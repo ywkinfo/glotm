@@ -1,0 +1,33 @@
+# LatTm 사실 검증 로그
+
+- 검증 기준일: 2026년 3월 27일
+- 목적: 공개용 정본 마스터에 반영되는 고위험 사실관계를 1차 출처 중심으로 고정한다.
+- 범위: 마드리드 가입국 범위, 안데스 권역 출원 구조, 멕시코 사용선언, 아르헨티나 중간 사용선언, 칠레 불사용 취소 도입.
+
+## 1. 핵심 결론
+
+| 항목 | 검증 결과 | 반영 원칙 |
+| --- | --- | --- |
+| 마드리드 가입국 | 대상 8개국 중 브라질, 멕시코, 콜롬비아, 칠레만 마드리드 시스템 사용 가능 | 04장과 관련 체크리스트에서 직접출원/마드리드 범위를 수정 |
+| 안데스 권역 구조 | 콜롬비아, 페루, 에콰도르는 Decision 486이라는 공통 규범을 공유하지만 등록은 국가별로 개별 확보 | `CAN 공동체 상표`라는 표현을 제거하고 `공통 규범 + 국가별 직접출원`으로 통일 |
+| 멕시코 사용선언 | 등록일 3주년 후 3개월 내에 실제·효과적 사용 선언을 제출해야 함 | `등록 후 3년 내` 표현을 모두 교정 |
+| 아르헨티나 사용선언 | 등록 후 5년차와 6년차 사이에 중간 사용선언이 필요하고, 갱신 단계에서도 사용 관련 진술이 연결됨 | 01장, 07장, 08장, 16장에 반영 |
+| 칠레 불사용 취소 | 2022년 법 개정 이후 불사용 취소 제도가 도입됨 | 01장, 07장, 08장, 16장 관련 서술 유지 가능 |
+
+## 2. 사용한 1차 출처
+
+| 주제 | 출처 | 메모 |
+| --- | --- | --- |
+| Madrid 회원국 | https://www.wipo.int/en/web/madrid-system/members | WIPO Madrid System 공식 회원국 페이지 기준 |
+| 안데스 규범 및 국가별 보호 범위 | https://www.sic.gov.co/node/79 | 콜롬비아 등록은 콜롬비아에서만 효력이 있고 타 회원국은 별도 등록 필요 |
+| 멕시코 사용선언 | https://www.gob.mx/impi/prensa/el-impi-facilita-la-presentacion-de-la-declaracion-de-uso-de-marcas-avisos-y-nombres-comerciales-por-medio-de-sus-servicios-electronicos-279218?idiom=es | IMPI 공지. 선언 대상과 전자 제출 맥락 확인 |
+| 멕시코 등록 후 유지관리 | https://www.impi.gob.mx/cloud/Seminario_en_linea_Ley_Federal_de_Proteccion_a_la_/D%C3%ADa%2002%20-%205%20de%20octubre/04%20Vigencia%20y%20conservaci%C3%B3n%20derechos%20signos%20distintivos.pdf | IMPI 자료. 3주년 후 3개월 창 확인 |
+| 아르헨티나 중간 사용선언 | https://portaltramites.inpi.gob.ar/Marcas/Renovaciones | INPI Argentina 갱신/선언 포털 기준 |
+| 칠레 불사용 취소 | https://www.inapi.cl/noticias/ley-21355-moderniza-el-sistema-de-propiedad-industrial-con-enfasis-en-la-reactivacion-economica-y-la-innovacion | INAPI의 법 개정 안내 기준 |
+
+## 3. 편집 반영 메모
+
+- 정본용 텍스트에는 `CAN 상표`, `안데스 공동체 상표` 같은 단일 권리 표현을 쓰지 않는다.
+- 멕시코 기한은 반드시 `등록일 3주년 후 3개월`로 적는다.
+- 국가별 평균 처리기간, 대리인 비용, 수수료는 공식 고정치가 아니므로 본문보다는 부록 템플릿과 실행 체크리스트에서 `최신 공지 재확인` 전제로 다룬다.
+- 배포 직전에는 16장 참고 기관 링크와 부록의 기한/비용 칸을 최신 공지 기준으로 다시 확인한다.

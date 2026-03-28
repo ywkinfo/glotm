@@ -1,0 +1,85 @@
+{
+  "title": "중남미 상표 보호 운영 가이드",
+  "chapters": [
+    {
+      "title": "제01장. 중남미 상표 보호 전략 프레임 (전체 구조)",
+      "path": "content/source/chapters/01_strategy-framework.md"
+    },
+    {
+      "title": "제02장. Pre-filing: 상표 포트폴리오 설계",
+      "path": "content/source/chapters/02_portfolio-design.md"
+    },
+    {
+      "title": "제03장. Pre-filing: 상표 검색 및 충돌 리스크 분석",
+      "path": "content/source/chapters/03_search-risk-analysis.md"
+    },
+    {
+      "title": "제04장. Filing 전략: 출원 경로 선택 (직접출원 vs 마드리드)",
+      "path": "content/source/chapters/04_filing-route-selection.md"
+    },
+    {
+      "title": "제05장. Filing 실무: 출원서 작성 및 제출",
+      "path": "content/source/chapters/05_application-preparation.md"
+    },
+    {
+      "title": "제06장. Examination / Opposition: 공고·이의·거절 대응",
+      "path": "content/source/chapters/06_opposition-and-office-actions.md"
+    },
+    {
+      "title": "제07장. Post-registration: 등록 후 유지관리 시스템",
+      "path": "content/source/chapters/07_post-registration-maintenance.md"
+    },
+    {
+      "title": "제08장. 상표 사용 및 증거 관리 시스템",
+      "path": "content/source/chapters/08_use-and-evidence-management.md"
+    },
+    {
+      "title": "제09장. 계약 구조: 유통·라이선스·프랜차이즈 통제",
+      "path": "content/source/chapters/09_contracts-and-licensing-control.md"
+    },
+    {
+      "title": "제10장. Monitoring 시스템: 출원·온라인·시장 감시",
+      "path": "content/source/chapters/10_monitoring-system.md"
+    },
+    {
+      "title": "제11장. Enforcement: 침해 대응 전략 (행정 중심)",
+      "path": "content/source/chapters/11_enforcement-strategy.md"
+    },
+    {
+      "title": "제12장. 국경·통관 및 물류 통제",
+      "path": "content/source/chapters/12_customs-and-border-control.md"
+    },
+    {
+      "title": "제13장. 온라인 플랫폼 대응 전략",
+      "path": "content/source/chapters/13_online-platform-response.md"
+    },
+    {
+      "title": "제14장. 분쟁 전략: 무효·취소·소송",
+      "path": "content/source/chapters/14_dispute-strategy.md"
+    },
+    {
+      "title": "제15장. 포트폴리오 관리 및 내부 통제 (RACI 기반)",
+      "path": "content/source/chapters/15_portfolio-governance.md"
+    },
+    {
+      "title": "제16장. 국가별 실행 가이드 (핵심 8개국)",
+      "path": "content/source/chapters/16_country-execution-guide.md"
+    },
+    {
+      "title": "제17장. 산업별 전략",
+      "path": "content/source/chapters/17_industry-strategies.md"
+    },
+    {
+      "title": "제18장. 실패 사례 분석 (한국기업 중심)",
+      "path": "content/source/chapters/18_failure-case-analysis.md"
+    },
+    {
+      "title": "제19장. 운영 시스템 구축 가이드",
+      "path": "content/source/chapters/19_operating-system-build-guide.md"
+    },
+    {
+      "title": "부록",
+      "path": "content/source/appendix/appendix_latam_brand_protection.md"
+    }
+  ]
+}

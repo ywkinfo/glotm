@@ -1,0 +1,9 @@
+.gstack
+CODEX-INSTRUCTIONS.md
+node_modules
+dist
+**/node_modules
+**/dist
+.DS_Store
+*.tsbuildinfo
+**/*.tsbuildinfo

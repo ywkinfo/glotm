@@ -1,0 +1,481 @@
+import {
+  startTransition,
+  useDeferredValue,
+  useEffect,
+  useRef,
+  useState,
+  type Ref
+} from "react";
+import { Link, NavLink } from "react-router-dom";
+
+import {
+  type Chapter,
+  type HeadingNode,
+  type SearchEntry,
+  buildChapterPath
+} from "./shared";
+
+type SidebarNavProps = {
+  chapters: Chapter[];
+  basePath: string;
+  currentChapterSlug?: string;
+  currentSectionId?: string;
+  onNavigate?: () => void;
+  showSections?: boolean;
+};
+
+type SearchPanelProps = {
+  onNavigate: (chapterSlug: string, sectionId?: string) => void;
+  searchContent: (rawQuery: string) => Promise<SearchEntry[]>;
+  warmSearchContent: () => void;
+};
+
+type MarkdownArticleProps = {
+  chapter: Chapter;
+  articleRef?: Ref<HTMLElement>;
+};
+
+type ChapterOutlineProps = {
+  basePath: string;
+  chapterSlug: string;
+  headings: HeadingNode[];
+  activeSectionId?: string;
+};
+
+type ReaderActionBarProps = {
+  activeSectionTitle?: string;
+  copyState: "idle" | "success" | "error";
+  onCopyLink: () => void;
+  onScrollToTop: () => void;
+  visible: boolean;
+};
+
+type StatusPageProps = {
+  kicker: string;
+  title: string;
+  message: string;
+};
+
+type OutlineItem = {
+  id: string;
+  title: string;
+  level: number;
+};
+
+export function StatusPage({ kicker, title, message }: StatusPageProps) {
+  return (
+    <div className="status-page">
+      <section className="status-card">
+        <p className="gateway-kicker">{kicker}</p>
+        <h1 className="status-title">{title}</h1>
+        <p className="status-message">{message}</p>
+      </section>
+    </div>
+  );
+}
+
+export function flattenOutlineHeadings(
+  headings: HeadingNode[],
+  level = 0
+): OutlineItem[] {
+  const items: OutlineItem[] = [];
+
+  for (const heading of headings) {
+    items.push({
+      id: heading.id,
+      title: heading.title,
+      level
+    });
+    items.push(...flattenOutlineHeadings(heading.children, level + 1));
+  }
+
+  return items;
+}
+
+export function SidebarNav({
+  chapters,
+  basePath,
+  currentChapterSlug,
+  currentSectionId,
+  onNavigate,
+  showSections = true
+}: SidebarNavProps) {
+  return (
+    <nav className="sidebar-nav" aria-label="전체 문서 목차">
+      <div className="sidebar-eyebrow">문서 구조</div>
+      <ul className="sidebar-list">
+        {chapters.map((chapter) => {
+          const isActive = chapter.slug === currentChapterSlug;
+          const sectionItems = isActive && showSections
+            ? flattenOutlineHeadings(chapter.headings)
+            : [];
+
+          return (
+            <li key={chapter.slug} className="sidebar-item">
+              <NavLink
+                to={buildChapterPath(basePath, chapter.slug)}
+                className={({ isActive: routeActive }) =>
+                  routeActive || isActive ? "sidebar-link active" : "sidebar-link"
+                }
+                onClick={onNavigate}
+              >
+                {chapter.title}
+              </NavLink>
+              {sectionItems.length > 0 ? (
+                <ul className="sidebar-section-list" aria-label={`${chapter.title} 섹션 목차`}>
+                  {sectionItems.map((section) => {
+                    const isCurrentSection = section.id === currentSectionId;
+
+                    return (
+                      <li key={section.id}>
+                        <Link
+                          to={{
+                            pathname: buildChapterPath(basePath, chapter.slug),
+                            hash: `#${section.id}`
+                          }}
+                          className={
+                            isCurrentSection
+                              ? "sidebar-section-link active"
+                              : "sidebar-section-link"
+                          }
+                          onClick={onNavigate}
+                          style={{ paddingInlineStart: `${0.85 + section.level * 0.85}rem` }}
+                          aria-current={isCurrentSection ? "location" : undefined}
+                        >
+                          {section.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+export function SearchPanel({
+  onNavigate,
+  searchContent,
+  warmSearchContent
+}: SearchPanelProps) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchEntry[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const deferredQuery = useDeferredValue(query);
+  const resultRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  useEffect(() => {
+    const trimmedQuery = deferredQuery.trim();
+    let isCancelled = false;
+
+    if (!trimmedQuery) {
+      setResults([]);
+      setIsSearching(false);
+      setSearchError(null);
+      setHighlightedIndex(-1);
+      return undefined;
+    }
+
+    setIsSearching(true);
+    setSearchError(null);
+
+    searchContent(trimmedQuery)
+      .then((nextResults) => {
+        if (isCancelled) {
+          return;
+        }
+
+        startTransition(() => {
+          setResults(nextResults);
+          setIsSearching(false);
+          setHighlightedIndex(nextResults.length > 0 ? 0 : -1);
+        });
+      })
+      .catch(() => {
+        if (isCancelled) {
+          return;
+        }
+
+        setResults([]);
+        setIsSearching(false);
+        setSearchError("검색 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+        setHighlightedIndex(-1);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [deferredQuery, searchContent]);
+
+  useEffect(() => {
+    const activeResult = resultRefs.current[highlightedIndex];
+
+    activeResult?.scrollIntoView({
+      block: "nearest"
+    });
+  }, [highlightedIndex]);
+
+  const activeResult =
+    highlightedIndex >= 0 && highlightedIndex < results.length
+      ? results[highlightedIndex]
+      : undefined;
+
+  const navigateToResult = (result: SearchEntry) => {
+    onNavigate(result.chapterSlug, result.sectionId || undefined);
+    setQuery("");
+    setResults([]);
+    setSearchError(null);
+    setHighlightedIndex(-1);
+  };
+
+  return (
+    <div className="search-shell">
+      <label className="search-label" htmlFor="reader-search">
+        검색
+      </label>
+      <input
+        id="reader-search"
+        className="search-input"
+        type="search"
+        value={query}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={query.trim() ? true : false}
+        aria-controls="reader-search-results"
+        aria-activedescendant={activeResult ? `search-result-${activeResult.id}` : undefined}
+        placeholder="장 제목, 섹션 제목, 본문 검색"
+        onFocus={() => {
+          warmSearchContent();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            setQuery("");
+            setResults([]);
+            setSearchError(null);
+            setHighlightedIndex(-1);
+            return;
+          }
+
+          if (results.length === 0) {
+            return;
+          }
+
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setHighlightedIndex((index) =>
+              index < results.length - 1 ? index + 1 : 0
+            );
+            return;
+          }
+
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            setHighlightedIndex((index) =>
+              index > 0 ? index - 1 : results.length - 1
+            );
+            return;
+          }
+
+          if (event.key === "Enter" && activeResult) {
+            event.preventDefault();
+            navigateToResult(activeResult);
+          }
+        }}
+        onChange={(event) => {
+          setQuery(event.target.value);
+        }}
+      />
+      {query.trim() ? (
+        <div
+          id="reader-search-results"
+          className="search-results"
+          role="listbox"
+          aria-label="검색 결과"
+        >
+          {isSearching ? (
+            <div className="search-empty">검색 인덱스를 불러오는 중입니다.</div>
+          ) : searchError ? (
+            <div className="search-empty">{searchError}</div>
+          ) : results.length > 0 ? (
+            results.map((result, index) => {
+              const isActive = index === highlightedIndex;
+
+              return (
+                <button
+                  key={result.id}
+                  id={`search-result-${result.id}`}
+                  ref={(element) => {
+                    resultRefs.current[index] = element;
+                  }}
+                  className={isActive ? "search-result active" : "search-result"}
+                  type="button"
+                  role="option"
+                  aria-selected={isActive}
+                  onMouseEnter={() => {
+                    setHighlightedIndex(index);
+                  }}
+                  onClick={() => {
+                    navigateToResult(result);
+                  }}
+                >
+                  <span className="search-result-meta">{result.chapterTitle}</span>
+                  <strong className="search-result-title">{result.sectionTitle}</strong>
+                  <span className="search-result-excerpt">{result.excerpt}</span>
+                </button>
+              );
+            })
+          ) : (
+            <div className="search-empty">일치하는 섹션을 찾지 못했습니다.</div>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
+  return (
+    <article
+      ref={articleRef}
+      className="article"
+      dangerouslySetInnerHTML={{ __html: chapter.html }}
+    />
+  );
+}
+
+export function ChapterOutline({
+  basePath,
+  chapterSlug,
+  headings,
+  activeSectionId
+}: ChapterOutlineProps) {
+  const items = flattenOutlineHeadings(headings);
+  const [isExpanded, setIsExpanded] = useState(() => {
+    if (typeof window === "undefined") {
+      return true;
+    }
+
+    return !window.matchMedia("(max-width: 640px)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    setIsExpanded(!window.matchMedia("(max-width: 640px)").matches);
+  }, [chapterSlug]);
+
+  if (items.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="chapter-outline" aria-labelledby="chapter-outline-title">
+      <div className="chapter-outline-header">
+        <div>
+          <p className="chapter-outline-kicker">Quick Jump</p>
+          <h2 id="chapter-outline-title" className="chapter-outline-title">
+            이 장의 섹션 목차
+          </h2>
+        </div>
+        <div className="chapter-outline-actions">
+          <p className="chapter-outline-meta">총 {items.length}개 섹션</p>
+          <button
+            className="chapter-outline-toggle"
+            type="button"
+            aria-expanded={isExpanded}
+            aria-controls="chapter-outline-list"
+            onClick={() => {
+              setIsExpanded((expanded) => !expanded);
+            }}
+          >
+            {isExpanded ? "목차 접기" : "목차 펼치기"}
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="chapter-outline-list"
+        className={isExpanded ? "chapter-outline-list" : "chapter-outline-list collapsed"}
+      >
+        {items.map((item) => {
+          const isActive = item.id === activeSectionId;
+
+          return (
+            <Link
+              key={item.id}
+              to={{
+                pathname: buildChapterPath(basePath, chapterSlug),
+                hash: `#${item.id}`
+              }}
+              className={isActive ? "chapter-outline-link active" : "chapter-outline-link"}
+              aria-current={isActive ? "location" : undefined}
+              style={{ paddingInlineStart: `${1 + item.level}rem` }}
+            >
+              <span className="chapter-outline-link-title">{item.title}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+export function ReaderActionBar({
+  activeSectionTitle,
+  copyState,
+  onCopyLink,
+  onScrollToTop,
+  visible
+}: ReaderActionBarProps) {
+  if (!visible) {
+    return null;
+  }
+
+  const copyLabel =
+    copyState === "success"
+      ? "링크 복사됨"
+      : copyState === "error"
+        ? "복사 실패"
+        : "현재 위치 링크";
+
+  return (
+    <aside className="reader-action-bar" aria-label="읽기 도구">
+      <div className="reader-action-context">
+        <p className="reader-action-kicker">Current Section</p>
+        <strong className="reader-action-title">
+          {activeSectionTitle ?? "이 장을 읽는 중"}
+        </strong>
+      </div>
+      <div className="reader-action-buttons">
+        <button className="reader-action-button" type="button" onClick={onCopyLink}>
+          {copyLabel}
+        </button>
+        <button className="reader-action-button" type="button" onClick={onScrollToTop}>
+          맨 위로
+        </button>
+      </div>
+    </aside>
+  );
+}
+
+export function ReadingProgressBar({ progress }: { progress: number }) {
+  const normalizedProgress = Math.max(0, Math.min(100, progress));
+
+  return (
+    <div className="reading-progress" aria-label="읽기 진행률">
+      <div
+        className="reading-progress-bar"
+        style={{ width: `${normalizedProgress}%` }}
+      />
+      <span className="reading-progress-label">{Math.round(normalizedProgress)}% 읽음</span>
+    </div>
+  );
+}
