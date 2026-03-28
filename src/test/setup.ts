@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 
 function createScrollIntoViewMock() {
   return vi.fn();
@@ -19,11 +19,7 @@ function createMatchMediaMock() {
   }));
 }
 
-afterEach(() => {
-  cleanup();
-  window.localStorage.clear();
-  vi.restoreAllMocks();
-
+function installDomMocks() {
   Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
     configurable: true,
     value: createScrollIntoViewMock()
@@ -34,15 +30,17 @@ afterEach(() => {
     writable: true,
     value: createMatchMediaMock()
   });
+}
+
+beforeEach(() => {
+  installDomMocks();
 });
 
-Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
-  configurable: true,
-  value: createScrollIntoViewMock()
+afterEach(() => {
+  cleanup();
+  window.localStorage.clear();
+  vi.restoreAllMocks();
+  installDomMocks();
 });
 
-Object.defineProperty(window, "matchMedia", {
-  configurable: true,
-  writable: true,
-  value: createMatchMediaMock()
-});
+installDomMocks();

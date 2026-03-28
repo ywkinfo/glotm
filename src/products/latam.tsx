@@ -1,52 +1,18 @@
-import {
-  createContext,
-  useContext,
-  useDeferredValue,
-  useEffect,
-  useEffectEvent,
-  useRef,
-  useState
-} from "react";
-import {
-  Link,
-  NavLink,
-  Navigate,
-  Outlet,
-  matchPath,
-  useLocation,
-  useNavigate,
-  useOutletContext,
-  useParams
-} from "react-router-dom";
+import { useDeferredValue, useState } from "react";
+import { NavLink } from "react-router-dom";
 
-import { products } from "./registry";
+import {
+  createReaderRuntime,
+  type ReaderHomePageProps
+} from "./configuredReader";
 import {
   buildChapterPath,
-  createDocumentResourceLoaders,
-  createReadingBookmarkStorage,
-  createSearchController,
   filterCatalogChapters,
-  formatBookmarkTimestamp,
-  getAdjacentChapters,
   getChapterMeta,
   getChapterNumber,
   getChapterStage,
-  getTrackedSectionId,
-  normalizeSearchText,
-  setRuntimeDocumentTitle,
-  type DocumentData,
-  type ReadingBookmark
+  normalizeSearchText
 } from "./shared";
-import {
-  ChapterOutline,
-  MarkdownArticle,
-  ReaderActionBar,
-  ReadingProgressBar,
-  SearchPanel,
-  SidebarNav,
-  StatusPage,
-  flattenOutlineHeadings
-} from "./components";
 import documentDataUrl from "../../LatTm/content/generated/document-data.json?url";
 import searchEntriesUrl from "../../LatTm/content/generated/search-index.json?url";
 
@@ -59,270 +25,22 @@ const HOME_FILTER_SUGGESTIONS = [
   "실패 사례"
 ] as const;
 
-const productMeta = products.find((product) => product.slug === "latam")!;
-const storage = createReadingBookmarkStorage("lattm_reading_bookmark");
-const { loadDocumentData, loadSearchEntries } = createDocumentResourceLoaders(
-  documentDataUrl,
-  searchEntriesUrl
-);
-const searchController = createSearchController(loadSearchEntries);
-
-type LatamReaderContextValue = {
-  documentData: DocumentData;
-  readingBookmark: ReadingBookmark | null;
-  onReadingBookmarkChange: (bookmark: ReadingBookmark) => void;
-};
-
-type ReaderShellOutletContext = {
-  syncCurrentSectionId: (sectionId?: string) => void;
-};
-
-const LatamReaderContext = createContext<LatamReaderContextValue | null>(null);
-
-function useLatamReader() {
-  const value = useContext(LatamReaderContext);
-
-  if (!value) {
-    throw new Error("Latam reader context is unavailable.");
-  }
-
-  return value;
-}
-
-function decodeRouteSegment(value?: string) {
-  if (!value) {
-    return undefined;
-  }
-
-  try {
-    return decodeURIComponent(value);
-  } catch {
-    return value;
-  }
-}
-
-function LatamReaderShell() {
-  const { documentData } = useLatamReader();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const chapters = documentData.chapters;
-  const chapterMatch = matchPath(`${productMeta.path}/chapter/:chapterSlug`, location.pathname);
-  const currentChapterSlug = decodeRouteSegment(chapterMatch?.params.chapterSlug);
-  const routeSectionId = decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined;
-  const [currentSectionId, setCurrentSectionId] = useState<string | undefined>(routeSectionId);
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  useEffect(() => {
-    setIsNavOpen(false);
-  }, [location.pathname, location.hash]);
-
-  useEffect(() => {
-    if (!currentChapterSlug) {
-      setCurrentSectionId(undefined);
-      return;
-    }
-
-    if (routeSectionId) {
-      setCurrentSectionId(routeSectionId);
-    }
-  }, [currentChapterSlug, routeSectionId]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
-
-    const isMobileViewport = window.matchMedia("(max-width: 920px)").matches;
-
-    if (!isMobileViewport) {
-      return undefined;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = isNavOpen ? "hidden" : previousOverflow;
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isNavOpen]);
-
-  useEffect(() => {
-    if (!currentChapterSlug) {
-      setRuntimeDocumentTitle(productMeta.title);
-    }
-  }, [currentChapterSlug]);
-
-  const navigateToSection = (chapterSlug: string, sectionId?: string) => {
-    navigate({
-      pathname: buildChapterPath(productMeta.path, chapterSlug),
-      hash: sectionId ? `#${sectionId}` : ""
-    });
-  };
-
-  return (
-    <div className="reader-shell">
-      <div className="app-shell">
-        <header className="topbar">
-          <div className="topbar-brand">
-            <span className="topbar-kicker">Pilot Track</span>
-            <NavLink className="brand-link" to={productMeta.path}>
-              {documentData.meta.title}
-            </NavLink>
-          </div>
-          <div className="topbar-actions">
-            <button
-              className="topbar-button mobile-only"
-              type="button"
-              onClick={() => setIsNavOpen((open) => !open)}
-            >
-              목차
-            </button>
-            <SearchPanel
-              onNavigate={navigateToSection}
-              searchContent={searchController.searchContent}
-              warmSearchContent={searchController.warmSearchContent}
-            />
-          </div>
-        </header>
-
-        <div className="reader-layout">
-          <aside
-            className={`left-rail ${isNavOpen ? "open" : ""}`}
-            aria-hidden={isNavOpen ? undefined : true}
-          >
-            <SidebarNav
-              chapters={chapters}
-              basePath={productMeta.path}
-              currentChapterSlug={currentChapterSlug}
-              currentSectionId={currentSectionId}
-              onNavigate={() => setIsNavOpen(false)}
-            />
-          </aside>
-
-          <main className="content-pane">
-            <Outlet context={{ syncCurrentSectionId: setCurrentSectionId }} />
-            <footer className="reader-layout" style={{ paddingTop: 0 }}>
-              <div />
-              <div>
-                <div className="disclaimer">
-                  <strong>법적 고지:</strong> 이 가이드는 일반적인 정보 제공 목적이며 법률 자문이 아닙니다.
-                  수록된 정보는 작성 시점 기준이며, 법령·판례 변경에 따라 내용이 달라질 수 있습니다.
-                  구체적인 법률 문제는 자격 있는 변호사 또는 변리사에게 문의하시기 바랍니다.
-                  저자와 독자 사이에는 변호사·의뢰인 관계가 성립하지 않습니다.
-                </div>
-              </div>
-            </footer>
-          </main>
-        </div>
-
-        {isNavOpen ? (
-          <button
-            className="mobile-scrim"
-            type="button"
-            aria-label="열린 패널 닫기"
-            onClick={() => {
-              setIsNavOpen(false);
-            }}
-          />
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
-export function LatamReaderRoot() {
-  const [documentData, setDocumentData] = useState<DocumentData | null>(null);
-  const [loadError, setLoadError] = useState<string | null>(null);
-  const [readingBookmark, setReadingBookmark] = useState<ReadingBookmark | null>(null);
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    loadDocumentData()
-      .then((nextDocumentData) => {
-        if (!isCancelled) {
-          setDocumentData(nextDocumentData);
-        }
-      })
-      .catch((error) => {
-        if (!isCancelled) {
-          setLoadError(
-            error instanceof Error
-              ? error.message
-              : "문서 데이터를 불러오지 못했습니다."
-          );
-        }
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    setReadingBookmark(storage.loadReadingBookmark());
-  }, []);
-
-  if (loadError) {
-    return (
-      <StatusPage
-        kicker="LatTm"
-        title="문서를 불러오지 못했습니다"
-        message={loadError}
-      />
-    );
-  }
-
-  if (!documentData) {
-    return (
-      <StatusPage
-        kicker="LatTm"
-        title="문서를 준비하고 있습니다"
-        message="로컬 콘텐츠와 목차를 불러오는 중입니다."
-      />
-    );
-  }
-
-  const handleReadingBookmarkChange = (bookmark: ReadingBookmark) => {
-    storage.saveReadingBookmark(bookmark);
-    setReadingBookmark(bookmark);
-  };
-
-  return (
-    <LatamReaderContext.Provider
-      value={{
-        documentData,
-        readingBookmark,
-        onReadingBookmarkChange: handleReadingBookmarkChange
-      }}
-    >
-      <LatamReaderShell />
-    </LatamReaderContext.Provider>
-  );
-}
-
-export function LatamHomePage() {
-  const { documentData, readingBookmark } = useLatamReader();
+function LatamHomeContent({
+  continueChapter,
+  continueTimestamp,
+  documentData,
+  productMeta,
+  readingBookmark
+}: ReaderHomePageProps) {
   const chapters = documentData.chapters;
   const [catalogQuery, setCatalogQuery] = useState("");
   const deferredCatalogQuery = useDeferredValue(catalogQuery);
-  const continueChapter = readingBookmark
-    ? chapters.find((chapter) => chapter.slug === readingBookmark.chapterSlug)
-    : undefined;
-  const continueTimestamp = readingBookmark
-    ? formatBookmarkTimestamp(readingBookmark.updatedAt)
-    : "";
   const matchingChapters = filterCatalogChapters(chapters, deferredCatalogQuery);
-  const filteredChapters = matchingChapters
-    .map(({ chapter, match }) => ({
-      chapter,
-      meta: getChapterMeta(chapter),
-      match
-    }));
-
-  useEffect(() => {
-    setRuntimeDocumentTitle(productMeta.title);
-  }, []);
+  const filteredChapters = matchingChapters.map(({ chapter, match }) => ({
+    chapter,
+    meta: getChapterMeta(chapter),
+    match
+  }));
 
   return (
     <div className="home-page">
@@ -487,293 +205,42 @@ export function LatamHomePage() {
   );
 }
 
-export function LatamChapterPage() {
-  const { documentData, onReadingBookmarkChange } = useLatamReader();
-  const { chapterSlug } = useParams();
-  const location = useLocation();
-  const { syncCurrentSectionId } = useOutletContext<ReaderShellOutletContext>();
-  const chapters = documentData.chapters;
-  const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
-  const articleRef = useRef<HTMLElement | null>(null);
-  const [activeSectionId, setActiveSectionId] = useState<string | undefined>(
-    () => location.hash.replace(/^#/, "") || undefined
-  );
-  const [readingProgress, setReadingProgress] = useState(0);
-  const [copyState, setCopyState] = useState<"idle" | "success" | "error">("idle");
+const {
+  ReaderRoot: LatamReaderRoot,
+  HomePage: LatamHomePage,
+  ChapterPage: LatamChapterPage,
+  loadDocumentData,
+  loadSearchEntries,
+  productMeta: latamProductMeta
+} = createReaderRuntime({
+  productSlug: "latam",
+  documentDataUrl,
+  searchEntriesUrl,
+  storageKey: "lattm_reading_bookmark",
+  topbarKicker: "Pilot Track",
+  loadingMessage: "로컬 콘텐츠와 목차를 불러오는 중입니다.",
+  HomePageComponent: LatamHomeContent,
+  renderChapterHeaderTopline: ({ chapter }) => {
+    const chapterStage = getChapterStage(chapter.title);
 
-  const chapter = normalizedChapterSlug
-    ? chapters.find((entry) => entry.slug === normalizedChapterSlug)
-    : undefined;
-  const outlineItems = chapter ? flattenOutlineHeadings(chapter.headings) : [];
-  const firstOutlineId = outlineItems[0]?.id;
-  const outlineSignature = outlineItems.map((item) => item.id).join("|");
-  const chapterMeta = chapter ? getChapterMeta(chapter) : null;
-  const chapterStage = chapter ? getChapterStage(chapter.title) : null;
-  const chapterNumber = chapter ? getChapterNumber(chapter.title) : null;
-  const progressBucket = Math.round(readingProgress / 5) * 5;
-  const activeOutlineItem = outlineItems.find((item) => item.id === activeSectionId);
-  const commitReadingBookmark = useEffectEvent((bookmark: ReadingBookmark) => {
-    onReadingBookmarkChange(bookmark);
-  });
-  const handleScrollToTop = useEffectEvent(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-  const handleCopyCurrentLink = useEffectEvent(async () => {
-    const currentUrl = window.location.href;
+    return (
+      <>
+        <p className="chapter-eyebrow">읽는 중</p>
+        <span className={`chapter-stage-chip chapter-stage-chip--${chapterStage.key}`}>
+          {chapterStage.label}
+        </span>
+      </>
+    );
+  },
+  renderChapterOrderValue: ({ chapter, currentIndex }) =>
+    getChapterNumber(chapter.title) ?? currentIndex + 1
+});
 
-    try {
-      await navigator.clipboard.writeText(currentUrl);
-      setCopyState("success");
-    } catch {
-      setCopyState("error");
-    }
-  });
-
-  useEffect(() => {
-    if (!chapter) {
-      return undefined;
-    }
-
-    setRuntimeDocumentTitle(chapter.title);
-
-    const anchor = location.hash.replace(/^#/, "");
-
-    if (!anchor) {
-      window.scrollTo({ top: 0 });
-      return;
-    }
-
-    const frame = window.requestAnimationFrame(() => {
-      const target = document.getElementById(anchor);
-      target?.scrollIntoView({ block: "start" });
-    });
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-    };
-  }, [chapter, location.hash]);
-
-  useEffect(() => {
-    if (!chapter) {
-      setActiveSectionId(undefined);
-      return;
-    }
-
-    const anchor = location.hash.replace(/^#/, "");
-
-    if (anchor) {
-      setActiveSectionId(anchor);
-      return;
-    }
-
-    setActiveSectionId(firstOutlineId);
-  }, [chapter, firstOutlineId, location.hash, normalizedChapterSlug]);
-
-  useEffect(() => {
-    if (!chapter) {
-      return undefined;
-    }
-
-    let frameId = 0;
-    let timeoutId = 0;
-
-    const collectTargets = () =>
-      outlineItems
-        .map((item) => document.getElementById(item.id))
-        .filter((element): element is HTMLElement => Boolean(element));
-
-    const updateActiveSection = () => {
-      const targets = collectTargets();
-
-      if (targets.length === 0) {
-        return;
-      }
-
-      const nextActiveSectionId = getTrackedSectionId(targets);
-
-      if (nextActiveSectionId) {
-        setActiveSectionId(nextActiveSectionId);
-      }
-    };
-
-    const scheduleUpdate = () => {
-      window.cancelAnimationFrame(frameId);
-      frameId = window.requestAnimationFrame(updateActiveSection);
-      window.clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(updateActiveSection, 120);
-    };
-
-    updateActiveSection();
-    timeoutId = window.setTimeout(updateActiveSection, 180);
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.clearTimeout(timeoutId);
-      window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
-    };
-  }, [chapter, outlineItems, outlineSignature]);
-
-  useEffect(() => {
-    syncCurrentSectionId(activeSectionId);
-  }, [activeSectionId, syncCurrentSectionId]);
-
-  useEffect(() => {
-    if (!chapter) {
-      setReadingProgress(0);
-      return undefined;
-    }
-
-    let frameId = 0;
-
-    const updateProgress = () => {
-      const articleElement = articleRef.current;
-
-      if (!articleElement) {
-        setReadingProgress(0);
-        return;
-      }
-
-      const articleTop = articleElement.offsetTop;
-      const articleHeight = articleElement.offsetHeight;
-      const viewportHeight = window.innerHeight;
-      const scrollTop = window.scrollY;
-      const maxScrollableDistance = Math.max(articleHeight - viewportHeight * 0.45, 1);
-      const nextProgress = ((scrollTop - articleTop + viewportHeight * 0.22) / maxScrollableDistance) * 100;
-
-      setReadingProgress(Math.max(0, Math.min(100, nextProgress)));
-    };
-
-    const scheduleUpdate = () => {
-      window.cancelAnimationFrame(frameId);
-      frameId = window.requestAnimationFrame(updateProgress);
-    };
-
-    updateProgress();
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
-    };
-  }, [chapter]);
-
-  useEffect(() => {
-    if (copyState === "idle") {
-      return undefined;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setCopyState("idle");
-    }, 1800);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [copyState]);
-
-  useEffect(() => {
-    if (!chapter) {
-      return;
-    }
-
-    commitReadingBookmark({
-      chapterSlug: chapter.slug,
-      chapterTitle: chapter.title,
-      sectionId: activeSectionId,
-      sectionTitle: activeOutlineItem?.title,
-      progress: Math.max(0, Math.min(100, progressBucket)),
-      updatedAt: new Date().toISOString()
-    });
-  }, [activeOutlineItem?.title, activeSectionId, chapter, commitReadingBookmark, progressBucket]);
-
-  if (!normalizedChapterSlug || !chapter) {
-    return <Navigate to={productMeta.path} replace />;
-  }
-
-  const {
-    currentIndex,
-    prevChapter,
-    nextChapter
-  } = getAdjacentChapters(chapters, normalizedChapterSlug);
-
-  return (
-    <div className="chapter-page">
-      <ReadingProgressBar progress={readingProgress} />
-      <section className="chapter-header">
-        <div className="chapter-header-grid">
-          <div className="chapter-header-copy">
-            <div className="chapter-header-topline">
-              <p className="chapter-eyebrow">읽는 중</p>
-              {chapterStage ? (
-                <span className={`chapter-stage-chip chapter-stage-chip--${chapterStage.key}`}>
-                  {chapterStage.label}
-                </span>
-              ) : null}
-            </div>
-            <h1>{chapter.title}</h1>
-            {chapter.summary ? <p className="chapter-summary">{chapter.summary}</p> : null}
-          </div>
-          {chapterMeta ? (
-            <div className="chapter-header-stats" aria-label="챕터 메타 정보">
-              <div className="chapter-stat-card">
-                <span className="chapter-stat-label">순서</span>
-                <strong className="chapter-stat-value">
-                  {chapterNumber ?? currentIndex + 1} / {chapters.length}
-                </strong>
-              </div>
-              <div className="chapter-stat-card">
-                <span className="chapter-stat-label">섹션</span>
-                <strong className="chapter-stat-value">{chapterMeta.sectionCount}개</strong>
-              </div>
-              <div className="chapter-stat-card">
-                <span className="chapter-stat-label">읽기 시간</span>
-                <strong className="chapter-stat-value">약 {chapterMeta.readingMinutes}분</strong>
-              </div>
-            </div>
-          ) : null}
-        </div>
-      </section>
-      <ChapterOutline
-        basePath={productMeta.path}
-        chapterSlug={chapter.slug}
-        headings={chapter.headings}
-        activeSectionId={activeSectionId}
-      />
-      <MarkdownArticle chapter={chapter} articleRef={articleRef} />
-      <ReaderActionBar
-        activeSectionTitle={activeOutlineItem?.title}
-        copyState={copyState}
-        onCopyLink={handleCopyCurrentLink}
-        onScrollToTop={handleScrollToTop}
-        visible={readingProgress >= 20}
-      />
-      <nav className="chapter-nav" aria-label="챕터 탐색">
-        {prevChapter ? (
-          <Link className="chapter-nav-btn" to={buildChapterPath(productMeta.path, prevChapter.slug)}>
-            <span className="chapter-nav-label">← 이전</span>
-            <span className="chapter-nav-title">{prevChapter.title}</span>
-          </Link>
-        ) : <div />}
-        {nextChapter ? (
-          <Link
-            className="chapter-nav-btn chapter-nav-btn--next"
-            to={buildChapterPath(productMeta.path, nextChapter.slug)}
-          >
-            <span className="chapter-nav-label">다음 →</span>
-            <span className="chapter-nav-title">{nextChapter.title}</span>
-          </Link>
-        ) : null}
-      </nav>
-    </div>
-  );
-}
-
-export { loadDocumentData, loadSearchEntries, productMeta as latamProductMeta };
+export {
+  LatamChapterPage,
+  LatamHomePage,
+  LatamReaderRoot,
+  loadDocumentData,
+  loadSearchEntries,
+  latamProductMeta
+};

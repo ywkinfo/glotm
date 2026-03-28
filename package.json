@@ -6,7 +6,11 @@
   "scripts": {
     "content:latam": "tsx LatTm/scripts/build-master.ts && tsx LatTm/scripts/qa-content.ts && tsx LatTm/scripts/build-content.ts",
     "content:mexico": "tsx MexTm/scripts/build-content.ts",
-    "content:prepare": "npm run content:latam && npm run content:mexico",
+    "content:usa": "tsx UsaTm/scripts/build-content.ts",
+    "content:japan": "tsx JapTm/scripts/build-content.ts",
+    "content:china": "tsx ChaTm/scripts/build-content.ts",
+    "content:europe": "tsx EuTm/scripts/build-content.ts",
+    "content:prepare": "npm run content:latam && npm run content:mexico && npm run content:usa && npm run content:japan && npm run content:china && npm run content:europe",
     "predev": "npm run content:prepare",
     "dev": "vite",
     "prebuild": "npm run content:prepare",

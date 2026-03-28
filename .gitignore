@@ -1,5 +1,6 @@
 .gstack
 .mextm-inner-git
+archive/local-history/
 CODEX-INSTRUCTIONS.md
 node_modules
 dist

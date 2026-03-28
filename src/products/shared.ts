@@ -58,15 +58,18 @@ export type FilteredCatalogChapter = {
 
 export type ProductMeta = {
   id: string;
+  shortLabel: string;
   slug: string;
   path: string;
   title: string;
   summary: string;
   status: string;
-  statusTone: "pilot" | "beta";
+  statusTone: "pilot" | "beta" | "neutral";
   audience: string;
   primaryCtaLabel: string;
   stageLabel: string;
+  coverageType: "region" | "country";
+  availability: "live_shell" | "developed_workspace";
 };
 
 type SearchIndexData = {
