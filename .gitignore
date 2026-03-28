@@ -5,6 +5,7 @@ node_modules
 dist
 **/node_modules
 **/dist
+**/content/generated
 .DS_Store
 *.tsbuildinfo
 **/*.tsbuildinfo
