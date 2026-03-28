@@ -142,4 +142,21 @@ describe("App portfolio shell", () => {
       expect(latamLink).not.toHaveClass("active");
     }
   });
+
+  it("scrolls the active product chip into view on route changes", async () => {
+    window.history.replaceState({}, "", "/europe");
+    installFetchMock();
+    const scrollIntoView = vi.fn();
+
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView
+    });
+
+    render(<App />);
+
+    await screen.findByRole("heading", { name: "EuTm 유럽 상표 운영 가이드북" });
+
+    expect(scrollIntoView).toHaveBeenCalled();
+  });
 });

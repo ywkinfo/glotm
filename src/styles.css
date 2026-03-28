@@ -52,10 +52,12 @@ body {
   gap: 0.6rem;
   flex-wrap: wrap;
   justify-content: center;
+  min-width: 0;
 }
 
 .global-nav-link {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 0.45rem;
   padding: 0.65rem 0.95rem;
@@ -79,6 +81,7 @@ body {
 
 .global-nav-label {
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .status-pill {
@@ -441,16 +444,57 @@ body {
 
 @media (max-width: 920px) {
   :root {
-    --global-topbar-height: 7.6rem;
+    --global-topbar-height: 5.15rem;
   }
 
   .global-topbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem 0.7rem;
+  }
+
+  .global-topbar-brand {
+    gap: 0;
   }
 
   .global-status-panel {
+    display: none;
+  }
+
+  .global-tagline {
+    display: none;
+  }
+
+  .global-nav {
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.15rem;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .global-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .global-nav-link {
+    gap: 0.35rem;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.92rem;
+    scroll-snap-align: start;
+  }
+
+  .global-nav-link:not(.active) .status-pill {
+    display: none;
+  }
+
+  .global-nav-link.active {
+    box-shadow: 0 0 0 1px rgba(14, 107, 109, 0.08);
   }
 
   .gateway-hero {
@@ -468,11 +512,44 @@ body {
   }
 
   .reader-shell .left-rail {
-    top: calc(var(--global-topbar-height) + 0.8rem);
+    top: calc(var(--global-topbar-height) + 0.55rem);
   }
 }
 
 @media (max-width: 640px) {
+  :root {
+    --global-topbar-height: 4.7rem;
+  }
+
+  .global-topbar {
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem 0.6rem;
+  }
+
+  .global-brand {
+    font-size: 1.18rem;
+  }
+
+  .global-nav {
+    gap: 0.45rem;
+  }
+
+  .global-nav-link {
+    gap: 0.32rem;
+    padding: 0.48rem 0.7rem;
+    font-size: 0.84rem;
+  }
+
+  .status-pill {
+    padding: 0.22rem 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+  }
+
+  .reader-shell .left-rail {
+    top: calc(var(--global-topbar-height) + 0.4rem);
+  }
+
   .gateway-page {
     padding-inline: 1rem;
   }

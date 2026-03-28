@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   BrowserRouter,
   NavLink,
@@ -42,11 +42,20 @@ function getSuggestedFlowCtaLabel(product: ProductMeta, index: number) {
 
 function AppLayout() {
   const location = useLocation();
+  const activeNavItemRef = useRef<HTMLAnchorElement | null>(null);
   const activeProduct = liveShellProducts.find(
     (product) =>
       location.pathname === product.path
       || location.pathname.startsWith(`${product.path}/`)
   );
+  const isGatewayActive = location.pathname === "/";
+
+  useEffect(() => {
+    activeNavItemRef.current?.scrollIntoView?.({
+      block: "nearest",
+      inline: "center"
+    });
+  }, [location.pathname]);
 
   return (
     <div className="glotm-app">
@@ -62,22 +71,28 @@ function AppLayout() {
           <NavLink
             to="/"
             end
+            ref={isGatewayActive ? activeNavItemRef : undefined}
             className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
           >
             <span className="global-nav-label">Gateway</span>
           </NavLink>
-          {liveShellProducts.map((product) => (
-            <NavLink
-              key={product.id}
-              to={product.path}
-              className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
-            >
-              <span className="global-nav-label">{product.shortLabel}</span>
-              <span className={`status-pill status-pill--${product.statusTone}`}>
-                {product.status}
-              </span>
-            </NavLink>
-          ))}
+          {liveShellProducts.map((product) => {
+            const isProductActive = activeProduct?.id === product.id;
+
+            return (
+              <NavLink
+                key={product.id}
+                to={product.path}
+                ref={isProductActive ? activeNavItemRef : undefined}
+                className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
+              >
+                <span className="global-nav-label">{product.shortLabel}</span>
+                <span className={`status-pill status-pill--${product.statusTone}`}>
+                  {product.status}
+                </span>
+              </NavLink>
+            );
+          })}
         </nav>
 
         <div className="global-status-panel">
