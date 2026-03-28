@@ -1,4 +1,5 @@
 .gstack
+.mextm-inner-git
 CODEX-INSTRUCTIONS.md
 node_modules
 dist
