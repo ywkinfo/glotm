@@ -49,6 +49,7 @@ import {
 
 type ReaderShellOutletContext = {
   syncCurrentSectionId: (sectionId?: string) => void;
+  jumpToSection: (sectionId: string) => void;
 };
 
 type ReaderContextValue = {
@@ -133,6 +134,35 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     return value;
   }
 
+  function scrollToSection(sectionId: string, behavior: ScrollBehavior) {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const scrollTarget = () => {
+      const target = document.getElementById(sectionId);
+
+      if (!target) {
+        return false;
+      }
+
+      target.scrollIntoView({
+        block: "start",
+        behavior
+      });
+
+      return true;
+    };
+
+    if (scrollTarget() || typeof window === "undefined") {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      scrollTarget();
+    });
+  }
+
   function ReaderShell() {
     const { documentData } = useReader();
     const navigate = useNavigate();
@@ -190,6 +220,15 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         hash: sectionId ? `#${sectionId}` : ""
       });
     };
+    const jumpToSection = useEffectEvent((sectionId: string) => {
+      if (!currentChapterSlug) {
+        return;
+      }
+
+      setCurrentSectionId(sectionId);
+      navigateToSection(currentChapterSlug, sectionId);
+      scrollToSection(sectionId, "smooth");
+    });
 
     return (
       <div className="reader-shell">
@@ -227,12 +266,18 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
                 basePath={productMeta.path}
                 currentChapterSlug={currentChapterSlug}
                 currentSectionId={currentSectionId}
+                onSectionJump={jumpToSection}
                 onNavigate={() => setIsNavOpen(false)}
               />
             </aside>
 
             <main className="content-pane">
-              <Outlet context={{ syncCurrentSectionId: setCurrentSectionId }} />
+              <Outlet
+                context={{
+                  syncCurrentSectionId: setCurrentSectionId,
+                  jumpToSection
+                }}
+              />
               <footer className="reader-layout" style={{ paddingTop: 0 }}>
                 <div />
                 <div>
@@ -361,7 +406,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const { documentData, onReadingBookmarkChange } = useReader();
     const { chapterSlug } = useParams();
     const location = useLocation();
-    const { syncCurrentSectionId } = useOutletContext<ReaderShellOutletContext>();
+    const { syncCurrentSectionId, jumpToSection } = useOutletContext<ReaderShellOutletContext>();
     const chapters = documentData.chapters;
     const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
     const articleRef = useRef<HTMLElement | null>(null);
@@ -369,7 +414,6 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       () => location.hash.replace(/^#/, "") || undefined
     );
     const [readingProgress, setReadingProgress] = useState(0);
-    const [copyState, setCopyState] = useState<"idle" | "success" | "error">("idle");
 
     const chapter = normalizedChapterSlug
       ? chapters.find((entry) => entry.slug === normalizedChapterSlug)
@@ -389,15 +433,9 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         behavior: "smooth"
       });
     });
-    const handleCopyCurrentLink = useEffectEvent(async () => {
-      const currentUrl = window.location.href;
-
-      try {
-        await navigator.clipboard.writeText(currentUrl);
-        setCopyState("success");
-      } catch {
-        setCopyState("error");
-      }
+    const handleSectionJump = useEffectEvent((sectionId: string) => {
+      setActiveSectionId(sectionId);
+      jumpToSection(sectionId);
     });
 
     useEffect(() => {
@@ -535,20 +573,6 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     }, [chapter]);
 
     useEffect(() => {
-      if (copyState === "idle") {
-        return undefined;
-      }
-
-      const timeoutId = window.setTimeout(() => {
-        setCopyState("idle");
-      }, 1800);
-
-      return () => {
-        window.clearTimeout(timeoutId);
-      };
-    }, [copyState]);
-
-    useEffect(() => {
       if (!chapter) {
         return;
       }
@@ -616,12 +640,11 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           chapterSlug={chapter.slug}
           headings={chapter.headings}
           activeSectionId={activeSectionId}
+          onSectionJump={handleSectionJump}
         />
         <MarkdownArticle chapter={chapter} articleRef={articleRef} />
         <ReaderActionBar
           activeSectionTitle={activeOutlineItem?.title}
-          copyState={copyState}
-          onCopyLink={handleCopyCurrentLink}
           onScrollToTop={handleScrollToTop}
           visible={readingProgress >= 20}
         />

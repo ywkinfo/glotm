@@ -20,6 +20,7 @@ type SidebarNavProps = {
   basePath: string;
   currentChapterSlug?: string;
   currentSectionId?: string;
+  onSectionJump?: (sectionId: string) => void;
   onNavigate?: () => void;
   showSections?: boolean;
 };
@@ -40,12 +41,11 @@ type ChapterOutlineProps = {
   chapterSlug: string;
   headings: HeadingNode[];
   activeSectionId?: string;
+  onSectionJump: (sectionId: string) => void;
 };
 
 type ReaderActionBarProps = {
   activeSectionTitle?: string;
-  copyState: "idle" | "success" | "error";
-  onCopyLink: () => void;
   onScrollToTop: () => void;
   visible: boolean;
 };
@@ -97,6 +97,7 @@ export function SidebarNav({
   basePath,
   currentChapterSlug,
   currentSectionId,
+  onSectionJump,
   onNavigate,
   showSections = true
 }: SidebarNavProps) {
@@ -138,7 +139,13 @@ export function SidebarNav({
                               ? "sidebar-section-link active"
                               : "sidebar-section-link"
                           }
-                          onClick={onNavigate}
+                          onClick={(event) => {
+                            if (onSectionJump) {
+                              event.preventDefault();
+                              onSectionJump(section.id);
+                            }
+                            onNavigate?.();
+                          }}
                           style={{ paddingInlineStart: `${0.85 + section.level * 0.85}rem` }}
                           aria-current={isCurrentSection ? "location" : undefined}
                         >
@@ -353,7 +360,8 @@ export function ChapterOutline({
   basePath,
   chapterSlug,
   headings,
-  activeSectionId
+  activeSectionId,
+  onSectionJump
 }: ChapterOutlineProps) {
   const items = flattenOutlineHeadings(headings);
   const [isExpanded, setIsExpanded] = useState(() => {
@@ -418,6 +426,10 @@ export function ChapterOutline({
               className={isActive ? "chapter-outline-link active" : "chapter-outline-link"}
               aria-current={isActive ? "location" : undefined}
               style={{ paddingInlineStart: `${1 + item.level}rem` }}
+              onClick={(event) => {
+                event.preventDefault();
+                onSectionJump(item.id);
+              }}
             >
               <span className="chapter-outline-link-title">{item.title}</span>
             </Link>
@@ -430,21 +442,12 @@ export function ChapterOutline({
 
 export function ReaderActionBar({
   activeSectionTitle,
-  copyState,
-  onCopyLink,
   onScrollToTop,
   visible
 }: ReaderActionBarProps) {
   if (!visible) {
     return null;
   }
-
-  const copyLabel =
-    copyState === "success"
-      ? "링크 복사됨"
-      : copyState === "error"
-        ? "복사 실패"
-        : "현재 위치 링크";
 
   return (
     <aside className="reader-action-bar" aria-label="읽기 도구">
@@ -455,9 +458,6 @@ export function ReaderActionBar({
         </strong>
       </div>
       <div className="reader-action-buttons">
-        <button className="reader-action-button" type="button" onClick={onCopyLink}>
-          {copyLabel}
-        </button>
         <button className="reader-action-button" type="button" onClick={onScrollToTop}>
           맨 위로
         </button>
