@@ -80,6 +80,8 @@ type SearchIndexData = {
 
 const CHARACTERS_PER_MINUTE = 850;
 const ROOT_DOCUMENT_TITLE = "GloTm | 글로벌 상표 지식베이스";
+const FALLBACK_APP_ORIGIN = "https://glotm.local";
+const SAFE_EXTERNAL_PROTOCOLS = new Set(["http:", "https:", "mailto:", "tel:"]);
 
 function loadJson<T>(url: string, label: string) {
   return fetch(url).then((response) => {
@@ -267,8 +269,124 @@ export function normalizeBasePath(basePath: string) {
   return basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
 }
 
+export function buildProductPath(basePath: string | ProductMeta) {
+  const path = typeof basePath === "string" ? basePath : basePath.path;
+  return normalizeBasePath(path) || "/";
+}
+
 export function buildChapterPath(basePath: string, chapterSlug: string) {
-  return `${normalizeBasePath(basePath)}/chapter/${chapterSlug}`;
+  const productPath = buildProductPath(basePath);
+
+  return productPath === "/"
+    ? `/chapter/${chapterSlug}`
+    : `${productPath}/chapter/${chapterSlug}`;
+}
+
+export function buildSectionHash(sectionId?: string) {
+  return sectionId ? `#${sectionId}` : "";
+}
+
+export function buildSectionLocation(
+  basePath: string,
+  chapterSlug: string,
+  sectionId?: string
+) {
+  return {
+    pathname: buildChapterPath(basePath, chapterSlug),
+    hash: buildSectionHash(sectionId)
+  };
+}
+
+export function getRouterBasePath(baseUrl = import.meta.env.BASE_URL ?? "/") {
+  return normalizeBasePath(baseUrl || "/");
+}
+
+export function getRouterBasename(baseUrl = import.meta.env.BASE_URL ?? "/") {
+  return getRouterBasePath(baseUrl) || undefined;
+}
+
+export function stripRouterBasePath(
+  pathname: string,
+  baseUrl = import.meta.env.BASE_URL ?? "/"
+) {
+  const normalizedPathname = pathname || "/";
+  const basePath = getRouterBasePath(baseUrl);
+
+  if (!basePath) {
+    return normalizedPathname;
+  }
+
+  if (normalizedPathname === basePath) {
+    return "/";
+  }
+
+  if (normalizedPathname.startsWith(`${basePath}/`)) {
+    return normalizedPathname.slice(basePath.length) || "/";
+  }
+
+  return normalizedPathname;
+}
+
+export function normalizeAppHref(
+  rawHref: string,
+  options?: {
+    baseUrl?: string;
+    currentOrigin?: string;
+    currentPathname?: string;
+  }
+) {
+  const trimmedHref = rawHref.trim();
+
+  if (!trimmedHref) {
+    return null;
+  }
+
+  if (trimmedHref.startsWith("#")) {
+    return trimmedHref;
+  }
+
+  const currentOrigin =
+    options?.currentOrigin
+    ?? (typeof window !== "undefined" ? window.location.origin : FALLBACK_APP_ORIGIN);
+  const currentPathname = options?.currentPathname ?? "/";
+
+  try {
+    const baseUrl = new URL(currentPathname, currentOrigin);
+    const hrefUrl = new URL(trimmedHref, baseUrl);
+
+    if (hrefUrl.origin !== currentOrigin || !SAFE_EXTERNAL_PROTOCOLS.has(hrefUrl.protocol)) {
+      return null;
+    }
+
+    const pathname = stripRouterBasePath(hrefUrl.pathname, options?.baseUrl);
+
+    if (!pathname.startsWith("/")) {
+      return null;
+    }
+
+    return `${pathname}${hrefUrl.search}${hrefUrl.hash}`;
+  } catch {
+    return null;
+  }
+}
+
+export function isSafeExternalHref(rawHref: string) {
+  const trimmedHref = rawHref.trim();
+  const hasExplicitProtocol = /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(trimmedHref);
+  const isProtocolRelative = trimmedHref.startsWith("//");
+
+  if (!trimmedHref || (!hasExplicitProtocol && !isProtocolRelative)) {
+    return false;
+  }
+
+  try {
+    const hrefUrl = new URL(trimmedHref, FALLBACK_APP_ORIGIN);
+
+    return hrefUrl.origin !== FALLBACK_APP_ORIGIN
+      && SAFE_EXTERNAL_PROTOCOLS.has(hrefUrl.protocol);
+  } catch {
+    return false;
+  }
 }
 
 export function buildRuntimeDocumentTitle(pageTitle?: string) {

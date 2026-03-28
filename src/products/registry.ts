@@ -1,4 +1,4 @@
-import type { ProductMeta } from "./shared";
+import { buildProductPath, type ProductMeta } from "./shared";
 
 export const products: ProductMeta[] = [
   {
@@ -103,4 +103,14 @@ export const developedWorkspaceProducts = products.filter(
 
 export function getProductBySlug(slug: string) {
   return products.find((product) => product.slug === slug);
+}
+
+export function getProductPathBySlug(slug: string) {
+  const product = getProductBySlug(slug);
+
+  if (!product) {
+    throw new Error(`Unknown product slug: ${slug}`);
+  }
+
+  return buildProductPath(product);
 }

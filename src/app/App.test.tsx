@@ -1,7 +1,9 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import App from "./App";
+import { AppRoutes } from "./App";
 import { liveShellReaderDefinitions } from "../products/liveShellReaders";
 import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
@@ -76,6 +78,26 @@ function installFetchMock() {
   return fetchMock;
 }
 
+function LocationProbe() {
+  const location = useLocation();
+
+  return (
+    <output data-testid="app-location">
+      {location.pathname}
+      {location.hash}
+    </output>
+  );
+}
+
+function renderAppRouteTree(initialEntry: string, basename?: string) {
+  return render(
+    <MemoryRouter basename={basename} initialEntries={[initialEntry]}>
+      <AppRoutes />
+      <LocationProbe />
+    </MemoryRouter>
+  );
+}
+
 describe("App portfolio shell", () => {
   beforeEach(() => {
     window.history.replaceState({}, "", "/");
@@ -94,7 +116,7 @@ describe("App portfolio shell", () => {
   it("shows all six live guides on the gateway and in top navigation", () => {
     installFetchMock();
 
-    render(<App />);
+    renderAppRouteTree("/");
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
 
@@ -126,10 +148,9 @@ describe("App portfolio shell", () => {
     ["/china", "중국 상표 실무 운영 가이드", /ChaTm/],
     ["/europe", "EuTm 유럽 상표 운영 가이드북", /EuTm/]
   ])("marks %s as an active live route", async (pathname, heading, navLabel) => {
-    window.history.replaceState({}, "", pathname);
     installFetchMock();
 
-    render(<App />);
+    renderAppRouteTree(pathname);
 
     await screen.findByRole("heading", { name: heading });
 
@@ -144,7 +165,6 @@ describe("App portfolio shell", () => {
   });
 
   it("scrolls the active product chip into view on route changes", async () => {
-    window.history.replaceState({}, "", "/europe");
     installFetchMock();
     const scrollIntoView = vi.fn();
 
@@ -153,10 +173,87 @@ describe("App portfolio shell", () => {
       value: scrollIntoView
     });
 
-    render(<App />);
+    renderAppRouteTree("/europe");
 
     await screen.findByRole("heading", { name: "EuTm 유럽 상표 운영 가이드북" });
 
     expect(scrollIntoView).toHaveBeenCalled();
+  });
+
+  it("navigates through top navigation and brand links on click", async () => {
+    const user = userEvent.setup();
+
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    await user.click(
+      within(screen.getByRole("navigation", { name: "제품 전환" })).getByRole("link", {
+        name: /MexTm/
+      })
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId("app-location")).toHaveTextContent("/mexico");
+    });
+
+    await user.click(screen.getByRole("link", { name: "GloTm" }));
+    await waitFor(() => {
+      expect(screen.getByTestId("app-location")).toHaveTextContent("/");
+    });
+  });
+
+  it("navigates through the gateway hero CTA into LatTm", async () => {
+    const user = userEvent.setup();
+
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
+
+    expect(gatewayHero).not.toBeNull();
+
+    await user.click(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" }));
+    await waitFor(() => {
+      expect(screen.getByTestId("app-location")).toHaveTextContent("/latam");
+    });
+  });
+
+  it("navigates through the gateway hero CTA into UsaTm", async () => {
+    const user = userEvent.setup();
+
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
+
+    expect(gatewayHero).not.toBeNull();
+
+    await user.click(within(gatewayHero as HTMLElement).getByRole("link", { name: "UsaTm 보기" }));
+    await waitFor(() => {
+      expect(screen.getByTestId("app-location")).toHaveTextContent("/usa");
+    });
+  });
+
+  it("redirects unknown routes back to the gateway", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/missing");
+
+    await screen.findByRole("heading", { name: "해외 진출에서 상표가 늦게 문제 되는 이유" });
+    expect(screen.getByTestId("app-location")).toHaveTextContent("/");
+  });
+
+  it("respects a deployment basename for deep links and rendered hrefs", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/GloTm/japan", "/GloTm");
+
+    await screen.findByRole("heading", { name: "일본 상표 실무 운영 가이드북" });
+    await waitFor(() => {
+      expect(screen.getByTestId("app-location")).toHaveTextContent("/japan");
+    });
+
+    expect(document.querySelector('a[href="/GloTm/latam"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/GloTm/japan"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/GloTm/europe"]')).not.toBeNull();
   });
 });

@@ -7,6 +7,8 @@ import {
 } from "./configuredReader";
 import {
   buildChapterPath,
+  buildProductPath,
+  buildSectionLocation,
   filterCatalogChapters,
   getChapterMeta,
   getChapterNumber,
@@ -33,6 +35,7 @@ function LatamHomeContent({
   readingBookmark
 }: ReaderHomePageProps) {
   const chapters = documentData.chapters;
+  const productPath = buildProductPath(productMeta);
   const [catalogQuery, setCatalogQuery] = useState("");
   const deferredCatalogQuery = useDeferredValue(catalogQuery);
   const matchingChapters = filterCatalogChapters(chapters, deferredCatalogQuery);
@@ -76,10 +79,11 @@ function LatamHomeContent({
           </div>
           <NavLink
             className="continue-link"
-            to={{
-              pathname: buildChapterPath(productMeta.path, continueChapter.slug),
-              hash: readingBookmark.sectionId ? `#${readingBookmark.sectionId}` : ""
-            }}
+            to={buildSectionLocation(
+              productPath,
+              continueChapter.slug,
+              readingBookmark.sectionId
+            )}
           >
             이어 읽기
           </NavLink>
@@ -156,7 +160,7 @@ function LatamHomeContent({
               <NavLink
                 key={chapter.slug}
                 className={`chapter-card chapter-card--${chapterStage.key}`}
-                to={buildChapterPath(productMeta.path, chapter.slug)}
+                to={buildChapterPath(productPath, chapter.slug)}
               >
                 <div className="chapter-card-header">
                   <div className="chapter-card-badges">

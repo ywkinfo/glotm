@@ -400,7 +400,8 @@ body {
 }
 
 .reader-shell .topbar {
-  position: static;
+  position: relative;
+  z-index: 70;
   margin: 0 auto;
   width: min(100%, var(--layout-width));
   border-radius: 24px;

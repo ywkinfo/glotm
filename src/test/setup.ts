@@ -19,6 +19,14 @@ function createMatchMediaMock() {
   }));
 }
 
+class ResizeObserverMock {
+  observe = vi.fn();
+
+  unobserve = vi.fn();
+
+  disconnect = vi.fn();
+}
+
 function installDomMocks() {
   Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
     configurable: true,
@@ -29,6 +37,12 @@ function installDomMocks() {
     configurable: true,
     writable: true,
     value: createMatchMediaMock()
+  });
+
+  Object.defineProperty(globalThis, "ResizeObserver", {
+    configurable: true,
+    writable: true,
+    value: ResizeObserverMock
   });
 }
 

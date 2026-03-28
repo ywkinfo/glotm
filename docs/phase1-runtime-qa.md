@@ -2,67 +2,64 @@
 
 ## 목적
 
-Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` 셸이다.  
-이번 체크리스트는 `LatTm`을 주 대상으로 검수하되, `MexTm`도 core reader parity 범위까지 함께 확인한다.
+Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` 셸이다.
+이번 체크리스트는 `로컬 루트`, `로컬 Pages subpath`, `배포 루트`, `배포 Pages subpath`까지 포함해
+링크 신뢰성 회귀를 재현 가능하게 유지하는 데 목적이 있다.
 
-## QA 층위
+## 자동 검증 범위
 
-1. 정적 QA
-   - `LatTm/scripts/qa-content.ts`로 원고 구조, 제목, 코드 펜스, 표 형식을 검사한다.
-2. 런타임 QA
-   - generated JSON 로드
-   - chapter slug와 public URL 유지
-   - hash anchor 이동
-   - 상단 검색 결과 이동
-   - 모바일 좌측 메뉴에서 챕터 제목 탭 시 올바른 `/chapter/:slug` 이동
-   - 모바일 좌측 메뉴에서 섹션 링크 탭 시 hash 이동 후 drawer 닫힘
+1. Shell 계약
+   - Gateway `/`
+   - 상단 제품 전환
+   - 글로벌 브랜드 링크
+   - unknown route → Gateway redirect
+   - deployment basename(`/GloTm`) 하의 rendered `href`
+2. Reader 홈 계약
+   - 6개 가이드 전부의 chapter-card `href`
+   - continue reading `href`
+   - configured reader의 inline `LatTm` cross-link
+   - `LatTm` home finder 필터 동작
+3. Reader 챕터 계약
+   - direct deep link boot
    - `document.title`
-   - 화면상 챕터 메타 정보
-3. 수동 QA
-   - 실제 읽기 흐름
-   - 모바일 목차 열기/닫기
-   - 모바일 목차에서 챕터/섹션 탭 가능 여부
-   - continue reading 복귀
+   - sidebar / outline / prev-next link contract
+   - invalid chapter slug → 제품 홈 redirect
+4. Content 링크 계약
+   - generated article HTML의 representative external anchor safe attribute
+   - raw internal app anchor 금지
 
-## 핵심 흐름
+## 수동 스모크 환경
 
-### LatTm 주 흐름
+아래 4조건에서 같은 체크리스트를 반복한다.
 
-1. Gateway `/`에서 `LatTm` 홈 `/latam`으로 이동한다.
-2. `LatTm` 홈에서 챕터 카드 또는 필터로 원하는 챕터를 찾는다.
-3. `LatTm` 챕터에서 섹션 목차를 눌렀을 때 올바른 hash로 이동한다.
-4. `LatTm` 상단 검색에서 결과를 눌렀을 때 올바른 챕터/섹션으로 이동한다.
-5. `LatTm` 챕터 하단 이전/다음 이동이 정상 동작한다.
-6. `LatTm` 홈에서 continue reading 카드가 마지막 읽은 챕터로 복귀시킨다.
+1. desktop local root
+2. mobile local root
+3. desktop Pages subpath
+4. mobile Pages subpath
 
-### MexTm core parity
+## 수동 스모크 체크리스트
 
-1. `/mexico` 홈이 정상 렌더링된다.
-2. MexTm continue reading 카드가 마지막 읽은 챕터/섹션으로 복귀시킨다.
-3. MexTm 챕터 카드에서 상세 페이지로 이동한다.
-4. MexTm 챕터에서 outline이 현재 섹션 위치와 hash 이동을 유지한다.
-5. MexTm 상단 검색 결과가 챕터/섹션 이동을 깨지지 않게 유지한다.
-6. MexTm 이전/다음 내비, reading progress, action bar가 정상 동작한다.
+1. Gateway `/`에서 각 가이드로 진입할 수 있다.
+2. 제품 홈에서 chapter card와 continue reading 링크가 올바른 챕터로 연결된다.
+3. 제품 홈의 inline product link가 올바른 다른 가이드로 이동한다.
+4. 챕터 deep link(`chapter/:slug#section`)로 직접 진입했을 때 올바른 섹션이 열린다.
+5. 챕터의 outline / sidebar / prev-next 링크가 깨지지 않는다.
+6. 상단 검색 결과를 눌렀을 때 올바른 챕터·섹션으로 이동한다.
+7. 스크롤 이후에도 search dropdown이 progress/action layer 아래로 깔리지 않는다.
+8. action bar가 하단 chapter nav 클릭을 가리지 않는다.
+9. 모바일에서 drawer를 열고 닫을 수 있고, scrim으로 닫은 뒤 `body.style.overflow`가 복구된다.
+10. 모바일에서 chapter/section 링크가 손가락으로 눌릴 정도로 안정적으로 노출된다.
+11. external official link는 새 탭으로 열리고 `rel="noreferrer noopener"`를 유지한다.
 
-### Live shell 모바일 회귀
+## 실행 명령
 
-모바일 폭(`<=920px`)에서 아래 가이드 공통으로 확인한다.
-
-1. 목차 버튼으로 좌측 메뉴를 열 수 있다.
-2. 좌측 메뉴에서 챕터 제목을 탭하면 해당 `chapter/:slug`로 이동한다.
-3. 같은 상태에서 섹션 링크를 탭하면 올바른 hash로 이동하고 drawer가 닫힌다.
-4. 데스크톱 폭으로 되돌렸을 때 기존 좌측 메뉴 동작이 유지된다.
-
-- `LatTm`
-- `MexTm`
-- `UsaTm`
-- `JapTm`
-- `ChaTm`
-- `EuTm`
+1. `npm test`
+2. `npm run build`
+3. `npm run build:pages:glotm`
 
 ## 비범위
 
 - SEO 메타 태그
 - canonical, Open Graph
 - prerender HTML 생성
-- `MexTm`의 `manifest.json`, `build-master.ts`, `qa-content.ts`
+- 새 E2E 프레임워크 도입

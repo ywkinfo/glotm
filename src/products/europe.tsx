@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 
 import { createConfiguredReader } from "./configuredReader";
+import { getProductPathBySlug } from "./registry";
 import documentDataUrl from "../../EuTm/content/generated/document-data.json?url";
 import searchEntriesUrl from "../../EuTm/content/generated/search-index.json?url";
+
+const latamPath = getProductPathBySlug("latam");
 
 const {
   ReaderRoot: EuropeReaderRoot,
@@ -22,7 +25,7 @@ const {
   homeSummary: (
     <>
       유럽 권역 상표 운영 구조를 빠르게 점검하기 위한 라이브 가이드입니다. 라틴아메리카와 유럽의
-      권역형 프레임을 비교해 보고 싶다면 <Link to="/latam">LatTm</Link>과 함께 읽는 구성이
+      권역형 프레임을 비교해 보고 싶다면 <Link to={latamPath}>LatTm</Link>과 함께 읽는 구성이
       자연스럽습니다.
     </>
   ),

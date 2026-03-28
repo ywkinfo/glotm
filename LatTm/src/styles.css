@@ -236,6 +236,7 @@ input {
 .search-shell {
   position: relative;
   width: min(34rem, 52vw);
+  z-index: 70;
 }
 
 .search-label {
@@ -263,6 +264,7 @@ input {
   left: 0;
   right: 0;
   top: calc(100% + 0.7rem);
+  z-index: 80;
   max-height: 28rem;
   overflow: auto;
   border: 1px solid var(--border);
@@ -1305,6 +1307,12 @@ input {
   .chapter-header-grid {
     grid-template-columns: 1fr;
   }
+
+  .reader-action-bar {
+    left: 1rem;
+    right: auto;
+    width: min(300px, calc(100vw - 2rem));
+  }
 }
 
 @media (max-width: 920px) {
@@ -1379,7 +1387,8 @@ input {
   }
 
   .reader-action-bar {
-    right: 0.9rem;
+    left: 0.9rem;
+    right: auto;
     bottom: 0.9rem;
   }
 

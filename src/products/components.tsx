@@ -6,14 +6,19 @@ import {
   useState,
   type Ref
 } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import {
   type Chapter,
   type HeadingNode,
   type SearchEntry,
-  buildChapterPath
+  buildChapterPath,
+  buildProductPath,
+  buildSectionLocation,
+  isSafeExternalHref,
+  normalizeAppHref
 } from "./shared";
+import { liveShellProducts } from "./registry";
 
 type SidebarNavProps = {
   chapters: Chapter[];
@@ -61,6 +66,44 @@ type OutlineItem = {
   title: string;
   level: number;
 };
+
+function isOwnedAppHref(href: string) {
+  if (href.startsWith("#")) {
+    return true;
+  }
+
+  const [pathname] = href.split(/[?#]/, 1);
+
+  if (!pathname) {
+    return false;
+  }
+
+  if (pathname === buildProductPath("/")) {
+    return true;
+  }
+
+  return liveShellProducts.some((product) => {
+    const productPath = buildProductPath(product);
+
+    return pathname === productPath || pathname.startsWith(`${productPath}/`);
+  });
+}
+
+function mergeArticleRefs(
+  articleRef: Ref<HTMLElement> | undefined,
+  node: HTMLElement | null
+) {
+  if (!articleRef) {
+    return;
+  }
+
+  if (typeof articleRef === "function") {
+    articleRef(node);
+    return;
+  }
+
+  (articleRef as { current: HTMLElement | null }).current = node;
+}
 
 export function StatusPage({ kicker, title, message }: StatusPageProps) {
   return (
@@ -130,10 +173,7 @@ export function SidebarNav({
                     return (
                       <li key={section.id}>
                         <Link
-                          to={{
-                            pathname: buildChapterPath(basePath, chapter.slug),
-                            hash: `#${section.id}`
-                          }}
+                          to={buildSectionLocation(basePath, chapter.slug, section.id)}
                           className={
                             isCurrentSection
                               ? "sidebar-section-link active"
@@ -347,10 +387,108 @@ export function SearchPanel({
 }
 
 export function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const articleElementRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const articleElement = articleElementRef.current;
+
+    if (!articleElement || typeof window === "undefined") {
+      return;
+    }
+
+    for (const anchor of articleElement.querySelectorAll<HTMLAnchorElement>("a[href]")) {
+      const rawHref = anchor.getAttribute("href")?.trim();
+
+      if (!rawHref) {
+        continue;
+      }
+
+      const normalizedHref = normalizeAppHref(rawHref, {
+        baseUrl: import.meta.env.BASE_URL ?? "/",
+        currentOrigin: window.location.origin,
+        currentPathname: `${location.pathname}${location.search}`
+      });
+
+      if (normalizedHref && isOwnedAppHref(normalizedHref)) {
+        anchor.setAttribute("href", normalizedHref);
+        anchor.removeAttribute("target");
+        anchor.removeAttribute("rel");
+        continue;
+      }
+
+      if (isSafeExternalHref(rawHref)) {
+        anchor.setAttribute("target", "_blank");
+        anchor.setAttribute("rel", "noreferrer noopener");
+        continue;
+      }
+
+      if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(rawHref) && !/^mailto:|^tel:/i.test(rawHref)) {
+        anchor.removeAttribute("href");
+      }
+    }
+  }, [chapter.html, location.pathname, location.search]);
+
   return (
     <article
-      ref={articleRef}
+      ref={(node) => {
+        articleElementRef.current = node;
+        mergeArticleRefs(articleRef, node);
+      }}
       className="article"
+      onClick={(event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+          return;
+        }
+
+        const anchor = target.closest("a[href]");
+
+        if (!(anchor instanceof HTMLAnchorElement) || anchor.target === "_blank") {
+          return;
+        }
+
+        if (
+          event.metaKey
+          || event.ctrlKey
+          || event.shiftKey
+          || event.altKey
+          || anchor.hasAttribute("download")
+        ) {
+          return;
+        }
+
+        const rawHref = anchor.getAttribute("href");
+
+        if (!rawHref) {
+          return;
+        }
+
+        const normalizedHref = normalizeAppHref(rawHref, {
+          baseUrl: import.meta.env.BASE_URL ?? "/",
+          currentOrigin: window.location.origin,
+          currentPathname: `${location.pathname}${location.search}`
+        });
+
+        if (!normalizedHref || !isOwnedAppHref(normalizedHref)) {
+          return;
+        }
+
+        event.preventDefault();
+
+        if (normalizedHref.startsWith("#")) {
+          navigate({
+            pathname: location.pathname,
+            search: location.search,
+            hash: normalizedHref
+          });
+          return;
+        }
+
+        navigate(normalizedHref);
+      }}
       dangerouslySetInnerHTML={{ __html: chapter.html }}
     />
   );
@@ -419,10 +557,7 @@ export function ChapterOutline({
           return (
             <Link
               key={item.id}
-              to={{
-                pathname: buildChapterPath(basePath, chapterSlug),
-                hash: `#${item.id}`
-              }}
+              to={buildSectionLocation(basePath, chapterSlug, item.id)}
               className={isActive ? "chapter-outline-link active" : "chapter-outline-link"}
               aria-current={isActive ? "location" : undefined}
               style={{ paddingInlineStart: `${1 + item.level}rem` }}

@@ -15,6 +15,8 @@ import {
 } from "../products/registry";
 import { liveShellReaderEntries } from "../products/liveShellReaders";
 import {
+  buildProductPath,
+  getRouterBasename,
   setRuntimeDocumentTitle,
   type ProductMeta
 } from "../products/shared";
@@ -43,12 +45,13 @@ function getSuggestedFlowCtaLabel(product: ProductMeta, index: number) {
 function AppLayout() {
   const location = useLocation();
   const activeNavItemRef = useRef<HTMLAnchorElement | null>(null);
+  const topbarRef = useRef<HTMLElement | null>(null);
   const activeProduct = liveShellProducts.find(
     (product) =>
-      location.pathname === product.path
-      || location.pathname.startsWith(`${product.path}/`)
+      location.pathname === buildProductPath(product)
+      || location.pathname.startsWith(`${buildProductPath(product)}/`)
   );
-  const isGatewayActive = location.pathname === "/";
+  const isGatewayActive = location.pathname === buildProductPath("/");
 
   useEffect(() => {
     activeNavItemRef.current?.scrollIntoView?.({
@@ -57,11 +60,51 @@ function AppLayout() {
     });
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const rootElement = document.documentElement;
+    const topbarElement = topbarRef.current;
+
+    if (!topbarElement) {
+      return undefined;
+    }
+
+    const updateTopbarHeight = () => {
+      rootElement.style.setProperty(
+        "--global-topbar-height",
+        `${topbarElement.getBoundingClientRect().height}px`
+      );
+    };
+
+    updateTopbarHeight();
+    window.addEventListener("resize", updateTopbarHeight);
+
+    if (typeof ResizeObserver === "undefined") {
+      return () => {
+        window.removeEventListener("resize", updateTopbarHeight);
+      };
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateTopbarHeight();
+    });
+
+    resizeObserver.observe(topbarElement);
+
+    return () => {
+      window.removeEventListener("resize", updateTopbarHeight);
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   return (
     <div className="glotm-app">
-      <header className="global-topbar">
+      <header ref={topbarRef} className="global-topbar">
         <div className="global-topbar-brand">
-          <NavLink className="global-brand" to="/">
+          <NavLink className="global-brand" to={buildProductPath("/")}>
             GloTm
           </NavLink>
           <p className="global-tagline">해외 진출 브랜드를 위한 글로벌 상표 지식베이스 파일럿</p>
@@ -69,7 +112,7 @@ function AppLayout() {
 
         <nav className="global-nav" aria-label="제품 전환">
           <NavLink
-            to="/"
+            to={buildProductPath("/")}
             end
             ref={isGatewayActive ? activeNavItemRef : undefined}
             className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
@@ -82,7 +125,7 @@ function AppLayout() {
             return (
               <NavLink
                 key={product.id}
-                to={product.path}
+                to={buildProductPath(product)}
                 ref={isProductActive ? activeNavItemRef : undefined}
                 className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
               >
@@ -162,7 +205,7 @@ function GatewayLandingPage() {
                     ? "gateway-button gateway-button--primary"
                     : "gateway-button gateway-button--secondary"
                 }
-                to={product.path}
+                to={buildProductPath(product)}
               >
                 {product.primaryCtaLabel}
               </NavLink>
@@ -295,7 +338,7 @@ function GatewayLandingPage() {
                       ? "product-card-link"
                       : "product-card-link product-card-link--secondary"
                   }
-                  to={product.path}
+                  to={buildProductPath(product)}
                 >
                   {product.primaryCtaLabel}
                 </NavLink>
@@ -325,7 +368,7 @@ function GatewayLandingPage() {
                   ? "gateway-button gateway-button--primary"
                   : "gateway-button gateway-button--secondary"
               }
-              to={product.path}
+              to={buildProductPath(product)}
             >
               {getSuggestedFlowCtaLabel(product, index)}
             </NavLink>
@@ -336,25 +379,31 @@ function GatewayLandingPage() {
   );
 }
 
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route index element={<GatewayLandingPage />} />
+        {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
+          <Route
+            key={product.slug}
+            path={buildProductPath(product).replace(/^\//, "")}
+            element={<ReaderRoot />}
+          >
+            <Route index element={<HomePage />} />
+            <Route path="chapter/:chapterSlug" element={<ChapterPage />} />
+          </Route>
+        ))}
+        <Route path="*" element={<Navigate to={buildProductPath("/")} replace />} />
+      </Route>
+    </Routes>
+  );
+}
+
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<GatewayLandingPage />} />
-          {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
-            <Route
-              key={product.slug}
-              path={product.path.replace(/^\//, "")}
-              element={<ReaderRoot />}
-            >
-              <Route index element={<HomePage />} />
-              <Route path="chapter/:chapterSlug" element={<ChapterPage />} />
-            </Route>
-          ))}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
+    <BrowserRouter basename={getRouterBasename()}>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

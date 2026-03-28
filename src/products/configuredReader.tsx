@@ -23,6 +23,8 @@ import {
 import { products } from "./registry";
 import {
   buildChapterPath,
+  buildProductPath,
+  buildSectionLocation,
   createDocumentResourceLoaders,
   createReadingBookmarkStorage,
   createSearchController,
@@ -168,7 +170,8 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const navigate = useNavigate();
     const location = useLocation();
     const chapters = documentData.chapters;
-    const chapterMatch = matchPath(`${productMeta.path}/chapter/:chapterSlug`, location.pathname);
+    const productPath = buildProductPath(productMeta);
+    const chapterMatch = matchPath(`${productPath}/chapter/:chapterSlug`, location.pathname);
     const currentChapterSlug = decodeRouteSegment(chapterMatch?.params.chapterSlug);
     const routeSectionId = decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined;
     const [currentSectionId, setCurrentSectionId] = useState<string | undefined>(routeSectionId);
@@ -214,11 +217,24 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       }
     }, [currentChapterSlug]);
 
-    const navigateToSection = (chapterSlug: string, sectionId?: string) => {
-      navigate({
-        pathname: buildChapterPath(productMeta.path, chapterSlug),
-        hash: sectionId ? `#${sectionId}` : ""
-      });
+    const navigateToSection = (
+      chapterSlug: string,
+      sectionId?: string,
+      behavior: ScrollBehavior = "auto"
+    ) => {
+      const sectionLocation = buildSectionLocation(productPath, chapterSlug, sectionId);
+
+      setIsNavOpen(false);
+      navigate(sectionLocation);
+
+      if (sectionId) {
+        scrollToSection(sectionId, behavior);
+      } else if (typeof window !== "undefined") {
+        window.scrollTo({
+          top: 0,
+          behavior
+        });
+      }
     };
     const jumpToSection = useEffectEvent((sectionId: string) => {
       if (!currentChapterSlug) {
@@ -226,8 +242,11 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       }
 
       setCurrentSectionId(sectionId);
-      navigateToSection(currentChapterSlug, sectionId);
-      scrollToSection(sectionId, "smooth");
+      navigateToSection(currentChapterSlug, sectionId, "smooth");
+    });
+
+    const closeNavigation = useEffectEvent(() => {
+      setIsNavOpen(false);
     });
 
     return (
@@ -236,7 +255,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           <header className="topbar">
             <div className="topbar-brand">
               <span className="topbar-kicker">{config.topbarKicker}</span>
-              <NavLink className="brand-link" to={productMeta.path}>
+              <NavLink className="brand-link" to={productPath}>
                 {documentData.meta.title}
               </NavLink>
             </div>
@@ -263,11 +282,11 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
             >
               <SidebarNav
                 chapters={chapters}
-                basePath={productMeta.path}
+                basePath={productPath}
                 currentChapterSlug={currentChapterSlug}
                 currentSectionId={currentSectionId}
                 onSectionJump={jumpToSection}
-                onNavigate={() => setIsNavOpen(false)}
+                onNavigate={closeNavigation}
               />
             </aside>
 
@@ -418,6 +437,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const chapter = normalizedChapterSlug
       ? chapters.find((entry) => entry.slug === normalizedChapterSlug)
       : undefined;
+    const productPath = buildProductPath(productMeta);
     const outlineItems = chapter ? flattenOutlineHeadings(chapter.headings) : [];
     const firstOutlineId = outlineItems[0]?.id;
     const outlineSignature = outlineItems.map((item) => item.id).join("|");
@@ -588,7 +608,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     }, [activeOutlineItem?.title, activeSectionId, chapter, commitReadingBookmark, progressBucket]);
 
     if (!normalizedChapterSlug || !chapter) {
-      return <Navigate to={productMeta.path} replace />;
+      return <Navigate to={buildProductPath(productMeta)} replace />;
     }
 
     const { currentIndex, prevChapter, nextChapter } = getAdjacentChapters(
@@ -636,7 +656,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           </div>
         </section>
         <ChapterOutline
-          basePath={productMeta.path}
+          basePath={productPath}
           chapterSlug={chapter.slug}
           headings={chapter.headings}
           activeSectionId={activeSectionId}
@@ -650,7 +670,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         />
         <nav className="chapter-nav" aria-label="챕터 탐색">
           {prevChapter ? (
-            <Link className="chapter-nav-btn" to={buildChapterPath(productMeta.path, prevChapter.slug)}>
+            <Link className="chapter-nav-btn" to={buildChapterPath(productPath, prevChapter.slug)}>
               <span className="chapter-nav-label">← 이전</span>
               <span className="chapter-nav-title">{prevChapter.title}</span>
             </Link>
@@ -658,7 +678,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           {nextChapter ? (
             <Link
               className="chapter-nav-btn chapter-nav-btn--next"
-              to={buildChapterPath(productMeta.path, nextChapter.slug)}
+              to={buildChapterPath(productPath, nextChapter.slug)}
             >
               <span className="chapter-nav-label">다음 →</span>
               <span className="chapter-nav-title">{nextChapter.title}</span>
@@ -687,6 +707,8 @@ export function createConfiguredReader(config: ReaderConfig) {
     productMeta,
     readingBookmark
   }: ReaderHomePageProps) {
+    const productPath = buildProductPath(productMeta);
+
     return (
       <div className="home-page">
         <section className="hero-card">
@@ -717,10 +739,11 @@ export function createConfiguredReader(config: ReaderConfig) {
             </div>
             <NavLink
               className="continue-link"
-              to={{
-                pathname: buildChapterPath(productMeta.path, continueChapter.slug),
-                hash: readingBookmark.sectionId ? `#${readingBookmark.sectionId}` : ""
-              }}
+              to={buildSectionLocation(
+                productPath,
+                continueChapter.slug,
+                readingBookmark.sectionId
+              )}
             >
               이어 읽기
             </NavLink>
@@ -745,7 +768,7 @@ export function createConfiguredReader(config: ReaderConfig) {
               <NavLink
                 key={chapter.slug}
                 className="chapter-card chapter-card--filing"
-                to={buildChapterPath(productMeta.path, chapter.slug)}
+                to={buildChapterPath(productPath, chapter.slug)}
               >
                 <div className="chapter-card-header">
                   <div className="chapter-card-badges">

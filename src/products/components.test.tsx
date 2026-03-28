@@ -1,9 +1,15 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 
-import { ChapterOutline, ReaderActionBar, SearchPanel, SidebarNav } from "./components";
+import {
+  ChapterOutline,
+  MarkdownArticle,
+  ReaderActionBar,
+  SearchPanel,
+  SidebarNav
+} from "./components";
 import type { Chapter, SearchEntry } from "./shared";
 
 const searchResult: SearchEntry = {
@@ -54,6 +60,17 @@ const sidebarChapters: Chapter[] = [
     ]
   }
 ];
+
+function LocationProbe() {
+  const location = useLocation();
+
+  return (
+    <output data-testid="component-location">
+      {location.pathname}
+      {location.hash}
+    </output>
+  );
+}
 
 describe("SearchPanel", () => {
   it("warms the search index on focus and navigates to the chosen chapter hash", async () => {
@@ -205,5 +222,51 @@ describe("ChapterOutline", () => {
     await user.click(riskLink);
 
     expect(onSectionJump).toHaveBeenCalledWith("filing-risk");
+  });
+});
+
+describe("MarkdownArticle", () => {
+  it("normalizes official external links with safe attributes", async () => {
+    render(
+      <MemoryRouter initialEntries={["/latam/chapter/chapter-2"]}>
+        <MarkdownArticle
+          chapter={{
+            ...sidebarChapters[1]!,
+            html: '<p><a href="https://example.com/guide">공식 가이드</a></p>'
+          }}
+        />
+      </MemoryRouter>
+    );
+
+    const externalLink = screen.getByRole("link", { name: "공식 가이드" });
+
+    await waitFor(() => {
+      expect(externalLink).toHaveAttribute("target", "_blank");
+      expect(externalLink).toHaveAttribute("rel", "noreferrer noopener");
+    });
+  });
+
+  it("routes internal article links through the SPA contract", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/latam/chapter/chapter-2"]}>
+        <MarkdownArticle
+          chapter={{
+            ...sidebarChapters[1]!,
+            html: '<p><a href="/latam/chapter/chapter-1#overview">개요로 이동</a></p>'
+          }}
+        />
+        <LocationProbe />
+      </MemoryRouter>
+    );
+
+    await user.click(screen.getByRole("link", { name: "개요로 이동" }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("component-location")).toHaveTextContent(
+        "/latam/chapter/chapter-1#overview"
+      );
+    });
   });
 });

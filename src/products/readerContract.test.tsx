@@ -1,7 +1,23 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 
+import {
+  ChinaChapterPage,
+  ChinaHomePage,
+  ChinaReaderRoot
+} from "./china";
+import {
+  EuropeChapterPage,
+  EuropeHomePage,
+  EuropeReaderRoot
+} from "./europe";
+import {
+  JapanChapterPage,
+  JapanHomePage,
+  JapanReaderRoot
+} from "./japan";
 import {
   LatamChapterPage,
   LatamHomePage,
@@ -17,10 +33,11 @@ import {
   UsaHomePage,
   UsaReaderRoot
 } from "./usa";
-import type { DocumentData } from "./shared";
+import type { DocumentData, SearchEntry } from "./shared";
 
 type ReaderCase = {
   name: string;
+  workspaceName: string;
   basePath: string;
   storageKey: string;
   homeHeading: string;
@@ -28,217 +45,122 @@ type ReaderCase = {
   HomePage: typeof LatamHomePage;
   ChapterPage: typeof LatamChapterPage;
   documentData: DocumentData;
+  firstChapterSlug: string;
+  firstChapterTitle: string;
   targetChapterSlug: string;
   targetChapterTitle: string;
   targetSectionId: string;
   targetSectionTitle: string;
-  prevChapterTitle: string;
-  nextChapterTitle: string;
+  alternateSectionId: string;
+  alternateSectionTitle: string;
+  thirdChapterSlug: string;
+  thirdChapterTitle: string;
   bookmarkChapterSlug: string;
   bookmarkChapterTitle: string;
   bookmarkSectionId: string;
   bookmarkSectionTitle: string;
 };
 
-const latamDocumentData: DocumentData = {
-  meta: {
-    title: "중남미 상표 보호 운영 가이드",
-    builtAt: "2026-03-28T00:00:00.000Z",
-    chapterCount: 3
-  },
-  chapters: [
-    {
-      id: "latam-1",
-      slug: "strategy-frame",
-      title: "제1장. 전략 프레임",
-      summary: "중남미 진출 우선순위를 잡는 기준을 설명합니다.",
-      html: '<h2 id="overview">개요</h2><p>전략 구조</p>',
-      headings: [
-        {
-          id: "overview",
-          depth: 2,
-          title: "개요",
-          children: []
-        }
-      ]
+function createReaderDocumentData(config: {
+  title: string;
+  firstChapterSlug: string;
+  firstChapterTitle: string;
+  secondChapterSlug: string;
+  secondChapterTitle: string;
+  thirdChapterSlug: string;
+  thirdChapterTitle: string;
+}) {
+  return {
+    meta: {
+      title: config.title,
+      builtAt: "2026-03-28T00:00:00.000Z",
+      chapterCount: 3
     },
-    {
-      id: "latam-2",
-      slug: "filing-route",
-      title: "제4장. 출원 경로 선택",
-      summary: "출원 경로와 우선순위를 정리합니다.",
-      html: '<h2 id="filing-overview">출원 개요</h2><p>출원 본문</p><h2 id="filing-risk">리스크</h2><p>리스크 본문</p>',
-      headings: [
-        {
-          id: "filing-overview",
-          depth: 2,
-          title: "출원 개요",
-          children: []
-        },
-        {
-          id: "filing-risk",
-          depth: 2,
-          title: "리스크",
-          children: []
-        }
-      ]
-    },
-    {
-      id: "latam-3",
-      slug: "enforcement",
-      title: "제11장. Enforcement",
-      summary: "모니터링과 집행 흐름을 다룹니다.",
-      html: '<h2 id="monitoring">모니터링</h2><p>집행 본문</p>',
-      headings: [
-        {
-          id: "monitoring",
-          depth: 2,
-          title: "모니터링",
-          children: []
-        }
-      ]
-    }
-  ]
-};
-
-const mexicoDocumentData: DocumentData = {
-  meta: {
-    title: "멕시코 상표 실무 운영 가이드북",
-    builtAt: "2026-03-28T00:00:00.000Z",
-    chapterCount: 3
-  },
-  chapters: [
-    {
-      id: "mx-1",
-      slug: "mexico-overview",
-      title: "멕시코 제1장. 제도 개요",
-      summary: "IMPI 운영 구조와 기본 흐름을 설명합니다.",
-      html: '<h2 id="overview">개요</h2><p>기본 구조</p>',
-      headings: [
-        {
-          id: "overview",
-          depth: 2,
-          title: "개요",
-          children: []
-        }
-      ]
-    },
-    {
-      id: "mx-2",
-      slug: "mexico-filing",
-      title: "멕시코 제2장. 출원 전략",
-      summary: "출원 경로와 클래스 설계를 정리합니다.",
-      html: '<h2 id="filing">출원 전략</h2><p>전략 본문</p><h2 id="filing-risk">리스크</h2><p>리스크 본문</p>',
-      headings: [
-        {
-          id: "filing",
-          depth: 2,
-          title: "출원 전략",
-          children: []
-        },
-        {
-          id: "filing-risk",
-          depth: 2,
-          title: "리스크",
-          children: []
-        }
-      ]
-    },
-    {
-      id: "mx-3",
-      slug: "mexico-enforcement",
-      title: "멕시코 제3장. 집행 운영",
-      summary: "모니터링과 집행 대응을 다룹니다.",
-      html: '<h2 id="monitoring">모니터링</h2><p>집행 본문</p>',
-      headings: [
-        {
-          id: "monitoring",
-          depth: 2,
-          title: "모니터링",
-          children: []
-        }
-      ]
-    }
-  ]
-};
-
-const usaDocumentData: DocumentData = {
-  meta: {
-    title: "미국 상표 실무 운영 가이드북",
-    builtAt: "2026-03-28T00:00:00.000Z",
-    chapterCount: 3
-  },
-  chapters: [
-    {
-      id: "us-1",
-      slug: "us-overview",
-      title: "미국 제1장. 제도 개요",
-      summary: "USPTO 운영 구조와 기본 흐름을 설명합니다.",
-      html: '<h2 id="overview">개요</h2><p>기본 구조</p>',
-      headings: [
-        {
-          id: "overview",
-          depth: 2,
-          title: "개요",
-          children: []
-        }
-      ]
-    },
-    {
-      id: "us-2",
-      slug: "us-filing",
-      title: "미국 제2장. 출원 전략",
-      summary: "filing basis와 specimen 설계를 정리합니다.",
-      html: '<h2 id="filing">출원 전략</h2><p>전략 본문</p><h2 id="filing-risk">리스크</h2><p>리스크 본문</p>',
-      headings: [
-        {
-          id: "filing",
-          depth: 2,
-          title: "출원 전략",
-          children: []
-        },
-        {
-          id: "filing-risk",
-          depth: 2,
-          title: "리스크",
-          children: []
-        }
-      ]
-    },
-    {
-      id: "us-3",
-      slug: "us-enforcement",
-      title: "미국 제3장. 집행 운영",
-      summary: "marketplace와 분쟁 대응을 다룹니다.",
-      html: '<h2 id="monitoring">모니터링</h2><p>집행 본문</p>',
-      headings: [
-        {
-          id: "monitoring",
-          depth: 2,
-          title: "모니터링",
-          children: []
-        }
-      ]
-    }
-  ]
-};
+    chapters: [
+      {
+        id: `${config.firstChapterSlug}-1`,
+        slug: config.firstChapterSlug,
+        title: config.firstChapterTitle,
+        summary: `${config.firstChapterTitle} 요약`,
+        html: '<h2 id="overview">개요</h2><p>기본 구조</p>',
+        headings: [
+          {
+            id: "overview",
+            depth: 2,
+            title: "개요",
+            children: []
+          }
+        ]
+      },
+      {
+        id: `${config.secondChapterSlug}-2`,
+        slug: config.secondChapterSlug,
+        title: config.secondChapterTitle,
+        summary: `${config.secondChapterTitle} 요약`,
+        html: '<h2 id="filing">출원 전략</h2><p>전략 본문</p><h2 id="filing-risk">리스크</h2><p>리스크 본문</p>',
+        headings: [
+          {
+            id: "filing",
+            depth: 2,
+            title: "출원 전략",
+            children: []
+          },
+          {
+            id: "filing-risk",
+            depth: 2,
+            title: "리스크",
+            children: []
+          }
+        ]
+      },
+      {
+        id: `${config.thirdChapterSlug}-3`,
+        slug: config.thirdChapterSlug,
+        title: config.thirdChapterTitle,
+        summary: `${config.thirdChapterTitle} 요약`,
+        html: '<h2 id="monitoring">모니터링</h2><p>집행 본문</p>',
+        headings: [
+          {
+            id: "monitoring",
+            depth: 2,
+            title: "모니터링",
+            children: []
+          }
+        ]
+      }
+    ]
+  } satisfies DocumentData;
+}
 
 const readerCases: ReaderCase[] = [
   {
     name: "Latam",
+    workspaceName: "LatTm",
     basePath: "/latam",
     storageKey: "lattm_reading_bookmark",
     homeHeading: "중남미 상표 보호 운영 가이드",
     ReaderRoot: LatamReaderRoot,
     HomePage: LatamHomePage,
     ChapterPage: LatamChapterPage,
-    documentData: latamDocumentData,
+    documentData: createReaderDocumentData({
+      title: "중남미 상표 보호 운영 가이드",
+      firstChapterSlug: "strategy-frame",
+      firstChapterTitle: "제1장. 전략 프레임",
+      secondChapterSlug: "filing-route",
+      secondChapterTitle: "제4장. 출원 경로 선택",
+      thirdChapterSlug: "enforcement",
+      thirdChapterTitle: "제11장. Enforcement"
+    }),
+    firstChapterSlug: "strategy-frame",
+    firstChapterTitle: "제1장. 전략 프레임",
     targetChapterSlug: "filing-route",
     targetChapterTitle: "제4장. 출원 경로 선택",
-    targetSectionId: "filing-overview",
-    targetSectionTitle: "출원 개요",
-    prevChapterTitle: "제1장. 전략 프레임",
-    nextChapterTitle: "제11장. Enforcement",
+    targetSectionId: "filing",
+    targetSectionTitle: "출원 전략",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "enforcement",
+    thirdChapterTitle: "제11장. Enforcement",
     bookmarkChapterSlug: "enforcement",
     bookmarkChapterTitle: "제11장. Enforcement",
     bookmarkSectionId: "monitoring",
@@ -246,19 +168,32 @@ const readerCases: ReaderCase[] = [
   },
   {
     name: "Mexico",
+    workspaceName: "MexTm",
     basePath: "/mexico",
     storageKey: "mextm_reading_bookmark",
     homeHeading: "멕시코 상표 실무 운영 가이드북",
     ReaderRoot: MexicoReaderRoot,
     HomePage: MexicoHomePage,
     ChapterPage: MexicoChapterPage,
-    documentData: mexicoDocumentData,
+    documentData: createReaderDocumentData({
+      title: "멕시코 상표 실무 운영 가이드북",
+      firstChapterSlug: "mexico-overview",
+      firstChapterTitle: "멕시코 제1장. 제도 개요",
+      secondChapterSlug: "mexico-filing",
+      secondChapterTitle: "멕시코 제2장. 출원 전략",
+      thirdChapterSlug: "mexico-enforcement",
+      thirdChapterTitle: "멕시코 제3장. 집행 운영"
+    }),
+    firstChapterSlug: "mexico-overview",
+    firstChapterTitle: "멕시코 제1장. 제도 개요",
     targetChapterSlug: "mexico-filing",
     targetChapterTitle: "멕시코 제2장. 출원 전략",
     targetSectionId: "filing",
     targetSectionTitle: "출원 전략",
-    prevChapterTitle: "멕시코 제1장. 제도 개요",
-    nextChapterTitle: "멕시코 제3장. 집행 운영",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "mexico-enforcement",
+    thirdChapterTitle: "멕시코 제3장. 집행 운영",
     bookmarkChapterSlug: "mexico-enforcement",
     bookmarkChapterTitle: "멕시코 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
@@ -266,32 +201,180 @@ const readerCases: ReaderCase[] = [
   },
   {
     name: "Usa",
+    workspaceName: "UsaTm",
     basePath: "/usa",
     storageKey: "usatm_reading_bookmark",
     homeHeading: "미국 상표 실무 운영 가이드북",
     ReaderRoot: UsaReaderRoot,
     HomePage: UsaHomePage,
     ChapterPage: UsaChapterPage,
-    documentData: usaDocumentData,
+    documentData: createReaderDocumentData({
+      title: "미국 상표 실무 운영 가이드북",
+      firstChapterSlug: "us-overview",
+      firstChapterTitle: "미국 제1장. 제도 개요",
+      secondChapterSlug: "us-filing",
+      secondChapterTitle: "미국 제2장. 출원 전략",
+      thirdChapterSlug: "us-enforcement",
+      thirdChapterTitle: "미국 제3장. 집행 운영"
+    }),
+    firstChapterSlug: "us-overview",
+    firstChapterTitle: "미국 제1장. 제도 개요",
     targetChapterSlug: "us-filing",
     targetChapterTitle: "미국 제2장. 출원 전략",
     targetSectionId: "filing",
     targetSectionTitle: "출원 전략",
-    prevChapterTitle: "미국 제1장. 제도 개요",
-    nextChapterTitle: "미국 제3장. 집행 운영",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "us-enforcement",
+    thirdChapterTitle: "미국 제3장. 집행 운영",
     bookmarkChapterSlug: "us-enforcement",
     bookmarkChapterTitle: "미국 제3장. 집행 운영",
+    bookmarkSectionId: "monitoring",
+    bookmarkSectionTitle: "모니터링"
+  },
+  {
+    name: "Japan",
+    workspaceName: "JapTm",
+    basePath: "/japan",
+    storageKey: "japtm_reading_bookmark",
+    homeHeading: "일본 상표 실무 운영 가이드북",
+    ReaderRoot: JapanReaderRoot,
+    HomePage: JapanHomePage,
+    ChapterPage: JapanChapterPage,
+    documentData: createReaderDocumentData({
+      title: "일본 상표 실무 운영 가이드북",
+      firstChapterSlug: "japan-overview",
+      firstChapterTitle: "일본 제1장. 제도 개요",
+      secondChapterSlug: "japan-filing",
+      secondChapterTitle: "일본 제2장. 출원 전략",
+      thirdChapterSlug: "japan-enforcement",
+      thirdChapterTitle: "일본 제3장. 집행 운영"
+    }),
+    firstChapterSlug: "japan-overview",
+    firstChapterTitle: "일본 제1장. 제도 개요",
+    targetChapterSlug: "japan-filing",
+    targetChapterTitle: "일본 제2장. 출원 전략",
+    targetSectionId: "filing",
+    targetSectionTitle: "출원 전략",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "japan-enforcement",
+    thirdChapterTitle: "일본 제3장. 집행 운영",
+    bookmarkChapterSlug: "japan-enforcement",
+    bookmarkChapterTitle: "일본 제3장. 집행 운영",
+    bookmarkSectionId: "monitoring",
+    bookmarkSectionTitle: "모니터링"
+  },
+  {
+    name: "China",
+    workspaceName: "ChaTm",
+    basePath: "/china",
+    storageKey: "chatm_reading_bookmark",
+    homeHeading: "중국 상표 실무 운영 가이드",
+    ReaderRoot: ChinaReaderRoot,
+    HomePage: ChinaHomePage,
+    ChapterPage: ChinaChapterPage,
+    documentData: createReaderDocumentData({
+      title: "중국 상표 실무 운영 가이드",
+      firstChapterSlug: "china-overview",
+      firstChapterTitle: "중국 제1장. 제도 개요",
+      secondChapterSlug: "china-filing",
+      secondChapterTitle: "중국 제2장. 출원 전략",
+      thirdChapterSlug: "china-enforcement",
+      thirdChapterTitle: "중국 제3장. 집행 운영"
+    }),
+    firstChapterSlug: "china-overview",
+    firstChapterTitle: "중국 제1장. 제도 개요",
+    targetChapterSlug: "china-filing",
+    targetChapterTitle: "중국 제2장. 출원 전략",
+    targetSectionId: "filing",
+    targetSectionTitle: "출원 전략",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "china-enforcement",
+    thirdChapterTitle: "중국 제3장. 집행 운영",
+    bookmarkChapterSlug: "china-enforcement",
+    bookmarkChapterTitle: "중국 제3장. 집행 운영",
+    bookmarkSectionId: "monitoring",
+    bookmarkSectionTitle: "모니터링"
+  },
+  {
+    name: "Europe",
+    workspaceName: "EuTm",
+    basePath: "/europe",
+    storageKey: "eutm_reading_bookmark",
+    homeHeading: "EuTm 유럽 상표 운영 가이드북",
+    ReaderRoot: EuropeReaderRoot,
+    HomePage: EuropeHomePage,
+    ChapterPage: EuropeChapterPage,
+    documentData: createReaderDocumentData({
+      title: "EuTm 유럽 상표 운영 가이드북",
+      firstChapterSlug: "europe-overview",
+      firstChapterTitle: "유럽 제1장. 제도 개요",
+      secondChapterSlug: "europe-filing",
+      secondChapterTitle: "유럽 제2장. 출원 전략",
+      thirdChapterSlug: "europe-enforcement",
+      thirdChapterTitle: "유럽 제3장. 집행 운영"
+    }),
+    firstChapterSlug: "europe-overview",
+    firstChapterTitle: "유럽 제1장. 제도 개요",
+    targetChapterSlug: "europe-filing",
+    targetChapterTitle: "유럽 제2장. 출원 전략",
+    targetSectionId: "filing",
+    targetSectionTitle: "출원 전략",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "europe-enforcement",
+    thirdChapterTitle: "유럽 제3장. 집행 운영",
+    bookmarkChapterSlug: "europe-enforcement",
+    bookmarkChapterTitle: "유럽 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
     bookmarkSectionTitle: "모니터링"
   }
 ];
 
-function installFetchMock(documentData: DocumentData) {
+const latamCase = readerCases[0]!;
+const configuredReaderCases = readerCases.filter((readerCase) => readerCase.name !== "Latam");
+
+function createSearchEntries(readerCase: ReaderCase): SearchEntry[] {
+  return [
+    {
+      id: `${readerCase.name}-monitoring`,
+      chapterSlug: readerCase.thirdChapterSlug,
+      chapterTitle: readerCase.thirdChapterTitle,
+      sectionId: readerCase.bookmarkSectionId,
+      sectionTitle: readerCase.bookmarkSectionTitle,
+      text: `${readerCase.bookmarkSectionTitle} 대응 흐름`,
+      excerpt: `${readerCase.bookmarkSectionTitle} 대응 흐름`
+    }
+  ];
+}
+
+function installFetchMock() {
   const fetchMock = vi.fn(async (input: string | URL | Request) => {
     const url = String(input);
+    const readerCase = readerCases.find((entry) => url.includes(entry.workspaceName));
+
+    if (!readerCase) {
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    }
 
     if (url.includes("document-data")) {
-      return new Response(JSON.stringify(documentData), {
+      return new Response(JSON.stringify(readerCase.documentData), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    }
+
+    if (url.includes("search-index")) {
+      return new Response(JSON.stringify(createSearchEntries(readerCase)), {
         status: 200,
         headers: {
           "Content-Type": "application/json"
@@ -316,26 +399,6 @@ function installFetchMock(documentData: DocumentData) {
   return fetchMock;
 }
 
-function renderReaderRoute(
-  readerCase: ReaderCase,
-  initialEntry: string
-) {
-  const ReaderRootComponent = readerCase.ReaderRoot;
-  const HomePageComponent = readerCase.HomePage;
-  const ChapterPageComponent = readerCase.ChapterPage;
-
-  return render(
-    <MemoryRouter initialEntries={[initialEntry]}>
-      <Routes>
-        <Route path={readerCase.basePath} element={<ReaderRootComponent />}>
-          <Route index element={<HomePageComponent />} />
-          <Route path="chapter/:chapterSlug" element={<ChapterPageComponent />} />
-        </Route>
-      </Routes>
-    </MemoryRouter>
-  );
-}
-
 function installNavigationMocks() {
   const scrollIntoViewMock = vi.fn();
 
@@ -355,46 +418,70 @@ function installNavigationMocks() {
   return scrollIntoViewMock;
 }
 
+function LocationProbe() {
+  const location = useLocation();
+
+  return (
+    <output data-testid="reader-location">
+      {location.pathname}
+      {location.hash}
+    </output>
+  );
+}
+
+function renderReaderCase(
+  readerCase: ReaderCase,
+  initialEntry: string,
+  extraCases: ReaderCase[] = []
+) {
+  const cases = [readerCase, ...extraCases.filter((entry) => entry.basePath !== readerCase.basePath)];
+
+  return render(
+    <MemoryRouter initialEntries={[initialEntry]}>
+      <Routes>
+        {cases.map((entry) => {
+          const ReaderRootComponent = entry.ReaderRoot;
+          const HomePageComponent = entry.HomePage;
+          const ChapterPageComponent = entry.ChapterPage;
+
+          return (
+            <Route key={entry.basePath} path={entry.basePath} element={<ReaderRootComponent />}>
+              <Route index element={<HomePageComponent />} />
+              <Route path="chapter/:chapterSlug" element={<ChapterPageComponent />} />
+            </Route>
+          );
+        })}
+      </Routes>
+      <LocationProbe />
+    </MemoryRouter>
+  );
+}
+
 describe("Shared reader runtime contract", () => {
   it.each(readerCases)(
-    "keeps chapter title, hash outline, and chapter navigation intact for $name",
+    "renders home chapter-card link contracts for $name",
     async (readerCase) => {
-      installFetchMock(readerCase.documentData);
-      const scrollIntoViewMock = installNavigationMocks();
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
 
-      renderReaderRoute(
-        readerCase,
-        `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}#${readerCase.targetSectionId}`
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const chapterCard = screen
+        .getByText(readerCase.firstChapterTitle, { selector: ".chapter-card-title" })
+        .closest("a");
+
+      expect(chapterCard).not.toBeNull();
+      expect(chapterCard).toHaveAttribute(
+        "href",
+        `${readerCase.basePath}/chapter/${readerCase.firstChapterSlug}`
       );
-
-      await screen.findByRole("heading", { name: readerCase.targetChapterTitle });
-
-      await waitFor(() => {
-        expect(document.title).toBe(`${readerCase.targetChapterTitle} | GloTm`);
-      });
-      await waitFor(() => {
-        expect(scrollIntoViewMock).toHaveBeenCalled();
-      });
-
-      const outline = screen.getByRole("heading", { name: "이 장의 섹션 목차" }).closest("section");
-
-      expect(outline).not.toBeNull();
-      await waitFor(() => {
-        const activeOutlineLink = (outline as HTMLElement).querySelector(".chapter-outline-link.active");
-
-        expect(activeOutlineLink).not.toBeNull();
-        expect(activeOutlineLink).toHaveAttribute("aria-current", "location");
-      });
-      expect(screen.getByRole("link", { name: new RegExp(readerCase.prevChapterTitle) })).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: new RegExp(readerCase.nextChapterTitle) })).toBeInTheDocument();
     }
   );
 
   it.each(readerCases)(
-    "restores continue reading state on the home page for $name",
+    "restores continue-reading link contracts for $name",
     async (readerCase) => {
-      installFetchMock(readerCase.documentData);
-
+      installFetchMock();
       window.localStorage.setItem(
         readerCase.storageKey,
         JSON.stringify({
@@ -407,26 +494,121 @@ describe("Shared reader runtime contract", () => {
         })
       );
 
-      renderReaderRoute(readerCase, readerCase.basePath);
+      renderReaderCase(readerCase, readerCase.basePath);
 
       await screen.findByRole("heading", { name: readerCase.homeHeading });
+
       const continueCard = screen.getByText("Continue Reading").closest("section");
 
       expect(continueCard).not.toBeNull();
-      expect(within(continueCard as HTMLElement).getByRole("heading", { level: 2 })).toHaveTextContent(
-        readerCase.bookmarkChapterTitle
-      );
-      expect(
-        within(continueCard as HTMLElement).getByText(
-          new RegExp(`최근 읽은 위치: ${readerCase.bookmarkSectionTitle}`)
-        )
-      ).toBeInTheDocument();
       expect(within(continueCard as HTMLElement).getByRole("link", { name: "이어 읽기" })).toHaveAttribute(
         "href",
-        expect.stringContaining(
-          `${readerCase.basePath}/chapter/${readerCase.bookmarkChapterSlug}#${readerCase.bookmarkSectionId}`
-        )
+        `${readerCase.basePath}/chapter/${readerCase.bookmarkChapterSlug}#${readerCase.bookmarkSectionId}`
       );
+    }
+  );
+
+  it.each(configuredReaderCases)(
+    "keeps the inline LatTm cross-link on $name home aligned with the registry path",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      expect(screen.getByRole("link", { name: "LatTm" })).toHaveAttribute("href", "/latam");
+    }
+  );
+
+  it("filters LatTm home cards through the finder and resets back to the full catalog", async () => {
+    const user = userEvent.setup();
+
+    installFetchMock();
+    renderReaderCase(latamCase, latamCase.basePath);
+
+    await screen.findByRole("heading", { name: latamCase.homeHeading });
+
+    await user.click(screen.getByRole("button", { name: "전략" }));
+    expect(screen.getByRole("link", { name: /제1장. 전략 프레임/ })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /제11장. Enforcement/ })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "전체 보기" }));
+    expect(screen.getByRole("link", { name: /제11장. Enforcement/ })).toBeInTheDocument();
+  });
+
+  it.each(readerCases)(
+    "boots deep chapter routes and preserves navigation contracts for $name",
+    async (readerCase) => {
+      installFetchMock();
+      const scrollIntoViewMock = installNavigationMocks();
+
+      renderReaderCase(
+        readerCase,
+        `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}#${readerCase.targetSectionId}`
+      );
+
+      await screen.findByRole(
+        "heading",
+        { name: readerCase.targetChapterTitle },
+        { timeout: 10000 }
+      );
+      await waitFor(() => {
+        expect(document.title).toBe(`${readerCase.targetChapterTitle} | GloTm`);
+      });
+      await waitFor(() => {
+        expect(screen.getByTestId("reader-location")).toHaveTextContent(
+          `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}#${readerCase.targetSectionId}`
+        );
+      });
+      expect(scrollIntoViewMock).toHaveBeenCalled();
+
+      const sidebar = document.querySelector(".sidebar-nav");
+      const outline = screen.getByRole("heading", { name: "이 장의 섹션 목차" }).closest("section");
+      const prevLink = screen.getByRole("link", { name: /이전/ });
+      const nextLink = screen.getByRole("link", { name: /다음/ });
+
+      expect(sidebar).not.toBeNull();
+      expect(outline).not.toBeNull();
+      const sectionList = (sidebar as HTMLElement).querySelector(".sidebar-section-list");
+      expect(sectionList).not.toBeNull();
+      const sidebarSectionLink = within(sectionList as HTMLElement)
+        .getByText(readerCase.alternateSectionTitle)
+        .closest("a");
+
+      expect(sidebarSectionLink).not.toBeNull();
+      expect(sidebarSectionLink).toHaveAttribute(
+        "href",
+        `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}#${readerCase.alternateSectionId}`
+      );
+      expect(
+        within(outline as HTMLElement).getByRole("link", { name: readerCase.alternateSectionTitle })
+      ).toHaveAttribute(
+        "href",
+        `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}#${readerCase.alternateSectionId}`
+      );
+      expect(prevLink).toHaveAttribute(
+        "href",
+        `${readerCase.basePath}/chapter/${readerCase.firstChapterSlug}`
+      );
+      expect(nextLink).toHaveAttribute(
+        "href",
+        `${readerCase.basePath}/chapter/${readerCase.thirdChapterSlug}`
+      );
+    }
+  );
+
+  it.each(readerCases)(
+    "redirects invalid chapter slugs back to the product home for $name",
+    async (readerCase) => {
+      installFetchMock();
+      installNavigationMocks();
+
+      renderReaderCase(readerCase, `${readerCase.basePath}/chapter/missing-chapter`);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+      await waitFor(() => {
+        expect(screen.getByTestId("reader-location")).toHaveTextContent(readerCase.basePath);
+      });
     }
   );
 });

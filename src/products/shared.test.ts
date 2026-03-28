@@ -1,13 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
+  buildProductPath,
+  buildSectionLocation,
   buildChapterPath,
   buildRuntimeDocumentTitle,
   createReadingBookmarkStorage,
   createSearchController,
   filterCatalogChapters,
+  getRouterBasename,
   getAdjacentChapters,
   getTrackedSectionId,
+  normalizeAppHref,
   type Chapter,
   type SearchEntry
 } from "./shared";
@@ -39,8 +43,47 @@ function createSearchEntry(overrides: Partial<SearchEntry> = {}): SearchEntry {
 
 describe("shared product helpers", () => {
   it("builds product chapter paths without changing the slug", () => {
+    expect(buildProductPath("/")).toBe("/");
+    expect(buildProductPath("/latam/")).toBe("/latam");
     expect(buildChapterPath("/latam", "제01장-전략-프레임")).toBe("/latam/chapter/제01장-전략-프레임");
     expect(buildChapterPath("/mexico/", "capitulo-01")).toBe("/mexico/chapter/capitulo-01");
+    expect(buildSectionLocation("/mexico/", "capitulo-01", "overview")).toEqual({
+      pathname: "/mexico/chapter/capitulo-01",
+      hash: "#overview"
+    });
+  });
+
+  it("normalizes router basename and app hrefs for subpath deployments", () => {
+    expect(getRouterBasename("/GloTm/")).toBe("/GloTm");
+    expect(getRouterBasename("/")).toBeUndefined();
+    expect(
+      normalizeAppHref("https://example.com/GloTm/latam/chapter/strategy#overview", {
+        baseUrl: "/GloTm/",
+        currentOrigin: "https://example.com",
+        currentPathname: "/GloTm/latam"
+      })
+    ).toBe("/latam/chapter/strategy#overview");
+    expect(
+      normalizeAppHref("/GloTm/mexico/chapter/filing#risk", {
+        baseUrl: "/GloTm/",
+        currentOrigin: "https://example.com",
+        currentPathname: "/GloTm/latam"
+      })
+    ).toBe("/mexico/chapter/filing#risk");
+    expect(
+      normalizeAppHref("#overview", {
+        baseUrl: "/GloTm/",
+        currentOrigin: "https://example.com",
+        currentPathname: "/GloTm/latam"
+      })
+    ).toBe("#overview");
+    expect(
+      normalizeAppHref("https://outside.example/path", {
+        baseUrl: "/GloTm/",
+        currentOrigin: "https://example.com",
+        currentPathname: "/GloTm/latam"
+      })
+    ).toBeNull();
   });
 
   it("builds runtime document titles for gateway and product pages", () => {

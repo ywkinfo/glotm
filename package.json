@@ -16,6 +16,7 @@
     "prebuild": "npm run content:prepare",
     "build": "tsc -b && vite build",
     "build:pages": "npm run build && node scripts/prepare-pages.mjs",
+    "build:pages:glotm": "PAGES_BASE_PATH=/GloTm/ npm run build:pages",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

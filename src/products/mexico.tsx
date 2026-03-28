@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 
 import { createConfiguredReader } from "./configuredReader";
+import { getProductPathBySlug } from "./registry";
 import documentDataUrl from "../../MexTm/content/generated/document-data.json?url";
 import searchEntriesUrl from "../../MexTm/content/generated/search-index.json?url";
+
+const latamPath = getProductPathBySlug("latam");
 
 const {
   ReaderRoot: MexicoReaderRoot,
@@ -22,7 +25,7 @@ const {
   homeSummary: (
     <>
       멕시코 IMPI 절차와 실무 쟁점을 더 깊게 탐색하기 위한 심화 가이드입니다.
-      권역 단위 구조를 먼저 잡고 싶다면 <Link to="/latam">LatTm</Link>에서 큰 흐름을 본 뒤
+      권역 단위 구조를 먼저 잡고 싶다면 <Link to={latamPath}>LatTm</Link>에서 큰 흐름을 본 뒤
       이 트랙으로 내려오는 구성이 가장 자연스럽습니다.
     </>
   ),
