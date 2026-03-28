@@ -46,6 +46,16 @@ export type ReadingBookmark = {
   updatedAt: string;
 };
 
+export type ChapterCatalogMatch = {
+  matches: boolean;
+  matchedHeadingTitle?: string;
+};
+
+export type FilteredCatalogChapter = {
+  chapter: Chapter;
+  match: ChapterCatalogMatch;
+};
+
 export type ProductMeta = {
   id: string;
   slug: string;
@@ -66,6 +76,7 @@ type SearchIndexData = {
 };
 
 const CHARACTERS_PER_MINUTE = 850;
+const ROOT_DOCUMENT_TITLE = "GloTm | 글로벌 상표 지식베이스";
 
 function loadJson<T>(url: string, label: string) {
   return fetch(url).then((response) => {
@@ -195,6 +206,56 @@ export function createSearchController(loadSearchEntries: () => Promise<SearchEn
   };
 }
 
+export function normalizeSearchText(value: string) {
+  return value.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function flattenHeadingTitles(headings: HeadingNode[]): string[] {
+  return headings.flatMap((heading) => [heading.title, ...flattenHeadingTitles(heading.children)]);
+}
+
+export function getChapterCatalogSearchMatch(
+  chapter: Chapter,
+  rawQuery: string
+): ChapterCatalogMatch {
+  const query = normalizeSearchText(rawQuery);
+
+  if (!query) {
+    return {
+      matches: true,
+      matchedHeadingTitle: undefined
+    };
+  }
+
+  const titleMatch = normalizeSearchText(chapter.title).includes(query);
+  const summaryMatch = normalizeSearchText(chapter.summary ?? "").includes(query);
+
+  if (titleMatch || summaryMatch) {
+    return {
+      matches: true,
+      matchedHeadingTitle: undefined
+    };
+  }
+
+  const matchedHeadingTitle = flattenHeadingTitles(chapter.headings).find((title) =>
+    normalizeSearchText(title).includes(query)
+  );
+
+  return {
+    matches: Boolean(matchedHeadingTitle),
+    matchedHeadingTitle
+  };
+}
+
+export function filterCatalogChapters(chapters: Chapter[], rawQuery: string): FilteredCatalogChapter[] {
+  return chapters
+    .map((chapter) => ({
+      chapter,
+      match: getChapterCatalogSearchMatch(chapter, rawQuery)
+    }))
+    .filter((entry) => entry.match.matches);
+}
+
 export function normalizeBasePath(basePath: string) {
   if (!basePath || basePath === "/") {
     return "";
@@ -205,6 +266,22 @@ export function normalizeBasePath(basePath: string) {
 
 export function buildChapterPath(basePath: string, chapterSlug: string) {
   return `${normalizeBasePath(basePath)}/chapter/${chapterSlug}`;
+}
+
+export function buildRuntimeDocumentTitle(pageTitle?: string) {
+  if (!pageTitle) {
+    return ROOT_DOCUMENT_TITLE;
+  }
+
+  return `${pageTitle} | GloTm`;
+}
+
+export function setRuntimeDocumentTitle(pageTitle?: string) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.title = buildRuntimeDocumentTitle(pageTitle);
 }
 
 export function formatBookmarkTimestamp(updatedAt: string) {
@@ -301,6 +378,32 @@ export function getChapterMeta(chapter: Chapter) {
   return {
     sectionCount: chapter.headings.length,
     readingMinutes: getEstimatedReadingMinutes(chapter.html)
+  };
+}
+
+export function getAdjacentChapters(chapters: Chapter[], currentChapterSlug?: string) {
+  if (!currentChapterSlug) {
+    return {
+      currentIndex: -1,
+      prevChapter: null,
+      nextChapter: null
+    };
+  }
+
+  const currentIndex = chapters.findIndex((chapter) => chapter.slug === currentChapterSlug);
+
+  if (currentIndex < 0) {
+    return {
+      currentIndex,
+      prevChapter: null,
+      nextChapter: null
+    };
+  }
+
+  return {
+    currentIndex,
+    prevChapter: currentIndex > 0 ? chapters[currentIndex - 1] : null,
+    nextChapter: currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null
   };
 }
 

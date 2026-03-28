@@ -11,6 +11,7 @@ import {
 
 import { getIntroSection, introDocument } from "../content/intro";
 import { products } from "../products/registry";
+import { setRuntimeDocumentTitle } from "../products/shared";
 import {
   LatamChapterPage,
   LatamHomePage,
@@ -89,7 +90,7 @@ function GatewayLandingPage() {
   const pilotScope = getIntroSection("현재 파일럿 범위");
 
   useEffect(() => {
-    document.title = "GloTm | 글로벌 상표 지식베이스";
+    setRuntimeDocumentTitle();
   }, []);
 
   return (

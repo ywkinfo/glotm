@@ -25,12 +25,15 @@ import {
   createDocumentResourceLoaders,
   createReadingBookmarkStorage,
   createSearchController,
+  filterCatalogChapters,
   formatBookmarkTimestamp,
+  getAdjacentChapters,
   getChapterMeta,
   getChapterNumber,
   getChapterStage,
   getTrackedSectionId,
-  type Chapter,
+  normalizeSearchText,
+  setRuntimeDocumentTitle,
   type DocumentData,
   type ReadingBookmark
 } from "./shared";
@@ -98,40 +101,6 @@ function decodeRouteSegment(value?: string) {
   }
 }
 
-function normalizeSearchText(value: string) {
-  return value.toLowerCase().replace(/\s+/g, " ").trim();
-}
-
-function getChapterSearchMatch(chapter: Chapter, rawQuery: string) {
-  const query = normalizeSearchText(rawQuery);
-
-  if (!query) {
-    return {
-      matches: true,
-      matchedHeadingTitle: undefined as string | undefined
-    };
-  }
-
-  const titleMatch = normalizeSearchText(chapter.title).includes(query);
-  const summaryMatch = normalizeSearchText(chapter.summary ?? "").includes(query);
-
-  if (titleMatch || summaryMatch) {
-    return {
-      matches: true,
-      matchedHeadingTitle: undefined
-    };
-  }
-
-  const matchedHeading = flattenOutlineHeadings(chapter.headings).find((item) =>
-    normalizeSearchText(item.title).includes(query)
-  );
-
-  return {
-    matches: Boolean(matchedHeading),
-    matchedHeadingTitle: matchedHeading?.title
-  };
-}
-
 function LatamReaderShell() {
   const { documentData } = useLatamReader();
   const navigate = useNavigate();
@@ -179,7 +148,7 @@ function LatamReaderShell() {
 
   useEffect(() => {
     if (!currentChapterSlug) {
-      document.title = `${productMeta.title} | GloTm`;
+      setRuntimeDocumentTitle(productMeta.title);
     }
   }, [currentChapterSlug]);
 
@@ -343,20 +312,16 @@ export function LatamHomePage() {
   const continueTimestamp = readingBookmark
     ? formatBookmarkTimestamp(readingBookmark.updatedAt)
     : "";
-  const filteredChapters = chapters
-    .map((chapter) => {
-      const match = getChapterSearchMatch(chapter, deferredCatalogQuery);
-
-      return {
-        chapter,
-        meta: getChapterMeta(chapter),
-        match
-      };
-    })
-    .filter((entry) => entry.match.matches);
+  const matchingChapters = filterCatalogChapters(chapters, deferredCatalogQuery);
+  const filteredChapters = matchingChapters
+    .map(({ chapter, match }) => ({
+      chapter,
+      meta: getChapterMeta(chapter),
+      match
+    }));
 
   useEffect(() => {
-    document.title = `${productMeta.title} | GloTm`;
+    setRuntimeDocumentTitle(productMeta.title);
   }, []);
 
   return (
@@ -412,7 +377,7 @@ export function LatamHomePage() {
             </h2>
           </div>
           <p className="catalog-panel-meta">
-            {filteredChapters.length} / {chapters.length}개 챕터
+            {matchingChapters.length} / {chapters.length}개 챕터
           </p>
         </div>
 
@@ -572,7 +537,7 @@ export function LatamChapterPage() {
       return undefined;
     }
 
-    document.title = `${chapter.title} | GloTm`;
+    setRuntimeDocumentTitle(chapter.title);
 
     const anchor = location.hash.replace(/^#/, "");
 
@@ -733,9 +698,11 @@ export function LatamChapterPage() {
     return <Navigate to={productMeta.path} replace />;
   }
 
-  const currentIndex = chapters.findIndex((entry) => entry.slug === normalizedChapterSlug);
-  const prevChapter = currentIndex > 0 ? chapters[currentIndex - 1] : null;
-  const nextChapter = currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
+  const {
+    currentIndex,
+    prevChapter,
+    nextChapter
+  } = getAdjacentChapters(chapters, normalizedChapterSlug);
 
   return (
     <div className="chapter-page">

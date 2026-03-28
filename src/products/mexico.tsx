@@ -2,6 +2,8 @@ import {
   createContext,
   useContext,
   useEffect,
+  useEffectEvent,
+  useRef,
   useState
 } from "react";
 import {
@@ -12,6 +14,7 @@ import {
   matchPath,
   useLocation,
   useNavigate,
+  useOutletContext,
   useParams
 } from "react-router-dom";
 
@@ -19,20 +22,31 @@ import { products } from "./registry";
 import {
   buildChapterPath,
   createDocumentResourceLoaders,
+  createReadingBookmarkStorage,
   createSearchController,
+  formatBookmarkTimestamp,
+  getAdjacentChapters,
   getChapterMeta,
-  type DocumentData
+  getTrackedSectionId,
+  setRuntimeDocumentTitle,
+  type DocumentData,
+  type ReadingBookmark
 } from "./shared";
 import {
+  ChapterOutline,
   MarkdownArticle,
+  ReaderActionBar,
+  ReadingProgressBar,
   SearchPanel,
   SidebarNav,
-  StatusPage
+  StatusPage,
+  flattenOutlineHeadings
 } from "./components";
 import documentDataUrl from "../../MexTm/content/generated/document-data.json?url";
 import searchEntriesUrl from "../../MexTm/content/generated/search-index.json?url";
 
 const productMeta = products.find((product) => product.slug === "mexico")!;
+const storage = createReadingBookmarkStorage("mextm_reading_bookmark");
 const { loadDocumentData, loadSearchEntries } = createDocumentResourceLoaders(
   documentDataUrl,
   searchEntriesUrl
@@ -41,6 +55,12 @@ const searchController = createSearchController(loadSearchEntries);
 
 type MexicoReaderContextValue = {
   documentData: DocumentData;
+  readingBookmark: ReadingBookmark | null;
+  onReadingBookmarkChange: (bookmark: ReadingBookmark) => void;
+};
+
+type ReaderShellOutletContext = {
+  syncCurrentSectionId: (sectionId?: string) => void;
 };
 
 const MexicoReaderContext = createContext<MexicoReaderContextValue | null>(null);
@@ -71,13 +91,27 @@ function MexicoReaderShell() {
   const { documentData } = useMexicoReader();
   const navigate = useNavigate();
   const location = useLocation();
+  const chapters = documentData.chapters;
   const chapterMatch = matchPath(`${productMeta.path}/chapter/:chapterSlug`, location.pathname);
   const currentChapterSlug = decodeRouteSegment(chapterMatch?.params.chapterSlug);
+  const routeSectionId = decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined;
+  const [currentSectionId, setCurrentSectionId] = useState<string | undefined>(routeSectionId);
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     setIsNavOpen(false);
   }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!currentChapterSlug) {
+      setCurrentSectionId(undefined);
+      return;
+    }
+
+    if (routeSectionId) {
+      setCurrentSectionId(routeSectionId);
+    }
+  }, [currentChapterSlug, routeSectionId]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -100,7 +134,7 @@ function MexicoReaderShell() {
 
   useEffect(() => {
     if (!currentChapterSlug) {
-      document.title = `${productMeta.title} | GloTm`;
+      setRuntimeDocumentTitle(productMeta.title);
     }
   }, [currentChapterSlug]);
 
@@ -138,18 +172,21 @@ function MexicoReaderShell() {
         </header>
 
         <div className="reader-layout">
-          <aside className={`left-rail ${isNavOpen ? "open" : ""}`}>
+          <aside
+            className={`left-rail ${isNavOpen ? "open" : ""}`}
+            aria-hidden={isNavOpen ? undefined : true}
+          >
             <SidebarNav
-              chapters={documentData.chapters}
+              chapters={chapters}
               basePath={productMeta.path}
               currentChapterSlug={currentChapterSlug}
-              showSections={false}
+              currentSectionId={currentSectionId}
               onNavigate={() => setIsNavOpen(false)}
             />
           </aside>
 
           <main className="content-pane">
-            <Outlet />
+            <Outlet context={{ syncCurrentSectionId: setCurrentSectionId }} />
             <footer className="reader-layout" style={{ paddingTop: 0 }}>
               <div />
               <div>
@@ -182,6 +219,7 @@ function MexicoReaderShell() {
 export function MexicoReaderRoot() {
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [readingBookmark, setReadingBookmark] = useState<ReadingBookmark | null>(null);
 
   useEffect(() => {
     let isCancelled = false;
@@ -207,6 +245,10 @@ export function MexicoReaderRoot() {
     };
   }, []);
 
+  useEffect(() => {
+    setReadingBookmark(storage.loadReadingBookmark());
+  }, []);
+
   if (loadError) {
     return (
       <StatusPage
@@ -227,18 +269,35 @@ export function MexicoReaderRoot() {
     );
   }
 
+  const handleReadingBookmarkChange = (bookmark: ReadingBookmark) => {
+    storage.saveReadingBookmark(bookmark);
+    setReadingBookmark(bookmark);
+  };
+
   return (
-    <MexicoReaderContext.Provider value={{ documentData }}>
+    <MexicoReaderContext.Provider
+      value={{
+        documentData,
+        readingBookmark,
+        onReadingBookmarkChange: handleReadingBookmarkChange
+      }}
+    >
       <MexicoReaderShell />
     </MexicoReaderContext.Provider>
   );
 }
 
 export function MexicoHomePage() {
-  const { documentData } = useMexicoReader();
+  const { documentData, readingBookmark } = useMexicoReader();
+  const continueChapter = readingBookmark
+    ? documentData.chapters.find((chapter) => chapter.slug === readingBookmark.chapterSlug)
+    : undefined;
+  const continueTimestamp = readingBookmark
+    ? formatBookmarkTimestamp(readingBookmark.updatedAt)
+    : "";
 
   useEffect(() => {
-    document.title = `${productMeta.title} | GloTm`;
+    setRuntimeDocumentTitle(productMeta.title);
   }, []);
 
   return (
@@ -256,6 +315,34 @@ export function MexicoHomePage() {
           <span>Beta 상태의 멕시코 단일 시장 심화 가이드</span>
         </div>
       </section>
+
+      {continueChapter && readingBookmark ? (
+        <section className="continue-card">
+          <div className="continue-copy">
+            <p className="continue-kicker">Continue Reading</p>
+            <h2 className="continue-title">{continueChapter.title}</h2>
+            <p className="continue-section">
+              {readingBookmark.sectionTitle
+                ? `최근 읽은 위치: ${readingBookmark.sectionTitle}`
+                : "최근 읽던 위치에서 바로 심화 읽기를 이어갈 수 있습니다."}
+            </p>
+            <div className="continue-meta">
+              <span>{Math.max(0, Math.min(100, readingBookmark.progress))}% 읽음</span>
+              <span>{getChapterMeta(continueChapter).readingMinutes}분 분량</span>
+              {continueTimestamp ? <span>마지막 열람 {continueTimestamp}</span> : null}
+            </div>
+          </div>
+          <NavLink
+            className="continue-link"
+            to={{
+              pathname: buildChapterPath(productMeta.path, continueChapter.slug),
+              hash: readingBookmark.sectionId ? `#${readingBookmark.sectionId}` : ""
+            }}
+          >
+            이어 읽기
+          </NavLink>
+        </section>
+      ) : null}
 
       <section className="gateway-section">
         <div className="gateway-section-header">
@@ -303,20 +390,54 @@ export function MexicoHomePage() {
 }
 
 export function MexicoChapterPage() {
-  const { documentData } = useMexicoReader();
+  const { documentData, onReadingBookmarkChange } = useMexicoReader();
   const { chapterSlug } = useParams();
   const location = useLocation();
+  const { syncCurrentSectionId } = useOutletContext<ReaderShellOutletContext>();
+  const chapters = documentData.chapters;
   const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
+  const articleRef = useRef<HTMLElement | null>(null);
+  const [activeSectionId, setActiveSectionId] = useState<string | undefined>(
+    () => location.hash.replace(/^#/, "") || undefined
+  );
+  const [readingProgress, setReadingProgress] = useState(0);
+  const [copyState, setCopyState] = useState<"idle" | "success" | "error">("idle");
+
   const chapter = normalizedChapterSlug
-    ? documentData.chapters.find((entry) => entry.slug === normalizedChapterSlug)
+    ? chapters.find((entry) => entry.slug === normalizedChapterSlug)
     : undefined;
+  const outlineItems = chapter ? flattenOutlineHeadings(chapter.headings) : [];
+  const firstOutlineId = outlineItems[0]?.id;
+  const outlineSignature = outlineItems.map((item) => item.id).join("|");
+  const chapterMeta = chapter ? getChapterMeta(chapter) : null;
+  const progressBucket = Math.round(readingProgress / 5) * 5;
+  const activeOutlineItem = outlineItems.find((item) => item.id === activeSectionId);
+  const commitReadingBookmark = useEffectEvent((bookmark: ReadingBookmark) => {
+    onReadingBookmarkChange(bookmark);
+  });
+  const handleScrollToTop = useEffectEvent(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+  const handleCopyCurrentLink = useEffectEvent(async () => {
+    const currentUrl = window.location.href;
+
+    try {
+      await navigator.clipboard.writeText(currentUrl);
+      setCopyState("success");
+    } catch {
+      setCopyState("error");
+    }
+  });
 
   useEffect(() => {
     if (!chapter) {
       return undefined;
     }
 
-    document.title = `${chapter.title} | GloTm`;
+    setRuntimeDocumentTitle(chapter.title);
 
     const anchor = location.hash.replace(/^#/, "");
 
@@ -335,18 +456,217 @@ export function MexicoChapterPage() {
     };
   }, [chapter, location.hash]);
 
+  useEffect(() => {
+    if (!chapter) {
+      setActiveSectionId(undefined);
+      return;
+    }
+
+    const anchor = location.hash.replace(/^#/, "");
+
+    if (anchor) {
+      setActiveSectionId(anchor);
+      return;
+    }
+
+    setActiveSectionId(firstOutlineId);
+  }, [chapter, firstOutlineId, location.hash, normalizedChapterSlug]);
+
+  useEffect(() => {
+    if (!chapter) {
+      return undefined;
+    }
+
+    let frameId = 0;
+    let timeoutId = 0;
+
+    const collectTargets = () =>
+      outlineItems
+        .map((item) => document.getElementById(item.id))
+        .filter((element): element is HTMLElement => Boolean(element));
+
+    const updateActiveSection = () => {
+      const targets = collectTargets();
+
+      if (targets.length === 0) {
+        return;
+      }
+
+      const nextActiveSectionId = getTrackedSectionId(targets);
+
+      if (nextActiveSectionId) {
+        setActiveSectionId(nextActiveSectionId);
+      }
+    };
+
+    const scheduleUpdate = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(updateActiveSection);
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(updateActiveSection, 120);
+    };
+
+    updateActiveSection();
+    timeoutId = window.setTimeout(updateActiveSection, 180);
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.clearTimeout(timeoutId);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, [chapter, outlineItems, outlineSignature]);
+
+  useEffect(() => {
+    syncCurrentSectionId(activeSectionId);
+  }, [activeSectionId, syncCurrentSectionId]);
+
+  useEffect(() => {
+    if (!chapter) {
+      setReadingProgress(0);
+      return undefined;
+    }
+
+    let frameId = 0;
+
+    const updateProgress = () => {
+      const articleElement = articleRef.current;
+
+      if (!articleElement) {
+        setReadingProgress(0);
+        return;
+      }
+
+      const articleTop = articleElement.offsetTop;
+      const articleHeight = articleElement.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      const scrollTop = window.scrollY;
+      const maxScrollableDistance = Math.max(articleHeight - viewportHeight * 0.45, 1);
+      const nextProgress =
+        ((scrollTop - articleTop + viewportHeight * 0.22) / maxScrollableDistance) * 100;
+
+      setReadingProgress(Math.max(0, Math.min(100, nextProgress)));
+    };
+
+    const scheduleUpdate = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, [chapter]);
+
+  useEffect(() => {
+    if (copyState === "idle") {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setCopyState("idle");
+    }, 1800);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [copyState]);
+
+  useEffect(() => {
+    if (!chapter) {
+      return;
+    }
+
+    commitReadingBookmark({
+      chapterSlug: chapter.slug,
+      chapterTitle: chapter.title,
+      sectionId: activeSectionId,
+      sectionTitle: activeOutlineItem?.title,
+      progress: Math.max(0, Math.min(100, progressBucket)),
+      updatedAt: new Date().toISOString()
+    });
+  }, [activeOutlineItem?.title, activeSectionId, chapter, commitReadingBookmark, progressBucket]);
+
   if (!normalizedChapterSlug || !chapter) {
     return <Navigate to={productMeta.path} replace />;
   }
 
+  const { currentIndex, prevChapter, nextChapter } = getAdjacentChapters(
+    chapters,
+    normalizedChapterSlug
+  );
+
   return (
     <div className="chapter-page">
+      <ReadingProgressBar progress={readingProgress} />
       <section className="chapter-header">
-        <p className="chapter-eyebrow">심화 읽기</p>
-        <h1>{chapter.title}</h1>
-        {chapter.summary ? <p className="chapter-summary">{chapter.summary}</p> : null}
+        <div className="chapter-header-grid">
+          <div className="chapter-header-copy">
+            <div className="chapter-header-topline">
+              <p className="chapter-eyebrow">심화 읽기</p>
+            </div>
+            <h1>{chapter.title}</h1>
+            {chapter.summary ? <p className="chapter-summary">{chapter.summary}</p> : null}
+          </div>
+          {chapterMeta ? (
+            <div className="chapter-header-stats" aria-label="챕터 메타 정보">
+              <div className="chapter-stat-card">
+                <span className="chapter-stat-label">순서</span>
+                <strong className="chapter-stat-value">
+                  {currentIndex + 1} / {chapters.length}
+                </strong>
+              </div>
+              <div className="chapter-stat-card">
+                <span className="chapter-stat-label">섹션</span>
+                <strong className="chapter-stat-value">{chapterMeta.sectionCount}개</strong>
+              </div>
+              <div className="chapter-stat-card">
+                <span className="chapter-stat-label">읽기 시간</span>
+                <strong className="chapter-stat-value">약 {chapterMeta.readingMinutes}분</strong>
+              </div>
+            </div>
+          ) : null}
+        </div>
       </section>
-      <MarkdownArticle chapter={chapter} />
+      <ChapterOutline
+        basePath={productMeta.path}
+        chapterSlug={chapter.slug}
+        headings={chapter.headings}
+        activeSectionId={activeSectionId}
+      />
+      <MarkdownArticle chapter={chapter} articleRef={articleRef} />
+      <ReaderActionBar
+        activeSectionTitle={activeOutlineItem?.title}
+        copyState={copyState}
+        onCopyLink={handleCopyCurrentLink}
+        onScrollToTop={handleScrollToTop}
+        visible={readingProgress >= 20}
+      />
+      <nav className="chapter-nav" aria-label="챕터 탐색">
+        {prevChapter ? (
+          <Link className="chapter-nav-btn" to={buildChapterPath(productMeta.path, prevChapter.slug)}>
+            <span className="chapter-nav-label">← 이전</span>
+            <span className="chapter-nav-title">{prevChapter.title}</span>
+          </Link>
+        ) : <div />}
+        {nextChapter ? (
+          <Link
+            className="chapter-nav-btn chapter-nav-btn--next"
+            to={buildChapterPath(productMeta.path, nextChapter.slug)}
+          >
+            <span className="chapter-nav-label">다음 →</span>
+            <span className="chapter-nav-title">{nextChapter.title}</span>
+          </Link>
+        ) : null}
+      </nav>
     </div>
   );
 }

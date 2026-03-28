@@ -6,13 +6,8 @@
   "scripts": {
     "content:master": "tsx scripts/build-master.ts",
     "content:qa": "tsx scripts/qa-content.ts",
-    "content:prepare": "npm run content:master && npm run content:qa && npm run content:build",
-    "predev": "npm run content:prepare",
-    "dev": "vite",
     "content:build": "tsx scripts/build-content.ts",
-    "prebuild": "npm run content:prepare",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "content:prepare": "npm run content:master && npm run content:qa && npm run content:build"
   },
   "dependencies": {
     "minisearch": "^7.1.2",
