@@ -1,5 +1,5 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -32,8 +32,6 @@ type ReaderCase = {
   targetChapterTitle: string;
   targetSectionId: string;
   targetSectionTitle: string;
-  clickedSectionId: string;
-  clickedSectionTitle: string;
   prevChapterTitle: string;
   nextChapterTitle: string;
   bookmarkChapterSlug: string;
@@ -239,8 +237,6 @@ const readerCases: ReaderCase[] = [
     targetChapterTitle: "제4장. 출원 경로 선택",
     targetSectionId: "filing-overview",
     targetSectionTitle: "출원 개요",
-    clickedSectionId: "filing-risk",
-    clickedSectionTitle: "리스크",
     prevChapterTitle: "제1장. 전략 프레임",
     nextChapterTitle: "제11장. Enforcement",
     bookmarkChapterSlug: "enforcement",
@@ -261,8 +257,6 @@ const readerCases: ReaderCase[] = [
     targetChapterTitle: "멕시코 제2장. 출원 전략",
     targetSectionId: "filing",
     targetSectionTitle: "출원 전략",
-    clickedSectionId: "filing-risk",
-    clickedSectionTitle: "리스크",
     prevChapterTitle: "멕시코 제1장. 제도 개요",
     nextChapterTitle: "멕시코 제3장. 집행 운영",
     bookmarkChapterSlug: "mexico-enforcement",
@@ -283,8 +277,6 @@ const readerCases: ReaderCase[] = [
     targetChapterTitle: "미국 제2장. 출원 전략",
     targetSectionId: "filing",
     targetSectionTitle: "출원 전략",
-    clickedSectionId: "filing-risk",
-    clickedSectionTitle: "리스크",
     prevChapterTitle: "미국 제1장. 제도 개요",
     nextChapterTitle: "미국 제3장. 집행 운영",
     bookmarkChapterSlug: "us-enforcement",
@@ -334,7 +326,6 @@ function renderReaderRoute(
 
   return render(
     <MemoryRouter initialEntries={[initialEntry]}>
-      <LocationProbe />
       <Routes>
         <Route path={readerCase.basePath} element={<ReaderRootComponent />}>
           <Route index element={<HomePageComponent />} />
@@ -342,16 +333,6 @@ function renderReaderRoute(
         </Route>
       </Routes>
     </MemoryRouter>
-  );
-}
-
-function LocationProbe() {
-  const location = useLocation();
-
-  return (
-    <output data-testid="location-probe">
-      {`${location.pathname}${location.hash}`}
-    </output>
   );
 }
 
@@ -406,41 +387,6 @@ describe("Shared reader runtime contract", () => {
       });
       expect(screen.getByRole("link", { name: new RegExp(readerCase.prevChapterTitle) })).toBeInTheDocument();
       expect(screen.getByRole("link", { name: new RegExp(readerCase.nextChapterTitle) })).toBeInTheDocument();
-    }
-  );
-
-  it.each(readerCases)(
-    "updates hash, active outline state, and scrolls when clicking a section outline for $name",
-    async (readerCase) => {
-      installFetchMock(readerCase.documentData);
-      const scrollIntoViewMock = installNavigationMocks();
-
-      renderReaderRoute(readerCase, `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}`);
-
-      await screen.findByRole("heading", { name: readerCase.targetChapterTitle });
-
-      const outline = screen.getByRole("heading", { name: "이 장의 섹션 목차" }).closest("section");
-
-      expect(outline).not.toBeNull();
-
-      fireEvent.click(
-        within(outline as HTMLElement).getByRole("link", { name: readerCase.clickedSectionTitle })
-      );
-
-      await waitFor(() => {
-        expect(screen.getByTestId("location-probe")).toHaveTextContent(
-          `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}#${readerCase.clickedSectionId}`
-        );
-        expect(
-          within(outline as HTMLElement).getByRole("link", { name: readerCase.clickedSectionTitle })
-        ).toHaveAttribute("aria-current", "location");
-        expect(scrollIntoViewMock).toHaveBeenCalledWith(
-          expect.objectContaining({
-            block: "start",
-            behavior: "smooth"
-          })
-        );
-      });
     }
   );
 

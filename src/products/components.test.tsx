@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 
-import { ReaderActionBar, SearchPanel, SidebarNav } from "./components";
+import { ChapterOutline, ReaderActionBar, SearchPanel, SidebarNav } from "./components";
 import type { Chapter, SearchEntry } from "./shared";
 
 const searchResult: SearchEntry = {
@@ -128,13 +128,10 @@ describe("ReaderActionBar", () => {
   it("shows the current section and keeps only the scroll-to-top action", async () => {
     const user = userEvent.setup();
     const onScrollToTop = vi.fn();
-    const onCopyLink = vi.fn();
 
     render(
       <ReaderActionBar
         activeSectionTitle="부서별 책임 배분"
-        copyState="idle"
-        onCopyLink={onCopyLink}
         onScrollToTop={onScrollToTop}
         visible
       />
@@ -146,7 +143,6 @@ describe("ReaderActionBar", () => {
     await user.click(screen.getByRole("button", { name: "맨 위로" }));
 
     expect(onScrollToTop).toHaveBeenCalledTimes(1);
-    expect(onCopyLink).not.toHaveBeenCalled();
   });
 });
 
@@ -178,5 +174,36 @@ describe("SidebarNav", () => {
 
     expect(onSectionJump).toHaveBeenCalledWith("filing-risk");
     expect(onNavigate).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("ChapterOutline", () => {
+  it("routes outline clicks through the shared jump callback while preserving hash hrefs", async () => {
+    const user = userEvent.setup();
+    const onSectionJump = vi.fn();
+
+    render(
+      <MemoryRouter>
+        <ChapterOutline
+          basePath="/latam"
+          chapterSlug="chapter-2"
+          headings={sidebarChapters[1]!.headings}
+          activeSectionId="filing"
+          onSectionJump={onSectionJump}
+        />
+      </MemoryRouter>
+    );
+
+    const outline = screen.getByRole("heading", { name: "이 장의 섹션 목차" }).closest("section");
+
+    expect(outline).not.toBeNull();
+
+    const riskLink = within(outline as HTMLElement).getByRole("link", { name: "리스크" });
+
+    expect(riskLink).toHaveAttribute("href", "/latam/chapter/chapter-2#filing-risk");
+
+    await user.click(riskLink);
+
+    expect(onSectionJump).toHaveBeenCalledWith("filing-risk");
   });
 });
