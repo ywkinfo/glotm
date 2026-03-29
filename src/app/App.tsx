@@ -245,6 +245,8 @@ function GatewayLandingPage() {
   const liveProductSlashList = joinProductLabels(liveShellProducts);
   const liveProductCommaList = liveShellProducts.map((product) => product.shortLabel).join(", ");
   const liveProductDotList = liveShellProducts.map((product) => product.shortLabel).join("·");
+  const introSummaryParagraphs = introDocument.quote.slice(1, 3);
+  const whyLateParagraphs = whyLate?.paragraphs ?? [];
 
   useEffect(() => {
     setRuntimeDocumentTitle();
@@ -260,12 +262,7 @@ function GatewayLandingPage() {
             {introDocument.quote[0]
               ?? "해외 진출 단계에서 상표 이슈가 언제 사업 리스크로 커지는지, 그리고 로펌 연결 전에 무엇을 먼저 판단해야 하는지를 정리한 관문 랜딩입니다."}
           </p>
-          {introDocument.quote.slice(1, 2).map((paragraph) => (
-            <p key={paragraph} className="gateway-summary">
-              {paragraph}
-            </p>
-          ))}
-          {whyLate?.paragraphs.slice(0, 1).map((paragraph) => (
+          {introSummaryParagraphs.map((paragraph) => (
             <p key={paragraph} className="gateway-summary">
               {paragraph}
             </p>
@@ -347,9 +344,16 @@ function GatewayLandingPage() {
             <p className="gateway-kicker">Why It Surfaces Late</p>
             <h2 className="gateway-section-title">상표 리스크는 늦게 보일수록 비싸집니다</h2>
           </div>
-          <p className="gateway-section-copy">
-            {whyLate?.paragraphs[1] ?? whyLate?.paragraphs[0]}
-          </p>
+          <div className="gateway-section-copy-stack">
+            {(whyLateParagraphs.length > 0
+              ? whyLateParagraphs
+              : ["상표 리스크는 발생하지 않는 것이 아니라, 사업이 본격화된 뒤 더 비싼 문제로 가시화되기 쉽습니다."]
+            ).map((paragraph) => (
+              <p key={paragraph} className="gateway-section-copy">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </div>
         <div className="gateway-card-grid">
           {riskPatterns?.subsections.map((pattern) => (
