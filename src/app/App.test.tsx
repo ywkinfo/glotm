@@ -35,23 +35,26 @@ function createMockDocumentData(title: string, chapterTitle: string, slug: strin
   };
 }
 
-const documentDataByWorkspace = {
-  LatTm: createMockDocumentData("중남미 상표 보호 운영 가이드", "중남미 제1장. 전략 프레임", "latam-overview"),
-  MexTm: createMockDocumentData("멕시코 상표 실무 운영 가이드북", "멕시코 제1장. 제도 개요", "mexico-overview"),
-  UsaTm: createMockDocumentData("미국 상표 실무 운영 가이드북", "미국 제1장. 제도 개요", "us-overview"),
-  JapTm: createMockDocumentData("일본 상표 실무 운영 가이드북", "일본 제1장. 제도 개요", "japan-overview"),
-  ChaTm: createMockDocumentData("중국 상표 실무 운영 가이드", "중국 제1장. 제도 개요", "china-overview"),
-  EuTm: createMockDocumentData("EuTm 유럽 상표 운영 가이드북", "유럽 제1장. 제도 개요", "europe-overview")
+const documentDataByProduct = {
+  latam: createMockDocumentData("중남미 상표 보호 운영 가이드", "중남미 제1장. 전략 프레임", "latam-overview"),
+  mexico: createMockDocumentData("멕시코 상표 실무 운영 가이드북", "멕시코 제1장. 제도 개요", "mexico-overview"),
+  usa: createMockDocumentData("미국 상표 실무 운영 가이드북", "미국 제1장. 제도 개요", "us-overview"),
+  japan: createMockDocumentData("일본 상표 실무 운영 가이드북", "일본 제1장. 제도 개요", "japan-overview"),
+  china: createMockDocumentData("중국 상표 실무 운영 가이드", "중국 제1장. 제도 개요", "china-overview"),
+  europe: createMockDocumentData("EuTm 유럽 상표 운영 가이드북", "유럽 제1장. 제도 개요", "europe-overview")
 };
 
 function installFetchMock() {
   const fetchMock = vi.fn(async (input: string | URL | Request) => {
     const url = String(input);
+    const productSlug = Object.keys(documentDataByProduct).find((slug) =>
+      url.includes(`/generated/${slug}/`)
+    );
 
     if (url.includes("document-data")) {
-      const documentData = Object.entries(documentDataByWorkspace).find(([workspace]) =>
-        url.includes(workspace)
-      )?.[1] ?? documentDataByWorkspace.UsaTm;
+      const documentData =
+        documentDataByProduct[productSlug as keyof typeof documentDataByProduct]
+        ?? documentDataByProduct.usa;
 
       return new Response(JSON.stringify(documentData), {
         status: 200,

@@ -4,6 +4,7 @@ import {
   buildProductPath,
   buildSectionLocation,
   buildChapterPath,
+  buildGeneratedContentUrl,
   buildRuntimeDocumentTitle,
   createReadingBookmarkStorage,
   createSearchController,
@@ -55,6 +56,12 @@ describe("shared product helpers", () => {
 
   it("normalizes router basename and app hrefs for subpath deployments", () => {
     expect(getRouterBasename("/GloTm/")).toBe("/GloTm");
+    expect(buildGeneratedContentUrl("latam", "document-data.json", "/GloTm/")).toBe(
+      "/GloTm/generated/latam/document-data.json"
+    );
+    expect(buildGeneratedContentUrl("latam", "search-index.json", "/")).toBe(
+      "/generated/latam/search-index.json"
+    );
     expect(getRouterBasename("/")).toBeUndefined();
     expect(
       normalizeAppHref("https://example.com/GloTm/latam/chapter/strategy#overview", {

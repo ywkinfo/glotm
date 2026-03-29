@@ -38,6 +38,7 @@ import type { DocumentData, SearchEntry } from "./shared";
 type ReaderCase = {
   name: string;
   workspaceName: string;
+  productSlug: string;
   basePath: string;
   storageKey: string;
   homeHeading: string;
@@ -136,6 +137,7 @@ const readerCases: ReaderCase[] = [
   {
     name: "Latam",
     workspaceName: "LatTm",
+    productSlug: "latam",
     basePath: "/latam",
     storageKey: "lattm_reading_bookmark",
     homeHeading: "중남미 상표 보호 운영 가이드",
@@ -169,6 +171,7 @@ const readerCases: ReaderCase[] = [
   {
     name: "Mexico",
     workspaceName: "MexTm",
+    productSlug: "mexico",
     basePath: "/mexico",
     storageKey: "mextm_reading_bookmark",
     homeHeading: "멕시코 상표 실무 운영 가이드북",
@@ -202,6 +205,7 @@ const readerCases: ReaderCase[] = [
   {
     name: "Usa",
     workspaceName: "UsaTm",
+    productSlug: "usa",
     basePath: "/usa",
     storageKey: "usatm_reading_bookmark",
     homeHeading: "미국 상표 실무 운영 가이드북",
@@ -235,6 +239,7 @@ const readerCases: ReaderCase[] = [
   {
     name: "Japan",
     workspaceName: "JapTm",
+    productSlug: "japan",
     basePath: "/japan",
     storageKey: "japtm_reading_bookmark",
     homeHeading: "일본 상표 실무 운영 가이드북",
@@ -268,6 +273,7 @@ const readerCases: ReaderCase[] = [
   {
     name: "China",
     workspaceName: "ChaTm",
+    productSlug: "china",
     basePath: "/china",
     storageKey: "chatm_reading_bookmark",
     homeHeading: "중국 상표 실무 운영 가이드",
@@ -301,6 +307,7 @@ const readerCases: ReaderCase[] = [
   {
     name: "Europe",
     workspaceName: "EuTm",
+    productSlug: "europe",
     basePath: "/europe",
     storageKey: "eutm_reading_bookmark",
     homeHeading: "EuTm 유럽 상표 운영 가이드북",
@@ -353,7 +360,9 @@ function createSearchEntries(readerCase: ReaderCase): SearchEntry[] {
 function installFetchMock() {
   const fetchMock = vi.fn(async (input: string | URL | Request) => {
     const url = String(input);
-    const readerCase = readerCases.find((entry) => url.includes(entry.workspaceName));
+    const readerCase = readerCases.find(
+      (entry) => url.includes(entry.workspaceName) || url.includes(`/generated/${entry.productSlug}/`)
+    );
 
     if (!readerCase) {
       return new Response(JSON.stringify([]), {

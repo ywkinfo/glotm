@@ -306,6 +306,17 @@ export function getRouterBasename(baseUrl = import.meta.env.BASE_URL ?? "/") {
   return getRouterBasePath(baseUrl) || undefined;
 }
 
+export function buildGeneratedContentUrl(
+  productSlug: string,
+  fileName: "document-data.json" | "search-index.json",
+  baseUrl = import.meta.env.BASE_URL ?? "/"
+) {
+  const normalizedBasePath = getRouterBasePath(baseUrl);
+  const basePrefix = normalizedBasePath ? `${normalizedBasePath}/` : "/";
+
+  return `${basePrefix}generated/${productSlug}/${fileName}`;
+}
+
 export function stripRouterBasePath(
   pathname: string,
   baseUrl = import.meta.env.BASE_URL ?? "/"

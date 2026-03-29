@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 
 import { createConfiguredReader } from "./configuredReader";
 import { getProductPathBySlug } from "./registry";
-import documentDataUrl from "../../MexTm/content/generated/document-data.json?url";
-import searchEntriesUrl from "../../MexTm/content/generated/search-index.json?url";
+import { buildGeneratedContentUrl } from "./shared";
+
+const documentDataUrl = buildGeneratedContentUrl("mexico", "document-data.json");
+const searchEntriesUrl = buildGeneratedContentUrl("mexico", "search-index.json");
 
 const latamPath = getProductPathBySlug("latam");
 

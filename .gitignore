@@ -7,6 +7,7 @@ dist
 **/node_modules
 **/dist
 **/content/generated
+public/generated
 .DS_Store
 *.tsbuildinfo
 **/*.tsbuildinfo

@@ -6,6 +6,7 @@ import {
   type ReaderHomePageProps
 } from "./configuredReader";
 import {
+  buildGeneratedContentUrl,
   buildChapterPath,
   buildProductPath,
   buildSectionLocation,
@@ -15,8 +16,9 @@ import {
   getChapterStage,
   normalizeSearchText
 } from "./shared";
-import documentDataUrl from "../../LatTm/content/generated/document-data.json?url";
-import searchEntriesUrl from "../../LatTm/content/generated/search-index.json?url";
+
+const documentDataUrl = buildGeneratedContentUrl("latam", "document-data.json");
+const searchEntriesUrl = buildGeneratedContentUrl("latam", "search-index.json");
 
 const HOME_FILTER_SUGGESTIONS = [
   "전략",
