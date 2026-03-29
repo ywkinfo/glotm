@@ -1187,6 +1187,7 @@ input {
 }
 
 .table-scroll {
+  position: relative;
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -1219,12 +1220,118 @@ input {
   text-transform: uppercase;
 }
 
+.table-scroll--wide,
+.table-scroll--xwide {
+  --table-fade-bg: rgba(250, 245, 238, 0.94);
+  --table-sticky-divider: rgba(39, 58, 62, 0.12);
+}
+
+.table-scroll--wide::before,
+.table-scroll--xwide::before {
+  content: "↔";
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.55rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.85rem;
+  height: 1.45rem;
+  border: 1px solid rgba(39, 58, 62, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 8px 18px rgba(24, 39, 42, 0.1);
+  color: #456268;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.table-scroll--wide::after,
+.table-scroll--xwide::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  width: 1.9rem;
+  border-radius: 0 20px 20px 0;
+  background: linear-gradient(
+    90deg,
+    rgba(250, 245, 238, 0) 0%,
+    rgba(250, 245, 238, 0.88) 78%,
+    var(--table-fade-bg) 100%
+  );
+  pointer-events: none;
+}
+
+.table-scroll--wide table,
+.table-scroll--xwide table {
+  width: max-content;
+  min-width: max(100%, 560px);
+}
+
+.table-scroll--wide th,
+.table-scroll--wide td {
+  padding: 0.62rem 0.58rem;
+  font-size: 0.94rem;
+  line-height: 1.58;
+}
+
+.table-scroll--wide th {
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+}
+
+.table-scroll--xwide th,
+.table-scroll--xwide td {
+  padding: 0.55rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.52;
+}
+
+.table-scroll--xwide th {
+  font-size: 0.72rem;
+  letter-spacing: 0.028em;
+}
+
+.table-scroll--wide thead th,
+.table-scroll--xwide thead th {
+  z-index: 3;
+}
+
+.table-scroll--wide th:first-child,
+.table-scroll--xwide th:first-child {
+  left: 0;
+  z-index: 4;
+  background: rgba(245, 238, 228, 0.98);
+  box-shadow:
+    1px 0 0 var(--table-sticky-divider),
+    10px 0 16px rgba(245, 238, 228, 0.72);
+}
+
+.table-scroll--wide td:first-child,
+.table-scroll--xwide td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--table-row-bg, rgba(255, 255, 255, 0.96));
+  box-shadow: 1px 0 0 var(--table-sticky-divider);
+}
+
+.article tbody tr {
+  --table-row-bg: transparent;
+  background: var(--table-row-bg);
+}
+
 .article tbody tr:nth-child(even) {
-  background: rgba(14, 107, 109, 0.045);
+  --table-row-bg: rgba(14, 107, 109, 0.045);
 }
 
 .article tbody tr:hover {
-  background: rgba(180, 95, 47, 0.06);
+  --table-row-bg: rgba(180, 95, 47, 0.06);
 }
 
 .article td:first-child {
