@@ -257,16 +257,18 @@ function GatewayLandingPage() {
       <section className="gateway-hero">
         <div className="gateway-hero-card">
           <p className="gateway-kicker">GloTm Gateway</p>
-          <h1 className="gateway-title">{introDocument.title}</h1>
-          <p className="gateway-lead">
-            {introDocument.quote[0]
-              ?? "해외 진출 단계에서 상표 이슈가 언제 사업 리스크로 커지는지, 그리고 로펌 연결 전에 무엇을 먼저 판단해야 하는지를 정리한 관문 랜딩입니다."}
-          </p>
-          {introSummaryParagraphs.map((paragraph) => (
-            <p key={paragraph} className="gateway-summary">
-              {paragraph}
+          <div className="gateway-copy-stack">
+            <h1 className="gateway-title">{introDocument.title}</h1>
+            <p className="gateway-lead">
+              {introDocument.quote[0]
+                ?? "해외 진출 단계에서 상표 이슈가 언제 사업 리스크로 커지는지, 그리고 로펌 연결 전에 무엇을 먼저 판단해야 하는지를 정리한 관문 랜딩입니다."}
             </p>
-          ))}
+            {introSummaryParagraphs.map((paragraph) => (
+              <p key={paragraph} className="gateway-summary">
+                {paragraph}
+              </p>
+            ))}
+          </div>
           {primaryProduct ? (
             <div className="gateway-actions">
               <FullDocumentLink
