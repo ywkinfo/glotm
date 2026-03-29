@@ -323,7 +323,7 @@ describe("App portfolio shell", () => {
       expect(screen.getByTestId("app-location")).toHaveTextContent("/japan");
     });
 
-    expect(document.querySelector('a[href="/glotm"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/glotm/"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/latam"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/japan"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/europe"]')).not.toBeNull();

@@ -1,4 +1,5 @@
 import {
+  memo,
   useEffect,
   useRef,
   useState,
@@ -453,7 +454,7 @@ export function SearchPanel({
   );
 }
 
-export function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
+export const MarkdownArticle = memo(function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const articleElementRef = useRef<HTMLElement | null>(null);
@@ -669,7 +670,7 @@ export function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
       dangerouslySetInnerHTML={{ __html: chapter.html }}
     />
   );
-}
+});
 
 export function ChapterOutline({
   basePath,
