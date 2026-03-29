@@ -1,11 +1,16 @@
-import { useEffect, useRef } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  type ComponentPropsWithoutRef
+} from "react";
 import {
   BrowserRouter,
-  NavLink,
   Navigate,
   Outlet,
   Route,
   Routes,
+  useHref,
   useLocation
 } from "react-router-dom";
 
@@ -44,6 +49,18 @@ function getProductCardCtaClass(product: ProductMeta) {
     : "product-card-link product-card-link--secondary";
 }
 
+type FullDocumentLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
+  to: string;
+};
+
+const FullDocumentLink = forwardRef<HTMLAnchorElement, FullDocumentLinkProps>(
+  function FullDocumentLink({ to, ...props }, ref) {
+    const href = useHref(to);
+
+    return <a {...props} href={href} ref={ref} />;
+  }
+);
+
 function ProductCard({ product }: { product: ProductMeta }) {
   return (
     <article className="product-card">
@@ -65,9 +82,9 @@ function ProductCard({ product }: { product: ProductMeta }) {
       ) : null}
       <p className="product-card-audience">대상: {product.audience}</p>
       <div className="product-card-actions">
-        <NavLink className={getProductCardCtaClass(product)} to={buildProductPath(product)}>
+        <FullDocumentLink className={getProductCardCtaClass(product)} to={buildProductPath(product)}>
           {product.primaryCtaLabel}
-        </NavLink>
+        </FullDocumentLink>
       </div>
     </article>
   );
@@ -105,6 +122,8 @@ function AppLayout() {
       || location.pathname.startsWith(`${buildProductPath(product)}/`)
   );
   const isGatewayActive = location.pathname === buildProductPath("/");
+  const getGlobalNavClassName = (isActive: boolean) =>
+    isActive ? "global-nav-link active" : "global-nav-link";
 
   useEffect(() => {
     activeNavItemRef.current?.scrollIntoView?.({
@@ -157,36 +176,37 @@ function AppLayout() {
     <div className="glotm-app">
       <header ref={topbarRef} className="global-topbar">
         <div className="global-topbar-brand">
-          <NavLink className="global-brand" to={buildProductPath("/")}>
+          <FullDocumentLink className="global-brand" to={buildProductPath("/")}>
             GloTm
-          </NavLink>
+          </FullDocumentLink>
           <p className="global-tagline">해외 진출 브랜드를 위한 글로벌 상표 지식베이스 파일럿</p>
         </div>
 
         <nav className="global-nav" aria-label="제품 전환">
-          <NavLink
+          <FullDocumentLink
             to={buildProductPath("/")}
-            end
             ref={isGatewayActive ? activeNavItemRef : undefined}
-            className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
+            className={getGlobalNavClassName(isGatewayActive)}
+            aria-current={isGatewayActive ? "page" : undefined}
           >
             <span className="global-nav-label">Gateway</span>
-          </NavLink>
+          </FullDocumentLink>
           {liveShellProducts.map((product) => {
             const isProductActive = activeProduct?.id === product.id;
 
             return (
-              <NavLink
+              <FullDocumentLink
                 key={product.id}
                 to={buildProductPath(product)}
                 ref={isProductActive ? activeNavItemRef : undefined}
-                className={({ isActive }) => isActive ? "global-nav-link active" : "global-nav-link"}
+                className={getGlobalNavClassName(isProductActive)}
+                aria-current={isProductActive ? "page" : undefined}
               >
                 <span className="global-nav-label">{product.shortLabel}</span>
                 <span className={`status-pill status-pill--${product.statusTone}`}>
                   {product.status}
                 </span>
-              </NavLink>
+              </FullDocumentLink>
             );
           })}
         </nav>
@@ -252,12 +272,12 @@ function GatewayLandingPage() {
           ))}
           {primaryProduct ? (
             <div className="gateway-actions">
-              <NavLink
+              <FullDocumentLink
                 className="gateway-button gateway-button--primary"
                 to={buildProductPath(primaryProduct)}
               >
                 {primaryProduct.primaryCtaLabel}
-              </NavLink>
+              </FullDocumentLink>
             </div>
           ) : null}
         </div>
