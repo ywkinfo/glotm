@@ -68,6 +68,7 @@ export type ProductMeta = {
   audience: string;
   primaryCtaLabel: string;
   stageLabel: string;
+  maturityNote?: string;
   coverageType: "region" | "country";
   availability: "live_shell" | "developed_workspace";
 };

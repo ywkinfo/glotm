@@ -38,8 +38,61 @@ function joinProductLabels(
   return productList.map((product) => product.shortLabel).join(separator);
 }
 
-function getSuggestedFlowCtaLabel(product: ProductMeta, index: number) {
-  return index === 0 ? `${product.shortLabel}부터 보기` : `${product.shortLabel} 바로 열기`;
+function getProductCardCtaClass(product: ProductMeta) {
+  return product.coverageType === "region"
+    ? "product-card-link"
+    : "product-card-link product-card-link--secondary";
+}
+
+function ProductCard({ product }: { product: ProductMeta }) {
+  return (
+    <article className="product-card">
+      <div className="product-card-topline">
+        <p className="gateway-kicker">{product.shortLabel}</p>
+        <span className={`status-pill status-pill--${product.statusTone}`}>
+          {product.status}
+        </span>
+      </div>
+      <div>
+        <span className="product-card-stage">
+          {getCoverageLabel(product)} · {getAvailabilityLabel(product)}
+        </span>
+        <h3 className="product-card-title">{product.title}</h3>
+      </div>
+      <p className="product-card-copy">{product.summary}</p>
+      {product.maturityNote ? (
+        <p className="product-card-note">{product.maturityNote}</p>
+      ) : null}
+      <p className="product-card-audience">대상: {product.audience}</p>
+      <div className="product-card-actions">
+        <NavLink className={getProductCardCtaClass(product)} to={buildProductPath(product)}>
+          {product.primaryCtaLabel}
+        </NavLink>
+      </div>
+    </article>
+  );
+}
+
+type ProductGroupProps = {
+  title: string;
+  description: string;
+  products: ProductMeta[];
+};
+
+function ProductGroup({ title, description, products }: ProductGroupProps) {
+  return (
+    <div className="product-group">
+      <div className="product-group-header">
+        <h3 className="product-group-title">{title}</h3>
+        <p className="product-group-copy">{description}</p>
+      </div>
+      <div className="product-card-grid">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function AppLayout() {
@@ -168,6 +221,7 @@ function GatewayLandingPage() {
   const regionProductCount = regionProducts.length;
   const countryProductCount = countryProducts.length;
   const liveProductCount = liveShellProducts.length;
+  const primaryProduct = liveShellProducts.find((product) => product.slug === "latam") ?? liveShellProducts[0];
   const liveProductSlashList = joinProductLabels(liveShellProducts);
   const liveProductCommaList = liveShellProducts.map((product) => product.shortLabel).join(", ");
   const liveProductDotList = liveShellProducts.map((product) => product.shortLabel).join("·");
@@ -196,21 +250,16 @@ function GatewayLandingPage() {
               {paragraph}
             </p>
           ))}
-          <div className="gateway-actions">
-            {liveShellProducts.map((product, index) => (
+          {primaryProduct ? (
+            <div className="gateway-actions">
               <NavLink
-                key={product.id}
-                className={
-                  index === 0
-                    ? "gateway-button gateway-button--primary"
-                    : "gateway-button gateway-button--secondary"
-                }
-                to={buildProductPath(product)}
+                className="gateway-button gateway-button--primary"
+                to={buildProductPath(primaryProduct)}
               >
-                {product.primaryCtaLabel}
+                {primaryProduct.primaryCtaLabel}
               </NavLink>
-            ))}
-          </div>
+            </div>
+          ) : null}
         </div>
 
         <aside className="gateway-panel-card">
@@ -252,6 +301,24 @@ function GatewayLandingPage() {
             </div>
           </div>
         </aside>
+      </section>
+
+      <section className="gateway-cta-card">
+        <p className="gateway-kicker">Suggested Reading Flow</p>
+        <h2 className="gateway-cta-title">
+          이제 권역형과 국가형 6개 가이드를 모두 같은 셸에서 바로 읽을 수 있습니다
+        </h2>
+        <p className="gateway-cta-copy">
+          먼저 LatTm에서 국가 우선순위, 출원 이후 운영, 증거 관리, 모니터링과 집행의 큰 흐름을 잡고,
+          멕시코·미국·일본·중국 단일 시장 쟁점이 중요해지는 순간 각 country guide로 내려가고,
+          유럽 권역 운영 구조가 필요할 때는 EuTm으로 이어지는 구성이 현재 live shell의 기본 독서
+          동선입니다.
+        </p>
+        <div className="gateway-cta-actions">
+          <a className="gateway-cta-link" href="#current-pilot-scope">
+            전체 가이드 보기
+          </a>
+        </div>
       </section>
 
       <section className="gateway-section">
@@ -301,7 +368,7 @@ function GatewayLandingPage() {
         </ul>
       </section>
 
-      <section className="gateway-section">
+      <section id="current-pilot-scope" className="gateway-section">
         <div className="gateway-section-header">
           <div>
             <p className="gateway-kicker">Current Pilot Scope</p>
@@ -314,65 +381,17 @@ function GatewayLandingPage() {
               ?? `현재는 ${liveProductCommaList}이 모두 루트 셸에 연결되어 있으며, LatTm 중심 우선순위는 유지한 채 전체 포트폴리오를 바로 탐색할 수 있습니다.`}
           </p>
         </div>
-        <div className="product-card-grid">
-          {liveShellProducts.map((product) => (
-            <article key={product.id} className="product-card">
-              <div className="product-card-topline">
-                <p className="gateway-kicker">{product.shortLabel}</p>
-                <span className={`status-pill status-pill--${product.statusTone}`}>
-                  {product.status}
-                </span>
-              </div>
-              <div>
-                <span className="product-card-stage">
-                  {getCoverageLabel(product)} · {getAvailabilityLabel(product)}
-                </span>
-                <h3 className="product-card-title">{product.title}</h3>
-              </div>
-              <p className="product-card-copy">{product.summary}</p>
-              <p className="product-card-audience">대상: {product.audience}</p>
-              <div className="product-card-actions">
-                <NavLink
-                  className={
-                    product.slug === "latam" || product.slug === "europe"
-                      ? "product-card-link"
-                      : "product-card-link product-card-link--secondary"
-                  }
-                  to={buildProductPath(product)}
-                >
-                  {product.primaryCtaLabel}
-                </NavLink>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="gateway-cta-card">
-        <p className="gateway-kicker">Suggested Reading Flow</p>
-        <h2 className="gateway-cta-title">
-          이제 권역형과 국가형 6개 가이드를 모두 같은 셸에서 바로 읽을 수 있습니다
-        </h2>
-        <p className="gateway-cta-copy">
-          먼저 LatTm에서 국가 우선순위, 출원 이후 운영, 증거 관리, 모니터링과 집행의 큰 흐름을 잡고,
-          멕시코·미국·일본·중국 단일 시장 쟁점이 중요해지는 순간 각 country guide로 내려가고,
-          유럽 권역 운영 구조가 필요할 때는 EuTm으로 이어지는 구성이 현재 live shell의 기본 독서
-          동선입니다.
-        </p>
-        <div className="gateway-cta-actions">
-          {liveShellProducts.map((product, index) => (
-            <NavLink
-              key={product.id}
-              className={
-                index === 0
-                  ? "gateway-button gateway-button--primary"
-                  : "gateway-button gateway-button--secondary"
-              }
-              to={buildProductPath(product)}
-            >
-              {getSuggestedFlowCtaLabel(product, index)}
-            </NavLink>
-          ))}
+        <div className="product-group-stack">
+          <ProductGroup
+            title="권역 가이드"
+            description="LatTm과 EuTm은 권역 단위 운영 프레임과 우선순위를 먼저 잡는 데 맞춰져 있습니다."
+            products={regionProducts}
+          />
+          <ProductGroup
+            title="국가 가이드"
+            description="MexTm, UsaTm, JapTm, ChaTm은 단일 시장별 절차와 운영 쟁점을 더 깊게 따라가는 트랙입니다."
+            products={countryProducts}
+          />
         </div>
       </section>
     </div>

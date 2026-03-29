@@ -210,6 +210,7 @@ describe("App portfolio shell", () => {
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
 
     expect(gatewayHero).not.toBeNull();
+    expect(within(gatewayHero as HTMLElement).queryByRole("link", { name: "UsaTm 보기" })).toBeNull();
 
     await user.click(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" }));
     await waitFor(() => {
@@ -217,19 +218,53 @@ describe("App portfolio shell", () => {
     });
   });
 
-  it("navigates through the gateway hero CTA into UsaTm", async () => {
+  it("places the reading flow above the risk section and links to the grouped portfolio", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const readingFlowHeading = screen.getByRole("heading", {
+      name: "이제 권역형과 국가형 6개 가이드를 모두 같은 셸에서 바로 읽을 수 있습니다"
+    });
+    const whyLateHeading = screen.getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" });
+
+    expect(
+      readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).not.toBe(0);
+    expect(screen.getByRole("link", { name: "전체 가이드 보기" })).toHaveAttribute(
+      "href",
+      "#current-pilot-scope"
+    );
+  });
+
+  it("groups the pilot scope cards and exposes the ChaTm maturity note", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const currentPilotScope = screen
+      .getByRole("heading", { name: "현재 GloTm에는 6개의 live shell guide가 연결되어 있습니다" })
+      .closest("section");
+
+    expect(currentPilotScope).not.toBeNull();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "권역 가이드" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "국가 가이드" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByText("지속 업데이트 중")).toBeInTheDocument();
+  });
+
+  it("navigates through the grouped pilot scope card into ChaTm", async () => {
     const user = userEvent.setup();
 
     installFetchMock();
     renderAppRouteTree("/");
 
-    const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
+    const currentPilotScope = screen
+      .getByRole("heading", { name: "현재 GloTm에는 6개의 live shell guide가 연결되어 있습니다" })
+      .closest("section");
 
-    expect(gatewayHero).not.toBeNull();
+    expect(currentPilotScope).not.toBeNull();
 
-    await user.click(within(gatewayHero as HTMLElement).getByRole("link", { name: "UsaTm 보기" }));
+    await user.click(within(currentPilotScope as HTMLElement).getByRole("link", { name: "ChaTm 보기" }));
     await waitFor(() => {
-      expect(screen.getByTestId("app-location")).toHaveTextContent("/usa");
+      expect(screen.getByTestId("app-location")).toHaveTextContent("/china");
     });
   });
 

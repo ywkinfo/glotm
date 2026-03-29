@@ -73,6 +73,7 @@ export const products: ProductMeta[] = [
     audience: "중국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "ChaTm 보기",
     stageLabel: "라이브 트랙",
+    maturityNote: "지속 업데이트 중",
     coverageType: "country",
     availability: "live_shell"
   },
