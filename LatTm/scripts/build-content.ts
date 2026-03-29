@@ -409,7 +409,7 @@ function rehypeEnhance() {
           type: "element",
           tagName: "div",
           properties: {
-            className: ["table-scroll"]
+            className: getTableWrapperClassNames(node)
           },
           children: [node]
         };
@@ -436,6 +436,45 @@ function mergeClassNames(existing: unknown, additions: string[]) {
 
   const merged = new Set([...current, ...additions]);
   return [...merged];
+}
+
+function getTableWrapperClassNames(tableNode: HastNode) {
+  const classNames = ["table-scroll"];
+  const columnCount = getTableColumnCount(tableNode);
+
+  if (columnCount >= 12) {
+    classNames.push("table-scroll--xwide");
+  } else if (columnCount >= 8) {
+    classNames.push("table-scroll--wide");
+  }
+
+  return classNames;
+}
+
+function getTableColumnCount(tableNode: HastNode) {
+  const firstRow = findFirstTableRow(tableNode);
+
+  if (!firstRow?.children) {
+    return 0;
+  }
+
+  return firstRow.children.filter((child) => child.tagName === "th" || child.tagName === "td").length;
+}
+
+function findFirstTableRow(node: HastNode): HastNode | undefined {
+  if (node.tagName === "tr") {
+    return node;
+  }
+
+  for (const child of node.children ?? []) {
+    const row = findFirstTableRow(child);
+
+    if (row) {
+      return row;
+    }
+  }
+
+  return undefined;
 }
 
 function nodeAlreadyWrapped(parent: HastNode) {
