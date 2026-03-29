@@ -84,6 +84,109 @@ function LocationProbe() {
   );
 }
 
+function createWideTableHtml() {
+  return `
+    <div
+      class="table-shell table-shell--wide"
+      data-table-scroll-root=""
+      data-has-overflow="false"
+      data-can-scroll-left="false"
+      data-can-scroll-right="false"
+    >
+      <button
+        type="button"
+        class="table-scroll-button table-scroll-button--left"
+        data-table-scroll-button="left"
+        aria-label="표를 왼쪽으로 스크롤"
+        disabled
+      >
+        ←
+      </button>
+      <div
+        class="table-scroll table-scroll--wide"
+        data-table-scroll-viewport=""
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th>브라질</th>
+              <th>멕시코</th>
+              <th>콜롬비아</th>
+              <th>아르헨티나</th>
+              <th>칠레</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>출원 언어</td>
+              <td>포르투갈어</td>
+              <td>스페인어</td>
+              <td>스페인어</td>
+              <td>스페인어</td>
+              <td>스페인어</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button
+        type="button"
+        class="table-scroll-button table-scroll-button--right"
+        data-table-scroll-button="right"
+        aria-label="표를 오른쪽으로 스크롤"
+        disabled
+      >
+        →
+      </button>
+    </div>
+  `;
+}
+
+function mockViewportMetrics(
+  element: HTMLElement,
+  metrics: {
+    clientWidth: number;
+    scrollWidth: number;
+    scrollLeft: number;
+  }
+) {
+  Object.defineProperties(element, {
+    clientWidth: {
+      configurable: true,
+      get: () => metrics.clientWidth
+    },
+    scrollWidth: {
+      configurable: true,
+      get: () => metrics.scrollWidth
+    },
+    scrollLeft: {
+      configurable: true,
+      get: () => metrics.scrollLeft,
+      set: (value: number) => {
+        metrics.scrollLeft = value;
+      }
+    }
+  });
+}
+
+function stubResizeObserverForTest(value: typeof ResizeObserver | undefined) {
+  const original = globalThis.ResizeObserver;
+
+  Object.defineProperty(globalThis, "ResizeObserver", {
+    configurable: true,
+    writable: true,
+    value
+  });
+
+  return () => {
+    Object.defineProperty(globalThis, "ResizeObserver", {
+      configurable: true,
+      writable: true,
+      value: original
+    });
+  };
+}
+
 describe("SearchPanel", () => {
   it("warms the search index on focus and navigates to the chosen chapter hash", async () => {
     const user = userEvent.setup();
@@ -429,5 +532,129 @@ describe("MarkdownArticle", () => {
         "/latam/chapter/chapter-1#overview"
       );
     });
+  });
+
+  it("renders wide-table scroll buttons and syncs their state with viewport overflow", async () => {
+    const restoreResizeObserver = stubResizeObserverForTest(undefined);
+
+    try {
+      render(
+        <MemoryRouter initialEntries={["/latam/chapter/chapter-2"]}>
+          <MarkdownArticle
+            chapter={{
+              ...sidebarChapters[1]!,
+              html: createWideTableHtml()
+            }}
+          />
+        </MemoryRouter>
+      );
+
+      const root = document.querySelector<HTMLElement>("[data-table-scroll-root]");
+      const viewport = document.querySelector<HTMLElement>("[data-table-scroll-viewport]");
+      const leftButton = screen.getByRole("button", { name: "표를 왼쪽으로 스크롤" });
+      const rightButton = screen.getByRole("button", { name: "표를 오른쪽으로 스크롤" });
+
+      expect(root).not.toBeNull();
+      expect(viewport).not.toBeNull();
+
+      const metrics = {
+        clientWidth: 400,
+        scrollWidth: 900,
+        scrollLeft: 0
+      };
+
+      mockViewportMetrics(viewport!, metrics);
+      window.dispatchEvent(new Event("resize"));
+
+      await waitFor(() => {
+        expect(root).toHaveAttribute("data-has-overflow", "true");
+        expect(root).toHaveAttribute("data-can-scroll-left", "false");
+        expect(root).toHaveAttribute("data-can-scroll-right", "true");
+        expect(leftButton).toBeDisabled();
+        expect(rightButton).not.toBeDisabled();
+      });
+
+      metrics.scrollLeft = 500;
+      viewport!.dispatchEvent(new Event("scroll"));
+
+      await waitFor(() => {
+        expect(root).toHaveAttribute("data-can-scroll-left", "true");
+        expect(root).toHaveAttribute("data-can-scroll-right", "false");
+        expect(leftButton).not.toBeDisabled();
+        expect(rightButton).toBeDisabled();
+      });
+
+      metrics.scrollWidth = 400;
+      metrics.scrollLeft = 0;
+      window.dispatchEvent(new Event("resize"));
+
+      await waitFor(() => {
+        expect(root).toHaveAttribute("data-has-overflow", "false");
+        expect(leftButton).toBeDisabled();
+        expect(rightButton).toBeDisabled();
+      });
+    } finally {
+      restoreResizeObserver();
+    }
+  });
+
+  it("scrolls the nearest wide-table viewport when the control buttons are clicked", async () => {
+    const restoreResizeObserver = stubResizeObserverForTest(undefined);
+    const user = userEvent.setup();
+
+    try {
+      render(
+        <MemoryRouter initialEntries={["/latam/chapter/chapter-2"]}>
+          <MarkdownArticle
+            chapter={{
+              ...sidebarChapters[1]!,
+              html: createWideTableHtml()
+            }}
+          />
+        </MemoryRouter>
+      );
+
+      const viewport = document.querySelector<HTMLElement>("[data-table-scroll-viewport]");
+
+      expect(viewport).not.toBeNull();
+
+      const metrics = {
+        clientWidth: 400,
+        scrollWidth: 900,
+        scrollLeft: 200
+      };
+
+      mockViewportMetrics(viewport!, metrics);
+
+      const scrollBy = vi.fn();
+      Object.defineProperty(viewport!, "scrollBy", {
+        configurable: true,
+        value: scrollBy
+      });
+
+      window.dispatchEvent(new Event("resize"));
+
+      const leftButton = screen.getByRole("button", { name: "표를 왼쪽으로 스크롤" });
+      const rightButton = screen.getByRole("button", { name: "표를 오른쪽으로 스크롤" });
+
+      await waitFor(() => {
+        expect(leftButton).not.toBeDisabled();
+        expect(rightButton).not.toBeDisabled();
+      });
+
+      await user.click(rightButton);
+      await user.click(leftButton);
+
+      expect(scrollBy).toHaveBeenNthCalledWith(1, {
+        left: 288,
+        behavior: "smooth"
+      });
+      expect(scrollBy).toHaveBeenNthCalledWith(2, {
+        left: -288,
+        behavior: "smooth"
+      });
+    } finally {
+      restoreResizeObserver();
+    }
   });
 });
