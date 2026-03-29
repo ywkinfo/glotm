@@ -51,6 +51,7 @@ type ChapterOutlineProps = {
 
 type ReaderActionBarProps = {
   activeSectionTitle?: string;
+  onDismiss: () => void;
   onScrollToTop: () => void;
   visible: boolean;
 };
@@ -577,6 +578,7 @@ export function ChapterOutline({
 
 export function ReaderActionBar({
   activeSectionTitle,
+  onDismiss,
   onScrollToTop,
   visible
 }: ReaderActionBarProps) {
@@ -584,19 +586,26 @@ export function ReaderActionBar({
     return null;
   }
 
+  const sectionLabel = activeSectionTitle ? `현재 섹션: ${activeSectionTitle}` : undefined;
+
   return (
     <aside className="reader-action-bar" aria-label="읽기 도구">
-      <div className="reader-action-context">
-        <p className="reader-action-kicker">Current Section</p>
-        <strong className="reader-action-title">
-          {activeSectionTitle ?? "이 장을 읽는 중"}
-        </strong>
-      </div>
-      <div className="reader-action-buttons">
-        <button className="reader-action-button" type="button" onClick={onScrollToTop}>
-          맨 위로
-        </button>
-      </div>
+      <button
+        className="reader-action-button"
+        type="button"
+        title={sectionLabel}
+        onClick={onScrollToTop}
+      >
+        맨 위로
+      </button>
+      <button
+        className="reader-action-dismiss"
+        type="button"
+        aria-label="맨 위로 버튼 숨기기"
+        onClick={onDismiss}
+      >
+        x
+      </button>
     </aside>
   );
 }
