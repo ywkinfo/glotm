@@ -56,8 +56,12 @@ type FullDocumentLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
 const FullDocumentLink = forwardRef<HTMLAnchorElement, FullDocumentLinkProps>(
   function FullDocumentLink({ to, ...props }, ref) {
     const href = useHref(to);
+    const normalizedHref =
+      to === buildProductPath("/") && href !== "/" && !href.endsWith("/")
+        ? `${href}/`
+        : href;
 
-    return <a {...props} href={href} ref={ref} />;
+    return <a {...props} href={normalizedHref} ref={ref} />;
   }
 );
 

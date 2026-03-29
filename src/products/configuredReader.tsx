@@ -171,7 +171,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
   }
 
   function scrollToSection(sectionId: string, behavior: ScrollBehavior) {
-    if (typeof document === "undefined") {
+    if (typeof document === "undefined" || typeof window === "undefined") {
       return;
     }
 
@@ -190,13 +190,17 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       return true;
     };
 
-    if (scrollTarget() || typeof window === "undefined") {
-      return;
-    }
+    const retryScroll = (remainingAttempts: number) => {
+      if (scrollTarget() || remainingAttempts <= 0) {
+        return;
+      }
 
-    window.requestAnimationFrame(() => {
-      scrollTarget();
-    });
+      window.requestAnimationFrame(() => {
+        retryScroll(remainingAttempts - 1);
+      });
+    };
+
+    retryScroll(8);
   }
 
   function ReaderShell() {
@@ -492,7 +496,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
     const articleRef = useRef<HTMLElement | null>(null);
     const [activeSectionId, setActiveSectionId] = useState<string | undefined>(
-      () => location.hash.replace(/^#/, "") || undefined
+      () => decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined
     );
     const [readingProgress, setReadingProgress] = useState(0);
 
@@ -527,21 +531,14 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
 
       setRuntimeDocumentTitle(chapter.title);
 
-      const anchor = location.hash.replace(/^#/, "");
+      const anchor = decodeRouteSegment(location.hash.replace(/^#/, "")) || "";
 
       if (!anchor) {
         window.scrollTo({ top: 0 });
         return;
       }
 
-      const frame = window.requestAnimationFrame(() => {
-        const target = document.getElementById(anchor);
-        target?.scrollIntoView({ block: "start" });
-      });
-
-      return () => {
-        window.cancelAnimationFrame(frame);
-      };
+      scrollToSection(anchor, "auto");
     }, [chapter, location.hash]);
 
     useEffect(() => {
@@ -550,7 +547,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         return;
       }
 
-      const anchor = location.hash.replace(/^#/, "");
+      const anchor = decodeRouteSegment(location.hash.replace(/^#/, "")) || "";
 
       if (anchor) {
         setActiveSectionId(anchor);

@@ -8,6 +8,7 @@ import {
   ChinaHomePage,
   ChinaReaderRoot
 } from "./china";
+import { createConfiguredReader } from "./configuredReader";
 import {
   EuropeChapterPage,
   EuropeHomePage,
@@ -516,6 +517,112 @@ describe("Shared reader runtime contract", () => {
       );
     }
   );
+
+  it("boots encoded section deep links on LatTm", async () => {
+    const encodedSectionId = "마지막으로";
+    const documentDataUrl = "/generated/latam/document-data.encoded.json";
+    const searchEntriesUrl = "/generated/latam/search-index.encoded.json";
+    const {
+      ReaderRoot: EncodedReaderRoot,
+      HomePage: EncodedHomePage,
+      ChapterPage: EncodedChapterPage
+    } = createConfiguredReader({
+      productSlug: "latam",
+      documentDataUrl,
+      searchEntriesUrl,
+      storageKey: "lattm_reading_bookmark_encoded_test",
+      topbarKicker: "Pilot Track",
+      loadingMessage: "중남미 상표 보호 운영 가이드를 불러오는 중입니다.",
+      homeHeroKicker: "LatTm Pilot",
+      homeSummary: <>테스트용 홈 요약</>,
+      homeStatusLabel: "테스트용 상태",
+      positioningKicker: "LatTm Positioning",
+      positioningTitle: "테스트용 포지셔닝",
+      positioningNote: <>테스트용 메모</>,
+      chapterBadge: "LATAM",
+      chapterEyebrow: "읽는 중"
+    });
+    const encodedDocumentData = {
+      ...latamCase.documentData,
+      chapters: latamCase.documentData.chapters.map((chapter, index) => {
+        if (index !== 2) {
+          return chapter;
+        }
+
+        return {
+          ...chapter,
+          html: `<h2 id="${encodedSectionId}">${encodedSectionId}</h2><p>집행 본문</p>`,
+          headings: [
+            {
+              id: encodedSectionId,
+              depth: 2,
+              title: encodedSectionId,
+              children: []
+            }
+          ]
+        };
+      })
+    } satisfies DocumentData;
+
+    const fetchMock = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+
+      if (url.includes(documentDataUrl)) {
+        return new Response(JSON.stringify(encodedDocumentData), {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      }
+
+      if (url.includes(searchEntriesUrl)) {
+        return new Response(JSON.stringify([]), {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      }
+
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    });
+
+    Object.defineProperty(globalThis, "fetch", {
+      configurable: true,
+      writable: true,
+        value: fetchMock
+    });
+
+    render(
+      <MemoryRouter
+        initialEntries={[`/latam/chapter/${latamCase.bookmarkChapterSlug}#${encodeURIComponent(encodedSectionId)}`]}
+      >
+        <Routes>
+          <Route path="/latam" element={<EncodedReaderRoot />}>
+            <Route index element={<EncodedHomePage />} />
+            <Route path="chapter/:chapterSlug" element={<EncodedChapterPage />} />
+          </Route>
+        </Routes>
+        <LocationProbe />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("reader-location")).toHaveTextContent(
+        `${latamCase.basePath}/chapter/${latamCase.bookmarkChapterSlug}#${encodeURIComponent(encodedSectionId)}`
+      );
+    });
+    expect(screen.getByRole("link", { name: encodedSectionId })).toHaveAttribute(
+      "aria-current",
+      "location"
+    );
+  });
 
   it.each(configuredReaderCases)(
     "keeps the inline LatTm cross-link on $name home aligned with the registry path",
