@@ -238,6 +238,21 @@ describe("App portfolio shell", () => {
     expect((gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
   });
 
+  it("groups the gateway hero title and intro copy into one shared content rail", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
+    const copyStack = (gatewayHero as HTMLElement | null)?.querySelector(".gateway-copy-stack");
+
+    expect(gatewayHero).not.toBeNull();
+    expect(copyStack).not.toBeNull();
+    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "해외 진출에서 상표가 늦게 문제 되는 이유" })).toBeInTheDocument();
+    expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
+    expect(within(copyStack as HTMLElement).queryByRole("link", { name: "LatTm 시작" })).toBeNull();
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" })).toBeInTheDocument();
+  });
+
   it("places the reading flow above the risk section and links to the grouped portfolio", () => {
     installFetchMock();
     renderAppRouteTree("/");

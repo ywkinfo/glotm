@@ -157,6 +157,12 @@ body {
   gap: 1rem;
 }
 
+.gateway-copy-stack {
+  display: grid;
+  gap: 0.8rem;
+  max-width: min(70ch, 100%);
+}
+
 .gateway-kicker {
   margin: 0 0 0.7rem;
   font-size: 0.74rem;
@@ -169,22 +175,19 @@ body {
 .gateway-title {
   margin: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-  font-size: clamp(2rem, 4vw, 3.35rem);
-  line-height: 1.05;
-  text-wrap: balance;
+  font-size: clamp(2rem, 3.9vw, 3.25rem);
+  line-height: 1.06;
 }
 
 .gateway-lead {
-  margin: 1rem 0 0;
-  max-width: min(46ch, 100%);
+  margin: 0.15rem 0 0;
   font-size: clamp(1.05rem, 1.6vw, 1.22rem);
   line-height: 1.72;
   color: var(--ink);
 }
 
 .gateway-summary {
-  margin: 0.8rem 0 0;
-  max-width: 70ch;
+  margin: 0;
   color: var(--muted);
 }
 
