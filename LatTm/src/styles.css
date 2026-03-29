@@ -1376,6 +1376,37 @@ input {
   letter-spacing: 0.028em;
 }
 
+.table-scroll--fit-9 table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.table-scroll--fit-9 th,
+.table-scroll--fit-9 td {
+  padding: 0.42rem 0.28rem;
+  font-size: 0.82rem;
+  line-height: 1.36;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.table-scroll--fit-9 th {
+  font-size: 0.68rem;
+  letter-spacing: 0.015em;
+}
+
+.table-scroll--fit-9 th:first-child,
+.table-scroll--fit-9 td:first-child {
+  width: 15%;
+}
+
+.table-scroll--fit-9 th:not(:first-child),
+.table-scroll--fit-9 td:not(:first-child) {
+  width: calc(85% / 8);
+}
+
 .table-scroll--wide thead th,
 .table-scroll--xwide thead th {
   z-index: 3;

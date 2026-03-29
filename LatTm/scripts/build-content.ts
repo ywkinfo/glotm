@@ -434,6 +434,7 @@ function mergeClassNames(existing: unknown, additions: string[]) {
 
 function createTableWrapper(tableNode: HastNode) {
   const variant = getWideTableVariant(tableNode);
+  const fitModifier = getTableFitModifier(tableNode);
 
   if (!variant) {
     return createTableViewport(tableNode, getTableWrapperClassNames(tableNode));
@@ -443,7 +444,11 @@ function createTableWrapper(tableNode: HastNode) {
     type: "element",
     tagName: "div",
     properties: {
-      className: ["table-shell", `table-shell--${variant}`],
+      className: [
+        "table-shell",
+        `table-shell--${variant}`,
+        ...(fitModifier ? [`table-shell--${fitModifier}`] : [])
+      ],
       "data-table-scroll-root": "",
       "data-has-overflow": "false",
       "data-can-scroll-left": "false",
@@ -498,12 +503,21 @@ function createTableScrollButton(direction: "left" | "right") {
 function getTableWrapperClassNames(tableNode: HastNode) {
   const classNames = ["table-scroll"];
   const variant = getWideTableVariant(tableNode);
+  const fitModifier = getTableFitModifier(tableNode);
 
   if (variant) {
     classNames.push(`table-scroll--${variant}`);
   }
 
+  if (fitModifier) {
+    classNames.push(`table-scroll--${fitModifier}`);
+  }
+
   return classNames;
+}
+
+function getTableFitModifier(tableNode: HastNode) {
+  return getTableColumnCount(tableNode) === 9 ? "fit-9" : null;
 }
 
 function getWideTableVariant(tableNode: HastNode) {
