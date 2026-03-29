@@ -50,6 +50,9 @@ import {
 } from "./components";
 
 type ReaderShellOutletContext = {
+  dismissActionBar: () => void;
+  isActionBarDismissed: boolean;
+  restoreActionBar: () => void;
   syncCurrentSectionId: (sectionId?: string) => void;
   jumpToSection: (sectionId: string) => void;
 };
@@ -103,6 +106,37 @@ type ReaderConfig = {
   chapterBadge: string;
   chapterEyebrow: string;
 };
+
+const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
+
+function loadReaderActionBarDismissed() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  try {
+    return window.localStorage.getItem(readerActionBarHiddenStorageKey) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function saveReaderActionBarDismissed(isDismissed: boolean) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    if (isDismissed) {
+      window.localStorage.setItem(readerActionBarHiddenStorageKey, "true");
+      return;
+    }
+
+    window.localStorage.removeItem(readerActionBarHiddenStorageKey);
+  } catch {
+    // Ignore storage failures so reading continues uninterrupted.
+  }
+}
 
 function decodeRouteSegment(value?: string) {
   if (!value) {
@@ -175,6 +209,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const currentChapterSlug = decodeRouteSegment(chapterMatch?.params.chapterSlug);
     const routeSectionId = decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined;
     const [currentSectionId, setCurrentSectionId] = useState<string | undefined>(routeSectionId);
+    const [isActionBarDismissed, setIsActionBarDismissed] = useState(loadReaderActionBarDismissed);
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     useEffect(() => {
@@ -248,6 +283,14 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const closeNavigation = useEffectEvent(() => {
       setIsNavOpen(false);
     });
+    const dismissActionBar = () => {
+      setIsActionBarDismissed(true);
+      saveReaderActionBarDismissed(true);
+    };
+    const restoreActionBar = () => {
+      setIsActionBarDismissed(false);
+      saveReaderActionBarDismissed(false);
+    };
 
     return (
       <div className="reader-shell">
@@ -267,6 +310,17 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               >
                 목차
               </button>
+              {currentChapterSlug && isActionBarDismissed ? (
+                <button
+                  className="topbar-button reader-action-restore"
+                  type="button"
+                  onClick={() => {
+                    restoreActionBar();
+                  }}
+                >
+                  맨 위로 버튼 표시
+                </button>
+              ) : null}
               <SearchPanel
                 onNavigate={navigateToSection}
                 searchContent={searchController.searchContent}
@@ -293,6 +347,9 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
             <main className="content-pane">
               <Outlet
                 context={{
+                  dismissActionBar,
+                  isActionBarDismissed,
+                  restoreActionBar,
                   syncCurrentSectionId: setCurrentSectionId,
                   jumpToSection
                 }}
@@ -425,7 +482,12 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const { documentData, onReadingBookmarkChange } = useReader();
     const { chapterSlug } = useParams();
     const location = useLocation();
-    const { syncCurrentSectionId, jumpToSection } = useOutletContext<ReaderShellOutletContext>();
+    const {
+      dismissActionBar,
+      isActionBarDismissed,
+      syncCurrentSectionId,
+      jumpToSection
+    } = useOutletContext<ReaderShellOutletContext>();
     const chapters = documentData.chapters;
     const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
     const articleRef = useRef<HTMLElement | null>(null);
@@ -665,8 +727,9 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         <MarkdownArticle chapter={chapter} articleRef={articleRef} />
         <ReaderActionBar
           activeSectionTitle={activeOutlineItem?.title}
+          onDismiss={dismissActionBar}
           onScrollToTop={handleScrollToTop}
-          visible={readingProgress >= 20}
+          visible={readingProgress >= 20 && !isActionBarDismissed}
         />
         <nav className="chapter-nav" aria-label="챕터 탐색">
           {prevChapter ? (

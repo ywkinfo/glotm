@@ -300,24 +300,27 @@ describe("SearchPanel", () => {
 });
 
 describe("ReaderActionBar", () => {
-  it("shows the current section and keeps only the scroll-to-top action", async () => {
+  it("renders the compact scroll-to-top control without visible section text", async () => {
     const user = userEvent.setup();
+    const onDismiss = vi.fn();
     const onScrollToTop = vi.fn();
 
     render(
       <ReaderActionBar
         activeSectionTitle="부서별 책임 배분"
+        onDismiss={onDismiss}
         onScrollToTop={onScrollToTop}
         visible
       />
     );
 
-    expect(screen.getByText("부서별 책임 배분")).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "현재 위치 링크" })).not.toBeInTheDocument();
+    expect(screen.queryByText("부서별 책임 배분")).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "맨 위로" }));
+    await user.click(screen.getByRole("button", { name: "맨 위로 버튼 숨기기" }));
 
     expect(onScrollToTop).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
 
