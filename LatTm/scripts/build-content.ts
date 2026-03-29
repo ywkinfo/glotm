@@ -64,6 +64,7 @@ type HastNode = {
   tagName?: string;
   properties?: Record<string, unknown>;
   children?: HastNode[];
+  value?: string;
 };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -405,14 +406,7 @@ function rehypeEnhance() {
         typeof index === "number" &&
         !nodeAlreadyWrapped(parent as HastNode)
       ) {
-        const wrapper: HastNode = {
-          type: "element",
-          tagName: "div",
-          properties: {
-            className: getTableWrapperClassNames(node)
-          },
-          children: [node]
-        };
+        const wrapper = createTableWrapper(node);
 
         const parentNode = parent as HastNode;
         const children = parentNode.children ?? [];
@@ -438,17 +432,92 @@ function mergeClassNames(existing: unknown, additions: string[]) {
   return [...merged];
 }
 
+function createTableWrapper(tableNode: HastNode) {
+  const variant = getWideTableVariant(tableNode);
+
+  if (!variant) {
+    return createTableViewport(tableNode, getTableWrapperClassNames(tableNode));
+  }
+
+  return {
+    type: "element",
+    tagName: "div",
+    properties: {
+      className: ["table-shell", `table-shell--${variant}`],
+      "data-table-scroll-root": "",
+      "data-has-overflow": "false",
+      "data-can-scroll-left": "false",
+      "data-can-scroll-right": "false"
+    },
+    children: [
+      createTableScrollButton("left"),
+      createTableViewport(tableNode, getTableWrapperClassNames(tableNode), {
+        "data-table-scroll-viewport": ""
+      }),
+      createTableScrollButton("right")
+    ]
+  } satisfies HastNode;
+}
+
+function createTableViewport(
+  tableNode: HastNode,
+  className: string[],
+  properties: Record<string, unknown> = {}
+) {
+  return {
+    type: "element",
+    tagName: "div",
+    properties: {
+      ...properties,
+      className
+    },
+    children: [tableNode]
+  } satisfies HastNode;
+}
+
+function createTableScrollButton(direction: "left" | "right") {
+  return {
+    type: "element",
+    tagName: "button",
+    properties: {
+      type: "button",
+      className: ["table-scroll-button", `table-scroll-button--${direction}`],
+      "data-table-scroll-button": direction,
+      "aria-label": direction === "left" ? "표를 왼쪽으로 스크롤" : "표를 오른쪽으로 스크롤",
+      disabled: true
+    },
+    children: [
+      {
+        type: "text",
+        value: direction === "left" ? "←" : "→"
+      }
+    ]
+  } satisfies HastNode;
+}
+
 function getTableWrapperClassNames(tableNode: HastNode) {
   const classNames = ["table-scroll"];
-  const columnCount = getTableColumnCount(tableNode);
+  const variant = getWideTableVariant(tableNode);
 
-  if (columnCount >= 12) {
-    classNames.push("table-scroll--xwide");
-  } else if (columnCount >= 8) {
-    classNames.push("table-scroll--wide");
+  if (variant) {
+    classNames.push(`table-scroll--${variant}`);
   }
 
   return classNames;
+}
+
+function getWideTableVariant(tableNode: HastNode) {
+  const columnCount = getTableColumnCount(tableNode);
+
+  if (columnCount >= 12) {
+    return "xwide";
+  }
+
+  if (columnCount >= 8) {
+    return "wide";
+  }
+
+  return null;
 }
 
 function getTableColumnCount(tableNode: HastNode) {

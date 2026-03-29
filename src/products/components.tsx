@@ -68,6 +68,19 @@ type OutlineItem = {
   level: number;
 };
 
+type TableScrollDirection = "left" | "right";
+
+type TableScrollElements = {
+  root: HTMLElement;
+  viewport: HTMLElement;
+  leftButton: HTMLButtonElement | null;
+  rightButton: HTMLButtonElement | null;
+};
+
+const TABLE_SCROLL_STEP_RATIO = 0.72;
+const TABLE_SCROLL_STEP_MIN_PX = 240;
+const TABLE_SCROLL_EPSILON = 2;
+
 function isOwnedAppHref(href: string) {
   if (href.startsWith("#")) {
     return true;
@@ -104,6 +117,59 @@ function mergeArticleRefs(
   }
 
   (articleRef as { current: HTMLElement | null }).current = node;
+}
+
+function getTableScrollElements(root: HTMLElement): TableScrollElements | null {
+  const viewport = root.querySelector<HTMLElement>("[data-table-scroll-viewport]");
+
+  if (!viewport) {
+    return null;
+  }
+
+  return {
+    root,
+    viewport,
+    leftButton: root.querySelector<HTMLButtonElement>('[data-table-scroll-button="left"]'),
+    rightButton: root.querySelector<HTMLButtonElement>('[data-table-scroll-button="right"]')
+  };
+}
+
+function getTableScrollStep(viewport: HTMLElement) {
+  return Math.max(TABLE_SCROLL_STEP_MIN_PX, viewport.clientWidth * TABLE_SCROLL_STEP_RATIO);
+}
+
+function syncTableScrollState({ root, viewport, leftButton, rightButton }: TableScrollElements) {
+  const maxScrollLeft = Math.max(viewport.scrollWidth - viewport.clientWidth, 0);
+  const hasOverflow = maxScrollLeft > TABLE_SCROLL_EPSILON;
+  const canScrollLeft = hasOverflow && viewport.scrollLeft > TABLE_SCROLL_EPSILON;
+  const canScrollRight = hasOverflow && viewport.scrollLeft < maxScrollLeft - TABLE_SCROLL_EPSILON;
+
+  root.dataset.hasOverflow = String(hasOverflow);
+  root.dataset.canScrollLeft = String(canScrollLeft);
+  root.dataset.canScrollRight = String(canScrollRight);
+
+  if (leftButton) {
+    leftButton.disabled = !canScrollLeft;
+  }
+
+  if (rightButton) {
+    rightButton.disabled = !canScrollRight;
+  }
+}
+
+function scrollWideTable(root: HTMLElement, direction: TableScrollDirection) {
+  const elements = getTableScrollElements(root);
+
+  if (!elements) {
+    return;
+  }
+
+  const offset = getTableScrollStep(elements.viewport);
+
+  elements.viewport.scrollBy({
+    left: direction === "left" ? -offset : offset,
+    behavior: "smooth"
+  });
 }
 
 export function StatusPage({ kicker, title, message }: StatusPageProps) {
@@ -431,6 +497,99 @@ export function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
     }
   }, [chapter.html, location.pathname, location.search]);
 
+  useEffect(() => {
+    const articleElement = articleElementRef.current;
+
+    if (!articleElement || typeof window === "undefined") {
+      return;
+    }
+
+    const roots = Array.from(
+      articleElement.querySelectorAll<HTMLElement>("[data-table-scroll-root]")
+    );
+
+    if (roots.length === 0) {
+      return;
+    }
+
+    const cleanups: Array<() => void> = [];
+    const syncCallbacks: Array<() => void> = [];
+    const resizeTargets = new Map<Element, () => void>();
+    const resizeObserver = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver((entries) => {
+        const scheduled = new Set<() => void>();
+
+        for (const entry of entries) {
+          const sync = resizeTargets.get(entry.target);
+
+          if (sync && !scheduled.has(sync)) {
+            scheduled.add(sync);
+            sync();
+          }
+        }
+      })
+      : null;
+
+    for (const root of roots) {
+      const elements = getTableScrollElements(root);
+
+      if (!elements) {
+        continue;
+      }
+
+      const sync = () => {
+        syncTableScrollState(elements);
+      };
+
+      syncCallbacks.push(sync);
+      sync();
+
+      const handleScroll = () => {
+        sync();
+      };
+
+      elements.viewport.addEventListener("scroll", handleScroll, { passive: true });
+      cleanups.push(() => {
+        elements.viewport.removeEventListener("scroll", handleScroll);
+      });
+
+      if (resizeObserver) {
+        resizeTargets.set(elements.viewport, sync);
+        resizeObserver.observe(elements.viewport);
+
+        const table = elements.viewport.querySelector("table");
+
+        if (table) {
+          resizeTargets.set(table, sync);
+          resizeObserver.observe(table);
+        }
+      }
+    }
+
+    if (resizeObserver) {
+      cleanups.push(() => {
+        resizeObserver.disconnect();
+      });
+    } else {
+      const handleResize = () => {
+        syncCallbacks.forEach((sync) => {
+          sync();
+        });
+      };
+
+      window.addEventListener("resize", handleResize);
+      cleanups.push(() => {
+        window.removeEventListener("resize", handleResize);
+      });
+    }
+
+    return () => {
+      cleanups.forEach((cleanup) => {
+        cleanup();
+      });
+    };
+  }, [chapter.html]);
+
   return (
     <article
       ref={(node) => {
@@ -442,6 +601,23 @@ export function MarkdownArticle({ chapter, articleRef }: MarkdownArticleProps) {
         const target = event.target;
 
         if (!(target instanceof Element)) {
+          return;
+        }
+
+        const scrollButton = target.closest("[data-table-scroll-button]");
+
+        if (scrollButton instanceof HTMLButtonElement) {
+          const direction = scrollButton.dataset.tableScrollButton;
+          const root = scrollButton.closest("[data-table-scroll-root]");
+
+          if (
+            (direction === "left" || direction === "right")
+            && root instanceof HTMLElement
+          ) {
+            event.preventDefault();
+            scrollWideTable(root, direction);
+          }
+
           return;
         }
 
