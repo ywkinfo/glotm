@@ -131,8 +131,8 @@ body {
 
 .gateway-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(290px, 0.9fr);
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.52fr) minmax(320px, 0.82fr);
+  gap: clamp(1.25rem, 2vw, 1.75rem);
   align-items: stretch;
 }
 
@@ -169,14 +169,16 @@ body {
 .gateway-title {
   margin: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-  font-size: clamp(2.1rem, 4vw, 3.6rem);
-  line-height: 1.02;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: 1.05;
+  text-wrap: balance;
 }
 
 .gateway-lead {
   margin: 1rem 0 0;
-  max-width: 24ch;
-  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  max-width: min(46ch, 100%);
+  font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+  line-height: 1.72;
   color: var(--ink);
 }
 
@@ -482,6 +484,10 @@ body {
 }
 
 @media (max-width: 1180px) {
+  .gateway-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .gateway-card-grid,
   .product-card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
