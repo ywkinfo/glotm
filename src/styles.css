@@ -288,6 +288,11 @@ body {
   color: var(--muted);
 }
 
+.gateway-section-copy-stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
 .gateway-card-grid,
 .product-card-grid {
   display: grid;
