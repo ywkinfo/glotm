@@ -1,5 +1,4 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -138,6 +137,10 @@ describe("App portfolio shell", () => {
     expect(screen.getByText("중국 상표 실무 운영 가이드")).toBeInTheDocument();
     expect(screen.getByText("EuTm 유럽 상표 운영 가이드북")).toBeInTheDocument();
 
+    expect(within(nav).getByRole("link", { name: /Gateway/ })).toHaveAttribute("href", "/");
+    expect(within(nav).getByRole("link", { name: /LatTm/ })).toHaveAttribute("href", "/latam");
+    expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
+    expect(within(nav).getByRole("link", { name: /UsaTm/ })).toHaveAttribute("href", "/usa");
     expect(document.querySelector('a[href="/japan"]')).not.toBeNull();
     expect(document.querySelector('a[href="/china"]')).not.toBeNull();
     expect(document.querySelector('a[href="/europe"]')).not.toBeNull();
@@ -183,30 +186,20 @@ describe("App portfolio shell", () => {
     expect(scrollIntoView).toHaveBeenCalled();
   });
 
-  it("navigates through top navigation and brand links on click", async () => {
-    const user = userEvent.setup();
-
+  it("renders full document hrefs for top navigation and brand links", async () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    await user.click(
-      within(screen.getByRole("navigation", { name: "제품 전환" })).getByRole("link", {
-        name: /MexTm/
-      })
-    );
-    await waitFor(() => {
-      expect(screen.getByTestId("app-location")).toHaveTextContent("/mexico");
-    });
+    await screen.findByRole("heading", { name: "해외 진출에서 상표가 늦게 문제 되는 이유" });
 
-    await user.click(screen.getByRole("link", { name: "GloTm" }));
-    await waitFor(() => {
-      expect(screen.getByTestId("app-location")).toHaveTextContent("/");
-    });
+    const nav = screen.getByRole("navigation", { name: "제품 전환" });
+
+    expect(screen.getByRole("link", { name: "GloTm" })).toHaveAttribute("href", "/");
+    expect(within(nav).getByRole("link", { name: /Gateway/ })).toHaveAttribute("href", "/");
+    expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
   });
 
-  it("navigates through the gateway hero CTA into LatTm", async () => {
-    const user = userEvent.setup();
-
+  it("renders a full document href for the gateway hero CTA", async () => {
     installFetchMock();
     renderAppRouteTree("/");
 
@@ -214,11 +207,10 @@ describe("App portfolio shell", () => {
 
     expect(gatewayHero).not.toBeNull();
     expect(within(gatewayHero as HTMLElement).queryByRole("link", { name: "UsaTm 보기" })).toBeNull();
-
-    await user.click(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" }));
-    await waitFor(() => {
-      expect(screen.getByTestId("app-location")).toHaveTextContent("/latam");
-    });
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" })).toHaveAttribute(
+      "href",
+      "/latam"
+    );
   });
 
   it("places the reading flow above the risk section and links to the grouped portfolio", () => {
@@ -253,9 +245,7 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByText("지속 업데이트 중")).toBeInTheDocument();
   });
 
-  it("navigates through the grouped pilot scope card into ChaTm", async () => {
-    const user = userEvent.setup();
-
+  it("renders full document hrefs for grouped pilot scope cards", async () => {
     installFetchMock();
     renderAppRouteTree("/");
 
@@ -264,11 +254,14 @@ describe("App portfolio shell", () => {
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
-
-    await user.click(within(currentPilotScope as HTMLElement).getByRole("link", { name: "ChaTm 보기" }));
-    await waitFor(() => {
-      expect(screen.getByTestId("app-location")).toHaveTextContent("/china");
-    });
+    expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toHaveAttribute(
+      "href",
+      "/china"
+    );
+    expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "EuTm 보기" })).toHaveAttribute(
+      "href",
+      "/europe"
+    );
   });
 
   it("redirects unknown routes back to the gateway", async () => {
@@ -283,15 +276,16 @@ describe("App portfolio shell", () => {
   it("respects a deployment basename for deep links and rendered hrefs", async () => {
     installFetchMock();
 
-    renderAppRouteTree("/GloTm/japan", "/GloTm");
+    renderAppRouteTree("/glotm/japan", "/glotm");
 
     await screen.findByRole("heading", { name: "일본 상표 실무 운영 가이드북" });
     await waitFor(() => {
       expect(screen.getByTestId("app-location")).toHaveTextContent("/japan");
     });
 
-    expect(document.querySelector('a[href="/GloTm/latam"]')).not.toBeNull();
-    expect(document.querySelector('a[href="/GloTm/japan"]')).not.toBeNull();
-    expect(document.querySelector('a[href="/GloTm/europe"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/glotm"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/glotm/latam"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/glotm/japan"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/glotm/europe"]')).not.toBeNull();
   });
 });

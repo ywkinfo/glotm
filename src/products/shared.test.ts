@@ -55,40 +55,40 @@ describe("shared product helpers", () => {
   });
 
   it("normalizes router basename and app hrefs for subpath deployments", () => {
-    expect(getRouterBasename("/GloTm/")).toBe("/GloTm");
-    expect(buildGeneratedContentUrl("latam", "document-data.json", "/GloTm/")).toBe(
-      "/GloTm/generated/latam/document-data.json"
+    expect(getRouterBasename("/glotm/")).toBe("/glotm");
+    expect(buildGeneratedContentUrl("latam", "document-data.json", "/glotm/")).toBe(
+      "/glotm/generated/latam/document-data.json"
     );
     expect(buildGeneratedContentUrl("latam", "search-index.json", "/")).toBe(
       "/generated/latam/search-index.json"
     );
     expect(getRouterBasename("/")).toBeUndefined();
     expect(
-      normalizeAppHref("https://example.com/GloTm/latam/chapter/strategy#overview", {
-        baseUrl: "/GloTm/",
+      normalizeAppHref("https://example.com/glotm/latam/chapter/strategy#overview", {
+        baseUrl: "/glotm/",
         currentOrigin: "https://example.com",
-        currentPathname: "/GloTm/latam"
+        currentPathname: "/glotm/latam"
       })
     ).toBe("/latam/chapter/strategy#overview");
     expect(
-      normalizeAppHref("/GloTm/mexico/chapter/filing#risk", {
-        baseUrl: "/GloTm/",
+      normalizeAppHref("/glotm/mexico/chapter/filing#risk", {
+        baseUrl: "/glotm/",
         currentOrigin: "https://example.com",
-        currentPathname: "/GloTm/latam"
+        currentPathname: "/glotm/latam"
       })
     ).toBe("/mexico/chapter/filing#risk");
     expect(
       normalizeAppHref("#overview", {
-        baseUrl: "/GloTm/",
+        baseUrl: "/glotm/",
         currentOrigin: "https://example.com",
-        currentPathname: "/GloTm/latam"
+        currentPathname: "/glotm/latam"
       })
     ).toBe("#overview");
     expect(
       normalizeAppHref("https://outside.example/path", {
-        baseUrl: "/GloTm/",
+        baseUrl: "/glotm/",
         currentOrigin: "https://example.com",
-        currentPathname: "/GloTm/latam"
+        currentPathname: "/glotm/latam"
       })
     ).toBeNull();
   });
