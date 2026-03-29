@@ -22,6 +22,18 @@ const searchResult: SearchEntry = {
   excerpt: "IMPI 거절이유와 대응 전략"
 };
 
+function createDeferredPromise<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  let reject!: (reason?: unknown) => void;
+
+  const promise = new Promise<T>((nextResolve, nextReject) => {
+    resolve = nextResolve;
+    reject = nextReject;
+  });
+
+  return { promise, resolve, reject };
+}
+
 const sidebarChapters: Chapter[] = [
   {
     id: "chapter-1",
@@ -138,6 +150,152 @@ describe("SearchPanel", () => {
     await user.keyboard("{ArrowDown}{Enter}");
 
     expect(onNavigate).toHaveBeenCalledWith("mexico-operating", "filing");
+  });
+
+  it("renders results for numeric queries once search completes", async () => {
+    const user = userEvent.setup();
+    const onNavigate = vi.fn();
+    const warmSearchContent = vi.fn();
+    const searchContent = vi.fn().mockImplementation(async (query: string) => {
+      if (query === "2") {
+        return [
+          {
+            ...searchResult,
+            id: "mx-result-2",
+            sectionId: "step-2",
+            sectionTitle: "2. 출원 전략 수립"
+          }
+        ];
+      }
+
+      return [];
+    });
+
+    render(
+      <SearchPanel
+        onNavigate={onNavigate}
+        searchContent={searchContent}
+        warmSearchContent={warmSearchContent}
+      />
+    );
+
+    const input = screen.getByRole("combobox", { name: "검색" });
+
+    await user.type(input, "2");
+
+    expect(await screen.findByRole("option", { name: /2\. 출원 전략 수립/ })).toBeInTheDocument();
+    expect(screen.queryByText("일치하는 섹션을 찾지 못했습니다.")).not.toBeInTheDocument();
+  });
+
+  it("shows a loading message instead of an empty state while search is pending", async () => {
+    const user = userEvent.setup();
+    const deferredSearch = createDeferredPromise<SearchEntry[]>();
+    const searchContent = vi.fn().mockReturnValue(deferredSearch.promise);
+
+    render(
+      <SearchPanel
+        onNavigate={vi.fn()}
+        searchContent={searchContent}
+        warmSearchContent={vi.fn()}
+      />
+    );
+
+    const input = screen.getByRole("combobox", { name: "검색" });
+
+    await user.type(input, "2");
+
+    expect(await screen.findByText("검색 인덱스를 불러오는 중입니다.")).toBeInTheDocument();
+    expect(screen.queryByText("일치하는 섹션을 찾지 못했습니다.")).not.toBeInTheDocument();
+
+    deferredSearch.resolve([
+      {
+        ...searchResult,
+        id: "mx-result-pending",
+        sectionTitle: "2. 검색 완료"
+      }
+    ]);
+
+    expect(await screen.findByRole("option", { name: /2\. 검색 완료/ })).toBeInTheDocument();
+  });
+
+  it("shows the empty state only after the active query resolves with no results", async () => {
+    const user = userEvent.setup();
+    const deferredSearch = createDeferredPromise<SearchEntry[]>();
+    const searchContent = vi.fn().mockReturnValue(deferredSearch.promise);
+
+    render(
+      <SearchPanel
+        onNavigate={vi.fn()}
+        searchContent={searchContent}
+        warmSearchContent={vi.fn()}
+      />
+    );
+
+    const input = screen.getByRole("combobox", { name: "검색" });
+
+    await user.type(input, "없는 검색어");
+
+    expect(await screen.findByText("검색 인덱스를 불러오는 중입니다.")).toBeInTheDocument();
+    expect(screen.queryByText("일치하는 섹션을 찾지 못했습니다.")).not.toBeInTheDocument();
+
+    deferredSearch.resolve([]);
+
+    expect(await screen.findByText("일치하는 섹션을 찾지 못했습니다.")).toBeInTheDocument();
+  });
+
+  it("keeps only the latest query results when requests resolve out of order", async () => {
+    const user = userEvent.setup();
+    const requests = new Map<string, ReturnType<typeof createDeferredPromise<SearchEntry[]>>>();
+    const searchContent = vi.fn().mockImplementation((query: string) => {
+      const deferredSearch = createDeferredPromise<SearchEntry[]>();
+
+      requests.set(query, deferredSearch);
+
+      return deferredSearch.promise;
+    });
+
+    render(
+      <SearchPanel
+        onNavigate={vi.fn()}
+        searchContent={searchContent}
+        warmSearchContent={vi.fn()}
+      />
+    );
+
+    const input = screen.getByRole("combobox", { name: "검색" });
+
+    await user.type(input, "1");
+    await waitFor(() => {
+      expect(requests.has("1")).toBe(true);
+    });
+
+    await user.type(input, "2");
+    await waitFor(() => {
+      expect(requests.has("12")).toBe(true);
+    });
+
+    requests.get("12")!.resolve([
+      {
+        ...searchResult,
+        id: "latest-result",
+        sectionTitle: "12. 최신 결과"
+      }
+    ]);
+
+    expect(await screen.findByRole("option", { name: /12\. 최신 결과/ })).toBeInTheDocument();
+
+    requests.get("1")!.resolve([
+      {
+        ...searchResult,
+        id: "stale-result",
+        sectionTitle: "1. 이전 결과"
+      }
+    ]);
+
+    await waitFor(() => {
+      expect(screen.getByRole("option", { name: /12\. 최신 결과/ })).toBeInTheDocument();
+      expect(screen.queryByRole("option", { name: /1\. 이전 결과/ })).not.toBeInTheDocument();
+    });
   });
 });
 

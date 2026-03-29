@@ -1,6 +1,4 @@
 import {
-  startTransition,
-  useDeferredValue,
   useEffect,
   useRef,
   useState,
@@ -35,6 +33,8 @@ type SearchPanelProps = {
   searchContent: (rawQuery: string) => Promise<SearchEntry[]>;
   warmSearchContent: () => void;
 };
+
+type SearchStatus = "idle" | "loading" | "success" | "empty" | "error";
 
 type MarkdownArticleProps = {
   chapter: Chapter;
@@ -211,54 +211,52 @@ export function SearchPanel({
 }: SearchPanelProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchEntry[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const [status, setStatus] = useState<SearchStatus>("idle");
   const [searchError, setSearchError] = useState<string | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const deferredQuery = useDeferredValue(query);
   const resultRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const searchRequestIdRef = useRef(0);
 
   useEffect(() => {
-    const trimmedQuery = deferredQuery.trim();
-    let isCancelled = false;
+    const trimmedQuery = query.trim();
+    const requestId = searchRequestIdRef.current + 1;
+
+    searchRequestIdRef.current = requestId;
 
     if (!trimmedQuery) {
       setResults([]);
-      setIsSearching(false);
+      setStatus("idle");
       setSearchError(null);
       setHighlightedIndex(-1);
       return undefined;
     }
 
-    setIsSearching(true);
+    setResults([]);
+    setStatus("loading");
     setSearchError(null);
+    setHighlightedIndex(-1);
 
     searchContent(trimmedQuery)
       .then((nextResults) => {
-        if (isCancelled) {
+        if (searchRequestIdRef.current !== requestId) {
           return;
         }
 
-        startTransition(() => {
-          setResults(nextResults);
-          setIsSearching(false);
-          setHighlightedIndex(nextResults.length > 0 ? 0 : -1);
-        });
+        setResults(nextResults);
+        setStatus(nextResults.length > 0 ? "success" : "empty");
+        setHighlightedIndex(nextResults.length > 0 ? 0 : -1);
       })
       .catch(() => {
-        if (isCancelled) {
+        if (searchRequestIdRef.current !== requestId) {
           return;
         }
 
         setResults([]);
-        setIsSearching(false);
+        setStatus("error");
         setSearchError("검색 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
         setHighlightedIndex(-1);
       });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [deferredQuery, searchContent]);
+  }, [query, searchContent]);
 
   useEffect(() => {
     const activeResult = resultRefs.current[highlightedIndex];
@@ -277,6 +275,7 @@ export function SearchPanel({
     onNavigate(result.chapterSlug, result.sectionId || undefined);
     setQuery("");
     setResults([]);
+    setStatus("idle");
     setSearchError(null);
     setHighlightedIndex(-1);
   };
@@ -304,6 +303,7 @@ export function SearchPanel({
           if (event.key === "Escape") {
             setQuery("");
             setResults([]);
+            setStatus("idle");
             setSearchError(null);
             setHighlightedIndex(-1);
             return;
@@ -345,9 +345,9 @@ export function SearchPanel({
           role="listbox"
           aria-label="검색 결과"
         >
-          {isSearching ? (
+          {status === "loading" ? (
             <div className="search-empty">검색 인덱스를 불러오는 중입니다.</div>
-          ) : searchError ? (
+          ) : status === "error" && searchError ? (
             <div className="search-empty">{searchError}</div>
           ) : results.length > 0 ? (
             results.map((result, index) => {
@@ -377,9 +377,9 @@ export function SearchPanel({
                 </button>
               );
             })
-          ) : (
+          ) : status === "empty" ? (
             <div className="search-empty">일치하는 섹션을 찾지 못했습니다.</div>
-          )}
+          ) : null}
         </div>
       ) : null}
     </div>
