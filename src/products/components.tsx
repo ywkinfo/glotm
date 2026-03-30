@@ -1,5 +1,6 @@
 import {
   memo,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -47,7 +48,7 @@ type ChapterOutlineProps = {
   chapterSlug: string;
   headings: HeadingNode[];
   activeSectionId?: string;
-  onSectionJump: (sectionId: string) => void;
+  onSectionJump?: (sectionId: string) => void;
 };
 
 type ReaderActionBarProps = {
@@ -458,6 +459,10 @@ export const MarkdownArticle = memo(function MarkdownArticle({ chapter, articleR
   const location = useLocation();
   const navigate = useNavigate();
   const articleElementRef = useRef<HTMLElement | null>(null);
+  const handleArticleRef = useCallback((node: HTMLElement | null) => {
+    articleElementRef.current = node;
+    mergeArticleRefs(articleRef, node);
+  }, [articleRef]);
 
   useEffect(() => {
     const articleElement = articleElementRef.current;
@@ -593,10 +598,7 @@ export const MarkdownArticle = memo(function MarkdownArticle({ chapter, articleR
 
   return (
     <article
-      ref={(node) => {
-        articleElementRef.current = node;
-        mergeArticleRefs(articleRef, node);
-      }}
+      ref={handleArticleRef}
       className="article"
       onClick={(event) => {
         const target = event.target;
@@ -739,9 +741,8 @@ export function ChapterOutline({
               className={isActive ? "chapter-outline-link active" : "chapter-outline-link"}
               aria-current={isActive ? "location" : undefined}
               style={{ paddingInlineStart: `${1 + item.level}rem` }}
-              onClick={(event) => {
-                event.preventDefault();
-                onSectionJump(item.id);
+              onClick={() => {
+                onSectionJump?.(item.id);
               }}
             >
               <span className="chapter-outline-link-title">{item.title}</span>

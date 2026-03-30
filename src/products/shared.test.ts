@@ -85,6 +85,13 @@ describe("shared product helpers", () => {
       })
     ).toBe("#overview");
     expect(
+      normalizeAppHref("/glotm/latam/chapter/enforcement#%EB%A7%88%EC%A7%80%EB%A7%89%EC%9C%BC%EB%A1%9C", {
+        baseUrl: "/glotm/",
+        currentOrigin: "https://example.com",
+        currentPathname: "/glotm/latam"
+      })
+    ).toBe("/latam/chapter/enforcement#%EB%A7%88%EC%A7%80%EB%A7%89%EC%9C%BC%EB%A1%9C");
+    expect(
       normalizeAppHref("https://outside.example/path", {
         baseUrl: "/glotm/",
         currentOrigin: "https://example.com",

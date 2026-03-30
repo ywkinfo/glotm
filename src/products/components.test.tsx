@@ -510,6 +510,36 @@ describe("MarkdownArticle", () => {
     });
   });
 
+  it("does not route external article links through the SPA click handler", async () => {
+    const user = userEvent.setup();
+    const clickStates: boolean[] = [];
+
+    render(
+      <MemoryRouter initialEntries={["/mexico/chapter/appendix"]}>
+        <MarkdownArticle
+          chapter={{
+            ...sidebarChapters[1]!,
+            html: '<p><a href="https://www.gob.mx/impi?idiom=es">사용선언 안내</a></p>'
+          }}
+        />
+        <LocationProbe />
+      </MemoryRouter>
+    );
+
+    const externalLink = screen.getByRole("link", { name: "사용선언 안내" });
+
+    externalLink.addEventListener("click", (event) => {
+      clickStates.push(event.defaultPrevented);
+    });
+
+    await user.click(externalLink);
+
+    expect(externalLink).toHaveAttribute("target", "_blank");
+    expect(externalLink).toHaveAttribute("rel", "noreferrer noopener");
+    expect(clickStates).toContain(false);
+    expect(screen.getByTestId("component-location")).toHaveTextContent("/mexico/chapter/appendix");
+  });
+
   it("routes internal article links through the SPA contract", async () => {
     const user = userEvent.setup();
 
