@@ -238,6 +238,36 @@ describe("App portfolio shell", () => {
     expect((gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
   });
 
+  it("renders wrap-safe separators in the coverage and current status metrics", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const livePortfolioPanel = screen.getByText("Live Portfolio").closest("aside");
+    const expectedRegionList = liveShellProducts
+      .filter((product) => product.coverageType === "region")
+      .map((product) => product.shortLabel)
+      .join(" · ");
+    const expectedCountryList = liveShellProducts
+      .filter((product) => product.coverageType === "country")
+      .map((product) => product.shortLabel)
+      .join(" · ");
+    const expectedCurrentStatus = liveShellProducts
+      .map((product) => product.shortLabel)
+      .join(" · ");
+
+    expect(livePortfolioPanel).not.toBeNull();
+    expect(
+      within(livePortfolioPanel as HTMLElement).getByText(
+        `권역형은 ${expectedRegionList}, 국가형은 ${expectedCountryList}으로 구분됩니다.`
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(livePortfolioPanel as HTMLElement).getByText(
+        `현재 라이브 포트폴리오는 ${expectedCurrentStatus}로 구성됩니다.`
+      )
+    ).toBeInTheDocument();
+  });
+
   it("groups the gateway hero title and intro copy into one shared content rail", () => {
     installFetchMock();
     renderAppRouteTree("/");
