@@ -248,7 +248,7 @@ function GatewayLandingPage() {
   const primaryProduct = liveShellProducts.find((product) => product.slug === "latam") ?? liveShellProducts[0];
   const liveProductSlashList = joinProductLabels(liveShellProducts);
   const liveProductCommaList = liveShellProducts.map((product) => product.shortLabel).join(", ");
-  const liveProductDotList = liveShellProducts.map((product) => product.shortLabel).join("·");
+  const liveProductDotList = joinProductLabels(liveShellProducts, " · ");
   const introSummaryParagraphs = introDocument.quote.slice(1, 3);
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
 
@@ -310,7 +310,7 @@ function GatewayLandingPage() {
                 {regionProductCount} Regional + {countryProductCount} Country
               </strong>
               <p className="gateway-metric-note">
-                권역형은 {joinProductLabels(regionProducts, "·")}, 국가형은 {joinProductLabels(countryProducts, "·")}으로 구분됩니다.
+                권역형은 {joinProductLabels(regionProducts, " · ")}, 국가형은 {joinProductLabels(countryProducts, " · ")}으로 구분됩니다.
               </p>
             </div>
             <div className="gateway-metric">
