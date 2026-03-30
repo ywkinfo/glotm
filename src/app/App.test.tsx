@@ -301,6 +301,31 @@ describe("App portfolio shell", () => {
     );
   });
 
+  it("applies the centered header modifier only to the why-late section", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const whyLateSection = screen
+      .getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" })
+      .closest("section");
+    const productIntentSection = screen
+      .getByRole("heading", { name: "출원 설명이 아니라 운영 판단의 빈칸을 메웁니다" })
+      .closest("section");
+    const currentPilotScopeSection = screen
+      .getByRole("heading", { name: "현재 GloTm에는 6개의 live shell guide가 연결되어 있습니다" })
+      .closest("section");
+
+    expect(
+      (whyLateSection as HTMLElement | null)?.querySelector(".gateway-section-header")
+    ).toHaveClass("gateway-section-header--centered");
+    expect(
+      (productIntentSection as HTMLElement | null)?.querySelector(".gateway-section-header")
+    ).not.toHaveClass("gateway-section-header--centered");
+    expect(
+      (currentPilotScopeSection as HTMLElement | null)?.querySelector(".gateway-section-header")
+    ).not.toHaveClass("gateway-section-header--centered");
+  });
+
   it("groups the pilot scope cards and exposes the ChaTm maturity note", () => {
     installFetchMock();
     renderAppRouteTree("/");
