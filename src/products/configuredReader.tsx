@@ -3,6 +3,7 @@ import {
   useContext,
   useEffect,
   useEffectEvent,
+  useMemo,
   useRef,
   useState,
   type ComponentType,
@@ -159,6 +160,8 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
   );
   const searchController = createSearchController(loadSearchEntries);
   const ReaderContext = createContext<ReaderContextValue | null>(null);
+  let programmaticScrollResetId = 0;
+  let isProgrammaticScrollActive = false;
 
   function useReader() {
     const value = useContext(ReaderContext);
@@ -175,6 +178,24 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       return;
     }
 
+    const targetTopThreshold = window.innerWidth <= 640 ? 104 : 136;
+    const targetBottomThreshold = Math.max(targetTopThreshold + 24, window.innerHeight * 0.42);
+
+    window.clearTimeout(programmaticScrollResetId);
+    isProgrammaticScrollActive = true;
+
+    const isTargetInView = () => {
+      const target = document.getElementById(sectionId);
+
+      if (!target) {
+        return false;
+      }
+
+      const { top } = target.getBoundingClientRect();
+
+      return top >= targetTopThreshold && top <= targetBottomThreshold;
+    };
+
     const scrollTarget = () => {
       const target = document.getElementById(sectionId);
 
@@ -187,20 +208,30 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         behavior
       });
 
-      return true;
+      return isTargetInView();
     };
 
-    const retryScroll = (remainingAttempts: number) => {
-      if (scrollTarget() || remainingAttempts <= 0) {
+    const releaseProgrammaticScroll = (delayMs: number) => {
+      window.clearTimeout(programmaticScrollResetId);
+      programmaticScrollResetId = window.setTimeout(() => {
+        isProgrammaticScrollActive = false;
+      }, delayMs);
+    };
+
+    const retryScroll = (remainingAttempts: number, shouldReissueScroll: boolean) => {
+      const reachedTarget = shouldReissueScroll ? scrollTarget() : isTargetInView();
+
+      if (reachedTarget || remainingAttempts <= 0) {
+        releaseProgrammaticScroll(behavior === "smooth" ? 420 : 120);
         return;
       }
 
       window.requestAnimationFrame(() => {
-        retryScroll(remainingAttempts - 1);
+        retryScroll(remainingAttempts - 1, false);
       });
     };
 
-    retryScroll(8);
+    retryScroll(8, true);
   }
 
   function ReaderShell() {
@@ -262,13 +293,28 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       behavior: ScrollBehavior = "auto"
     ) => {
       const sectionLocation = buildSectionLocation(productPath, chapterSlug, sectionId);
+      const isSameLocation =
+        location.pathname === sectionLocation.pathname
+        && location.hash === sectionLocation.hash;
 
       setIsNavOpen(false);
+
+      if (isSameLocation) {
+        if (sectionId) {
+          scrollToSection(sectionId, behavior);
+        } else if (typeof window !== "undefined") {
+          window.scrollTo({
+            top: 0,
+            behavior
+          });
+        }
+
+        return;
+      }
+
       navigate(sectionLocation);
 
-      if (sectionId) {
-        scrollToSection(sectionId, behavior);
-      } else if (typeof window !== "undefined") {
+      if (!sectionId && typeof window !== "undefined") {
         window.scrollTo({
           top: 0,
           behavior
@@ -343,7 +389,6 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
                 basePath={productPath}
                 currentChapterSlug={currentChapterSlug}
                 currentSectionId={currentSectionId}
-                onSectionJump={jumpToSection}
                 onNavigate={closeNavigation}
               />
             </aside>
@@ -495,6 +540,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const chapters = documentData.chapters;
     const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
     const articleRef = useRef<HTMLElement | null>(null);
+    const lastBookmarkSignatureRef = useRef<string | null>(null);
     const [activeSectionId, setActiveSectionId] = useState<string | undefined>(
       () => decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined
     );
@@ -504,7 +550,10 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       ? chapters.find((entry) => entry.slug === normalizedChapterSlug)
       : undefined;
     const productPath = buildProductPath(productMeta);
-    const outlineItems = chapter ? flattenOutlineHeadings(chapter.headings) : [];
+    const outlineItems = useMemo(
+      () => (chapter ? flattenOutlineHeadings(chapter.headings) : []),
+      [chapter]
+    );
     const firstOutlineId = outlineItems[0]?.id;
     const outlineSignature = outlineItems.map((item) => item.id).join("|");
     const chapterMeta = chapter ? getChapterMeta(chapter) : null;
@@ -519,11 +568,6 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         behavior: "smooth"
       });
     });
-    const handleSectionJump = useEffectEvent((sectionId: string) => {
-      setActiveSectionId(sectionId);
-      jumpToSection(sectionId);
-    });
-
     useEffect(() => {
       if (!chapter) {
         return undefined;
@@ -562,6 +606,10 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         return undefined;
       }
 
+      if (location.hash) {
+        return undefined;
+      }
+
       let frameId = 0;
       let timeoutId = 0;
 
@@ -571,6 +619,10 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           .filter((element): element is HTMLElement => Boolean(element));
 
       const updateActiveSection = () => {
+        if (isProgrammaticScrollActive) {
+          return;
+        }
+
         const targets = collectTargets();
 
         if (targets.length === 0) {
@@ -580,7 +632,9 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         const nextActiveSectionId = getTrackedSectionId(targets);
 
         if (nextActiveSectionId) {
-          setActiveSectionId(nextActiveSectionId);
+          setActiveSectionId((currentSectionId) =>
+            currentSectionId === nextActiveSectionId ? currentSectionId : nextActiveSectionId
+          );
         }
       };
 
@@ -602,7 +656,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         window.removeEventListener("scroll", scheduleUpdate);
         window.removeEventListener("resize", scheduleUpdate);
       };
-    }, [chapter, outlineItems, outlineSignature]);
+    }, [chapter, location.hash, outlineItems, outlineSignature]);
 
     useEffect(() => {
       syncCurrentSectionId(activeSectionId);
@@ -655,6 +709,19 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       if (!chapter) {
         return;
       }
+
+      const bookmarkSignature = [
+        chapter.slug,
+        activeSectionId ?? "",
+        activeOutlineItem?.title ?? "",
+        String(progressBucket)
+      ].join("|");
+
+      if (lastBookmarkSignatureRef.current === bookmarkSignature) {
+        return;
+      }
+
+      lastBookmarkSignatureRef.current = bookmarkSignature;
 
       commitReadingBookmark({
         chapterSlug: chapter.slug,
@@ -719,7 +786,6 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           chapterSlug={chapter.slug}
           headings={chapter.headings}
           activeSectionId={activeSectionId}
-          onSectionJump={handleSectionJump}
         />
         <MarkdownArticle chapter={chapter} articleRef={articleRef} />
         <ReaderActionBar
