@@ -42,7 +42,8 @@ const {
     </>
   ),
   chapterBadge: "USA",
-  chapterEyebrow: "미국 심화 읽기"
+  chapterEyebrow: "미국 심화 읽기",
+  contentStatus: "draft"
 });
 
 export {
