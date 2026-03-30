@@ -345,7 +345,7 @@ function GatewayLandingPage() {
       </section>
 
       <section className="gateway-section">
-        <div className="gateway-section-header">
+        <div className="gateway-section-header gateway-section-header--centered">
           <div>
             <p className="gateway-kicker">Why It Surfaces Late</p>
             <h2 className="gateway-section-title">상표 리스크는 늦게 보일수록 비싸집니다</h2>

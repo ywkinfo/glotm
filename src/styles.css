@@ -285,6 +285,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.gateway-section-header--centered {
+  align-items: center;
+}
+
 .gateway-section-title {
   margin: 0.15rem 0 0;
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
