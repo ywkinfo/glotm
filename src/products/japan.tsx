@@ -41,7 +41,8 @@ const {
     </>
   ),
   chapterBadge: "Japan",
-  chapterEyebrow: "일본 심화 읽기"
+  chapterEyebrow: "일본 심화 읽기",
+  contentStatus: "draft"
 });
 
 export {
