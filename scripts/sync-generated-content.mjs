@@ -7,7 +7,8 @@ const products = [
   { sourceDir: "UsaTm", slug: "usa" },
   { sourceDir: "JapTm", slug: "japan" },
   { sourceDir: "ChaTm", slug: "china" },
-  { sourceDir: "EuTm", slug: "europe" }
+  { sourceDir: "EuTm", slug: "europe" },
+  { sourceDir: "UKTm", slug: "uk" }
 ];
 
 const publicGeneratedRoot = path.resolve("public/generated");

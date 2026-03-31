@@ -32,6 +32,11 @@ import {
   UsaHomePage,
   UsaReaderRoot
 } from "./usa";
+import {
+  UkChapterPage,
+  UkHomePage,
+  UkReaderRoot
+} from "./uk";
 
 export type LiveShellReaderDefinition = {
   slug: string;
@@ -80,6 +85,12 @@ export const liveShellReaderDefinitions: LiveShellReaderDefinition[] = [
     ReaderRoot: EuropeReaderRoot,
     HomePage: EuropeHomePage,
     ChapterPage: EuropeChapterPage
+  },
+  {
+    slug: "uk",
+    ReaderRoot: UkReaderRoot,
+    HomePage: UkHomePage,
+    ChapterPage: UkChapterPage
   }
 ];
 
