@@ -78,6 +78,9 @@ function ProductCard({ product }: { product: ProductMeta }) {
         <span className="product-card-stage">
           {getCoverageLabel(product)} · {getAvailabilityLabel(product)}
         </span>
+        <p className="product-card-metrics">
+          총 {product.chapterCount}개 챕터 · 검색 {product.searchEntryCount}개 엔트리
+        </p>
         <h3 className="product-card-title">{product.title}</h3>
       </div>
       <p className="product-card-copy">{product.summary}</p>
@@ -245,6 +248,11 @@ function GatewayLandingPage() {
   const regionProductCount = regionProducts.length;
   const countryProductCount = countryProducts.length;
   const liveProductCount = liveShellProducts.length;
+  const liveChapterCount = liveShellProducts.reduce((total, product) => total + product.chapterCount, 0);
+  const liveSearchEntryCount = liveShellProducts.reduce(
+    (total, product) => total + product.searchEntryCount,
+    0
+  );
   const primaryProduct = liveShellProducts.find((product) => product.slug === "latam") ?? liveShellProducts[0];
   const liveProductSlashList = joinProductLabels(liveShellProducts);
   const liveProductCommaList = liveShellProducts.map((product) => product.shortLabel).join(", ");
@@ -320,6 +328,9 @@ function GatewayLandingPage() {
               </strong>
               <p className="gateway-metric-note">
                 현재 라이브 포트폴리오는 {liveProductDotList}로 구성됩니다.
+              </p>
+              <p className="gateway-metric-note">
+                운영 메타데이터 기준 총 {liveChapterCount}개 챕터와 검색 {liveSearchEntryCount}개 엔트리를 관리합니다.
               </p>
             </div>
           </div>

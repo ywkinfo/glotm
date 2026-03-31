@@ -63,6 +63,8 @@ export type ProductMeta = {
   path: string;
   title: string;
   summary: string;
+  chapterCount: number;
+  searchEntryCount: number;
   status: string;
   statusTone: "pilot" | "beta" | "neutral";
   audience: string;
