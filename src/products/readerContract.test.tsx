@@ -33,6 +33,11 @@ import {
   UsaHomePage,
   UsaReaderRoot
 } from "./usa";
+import {
+  UkChapterPage,
+  UkHomePage,
+  UkReaderRoot
+} from "./uk";
 import type { DocumentData, SearchEntry } from "./shared";
 
 type ReaderCase = {
@@ -40,6 +45,8 @@ type ReaderCase = {
   workspaceName: string;
   productSlug: string;
   basePath: string;
+  crossLinkLabel: string;
+  crossLinkHref: string;
   storageKey: string;
   homeHeading: string;
   ReaderRoot: typeof LatamReaderRoot;
@@ -139,6 +146,8 @@ const readerCases: ReaderCase[] = [
     workspaceName: "LatTm",
     productSlug: "latam",
     basePath: "/latam",
+    crossLinkLabel: "LatTm",
+    crossLinkHref: "/latam",
     storageKey: "lattm_reading_bookmark",
     homeHeading: "중남미 상표 보호 운영 가이드",
     ReaderRoot: LatamReaderRoot,
@@ -173,6 +182,8 @@ const readerCases: ReaderCase[] = [
     workspaceName: "MexTm",
     productSlug: "mexico",
     basePath: "/mexico",
+    crossLinkLabel: "LatTm",
+    crossLinkHref: "/latam",
     storageKey: "mextm_reading_bookmark",
     homeHeading: "멕시코 상표 실무 운영 가이드북",
     ReaderRoot: MexicoReaderRoot,
@@ -207,6 +218,8 @@ const readerCases: ReaderCase[] = [
     workspaceName: "UsaTm",
     productSlug: "usa",
     basePath: "/usa",
+    crossLinkLabel: "LatTm",
+    crossLinkHref: "/latam",
     storageKey: "usatm_reading_bookmark",
     homeHeading: "미국 상표 실무 운영 가이드북",
     ReaderRoot: UsaReaderRoot,
@@ -241,6 +254,8 @@ const readerCases: ReaderCase[] = [
     workspaceName: "JapTm",
     productSlug: "japan",
     basePath: "/japan",
+    crossLinkLabel: "LatTm",
+    crossLinkHref: "/latam",
     storageKey: "japtm_reading_bookmark",
     homeHeading: "일본 상표 실무 운영 가이드북",
     ReaderRoot: JapanReaderRoot,
@@ -275,6 +290,8 @@ const readerCases: ReaderCase[] = [
     workspaceName: "ChaTm",
     productSlug: "china",
     basePath: "/china",
+    crossLinkLabel: "LatTm",
+    crossLinkHref: "/latam",
     storageKey: "chatm_reading_bookmark",
     homeHeading: "중국 상표 실무 운영 가이드",
     ReaderRoot: ChinaReaderRoot,
@@ -309,6 +326,8 @@ const readerCases: ReaderCase[] = [
     workspaceName: "EuTm",
     productSlug: "europe",
     basePath: "/europe",
+    crossLinkLabel: "LatTm",
+    crossLinkHref: "/latam",
     storageKey: "eutm_reading_bookmark",
     homeHeading: "EuTm 유럽 상표 운영 가이드북",
     ReaderRoot: EuropeReaderRoot,
@@ -335,6 +354,42 @@ const readerCases: ReaderCase[] = [
     thirdChapterTitle: "유럽 제3장. 집행 운영",
     bookmarkChapterSlug: "europe-enforcement",
     bookmarkChapterTitle: "유럽 제3장. 집행 운영",
+    bookmarkSectionId: "monitoring",
+    bookmarkSectionTitle: "모니터링"
+  },
+  {
+    name: "Uk",
+    workspaceName: "UKTm",
+    productSlug: "uk",
+    basePath: "/uk",
+    crossLinkLabel: "EuTm",
+    crossLinkHref: "/europe",
+    storageKey: "uktm_reading_bookmark",
+    homeHeading: "영국 상표 실무 운영 가이드북",
+    ReaderRoot: UkReaderRoot,
+    HomePage: UkHomePage,
+    ChapterPage: UkChapterPage,
+    documentData: createReaderDocumentData({
+      title: "영국 상표 실무 운영 가이드북",
+      firstChapterSlug: "uk-overview",
+      firstChapterTitle: "영국 제1장. 제도 개요",
+      secondChapterSlug: "uk-filing",
+      secondChapterTitle: "영국 제2장. 출원 전략",
+      thirdChapterSlug: "uk-enforcement",
+      thirdChapterTitle: "영국 제3장. 집행 운영"
+    }),
+    firstChapterSlug: "uk-overview",
+    firstChapterTitle: "영국 제1장. 제도 개요",
+    targetChapterSlug: "uk-filing",
+    targetChapterTitle: "영국 제2장. 출원 전략",
+    targetSectionId: "filing",
+    targetSectionTitle: "출원 전략",
+    alternateSectionId: "filing-risk",
+    alternateSectionTitle: "리스크",
+    thirdChapterSlug: "uk-enforcement",
+    thirdChapterTitle: "영국 제3장. 집행 운영",
+    bookmarkChapterSlug: "uk-enforcement",
+    bookmarkChapterTitle: "영국 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
     bookmarkSectionTitle: "모니터링"
   }
@@ -545,14 +600,17 @@ describe("Shared reader runtime contract", () => {
   );
 
   it.each(configuredReaderCases)(
-    "keeps the inline LatTm cross-link on $name home aligned with the registry path",
+    "keeps the configured inline cross-link on $name home aligned with the registry path",
     async (readerCase) => {
       installFetchMock();
       renderReaderCase(readerCase, readerCase.basePath);
 
       await screen.findByRole("heading", { name: readerCase.homeHeading });
 
-      expect(screen.getByRole("link", { name: "LatTm" })).toHaveAttribute("href", "/latam");
+      expect(screen.getByRole("link", { name: readerCase.crossLinkLabel })).toHaveAttribute(
+        "href",
+        readerCase.crossLinkHref
+      );
     }
   );
 
