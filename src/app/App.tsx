@@ -340,13 +340,13 @@ function GatewayLandingPage() {
       <section className="gateway-cta-card">
         <p className="gateway-kicker">Suggested Reading Flow</p>
         <h2 className="gateway-cta-title">
-          이제 권역형과 국가형 6개 가이드를 모두 같은 셸에서 바로 읽을 수 있습니다
+          이제 권역형과 국가형 {liveProductCount}개 가이드를 모두 같은 셸에서 바로 읽을 수 있습니다
         </h2>
         <p className="gateway-cta-copy">
           먼저 LatTm에서 국가 우선순위, 출원 이후 운영, 증거 관리, 모니터링과 집행의 큰 흐름을 잡고,
-          멕시코·미국·일본·중국 단일 시장 쟁점이 중요해지는 순간 각 country guide로 내려가고,
-          유럽 권역 운영 구조가 필요할 때는 EuTm으로 이어지는 구성이 현재 live shell의 기본 독서
-          동선입니다.
+          {joinProductLabels(countryProducts, " · ")} 단일 시장 쟁점이 중요해지는 순간 각 country
+          guide로 내려가며, 권역 운영 구조가 필요할 때는 {joinProductLabels(regionProducts, " · ")}
+          으로 이어지는 구성이 현재 live shell의 기본 독서 동선입니다.
         </p>
         <div className="gateway-cta-actions">
           <a className="gateway-cta-link" href="#current-pilot-scope">
@@ -414,7 +414,7 @@ function GatewayLandingPage() {
           <div>
             <p className="gateway-kicker">Current Pilot Scope</p>
             <h2 className="gateway-section-title">
-              현재 GloTm에는 6개의 live shell guide가 연결되어 있습니다
+              현재 GloTm에는 {liveProductCount}개의 live shell guide가 연결되어 있습니다
             </h2>
           </div>
           <p className="gateway-section-copy">
@@ -430,7 +430,7 @@ function GatewayLandingPage() {
           />
           <ProductGroup
             title="국가 가이드"
-            description="MexTm, UsaTm, JapTm, ChaTm은 단일 시장별 절차와 운영 쟁점을 더 깊게 따라가는 트랙입니다."
+            description={`${joinProductLabels(countryProducts, " · ")}은 단일 시장별 절차와 운영 쟁점을 더 깊게 따라가는 트랙입니다.`}
             products={countryProducts}
           />
         </div>

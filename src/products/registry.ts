@@ -103,6 +103,24 @@ export const products: ProductMeta[] = [
     stageLabel: "라이브 권역 가이드",
     coverageType: "region",
     availability: "live_shell"
+  },
+  {
+    id: "uk",
+    shortLabel: "UKTm",
+    slug: "uk",
+    path: "/uk",
+    title: "영국 상표 실무 운영 가이드북",
+    summary: "UKIPO 중심의 영국 단일국가 실무를 빠르게 점검하는 신규 트랙으로, Brexit 이후 영국 시장 운영 판단을 별도 정리합니다.",
+    chapterCount: 14,
+    searchEntryCount: 56,
+    status: "Pilot",
+    statusTone: "pilot",
+    audience: "영국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
+    primaryCtaLabel: "UKTm 보기",
+    stageLabel: "신규 단일국가 트랙",
+    maturityNote: "draft 공개본",
+    coverageType: "country",
+    availability: "live_shell"
   }
 ];
 

@@ -1,0 +1,61 @@
+{
+  "title": "영국 상표 실무 운영 가이드북",
+  "chapters": [
+    {
+      "title": "영국 상표 시스템 맵과 UKIPO 운영 구조",
+      "path": "content/source/chapters/01_system-map.md"
+    },
+    {
+      "title": "출원 전 검색과 충돌 분석",
+      "path": "content/source/chapters/02_clearance-risk.md"
+    },
+    {
+      "title": "출원 전략과 권리 범위 설계",
+      "path": "content/source/chapters/03_filing-strategy.md"
+    },
+    {
+      "title": "출원서 준비와 명세 작성",
+      "path": "content/source/chapters/04_application-specification.md"
+    },
+    {
+      "title": "심사, 절차 보정, 거절 대응",
+      "path": "content/source/chapters/05_examination-refusal.md"
+    },
+    {
+      "title": "공고, Opposition, Third Party Challenge 대응",
+      "path": "content/source/chapters/06_opposition-third-party.md"
+    },
+    {
+      "title": "등록 후 유지관리와 갱신 체계",
+      "path": "content/source/chapters/07_maintenance-renewal.md"
+    },
+    {
+      "title": "사용증거와 Non-Use Cancellation 운영",
+      "path": "content/source/chapters/08_use-nonuse-cancellation.md"
+    },
+    {
+      "title": "라이선스, 유통, 공동브랜딩 운영",
+      "path": "content/source/chapters/09_license-distribution.md"
+    },
+    {
+      "title": "집행, 경고장, 분쟁 대응",
+      "path": "content/source/chapters/10_enforcement-disputes.md"
+    },
+    {
+      "title": "플랫폼, 도메인, 온라인 침해 대응",
+      "path": "content/source/chapters/11_platform-domain.md"
+    },
+    {
+      "title": "세관, 국경조치, 병행수입 이슈",
+      "path": "content/source/chapters/12_customs-border.md"
+    },
+    {
+      "title": "포트폴리오 운영, 내부 통제, RACI",
+      "path": "content/source/chapters/13_governance-raci.md"
+    },
+    {
+      "title": "사례, 체크리스트, 실행 부록",
+      "path": "content/source/chapters/14_cases-appendix.md"
+    }
+  ]
+}
