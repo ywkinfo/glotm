@@ -1,0 +1,64 @@
+{
+  "pid": 98322,
+  "parent_pid": 98292,
+  "started_at": "2026-03-31T01:01:29.986Z",
+  "cwd": "/Users/peter/GloTm",
+  "notify_script": "/opt/homebrew/lib/node_modules/oh-my-codex/dist/scripts/notify-hook.js",
+  "poll_ms": 250,
+  "pid_file": "/Users/peter/GloTm/.omx/state/notify-fallback.pid",
+  "max_lifetime_ms": 21600000,
+  "tracked_files": 3,
+  "seen_turns": 1,
+  "dispatch_drain": {
+    "enabled": true,
+    "max_per_tick": 5,
+    "run_count": 8839,
+    "leader_only": true,
+    "last_tick_at": "2026-03-31T01:55:44.941Z",
+    "last_result": {
+      "processed": 0,
+      "skipped": 0,
+      "failed": 0
+    },
+    "last_error": null
+  },
+  "leader_nudge": {
+    "enabled": true,
+    "leader_only": true,
+    "stale_threshold_ms": 180000,
+    "precomputed_leader_stale": false,
+    "last_tick_at": "2026-03-31T01:55:44.942Z",
+    "last_error": null,
+    "run_count": 8839
+  },
+  "ralph_continue_steer": {
+    "enabled": true,
+    "cadence_ms": 60000,
+    "message": "Ralph loop active continue",
+    "active": false,
+    "last_state_check_at": "2026-03-31T01:55:45.056Z",
+    "last_sent_at": "",
+    "cooldown_anchor_at": "",
+    "last_reason": "blocked_by_current_session",
+    "last_error": null,
+    "state_path": "",
+    "pane_id": "",
+    "pane_current_command": "",
+    "current_phase": "",
+    "shared_timestamp_path": "/Users/peter/GloTm/.omx/state/ralph-last-steer-at",
+    "shared_last_sent_at": "",
+    "singleton_lock_path": "/Users/peter/GloTm/.omx/state/ralph-continue-steer.lock"
+  },
+  "fallback_auto_nudge": {
+    "enabled": true,
+    "stall_ms": 5000,
+    "last_tick_at": "2026-03-31T01:55:45.042Z",
+    "last_turn_at": "2026-03-31T01:53:36.916Z",
+    "last_turn_count": 8,
+    "last_message": "**진단 업데이트**\n\n현재 브랜치는 여전히 Phase 1 작업 브랜치로 건강합니다. 루트 셸과 6개 라이브 가이드 구조는 문서/코드가 맞고, `npm test`, `npm run",
+    "last_reason": "eligible_but_not_sent",
+    "last_error": null,
+    "last_nudged_signature": "",
+    "last_nudged_at": ""
+  }
+}

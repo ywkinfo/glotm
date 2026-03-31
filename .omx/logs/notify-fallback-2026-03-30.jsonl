@@ -1,0 +1,14 @@
+{"timestamp":"2026-03-30T23:38:17.014Z","type":"watcher_start","cwd":"/Users/peter/GloTm","notify_script":"/opt/homebrew/lib/node_modules/oh-my-codex/dist/scripts/notify-hook.js","poll_ms":250,"once":false,"parent_pid":35223,"pid_file":"/Users/peter/GloTm/.omx/state/notify-fallback.pid","max_lifetime_ms":21600000}
+{"timestamp":"2026-03-30T23:38:17.016Z","type":"dispatch_drain_tick","leader_only":true,"dispatch_max_per_tick":5,"run_count":1,"processed":0,"skipped":0,"failed":0}
+{"timestamp":"2026-03-30T23:38:17.128Z","type":"leader_nudge_tick","leader_only":true,"run_count":1,"stale_threshold_ms":180000,"precomputed_leader_stale":false,"reason":"leader_nudge_skipped_not_stale"}
+{"timestamp":"2026-03-30T23:38:17.383Z","type":"dispatch_drain_tick","leader_only":true,"dispatch_max_per_tick":5,"run_count":2,"processed":0,"skipped":0,"failed":0}
+{"timestamp":"2026-03-30T23:38:17.505Z","type":"leader_nudge_tick","leader_only":true,"run_count":2,"stale_threshold_ms":180000,"precomputed_leader_stale":false,"reason":"leader_nudge_skipped_not_stale"}
+{"timestamp":"2026-03-30T23:38:17.758Z","type":"dispatch_drain_tick","leader_only":true,"dispatch_max_per_tick":5,"run_count":3,"processed":0,"skipped":0,"failed":0}
+{"timestamp":"2026-03-30T23:38:17.877Z","type":"leader_nudge_tick","leader_only":true,"run_count":3,"stale_threshold_ms":180000,"precomputed_leader_stale":false,"reason":"leader_nudge_skipped_not_stale"}
+{"timestamp":"2026-03-30T23:38:18.114Z","type":"watcher_start","cwd":"/Users/peter/GloTm","notify_script":"/opt/homebrew/lib/node_modules/oh-my-codex/dist/scripts/notify-hook.js","poll_ms":250,"once":true,"parent_pid":35223,"pid_file":null,"max_lifetime_ms":0}
+{"timestamp":"2026-03-30T23:38:18.117Z","type":"dispatch_drain_tick","leader_only":true,"dispatch_max_per_tick":5,"run_count":1,"processed":0,"skipped":0,"failed":0}
+{"timestamp":"2026-03-30T23:38:18.130Z","type":"dispatch_drain_tick","leader_only":true,"dispatch_max_per_tick":5,"run_count":4,"processed":0,"skipped":0,"failed":0}
+{"timestamp":"2026-03-30T23:38:18.226Z","type":"leader_nudge_tick","leader_only":true,"run_count":1,"stale_threshold_ms":180000,"precomputed_leader_stale":false,"reason":"leader_nudge_skipped_not_stale"}
+{"timestamp":"2026-03-30T23:38:18.228Z","type":"watcher_once_complete","seen_turns":0}
+{"timestamp":"2026-03-30T23:38:18.238Z","type":"leader_nudge_tick","leader_only":true,"run_count":4,"stale_threshold_ms":180000,"precomputed_leader_stale":false,"reason":"leader_nudge_skipped_not_stale"}
+{"timestamp":"2026-03-30T23:38:18.239Z","type":"watcher_stop","signal":"SIGTERM","reason":"signal","parent_pid":35223,"pid_file":"/Users/peter/GloTm/.omx/state/notify-fallback.pid"}
