@@ -49,8 +49,9 @@ const ukModulePath = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "uk.tsx"
 );
+const ukImportPath = "./uk";
 const ukModule = existsSync(ukModulePath)
-  ? (await import("./uk")) as OptionalUkModule
+  ? (await import(/* @vite-ignore */ ukImportPath)) as OptionalUkModule
   : null;
 
 type ReaderCase = {
