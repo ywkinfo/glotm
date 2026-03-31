@@ -3,7 +3,7 @@
 ## Purpose
 
 `JapTm`은 일본 상표 실무를 다루는 단일국가 심화 워크스페이스다.
-현재는 단일 마스터 원고 기반 콘텐츠 파이프라인으로 운영되며, 루트 `GloTm` 셸의 `/japan` 경로에 연결된 live country guide다.
+현재는 장별 원고와 `manifest.json`을 기준으로 `master.md`를 조립한 뒤 QA와 generated JSON 생성을 거치는 콘텐츠 파이프라인으로 운영되며, 루트 `GloTm` 셸의 `/japan` 경로에 연결된 live country guide다.
 
 ## Source Of Truth
 
