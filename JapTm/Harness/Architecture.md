@@ -3,7 +3,7 @@
 ## Purpose
 
 `JapTm`은 일본 상표 실무를 다루는 단일국가 심화 워크스페이스다.
-현재는 `MexTm`와 같은 단일 마스터 원고 기반 콘텐츠 파이프라인으로 시작하며, 루트 `GloTm` 셸에는 아직 연결하지 않는다.
+현재는 단일 마스터 원고 기반 콘텐츠 파이프라인으로 운영되며, 루트 `GloTm` 셸의 `/japan` 경로에 연결된 live country guide다.
 
 ## Source Of Truth
 
@@ -22,13 +22,14 @@
 1. `scripts/build-content.ts`가 `master.md`를 읽는다.
 2. H2를 챕터 경계로 파싱한다.
 3. 각 챕터를 HTML, headings tree, summary, search entries로 변환한다.
-4. 향후 루트 GloTm 셸에 연결할 경우 generated JSON을 소비한다.
+4. 루트 `GloTm` 셸은 현재 이 generated JSON을 소비해 `/japan` 리더를 렌더링한다.
 
 ## Current Verified Shape
 
 - 목표 챕터 수: 15
 - 파이프라인 명령: `npm run content:build`
 - 현재 미구축 항목: `manifest.json`, `build-master.ts`, `qa-content.ts`
+- 현재 런타임 경로: `/japan`, `/japan/chapter/:chapterSlug`
 
 ## Editing Rules
 
@@ -36,6 +37,7 @@
 - 장별 파일은 편집 초안이며 `master.md`에 반영되지 않으면 빌드 결과에 나타나지 않는다.
 - generated JSON은 손으로 수정하지 않는다.
 - 변동성이 큰 사실은 본문보다 `content/research/jp_tm_fact_verification_log.md`에 먼저 정리한다.
+- 콘텐츠 보강은 기존 챕터 제목과 루트 셸 라우트 안정성을 해치지 않는 방향을 우선한다.
 
 ## Implementation Notes
 
