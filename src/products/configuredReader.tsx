@@ -106,6 +106,7 @@ type ReaderConfig = {
   positioningNote: ReactNode;
   chapterBadge: string;
   chapterEyebrow: string;
+  contentStatus?: "draft";
 };
 
 const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
@@ -874,6 +875,15 @@ export function createConfiguredReader(config: ReaderConfig) {
               이어 읽기
             </NavLink>
           </section>
+        ) : null}
+
+        {config.contentStatus === "draft" ? (
+          <div className="draft-notice" role="note" aria-label="콘텐츠 준비 중 안내">
+            <span className="draft-notice-icon" aria-hidden="true">⚠</span>
+            <p className="draft-notice-text">
+              이 가이드는 현재 콘텐츠를 작성 중입니다. 일부 챕터는 개요 수준으로만 제공될 수 있으며, 순차적으로 보강될 예정입니다.
+            </p>
+          </div>
         ) : null}
 
         <section className="gateway-section">
