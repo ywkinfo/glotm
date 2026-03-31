@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "content:build": "node ../node_modules/tsx/dist/cli.mjs scripts/build-content.ts"
+    "content:master": "node ../node_modules/tsx/dist/cli.mjs scripts/build-master.ts",
+    "content:qa": "node ../node_modules/tsx/dist/cli.mjs scripts/qa-content.ts",
+    "content:build": "node ../node_modules/tsx/dist/cli.mjs scripts/build-content.ts",
+    "content:prepare": "npm run content:master && npm run content:qa && npm run content:build"
   },
   "dependencies": {
     "minisearch": "^7.1.2",

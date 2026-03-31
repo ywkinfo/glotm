@@ -1,32 +1,40 @@
 # EuTm Harness Content Spec
 
-## Canonical Input
+## Canonical Inputs
 
-- 현재 빌드 기준 정본은 `content/source/master.md`다.
+- 챕터 원고: `content/source/chapters/*.md`
+- 챕터 메타데이터: `content/source/manifest.json`
+- 조립 결과물: `content/source/master.md`
 
-이 문서가 중요하다.
+중요:
 
-- `scripts/build-content.ts`는 `master.md`만 읽는다.
-- `content/source/chapters/`와 `appendix/`는 현재 참고용 또는 편집용 자산이며 자동 조립되지 않는다.
+- `scripts/build-master.ts`와 `scripts/build-content.ts`는 현재 `chapters/`와 `manifest.json`을 기준으로 공개본을 만든다.
+- `master.md`를 직접 수정하더라도 장별 원고와 `manifest.json`에 반영되지 않으면 다음 조립에서 덮어써진다.
+
+## Chapter File Rules
+
+- 각 원고 파일은 첫 번째 비어 있지 않은 줄에 H1 하나만 둔다.
+- 원고 H1은 `manifest.json`의 해당 `title`과 정확히 일치해야 한다.
+- 내부 본문 섹션은 기본적으로 H2-H4를 사용한다.
+- 표는 pipe table 문법을 유지하고, 코드 펜스는 반드시 닫는다.
+- 리서치 메모, 검색 턴 표식, 브라우저 인용 표식은 원고에 남기지 않는다.
 
 ## Master Document Rules
 
-- 문서 첫 번째 H1은 전체 가이드 제목이다.
-- 각 H2는 하나의 챕터를 시작한다.
-- 각 챕터 안에서 H3-H5는 outline과 search entry 생성을 위한 섹션 단위다.
-- 챕터 도입부는 첫 H3 이전까지의 내용으로 보고 summary와 overview search entry를 만든다.
+- `master.md`의 H1은 문서 전체 제목이다.
+- 각 챕터 경계는 H2다.
+- 챕터 내부 섹션은 H3-H5다.
+- 장별 원고의 H2-H4는 `build-master.ts`를 거치며 H3-H5로 승격된다.
 
-## Chapter Writing Rules
+## Search And Reader Rules
 
-- 챕터 제목은 H2에서만 정의한다.
-- 본문 섹션은 가능하면 H3부터 시작하고, 필요한 경우 H4-H5까지 사용한다.
-- 각 챕터는 최소 3개의 H3를 둔다.
-- 표는 pipe table 문법을 유지하고, 코드 펜스는 반드시 닫는다.
-- 링크와 기관명은 독자가 확인 가능한 형태로 쓴다.
-- 수수료, 제출기한, 제도 명칭, 공식 폼 이름은 공식 출처 기준으로 다시 확인한다.
+- 챕터 첫 번째 섹션 전의 도입부는 summary와 overview search entry의 재료가 된다.
+- H3-H5 각 섹션은 outline 노드와 search entry 후보가 된다.
+- 섹션 제목은 slug로 변환되어 hash 이동과 검색 이동의 기준이 된다.
 
-## Editorial Warnings
+## Editorial Guidance
 
-- 개별 챕터 파일을 수정해도 `master.md`에 반영되지 않으면 현재 generated JSON에는 나타나지 않는다.
-- `manifest.json`과 자동 QA가 없으므로, 제목 정합성, 헤딩 구조, 중복 문단은 수동 검토 비중이 더 크다.
-- 본문 확정 전에 `content/research/eu_tm_fact_verification_log.md`에서 고변동 사실의 검증 상태를 먼저 본다.
+- 장 제목을 바꿀 때는 원고 H1, `manifest.json`, `master.md` 생성 결과를 함께 확인한다.
+- 법률 사실, 기한, 기관명, 수수료, 제도 설명은 공식 출처 또는 검증 로그와 맞춘다.
+- 권역형 본문은 EU 공통 프레임과 운영 판단을 먼저 설명하고, 회원국별 예외는 표나 메모 수준으로 제한한다.
+- 장별 최소 3개 이상의 실무 섹션(H2)을 유지하고, 가능한 경우 체크리스트나 표를 포함한다.
