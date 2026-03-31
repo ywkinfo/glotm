@@ -398,6 +398,12 @@ body {
   font-weight: 700;
 }
 
+.product-card-metrics {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .product-card-note {
   margin: 0.65rem 0 0;
   color: var(--warm);

@@ -1,31 +1,39 @@
 # ChaTm Harness Content Spec
 
-## Canonical Input
+## Canonical Inputs
 
-- 현재 빌드 기준 정본은 `content/source/master.md`다.
+- 챕터 원고: `content/source/chapters/*.md`
+- 챕터 메타데이터: `content/source/manifest.json`
+- 조립 결과물: `content/source/master.md`
 
-이 문서가 중요하다.
+중요:
 
-- `scripts/build-content.ts`는 `master.md`만 읽는다.
-- `content/source/chapters/`와 `appendix/`는 현재 참고용 또는 후속 분리용 자산이며 자동 조립되지 않는다.
+- `scripts/build-master.ts`와 `scripts/build-content.ts`는 현재 `chapters/`와 `manifest.json`을 기준으로 공개본을 만든다.
+- `master.md`를 직접 수정하더라도 장별 원고와 `manifest.json`에 반영되지 않으면 다음 조립에서 덮어써진다.
+
+## Chapter File Rules
+
+- 각 원고 파일은 첫 번째 비어 있지 않은 줄에 H1 하나만 둔다.
+- 원고 H1은 `manifest.json`의 해당 `title`과 정확히 일치해야 한다.
+- 내부 본문 섹션은 기본적으로 H2-H4를 사용한다.
+- 표는 pipe table 문법을 유지하고, 코드 펜스는 반드시 닫는다.
+- 리서치 메모, 검색 턴 표식, 브라우저 인용 표식은 원고에 남기지 않는다.
 
 ## Master Document Rules
 
-- 문서 첫 번째 H1은 전체 가이드 제목이다.
-- 각 H2는 하나의 챕터를 시작한다.
-- 각 챕터 안에서 H3-H5는 outline과 search entry 생성을 위한 섹션 단위다.
-- 챕터 도입부는 첫 H3 이전까지의 내용으로 보고 summary와 overview search entry를 만든다.
+- `master.md`의 H1은 문서 전체 제목이다.
+- 각 챕터 경계는 H2다.
+- 챕터 내부 섹션은 H3-H5다.
+- 장별 원고의 H2-H4는 `build-master.ts`를 거치며 H3-H5로 승격된다.
 
-## Chapter Writing Rules
+## Search And Reader Rules
 
-- 챕터 제목은 H2에서만 정의한다.
-- 본문 섹션은 가능하면 H3부터 시작하고, 필요한 경우 H4-H5까지 사용한다.
-- 표는 pipe table 문법을 유지하고, 코드 펜스는 반드시 닫는다.
-- 링크와 기관명은 독자가 다시 확인할 수 있는 공식 명칭으로 적는다.
-- 민감한 법률 사실과 기한은 CNIPA, SAMR, 법원, WIPO 등 공식 출처 기준으로 다시 확인한다.
+- 챕터 첫 번째 섹션 전의 도입부는 summary와 overview search entry의 재료가 된다.
+- H3-H5 각 섹션은 outline 노드와 search entry 후보가 된다.
+- 섹션 제목은 slug로 변환되어 hash 이동과 검색 이동의 기준이 된다.
 
-## Editorial Warnings
+## Editorial Guidance
 
-- 개별 챕터 파일을 수정해도 `master.md`에 반영되지 않으면 현재 generated JSON에는 나타나지 않는다.
-- `manifest.json`과 자동 QA가 없으므로 제목 정합성, 헤딩 구조, 표 형식, 중복 문단은 수동 검토 비중이 크다.
-- 향후 `LatTm`식 파이프라인으로 이식되기 전까지는 `master.md`가 실제 공개본 기준이다.
+- 장 제목을 바꿀 때는 원고 H1, `manifest.json`, `master.md` 생성 결과를 함께 확인한다.
+- 법률 사실, 기한, 기관명, 수수료, 시스템 명칭은 `content/research/cn_tm_fact_verification_log.md` 또는 공식 출처와 맞춘다.
+- 얇은 가이드 상태를 고려해 각 장에 최소 1개의 체크리스트, 판단 기준표, 운영 메모 중 하나를 유지한다.

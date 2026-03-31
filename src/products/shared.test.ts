@@ -7,12 +7,13 @@ import {
   buildGeneratedContentUrl,
   buildRuntimeDocumentTitle,
   createReadingBookmarkStorage,
-  createSearchController,
-  filterCatalogChapters,
-  getRouterBasename,
-  getAdjacentChapters,
-  getTrackedSectionId,
-  normalizeAppHref,
+    createSearchController,
+    filterCatalogChapters,
+    getRouterBasename,
+    getAdjacentChapters,
+    getChapterStage,
+    getTrackedSectionId,
+    normalizeAppHref,
   type Chapter,
   type SearchEntry
 } from "./shared";
@@ -202,6 +203,17 @@ describe("shared product helpers", () => {
         value: originalInnerHeight
       });
     }
+  });
+
+  it("treats chapter 20 and later as appendix until the stage map expands", () => {
+    expect(getChapterStage("제19장. 운영 시스템 구축 가이드")).toEqual({
+      key: "operations",
+      label: "운영 체계"
+    });
+    expect(getChapterStage("제20장. 후속 확장")).toEqual({
+      key: "appendix",
+      label: "부록"
+    });
   });
 
   it("falls back safely when bookmark storage contains invalid JSON", () => {

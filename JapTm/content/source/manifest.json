@@ -1,0 +1,65 @@
+{
+  "title": "일본 상표 실무 운영 가이드북",
+  "chapters": [
+    {
+      "title": "서문",
+      "path": "content/source/chapters/00-preface.md"
+    },
+    {
+      "title": "제1장 일본 상표 제도 개요와 JPO 운영 구조",
+      "path": "content/source/chapters/01-jpo-overview.md"
+    },
+    {
+      "title": "제2장 상표 전략 수립: 표장·클래스·지정상품/서비스 스코프 설계",
+      "path": "content/source/chapters/02-strategy-scope-design.md"
+    },
+    {
+      "title": "제3장 검색과 충돌 리스크 분석: 일본 공식 검색 도구와 선행조사 활용",
+      "path": "content/source/chapters/03-search-risk-analysis.md"
+    },
+    {
+      "title": "제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원)",
+      "path": "content/source/chapters/04-filing-route-selection.md"
+    },
+    {
+      "title": "제5장 출원서 작성 실무: 출원인 구조·대리인·전자출원 준비",
+      "path": "content/source/chapters/05-application-preparation.md"
+    },
+    {
+      "title": "제6장 심사·보정·거절이유 대응 플레이북",
+      "path": "content/source/chapters/06-examination-and-refusal-playbook.md"
+    },
+    {
+      "title": "제7장 등록 후 유지관리: 갱신·권리 유지 캘린더",
+      "path": "content/source/chapters/07-post-registration-maintenance.md"
+    },
+    {
+      "title": "제8장 양도·라이선스·유통 구조 통제",
+      "path": "content/source/chapters/08-transactions-and-licensing.md"
+    },
+    {
+      "title": "제9장 침해 대응: 경고장·행정/민사 연계·증거 패키지",
+      "path": "content/source/chapters/09-enforcement-strategy.md"
+    },
+    {
+      "title": "제10장 세관·국경 조치와 물류 통제",
+      "path": "content/source/chapters/10-customs-and-border-control.md"
+    },
+    {
+      "title": "제11장 도메인·디자인·저작권·부정경쟁과의 결합 전략",
+      "path": "content/source/chapters/11-domain-design-copyright-unfair-competition.md"
+    },
+    {
+      "title": "제12장 분쟁 예방: 포트폴리오 관리·모니터링·내부통제(RACI)",
+      "path": "content/source/chapters/12-portfolio-monitoring-raci.md"
+    },
+    {
+      "title": "제13장 실무 사례·실패 패턴: 한국 기업 관점",
+      "path": "content/source/chapters/13-case-studies-and-failure-patterns.md"
+    },
+    {
+      "title": "부록: 체크리스트·서식 템플릿·타임라인·FAQ·공식 링크",
+      "path": "content/source/appendix/14-checklists-and-templates.md"
+    }
+  ]
+}
