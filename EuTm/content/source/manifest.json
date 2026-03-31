@@ -1,0 +1,61 @@
+{
+  "title": "EuTm 유럽 상표 운영 가이드북",
+  "chapters": [
+    {
+      "title": "제1장. 유럽 상표 시스템 지도",
+      "path": "content/source/chapters/01_system-map.md"
+    },
+    {
+      "title": "제2장. 권리 선택: EUTM, 개별국, 영국 병행",
+      "path": "content/source/chapters/02_right-selection.md"
+    },
+    {
+      "title": "제3장. 포트폴리오 설계와 우선순위",
+      "path": "content/source/chapters/03_portfolio-priority.md"
+    },
+    {
+      "title": "제4장. 사전 검색과 충돌 분석",
+      "path": "content/source/chapters/04_clearance-risk.md"
+    },
+    {
+      "title": "제5장. 출원 경로와 서류 설계",
+      "path": "content/source/chapters/05_filing-route.md"
+    },
+    {
+      "title": "제6장. 심사와 절대적 거절 대응",
+      "path": "content/source/chapters/06_absolute-grounds.md"
+    },
+    {
+      "title": "제7장. 이의신청과 공존 전략",
+      "path": "content/source/chapters/07_opposition-coexistence.md"
+    },
+    {
+      "title": "제8장. 등록 후 사용, 갱신, 증거 관리",
+      "path": "content/source/chapters/08_post-registration-evidence.md"
+    },
+    {
+      "title": "제9장. 취소, 무효, 불사용 리스크",
+      "path": "content/source/chapters/09_cancellation-invalidity.md"
+    },
+    {
+      "title": "제10장. 라이선스, 유통, 병행수입",
+      "path": "content/source/chapters/10_licensing-distribution-exhaustion.md"
+    },
+    {
+      "title": "제11장. 온라인 플랫폼, 도메인, 디지털 집행",
+      "path": "content/source/chapters/11_platform-domain-digital-enforcement.md"
+    },
+    {
+      "title": "제12장. 세관과 국경조치",
+      "path": "content/source/chapters/12_customs-border-measures.md"
+    },
+    {
+      "title": "제13장. 회원국 분쟁과 포럼 선택",
+      "path": "content/source/chapters/13_member-state-forum-selection.md"
+    },
+    {
+      "title": "제14장. 운영 거버넌스와 RACI",
+      "path": "content/source/chapters/14_governance-raci.md"
+    }
+  ]
+}
