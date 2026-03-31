@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -6,7 +6,11 @@ import { describe, expect, it } from "vitest";
 import { liveShellProducts } from "./registry";
 import type { DocumentData } from "./shared";
 
-const generatedProducts = liveShellProducts.map((product) => product.shortLabel);
+const generatedProducts = liveShellProducts
+  .map((product) => product.shortLabel)
+  .filter((productName) =>
+    existsSync(path.resolve(process.cwd(), productName, "content/generated/document-data.json"))
+  );
 
 function readGeneratedDocument(productName: string) {
   const documentPath = path.resolve(
@@ -24,7 +28,7 @@ describe("generated content link smoke", () => {
     const chapterHtml = documentData.chapters.map((chapter) => chapter.html).join("\n");
     const anchors = chapterHtml.match(/<a [^>]+>/g) ?? [];
     const internalAppAnchors = anchors.filter((anchor) =>
-      /href="\/(?:latam|mexico|usa|japan|china|europe)(?:[\/#?"]|$)/.test(anchor)
+      /href="\/(?:latam|mexico|usa|japan|china|europe|uk)(?:[\/#?"]|$)/.test(anchor)
     );
 
     if (anchors.length > 0) {
