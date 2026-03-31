@@ -10,20 +10,56 @@
       "path": "content/source/chapters/01-system-map.md"
     },
     {
-      "title": "제2장. 출원 설계와 선행 검토",
-      "path": "content/source/chapters/02-filing-design.md"
+      "title": "제2장. 브랜드 구조와 중국어 표기 전략",
+      "path": "content/source/chapters/02-brand-structure-chinese-naming.md"
     },
     {
-      "title": "제3장. 심사, 공고, 이의와 거절 대응",
-      "path": "content/source/chapters/03-examination-opposition-refusal.md"
+      "title": "제3장. 검색, 분류, 서브클래스 리스크 분석",
+      "path": "content/source/chapters/03-search-subclass-risk.md"
     },
     {
-      "title": "제4장. 등록 후 유지와 사용 증거",
-      "path": "content/source/chapters/04-post-registration-evidence.md"
+      "title": "제4장. 출원 경로 선택: 직접출원 vs 마드리드",
+      "path": "content/source/chapters/04-filing-route.md"
     },
     {
-      "title": "제5장. 분쟁 대응과 집행",
-      "path": "content/source/chapters/05-enforcement.md"
+      "title": "제5장. 출원서 작성 실무와 지정상품 설계",
+      "path": "content/source/chapters/05-application-preparation.md"
+    },
+    {
+      "title": "제6장. 심사, 공고, 이의와 거절 대응",
+      "path": "content/source/chapters/06-examination-opposition-refusal.md"
+    },
+    {
+      "title": "제7장. 등록 후 유지와 사용 증거",
+      "path": "content/source/chapters/07-post-registration-evidence.md"
+    },
+    {
+      "title": "제8장. 비사용취소, 무효와 취소 리스크",
+      "path": "content/source/chapters/08-nonuse-invalidation.md"
+    },
+    {
+      "title": "제9장. 라이선스, 유통, OEM/제조 구조 통제",
+      "path": "content/source/chapters/09-licensing-distribution-oem.md"
+    },
+    {
+      "title": "제10장. 침해 대응: 행정, 사법, 경고장, 증거 패키지",
+      "path": "content/source/chapters/10-enforcement-admin-judicial.md"
+    },
+    {
+      "title": "제11장. 플랫폼, 도메인, 저작권, 부정경쟁 결합 대응",
+      "path": "content/source/chapters/11-platform-domain-copyright-unfair-competition.md"
+    },
+    {
+      "title": "제12장. 세관, 국경조치, 물류 통제",
+      "path": "content/source/chapters/12-customs-border-control.md"
+    },
+    {
+      "title": "제13장. 모니터링, 내부통제, RACI",
+      "path": "content/source/chapters/13-monitoring-governance-raci.md"
+    },
+    {
+      "title": "제14장. 사례, 실패 패턴, 부록",
+      "path": "content/source/chapters/14-case-studies-and-appendix.md"
     }
   ]
 }

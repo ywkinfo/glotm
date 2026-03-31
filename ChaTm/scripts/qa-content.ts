@@ -19,7 +19,7 @@ type Issue = {
 };
 
 const WORKSPACE_LABEL = "ChaTm";
-const EXPECTED_CHAPTER_COUNT = 6;
+const EXPECTED_CHAPTER_COUNT = 15;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
