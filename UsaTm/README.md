@@ -22,4 +22,5 @@
 - v1의 공개본 기준은 `content/source/master.md`입니다.
 - `content/source/chapters/`와 `content/source/appendix/`는 편집용 자산이며, 현재 빌드는 자동 조립하지 않습니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/usa` 리더를 렌더링합니다.
+- 현재 빌드 기준 산출물은 **14개 챕터 / 검색 엔트리 165개**입니다.
 - 수수료, 세부 기한, 시스템 명칭처럼 변동성이 큰 정보는 출판 직전 `content/research/us_tm_fact_verification_log.md`로 다시 확인합니다.
