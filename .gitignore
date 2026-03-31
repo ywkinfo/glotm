@@ -11,3 +11,4 @@ public/generated
 .DS_Store
 *.tsbuildinfo
 **/*.tsbuildinfo
+.tmp-reader-*.png

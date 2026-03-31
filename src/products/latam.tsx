@@ -23,10 +23,10 @@ const searchEntriesUrl = buildGeneratedContentUrl("latam", "search-index.json");
 const HOME_FILTER_SUGGESTIONS = [
   "전략",
   "출원",
-  "분쟁",
-  "운영",
+  "집행",
   "국가별",
-  "실패 사례"
+  "사례",
+  "부록"
 ] as const;
 
 function LatamHomeContent({

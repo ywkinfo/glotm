@@ -1,0 +1,29 @@
+{
+  "title": "중국 상표 실무 운영 가이드",
+  "chapters": [
+    {
+      "title": "서문",
+      "path": "content/source/chapters/00-preface.md"
+    },
+    {
+      "title": "제1장. 중국 상표제도 구조와 판단 프레임",
+      "path": "content/source/chapters/01-system-map.md"
+    },
+    {
+      "title": "제2장. 출원 설계와 선행 검토",
+      "path": "content/source/chapters/02-filing-design.md"
+    },
+    {
+      "title": "제3장. 심사, 공고, 이의와 거절 대응",
+      "path": "content/source/chapters/03-examination-opposition-refusal.md"
+    },
+    {
+      "title": "제4장. 등록 후 유지와 사용 증거",
+      "path": "content/source/chapters/04-post-registration-evidence.md"
+    },
+    {
+      "title": "제5장. 분쟁 대응과 집행",
+      "path": "content/source/chapters/05-enforcement.md"
+    }
+  ]
+}

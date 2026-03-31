@@ -540,6 +540,8 @@ export function getAdjacentChapters(chapters: Chapter[], currentChapterSlug?: st
   };
 }
 
+// LatTm live content currently ends at chapter 19 plus an appendix.
+// Chapter 20+ intentionally falls back to appendix until the stage map expands.
 const STAGE_ORDER = [
   { min: 1, max: 1, key: "strategy", label: "전략 프레임" },
   { min: 2, max: 3, key: "prefiling", label: "Pre-filing" },
