@@ -3,6 +3,7 @@ import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppRoutes } from "./App";
+import { introDocument } from "../content/intro";
 import { liveShellReaderDefinitions } from "../products/liveShellReaders";
 import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
@@ -218,23 +219,15 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
+    const expectedSummaryParagraphs = introDocument.quote.slice(1, 3);
 
     expect(gatewayHero).not.toBeNull();
     expect(
-      within(gatewayHero as HTMLElement).getByText(
-        "이 글은 상표 절차를 처음부터 끝까지 설명하는 입문서가 아니다. 해외 진출 현장에서 상표 이슈가 어떤 순간에 사업 리스크로 커지는지, 그 타이밍과 맥락에 초점을 맞춘 글이다."
-      )
+      within(gatewayHero as HTMLElement).getByText(introDocument.quote[0] ?? "")
     ).toBeInTheDocument();
-    expect(
-      within(gatewayHero as HTMLElement).getByText(
-        "해외 진출을 준비할 때, 상표 문제는 좀처럼 먼저 눈에 들어오지 않는다. 인증, 통관, 물류, 채널 확보처럼 당장 발등에 떨어진 과제들이 앞을 가리고 있기 때문이다. 하지만 브랜드가 시장에 자리를 잡고, 파트너 구조가 복잡해지고, 투자나 확장 논의가 본격화되는 바로 그 시점에 준비되지 않은 상표는 생각보다 훨씬 큰 공백으로 돌아온다."
-      )
-    ).toBeInTheDocument();
-    expect(
-      within(gatewayHero as HTMLElement).getByText(
-        "이 글에서는 그 공백이 실제로 어떤 장면에서 드러나는지, 그리고 왜 사후 대응이 사전 준비보다 몇 배나 어려운지를 구체적으로 짚어 본다."
-      )
-    ).toBeInTheDocument();
+    expectedSummaryParagraphs.forEach((paragraph) => {
+      expect(within(gatewayHero as HTMLElement).getByText(paragraph)).toBeInTheDocument();
+    });
     expect((gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
   });
 

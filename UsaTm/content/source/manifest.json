@@ -1,0 +1,61 @@
+{
+  "title": "미국 상표 실무 운영 가이드북",
+  "chapters": [
+    {
+      "title": "서문",
+      "path": "content/source/chapters/01_preface.md"
+    },
+    {
+      "title": "미국 상표 제도 개요와 USPTO 운영 구조",
+      "path": "content/source/chapters/02_uspto-overview.md"
+    },
+    {
+      "title": "브랜드/포트폴리오 전략과 권리 범위 설계",
+      "path": "content/source/chapters/03_portfolio-strategy.md"
+    },
+    {
+      "title": "검색과 충돌 리스크 분석",
+      "path": "content/source/chapters/04_clearance-risk.md"
+    },
+    {
+      "title": "출원 경로 선택: use-based / intent-to-use / Madrid",
+      "path": "content/source/chapters/05_filing-route.md"
+    },
+    {
+      "title": "출원서 작성 실무와 ID 설계",
+      "path": "content/source/chapters/06_application-id.md"
+    },
+    {
+      "title": "심사와 Office Action 대응",
+      "path": "content/source/chapters/07_office-action.md"
+    },
+    {
+      "title": "공고, Opposition, Letter of Protest 대응",
+      "path": "content/source/chapters/08_publication-opposition-lop.md"
+    },
+    {
+      "title": "사용 개시, Specimen, Statement of Use 운영",
+      "path": "content/source/chapters/09_use-specimen-sou.md"
+    },
+    {
+      "title": "등록 후 유지관리와 갱신 체계",
+      "path": "content/source/chapters/10_maintenance-renewal.md"
+    },
+    {
+      "title": "Assignment, License, Quality Control 실무",
+      "path": "content/source/chapters/11_assignment-license-qc.md"
+    },
+    {
+      "title": "모니터링, Marketplace, Domain, CBP 연계 대응",
+      "path": "content/source/chapters/12_monitoring-marketplace-domain-cbp.md"
+    },
+    {
+      "title": "분쟁 전략: TTAB, 연방법원, 행정/민사 선택",
+      "path": "content/source/chapters/13_disputes-ttab-court.md"
+    },
+    {
+      "title": "포트폴리오 관리 및 내부 통제(RACI) + 부록",
+      "path": "content/source/chapters/14_governance-raci-appendix.md"
+    }
+  ]
+}

@@ -517,6 +517,33 @@ describe("Shared reader runtime contract", () => {
     }
   );
 
+  it.each(readerCases)(
+    "navigates from search results into chapter hash routes for $name",
+    async (readerCase) => {
+      const user = userEvent.setup();
+
+      installFetchMock();
+      installNavigationMocks();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const input = screen.getByRole("combobox", { name: "검색" });
+      await user.click(input);
+      await user.type(input, readerCase.bookmarkSectionTitle);
+
+      const option = await screen.findByRole("option", { name: new RegExp(readerCase.bookmarkSectionTitle) });
+      await user.click(option);
+
+      await screen.findByRole("heading", { name: readerCase.bookmarkChapterTitle });
+      await waitFor(() => {
+        expect(screen.getByTestId("reader-location")).toHaveTextContent(
+          `${readerCase.basePath}/chapter/${readerCase.bookmarkChapterSlug}#${readerCase.bookmarkSectionId}`
+        );
+      });
+    }
+  );
+
   it.each(configuredReaderCases)(
     "keeps the inline LatTm cross-link on $name home aligned with the registry path",
     async (readerCase) => {
