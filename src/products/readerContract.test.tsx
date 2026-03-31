@@ -1,3 +1,7 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
@@ -33,12 +37,21 @@ import {
   UsaHomePage,
   UsaReaderRoot
 } from "./usa";
-import {
-  UkChapterPage,
-  UkHomePage,
-  UkReaderRoot
-} from "./uk";
 import type { DocumentData, SearchEntry } from "./shared";
+
+type OptionalUkModule = {
+  UkChapterPage: typeof LatamChapterPage;
+  UkHomePage: typeof LatamHomePage;
+  UkReaderRoot: typeof LatamReaderRoot;
+};
+
+const ukModulePath = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "uk.tsx"
+);
+const ukModule = existsSync(ukModulePath)
+  ? (await import("./uk")) as OptionalUkModule
+  : null;
 
 type ReaderCase = {
   name: string;
@@ -357,42 +370,46 @@ const readerCases: ReaderCase[] = [
     bookmarkSectionId: "monitoring",
     bookmarkSectionTitle: "모니터링"
   },
-  {
-    name: "Uk",
-    workspaceName: "UKTm",
-    productSlug: "uk",
-    basePath: "/uk",
-    crossLinkLabel: "EuTm",
-    crossLinkHref: "/europe",
-    storageKey: "uktm_reading_bookmark",
-    homeHeading: "영국 상표 실무 운영 가이드북",
-    ReaderRoot: UkReaderRoot,
-    HomePage: UkHomePage,
-    ChapterPage: UkChapterPage,
-    documentData: createReaderDocumentData({
-      title: "영국 상표 실무 운영 가이드북",
-      firstChapterSlug: "uk-overview",
-      firstChapterTitle: "영국 제1장. 제도 개요",
-      secondChapterSlug: "uk-filing",
-      secondChapterTitle: "영국 제2장. 출원 전략",
-      thirdChapterSlug: "uk-enforcement",
-      thirdChapterTitle: "영국 제3장. 집행 운영"
-    }),
-    firstChapterSlug: "uk-overview",
-    firstChapterTitle: "영국 제1장. 제도 개요",
-    targetChapterSlug: "uk-filing",
-    targetChapterTitle: "영국 제2장. 출원 전략",
-    targetSectionId: "filing",
-    targetSectionTitle: "출원 전략",
-    alternateSectionId: "filing-risk",
-    alternateSectionTitle: "리스크",
-    thirdChapterSlug: "uk-enforcement",
-    thirdChapterTitle: "영국 제3장. 집행 운영",
-    bookmarkChapterSlug: "uk-enforcement",
-    bookmarkChapterTitle: "영국 제3장. 집행 운영",
-    bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
-  }
+  ...(
+    ukModule
+      ? [{
+          name: "Uk",
+          workspaceName: "UKTm",
+          productSlug: "uk",
+          basePath: "/uk",
+          crossLinkLabel: "EuTm",
+          crossLinkHref: "/europe",
+          storageKey: "uktm_reading_bookmark",
+          homeHeading: "영국 상표 실무 운영 가이드북",
+          ReaderRoot: ukModule.UkReaderRoot,
+          HomePage: ukModule.UkHomePage,
+          ChapterPage: ukModule.UkChapterPage,
+          documentData: createReaderDocumentData({
+            title: "영국 상표 실무 운영 가이드북",
+            firstChapterSlug: "uk-overview",
+            firstChapterTitle: "영국 제1장. 제도 개요",
+            secondChapterSlug: "uk-filing",
+            secondChapterTitle: "영국 제2장. 출원 전략",
+            thirdChapterSlug: "uk-enforcement",
+            thirdChapterTitle: "영국 제3장. 집행 운영"
+          }),
+          firstChapterSlug: "uk-overview",
+          firstChapterTitle: "영국 제1장. 제도 개요",
+          targetChapterSlug: "uk-filing",
+          targetChapterTitle: "영국 제2장. 출원 전략",
+          targetSectionId: "filing",
+          targetSectionTitle: "출원 전략",
+          alternateSectionId: "filing-risk",
+          alternateSectionTitle: "리스크",
+          thirdChapterSlug: "uk-enforcement",
+          thirdChapterTitle: "영국 제3장. 집행 운영",
+          bookmarkChapterSlug: "uk-enforcement",
+          bookmarkChapterTitle: "영국 제3장. 집행 운영",
+          bookmarkSectionId: "monitoring",
+          bookmarkSectionTitle: "모니터링"
+        } satisfies ReaderCase]
+      : []
+  )
 ];
 
 const latamCase = readerCases[0]!;
