@@ -1,5 +1,7 @@
 .gstack
 .mextm-inner-git
+.omx/
+test-results/
 archive/local-history/
 CODEX-INSTRUCTIONS.md
 node_modules
