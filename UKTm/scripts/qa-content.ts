@@ -77,6 +77,9 @@ function validateDocument(filePath: string, source: string, expectedTitle: strin
   const lines = source.split(/\r?\n/);
   const firstContentLine = lines.find((line) => line.trim() !== "");
   const h1 = lines.find((line) => /^#\s+/.test(line));
+  const nonEmptyLineCount = lines.filter((line) => line.trim() !== "").length;
+  const tableCount = countTables(lines);
+  const checklistCount = countChecklistBlocks(lines);
 
   if (!firstContentLine?.startsWith("# ")) {
     issues.push({ level: "error", file: relative(filePath), message: "첫 번째 비어 있지 않은 줄이 H1이 아닙니다." });
@@ -110,6 +113,22 @@ function validateDocument(filePath: string, source: string, expectedTitle: strin
       level: "warning",
       file: relative(filePath),
       message: `실무 섹션(H2)이 3개 미만입니다. 현재 ${h2Count}개입니다.`
+    });
+  }
+
+  if (nonEmptyLineCount < 28) {
+    issues.push({
+      level: "warning",
+      file: relative(filePath),
+      message: `문서 밀도가 낮을 수 있습니다. 비어 있지 않은 줄 수가 ${nonEmptyLineCount}줄입니다.`
+    });
+  }
+
+  if (tableCount + checklistCount === 0) {
+    issues.push({
+      level: "warning",
+      file: relative(filePath),
+      message: "표 또는 체크리스트가 없습니다. 최소 1개 이상의 구조화 산출물을 권장합니다."
     });
   }
 
@@ -183,6 +202,55 @@ function checkTableConsistency(filePath: string, lines: string[]) {
 
 function countCodeFences(source: string) {
   return (source.match(/^```/gm) ?? []).length;
+}
+
+function countTables(lines: string[]) {
+  let count = 0;
+
+  for (let index = 0; index < lines.length - 1; index += 1) {
+    const line = lines[index].trim();
+    const next = lines[index + 1].trim();
+
+    if (!line.startsWith("|") || !next.startsWith("|")) {
+      continue;
+    }
+
+    if (/^\|(?:\s*:?-+:?\s*\|)+\s*$/.test(next)) {
+      count += 1;
+    }
+  }
+
+  return count;
+}
+
+function countChecklistBlocks(lines: string[]) {
+  let count = 0;
+  let inBlock = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    const isChecklistHeading = /^##+\s+.*(체크리스트|점검표|운영 캘린더|실행 순서)/.test(trimmed);
+    const isListItem = /^-\s+/.test(trimmed);
+
+    if (isChecklistHeading) {
+      count += 1;
+      inBlock = true;
+      continue;
+    }
+
+    if (inBlock && trimmed === "") {
+      inBlock = false;
+      continue;
+    }
+
+    if (isListItem) {
+      count += 1;
+      inBlock = false;
+      continue;
+    }
+  }
+
+  return count;
 }
 
 function relative(filePath: string) {
