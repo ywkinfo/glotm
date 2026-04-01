@@ -295,6 +295,9 @@ describe("App portfolio shell", () => {
     expect(
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
+    expect(
+      screen.getByText(/UKTm은 영국 단일 시장을 빠르게 점검하는 early track으로 함께 열어 둘 수 있고/)
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "전체 가이드 보기" })).toHaveAttribute(
       "href",
       "#current-pilot-scope"
