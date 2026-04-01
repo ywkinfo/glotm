@@ -77,7 +77,7 @@ export const products: ProductMeta[] = [
     title: "중국 상표 실무 운영 가이드",
     summary: "중국 단일 시장 실무를 다루는 live track으로, CNIPA 절차와 플랫폼·집행 운영 포인트를 바로 읽을 수 있습니다.",
     chapterCount: 15,
-    searchEntryCount: 129,
+    searchEntryCount: 144,
     status: "Beta",
     statusTone: "beta",
     audience: "중국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",

@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 type ManifestEntry = {
   title: string;
-  path: string;
+  path?: string;
 };
 
 type Manifest = {
@@ -19,6 +19,7 @@ const masterPath = path.join(rootDir, "content", "source", "master.md");
 
 async function main() {
   const manifest = await readManifest();
+  const sourcePathByTitle = await buildSourcePathIndex();
   const parts: string[] = [
     `# ${manifest.title}`,
     "",
@@ -27,7 +28,7 @@ async function main() {
   ];
 
   for (const entry of manifest.chapters) {
-    const sourcePath = path.join(rootDir, entry.path);
+    const sourcePath = resolveSourcePath(entry, sourcePathByTitle);
     const source = await fs.readFile(sourcePath, "utf-8");
     const body = promoteHeadings(stripSourceTitle(source, entry.title));
 
@@ -42,9 +43,60 @@ async function main() {
   console.log(`Generated MexTm master manuscript from ${manifest.chapters.length} sources.`);
 }
 
+async function buildSourcePathIndex() {
+  const sourceRoot = path.join(rootDir, "content", "source");
+  const directories = ["chapters", "appendix"];
+  const pairs = await Promise.all(
+    directories.map(async (directory) => {
+      const directoryPath = path.join(sourceRoot, directory);
+      try {
+        const filenames = await fs.readdir(directoryPath);
+        return filenames
+          .filter((filename) => filename.endsWith(".md"))
+          .map((filename) => path.join(directoryPath, filename));
+      } catch {
+        return [];
+      }
+    })
+  );
+
+  const titleToPath = new Map<string, string>();
+  for (const filePath of pairs.flat()) {
+    const source = await fs.readFile(filePath, "utf-8");
+    const title = readSourceTitle(source);
+    titleToPath.set(title, filePath);
+  }
+
+  return titleToPath;
+}
+
 async function readManifest() {
   const raw = await fs.readFile(manifestPath, "utf-8");
   return JSON.parse(raw) as Manifest;
+}
+
+function resolveSourcePath(entry: ManifestEntry, sourcePathByTitle: Map<string, string>) {
+  if (entry.path) {
+    return path.join(rootDir, entry.path);
+  }
+
+  const resolved = sourcePathByTitle.get(entry.title);
+  if (!resolved) {
+    throw new Error(`Missing source path for "${entry.title}" in manifest and source index.`);
+  }
+
+  return resolved;
+}
+
+function readSourceTitle(source: string) {
+  const lines = source.split(/\r?\n/);
+  const heading = lines.find((line) => /^#\s+/.test(line));
+
+  if (!heading) {
+    throw new Error("Missing H1 while indexing MexTm source.");
+  }
+
+  return heading.replace(/^#\s+/, "").trim();
 }
 
 function stripSourceTitle(source: string, expectedTitle: string) {

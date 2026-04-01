@@ -54,13 +54,14 @@ describe("ChaTm final manuscript", () => {
   });
 
   it("keeps the China search index dense enough for final-manuscript navigation", () => {
-    expect(searchEntries).toHaveLength(129);
+    expect(searchEntries).toHaveLength(144);
 
     const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
 
     expect(sectionTitles.has("개요")).toBe(true);
     expect(sectionTitles.has("마드리드가 유리한 경우")).toBe(true);
     expect(sectionTitles.has("거절 대응은 사건별이 아니라 포트폴리오 기준으로 본다")).toBe(true);
+    expect(sectionTitles.has("출구 선택 매트릭스")).toBe(true);
     expect(sectionTitles.has("부록 D. 2026-03-31 검증 메모")).toBe(true);
   });
 });

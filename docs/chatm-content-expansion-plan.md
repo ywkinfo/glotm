@@ -2,7 +2,7 @@
 
 ## 목적
 
-이 문서는 `ChaTm`을 현재의 얇은 live country guide 상태에서, 루트 `GloTm` 셸 `/china`에서 안정적으로 읽히는 중국 상표 실무 가이드 v1로 끌어올리기 위한 실행 계획서다.
+이 문서는 `ChaTm`을 루트 `GloTm` 셸 `/china`에서 읽히는 live country guide baseline에서, 더 깊고 실행형인 중국 상표 실무 가이드 v1로 끌어올리기 위한 실행 계획서다.
 
 핵심 목표는 세 가지다.
 
@@ -12,14 +12,14 @@
 
 ## 현재 상태 요약
 
-2026-03-31 기준 확인된 사실:
+2026-04-01 기준 확인된 사실:
 
 - `ChaTm`은 루트 `GloTm` 셸 `/china` 경로에 연결된 live country guide다.
 - 현재 파이프라인은 `build-master -> qa-content -> build-content`로 정착돼 있다.
-- 현재 공개본 기준 구조는 6개 챕터다.
-- 현재 검색 엔트리는 32개다.
-- `content/research/cn_tm_fact_verification_log.md`에는 핵심 검증 항목 4개가 모두 `Pending` 상태로 남아 있다.
-- `UsaTm`, `JapTm`, `MexTm`은 14~15장 구조와 더 높은 검색 밀도를 이미 확보했다.
+- 현재 공개본 기준 구조는 서문 포함 15개 챕터다.
+- 현재 루트 registry 기준 검색 엔트리는 144개다.
+- `content/research/cn_tm_fact_verification_log.md`의 핵심 큐는 구조화된 `claim_id` 기반 로그로 정리돼 있고, 주요 항목은 `Body-ready` 상태까지 올라와 있다.
+- 현재 병목은 "초기 장 수 확보"가 아니라, Sprint 1 우선 장의 실무 밀도와 검색 섹션 밀도를 더 끌어올리는 일이다.
 
 ## 편집 원칙
 
@@ -30,8 +30,8 @@
 
 ## v1 목표 산출물
 
-- 챕터 수: 6 -> 12~14
-- 검색 엔트리: 32 -> 120~160
+- 챕터 수: 서문 포함 15장 구조 유지
+- 검색 엔트리: 144 -> 180~240
 - 장별 H3 이상 소제목: 최소 5개 이상
 - 각 장의 도입부는 summary/search entry 재료가 되도록 판단 프레임 역할을 하게 작성
 - `npm run content:china`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
@@ -108,8 +108,8 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 
 ### Phase 0 — 기준선 고정
 
-- 현재 챕터 구조와 목표 구조를 확정한다.
-- 사실 검증 로그 카테고리를 확장한다.
+- 현재 15장 구조와 Sprint 1 우선 6장을 고정한다.
+- 사실 검증 로그의 핵심 `Body-ready` 항목을 어느 장에 승격할지 명시한다.
 - Sprint 1 완료 기준과 머지 기준을 문서화한다.
 
 ### Phase 1 — 병렬 집필
@@ -185,7 +185,7 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 
 - 권장 챕터 구조가 `manifest.json`과 장별 원고에 반영됨
 - Sprint 1 우선 6개 장이 목표 밀도까지 확장됨
-- 사실 검증 로그가 더 이상 4개 `Pending`만 남는 상태가 아님
+- 사실 검증 로그의 핵심 큐가 `Pending-only` 상태가 아니고, Sprint 1 우선 장에 필요한 항목이 본문 반영 가능 상태로 정리됨
 - `content:china`와 루트 검증 명령이 모두 통과함
 - `/china` 리더의 홈/챕터/검색 흐름이 깨지지 않음
 - 배포 준비팀이 파일럿 배포 readiness 메모를 남김
