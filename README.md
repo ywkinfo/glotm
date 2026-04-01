@@ -22,9 +22,9 @@ npm run content:prepare
 설명:
 
 - `npm test`: 루트 셸 라우팅, 링크 계약, 공통 리더 동작 검증
-- `npm run build`: 모든 워크스페이스 `content:prepare` + 루트 Vite build
+- `npm run build`: 루트 `content:prepare` 실행 후 루트 Vite build
 - `npm run build:pages:glotm`: GitHub Pages subpath 빌드 검증
-- `npm run content:prepare`: 7개 live guide의 `build-master -> qa-content -> build-content`
+- `npm run content:prepare`: 7개 live guide의 generated content를 재생성한다. 현재 루트 기준으로 `LatTm`·`ChaTm`·`EuTm`·`UKTm`은 `build-master -> qa-content -> build-content` 전체 흐름을 타고, `MexTm`·`UsaTm`·`JapTm`은 `build-content.ts` shortcut으로 generated JSON을 갱신한다.
 
 ## Workspace Commands
 
@@ -36,7 +36,7 @@ npm run content:prepare
 - `npm run content:europe`
 - `npm run content:uk`
 
-각 명령은 해당 워크스페이스의 `manifest.json`, `master.md`, generated JSON, QA 규칙을 같은 흐름으로 재생성합니다.
+루트 워크스페이스 명령은 각 가이드의 generated JSON을 현재 검증 계약에 맞게 재생성합니다. 다만 실행 깊이는 가이드마다 다릅니다. 워크스페이스별 로컬 `content:prepare`는 루트 shortcut보다 더 풍부한 파이프라인을 제공할 수 있으므로, 편집 작업 전에는 각 가이드의 `README.md`와 `package.json`을 함께 확인합니다.
 
 ## Source Of Truth
 
