@@ -1,8 +1,10 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppRoutes } from "./App";
+import * as ga from "../analytics/ga";
+import { briefIssues } from "../briefs/archive";
 import { liveShellReaderDefinitions } from "../products/liveShellReaders";
 import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
@@ -110,6 +112,7 @@ describe("App portfolio shell", () => {
 
   afterEach(() => {
     window.history.replaceState({}, "", "/");
+    vi.restoreAllMocks();
   });
 
   it("keeps live product metadata aligned with live reader definitions", () => {
@@ -126,6 +129,7 @@ describe("App portfolio shell", () => {
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
 
     expect(within(nav).getByRole("link", { name: /Gateway/ })).toBeInTheDocument();
+    expect(within(nav).getByRole("link", { name: /Brief/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /LatTm/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /UsaTm/ })).toBeInTheDocument();
@@ -143,6 +147,7 @@ describe("App portfolio shell", () => {
     expect(screen.getByText("영국 상표 실무 운영 가이드북")).toBeInTheDocument();
 
     expect(within(nav).getByRole("link", { name: /Gateway/ })).toHaveAttribute("href", "/");
+    expect(within(nav).getByRole("link", { name: /Brief/ })).toHaveAttribute("href", "/briefs");
     expect(within(nav).getByRole("link", { name: /LatTm/ })).toHaveAttribute("href", "/latam");
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
     expect(within(nav).getByRole("link", { name: /UsaTm/ })).toHaveAttribute("href", "/usa");
@@ -203,6 +208,7 @@ describe("App portfolio shell", () => {
 
     expect(screen.getByRole("link", { name: "GloTm" })).toHaveAttribute("href", "/");
     expect(within(nav).getByRole("link", { name: /Gateway/ })).toHaveAttribute("href", "/");
+    expect(within(nav).getByRole("link", { name: /Brief/ })).toHaveAttribute("href", "/briefs");
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
   });
 
@@ -296,6 +302,29 @@ describe("App portfolio shell", () => {
     );
   });
 
+  it("surfaces the latest brief banner ahead of the reading flow with primary and archive CTAs", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const banner = screen.getByRole("region", { name: "최신 브리프 배너" });
+    const readingFlowHeading = screen.getByRole("heading", {
+      name: "처음이라면 MexTm 또는 LatTm부터 시작하세요"
+    });
+
+    expect(within(banner).getByRole("heading", { name: briefIssues[0]?.title ?? "" })).toBeInTheDocument();
+    expect(within(banner).getByRole("link", { name: "최신 이슈 보기" })).toHaveAttribute(
+      "href",
+      `/briefs/${briefIssues[0]?.slug}`
+    );
+    expect(within(banner).getByRole("link", { name: "브리프 전체 보기" })).toHaveAttribute(
+      "href",
+      "/briefs"
+    );
+    expect(
+      banner.compareDocumentPosition(readingFlowHeading) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).not.toBe(0);
+  });
+
   it("applies the centered header modifier only to the why-late section", () => {
     installFetchMock();
     renderAppRouteTree("/");
@@ -363,6 +392,34 @@ describe("App portfolio shell", () => {
     expect(operatorLink).toHaveAttribute("rel", "noreferrer noopener");
   });
 
+  it("surfaces the brief archive on the gateway with links to the archive and latest issue", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const briefSection = screen
+      .getByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다" })
+      .closest("section");
+
+    expect(briefSection).not.toBeNull();
+    expect(
+      within(briefSection as HTMLElement).getByRole("link", { name: "브리프 전체 보기" })
+    ).toHaveAttribute("href", "/briefs");
+    expect(
+      within(briefSection as HTMLElement).getByRole("link", { name: "이번 주 브리프 보기" })
+    ).toHaveAttribute("href", `/briefs/${briefIssues[0]?.slug}`);
+    expect(within(briefSection as HTMLElement).getByText(briefIssues[0]?.title ?? "")).toBeInTheDocument();
+    expect(
+      within(briefSection as HTMLElement).getByText(
+        "Hot Global TM Brief는 해외 상표 뉴스를 길게 모아두는 피드가 아니라, 한국 기업이 이번 주 먼저 확인해야 할 브랜드 이슈 하나를 골라 짧고 밀도 있게 해설하는 운영 브리프입니다."
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(briefSection as HTMLElement).queryByText(
+        /이메일 게이트 없이 먼저 on-site archive로 축적하고/
+      )
+    ).toBeNull();
+  });
+
   it("renders full document hrefs for grouped pilot scope cards", async () => {
     installFetchMock();
     renderAppRouteTree("/");
@@ -401,6 +458,70 @@ describe("App portfolio shell", () => {
 
     await screen.findByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" });
     expect(screen.getByTestId("app-location")).toHaveTextContent("/");
+  });
+
+  it("marks the brief archive as an active route", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/briefs");
+
+    await screen.findByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 해설합니다" });
+
+    const nav = screen.getByRole("navigation", { name: "제품 전환" });
+    const activeLink = within(nav).getByRole("link", { name: /Brief/ });
+
+    expect(activeLink).toHaveClass("active");
+  });
+
+  it("renders brief archive issues in latest-first order", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/briefs");
+
+    await screen.findByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 해설합니다" });
+
+    const archiveSection = screen
+      .getByRole("heading", { name: "최신순으로 브리프 이슈를 모아 둡니다" })
+      .closest("section");
+    const issueHeadings = within(archiveSection as HTMLElement).getAllByRole("heading", { level: 3 });
+
+    expect(issueHeadings[0]).toHaveTextContent(briefIssues[0]?.title ?? "");
+    expect(issueHeadings[1]).toHaveTextContent(briefIssues[1]?.title ?? "");
+  });
+
+  it("renders brief issue pages with related guide links and tracks guide CTA clicks", async () => {
+    installFetchMock();
+    const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
+    const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+
+    renderAppRouteTree(`/briefs/${briefIssues[0]?.slug}`);
+
+    await screen.findByRole("heading", { name: briefIssues[0]?.title ?? "" });
+
+    expect(
+      screen.getByText(
+        /위조 대응은 판매가 커진 뒤 뒤늦게 처리하는 법무 문제가 아니라, 해외 진출을 준비할 때부터 함께 설계해야 하는 사업 운영 문제입니다\./
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/2025년 K-화장품 수출이 114억3000만 달러/)).toBeInTheDocument();
+
+    const guideLink = screen.getByRole("link", { name: "ChaTm 운영 가이드" });
+
+    expect(guideLink).toHaveAttribute("href", "/china");
+    fireEvent.click(guideLink);
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "brief_guide_click",
+      expect.objectContaining({
+        issue_slug: briefIssues[0]?.slug,
+        item_id: "k-brand-counterfeit-strategy",
+        target_path: "/china"
+      })
+    );
+
+    measurementSpy.mockRestore();
+    trackEventSpy.mockRestore();
   });
 
   it("respects a deployment basename for deep links and rendered hrefs", async () => {

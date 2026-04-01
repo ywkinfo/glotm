@@ -10,6 +10,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useParams,
   useHref,
   useLocation
 } from "react-router-dom";
@@ -17,8 +18,18 @@ import {
 import {
   getGaMeasurementId,
   initializeGa,
+  trackGaEvent,
   trackGaPageView
 } from "../analytics/ga";
+import {
+  briefIssues,
+  buildBriefArchivePath,
+  buildBriefIssuePath,
+  formatBriefDate,
+  getBriefIssueBySlug,
+  getLatestBriefIssue,
+  type BriefIssue
+} from "../briefs/archive";
 import { getIntroSection } from "../content/intro";
 import {
   liveShellProducts
@@ -32,6 +43,16 @@ import {
 } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
+
+function trackEngagement(eventName: string, params: Record<string, string>) {
+  const measurementId = getGaMeasurementId();
+
+  if (!measurementId) {
+    return;
+  }
+
+  trackGaEvent(measurementId, eventName, params);
+}
 
 function getCoverageLabel(product: ProductMeta) {
   return product.coverageType === "region" ? "권역 가이드" : "국가 가이드";
@@ -156,6 +177,82 @@ function ProductGroup({ title, description, products }: ProductGroupProps) {
   );
 }
 
+type BriefIssueCardProps = {
+  issue: BriefIssue;
+  surface: "gateway" | "archive";
+};
+
+function BriefIssueCard({ issue, surface }: BriefIssueCardProps) {
+  return (
+    <article className="brief-card">
+      <div className="brief-card-topline">
+        <p className="gateway-kicker">Latest Brief</p>
+        <span className="status-pill status-pill--neutral">{issue.cadenceLabel}</span>
+      </div>
+      <p className="brief-card-date">{formatBriefDate(issue.publishedAt)}</p>
+      <h3 className="brief-card-title">{issue.title}</h3>
+      <p className="brief-card-summary">{issue.summary}</p>
+      <div className="brief-chip-row" aria-label="관할 목록">
+        {issue.jurisdictions.map((jurisdiction) => (
+          <span key={jurisdiction} className="brief-chip">
+            {jurisdiction}
+          </span>
+        ))}
+      </div>
+      <ul className="brief-card-list">
+        {issue.items.slice(0, 2).map((item) => (
+          <li key={item.id}>{item.headline}</li>
+        ))}
+      </ul>
+      <div className="brief-card-actions">
+        <FullDocumentLink
+          className="product-card-link"
+          to={buildBriefIssuePath(issue.slug)}
+          onClick={() => {
+            trackEngagement("brief_issue_open", {
+              issue_slug: issue.slug,
+              surface
+            });
+          }}
+        >
+          이번 이슈 보기
+        </FullDocumentLink>
+      </div>
+    </article>
+  );
+}
+
+function BriefGuideLinks({
+  issue,
+  itemId,
+  links
+}: {
+  issue: BriefIssue;
+  itemId: string;
+  links: BriefIssue["items"][number]["relatedGuideLinks"];
+}) {
+  return (
+    <div className="brief-link-row">
+      {links.map((link) => (
+        <FullDocumentLink
+          key={`${itemId}-${link.href}`}
+          className="brief-guide-link"
+          to={link.href}
+          onClick={() => {
+            trackEngagement("brief_guide_click", {
+              issue_slug: issue.slug,
+              item_id: itemId,
+              target_path: link.href
+            });
+          }}
+        >
+          {link.label}
+        </FullDocumentLink>
+      ))}
+    </div>
+  );
+}
+
 function AppLayout() {
   const location = useLocation();
   const activeNavItemRef = useRef<HTMLAnchorElement | null>(null);
@@ -166,6 +263,9 @@ function AppLayout() {
       location.pathname === buildProductPath(product)
       || location.pathname.startsWith(`${buildProductPath(product)}/`)
   );
+  const isBriefActive =
+    location.pathname === buildBriefArchivePath()
+    || location.pathname.startsWith(`${buildBriefArchivePath()}/`);
   const isGatewayActive = location.pathname === buildProductPath("/");
   const getGlobalNavClassName = (isActive: boolean) =>
     isActive ? "global-nav-link active" : "global-nav-link";
@@ -236,6 +336,14 @@ function AppLayout() {
           >
             <span className="global-nav-label">Gateway</span>
           </FullDocumentLink>
+          <FullDocumentLink
+            to={buildBriefArchivePath()}
+            ref={isBriefActive ? activeNavItemRef : undefined}
+            className={getGlobalNavClassName(isBriefActive)}
+            aria-current={isBriefActive ? "page" : undefined}
+          >
+            <span className="global-nav-label">Brief</span>
+          </FullDocumentLink>
           {orderedNavProducts.map((product) => {
             const isProductActive = activeProduct?.id === product.id;
 
@@ -260,6 +368,10 @@ function AppLayout() {
           {activeProduct ? (
             <span className={`status-pill status-pill--${activeProduct.statusTone}`}>
               {activeProduct.stageLabel}
+            </span>
+          ) : isBriefActive ? (
+            <span className="status-pill status-pill--neutral">
+              Hot Global TM Brief
             </span>
           ) : (
             <span className="status-pill status-pill--neutral">
@@ -311,6 +423,9 @@ function GatewayLandingPage() {
     "검색 결과를 여기저기 모으거나 일반적인 AI 답변을 그대로 믿기 어려운 담당자를 위해 만든 실무 가이드입니다.",
     "지금은 LatTm과 MexTm을 중심으로 가장 중요한 의사결정 흐름부터 빠르게 확인할 수 있고, 다른 시장 가이드는 후속 확장 방향을 함께 보여줍니다."
   ];
+  const featuredBriefs = briefIssues.slice(0, 2);
+  const latestBrief = getLatestBriefIssue();
+  const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
 
   useEffect(() => {
     setRuntimeDocumentTitle();
@@ -380,6 +495,53 @@ function GatewayLandingPage() {
           </div>
         </aside>
       </section>
+
+      {latestBrief ? (
+        <section className="latest-brief-banner" aria-label="최신 브리프 배너">
+          <div className="latest-brief-banner-copy">
+            <p className="gateway-kicker">Latest Brief</p>
+            <h2 className="latest-brief-banner-title">{latestBrief.title}</h2>
+            <p className="latest-brief-banner-summary">
+              지난 1주일간 한국 기업 브랜드 보호 전략에 바로 영향을 주는 변화만 추렸습니다.
+            </p>
+          </div>
+          <div className="latest-brief-banner-meta">
+            <p className="brief-card-date">{formatBriefDate(latestBrief.publishedAt)}</p>
+            <div className="brief-chip-row" aria-label="최신 브리프 관할 목록">
+              {latestBriefJurisdictions.map((jurisdiction) => (
+                <span key={jurisdiction} className="brief-chip">
+                  {jurisdiction}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="latest-brief-banner-actions">
+            <FullDocumentLink
+              className="gateway-button gateway-button--primary"
+              to={buildBriefIssuePath(latestBrief.slug)}
+              onClick={() => {
+                trackEngagement("brief_issue_open", {
+                  issue_slug: latestBrief.slug,
+                  surface: "gateway_banner"
+                });
+              }}
+            >
+              최신 이슈 보기
+            </FullDocumentLink>
+            <FullDocumentLink
+              className="gateway-button gateway-button--secondary"
+              to={buildBriefArchivePath()}
+              onClick={() => {
+                trackEngagement("brief_archive_open", {
+                  surface: "gateway_banner"
+                });
+              }}
+            >
+              브리프 전체 보기
+            </FullDocumentLink>
+          </div>
+        </section>
+      ) : null}
 
       <section className="gateway-cta-card">
         <p className="gateway-kicker">Suggested Reading Flow</p>
@@ -453,6 +615,56 @@ function GatewayLandingPage() {
         </ul>
       </section>
 
+      <section className="gateway-section">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">Latest Brief</p>
+            <h2 className="gateway-section-title">지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다</h2>
+          </div>
+          <p className="gateway-section-copy">
+            Hot Global TM Brief는 해외 상표 뉴스를 길게 모아두는 피드가 아니라, 한국 기업이 이번 주 먼저 확인해야 할 브랜드 이슈 하나를 골라 짧고 밀도 있게 해설하는 운영 브리프입니다.
+          </p>
+        </div>
+        <p className="gateway-section-copy">
+          배경 뉴스 요약에 그치지 않고, 왜 중요한지와 기업이 지금 바로 점검할 방어 포인트까지 함께 보여드립니다.
+        </p>
+        <p className="gateway-section-copy gateway-section-copy--spaced">
+          위조, 모방, 상표 선점, 플랫폼 대응처럼 한국 브랜드의 신뢰와 매출에 직접 영향을 주는 주제를 중심으로 다룹니다.
+        </p>
+        <div className="gateway-cta-actions">
+          <FullDocumentLink
+            className="gateway-cta-link"
+            to={buildBriefArchivePath()}
+            onClick={() => {
+              trackEngagement("brief_archive_open", {
+                surface: "gateway_section"
+              });
+            }}
+          >
+            브리프 전체 보기
+          </FullDocumentLink>
+          {latestBrief ? (
+            <FullDocumentLink
+              className="gateway-cta-link gateway-cta-link--secondary"
+              to={buildBriefIssuePath(latestBrief.slug)}
+              onClick={() => {
+                trackEngagement("brief_issue_open", {
+                  issue_slug: latestBrief.slug,
+                  surface: "gateway_section"
+                });
+              }}
+            >
+              이번 주 브리프 보기
+            </FullDocumentLink>
+          ) : null}
+        </div>
+        <div className="brief-card-grid">
+          {featuredBriefs.map((issue) => (
+            <BriefIssueCard key={issue.slug} issue={issue} surface="gateway" />
+          ))}
+        </div>
+      </section>
+
       <section id="current-pilot-scope" className="gateway-section">
         <div className="gateway-section-header">
           <div>
@@ -521,6 +733,154 @@ function GatewayLandingPage() {
   );
 }
 
+function BriefArchivePage() {
+  useEffect(() => {
+    setRuntimeDocumentTitle("Hot Global TM Brief");
+  }, []);
+
+  const latestIssue = getLatestBriefIssue();
+
+  return (
+    <div className="gateway-page">
+      <section className="brief-hero">
+        <div className="brief-hero-card">
+          <p className="gateway-kicker">Hot Global TM Brief</p>
+          <h1 className="gateway-title">지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 해설합니다</h1>
+          <p className="gateway-lead">
+            속보를 많이 모으는 대신, 글로벌 시장에서 한국 기업 브랜드에 직접 영향을 주는 뉴스 하나를 골라 짧고 밀도 있게 분석하는 주간 브리프 아카이브입니다.
+          </p>
+          <p className="gateway-summary">
+            정책은 배경으로 두고, 기업이 지금 무엇을 먼저 점검하고 어떻게 방어 체계를 설계해야 하는지에 초점을 맞춥니다.
+          </p>
+          <div className="gateway-actions">
+            {latestIssue ? (
+              <FullDocumentLink
+                className="gateway-button gateway-button--primary"
+                to={buildBriefIssuePath(latestIssue.slug)}
+                onClick={() => {
+                  trackEngagement("brief_issue_open", {
+                    issue_slug: latestIssue.slug,
+                    surface: "archive_hero"
+                  });
+                }}
+              >
+                최신 이슈 보기
+              </FullDocumentLink>
+            ) : null}
+            <FullDocumentLink className="gateway-button gateway-button--secondary" to={buildProductPath("/")}>
+              Gateway로 돌아가기
+            </FullDocumentLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="gateway-section">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">Archive</p>
+            <h2 className="gateway-section-title">최신순으로 브리프 이슈를 모아 둡니다</h2>
+          </div>
+          <p className="gateway-section-copy">
+            각 이슈는 지난 1주일간 가장 중요한 한국 기업 브랜드 이슈 하나를 골라, 왜 중요한지와 기업이 바로 점검할 항목을 함께 정리합니다.
+          </p>
+        </div>
+        <div className="brief-card-grid">
+          {briefIssues.map((issue) => (
+            <BriefIssueCard key={issue.slug} issue={issue} surface="archive" />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function BriefIssuePage() {
+  const params = useParams<{ issueSlug: string }>();
+  const issue = params.issueSlug ? getBriefIssueBySlug(params.issueSlug) : undefined;
+
+  useEffect(() => {
+    if (!issue) {
+      return;
+    }
+
+    setRuntimeDocumentTitle(issue.title);
+  }, [issue]);
+
+  if (!issue) {
+    return <Navigate to={buildBriefArchivePath()} replace />;
+  }
+
+  return (
+    <div className="gateway-page">
+      <section className="brief-issue-shell">
+        <div className="brief-breadcrumb">
+          <FullDocumentLink to={buildProductPath("/")}>Gateway</FullDocumentLink>
+          <span>/</span>
+          <FullDocumentLink to={buildBriefArchivePath()}>Hot Global TM Brief</FullDocumentLink>
+        </div>
+        <div className="brief-issue-header">
+          <p className="gateway-kicker">Issue</p>
+          <p className="brief-card-date">{formatBriefDate(issue.publishedAt)}</p>
+          <h1 className="gateway-title">{issue.title}</h1>
+          <p className="gateway-lead">{issue.summary}</p>
+          <div className="brief-chip-row" aria-label="관할 목록">
+            {issue.jurisdictions.map((jurisdiction) => (
+              <span key={jurisdiction} className="brief-chip">
+                {jurisdiction}
+              </span>
+            ))}
+          </div>
+          <p className="brief-issue-note">
+            이 브리프는 법률 자문이 아니라, 이번 주 기업이 무엇을 먼저 확인하고 어떤 방어 체계를 점검해야 하는지 정리하는 운영 메모입니다.
+          </p>
+        </div>
+
+        {issue.bodyParagraphs?.length ? (
+          <div className="brief-article-body">
+            {issue.bodyParagraphs.map((paragraph) => (
+              <p key={paragraph} className="brief-article-paragraph">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        ) : null}
+
+        <div className="brief-item-stack">
+          {issue.items.map((item, index) => (
+            <article key={item.id} className="brief-item-card">
+              <div className="brief-item-header">
+                <span className="brief-item-index">{index + 1}</span>
+                <div>
+                  <h2 className="brief-item-title">{item.headline}</h2>
+                  <p className="brief-item-copy">{item.whatChanged}</p>
+                </div>
+              </div>
+              <div className="brief-item-grid">
+                <section>
+                  <h3 className="brief-item-label">누가 신경 써야 하는가</h3>
+                  <p className="brief-item-copy">{item.whoShouldCare}</p>
+                </section>
+                <section>
+                  <h3 className="brief-item-label">실무 영향</h3>
+                  <p className="brief-item-copy">{item.whyItMatters}</p>
+                </section>
+                <section>
+                  <h3 className="brief-item-label">지금 체크할 것</h3>
+                  <p className="brief-item-copy">{item.nextAction}</p>
+                </section>
+              </div>
+              <div>
+                <h3 className="brief-item-label">관련 GloTm 가이드</h3>
+                <BriefGuideLinks issue={issue} itemId={item.id} links={item.relatedGuideLinks} />
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function AnalyticsTracker() {
   const location = useLocation();
 
@@ -561,6 +921,8 @@ export function AppRoutes() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<GatewayLandingPage />} />
+          <Route path={buildBriefArchivePath().replace(/^\//, "")} element={<BriefArchivePage />} />
+          <Route path={`${buildBriefArchivePath().replace(/^\//, "")}/:issueSlug`} element={<BriefIssuePage />} />
           {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
             <Route
               key={product.slug}

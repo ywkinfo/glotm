@@ -95,3 +95,27 @@ export function trackGaPageView(measurementId: string, pagePath: string, pageTit
 
   return true;
 }
+
+export function trackGaEvent(
+  measurementId: string,
+  eventName: string,
+  params: GaEventParams = {}
+) {
+  const normalizedId = normalizeMeasurementId(measurementId);
+
+  if (
+    !normalizedId
+    || !eventName.trim()
+    || typeof window === "undefined"
+    || typeof window.gtag !== "function"
+  ) {
+    return false;
+  }
+
+  window.gtag("event", eventName, {
+    send_to: normalizedId,
+    ...params
+  });
+
+  return true;
+}
