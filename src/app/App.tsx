@@ -26,6 +26,8 @@ import {
   type ProductMeta
 } from "../products/shared";
 
+const operatorProfileUrl = "https://ywkinfo.github.io";
+
 function getCoverageLabel(product: ProductMeta) {
   return product.coverageType === "region" ? "권역 가이드" : "국가 가이드";
 }
@@ -434,6 +436,31 @@ function GatewayLandingPage() {
             products={countryProducts}
           />
         </div>
+      </section>
+
+      <section className="gateway-section">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">운영자 소개</p>
+            <h2 className="gateway-section-title">20년+ 상표 실무 경험을 바탕으로 운영 판단의 기준을 정리합니다</h2>
+          </div>
+        </div>
+        <p className="gateway-section-copy">
+          GloTm은 20년 이상 축적된 상표 실무 경험을 바탕으로, 해외 진출 과정에서 어떤 이슈를 먼저
+          확인하고 어떤 운영 판단을 준비해야 하는지 실무 중심으로 정리한 지식베이스입니다.
+        </p>
+        <p className="gateway-section-copy gateway-section-copy--spaced">
+          문의, 강연 요청, 심층 연구 안내는{" "}
+          <a
+            className="gateway-inline-link"
+            href={operatorProfileUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            ywkinfo.github.io
+          </a>
+          에서 확인하실 수 있습니다.
+        </p>
       </section>
     </div>
   );

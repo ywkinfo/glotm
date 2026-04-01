@@ -302,9 +302,20 @@ body {
   color: var(--muted);
 }
 
+.gateway-section-copy--spaced {
+  margin-top: 0.8rem;
+}
+
 .gateway-section-copy-stack {
   display: grid;
   gap: 0.75rem;
+}
+
+.gateway-inline-link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .gateway-card-grid,
@@ -495,6 +506,10 @@ body {
 
 .reader-product-note a {
   color: var(--accent);
+}
+
+.reader-footer-note {
+  margin-bottom: 0.8rem;
 }
 
 .status-card .gateway-kicker {

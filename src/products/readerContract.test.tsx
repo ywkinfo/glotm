@@ -39,6 +39,8 @@ import {
 } from "./usa";
 import type { DocumentData, SearchEntry } from "./shared";
 
+const operatorProfileUrl = "https://ywkinfo.github.io";
+
 type OptionalUkModule = {
   UkChapterPage: typeof LatamChapterPage;
   UkHomePage: typeof LatamHomePage;
@@ -629,6 +631,27 @@ describe("Shared reader runtime contract", () => {
         "href",
         readerCase.crossLinkHref
       );
+    }
+  );
+
+  it.each(readerCases)(
+    "renders the operator profile note ahead of the legal disclaimer for $name",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const profileNote = screen.getByText(/운영자 소개·문의·강연 요청·심층 연구 안내:/);
+      const profileLink = within(profileNote).getByRole("link", { name: "ywkinfo.github.io" });
+      const disclaimer = screen.getByText(/법적 고지:/);
+
+      expect(profileLink).toHaveAttribute("href", operatorProfileUrl);
+      expect(profileLink).toHaveAttribute("target", "_blank");
+      expect(profileLink).toHaveAttribute("rel", "noreferrer noopener");
+      expect(
+        profileNote.compareDocumentPosition(disclaimer) & Node.DOCUMENT_POSITION_FOLLOWING
+      ).not.toBe(0);
     }
   );
 
