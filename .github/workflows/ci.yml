@@ -31,3 +31,6 @@ jobs:
 
       - name: Run build
         run: npm run build
+
+      - name: Run GitHub Pages build
+        run: npm run build:pages:glotm
