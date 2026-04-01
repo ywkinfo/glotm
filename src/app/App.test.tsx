@@ -3,7 +3,6 @@ import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppRoutes } from "./App";
-import { introDocument } from "../content/intro";
 import { liveShellReaderDefinitions } from "../products/liveShellReaders";
 import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
@@ -198,7 +197,7 @@ describe("App portfolio shell", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    await screen.findByRole("heading", { name: "해외 진출에서 상표가 늦게 문제 되는 이유" });
+    await screen.findByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
 
@@ -215,7 +214,11 @@ describe("App portfolio shell", () => {
 
     expect(gatewayHero).not.toBeNull();
     expect(within(gatewayHero as HTMLElement).queryByRole("link", { name: "UsaTm 보기" })).toBeNull();
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" })).toHaveAttribute(
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toHaveAttribute(
+      "href",
+      "/mexico"
+    );
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm에서 전체 흐름 보기" })).toHaveAttribute(
       "href",
       "/latam"
     );
@@ -226,11 +229,16 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
-    const expectedSummaryParagraphs = introDocument.quote.slice(1, 3);
+    const expectedSummaryParagraphs = [
+      "검색 결과를 여기저기 모으거나 일반적인 AI 답변을 그대로 믿기 어려운 담당자를 위해 만든 실무 가이드입니다.",
+      "지금은 LatTm과 MexTm을 중심으로 가장 중요한 의사결정 흐름부터 빠르게 확인할 수 있고, 다른 시장 가이드는 후속 확장 방향을 함께 보여줍니다."
+    ];
 
     expect(gatewayHero).not.toBeNull();
     expect(
-      within(gatewayHero as HTMLElement).getByText(introDocument.quote[0] ?? "")
+      within(gatewayHero as HTMLElement).getByText(
+        "로펌에 바로 묻기 전에, 멕시코와 라틴아메리카 시장에서 무엇을 먼저 확인해야 하는지 구조적으로 정리할 수 있습니다."
+      )
     ).toBeInTheDocument();
     expectedSummaryParagraphs.forEach((paragraph) => {
       expect(within(gatewayHero as HTMLElement).getByText(paragraph)).toBeInTheDocument();
@@ -242,28 +250,12 @@ describe("App portfolio shell", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    const livePortfolioPanel = screen.getByText("Live Portfolio").closest("aside");
-    const expectedRegionList = liveShellProducts
-      .filter((product) => product.coverageType === "region")
-      .map((product) => product.shortLabel)
-      .join(" · ");
-    const expectedCountryList = liveShellProducts
-      .filter((product) => product.coverageType === "country")
-      .map((product) => product.shortLabel)
-      .join(" · ");
-    const expectedCurrentStatus = liveShellProducts
-      .map((product) => product.shortLabel)
-      .join(" · ");
+    const livePortfolioPanel = screen.getByText("Pilot Snapshot").closest("aside");
 
     expect(livePortfolioPanel).not.toBeNull();
     expect(
       within(livePortfolioPanel as HTMLElement).getByText(
-        `권역형은 ${expectedRegionList}, 국가형은 ${expectedCountryList}으로 구분됩니다.`
-      )
-    ).toBeInTheDocument();
-    expect(
-      within(livePortfolioPanel as HTMLElement).getByText(
-        `현재 라이브 포트폴리오는 ${expectedCurrentStatus}로 구성됩니다.`
+        "권역형 2개와 국가형 5개를 하나의 셸에서 운영하며, 현재는 실제 읽기 경험과 탐색 흐름을 먼저 검증하고 있습니다."
       )
     ).toBeInTheDocument();
   });
@@ -277,10 +269,10 @@ describe("App portfolio shell", () => {
 
     expect(gatewayHero).not.toBeNull();
     expect(copyStack).not.toBeNull();
-    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "해외 진출에서 상표가 늦게 문제 되는 이유" })).toBeInTheDocument();
+    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" })).toBeInTheDocument();
     expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
-    expect(within(copyStack as HTMLElement).queryByRole("link", { name: "LatTm 시작" })).toBeNull();
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 시작" })).toBeInTheDocument();
+    expect(within(copyStack as HTMLElement).queryByRole("link", { name: "MexTm 먼저 보기" })).toBeNull();
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toBeInTheDocument();
   });
 
   it("places the reading flow above the risk section and links to the grouped portfolio", () => {
@@ -288,7 +280,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const readingFlowHeading = screen.getByRole("heading", {
-      name: `이제 권역형과 국가형 ${liveShellProducts.length}개 가이드를 모두 같은 셸에서 바로 읽을 수 있습니다`
+      name: "처음이라면 MexTm 또는 LatTm부터 시작하세요"
     });
     const whyLateHeading = screen.getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" });
 
@@ -296,9 +288,9 @@ describe("App portfolio shell", () => {
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
     expect(
-      screen.getByText(/UKTm은 영국 단일 시장을 빠르게 점검하는 early track으로 함께 열어 둘 수 있고/)
+      screen.getByText(/멕시코 진출 검토가 가장 급하다면 MexTm에서 바로 실무 쟁점을 확인하고/)
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "전체 가이드 보기" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "LatTm/MexTm 중심으로 보기" })).toHaveAttribute(
       "href",
       "#current-pilot-scope"
     );
@@ -312,10 +304,10 @@ describe("App portfolio shell", () => {
       .getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" })
       .closest("section");
     const productIntentSection = screen
-      .getByRole("heading", { name: "출원 설명이 아니라 운영 판단의 빈칸을 메웁니다" })
+      .getByRole("heading", { name: "법률 자문 전에 필요한 판단의 빈칸을 메웁니다" })
       .closest("section");
     const currentPilotScopeSection = screen
-      .getByRole("heading", { name: `현재 GloTm에는 ${liveShellProducts.length}개의 live shell guide가 연결되어 있습니다` })
+      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
       .closest("section");
 
     expect(
@@ -334,12 +326,13 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: `현재 GloTm에는 ${liveShellProducts.length}개의 live shell guide가 연결되어 있습니다` })
+      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "권역 가이드" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "국가 가이드" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "지금 가장 먼저 볼 가이드" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "추가 권역 가이드" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "후속 시장 검토용 국가 가이드" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByText("지속 업데이트 중")).toBeInTheDocument();
   });
 
@@ -348,10 +341,10 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: `현재 GloTm에는 ${liveShellProducts.length}개의 live shell guide가 연결되어 있습니다` })
+      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
       .closest("section");
     const operatorSection = screen
-      .getByRole("heading", { name: "20년+ 상표 실무 경험을 바탕으로 운영 판단의 기준을 정리합니다" })
+      .getByRole("heading", { name: "20년+ 상표 실무 경험을 바탕으로 먼저 봐야 할 판단을 정리합니다" })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
@@ -375,10 +368,18 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: `현재 GloTm에는 ${liveShellProducts.length}개의 live shell guide가 연결되어 있습니다` })
+      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
+    expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toHaveAttribute(
+      "href",
+      "/mexico"
+    );
+    expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "LatTm 전체 흐름 보기" })).toHaveAttribute(
+      "href",
+      "/latam"
+    );
     expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toHaveAttribute(
       "href",
       "/china"
@@ -398,7 +399,7 @@ describe("App portfolio shell", () => {
 
     renderAppRouteTree("/missing");
 
-    await screen.findByRole("heading", { name: "해외 진출에서 상표가 늦게 문제 되는 이유" });
+    await screen.findByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" });
     expect(screen.getByTestId("app-location")).toHaveTextContent("/");
   });
 
