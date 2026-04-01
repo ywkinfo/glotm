@@ -110,6 +110,7 @@ type ReaderConfig = {
 };
 
 const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
+const operatorProfileUrl = "https://ywkinfo.github.io";
 
 function loadReaderActionBarDismissed() {
   if (typeof window === "undefined") {
@@ -407,6 +408,12 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               <footer className="reader-layout" style={{ paddingTop: 0 }}>
                 <div />
                 <div>
+                  <p className="reader-product-note reader-footer-note">
+                    운영자 소개·문의·강연 요청·심층 연구 안내:{" "}
+                    <a href={operatorProfileUrl} target="_blank" rel="noreferrer noopener">
+                      ywkinfo.github.io
+                    </a>
+                  </p>
                   <div className="disclaimer">
                     <strong>법적 고지:</strong> 이 가이드는 일반적인 정보 제공 목적이며 법률 자문이 아닙니다.
                     수록된 정보는 작성 시점 기준이며, 법령·판례 변경에 따라 내용이 달라질 수 있습니다.

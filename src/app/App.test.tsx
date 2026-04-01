@@ -8,6 +8,8 @@ import { liveShellReaderDefinitions } from "../products/liveShellReaders";
 import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
 
+const operatorProfileUrl = "https://ywkinfo.github.io";
+
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
   return {
     meta: {
@@ -336,6 +338,33 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "권역 가이드" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "국가 가이드" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByText("지속 업데이트 중")).toBeInTheDocument();
+  });
+
+  it("renders the operator intro section after the pilot scope with an external profile link", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const currentPilotScope = screen
+      .getByRole("heading", { name: `현재 GloTm에는 ${liveShellProducts.length}개의 live shell guide가 연결되어 있습니다` })
+      .closest("section");
+    const operatorSection = screen
+      .getByRole("heading", { name: "20년+ 상표 실무 경험을 바탕으로 운영 판단의 기준을 정리합니다" })
+      .closest("section");
+
+    expect(currentPilotScope).not.toBeNull();
+    expect(operatorSection).not.toBeNull();
+    expect(
+      (currentPilotScope as HTMLElement).compareDocumentPosition(operatorSection as HTMLElement)
+      & Node.DOCUMENT_POSITION_FOLLOWING
+    ).not.toBe(0);
+
+    const operatorLink = within(operatorSection as HTMLElement).getByRole("link", {
+      name: "ywkinfo.github.io"
+    });
+
+    expect(operatorLink).toHaveAttribute("href", operatorProfileUrl);
+    expect(operatorLink).toHaveAttribute("target", "_blank");
+    expect(operatorLink).toHaveAttribute("rel", "noreferrer noopener");
   });
 
   it("renders full document hrefs for grouped pilot scope cards", async () => {
