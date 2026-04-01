@@ -14,6 +14,11 @@ import {
   useLocation
 } from "react-router-dom";
 
+import {
+  getGaMeasurementId,
+  initializeGa,
+  trackGaPageView
+} from "../analytics/ga";
 import { getIntroSection, introDocument } from "../content/intro";
 import {
   liveShellProducts
@@ -476,24 +481,60 @@ function GatewayLandingPage() {
   );
 }
 
+function AnalyticsTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const measurementId = getGaMeasurementId();
+
+    if (!measurementId) {
+      return;
+    }
+
+    initializeGa(measurementId);
+  }, []);
+
+  useEffect(() => {
+    const measurementId = getGaMeasurementId();
+
+    if (!measurementId || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const pagePath = `${location.pathname}${location.search}${location.hash}`;
+    const timeoutId = window.setTimeout(() => {
+      trackGaPageView(measurementId, pagePath, document.title);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [location.hash, location.pathname, location.search]);
+
+  return null;
+}
+
 export function AppRoutes() {
   return (
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route index element={<GatewayLandingPage />} />
-        {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
-          <Route
-            key={product.slug}
-            path={buildProductPath(product).replace(/^\//, "")}
-            element={<ReaderRoot />}
-          >
-            <Route index element={<HomePage />} />
-            <Route path="chapter/:chapterSlug" element={<ChapterPage />} />
-          </Route>
-        ))}
-        <Route path="*" element={<Navigate to={buildProductPath("/")} replace />} />
-      </Route>
-    </Routes>
+    <>
+      <AnalyticsTracker />
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route index element={<GatewayLandingPage />} />
+          {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
+            <Route
+              key={product.slug}
+              path={buildProductPath(product).replace(/^\//, "")}
+              element={<ReaderRoot />}
+            >
+              <Route index element={<HomePage />} />
+              <Route path="chapter/:chapterSlug" element={<ChapterPage />} />
+            </Route>
+          ))}
+          <Route path="*" element={<Navigate to={buildProductPath("/")} replace />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
