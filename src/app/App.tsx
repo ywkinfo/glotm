@@ -256,6 +256,8 @@ function GatewayLandingPage() {
     0
   );
   const primaryProduct = liveShellProducts.find((product) => product.slug === "latam") ?? liveShellProducts[0];
+  const ukEarlyTrackProduct = countryProducts.find((product) => product.slug === "uk");
+  const coreCountryProducts = countryProducts.filter((product) => product.slug !== "uk");
   const liveProductSlashList = joinProductLabels(liveShellProducts);
   const liveProductCommaList = liveShellProducts.map((product) => product.shortLabel).join(", ");
   const liveProductDotList = joinProductLabels(liveShellProducts, " · ");
@@ -346,9 +348,13 @@ function GatewayLandingPage() {
         </h2>
         <p className="gateway-cta-copy">
           먼저 LatTm에서 국가 우선순위, 출원 이후 운영, 증거 관리, 모니터링과 집행의 큰 흐름을 잡고,
-          {joinProductLabels(countryProducts, " · ")} 단일 시장 쟁점이 중요해지는 순간 각 country
-          guide로 내려가며, 권역 운영 구조가 필요할 때는 {joinProductLabels(regionProducts, " · ")}
-          으로 이어지는 구성이 현재 live shell의 기본 독서 동선입니다.
+          {joinProductLabels(coreCountryProducts, " · ")} 단일 시장 쟁점이 중요해지는 순간 각 country
+          guide로 내려가며,
+          {ukEarlyTrackProduct
+            ? ` ${ukEarlyTrackProduct.shortLabel}은 영국 단일 시장을 빠르게 점검하는 early track으로 함께 열어 둘 수 있고,`
+            : ""}
+          권역 운영 구조가 필요할 때는 {joinProductLabels(regionProducts, " · ")}으로 이어지는 구성이
+          현재 live shell의 기본 독서 동선입니다.
         </p>
         <div className="gateway-cta-actions">
           <a className="gateway-cta-link" href="#current-pilot-scope">
@@ -432,7 +438,11 @@ function GatewayLandingPage() {
           />
           <ProductGroup
             title="국가 가이드"
-            description={`${joinProductLabels(countryProducts, " · ")}은 단일 시장별 절차와 운영 쟁점을 더 깊게 따라가는 트랙입니다.`}
+            description={
+              ukEarlyTrackProduct
+                ? `${joinProductLabels(coreCountryProducts, " · ")}은 단일 시장별 절차와 운영 쟁점을 더 깊게 따라가는 트랙이고, ${ukEarlyTrackProduct.shortLabel}은 draft 공개본 성격의 early track으로 함께 연결됩니다.`
+                : `${joinProductLabels(countryProducts, " · ")}은 단일 시장별 절차와 운영 쟁점을 더 깊게 따라가는 트랙입니다.`
+            }
             products={countryProducts}
           />
         </div>
