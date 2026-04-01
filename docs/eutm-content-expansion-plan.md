@@ -2,11 +2,11 @@
 
 ## 목적
 
-이 문서는 `EuTm`을 현재의 구조 초안(v0) 상태에서, 루트 `GloTm` 셸에서 안정적으로 읽히는 권역형 실무 가이드(v1)로 끌어올리기 위한 실행 계획서다. 기준 제품은 `LatTm`이지만, `EuTm`은 유럽 권역형 가이드라는 특성상 **LatTm의 내용량을 그대로 복제하는 것보다 LatTm의 제작 체계와 편집 기준을 이식하는 것**을 우선 원칙으로 삼는다.
+이 문서는 `EuTm`의 현재 shipped baseline을 기준으로, 루트 `GloTm` 셸에서 더 깊고 안정적으로 읽히는 권역형 실무 가이드로 고도화하기 위한 실행 계획서다. 기반 제작 체계는 이미 갖춰져 있으며, 이제 남은 핵심은 **장별 실무 밀도, fact verification, 문서 정합성**을 끌어올리는 일이다.
 
 핵심 목표는 세 가지다.
 
-1. `EuTm`의 현재 `master.md` 중심 초안 구조를 장별 원천 원고 + 조립 파이프라인 구조로 전환한다.
+1. 이미 도입된 장별 원천 원고 + 조립 파이프라인 체계를 안정된 baseline으로 유지한다.
 2. EU 공통 실무 프레임을 중심으로 본문을 심화하되, 회원국별 편차는 통제된 범위에서만 반영한다.
 3. 리서치 검증 로그를 통과한 사실만 본문으로 승격해, 이후 런타임 확장과 파일럿 배포에 견딜 수 있는 정본을 만든다.
 
@@ -18,36 +18,31 @@
 
 - `EuTm`은 루트 `GloTm` 셸에서 `/europe` 경로로 연결된 live regional guide다.
 - 현재 공개본 기준은 `EuTm/content/source/master.md`다.
-- 현재 파이프라인은 `scripts/build-content.ts` 단일 단계다.
-- 현재 **미구축 항목**:
-  - `content/source/manifest.json`
-  - `scripts/build-master.ts`
-  - `scripts/qa-content.ts`
+- 현재 워크스페이스 파이프라인은 `scripts/build-master.ts -> scripts/qa-content.ts -> scripts/build-content.ts` 순으로 동작한다.
+- `content/source/manifest.json`, `content/source/chapters/`, `scripts/build-master.ts`, `scripts/qa-content.ts`가 모두 존재한다.
 - 현재 생성 산출물:
   - **14 chapters**
-  - **56 search entries**
-- 현재 `master.md` 분량은 약 **1.2k words** 수준으로, 실무 가이드라기보다 장 구조를 고정하기 위한 초안에 가깝다.
+  - **180 search entries**
+- 현재 `master.md`는 장별 원고를 조립한 공개본 기준이며, reader에서 읽을 수 있는 실사용 분량을 확보한 상태다.
 
 ### LatTm 대비 차이
 
 | 항목 | LatTm | EuTm |
 |------|------|------|
-| 정본 구조 | 장별 원천 원고 + 조립본 | 단일 `master.md` 초안 |
-| 메타 구조 | `manifest.json` 있음 | 없음 |
-| 조립 스크립트 | `build-master.ts` 있음 | 없음 |
-| QA 스크립트 | `qa-content.ts` 있음 | 없음 |
+| 정본 구조 | 장별 원천 원고 + 조립본 | 장별 원천 원고 + 조립본 |
+| 메타 구조 | `manifest.json` 있음 | `manifest.json` 있음 |
+| 조립 스크립트 | `build-master.ts` 있음 | `build-master.ts` 있음 |
+| QA 스크립트 | `qa-content.ts` 있음 | `qa-content.ts` 있음 |
 | 챕터 수 | 20 | 14 |
-| 검색 엔트리 | 780 | 56 |
-| 문서 깊이 | publish-grade | outline-grade |
+| 검색 엔트리 | 780 | 180 |
+| 문서 깊이 | publish-grade | live regional guide baseline, 추가 심화 필요 |
 
 ### 현재 리스크
 
-1. `README.md`와 `Harness/Architecture.md`의 상태 설명이 일부 충돌한다.
-   - README는 live guide 상태를 반영하지만,
-   - Architecture는 아직 루트 셸에 연결하지 않는다고 적혀 있다.
-2. `EuTm` 본문은 대부분 장당 짧은 도입 + 3개 섹션 + 리서치 게이트 수준이라 reader 품질이 낮다.
-3. 리서치 검증 로그의 핵심 항목이 대부분 `Pending` 상태다.
-4. 지금 상태에서 본문만 늘리면 `master.md` 단일 파일이 빠르게 유지보수 불가능해질 수 있다.
+1. 기반 파이프라인은 갖춰졌지만 `LatTm` 대비 장별 밀도와 실무 사례 깊이가 아직 낮다.
+2. 리서치 검증 로그의 핵심 항목이 여전히 `Pending` 상태여서, 고변동 정보를 바로 확정하기 어렵다.
+3. 루트 전략 문서와 개별 워크스페이스 문서가 같은 속도로 갱신되지 않으면 shipped 상태 설명이 다시 어긋날 수 있다.
+4. 검색 엔트리는 baseline을 넘었지만, 핵심 장의 섹션 탐색 밀도는 더 높일 여지가 있다.
 
 ---
 
@@ -55,7 +50,7 @@
 
 ### 1. LatTm처럼 "쓴다"보다 LatTm처럼 "만든다"
 
-`EuTm` 보강의 첫 단계는 분량 확대가 아니라 **제작 체계 전환**이다. 장별 원천 원고, manifest, 조립 스크립트, QA 스크립트를 먼저 도입해야 이후 보강이 반복 가능하다.
+`EuTm` 보강의 출발점은 이미 도입된 **제작 체계를 유지한 채** 분량과 판단 밀도를 높이는 것이다. 장별 원천 원고, manifest, 조립 스크립트, QA 스크립트는 이제 baseline으로 취급한다.
 
 ### 2. EU 공통 프레임이 본문, 회원국 편차는 통제
 
@@ -86,21 +81,20 @@
 
 ## 목표 산출물
 
-### v1 구조 목표
+### 현재 baseline (완료)
 
-- `content/source/manifest.json` 신설
-- `content/source/chapters/*.md` 체계 도입
-- `content/source/master.md`를 조립 결과물로 전환
-- `scripts/build-master.ts` 도입
-- `scripts/qa-content.ts` 도입
-- `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md` 상태 설명 정합화
+- `content/source/manifest.json` 운영 중
+- `content/source/chapters/*.md` 체계 운영 중
+- `content/source/master.md`를 조립 결과물로 관리 중
+- `scripts/build-master.ts`, `scripts/qa-content.ts` 운영 중
+- `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`는 현재 워크스페이스 기준 상태를 반영한다
 
 ### v1 콘텐츠 목표
 
 - 14장 구조 유지
 - 핵심 장의 본문 밀도 대폭 확대
 - 장별 최소 실행형 체크리스트 1개 이상 포함
-- search entries를 현재 56에서 **1차 목표 180~250** 수준으로 확대
+- search entries를 현재 180에서 **다음 목표 220~300** 수준으로 확대
 
 ### v1 품질 목표
 
@@ -157,25 +151,23 @@
 - `EuTm/README.md` 수정
 - `EuTm/Harness/Architecture.md` 수정
 - `EuTm/Harness/Content-Spec.md` 수정
-- 현재 `live guide` 상태, 공개본 기준, 미구축 항목을 일관되게 정리
+- 현재 `live guide` 상태와 공개본 기준을 일관되게 정리
 
 ### 완료 기준
 - 문서 간 상태 충돌이 없음
-- `master.md`가 현재 공개본이라는 사실과 향후 조립 전환 계획이 명시됨
+- `master.md`가 현재 공개본이라는 사실과 shipped baseline이 명시됨
 
 ---
 
-## Phase 1 — LatTm-lite 파이프라인 도입
+## Phase 1 — LatTm-lite 파이프라인 유지
 
 ### 목표
-콘텐츠를 안전하게 확장할 수 있는 제작 기반을 만든다.
+콘텐츠를 안전하게 확장할 수 있는 현재 제작 기반을 유지한다.
 
 ### 작업
-- `content/source/manifest.json` 생성
-- `content/source/chapters/` 디렉터리 실사용 시작
-- `scripts/build-master.ts` 추가
-- `scripts/qa-content.ts` 추가
-- 루트 `package.json`의 `content:europe` 흐름은 유지하되 내부적으로 `build-master -> qa-content -> build-content` 순서를 탈 수 있게 준비
+- `content/source/manifest.json`, `content/source/chapters/`, `scripts/build-master.ts`, `scripts/qa-content.ts`를 baseline으로 계속 유지
+- 루트 `package.json`과 워크스페이스 로컬 문서가 현재 실행 순서를 정확히 설명하는지 점검
+- 구조 확장 전 `master.md` 재생성, QA, generated JSON 생성 흐름이 계속 깨지지 않도록 유지
 
 ### LatTm에서 참고할 것
 - `LatTm/scripts/build-master.ts`
@@ -183,8 +175,8 @@
 - `LatTm/content/source/manifest.json`
 
 ### 완료 기준
-- 장별 원고를 조립해 `master.md` 재생성 가능
-- 제목/순서 불일치, 미닫힌 코드펜스, 기본 표 형식 오류를 자동 탐지 가능
+- 장별 원고를 조립해 `master.md`를 계속 재생성할 수 있음
+- 제목/순서 불일치, 미닫힌 코드펜스, 기본 표 형식 오류를 자동 탐지할 수 있음
 
 ---
 
@@ -317,8 +309,8 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ### Sprint 1
 - Phase 0 완료
-- Phase 1 시작
-- manifest / build-master / qa-content 도입
+- Phase 1 유지
+- 문서 정합화와 baseline 유지
 
 ### Sprint 2
 - Phase 2 완료
@@ -348,7 +340,7 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 2. `master.md`가 조립 결과물로 관리된다.
 3. 14개 장이 모두 장별 원고 파일로 분리돼 있다.
 4. 핵심 6장이 초안 수준을 벗어나 실무형 본문 구조를 갖는다.
-5. search entries가 최소 180 이상으로 증가한다.
+5. search entries가 baseline 180을 유지하면서 추가 심화 시 더 증가한다.
 6. `npm run build` 기준 루트 셸이 정상 동작한다.
 7. `README`, `Architecture`, `Content-Spec`, research docs의 상태 설명이 일치한다.
 
@@ -368,15 +360,14 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ## 최종 제안
 
-`EuTm` 보강은 지금 시작하는 것이 맞다. 다만 첫 단계는 본문 확장이 아니라 **LatTm-lite 제작 체계 도입**이어야 한다. 그 위에서 핵심 6장을 먼저 심화하고, fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
+`EuTm` 보강은 지금도 계속할 가치가 있다. 다만 첫 단계는 더 이상 제작 체계 도입이 아니라, **이미 도입된 LatTm-lite baseline을 유지한 채** 핵심 장을 심화하는 것이다. 그 위에서 fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
 
 즉, 실행 순서는 아래와 같다.
 
 1. 상태 문서 정합화
-2. manifest + build-master + qa-content 도입
-3. master 분해
-4. 핵심 6장 심화
-5. 후반 장 보강
-6. 사실 검증 승격
+2. baseline 파이프라인 유지
+3. 핵심 6장 심화
+4. 후반 장 보강
+5. 사실 검증 승격
 
-이 순서를 지키면 `EuTm`은 지금의 "권역 구조 초안"에서, 루트 `GloTm` 셸에서 LatTm 다음 수준으로 읽히는 권역형 실무 가이드로 전환될 수 있다.
+이 순서를 지키면 `EuTm`은 현재의 live regional guide baseline에서, 루트 `GloTm` 셸에서 LatTm 다음 수준으로 더 깊게 읽히는 권역형 실무 가이드로 성장할 수 있다.
