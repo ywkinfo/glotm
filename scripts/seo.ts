@@ -1,6 +1,14 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import {
+  briefIssues,
+  buildBriefArchivePath,
+  buildBriefDocumentTitle,
+  buildBriefIssuePath,
+  formatBriefDate,
+  type BriefIssue
+} from "../src/briefs/archive";
 import { liveShellProducts } from "../src/products/registry";
 import {
   buildChapterPath,
@@ -131,6 +139,7 @@ function renderGatewayBody(basePath: string) {
     href: buildPublicHref(buildProductPath(product), basePath),
     label: `${product.shortLabel} · ${product.title}`
   }));
+  const latestBrief = briefIssues[0];
 
   return `
     <main>
@@ -139,6 +148,15 @@ function renderGatewayBody(basePath: string) {
         <h1>글로벌 상표 지식베이스</h1>
         <p>${escapeHtml(DEFAULT_SITE_DESCRIPTION)}</p>
       </header>
+      ${latestBrief
+        ? `
+      <section>
+        <h2>Hot Global TM Brief</h2>
+        <p>지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 골라 짧고 밀도 있게 해설하는 주간 브리프를 함께 운영합니다.</p>
+        <p><a href="${escapeHtml(buildPublicHref(buildBriefArchivePath(), basePath))}">브리프 아카이브 보기</a></p>
+      </section>
+      `
+        : ""}
       <section>
         <h2>라이브 가이드 포트폴리오</h2>
         <p>현재 ${liveShellProducts.length}개의 권역형·국가형 상표 운영 가이드를 공개하고 있습니다.</p>
@@ -218,6 +236,79 @@ function renderChapterBody(
   `;
 }
 
+function renderBriefArchiveBody(basePath: string) {
+  const issueLinks = briefIssues.map((issue) => ({
+    href: buildPublicHref(buildBriefIssuePath(issue.slug), basePath),
+    label: `${formatBriefDate(issue.publishedAt)} · ${issue.title}`
+  }));
+
+  return `
+    <main>
+      <nav>
+        <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
+      </nav>
+      <header>
+        <p>Hot Global TM Brief</p>
+        <h1>지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 해설하는 브리프 아카이브</h1>
+        <p>해외 상표 뉴스를 그대로 모으는 대신, 한국 기업이 이번 주 바로 점검해야 할 브랜드 이슈를 골라 짧고 밀도 있게 정리합니다.</p>
+      </header>
+      ${renderLinkList("브리프 이슈 목록", issueLinks, true)}
+    </main>
+  `;
+}
+
+function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
+  const bodyParagraphs = issue.bodyParagraphs?.length
+    ? `
+        <section>
+          ${issue.bodyParagraphs
+            .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+            .join("")}
+        </section>
+      `
+    : "";
+  const issueSections = issue.items
+    .map(
+      (item) => `
+        <section>
+          <h2>${escapeHtml(item.headline)}</h2>
+          <p>${escapeHtml(item.whatChanged)}</p>
+          <p><strong>누가 신경 써야 하는가:</strong> ${escapeHtml(item.whoShouldCare)}</p>
+          <p><strong>실무 영향:</strong> ${escapeHtml(item.whyItMatters)}</p>
+          <p><strong>지금 체크할 것:</strong> ${escapeHtml(item.nextAction)}</p>
+          ${renderLinkList(
+            "관련 GloTm 가이드",
+            item.relatedGuideLinks.map((link) => ({
+              href: buildPublicHref(link.href, basePath),
+              label: link.label
+            }))
+          )}
+        </section>
+      `
+    )
+    .join("");
+
+  return `
+    <main>
+      <nav>
+        <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
+        <span> / </span>
+        <a href="${escapeHtml(buildPublicHref(buildBriefArchivePath(), basePath))}">Hot Global TM Brief</a>
+      </nav>
+      <article>
+        <header>
+          <p>${escapeHtml(formatBriefDate(issue.publishedAt))}</p>
+          <h1>${escapeHtml(issue.title)}</h1>
+          <p>${escapeHtml(issue.summary)}</p>
+          <p>관할: ${escapeHtml(issue.jurisdictions.join(" · "))}</p>
+        </header>
+        ${bodyParagraphs}
+        ${issueSections}
+      </article>
+    </main>
+  `;
+}
+
 function buildGatewayPage(
   basePath: string,
   siteOrigin: string,
@@ -233,6 +324,18 @@ function buildGatewayPage(
     lastModified: ensureIsoDate(lastModified),
     bodyHtml: renderGatewayBody(basePath)
   };
+}
+
+function buildBriefArchiveDescription() {
+  return trimDescription(
+    "Hot Global TM Brief 아카이브. 지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 골라, 기업이 바로 점검할 운영 포인트와 방어 체계를 정리합니다."
+  );
+}
+
+function buildBriefIssueDescription(issue: BriefIssue) {
+  return trimDescription(
+    `${issue.summary} ${issue.jurisdictions.join(", ")} 관할을 중심으로 운영 포인트를 정리한 Hot Global TM Brief 이슈입니다.`
+  );
 }
 
 function buildProductDescription(product: ProductMeta, documentData: DocumentData) {
@@ -252,8 +355,10 @@ export function buildStaticPageDefinitions(
   options: SeoRuntimeOptions = {}
 ) {
   const { basePath, siteOrigin, distDir } = getSeoRuntimeOptions(options);
-  const gatewayLastModified = Array.from(documentDataBySlug.values())
-    .map((documentData) => ensureIsoDate(documentData.meta.builtAt))
+  const gatewayLastModified = [
+    ...Array.from(documentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
+    ...briefIssues.map((issue) => ensureIsoDate(issue.publishedAt))
+  ]
     .sort()
     .at(-1) ?? new Date().toISOString();
   const pages: StaticPageDefinition[] = [
@@ -262,6 +367,35 @@ export function buildStaticPageDefinitions(
       outputPath: buildOutputPath("/", distDir)
     }
   ];
+
+  const briefArchivePath = buildBriefArchivePath();
+  const latestBriefPublishedAt = briefIssues[0]?.publishedAt ?? gatewayLastModified;
+
+  pages.push({
+    routePath: briefArchivePath,
+    outputPath: buildOutputPath(briefArchivePath, distDir),
+    title: buildBriefDocumentTitle(),
+    description: buildBriefArchiveDescription(),
+    canonicalUrl: buildCanonicalUrl(briefArchivePath, siteOrigin, basePath),
+    ogType: "website",
+    lastModified: ensureIsoDate(latestBriefPublishedAt),
+    bodyHtml: renderBriefArchiveBody(basePath)
+  });
+
+  for (const issue of briefIssues) {
+    const issueRoutePath = buildBriefIssuePath(issue.slug);
+
+    pages.push({
+      routePath: issueRoutePath,
+      outputPath: buildOutputPath(issueRoutePath, distDir),
+      title: buildBriefDocumentTitle(issue),
+      description: buildBriefIssueDescription(issue),
+      canonicalUrl: buildCanonicalUrl(issueRoutePath, siteOrigin, basePath),
+      ogType: "article",
+      lastModified: ensureIsoDate(issue.publishedAt),
+      bodyHtml: renderBriefIssueBody(issue, basePath)
+    });
+  }
 
   for (const product of liveShellProducts) {
     const documentData = documentDataBySlug.get(product.slug);

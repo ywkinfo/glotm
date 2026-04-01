@@ -2,6 +2,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
 import {
   initializeGa,
+  trackGaEvent,
   trackGaPageView
 } from "./ga";
 
@@ -50,6 +51,23 @@ describe("GA helpers", () => {
       page_title: "LatTm",
       page_path: "/latam",
       page_location: "http://localhost:3000/latam"
+    });
+  });
+
+  it("sends custom events through gtag", () => {
+    const gtag = vi.fn();
+    window.gtag = gtag;
+
+    expect(
+      trackGaEvent("G-TEST123", "brief_guide_click", {
+        issue_slug: "2026-04-launch-issue",
+        target_path: "/mexico"
+      })
+    ).toBe(true);
+    expect(gtag).toHaveBeenCalledWith("event", "brief_guide_click", {
+      send_to: "G-TEST123",
+      issue_slug: "2026-04-launch-issue",
+      target_path: "/mexico"
     });
   });
 });

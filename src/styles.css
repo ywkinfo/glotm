@@ -129,6 +129,43 @@ body {
   padding: clamp(1.4rem, 2.5vw, 2rem) 1.25rem 3rem;
 }
 
+.latest-brief-banner {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.8fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  border-radius: 24px;
+  border: 1px solid rgba(14, 107, 109, 0.16);
+  background: linear-gradient(135deg, rgba(14, 107, 109, 0.12), rgba(180, 95, 47, 0.08));
+  box-shadow: var(--shadow);
+}
+
+.latest-brief-banner-copy,
+.latest-brief-banner-meta {
+  min-width: 0;
+}
+
+.latest-brief-banner-title {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  line-height: 1.18;
+}
+
+.latest-brief-banner-summary {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+.latest-brief-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: flex-end;
+}
+
 .gateway-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.52fr) minmax(320px, 0.82fr);
@@ -139,7 +176,11 @@ body {
 .gateway-hero-card,
 .gateway-panel-card,
 .gateway-section,
-.product-card {
+.product-card,
+.brief-card,
+.brief-hero-card,
+.brief-issue-shell,
+.brief-item-card {
   border: 1px solid var(--border);
   border-radius: 30px;
   background: var(--bg);
@@ -203,6 +244,10 @@ body {
   margin-top: 1.35rem;
 }
 
+.gateway-cta-link--secondary {
+  color: var(--ink);
+}
+
 .gateway-button {
   display: inline-flex;
   align-items: center;
@@ -234,6 +279,159 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 0.75rem;
+}
+
+.brief-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.brief-hero-card,
+.brief-issue-shell {
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.brief-card-grid,
+.brief-item-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.brief-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.3rem;
+}
+
+.brief-card-topline,
+.brief-item-header,
+.brief-breadcrumb,
+.brief-link-row,
+.brief-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.brief-card-date {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.brief-card-title,
+.brief-item-title {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  line-height: 1.18;
+}
+
+.brief-card-title {
+  font-size: 1.4rem;
+}
+
+.brief-card-summary,
+.brief-item-copy,
+.brief-issue-note {
+  margin: 0;
+  color: var(--muted);
+}
+
+.brief-card-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--ink);
+}
+
+.brief-card-actions {
+  margin-top: auto;
+}
+
+.brief-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(14, 107, 109, 0.1);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.brief-breadcrumb {
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.brief-breadcrumb a {
+  color: var(--accent);
+}
+
+.brief-issue-header {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1.4rem;
+}
+
+.brief-article-body {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.brief-article-paragraph {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.9;
+}
+
+.brief-item-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.brief-item-card {
+  padding: 1.25rem;
+}
+
+.brief-item-index {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(180, 95, 47, 0.12);
+  color: var(--warm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+.brief-item-grid {
+  margin: 1rem 0;
+}
+
+.brief-item-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.brief-guide-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.62rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(39, 58, 62, 0.1);
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .gateway-metric {
@@ -531,8 +729,19 @@ body {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .latest-brief-banner {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .latest-brief-banner-actions {
+    justify-content: flex-start;
+  }
+
   .gateway-card-grid,
-  .product-card-grid {
+  .product-card-grid,
+  .brief-card-grid,
+  .brief-item-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -597,7 +806,9 @@ body {
   }
 
   .gateway-card-grid,
-  .product-card-grid {
+  .product-card-grid,
+  .brief-card-grid,
+  .brief-item-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -649,17 +860,29 @@ body {
     padding-inline: 1rem;
   }
 
+  .latest-brief-banner {
+    padding: 1rem;
+    border-radius: 20px;
+  }
+
   .gateway-hero-card,
   .gateway-panel-card,
   .gateway-section,
   .gateway-cta-card,
-  .product-card {
+  .product-card,
+  .brief-card,
+  .brief-hero-card,
+  .brief-issue-shell,
+  .brief-item-card {
     border-radius: 24px;
   }
 
   .gateway-hero-card,
   .gateway-panel-card,
-  .gateway-cta-card {
+  .gateway-cta-card,
+  .brief-hero-card,
+  .brief-issue-shell,
+  .brief-item-card {
     padding: 1.15rem;
   }
 
@@ -679,14 +902,18 @@ body {
 
   .gateway-actions,
   .gateway-cta-actions,
-  .product-card-actions {
+  .product-card-actions,
+  .latest-brief-banner-actions,
+  .brief-link-row {
     flex-direction: column;
     align-items: stretch;
   }
 
   .gateway-button,
   .product-card-link,
-  .gateway-cta-link {
+  .latest-brief-banner-actions .gateway-button,
+  .gateway-cta-link,
+  .brief-guide-link {
     width: 100%;
   }
 
