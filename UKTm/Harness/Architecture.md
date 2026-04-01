@@ -3,7 +3,7 @@
 ## Purpose
 
 `UKTm`은 영국 상표 실무를 다루는 단일국가 워크스페이스다.
-현재는 루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비하는 구조를 목표로 한다.
+현재는 루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비하는 early-track 구조로 운영 중이다.
 
 ## Source Of Truth
 
@@ -29,6 +29,7 @@
 - 초기 공개 범위: draft 상태의 영국 단일국가 가이드
 - 파이프라인 명령: 루트에서 `npm run content:uk`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
+- 현재 운영 우선순위: status 승격이 아니라 fact log 정합성과 루트 회귀 방지
 
 ## Editing Rules
 

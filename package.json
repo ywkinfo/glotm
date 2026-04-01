@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "content:latam": "node --import tsx LatTm/scripts/build-master.ts && node --import tsx LatTm/scripts/qa-content.ts && node --import tsx LatTm/scripts/build-content.ts",
-    "content:mexico": "node --import tsx MexTm/scripts/build-content.ts",
+    "content:mexico": "node --import tsx MexTm/scripts/build-master.ts && node --import tsx MexTm/scripts/qa-content.ts && node --import tsx MexTm/scripts/build-content.ts",
     "content:usa": "node --import tsx UsaTm/scripts/build-content.ts",
     "content:japan": "node --import tsx JapTm/scripts/build-content.ts",
     "content:china": "node --import tsx ChaTm/scripts/build-master.ts && node --import tsx ChaTm/scripts/qa-content.ts && node --import tsx ChaTm/scripts/build-content.ts",
