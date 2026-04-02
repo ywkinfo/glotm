@@ -12,28 +12,34 @@ npm ci
 
 ## Standard Verification
 
-아래 4개 명령이 현재 루트 기준 검증 계약입니다.
+루트 health 계약은 아래 3개 lane으로 나뉩니다.
 
 ```bash
-npm test
-npm run e2e:smoke
-npm run build
-npm run build:pages:glotm
 npm run content:prepare
+npm run health:runtime
+npm run health:content
+npm run health:release
+npm run health:report
 ```
 
 설명:
 
-- `npm test`: 루트 셸 라우팅, 링크 계약, 공통 리더 동작 검증
-- `npm run e2e:smoke`: 실제 브라우저로 Gateway, LatTm/ChaTm/MexTm/EuTm/UsaTm/JapTm/UKTm, Brief 흐름 스모크
-- `npm run build`: 루트 `content:prepare` 실행 후 루트 Vite build
-- `npm run build:pages:glotm`: GitHub Pages subpath 빌드 검증
+- `npm run health:runtime`: `typecheck + npm test + npm run e2e:smoke`를 묶어 루트 셸 라우팅, 링크 계약, 공통 리더 동작, 실제 브라우저 스모크를 함께 검증한다. 여기서 `e2e:smoke`는 preview webServer를 띄우기 위해 build를 동반하는 runtime smoke다.
+- `npm run health:content`: 루트 `content:prepare` 뒤에 `ChaTm`·`MexTm`·`EuTm`의 workspace local full pipeline을 다시 재현한다. `UsaTm`·`JapTm`·`UKTm`은 lighter-track 기준으로 루트 `content:prepare`의 refresh 계약을 따른다.
+- `npm run health:release`: `build + build:pages:glotm`를 묶어 GitHub Pages subpath 출하 전 상태를 검증한다.
+- `npm run health:report`: 루트 lane 상태와 product scorecard 메타데이터를 같은 리포트 포맷으로 출력한다. `--format json`, `--runtime=pass` 같은 플래그를 받을 수 있다.
 - `npm run content:prepare`: 7개 live guide의 generated content를 재생성한다. 현재 루트 기준으로 `LatTm`·`MexTm`·`ChaTm`·`EuTm`·`UKTm`은 `build-master -> qa-content -> build-content` 전체 흐름을 타고, `UsaTm`·`JapTm`은 shortcut generated-content 갱신 경로를 사용한다. `UsaTm`·`JapTm`의 deeper content QA가 필요하면 각 워크스페이스 로컬 `content:prepare`를 직접 실행한다.
 
 릴리즈 직전 한 번에 돌릴 때는 아래 묶음 명령을 사용합니다.
 
 ```bash
 npm run verify:release
+```
+
+전체 health lane을 연속으로 재현하려면 아래 명령을 사용합니다.
+
+```bash
+npm run health:all
 ```
 
 ## Workspace Commands
@@ -64,3 +70,5 @@ npm run verify:release
 현재 포트폴리오의 기본 실행 순서는 `ChaTm -> MexTm -> EuTm -> Brief/Gateway -> JapTm -> UKTm -> UsaTm`입니다. `LatTm`은 기준 프레임 보호를 우선하며, 대형 신규 집필보다 freshness·density·reader QA 유지에 집중합니다.
 
 운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verificationFreshnessDays`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계산합니다.
+
+월간 review에서는 위 메타데이터를 수동 상태표시가 아니라 scorecard 입력값으로 취급합니다. `npm run health:report`는 현재 메타데이터 기준으로 각 guide의 verdict를 `hold`, `upgrade-ready`, `verification-refresh-needed`로 정리합니다.

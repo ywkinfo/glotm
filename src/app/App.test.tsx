@@ -311,7 +311,7 @@ describe("App portfolio shell", () => {
     expect(livePortfolioPanel).not.toBeNull();
     expect(
       within(livePortfolioPanel as HTMLElement).getByText(
-        "권역형 2개와 국가형 5개를 운영하며, monthly scorecard로 search density, verification freshness, QA를 함께 관리합니다."
+        "권역형 2개와 국가형 5개를 운영하며, monthly health review와 scorecard로 search density, verification freshness, QA를 함께 관리합니다."
       )
     ).toBeInTheDocument();
   });

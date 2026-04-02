@@ -1117,3 +1117,20 @@ body {
   color: #6b4a0e;
   line-height: 1.55;
 }
+
+.gateway-copyright {
+  text-align: center;
+  padding: 2rem 1rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.gateway-copyright p {
+  margin: 0;
+}
+
+.copyright-notice {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}

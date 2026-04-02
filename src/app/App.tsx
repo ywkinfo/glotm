@@ -694,7 +694,7 @@ function GatewayLandingPage() {
               <span className="gateway-metric-label">Proof</span>
               <strong className="gateway-metric-value">{liveChapterCount} Chapters · {liveSearchEntryCount} Search Entries</strong>
               <p className="gateway-metric-note">
-                권역형 {regionProductCount}개와 국가형 {countryProductCount}개를 운영하며, monthly scorecard로 search density, verification freshness, QA를 함께 관리합니다.
+                권역형 {regionProductCount}개와 국가형 {countryProductCount}개를 운영하며, monthly health review와 scorecard로 search density, verification freshness, QA를 함께 관리합니다.
               </p>
             </div>
           </div>
@@ -981,6 +981,10 @@ function GatewayLandingPage() {
           에서 확인하실 수 있습니다.
         </p>
       </section>
+
+      <footer className="gateway-copyright">
+        <p>© 2026 GloTm. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
