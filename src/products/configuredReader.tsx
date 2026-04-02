@@ -269,7 +269,11 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         return undefined;
       }
 
-      const isMobileViewport = window.matchMedia("(max-width: 920px)").matches;
+      const mobileViewportQuery =
+        typeof window.matchMedia === "function"
+          ? window.matchMedia("(max-width: 920px)")
+          : undefined;
+      const isMobileViewport = mobileViewportQuery?.matches ?? false;
 
       if (!isMobileViewport) {
         return undefined;
