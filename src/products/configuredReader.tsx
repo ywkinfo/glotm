@@ -465,6 +465,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
                     구체적인 법률 문제는 자격 있는 변호사 또는 변리사에게 문의하시기 바랍니다.
                     저자와 독자 사이에는 변호사·의뢰인 관계가 성립하지 않습니다.
                   </div>
+                  <p className="copyright-notice">© 2026 GloTm. All rights reserved.</p>
                 </div>
               </footer>
             </main>
