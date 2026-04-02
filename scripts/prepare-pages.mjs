@@ -9,6 +9,7 @@ const indexHtml = await readFile(indexHtmlPath, "utf8");
 const notFoundHtml = indexHtml
   .replace(/\s*<meta\s+name="description"[^>]*>\s*/gi, "\n")
   .replace(/\s*<meta\s+name="robots"[^>]*>\s*/gi, "\n")
+  .replace(/\s*<meta\s+name="twitter:[^"]+"[^>]*>\s*/gi, "\n")
   .replace(/\s*<meta[^>]+property="og:[^"]+"[^>]*>\s*/gi, "\n")
   .replace(/\s*<link[^>]+rel="canonical"[^>]*>\s*/gi, "\n")
   .replace(/<title>[\s\S]*?<\/title>/i, "<title>찾을 수 없는 페이지 | GloTm</title>")

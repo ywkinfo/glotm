@@ -34,6 +34,8 @@ type SearchPanelProps = {
   onNavigate: (chapterSlug: string, sectionId?: string) => void;
   searchContent: (rawQuery: string) => Promise<SearchEntry[]>;
   warmSearchContent: () => void;
+  onSearchSubmit?: (query: string, resultCount: number) => void;
+  onSearchResultSelect?: (result: SearchEntry) => void;
 };
 
 type SearchStatus = "idle" | "loading" | "success" | "empty" | "error";
@@ -276,7 +278,9 @@ export function SidebarNav({
 export function SearchPanel({
   onNavigate,
   searchContent,
-  warmSearchContent
+  warmSearchContent,
+  onSearchSubmit,
+  onSearchResultSelect
 }: SearchPanelProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchEntry[]>([]);
@@ -311,6 +315,7 @@ export function SearchPanel({
           return;
         }
 
+        onSearchSubmit?.(trimmedQuery, nextResults.length);
         setResults(nextResults);
         setStatus(nextResults.length > 0 ? "success" : "empty");
         setHighlightedIndex(nextResults.length > 0 ? 0 : -1);
@@ -325,7 +330,7 @@ export function SearchPanel({
         setSearchError("검색 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
         setHighlightedIndex(-1);
       });
-  }, [query, searchContent]);
+  }, [onSearchSubmit, query, searchContent]);
 
   useEffect(() => {
     const activeResult = resultRefs.current[highlightedIndex];
@@ -341,6 +346,7 @@ export function SearchPanel({
       : undefined;
 
   const navigateToResult = (result: SearchEntry) => {
+    onSearchResultSelect?.(result);
     onNavigate(result.chapterSlug, result.sectionId || undefined);
     setQuery("");
     setResults([]);

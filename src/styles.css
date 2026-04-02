@@ -2,6 +2,25 @@
 
 :root {
   --global-topbar-height: 4.85rem;
+  --focus-ring: rgba(14, 107, 109, 0.26);
+  --focus-ring-shadow: 0 0 0 4px rgba(14, 107, 109, 0.12);
+}
+
+:where(
+    a[href],
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [role="button"],
+    [role="link"],
+    [tabindex]:not([tabindex="-1"])
+  ):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: var(--focus-ring-shadow);
+  border-color: rgba(14, 107, 109, 0.32);
 }
 
 body {
@@ -738,6 +757,138 @@ body {
 
 .status-card .gateway-kicker {
   margin-bottom: 0.4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: var(--ink);
+  }
+
+  .global-topbar,
+  .topbar,
+  .left-rail,
+  .reading-progress,
+  .reader-action-bar,
+  .mobile-scrim,
+  .search-shell,
+  .search-results,
+  .global-status-panel,
+  .catalog-panel,
+  .chapter-outline,
+  .continue-card,
+  .latest-brief-banner-actions,
+  .gateway-actions,
+  .gateway-cta-actions,
+  .product-card-actions,
+  .chapter-nav,
+  .table-scroll-button {
+    display: none !important;
+  }
+
+  .glotm-main,
+  .gateway-page,
+  .reader-shell,
+  .reader-layout,
+  .content-pane,
+  .home-page,
+  .chapter-page,
+  .brief-hero,
+  .brief-card-grid,
+  .brief-item-grid,
+  .gateway-card-grid,
+  .product-card-grid {
+    display: block;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gateway-hero,
+  .chapter-header-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .latest-brief-banner,
+  .gateway-hero-card,
+  .gateway-panel-card,
+  .gateway-section,
+  .gateway-card,
+  .gateway-metric,
+  .product-card,
+  .brief-card,
+  .brief-hero-card,
+  .brief-issue-shell,
+  .brief-item-card,
+  .chapter-header,
+  .article,
+  .disclaimer {
+    break-inside: avoid;
+    border-color: rgba(39, 58, 62, 0.16);
+    background: #fff;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .gateway-page,
+  .reader-shell,
+  .chapter-page {
+    padding: 0;
+  }
+
+  .reader-shell {
+    padding-bottom: 0;
+  }
+
+  .chapter-page,
+  .brief-item-grid,
+  .gateway-card-grid,
+  .product-card-grid {
+    gap: 1rem;
+  }
+
+  .article {
+    max-width: none;
+  }
+
+  .table-scroll,
+  .article .table-shell .table-scroll {
+    overflow: visible;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .article table {
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .article th {
+    position: static;
+  }
+
+  .article th,
+  .article td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (max-width: 1180px) {

@@ -221,6 +221,7 @@ describe("SearchPanel", () => {
   it("supports keyboard selection through the result list", async () => {
     const user = userEvent.setup();
     const onNavigate = vi.fn();
+    const onSearchResultSelect = vi.fn();
     const warmSearchContent = vi.fn();
     const searchContent = vi.fn().mockResolvedValue([
       {
@@ -240,6 +241,7 @@ describe("SearchPanel", () => {
     render(
       <SearchPanel
         onNavigate={onNavigate}
+        onSearchResultSelect={onSearchResultSelect}
         searchContent={searchContent}
         warmSearchContent={warmSearchContent}
       />
@@ -253,6 +255,12 @@ describe("SearchPanel", () => {
     await user.keyboard("{ArrowDown}{Enter}");
 
     expect(onNavigate).toHaveBeenCalledWith("mexico-operating", "filing");
+    expect(onSearchResultSelect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: "mx-result-2",
+        sectionId: "filing"
+      })
+    );
   });
 
   it("renders results for numeric queries once search completes", async () => {
@@ -323,12 +331,14 @@ describe("SearchPanel", () => {
 
   it("shows the empty state only after the active query resolves with no results", async () => {
     const user = userEvent.setup();
+    const onSearchSubmit = vi.fn();
     const deferredSearch = createDeferredPromise<SearchEntry[]>();
     const searchContent = vi.fn().mockReturnValue(deferredSearch.promise);
 
     render(
       <SearchPanel
         onNavigate={vi.fn()}
+        onSearchSubmit={onSearchSubmit}
         searchContent={searchContent}
         warmSearchContent={vi.fn()}
       />
@@ -344,10 +354,12 @@ describe("SearchPanel", () => {
     deferredSearch.resolve([]);
 
     expect(await screen.findByText("일치하는 섹션을 찾지 못했습니다.")).toBeInTheDocument();
+    expect(onSearchSubmit).toHaveBeenCalledWith("없는 검색어", 0);
   });
 
   it("keeps only the latest query results when requests resolve out of order", async () => {
     const user = userEvent.setup();
+    const onSearchSubmit = vi.fn();
     const requests = new Map<string, ReturnType<typeof createDeferredPromise<SearchEntry[]>>>();
     const searchContent = vi.fn().mockImplementation((query: string) => {
       const deferredSearch = createDeferredPromise<SearchEntry[]>();
@@ -360,6 +372,7 @@ describe("SearchPanel", () => {
     render(
       <SearchPanel
         onNavigate={vi.fn()}
+        onSearchSubmit={onSearchSubmit}
         searchContent={searchContent}
         warmSearchContent={vi.fn()}
       />
@@ -399,6 +412,31 @@ describe("SearchPanel", () => {
       expect(screen.getByRole("option", { name: /12\. 최신 결과/ })).toBeInTheDocument();
       expect(screen.queryByRole("option", { name: /1\. 이전 결과/ })).not.toBeInTheDocument();
     });
+
+    expect(onSearchSubmit).toHaveBeenCalledTimes(1);
+    expect(onSearchSubmit).toHaveBeenCalledWith("12", 1);
+  });
+
+  it("reports the resolved query with result count before selection", async () => {
+    const user = userEvent.setup();
+    const onSearchSubmit = vi.fn();
+    const searchContent = vi.fn().mockResolvedValue([searchResult]);
+
+    render(
+      <SearchPanel
+        onNavigate={vi.fn()}
+        onSearchSubmit={onSearchSubmit}
+        searchContent={searchContent}
+        warmSearchContent={vi.fn()}
+      />
+    );
+
+    const input = screen.getByRole("combobox", { name: "검색" });
+
+    await user.type(input, "IMPI");
+
+    expect(await screen.findByRole("option", { name: /IMPI 대응/ })).toBeInTheDocument();
+    expect(onSearchSubmit).toHaveBeenCalledWith("IMPI", 1);
   });
 });
 

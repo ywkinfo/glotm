@@ -21,8 +21,14 @@ import {
 } from "../src/products/shared";
 
 const DEFAULT_SITE_ORIGIN = "https://ywkinfo.github.io";
+const DEFAULT_SITE_NAME = "GloTm";
 const DEFAULT_SITE_DESCRIPTION =
   "인하우스 팀을 위한 cross-border trademark operating guides GloTm. 시장 우선순위, 출원 경로, 유지·집행 판단을 한곳에서 탐색할 수 있습니다.";
+const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.svg";
+const DEFAULT_SOCIAL_IMAGE_ALT =
+  "GloTm Gateway와 cross-border trademark operating guides를 소개하는 대표 공유 이미지";
+const DEFAULT_SOCIAL_IMAGE_WIDTH = 1200;
+const DEFAULT_SOCIAL_IMAGE_HEIGHT = 630;
 
 export type StaticPageDefinition = {
   routePath: string;
@@ -30,6 +36,10 @@ export type StaticPageDefinition = {
   title: string;
   description: string;
   canonicalUrl: string;
+  ogImageUrl: string;
+  ogImageAlt: string;
+  ogImageWidth: number;
+  ogImageHeight: number;
   ogType: "website" | "article";
   lastModified: string;
   bodyHtml: string;
@@ -117,6 +127,15 @@ export function buildPublicHref(routePath: string, basePath = "") {
 
 export function buildCanonicalUrl(routePath: string, siteOrigin: string, basePath = "") {
   return `${siteOrigin}${buildPublicHref(routePath, basePath)}`;
+}
+
+function buildDefaultSocialImage(siteOrigin: string, basePath: string) {
+  return {
+    ogImageUrl: buildCanonicalUrl(DEFAULT_SOCIAL_IMAGE_PATH, siteOrigin, basePath),
+    ogImageAlt: DEFAULT_SOCIAL_IMAGE_ALT,
+    ogImageWidth: DEFAULT_SOCIAL_IMAGE_WIDTH,
+    ogImageHeight: DEFAULT_SOCIAL_IMAGE_HEIGHT
+  };
 }
 
 function renderLinkList(title: string, links: PageLink[], ordered = false) {
@@ -320,6 +339,7 @@ function buildGatewayPage(
     title: buildRuntimeDocumentTitle(),
     description: DEFAULT_SITE_DESCRIPTION,
     canonicalUrl: buildCanonicalUrl("/", siteOrigin, basePath),
+    ...buildDefaultSocialImage(siteOrigin, basePath),
     ogType: "website",
     lastModified: ensureIsoDate(lastModified),
     bodyHtml: renderGatewayBody(basePath)
@@ -371,16 +391,17 @@ export function buildStaticPageDefinitions(
   const briefArchivePath = buildBriefArchivePath();
   const latestBriefPublishedAt = briefIssues[0]?.publishedAt ?? gatewayLastModified;
 
-  pages.push({
-    routePath: briefArchivePath,
-    outputPath: buildOutputPath(briefArchivePath, distDir),
-    title: buildBriefDocumentTitle(),
-    description: buildBriefArchiveDescription(),
-    canonicalUrl: buildCanonicalUrl(briefArchivePath, siteOrigin, basePath),
-    ogType: "website",
-    lastModified: ensureIsoDate(latestBriefPublishedAt),
-    bodyHtml: renderBriefArchiveBody(basePath)
-  });
+    pages.push({
+      routePath: briefArchivePath,
+      outputPath: buildOutputPath(briefArchivePath, distDir),
+      title: buildBriefDocumentTitle(),
+      description: buildBriefArchiveDescription(),
+      canonicalUrl: buildCanonicalUrl(briefArchivePath, siteOrigin, basePath),
+      ...buildDefaultSocialImage(siteOrigin, basePath),
+      ogType: "website",
+      lastModified: ensureIsoDate(latestBriefPublishedAt),
+      bodyHtml: renderBriefArchiveBody(basePath)
+    });
 
   for (const issue of briefIssues) {
     const issueRoutePath = buildBriefIssuePath(issue.slug);
@@ -391,6 +412,7 @@ export function buildStaticPageDefinitions(
       title: buildBriefDocumentTitle(issue),
       description: buildBriefIssueDescription(issue),
       canonicalUrl: buildCanonicalUrl(issueRoutePath, siteOrigin, basePath),
+      ...buildDefaultSocialImage(siteOrigin, basePath),
       ogType: "article",
       lastModified: ensureIsoDate(issue.publishedAt),
       bodyHtml: renderBriefIssueBody(issue, basePath)
@@ -412,6 +434,7 @@ export function buildStaticPageDefinitions(
       title: buildRuntimeDocumentTitle(product.title),
       description: buildProductDescription(product, documentData),
       canonicalUrl: buildCanonicalUrl(productRoutePath, siteOrigin, basePath),
+      ...buildDefaultSocialImage(siteOrigin, basePath),
       ogType: "website",
       lastModified: ensureIsoDate(documentData.meta.builtAt),
       bodyHtml: renderProductBody(product, documentData, basePath)
@@ -426,6 +449,7 @@ export function buildStaticPageDefinitions(
         title: buildRuntimeDocumentTitle(chapter.title),
         description: buildChapterDescription(product, chapter),
         canonicalUrl: buildCanonicalUrl(chapterRoutePath, siteOrigin, basePath),
+        ...buildDefaultSocialImage(siteOrigin, basePath),
         ogType: "article",
         lastModified: ensureIsoDate(documentData.meta.builtAt),
         bodyHtml: renderChapterBody(product, documentData, chapter, basePath)
@@ -440,6 +464,7 @@ function stripManagedHeadTags(templateHtml: string) {
   return templateHtml
     .replace(/\s*<meta\s+name="description"[^>]*>\s*/gi, "\n")
     .replace(/\s*<meta\s+name="robots"[^>]*>\s*/gi, "\n")
+    .replace(/\s*<meta\s+name="twitter:[^"]+"[^>]*>\s*/gi, "\n")
     .replace(/\s*<meta\s+property="og:[^"]+"[^>]*>\s*/gi, "\n")
     .replace(/\s*<link\s+rel="canonical"[^>]*>\s*/gi, "\n");
 }
@@ -453,10 +478,20 @@ export function renderStaticHtml(templateHtml: string, page: StaticPageDefinitio
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
     `<meta name="robots" content="index, follow" />`,
     `<link rel="canonical" href="${escapeHtml(page.canonicalUrl)}" />`,
+    `<meta property="og:site_name" content="${DEFAULT_SITE_NAME}" />`,
     `<meta property="og:type" content="${page.ogType}" />`,
     `<meta property="og:title" content="${escapeHtml(page.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(page.description)}" />`,
-    `<meta property="og:url" content="${escapeHtml(page.canonicalUrl)}" />`
+    `<meta property="og:url" content="${escapeHtml(page.canonicalUrl)}" />`,
+    `<meta property="og:image" content="${escapeHtml(page.ogImageUrl)}" />`,
+    `<meta property="og:image:alt" content="${escapeHtml(page.ogImageAlt)}" />`,
+    `<meta property="og:image:width" content="${String(page.ogImageWidth)}" />`,
+    `<meta property="og:image:height" content="${String(page.ogImageHeight)}" />`,
+    '<meta name="twitter:card" content="summary_large_image" />',
+    `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
+    `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
+    `<meta name="twitter:image" content="${escapeHtml(page.ogImageUrl)}" />`,
+    `<meta name="twitter:image:alt" content="${escapeHtml(page.ogImageAlt)}" />`
   ].join("\n    ");
 
   return cleanedTemplate
