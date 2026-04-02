@@ -119,4 +119,12 @@ describe("portfolio health helpers", () => {
     expect(getProductHealthVerdict(usa!)).toBe("hold");
     expect(getLifecycleCriteriaGaps(usa!, usa!.lifecycleStatus)).toEqual([]);
   });
+
+  it("treats the refreshed UKTm pilot state as hold with no current lifecycle gaps", () => {
+    const uk = products.find((product) => product.slug === "uk");
+
+    expect(uk).toBeDefined();
+    expect(getProductHealthVerdict(uk!)).toBe("hold");
+    expect(getLifecycleCriteriaGaps(uk!, uk!.lifecycleStatus)).toEqual([]);
+  });
 });

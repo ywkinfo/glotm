@@ -28,4 +28,5 @@
 - `master.md`는 조립 결과물로 취급하며, 수동 편집보다 재생성을 우선합니다.
 - 영국 실무는 Brexit 이후 EU 경로와 분리된 운영 판단이 많으므로, `EuTm`과 중복 설명보다 UKIPO 실무 판단 기준을 우선 정리합니다.
 - 수수료, 기한, 기관명, 공식 시스템 명칭처럼 변동성이 큰 정보는 출판 직전 `content/research/uk_tm_fact_verification_log.md`로 다시 확인합니다.
+- verification refresh 판정은 `content/research/uk_tm_accuracy_completeness_review.md`와 로컬 `content:prepare` 재현 결과를 함께 기준으로 봅니다.
 - 현재 우선순위는 신규 대확장보다 `draft 공개본 · early track` 상태를 유지하면서 문서 정합성, fact log, 루트 회귀 방지 기준을 단단히 하는 것입니다.

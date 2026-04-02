@@ -92,7 +92,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
 - `Brief`·`Gateway`: guide 본문 보강 뒤 buyer-facing cadence와 진입 신뢰 보강
-- `JapTm`·`UKTm`·`UsaTm`: JapTm search density 보강, UKTm verification refresh, UsaTm standard QA 유지
+- `JapTm`·`UKTm`·`UsaTm`: JapTm search density 보강, UKTm pilot 유지, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -152,7 +152,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 early track
 
-`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 90개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 다만 현재 Gateway 메시지에서는 다른 성숙한 country guide와 동등 승격하지 않고, draft 공개본 성격의 early track으로 약하게 노출한다.
+`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 90개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 이번 verification refresh에서 fact log와 local full pipeline을 다시 확인했고, lifecycle은 `pilot`로 유지한다. Gateway에서는 계속 draft 공개본 성격의 early track으로 약하게 노출하되, verification freshness와 고위험 gap은 이번 라운드 기준으로 정리된 상태다.
 
 ### 향후 확장 방향
 

@@ -137,12 +137,12 @@ export const products: ProductMeta[] = [
     portfolioTier: "incubate",
     lifecycleStatus: "pilot",
     lifecycleTone: "pilot",
-    verificationFreshnessDays: 108,
+    verificationFreshnessDays: 0,
     qaLevel: "smoke",
-    highRiskVerificationGapCount: 3,
+    highRiskVerificationGapCount: 0,
     audience: "영국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "UKTm 보기",
-    maturityNote: "lighter track · draft 공개본",
+    maturityNote: "verification refresh 완료 · draft 공개본 유지",
     coverageType: "country",
     availability: "live_shell"
   }
