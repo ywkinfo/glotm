@@ -1,6 +1,7 @@
 .gstack
 .mextm-inner-git
 .omx/
+.sisyphus/
 test-results/
 archive/local-history/
 CODEX-INSTRUCTIONS.md
