@@ -49,3 +49,22 @@
 ## 실무 예시
 
 예를 들어 영국 이커머스 launch를 앞둔 소비재 브랜드라면, 상품 판매용 클래스와 온라인 retail services를 한 번에 넣고 싶어질 수 있다. 이때 실제 판매주체와 서비스 제공주체가 다르면 owner 구조를 먼저 정리하지 않으면 심사 이후 라이선스와 evidence story가 꼬이기 쉽다.
+
+## 명세 브리프 전달 패킷
+
+외부 대리인에게 명세 검토를 맡길 때는 아래 패킷이 같이 가는 편이 좋다.
+
+| 묶음 | 포함 내용 |
+| --- | --- |
+| owner pack | 권리자, 실제 사용자, address |
+| mark pack | word/logo/composite 구분, 최신 버전 |
+| class pack | core goods/services, 인접 범위, 제거 후보 |
+| launch pack | 출시 일정, 채널, 후속 확장 계획 |
+
+## 표현 수정 기준
+
+| 상황 | 기본 수정 방향 |
+| --- | --- |
+| 내부 마케팅 문구가 모호함 | 실제 goods/services 설명 용어로 교체 |
+| 너무 넓은 개념어가 들어감 | core 범위 중심으로 좁힘 |
+| owner-user 구조가 복잡함 | licence story 설명 가능한 범위로 재정리 |

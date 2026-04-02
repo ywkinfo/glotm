@@ -17,7 +17,7 @@
 - `ChaTm`은 루트 `GloTm` 셸 `/china` 경로에 연결된 live country guide다.
 - 현재 파이프라인은 `build-master -> qa-content -> build-content`로 정착돼 있다.
 - 현재 공개본 기준 구조는 서문 포함 15개 챕터다.
-- 현재 루트 registry 기준 검색 엔트리는 144개다.
+- 현재 루트 registry 기준 검색 엔트리는 171개다.
 - `content/research/cn_tm_fact_verification_log.md`의 핵심 큐는 구조화된 `claim_id` 기반 로그로 정리돼 있고, 주요 항목은 `Body-ready` 상태까지 올라와 있다.
 - 현재 병목은 "초기 장 수 확보"가 아니라, Sprint 1 우선 장의 실무 밀도와 검색 섹션 밀도를 더 끌어올리는 일이다.
 
@@ -31,7 +31,7 @@
 ## v1 목표 산출물
 
 - 챕터 수: 서문 포함 15장 구조 유지
-- 검색 엔트리: 144 -> 180~240
+- 검색 엔트리: 171 -> 200~240
 - 장별 H3 이상 소제목: 최소 5개 이상
 - 각 장의 도입부는 summary/search entry 재료가 되도록 판단 프레임 역할을 하게 작성
 - `npm run content:china`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과

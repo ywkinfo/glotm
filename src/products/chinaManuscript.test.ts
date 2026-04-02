@@ -3,6 +3,20 @@ import { describe, expect, it } from "vitest";
 import documentData from "../../ChaTm/content/generated/document-data.json";
 import searchEntries from "../../ChaTm/content/generated/search-index.json";
 
+type HeadingNode = {
+  title: string;
+  children?: HeadingNode[];
+};
+
+function flattenHeadingTitles(
+  headings: HeadingNode[] = []
+): string[] {
+  return headings.flatMap((heading) => [
+    heading.title,
+    ...flattenHeadingTitles(heading.children ?? [])
+  ]);
+}
+
 describe("ChaTm final manuscript", () => {
   it("ships the expanded 15-chapter China manuscript structure", () => {
     expect(documentData.meta.chapterCount).toBe(15);
@@ -42,7 +56,7 @@ describe("ChaTm final manuscript", () => {
       "경로를 고르기 전에 확인할 것",
       "경로 선택 메모를 남기는 방식"
     ]);
-    expect(examinationChapter?.headings.map((heading) => heading.title)).toContain(
+    expect(flattenHeadingTitles(examinationChapter?.headings)).toContain(
       "사건 기록 보드는 반드시 표준화한다"
     );
     expect(appendixChapter?.headings.map((heading) => heading.title)).toContain(
@@ -54,7 +68,7 @@ describe("ChaTm final manuscript", () => {
   });
 
   it("keeps the China search index dense enough for final-manuscript navigation", () => {
-    expect(searchEntries).toHaveLength(159);
+    expect(searchEntries).toHaveLength(171);
 
     const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
 
