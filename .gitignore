@@ -3,6 +3,7 @@
 .omx/
 .sisyphus/
 test-results/
+playwright-report/
 archive/local-history/
 CODEX-INSTRUCTIONS.md
 node_modules

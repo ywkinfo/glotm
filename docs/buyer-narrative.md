@@ -46,9 +46,15 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 ## Current recommended guides
 
-- `LatTm`: 여러 국가를 동시에 검토할 때 가장 먼저 보는 flagship guide
-- `MexTm`: 멕시코 진입 직전의 출원 경로와 실무 질문을 빠르게 정리할 때 우선
-- `ChaTm`: 중국어 표기, 서브클래스, 집행 경로 판단이 급할 때 다음 growth guide로 사용
+- `ChaTm`: 중국어 표기, 서브클래스, 출원 실무, 집행 경로를 먼저 정리해야 할 때 현재 최우선 growth guide
+- `MexTm`: 멕시코 진입 직전의 출원 경로와 실무 질문을 빠르게 정리할 때 다음 우선 guide
+- `EuTm`: 유럽 권역 판단을 개별 국가 나열보다 운영 구조 중심으로 정리할 때 validate guide로 사용
+- `LatTm`: 여러 국가를 동시에 검토할 때 기준 프레임을 잡는 flagship guide
+
+## Current execution order
+
+- `ChaTm -> MexTm -> EuTm -> Brief/Gateway -> JapTm -> UKTm -> UsaTm`
+- `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
 
 ## Three practical outcomes
 

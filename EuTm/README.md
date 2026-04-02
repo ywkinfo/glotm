@@ -28,6 +28,7 @@
 - 현재 `EuTm`의 공개본 기준은 `content/source/master.md`입니다.
 - 장별 원고 수정은 가능한 한 `content/source/chapters/`에서 시작하고, `master.md`는 조립 결과물로 취급합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/europe` 리더를 렌더링합니다.
-- 현재 빌드 기준 산출물은 **14개 챕터 / 검색 엔트리 180개**입니다.
+- 현재 빌드 기준 산출물은 **14개 챕터 / 검색 엔트리 196개**입니다.
 - 수수료, 공식 기한, 시스템 명칭처럼 변동성이 큰 정보는 본문에 확정하기 전에 `content/research/eu_tm_fact_verification_log.md`에서 먼저 검증합니다.
 - 현재 스프린트 우선순위는 상태 승격보다 `핵심 6장 심화 + fact verification 승격 + 문서/파이프라인 정합성 유지`입니다.
+- 현재 포트폴리오 실행 순서상 `ChaTm -> MexTm -> EuTm -> Brief/Gateway` 정렬 안에서, `EuTm`은 범위 확대보다 안정화와 reader 탐색 품질 보강을 맡습니다.
