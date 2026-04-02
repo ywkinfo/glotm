@@ -170,3 +170,32 @@ test("brief archive smoke", async ({ page }) => {
     )
   ).toBeVisible();
 });
+
+test("report archive smoke", async ({ page }) => {
+  await page.goto("/reports");
+
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트"
+    })
+  ).toBeVisible();
+  await expect(
+    page.getByText("글로벌 사용 증거 수집 운영 시스템 구축")
+  ).toBeVisible();
+});
+
+test("report detail smoke", async ({ page }) => {
+  await page.goto("/reports/global-use-evidence-system");
+
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "글로벌 사용 증거 수집 운영 시스템 구축"
+    })
+  ).toBeVisible();
+  await expect(
+    page.getByText("최소 운영 구조", { exact: false })
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "LatTm 기준 프레임" })).toBeVisible();
+});

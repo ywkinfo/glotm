@@ -3,10 +3,12 @@ import documentDataEurope from "../public/generated/europe/document-data.json";
 import documentDataJapan from "../public/generated/japan/document-data.json";
 import documentDataLatam from "../public/generated/latam/document-data.json";
 import documentDataMexico from "../public/generated/mexico/document-data.json";
+import documentDataReport from "../public/generated/reports/global-use-evidence-system/document-data.json";
 import documentDataUk from "../public/generated/uk/document-data.json";
 import documentDataUsa from "../public/generated/usa/document-data.json";
 import { describe, expect, it } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
+import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import type { DocumentData } from "../src/products/shared";
 import {
@@ -26,15 +28,19 @@ const documentDataBySlug = new Map<string, DocumentData>([
   ["uk", documentDataUk as DocumentData]
 ]);
 
+const reportDocumentDataBySlug = new Map<string, DocumentData>([
+  ["global-use-evidence-system", documentDataReport as DocumentData]
+]);
+
 describe("SEO build helpers", () => {
   it("builds static pages for the gateway, product homes, and chapters", () => {
-    const pages = buildStaticPageDefinitions(documentDataBySlug, {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
       basePath: "/glotm/",
       distDir: "/tmp/glotm-dist",
       siteOrigin: "https://ywkinfo.github.io"
     });
     const expectedPageCount =
-      1 + 1 + briefIssues.length + liveShellProducts.length + Array.from(documentDataBySlug.values()).reduce(
+      1 + 1 + briefIssues.length + 1 + reports.length + liveShellProducts.length + Array.from(documentDataBySlug.values()).reduce(
         (total, documentData) => total + documentData.chapters.length,
         0
       );
@@ -78,6 +84,25 @@ describe("SEO build helpers", () => {
     expect(pages).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
+          routePath: "/reports",
+          outputPath: "/tmp/glotm-dist/reports/index.html",
+          canonicalUrl: "https://ywkinfo.github.io/glotm/reports",
+          title: "Special Report | GloTm"
+        })
+      ])
+    );
+    expect(pages).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          routePath: `/reports/${reports[0]?.slug}`,
+          canonicalUrl: `https://ywkinfo.github.io/glotm/reports/${reports[0]?.slug}`,
+          ogType: "article"
+        })
+      ])
+    );
+    expect(pages).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
           routePath: `/latam/chapter/${documentDataLatam.chapters[0]?.slug}`,
           canonicalUrl: `https://ywkinfo.github.io/glotm/latam/chapter/${documentDataLatam.chapters[0]?.slug}`,
           ogType: "article"
@@ -87,7 +112,7 @@ describe("SEO build helpers", () => {
   });
 
   it("builds a sitemap and robots.txt with the public routes", () => {
-    const pages = buildStaticPageDefinitions(documentDataBySlug, {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
       basePath: "/glotm/",
       distDir: "/tmp/glotm-dist",
       siteOrigin: "https://ywkinfo.github.io"
@@ -98,6 +123,8 @@ describe("SEO build helpers", () => {
     expect(sitemapXml).toContain("<urlset");
     expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/");
     expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/briefs");
+    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/reports");
+    expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm/reports/${reports[0]?.slug}`);
     expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/latam");
     expect(robotsTxt).toBe(
       ["User-agent: *", "Allow: /", "Sitemap: https://ywkinfo.github.io/glotm/sitemap.xml"].join(
@@ -107,7 +134,7 @@ describe("SEO build helpers", () => {
   });
 
   it("renders og and twitter metadata with a base-path aware social image", () => {
-    const [page] = buildStaticPageDefinitions(documentDataBySlug, {
+    const [page] = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
       basePath: "/glotm/",
       distDir: "/tmp/glotm-dist",
       siteOrigin: "https://ywkinfo.github.io"
