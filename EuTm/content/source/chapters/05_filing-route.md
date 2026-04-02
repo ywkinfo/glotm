@@ -77,6 +77,29 @@ WIPO 기준으로 Madrid를 쓰려면 national 또는 regional application/regis
 - priority 또는 Madrid 연계가 문서에 남아 있는가
 - 대표자와 결제 책임자가 정해졌는가
 
+## filing pack 체크리스트
+
+filing 단계는 form 입력보다 pack 준비가 중요하다. 아래 pack이 있으면 EUTM, national, UK 어느 경로로 가도 다시 쓰기 쉽다.
+
+| pack 항목 | 포함 내용 |
+| --- | --- |
+| owner pack | 법인명, 주소, ownership note |
+| mark pack | 최종 표장 버전, 사용형 메모 |
+| goods/services pack | core, adjacent, accepted terms |
+| route pack | EUTM / national / UK / Madrid 선택 이유 |
+| timing pack | priority 여부, launch 일정, 결제 승인 |
+
+## 대표자/대리인 handoff 규칙
+
+외부 대리인 handoff는 메일 전달보다 내부 선택 이유를 넘기는 일이 더 중요하다.
+
+| 질문 | 미리 답해 둘 것 |
+| --- | --- |
+| 누가 대리인과 직접 소통하는가 | 본사 IP / 지역 counsel / PM |
+| goods/services 수정 승인권은 누구에게 있는가 | 사업팀 / 법무 / 공동 |
+| 영국 병행 여부를 누가 잠그는가 | 권리 선택 회의 owner |
+| priority/Madrid 이슈는 누가 확인하는가 | 포트폴리오 리드 |
+
 ## 한 줄 결론
 
 유럽 출원 실무의 핵심은 폼 작성 자체보다, **어떤 권리 단위로 누구 명의로 어떤 범위를 제출하는지 내부 설명이 먼저 가능한 상태**를 만드는 데 있다.

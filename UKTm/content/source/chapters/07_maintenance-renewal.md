@@ -48,3 +48,20 @@
 - comparable UK right를 별도 관리 항목으로 두는가
 - renew decision 전에 evidence vault를 같이 검토하는가
 - 권리 유지/포기 결정을 누가 최종 승인하는지 정했는가
+
+## 12개월/6개월/1개월 점검표
+
+| 시점 | 점검할 것 |
+| --- | --- |
+| 12개월 전 | 사업 필요성, comparable mark 여부, 예산 슬롯 |
+| 6개월 전 | evidence vault 강도, class 축소 후보 |
+| 1개월 전 | 대리인, 결제, 최종 승인 |
+
+## 실사용 증거 vault
+
+| 항목 | 적어 둘 내용 |
+| --- | --- |
+| mark version | word / logo / composite |
+| channel | D2C, retail, distributor, marketplace |
+| proof | 포장, 판매 화면, invoice, promo asset |
+| last checked | 최근 검토일 |

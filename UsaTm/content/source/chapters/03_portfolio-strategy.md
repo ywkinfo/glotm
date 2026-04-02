@@ -25,3 +25,24 @@
 출원 전에 최소한 다섯 가지 질문에 답해야 한다. 지금 미국에서 실제로 쓸 표장이 무엇인지, 2년 안에 어떤 goods/services까지 사업이 확장될지, owner가 해당 사용을 통제할 구조가 있는지, 어느 채널에서 먼저 사용할지, 나중에 specimen으로 설명할 수 있는 버전이 이미 보이는지다.
 
 이 질문에 답하지 못하면 clearance와 filing basis 선택도 흔들린다. 결국 포트폴리오 전략은 이름을 많이 확보하는 문제가 아니라, 실제 사업 구조와 증거 구조를 감당 가능한 범위로 설계하는 문제다.
+
+## 포트폴리오 tier 표
+
+모든 표장을 같은 강도로 관리하지 않으려면 tier를 먼저 나누는 편이 좋다.
+
+| tier | 포함 자산 | 기본 액션 |
+| --- | --- | --- |
+| Core | house mark, 핵심 product mark | 선제 clearance, 빠른 filing, 증거 축적 강화 |
+| Support | 확장 가능성이 높은 sub-brand | launch 일정에 맞춰 선별 출원 |
+| Optional | 캠페인, 단기 슬로건, 협업 표장 | 사용 계획이 생길 때 재평가 |
+
+## launch wave 체크리스트
+
+미국 포트폴리오는 launch wave와 함께 설계해야 예산과 specimen 준비가 덜 흔들린다.
+
+| 질문 | 지금 답해야 할 것 |
+| --- | --- |
+| 12개월 안에 실제 판매될 표장은 무엇인가 | core list |
+| 어떤 채널에서 먼저 쓰나 | D2C / retail / marketplace |
+| 누가 owner이고 누가 user인가 | ownership memo |
+| 어떤 표장이 specimen 확보가 쉬운가 | filing priority 메모 |

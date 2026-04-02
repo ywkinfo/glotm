@@ -19,3 +19,23 @@
 현재 누가 owner인지, 누가 실제로 판매하는지, 어떤 계약이 활성 상태인지, marketplace와 invoice에는 누구 이름이 나가는지를 점검한다. 이 정보가 정리되지 않으면 specimen 설명, 유지 제출, 분쟁 대응 모두에서 동일한 혼선이 반복된다.
 
 운영상으로는 owner 변경, 신규 라이선스 체결, 유통 구조 변경 같은 이벤트가 생길 때마다 동일한 체크리스트를 반복하는 편이 안전하다. 상표 거래 구조는 한 번 정리해 두고 끝나는 것이 아니라, 사업 구조가 바뀔 때마다 다시 맞춰야 하는 항목이다.
+
+## assignment/license QC 매트릭스
+
+거래 구조 문서는 계약서보다 QC 매트릭스로 보는 편이 운영에 더 도움이 된다.
+
+| 이벤트 | 꼭 확인할 것 | 누가 잠글지 |
+| --- | --- | --- |
+| assignment | owner chain, recordal timing, related marks 범위 | 법무/IP |
+| 신규 licence | quality control, 승인 절차, evidence owner | 법무 + 브랜드팀 |
+| distributor 변경 | invoice 표기, marketplace seller, packaging control | 사업팀 |
+
+## 이벤트 트리거
+
+아래 이벤트가 생기면 상표 거래 구조도 같이 점검하는 습관이 필요하다.
+
+| trigger | 같이 열어 볼 문서 |
+| --- | --- |
+| 법인 재편 | assignment memo, register update list |
+| 신규 라이선스 체결 | QC checklist, brand guideline |
+| 채널 확대 | specimen/evidence plan, marketplace naming memo |
