@@ -29,5 +29,5 @@
 - `master.md`는 조립 결과물로 취급하며, 수동 편집보다 재생성을 우선합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/usa` 리더를 렌더링합니다.
 - 현재 루트 `GloTm`의 `content:prepare`에서는 `UsaTm`이 shortcut 예외 그룹으로 동작합니다. 즉 루트에서는 빠른 generated-content 갱신 경로를 사용하고, deeper content QA가 필요할 때는 `UsaTm` 로컬 `content:prepare`를 직접 실행합니다.
-- 현재 빌드 기준 산출물은 **14개 챕터 / 검색 엔트리 165개**입니다.
+- 현재 빌드 기준 산출물은 14개 챕터 / 검색 엔트리 165개입니다.
 - 수수료, 세부 기한, 시스템 명칭처럼 변동성이 큰 정보는 출판 직전 `content/research/us_tm_fact_verification_log.md`로 다시 확인합니다.

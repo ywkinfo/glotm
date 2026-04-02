@@ -2,7 +2,7 @@
 
 ## 목적
 
-이 문서는 `EuTm`의 현재 shipped baseline을 기준으로, 루트 `GloTm` 셸에서 더 깊고 안정적으로 읽히는 권역형 실무 가이드로 고도화하기 위한 실행 계획서다. 기반 제작 체계는 이미 갖춰져 있으며, 이제 남은 핵심은 **장별 실무 밀도, fact verification, 문서 정합성**을 끌어올리는 일이다.
+이 문서는 `EuTm`의 현재 shipped baseline을 기준으로, 루트 `GloTm` 셸에서 더 깊고 안정적으로 읽히는 권역형 실무 가이드로 고도화하기 위한 실행 계획서다. 기반 제작 체계는 이미 갖춰져 있으며, 이제 남은 핵심은 장별 실무 밀도, fact verification, 문서 정합성을 끌어올리는 일이다.
 
 핵심 목표는 세 가지다.
 
@@ -21,8 +21,8 @@
 - 현재 워크스페이스 파이프라인은 `scripts/build-master.ts -> scripts/qa-content.ts -> scripts/build-content.ts` 순으로 동작한다.
 - `content/source/manifest.json`, `content/source/chapters/`, `scripts/build-master.ts`, `scripts/qa-content.ts`가 모두 존재한다.
 - 현재 생성 산출물:
-  - **14 chapters**
-  - **192 search entries**
+  - 14 chapters
+  - 192 search entries
 - 현재 `master.md`는 장별 원고를 조립한 공개본 기준이며, reader에서 읽을 수 있는 실사용 분량을 확보한 상태다.
 
 ### LatTm 대비 차이
@@ -50,11 +50,11 @@
 
 ### 1. LatTm처럼 "쓴다"보다 LatTm처럼 "만든다"
 
-`EuTm` 보강의 출발점은 이미 도입된 **제작 체계를 유지한 채** 분량과 판단 밀도를 높이는 것이다. 장별 원천 원고, manifest, 조립 스크립트, QA 스크립트는 이제 baseline으로 취급한다.
+`EuTm` 보강의 출발점은 이미 도입된 제작 체계를 유지한 채 분량과 판단 밀도를 높이는 것이다. 장별 원천 원고, manifest, 조립 스크립트, QA 스크립트는 이제 baseline으로 취급한다.
 
 ### 2. EU 공통 프레임이 본문, 회원국 편차는 통제
 
-`EuTm`은 독일·프랑스·이탈리아·스페인·영국 세부 실무를 모두 본문에서 깊게 푸는 문서가 아니다. 본문은 **EU 공통 프레임 + UK 병행 판단 + 주요 회원국 편차 메모** 중심으로 유지한다.
+`EuTm`은 독일·프랑스·이탈리아·스페인·영국 세부 실무를 모두 본문에서 깊게 푸는 문서가 아니다. 본문은 EU 공통 프레임 + UK 병행 판단 + 주요 회원국 편차 메모 중심으로 유지한다.
 
 ### 3. 변동성이 큰 사실은 검증 로그 우선
 
@@ -98,7 +98,7 @@
 - 14장 구조 유지
 - 핵심 장의 본문 밀도 대폭 확대
 - 장별 최소 실행형 체크리스트 1개 이상 포함
-- search entries를 현재 192에서 **다음 목표 220~300** 수준으로 확대
+- search entries를 현재 192에서 다음 목표 220~300 수준으로 확대
 
 ### v1 품질 목표
 
@@ -113,33 +113,33 @@
 
 현재 14장 구성은 유지하되, 다음처럼 역할을 명확히 한다.
 
-1. **유럽 상표 시스템 지도**
+1. 유럽 상표 시스템 지도
    - EUTM / national / UK / Madrid 연결의 큰 지도
-2. **권리 선택: EUTM, 개별국, 영국 병행**
+2. 권리 선택: EUTM, 개별국, 영국 병행
    - 선택 기준과 분기 표
-3. **포트폴리오 설계와 우선순위**
+3. 포트폴리오 설계와 우선순위
    - house mark / product mark / defensive mark 구조
-4. **사전 검색과 충돌 분석**
+4. 사전 검색과 충돌 분석
    - TMview / EUIPO / 국가청 / 시장 사용 구조
-5. **출원 경로와 서류 설계**
+5. 출원 경로와 서류 설계
    - owner, language, goods/services, filing route 정리
-6. **심사와 절대적 거절 대응**
+6. 심사와 절대적 거절 대응
    - 식별력, descriptive risk, refusal 대응 프레임
-7. **이의신청과 공존 전략**
+7. 이의신청과 공존 전략
    - opposition, coexistence, cooling-off 등 운영 판단
-8. **등록 후 사용, 갱신, 증거 관리**
+8. 등록 후 사용, 갱신, 증거 관리
    - renewal, use evidence, evidence vault
-9. **취소, 무효, 불사용 리스크**
+9. 취소, 무효, 불사용 리스크
    - cancellation / invalidity / proof of use 방어 구조
-10. **라이선스, 유통, 병행수입**
+10. 라이선스, 유통, 병행수입
    - exhaustion, distribution, QC 메모
-11. **온라인 플랫폼, 도메인, 디지털 집행**
+11. 온라인 플랫폼, 도메인, 디지털 집행
    - platform takedown, domain, online seller triage
-12. **세관과 국경조치**
+12. 세관과 국경조치
    - customs recordal, product ID pack, border ops
-13. **회원국 분쟁과 포럼 선택**
+13. 회원국 분쟁과 포럼 선택
    - 행정/민사/국가별 포럼 분기
-14. **운영 거버넌스와 RACI**
+14. 운영 거버넌스와 RACI
    - 본사/현지/외부대리인 책임 구조
 
 ---
@@ -303,7 +303,7 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 - UK 심화 실무 전부
 
 ### 문체 원칙
-- 권역형 guide답게 **분기 기준과 운영 프레임**을 우선 설명
+- 권역형 guide답게 분기 기준과 운영 프레임을 우선 설명
 - 회원국 편차는 본문을 깨지 않는 범위의 표/메모/주의문으로 제한
 - 제도 설명보다 실무 판단 질문을 먼저 제시
 
@@ -364,7 +364,7 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ## 최종 제안
 
-`EuTm` 보강은 지금도 계속할 가치가 있다. 다만 첫 단계는 더 이상 제작 체계 도입이 아니라, **이미 도입된 LatTm-lite baseline을 유지한 채** 핵심 장을 심화하는 것이다. 그 위에서 fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
+`EuTm` 보강은 지금도 계속할 가치가 있다. 다만 첫 단계는 더 이상 제작 체계 도입이 아니라, 이미 도입된 LatTm-lite baseline을 유지한 채 핵심 장을 심화하는 것이다. 그 위에서 fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
 
 즉, 실행 순서는 아래와 같다.
 
