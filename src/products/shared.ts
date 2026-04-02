@@ -56,6 +56,14 @@ export type FilteredCatalogChapter = {
   match: ChapterCatalogMatch;
 };
 
+export type PortfolioTier = "flagship" | "growth" | "validate" | "incubate";
+
+export type LifecycleStatus = "pilot" | "beta" | "mature";
+
+export type LifecycleTone = LifecycleStatus | "neutral";
+
+export type QaLevel = "smoke" | "standard" | "full";
+
 export type ProductMeta = {
   id: string;
   shortLabel: string;
@@ -65,11 +73,14 @@ export type ProductMeta = {
   summary: string;
   chapterCount: number;
   searchEntryCount: number;
-  status: string;
-  statusTone: "pilot" | "beta" | "neutral";
+  portfolioTier: PortfolioTier;
+  lifecycleStatus: LifecycleStatus;
+  lifecycleTone: LifecycleTone;
+  verificationFreshnessDays: number;
+  qaLevel: QaLevel;
+  highRiskVerificationGapCount: number;
   audience: string;
   primaryCtaLabel: string;
-  stageLabel: string;
   maturityNote?: string;
   coverageType: "region" | "country";
   availability: "live_shell" | "developed_workspace";
@@ -82,7 +93,7 @@ type SearchIndexData = {
 };
 
 const CHARACTERS_PER_MINUTE = 850;
-const ROOT_DOCUMENT_TITLE = "GloTm | 글로벌 상표 지식베이스";
+const ROOT_DOCUMENT_TITLE = "GloTm | Cross-border Trademark Operating Guides";
 const FALLBACK_APP_ORIGIN = "https://glotm.local";
 const SAFE_EXTERNAL_PROTOCOLS = new Set(["http:", "https:", "mailto:", "tel:"]);
 

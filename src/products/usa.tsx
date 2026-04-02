@@ -21,9 +21,9 @@ const {
   documentDataUrl,
   searchEntriesUrl,
   storageKey: "usatm_reading_bookmark",
-  topbarKicker: "UsaTm Beta",
+  topbarKicker: "UsaTm Incubate",
   loadingMessage: "미국 연방 상표 가이드 콘텐츠를 불러오는 중입니다.",
-  homeHeroKicker: "미국 연방 심화 트랙",
+  homeHeroKicker: "미국 단일국가 incubate guide",
   homeSummary: (
     <>
       USPTO 중심의 미국 연방 상표 실무를 빠르게 점검하기 위한 단일국가 가이드입니다.
@@ -31,9 +31,9 @@ const {
       미국 단일 시장 쟁점을 확인할 때 이 트랙으로 내려오는 구성이 자연스럽습니다.
     </>
   ),
-  homeStatusLabel: "Beta 상태의 미국 연방 단일 시장 심화 가이드",
+  homeStatusLabel: "Incubate tier · Beta lifecycle의 미국 단일 시장 가이드",
   positioningKicker: "UsaTm Positioning",
-  positioningTitle: "미국 연방 실무를 빠르게 점검하는 신규 트랙",
+  positioningTitle: "미국 연방 실무를 lighter depth로 유지하는 incubate guide",
   positioningNote: (
     <>
       현재 UsaTm은 새로 추가된 미국 단일 시장 트랙으로, USPTO 출원, specimen 운영,

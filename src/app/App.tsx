@@ -35,11 +35,15 @@ import {
   liveShellProducts
 } from "../products/registry";
 import { liveShellReaderEntries } from "../products/liveShellReaders";
+import { getSearchDensity } from "../products/scorecard";
 import {
   buildProductPath,
   getRouterBasename,
   setRuntimeDocumentTitle,
-  type ProductMeta
+  type LifecycleStatus,
+  type PortfolioTier,
+  type ProductMeta,
+  type QaLevel
 } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
@@ -58,6 +62,41 @@ function getCoverageLabel(product: ProductMeta) {
   return product.coverageType === "region" ? "권역 가이드" : "국가 가이드";
 }
 
+function getPortfolioTierLabel(portfolioTier: PortfolioTier) {
+  switch (portfolioTier) {
+    case "flagship":
+      return "Flagship";
+    case "growth":
+      return "Growth";
+    case "validate":
+      return "Validate";
+    case "incubate":
+      return "Incubate";
+  }
+}
+
+function getLifecycleStatusLabel(lifecycleStatus: LifecycleStatus) {
+  switch (lifecycleStatus) {
+    case "pilot":
+      return "Pilot";
+    case "beta":
+      return "Beta";
+    case "mature":
+      return "Mature";
+  }
+}
+
+function getQaLevelLabel(qaLevel: QaLevel) {
+  switch (qaLevel) {
+    case "smoke":
+      return "Smoke";
+    case "standard":
+      return "Standard";
+    case "full":
+      return "Full";
+  }
+}
+
 function getAvailabilityLabel(product: ProductMeta) {
   return product.availability === "live_shell"
     ? "라이브 셸 연결"
@@ -72,7 +111,7 @@ function joinProductLabels(
 }
 
 function orderGatewayProducts(products: ProductMeta[]) {
-  const preferredOrder = ["mexico", "latam", "usa", "japan", "china", "europe", "uk"];
+  const preferredOrder = ["latam", "mexico", "china", "europe", "usa", "japan", "uk"];
   const productIndex = new Map(preferredOrder.map((slug, index) => [slug, index]));
 
   return [...products].sort((left, right) => {
@@ -84,15 +123,21 @@ function orderGatewayProducts(products: ProductMeta[]) {
 }
 
 function getProductCardCtaClass(product: ProductMeta) {
-  return product.slug === "latam" || product.slug === "mexico"
+  return product.portfolioTier === "flagship" || product.portfolioTier === "growth"
     ? "product-card-link"
     : "product-card-link product-card-link--secondary";
 }
 
 function getProductCardClass(product: ProductMeta) {
-  return product.slug === "latam" || product.slug === "mexico"
-    ? "product-card product-card--focus"
-    : "product-card";
+  if (product.portfolioTier === "flagship") {
+    return "product-card product-card--focus";
+  }
+
+  if (product.portfolioTier === "growth") {
+    return "product-card product-card--priority";
+  }
+
+  return "product-card";
 }
 
 function getProductCardCtaLabel(product: ProductMeta) {
@@ -101,10 +146,45 @@ function getProductCardCtaLabel(product: ProductMeta) {
   }
 
   if (product.slug === "latam") {
-    return "LatTm 전체 흐름 보기";
+    return "LatTm 기준 프레임 보기";
   }
 
   return product.primaryCtaLabel;
+}
+
+function formatSearchDensity(product: ProductMeta) {
+  return getSearchDensity(product).toFixed(1);
+}
+
+function buildGuideTrackingParams(
+  product: ProductMeta,
+  surface: string,
+  extraParams: Record<string, string> = {}
+) {
+  return {
+    product_slug: product.slug,
+    portfolio_tier: product.portfolioTier,
+    lifecycle_status: product.lifecycleStatus,
+    surface,
+    ...extraParams
+  };
+}
+
+function getTierComposition(products: ProductMeta[]) {
+  const tierCounts = products.reduce(
+    (counts, product) => {
+      counts[product.portfolioTier] += 1;
+      return counts;
+    },
+    {
+      flagship: 0,
+      growth: 0,
+      validate: 0,
+      incubate: 0
+    } as Record<PortfolioTier, number>
+  );
+
+  return `${tierCounts.flagship} Flagship · ${tierCounts.growth} Growth · ${tierCounts.validate} Validate · ${tierCounts.incubate} Incubate`;
 }
 
 type FullDocumentLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
@@ -123,21 +203,24 @@ const FullDocumentLink = forwardRef<HTMLAnchorElement, FullDocumentLinkProps>(
   }
 );
 
-function ProductCard({ product }: { product: ProductMeta }) {
+function ProductCard({ product, surface }: { product: ProductMeta; surface: string }) {
   return (
     <article className={getProductCardClass(product)}>
       <div className="product-card-topline">
         <p className="gateway-kicker">{product.shortLabel}</p>
-        <span className={`status-pill status-pill--${product.statusTone}`}>
-          {product.status}
+        <span className={`status-pill status-pill--${product.lifecycleTone}`}>
+          {getLifecycleStatusLabel(product.lifecycleStatus)}
         </span>
       </div>
       <div>
         <span className="product-card-stage">
-          {getCoverageLabel(product)} · {getAvailabilityLabel(product)}
+          {getPortfolioTierLabel(product.portfolioTier)} · {getCoverageLabel(product)} · {getAvailabilityLabel(product)}
         </span>
         <p className="product-card-metrics">
-          총 {product.chapterCount}개 챕터 · 검색 {product.searchEntryCount}개 엔트리
+          총 {product.chapterCount}개 챕터 · 검색 {product.searchEntryCount}개 엔트리 · density {formatSearchDensity(product)}
+        </p>
+        <p className="product-card-scorecard">
+          검증 freshness {product.verificationFreshnessDays}일 · QA {getQaLevelLabel(product.qaLevel)} · 고위험 gap {product.highRiskVerificationGapCount}건
         </p>
         <h3 className="product-card-title">{product.title}</h3>
       </div>
@@ -147,7 +230,13 @@ function ProductCard({ product }: { product: ProductMeta }) {
       ) : null}
       <p className="product-card-audience">대상: {product.audience}</p>
       <div className="product-card-actions">
-        <FullDocumentLink className={getProductCardCtaClass(product)} to={buildProductPath(product)}>
+        <FullDocumentLink
+          className={getProductCardCtaClass(product)}
+          to={buildProductPath(product)}
+          onClick={() => {
+            trackEngagement("guide_cta_click", buildGuideTrackingParams(product, surface));
+          }}
+        >
           {getProductCardCtaLabel(product)}
         </FullDocumentLink>
       </div>
@@ -159,9 +248,10 @@ type ProductGroupProps = {
   title: string;
   description: string;
   products: ProductMeta[];
+  surface: string;
 };
 
-function ProductGroup({ title, description, products }: ProductGroupProps) {
+function ProductGroup({ title, description, products, surface }: ProductGroupProps) {
   return (
     <div className="product-group">
       <div className="product-group-header">
@@ -170,7 +260,7 @@ function ProductGroup({ title, description, products }: ProductGroupProps) {
       </div>
       <div className="product-card-grid">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} surface={surface} />
         ))}
       </div>
     </div>
@@ -278,6 +368,22 @@ function AppLayout() {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (!activeProduct) {
+      return;
+    }
+
+    trackEngagement(
+      "guide_open",
+      buildGuideTrackingParams(activeProduct, "route", {
+        route_kind:
+          location.pathname === buildProductPath(activeProduct)
+            ? "home"
+            : "reader"
+      })
+    );
+  }, [activeProduct, location.pathname]);
+
+  useEffect(() => {
     if (typeof document === "undefined") {
       return undefined;
     }
@@ -324,7 +430,7 @@ function AppLayout() {
           <FullDocumentLink className="global-brand" to={buildProductPath("/")}>
             GloTm
           </FullDocumentLink>
-          <p className="global-tagline">해외 진출 브랜드를 위한 글로벌 상표 지식베이스 파일럿</p>
+          <p className="global-tagline">인하우스 팀을 위한 cross-border trademark operating guides</p>
         </div>
 
         <nav className="global-nav" aria-label="제품 전환">
@@ -356,8 +462,8 @@ function AppLayout() {
                 aria-current={isProductActive ? "page" : undefined}
               >
                 <span className="global-nav-label">{product.shortLabel}</span>
-                <span className={`status-pill status-pill--${product.statusTone}`}>
-                  {product.status}
+                <span className={`status-pill status-pill--${product.lifecycleTone}`}>
+                  {getLifecycleStatusLabel(product.lifecycleStatus)}
                 </span>
               </FullDocumentLink>
             );
@@ -366,8 +472,8 @@ function AppLayout() {
 
         <div className="global-status-panel">
           {activeProduct ? (
-            <span className={`status-pill status-pill--${activeProduct.statusTone}`}>
-              {activeProduct.stageLabel}
+            <span className="status-pill status-pill--neutral">
+              {getPortfolioTierLabel(activeProduct.portfolioTier)}
             </span>
           ) : isBriefActive ? (
             <span className="status-pill status-pill--neutral">
@@ -375,7 +481,7 @@ function AppLayout() {
             </span>
           ) : (
             <span className="status-pill status-pill--neutral">
-              라이브 {liveShellProducts.length}개 가이드
+              4-tier operating guide portfolio
             </span>
           )}
         </div>
@@ -391,37 +497,29 @@ function AppLayout() {
 function GatewayLandingPage() {
   const whyLate = getIntroSection("왜 상표 이슈는 늦게 드러나는가");
   const riskPatterns = getIntroSection("사업 리스크로 전환되는 대표 패턴");
-  const pilotScope = getIntroSection("현재 파일럿 범위");
-  const regionProducts = liveShellProducts.filter((product) => product.coverageType === "region");
-  const countryProducts = liveShellProducts.filter((product) => product.coverageType === "country");
+  const orderedProducts = orderGatewayProducts(liveShellProducts);
+  const regionProducts = orderedProducts.filter((product) => product.coverageType === "region");
+  const countryProducts = orderedProducts.filter((product) => product.coverageType === "country");
+  const flagshipProducts = orderedProducts.filter((product) => product.portfolioTier === "flagship");
+  const growthProducts = orderedProducts.filter((product) => product.portfolioTier === "growth");
+  const validateProducts = orderedProducts.filter((product) => product.portfolioTier === "validate");
+  const incubateProducts = orderedProducts.filter((product) => product.portfolioTier === "incubate");
   const regionProductCount = regionProducts.length;
   const countryProductCount = countryProducts.length;
-  const liveProductCount = liveShellProducts.length;
-  const liveChapterCount = liveShellProducts.reduce((total, product) => total + product.chapterCount, 0);
-  const liveSearchEntryCount = liveShellProducts.reduce(
+  const liveProductCount = orderedProducts.length;
+  const liveChapterCount = orderedProducts.reduce((total, product) => total + product.chapterCount, 0);
+  const liveSearchEntryCount = orderedProducts.reduce(
     (total, product) => total + product.searchEntryCount,
     0
   );
-  const latamProduct = liveShellProducts.find((product) => product.slug === "latam") ?? liveShellProducts[0];
-  const mexicoProduct = liveShellProducts.find((product) => product.slug === "mexico") ?? liveShellProducts[0];
-  const ukEarlyTrackProduct = countryProducts.find((product) => product.slug === "uk");
-  const coreCountryProducts = countryProducts.filter((product) => product.slug !== "uk");
-  const focusProducts = [mexicoProduct, latamProduct].filter(
-    (product): product is ProductMeta => Boolean(product)
-  );
-  const supportingRegionProducts = regionProducts.filter(
-    (product) => product.slug !== "latam" && product.slug !== "mexico"
-  );
-  const supportingCountryProducts = countryProducts.filter(
-    (product) => product.slug !== "mexico" && product.slug !== "latam"
-  );
-  const liveProductCommaList = liveShellProducts.map((product) => product.shortLabel).join(", ");
+  const latamProduct = orderedProducts.find((product) => product.slug === "latam") ?? orderedProducts[0];
+  const mexicoProduct = orderedProducts.find((product) => product.slug === "mexico") ?? orderedProducts[0];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
-  const heroTitle = "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요";
-  const heroLead = "로펌에 바로 묻기 전에, 멕시코와 라틴아메리카 시장에서 무엇을 먼저 확인해야 하는지 구조적으로 정리할 수 있습니다.";
+  const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guides";
+  const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
-    "검색 결과를 여기저기 모으거나 일반적인 AI 답변을 그대로 믿기 어려운 담당자를 위해 만든 실무 가이드입니다.",
-    "지금은 LatTm과 MexTm을 중심으로 가장 중요한 의사결정 흐름부터 빠르게 확인할 수 있고, 다른 시장 가이드는 후속 확장 방향을 함께 보여줍니다."
+    "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
+    "지금은 LatTm flagship을 기준으로 MexTm과 ChaTm growth guide를 우선 강화하고, EuTm은 validate, UsaTm·JapTm·UKTm은 incubate로 가볍게 유지합니다."
   ];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
@@ -453,6 +551,9 @@ function GatewayLandingPage() {
               <FullDocumentLink
                 className="gateway-button gateway-button--primary"
                 to={buildProductPath(mexicoProduct)}
+                onClick={() => {
+                  trackEngagement("guide_cta_click", buildGuideTrackingParams(mexicoProduct, "gateway_hero"));
+                }}
               >
                 MexTm 먼저 보기
               </FullDocumentLink>
@@ -460,8 +561,11 @@ function GatewayLandingPage() {
                 <FullDocumentLink
                   className="gateway-button gateway-button--secondary"
                   to={buildProductPath(latamProduct)}
+                  onClick={() => {
+                    trackEngagement("guide_cta_click", buildGuideTrackingParams(latamProduct, "gateway_hero"));
+                  }}
                 >
-                  LatTm에서 전체 흐름 보기
+                  LatTm 기준 프레임 보기
                 </FullDocumentLink>
               ) : null}
             </div>
@@ -469,27 +573,27 @@ function GatewayLandingPage() {
         </div>
 
         <aside className="gateway-panel-card">
-          <p className="gateway-kicker">Pilot Snapshot</p>
+          <p className="gateway-kicker">Portfolio Snapshot</p>
           <div className="gateway-hero-metrics">
             <div className="gateway-metric">
-              <span className="gateway-metric-label">Flow</span>
-              <strong className="gateway-metric-value">중남미 프레임 → 멕시코 심화 → 시장별 확장</strong>
+              <span className="gateway-metric-label">Positioning</span>
+              <strong className="gateway-metric-value">Cross-border operating guides for in-house teams</strong>
               <p className="gateway-metric-note">
-                현재는 LatTm과 MexTm을 중심으로 읽기 흐름을 시작하고, 필요한 시장으로 이어서 내려가는 구성이 가장 자연스럽습니다.
+                GloTm은 일반 법률 정보 사이트가 아니라, 시장 우선순위와 출원·유지·집행 판단을 돕는 운영형 포트폴리오입니다.
               </p>
             </div>
             <div className="gateway-metric">
               <span className="gateway-metric-label">Portfolio</span>
-              <strong className="gateway-metric-value">{liveProductCount} Live Guides</strong>
+              <strong className="gateway-metric-value">{getTierComposition(orderedProducts)}</strong>
               <p className="gateway-metric-note">
-                라틴아메리카 기준 제품과 멕시코 심화 트랙을 우선 제공하고, 다른 시장 가이드는 확장 포트폴리오로 함께 연결합니다.
+                {liveProductCount}개 live guide를 하나의 셸에서 운영하되, 투자 강도와 승격 기준은 tier별로 다르게 관리합니다.
               </p>
             </div>
             <div className="gateway-metric">
               <span className="gateway-metric-label">Proof</span>
               <strong className="gateway-metric-value">{liveChapterCount} Chapters · {liveSearchEntryCount} Search Entries</strong>
               <p className="gateway-metric-note">
-                권역형 {regionProductCount}개와 국가형 {countryProductCount}개를 하나의 셸에서 운영하며, 현재는 실제 읽기 경험과 탐색 흐름을 먼저 검증하고 있습니다.
+                권역형 {regionProductCount}개와 국가형 {countryProductCount}개를 운영하며, monthly scorecard로 search density, verification freshness, QA를 함께 관리합니다.
               </p>
             </div>
           </div>
@@ -544,14 +648,14 @@ function GatewayLandingPage() {
       ) : null}
 
       <section className="gateway-cta-card">
-        <p className="gateway-kicker">Suggested Reading Flow</p>
-        <h2 className="gateway-cta-title">처음이라면 MexTm 또는 LatTm부터 시작하세요</h2>
+        <p className="gateway-kicker">Recommended Start</p>
+        <h2 className="gateway-cta-title">LatTm과 MexTm부터 보면 전체 구조와 즉시 실행 질문이 함께 잡힙니다</h2>
         <p className="gateway-cta-copy">
-          멕시코 진출 검토가 가장 급하다면 MexTm에서 바로 실무 쟁점을 확인하고, 중남미 전체 우선순위를 먼저 잡고 싶다면 LatTm에서 시작하는 구성이 가장 자연스럽습니다.
+          LatTm은 cross-border 우선순위의 flagship이고, MexTm은 가장 빠르게 buyer entry value를 만드는 growth guide입니다. 두 가이드에서 큰 프레임과 단일 시장 실행 질문을 함께 잡는 흐름이 가장 자연스럽습니다.
         </p>
         <div className="gateway-cta-actions">
-          <a className="gateway-cta-link" href="#current-pilot-scope">
-            LatTm/MexTm 중심으로 보기
+          <a className="gateway-cta-link" href="#portfolio-focus">
+            포트폴리오 우선 가이드 보기
           </a>
         </div>
       </section>
@@ -596,19 +700,19 @@ function GatewayLandingPage() {
         <div className="gateway-section-header">
           <div>
             <p className="gateway-kicker">What GloTm Solves</p>
-            <h2 className="gateway-section-title">법률 자문 전에 필요한 판단의 빈칸을 메웁니다</h2>
+            <h2 className="gateway-section-title">시장 우선순위, 출원 경로, 유지·집행 판단을 한 번에 묶습니다</h2>
           </div>
-          <p className="gateway-section-copy">GloTm은 법률 자문을 대체하려는 서비스가 아니라, 법률 자문 전에 무엇을 먼저 판단하고 어떤 질문을 준비해야 하는지 정리하도록 돕는 운영 가이드입니다.</p>
+          <p className="gateway-section-copy">GloTm은 법률 자문을 대체하려는 서비스가 아니라, 자문 전에 내부 팀이 어떤 순서로 판단하고 어떤 질문을 준비해야 하는지 정리하도록 돕는 운영 가이드 포트폴리오입니다.</p>
         </div>
         <p className="gateway-section-copy">
-          국가별 제도를 단순히 설명하는 대신, 출원 경로, 검색과 충돌 위험, 증거와 사용 관리, 이후 운영 흐름까지 실무 기준으로 묶어 보여줍니다.
+          국가별 제도를 백과사전처럼 늘어놓는 대신, 출원 경로, 검색과 충돌 위험, 증거와 사용 관리, 플랫폼·세관·분쟁 대응까지 운영 흐름으로 묶어 보여줍니다.
         </p>
         <ul className="gateway-bullet-list">
           {[
-            "어느 시장부터 먼저 출원할지 우선순위를 잡을 수 있습니다",
-            "멕시코와 라틴아메리카 시장에서 어떤 위험을 먼저 봐야 하는지 정리할 수 있습니다",
-            "외부 자문 전에 내부 판단과 질문을 구조화할 수 있습니다",
-            "검색, 유지, 증거, 분쟁까지 운영 흐름을 한 번에 볼 수 있습니다"
+            "어느 시장부터 먼저 들어가고 출원할지 우선순위를 잡을 수 있습니다",
+            "어떤 출원 경로와 준비 질문이 필요한지 빠르게 정리할 수 있습니다",
+            "유지, 증거, 플랫폼, 집행까지 이어지는 운영 흐름을 한 번에 볼 수 있습니다",
+            "외부 자문 전에 내부 판단과 질문을 구조화할 수 있습니다"
           ].map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -665,39 +769,47 @@ function GatewayLandingPage() {
         </div>
       </section>
 
-      <section id="current-pilot-scope" className="gateway-section">
+      <section id="portfolio-focus" className="gateway-section">
         <div className="gateway-section-header">
           <div>
-            <p className="gateway-kicker">Current Pilot Scope</p>
-            <h2 className="gateway-section-title">지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다</h2>
+            <p className="gateway-kicker">Portfolio Focus</p>
+            <h2 className="gateway-section-title">포트폴리오를 flagship, growth, validate, incubate로 운영합니다</h2>
           </div>
           <p className="gateway-section-copy">
-            {pilotScope?.paragraphs[0]
-              ?? `현재 GloTm에는 ${liveProductCommaList}이 모두 루트 셸에 연결되어 있지만, 실제 파일럿의 중심은 LatTm과 MexTm입니다. 다른 시장 가이드는 포트폴리오의 확장 방향과 구조적 신뢰를 보여주는 보조 트랙으로 함께 탐색할 수 있습니다.`}
+            모든 guide는 하나의 셸에서 열리지만, 투자 강도와 승격 기준은 tier별로 다르게 운영합니다. 신규 시장 추가보다 기존 포트폴리오의 freshness, density, QA 정렬을 먼저 끌어올립니다.
           </p>
         </div>
         <div className="product-group-stack">
-          <ProductGroup
-            title="지금 가장 먼저 볼 가이드"
-            description="MexTm은 가장 급한 단일 시장 판단을 바로 돕고, LatTm은 중남미 전체 우선순위와 운영 흐름을 먼저 잡는 기준 제품입니다."
-            products={focusProducts}
-          />
-          {supportingRegionProducts.length > 0 ? (
+          {flagshipProducts.length > 0 ? (
             <ProductGroup
-              title="추가 권역 가이드"
-              description="EuTm은 권역 단위에서 어떤 시장부터 보고 어떤 운영 순서로 접근할지 큰 프레임을 확장해서 비교할 때 함께 읽는 가이드입니다."
-              products={supportingRegionProducts}
+              title="Flagship"
+              description="LatTm은 cross-border 우선순위와 운영 흐름의 기준 제품입니다. 신규 시장 확장보다 freshness, search density, reader QA를 먼저 높입니다."
+              products={flagshipProducts}
+              surface="portfolio_flagship"
             />
           ) : null}
-          {supportingCountryProducts.length > 0 ? (
+          {growthProducts.length > 0 ? (
             <ProductGroup
-              title="후속 시장 검토용 국가 가이드"
-              description={
-                ukEarlyTrackProduct
-                  ? `${joinProductLabels(coreCountryProducts.filter((product) => product.slug !== "mexico"), " · ")}은 후속 시장 검토용 단일국가 가이드로 연결합니다. ${ukEarlyTrackProduct.shortLabel}은 draft 공개본 성격의 early track으로 함께 제공합니다.`
-                  : `${joinProductLabels(supportingCountryProducts, " · ")}은 후속 시장 검토용 단일국가 가이드로 연결합니다.`
-              }
-              products={supportingCountryProducts}
+              title="Growth"
+              description="MexTm과 ChaTm은 buyer entry 가치와 실무 밀도를 빠르게 올리는 성장 트랙입니다."
+              products={growthProducts}
+              surface="portfolio_growth"
+            />
+          ) : null}
+          {validateProducts.length > 0 ? (
+            <ProductGroup
+              title="Validate"
+              description="EuTm은 범위 확대보다 fact verification와 문서 정합성, 검색 밀도를 안정화하는 권역 validate 가이드입니다."
+              products={validateProducts}
+              surface="portfolio_validate"
+            />
+          ) : null}
+          {incubateProducts.length > 0 ? (
+            <ProductGroup
+              title="Incubate"
+              description={`${joinProductLabels(incubateProducts, " · ")}은 verification refresh, 문서 정합성, smoke QA를 우선하는 lighter track입니다.`}
+              products={incubateProducts}
+              surface="portfolio_incubate"
             />
           ) : null}
         </div>
@@ -711,10 +823,10 @@ function GatewayLandingPage() {
           </div>
         </div>
         <p className="gateway-section-copy">
-          GloTm은 해외 진출 과정에서 무엇을 먼저 확인하고 어떤 운영 판단을 준비해야 하는지를, 20년 이상 축적된 상표 실무 경험을 바탕으로 실무 중심으로 정리한 가이드입니다.
+          GloTm은 해외 진출 과정에서 무엇을 먼저 확인하고 어떤 운영 판단을 준비해야 하는지를, 20년 이상 축적된 상표 실무 경험을 바탕으로 구조화한 cross-border operating guide portfolio입니다.
         </p>
         <p className="gateway-section-copy">
-          지금은 중남미와 멕시코 진출 준비 단계에서 가장 자주 부딪히는 질문부터 구조적으로 풀어내는 데 집중하고 있습니다.
+          지금은 LatTm flagship과 MexTm·ChaTm growth guide에서 buyer entry 가치와 운영 밀도를 먼저 끌어올리는 데 집중하고 있습니다.
         </p>
         <p className="gateway-section-copy gateway-section-copy--spaced">
           문의, 강연 요청, 심층 연구 안내는{" "}
@@ -723,6 +835,11 @@ function GatewayLandingPage() {
             href={operatorProfileUrl}
             target="_blank"
             rel="noreferrer noopener"
+            onClick={() => {
+              trackEngagement("operator_link_click", {
+                surface: "gateway_operator_section"
+              });
+            }}
           >
             ywkinfo.github.io
           </a>

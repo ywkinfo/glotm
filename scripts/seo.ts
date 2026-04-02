@@ -22,7 +22,7 @@ import {
 
 const DEFAULT_SITE_ORIGIN = "https://ywkinfo.github.io";
 const DEFAULT_SITE_DESCRIPTION =
-  "해외 진출 브랜드를 위한 글로벌 상표 지식베이스 GloTm. 권역형·국가형 상표 운영 가이드를 한곳에서 탐색할 수 있습니다.";
+  "인하우스 팀을 위한 cross-border trademark operating guides GloTm. 시장 우선순위, 출원 경로, 유지·집행 판단을 한곳에서 탐색할 수 있습니다.";
 
 export type StaticPageDefinition = {
   routePath: string;
@@ -145,7 +145,7 @@ function renderGatewayBody(basePath: string) {
     <main>
       <header>
         <p>GloTm Gateway</p>
-        <h1>글로벌 상표 지식베이스</h1>
+        <h1>Cross-border Trademark Operating Guides</h1>
         <p>${escapeHtml(DEFAULT_SITE_DESCRIPTION)}</p>
       </header>
       ${latestBrief
@@ -158,8 +158,8 @@ function renderGatewayBody(basePath: string) {
       `
         : ""}
       <section>
-        <h2>라이브 가이드 포트폴리오</h2>
-        <p>현재 ${liveShellProducts.length}개의 권역형·국가형 상표 운영 가이드를 공개하고 있습니다.</p>
+        <h2>운영 가이드 포트폴리오</h2>
+        <p>현재 ${liveShellProducts.length}개의 권역형·국가형 guide를 flagship, growth, validate, incubate 구조로 운영하고 있습니다.</p>
       </section>
       ${renderLinkList("가이드 목록", productLinks)}
     </main>

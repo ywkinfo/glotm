@@ -42,7 +42,7 @@ describe("SEO build helpers", () => {
     expect(pages[0]).toMatchObject({
       routePath: "/",
       canonicalUrl: "https://ywkinfo.github.io/glotm/",
-      title: "GloTm | 글로벌 상표 지식베이스"
+      title: "GloTm | Cross-border Trademark Operating Guides"
     });
     expect(pages).toEqual(
       expect.arrayContaining([

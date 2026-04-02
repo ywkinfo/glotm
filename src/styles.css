@@ -107,6 +107,11 @@ body {
   color: var(--warm);
 }
 
+.status-pill--mature {
+  background: rgba(73, 123, 67, 0.14);
+  color: #365c32;
+}
+
 .status-pill--neutral {
   background: rgba(39, 58, 62, 0.08);
   color: var(--muted);
@@ -604,6 +609,11 @@ body {
   box-shadow: 0 18px 40px rgba(39, 58, 62, 0.08);
 }
 
+.product-card--priority {
+  background: linear-gradient(180deg, rgba(180, 95, 47, 0.08), rgba(255, 255, 255, 0.98));
+  border-color: rgba(180, 95, 47, 0.18);
+}
+
 .product-card-topline {
   display: flex;
   align-items: center;
@@ -621,6 +631,12 @@ body {
   margin: 0.35rem 0 0;
   color: var(--muted);
   font-size: 0.88rem;
+}
+
+.product-card-scorecard {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
 }
 
 .product-card-note {

@@ -687,7 +687,12 @@ export function ChapterOutline({
       return true;
     }
 
-    return !window.matchMedia("(max-width: 640px)").matches;
+    const mobileViewportQuery =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(max-width: 640px)")
+        : undefined;
+
+    return !(mobileViewportQuery?.matches ?? false);
   });
 
   useEffect(() => {
@@ -695,7 +700,12 @@ export function ChapterOutline({
       return;
     }
 
-    setIsExpanded(!window.matchMedia("(max-width: 640px)").matches);
+    const mobileViewportQuery =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(max-width: 640px)")
+        : undefined;
+
+    setIsExpanded(!(mobileViewportQuery?.matches ?? false));
   }, [chapterSlug]);
 
   if (items.length === 0) {

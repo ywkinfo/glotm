@@ -487,6 +487,39 @@ describe("ChapterOutline", () => {
 
     expect(onSectionJump).toHaveBeenCalledWith("filing-risk");
   });
+
+  it("stays expanded and does not crash when matchMedia is unavailable", () => {
+    const originalMatchMedia = window.matchMedia;
+
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+
+    try {
+      render(
+        <MemoryRouter>
+          <ChapterOutline
+            basePath="/latam"
+            chapterSlug="chapter-2"
+            headings={sidebarChapters[1]!.headings}
+            activeSectionId="filing"
+            onSectionJump={vi.fn()}
+          />
+        </MemoryRouter>
+      );
+
+      expect(screen.getByRole("heading", { name: "이 장의 섹션 목차" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "목차 접기" })).toHaveAttribute("aria-expanded", "true");
+    } finally {
+      Object.defineProperty(window, "matchMedia", {
+        configurable: true,
+        writable: true,
+        value: originalMatchMedia
+      });
+    }
+  });
 });
 
 describe("MarkdownArticle", () => {

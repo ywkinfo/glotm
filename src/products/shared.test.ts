@@ -102,7 +102,7 @@ describe("shared product helpers", () => {
   });
 
   it("builds runtime document titles for gateway and product pages", () => {
-    expect(buildRuntimeDocumentTitle()).toBe("GloTm | 글로벌 상표 지식베이스");
+    expect(buildRuntimeDocumentTitle()).toBe("GloTm | Cross-border Trademark Operating Guides");
     expect(buildRuntimeDocumentTitle("중남미 상표 보호 운영 가이드")).toBe(
       "중남미 상표 보호 운영 가이드 | GloTm"
     );

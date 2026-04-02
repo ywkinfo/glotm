@@ -223,7 +223,7 @@ const {
   documentDataUrl,
   searchEntriesUrl,
   storageKey: "lattm_reading_bookmark",
-  topbarKicker: "Pilot Track",
+  topbarKicker: "Flagship Guide",
   loadingMessage: "로컬 콘텐츠와 목차를 불러오는 중입니다.",
   HomePageComponent: LatamHomeContent,
   renderChapterHeaderTopline: ({ chapter }) => {

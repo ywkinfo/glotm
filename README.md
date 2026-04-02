@@ -1,6 +1,6 @@
 # GloTm
 
-글로벌 상표 지식베이스 루트 셸입니다. 현재 런타임은 루트 `GloTm` 하나이며, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`의 generated JSON을 읽어 Gateway와 각 가이드를 렌더링합니다.
+인하우스 팀을 위한 cross-border trademark operating guides 루트 셸입니다. 현재 런타임은 루트 `GloTm` 하나이며, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`의 generated JSON을 읽어 Gateway와 각 가이드를 렌더링합니다.
 
 ## Bootstrap
 
@@ -41,9 +41,12 @@ npm run content:prepare
 ## Source Of Truth
 
 - 런타임 제품 메타데이터: `src/products/registry.ts`
+- 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
+- buyer-facing 포지셔닝: `docs/buyer-narrative.md`
 - 루트 런타임 QA 체크리스트: `docs/phase1-runtime-qa.md`
 - EuTm 확장 실행 계획: `docs/eutm-content-expansion-plan.md`
 - UKTm 확장 실행 계획: `docs/uktm-content-expansion-plan.md`
+- ChaTm 확장 실행 계획: `docs/chatm-content-expansion-plan.md`
 - 워크스페이스별 콘텐츠 규칙: 각 디렉터리의 `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`
 
-운영 상태(`Pilot`, `Beta`, 성숙도 메모, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다.
+운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verificationFreshnessDays`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계산합니다.

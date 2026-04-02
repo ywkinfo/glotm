@@ -202,7 +202,7 @@ describe("App portfolio shell", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    await screen.findByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" });
+    await screen.findByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
 
@@ -224,7 +224,7 @@ describe("App portfolio shell", () => {
       "href",
       "/mexico"
     );
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm에서 전체 흐름 보기" })).toHaveAttribute(
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 기준 프레임 보기" })).toHaveAttribute(
       "href",
       "/latam"
     );
@@ -236,14 +236,14 @@ describe("App portfolio shell", () => {
 
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
     const expectedSummaryParagraphs = [
-      "검색 결과를 여기저기 모으거나 일반적인 AI 답변을 그대로 믿기 어려운 담당자를 위해 만든 실무 가이드입니다.",
-      "지금은 LatTm과 MexTm을 중심으로 가장 중요한 의사결정 흐름부터 빠르게 확인할 수 있고, 다른 시장 가이드는 후속 확장 방향을 함께 보여줍니다."
+      "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
+      "지금은 LatTm flagship을 기준으로 MexTm과 ChaTm growth guide를 우선 강화하고, EuTm은 validate, UsaTm·JapTm·UKTm은 incubate로 가볍게 유지합니다."
     ];
 
     expect(gatewayHero).not.toBeNull();
     expect(
       within(gatewayHero as HTMLElement).getByText(
-        "로펌에 바로 묻기 전에, 멕시코와 라틴아메리카 시장에서 무엇을 먼저 확인해야 하는지 구조적으로 정리할 수 있습니다."
+        "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다."
       )
     ).toBeInTheDocument();
     expectedSummaryParagraphs.forEach((paragraph) => {
@@ -256,12 +256,12 @@ describe("App portfolio shell", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    const livePortfolioPanel = screen.getByText("Pilot Snapshot").closest("aside");
+    const livePortfolioPanel = screen.getByText("Portfolio Snapshot").closest("aside");
 
     expect(livePortfolioPanel).not.toBeNull();
     expect(
       within(livePortfolioPanel as HTMLElement).getByText(
-        "권역형 2개와 국가형 5개를 하나의 셸에서 운영하며, 현재는 실제 읽기 경험과 탐색 흐름을 먼저 검증하고 있습니다."
+        "권역형 2개와 국가형 5개를 운영하며, monthly scorecard로 search density, verification freshness, QA를 함께 관리합니다."
       )
     ).toBeInTheDocument();
   });
@@ -275,7 +275,7 @@ describe("App portfolio shell", () => {
 
     expect(gatewayHero).not.toBeNull();
     expect(copyStack).not.toBeNull();
-    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" })).toBeInTheDocument();
+    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" })).toBeInTheDocument();
     expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
     expect(within(copyStack as HTMLElement).queryByRole("link", { name: "MexTm 먼저 보기" })).toBeNull();
     expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toBeInTheDocument();
@@ -286,7 +286,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const readingFlowHeading = screen.getByRole("heading", {
-      name: "처음이라면 MexTm 또는 LatTm부터 시작하세요"
+      name: "LatTm과 MexTm부터 보면 전체 구조와 즉시 실행 질문이 함께 잡힙니다"
     });
     const whyLateHeading = screen.getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" });
 
@@ -294,11 +294,11 @@ describe("App portfolio shell", () => {
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
     expect(
-      screen.getByText(/멕시코 진출 검토가 가장 급하다면 MexTm에서 바로 실무 쟁점을 확인하고/)
+      screen.getByText(/LatTm은 cross-border 우선순위의 flagship이고, MexTm은 가장 빠르게 buyer entry value를 만드는 growth guide입니다\./)
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "LatTm/MexTm 중심으로 보기" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "포트폴리오 우선 가이드 보기" })).toHaveAttribute(
       "href",
-      "#current-pilot-scope"
+      "#portfolio-focus"
     );
   });
 
@@ -308,7 +308,7 @@ describe("App portfolio shell", () => {
 
     const banner = screen.getByRole("region", { name: "최신 브리프 배너" });
     const readingFlowHeading = screen.getByRole("heading", {
-      name: "처음이라면 MexTm 또는 LatTm부터 시작하세요"
+      name: "LatTm과 MexTm부터 보면 전체 구조와 즉시 실행 질문이 함께 잡힙니다"
     });
 
     expect(within(banner).getByRole("heading", { name: briefIssues[0]?.title ?? "" })).toBeInTheDocument();
@@ -333,10 +333,10 @@ describe("App portfolio shell", () => {
       .getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" })
       .closest("section");
     const productIntentSection = screen
-      .getByRole("heading", { name: "법률 자문 전에 필요한 판단의 빈칸을 메웁니다" })
+      .getByRole("heading", { name: "시장 우선순위, 출원 경로, 유지·집행 판단을 한 번에 묶습니다" })
       .closest("section");
     const currentPilotScopeSection = screen
-      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
+      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
       .closest("section");
 
     expect(
@@ -350,18 +350,19 @@ describe("App portfolio shell", () => {
     ).not.toHaveClass("gateway-section-header--centered");
   });
 
-  it("groups the pilot scope cards and exposes the ChaTm maturity note", () => {
+  it("groups the portfolio cards by tier and exposes the ChaTm maturity note", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
+      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "지금 가장 먼저 볼 가이드" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "추가 권역 가이드" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "후속 시장 검토용 국가 가이드" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Flagship" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByText("지속 업데이트 중")).toBeInTheDocument();
   });
 
@@ -370,7 +371,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
+      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
       .closest("section");
     const operatorSection = screen
       .getByRole("heading", { name: "20년+ 상표 실무 경험을 바탕으로 먼저 봐야 할 판단을 정리합니다" })
@@ -390,6 +391,62 @@ describe("App portfolio shell", () => {
     expect(operatorLink).toHaveAttribute("href", operatorProfileUrl);
     expect(operatorLink).toHaveAttribute("target", "_blank");
     expect(operatorLink).toHaveAttribute("rel", "noreferrer noopener");
+  });
+
+  it("tracks guide opens on product routes", async () => {
+    installFetchMock();
+    const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
+    const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+
+    renderAppRouteTree("/china");
+
+    await screen.findByRole("heading", { name: "중국 상표 실무 운영 가이드" });
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "guide_open",
+      expect.objectContaining({
+        product_slug: "china",
+        portfolio_tier: "growth",
+        lifecycle_status: "beta",
+        route_kind: "home"
+      })
+    );
+
+    measurementSpy.mockRestore();
+    trackEventSpy.mockRestore();
+  });
+
+  it("tracks portfolio CTA clicks and operator link clicks", () => {
+    installFetchMock();
+    const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
+    const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+
+    renderAppRouteTree("/");
+
+    fireEvent.click(screen.getByRole("link", { name: "ChaTm 보기" }));
+    fireEvent.click(screen.getByRole("link", { name: "ywkinfo.github.io" }));
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "guide_cta_click",
+      expect.objectContaining({
+        product_slug: "china",
+        portfolio_tier: "growth",
+        lifecycle_status: "beta",
+        surface: "portfolio_growth"
+      })
+    );
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "operator_link_click",
+      expect.objectContaining({
+        surface: "gateway_operator_section"
+      })
+    );
+
+    measurementSpy.mockRestore();
+    trackEventSpy.mockRestore();
   });
 
   it("surfaces the brief archive on the gateway with links to the archive and latest issue", () => {
@@ -425,7 +482,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: "지금은 LatTm과 MexTm을 중심으로 파일럿을 검증하고 있습니다" })
+      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
@@ -433,7 +490,7 @@ describe("App portfolio shell", () => {
       "href",
       "/mexico"
     );
-    expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "LatTm 전체 흐름 보기" })).toHaveAttribute(
+    expect(within(currentPilotScope as HTMLElement).getByRole("link", { name: "LatTm 기준 프레임 보기" })).toHaveAttribute(
       "href",
       "/latam"
     );
@@ -456,7 +513,7 @@ describe("App portfolio shell", () => {
 
     renderAppRouteTree("/missing");
 
-    await screen.findByRole("heading", { name: "중남미 진출 전, 상표 출원 판단을 먼저 정리하세요" });
+    await screen.findByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" });
     expect(screen.getByTestId("app-location")).toHaveTextContent("/");
   });
 

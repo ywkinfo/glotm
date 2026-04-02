@@ -21,9 +21,9 @@ const {
   documentDataUrl,
   searchEntriesUrl,
   storageKey: "uktm_reading_bookmark",
-  topbarKicker: "UKTm Draft",
+  topbarKicker: "UKTm Incubate",
   loadingMessage: "영국 상표 가이드 콘텐츠를 불러오는 중입니다.",
-  homeHeroKicker: "영국 단일국가 실무 트랙",
+  homeHeroKicker: "영국 단일국가 incubate guide",
   homeSummary: (
     <>
       영국 시장 상표 실무를 빠르게 점검하기 위한 단일국가 가이드입니다. EU 공통 프레임과 병행해
@@ -31,9 +31,9 @@ const {
       판단이 필요한 순간 이 트랙으로 내려오는 구성이 자연스럽습니다.
     </>
   ),
-  homeStatusLabel: "Draft 상태의 영국 단일 시장 가이드",
+  homeStatusLabel: "Incubate tier · Pilot lifecycle의 영국 단일 시장 가이드",
   positioningKicker: "UKTm Positioning",
-  positioningTitle: "영국 단일 시장 실무를 바로 읽을 수 있는 신규 트랙",
+  positioningTitle: "영국 단일 시장 실무를 lighter depth로 유지하는 incubate guide",
   positioningNote: (
     <>
       현재 UKTm은 UKIPO 중심 출원 흐름, 사용증거와 non-use cancellation, 영국 온라인 침해와
