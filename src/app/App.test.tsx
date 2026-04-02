@@ -237,7 +237,7 @@ describe("App portfolio shell", () => {
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
     const expectedSummaryParagraphs = [
       "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-      "지금은 LatTm flagship을 기준으로 MexTm과 ChaTm growth guide를 우선 강화하고, EuTm은 validate, UsaTm·JapTm·UKTm은 incubate로 가볍게 유지합니다."
+      "지금은 ChaTm -> MexTm -> EuTm -> Brief/Gateway 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
     ];
 
     expect(gatewayHero).not.toBeNull();

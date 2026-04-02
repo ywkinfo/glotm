@@ -60,6 +60,10 @@ const briefIssueSource: BriefIssue[] = [
             href: getProductPathBySlug("china")
           },
           {
+            label: "MexTm 운영 가이드",
+            href: getProductPathBySlug("mexico")
+          },
+          {
             label: "JapTm 운영 가이드",
             href: getProductPathBySlug("japan")
           },
@@ -95,6 +99,10 @@ const briefIssueSource: BriefIssue[] = [
           {
             label: "EuTm 권역 가이드",
             href: getProductPathBySlug("europe")
+          },
+          {
+            label: "LatTm 기준 제품",
+            href: getProductPathBySlug("latam")
           }
         ]
       },
@@ -113,6 +121,10 @@ const briefIssueSource: BriefIssue[] = [
           {
             label: "UKTm early track",
             href: getProductPathBySlug("uk")
+          },
+          {
+            label: "LatTm 기준 제품",
+            href: getProductPathBySlug("latam")
           }
         ]
       },
@@ -128,6 +140,92 @@ const briefIssueSource: BriefIssue[] = [
         nextAction:
           "중남미 진출 검토 시 각국 조사 메모를 늘리기 전에, 우선 국가 2-3개와 launch sequencing부터 먼저 정하세요.",
         relatedGuideLinks: [
+          {
+            label: "LatTm 기준 제품",
+            href: getProductPathBySlug("latam")
+          },
+          {
+            label: "MexTm 운영 가이드",
+            href: getProductPathBySlug("mexico")
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "2026-03-china-name-search-priority",
+    title: "2026년 3월 Hot Global TM Brief | 중국 진출 직전에는 이름보다 표기·서브클래스 순서를 먼저 잠가야 합니다",
+    summary:
+      "중국 진출 초기에 가장 자주 틀어지는 표기·검색·출원 순서를 정리하고, 어떤 팀이 무엇을 먼저 잠가야 하는지 운영형으로 묶은 issue입니다.",
+    cadenceLabel: "주간 브리프",
+    publishedAt: "2026-03-13T09:00:00.000Z",
+    jurisdictions: ["China", "Brand Naming", "Search", "Subclass"],
+    bodyParagraphs: [
+      "중국 상표 실무에서 흔한 실패는 이름 자체보다 순서에서 발생합니다. 영문 브랜드를 먼저 고정하고 중국어 표기를 뒤늦게 붙이거나, 클래스만 맞춘 뒤 서브클래스와 실제 판매 경로를 나중에 보면서 충돌과 수정비용이 커집니다.",
+      "이번 이슈의 초점은 중국 진출 직전 팀이 무엇을 먼저 잠가야 하는지입니다. 중국어 표기 후보를 2~3개로 줄이고, 검색을 단순 중복확인이 아니라 go/revise/hold 판단 단계로 운영하며, search 결과가 바로 지정상품 설계와 출원 브리프로 넘어가게 만드는 흐름이 핵심입니다."
+    ],
+    items: [
+      {
+        id: "china-naming-sequence",
+        headline: "중국 진출 직전 팀이 먼저 잠가야 할 것은 이름 하나가 아니라 표기 묶음입니다",
+        whatChanged:
+          "중국어 표기, 영문 표장, 결합표장, 서브클래스 방향을 따로 보지 말고 하나의 포트폴리오 묶음으로 잠가야 한다는 운영 기준을 현재 우선순위로 올렸습니다.",
+        whoShouldCare:
+          "중국 론칭을 준비하는 브랜드팀, 중국 사업팀, 인하우스 IP팀, 외부 대리인과 협업할 PM",
+        whyItMatters:
+          "표기 후보와 검색 기준이 분리되면 출원 직전 수정이 반복되고, 플랫폼 검색어와 실제 등록 포트폴리오가 어긋날 위험이 커집니다.",
+        nextAction:
+          "영문 표장, 중국어 표기 2~3개 후보, 핵심 상품군, 인접 확장 상품군, go/revise/hold 기준을 한 장 브리프로 묶어 search 회의부터 잠그세요.",
+        relatedGuideLinks: [
+          {
+            label: "ChaTm 운영 가이드",
+            href: getProductPathBySlug("china")
+          },
+          {
+            label: "MexTm 운영 가이드",
+            href: getProductPathBySlug("mexico")
+          },
+          {
+            label: "LatTm 기준 제품",
+            href: getProductPathBySlug("latam")
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "2026-03-mexico-entry-decisions",
+    title: "2026년 3월 Hot Global TM Brief | 멕시코 진입 직전에는 출원 방식보다 운영 통제표가 먼저 필요합니다",
+    summary:
+      "멕시코 진입에서 직접출원 vs 마드리드 선택보다 먼저 잠가야 할 운영 통제표와 buyer entry 질문을 정리한 issue입니다.",
+    cadenceLabel: "주간 브리프",
+    publishedAt: "2026-03-06T09:00:00.000Z",
+    jurisdictions: ["Mexico", "Madrid", "IMPI", "Domain"],
+    bodyParagraphs: [
+      "멕시코 실무는 출원 경로 선택만으로 정리되지 않습니다. IMPI를 중심으로 어떤 기한을 누가 볼지, 가제타와 후속 통지를 어떻게 놓치지 않을지, 본사와 현지 파트너 사이에서 도메인과 사용증빙을 누가 통제할지가 함께 잠겨야 합니다.",
+      "즉, direct filing과 Madrid 중 무엇이 더 좋은지보다 먼저, 멕시코를 핵심국으로 보는지, 중앙관리 효율을 우선하는지, 현지 대응을 누가 맡는지에 대한 운영표가 필요합니다. 그 표가 있어야 경로 선택도 일관되게 됩니다."
+    ],
+    items: [
+      {
+        id: "mexico-entry-control-sheet",
+        headline: "멕시코 진입 직전에는 IMPI 절차표와 도메인·사용증빙 통제를 같이 잠가야 합니다",
+        whatChanged:
+          "출원 방식 선택을 단독 이슈로 보지 않고, 가제타 모니터링, 도메인 명의, 사용증빙 owner, 현지 대리인 대응라인까지 한 장 control sheet로 묶는 방식이 현재 우선 패턴으로 올라왔습니다.",
+        whoShouldCare:
+          "멕시코 판매 개시를 앞둔 브랜드팀, IP팀, 현지 유통 파트너를 관리하는 사업 리드",
+        whyItMatters:
+          "멕시코에서는 등록 후 관리와 집행이 출원만큼 중요합니다. control sheet 없이 들어가면 권리 통제와 대응 기한이 쉽게 분산됩니다.",
+        nextAction:
+          "직접출원 vs Madrid를 고르기 전에 권리자, 실제 사용자, 도메인 등록 주체, 가제타 모니터링 owner, 사용증빙 저장 위치를 같은 문서에 먼저 적으세요.",
+        relatedGuideLinks: [
+          {
+            label: "MexTm 운영 가이드",
+            href: getProductPathBySlug("mexico")
+          },
+          {
+            label: "ChaTm 운영 가이드",
+            href: getProductPathBySlug("china")
+          },
           {
             label: "LatTm 기준 제품",
             href: getProductPathBySlug("latam")

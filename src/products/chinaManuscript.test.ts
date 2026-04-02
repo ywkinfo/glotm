@@ -29,7 +29,7 @@ describe("ChaTm final manuscript", () => {
       "제5장. 출원서 작성 실무와 지정상품 설계",
       "제6장. 심사, 공고, 이의와 거절 대응",
       "제7장. 등록 후 유지와 사용 증거",
-      "제8장. 비사용취소, 무효와 취소 리스크",
+      "제8장. 불사용취소, 무효와 취소 리스크",
       "제9장. 라이선스, 유통, OEM/제조 구조 통제",
       "제10장. 침해 대응: 행정, 사법, 경고장, 증거 패키지",
       "제11장. 플랫폼, 도메인, 저작권, 부정경쟁 결합 대응",
@@ -68,7 +68,7 @@ describe("ChaTm final manuscript", () => {
   });
 
   it("keeps the China search index dense enough for final-manuscript navigation", () => {
-    expect(searchEntries).toHaveLength(171);
+    expect(searchEntries.length).toBeGreaterThanOrEqual(175);
 
     const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
 

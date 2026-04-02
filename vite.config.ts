@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   base: process.env.PAGES_BASE_PATH ?? "/",
@@ -8,6 +8,7 @@ export default defineConfig({
     environment: "jsdom",
     globals: false,
     setupFiles: "./src/test/setup.ts",
+    exclude: [...configDefaults.exclude, "e2e/**"],
     testTimeout: 15000,
     hookTimeout: 15000
   },

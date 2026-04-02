@@ -519,11 +519,53 @@ function GatewayLandingPage() {
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    "지금은 LatTm flagship을 기준으로 MexTm과 ChaTm growth guide를 우선 강화하고, EuTm은 validate, UsaTm·JapTm·UKTm은 incubate로 가볍게 유지합니다."
+    "지금은 ChaTm -> MexTm -> EuTm -> Brief/Gateway 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
   ];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
+  const priorityRoadmap = [
+    {
+      id: "china",
+      title: "ChaTm Sprint 1 심화",
+      copy:
+        "중국어 표기, 서브클래스, 출원 실무, 심사·집행 경로를 먼저 두껍게 만드는 현재 최우선 growth lane입니다.",
+      note: "제2장, 제3장, 제5장, 제6장, 제7장, 제10장 우선",
+      href: buildProductPath("/china")
+    },
+    {
+      id: "mexico",
+      title: "MexTm 핵심 장 심화",
+      copy:
+        "이미 강한 baseline 위에서 buyer entry 가치가 큰 장을 더 두껍게 만들어, 단일국가 실행 질문이 빠르게 보이게 합니다.",
+      note: "제1장, 제4장, 제11장, 제13장 우선",
+      href: buildProductPath("/mexico")
+    },
+    {
+      id: "europe",
+      title: "EuTm 안정화",
+      copy:
+        "범위 확대보다 opposition, coexistence, genuine use, evidence 운영 구조를 더 명확하게 만들어 validate lane을 안정화합니다.",
+      note: "제1장, 제2장, 제4장, 제5장, 제7장, 제8장 우선",
+      href: buildProductPath("/europe")
+    },
+    {
+      id: "briefs",
+      title: "Brief / Gateway 신뢰 보강",
+      copy:
+        "가이드 본문만 강해지는 데서 멈추지 않고, buyer가 처음 들어왔을 때 우선순위와 최근 이슈 흐름을 바로 이해하게 만듭니다.",
+      note: "브리프 4개 이상 축적, guide CTA 연결 강화",
+      href: buildBriefArchivePath()
+    },
+    {
+      id: "incubate",
+      title: "Incubate 선택 유지보수",
+      copy:
+        "JapTm -> UKTm -> UsaTm 순서로 freshness, verification, smoke QA 위주 보강만 수행하고 대형 재작성은 뒤로 미룹니다.",
+      note: "lighter track 유지",
+      href: buildProductPath("/japan")
+    }
+  ];
 
   useEffect(() => {
     setRuntimeDocumentTitle();
@@ -812,6 +854,40 @@ function GatewayLandingPage() {
               surface="portfolio_incubate"
             />
           ) : null}
+        </div>
+      </section>
+
+      <section className="gateway-section">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">Current Build Order</p>
+            <h2 className="gateway-section-title">지금은 가장 얇은 가이드보다 가장 가치가 빨리 커지는 레인부터 보강합니다</h2>
+          </div>
+          <p className="gateway-section-copy">
+            현재 정렬 기준은 `buyer impact + 포트폴리오 전략 + 실제 콘텐츠 밀도 부족`입니다. 그래서 growth와 validate 레인의 체감 가치를 먼저 키우고, incubate 레인은 가볍게 유지합니다.
+          </p>
+        </div>
+        <div className="gateway-card-grid">
+          {priorityRoadmap.map((lane, index) => (
+            <article key={lane.id} className="gateway-card">
+              <p className="gateway-kicker">Priority {index + 1}</p>
+              <h3 className="gateway-card-title">{lane.title}</h3>
+              <p className="gateway-card-copy">{lane.copy}</p>
+              <p className="gateway-card-copy">{lane.note}</p>
+              <FullDocumentLink
+                className="gateway-cta-link"
+                to={lane.href}
+                onClick={() => {
+                  trackEngagement("priority_cta_click", {
+                    priority_lane: lane.id,
+                    target_path: lane.href
+                  });
+                }}
+              >
+                자세히 보기
+              </FullDocumentLink>
+            </article>
+          ))}
         </div>
       </section>
 
