@@ -21,6 +21,10 @@ import {
   useParams
 } from "react-router-dom";
 
+import {
+  getGaMeasurementId,
+  trackGaEvent
+} from "../analytics/ga";
 import { products } from "./registry";
 import {
   buildChapterPath,
@@ -37,7 +41,8 @@ import {
   type Chapter,
   type DocumentData,
   type ProductMeta,
-  type ReadingBookmark
+  type ReadingBookmark,
+  type SearchEntry
 } from "./shared";
 import {
   ChapterOutline,
@@ -335,6 +340,40 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       setCurrentSectionId(sectionId);
       navigateToSection(currentChapterSlug, sectionId, "smooth");
     });
+    const trackReaderSearchEvent = useEffectEvent(
+      (eventName: string, params: Record<string, string | number | boolean | undefined>) => {
+        const measurementId = getGaMeasurementId();
+
+        if (!measurementId) {
+          return;
+        }
+
+        trackGaEvent(measurementId, eventName, {
+          product_slug: productMeta.slug,
+          surface: "reader_search",
+          ...params
+        });
+      }
+    );
+    const handleSearchSubmit = useEffectEvent((query: string, resultCount: number) => {
+      trackReaderSearchEvent("search_submit", {
+        query_length: query.length,
+        result_count: resultCount
+      });
+
+      if (resultCount === 0) {
+        trackReaderSearchEvent("search_zero_result", {
+          query_length: query.length
+        });
+      }
+    });
+    const handleSearchResultSelect = useEffectEvent((result: SearchEntry) => {
+      trackReaderSearchEvent("search_result_click", {
+        chapter_slug: result.chapterSlug,
+        section_id: result.sectionId,
+        section_title: result.sectionTitle
+      });
+    });
 
     const closeNavigation = useEffectEvent(() => {
       setIsNavOpen(false);
@@ -379,6 +418,8 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               ) : null}
               <SearchPanel
                 onNavigate={navigateToSection}
+                onSearchResultSelect={handleSearchResultSelect}
+                onSearchSubmit={handleSearchSubmit}
                 searchContent={searchController.searchContent}
                 warmSearchContent={searchController.warmSearchContent}
               />

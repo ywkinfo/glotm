@@ -54,7 +54,7 @@ describe("ChaTm final manuscript", () => {
   });
 
   it("keeps the China search index dense enough for final-manuscript navigation", () => {
-    expect(searchEntries).toHaveLength(144);
+    expect(searchEntries).toHaveLength(159);
 
     const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
 

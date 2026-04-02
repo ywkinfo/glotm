@@ -12,7 +12,8 @@ import type { DocumentData } from "../src/products/shared";
 import {
   buildRobotsTxt,
   buildSitemapXml,
-  buildStaticPageDefinitions
+  buildStaticPageDefinitions,
+  renderStaticHtml
 } from "./seo";
 
 const documentDataBySlug = new Map<string, DocumentData>([
@@ -42,6 +43,7 @@ describe("SEO build helpers", () => {
     expect(pages[0]).toMatchObject({
       routePath: "/",
       canonicalUrl: "https://ywkinfo.github.io/glotm/",
+      ogImageUrl: "https://ywkinfo.github.io/glotm/og/glotm-share-card.svg",
       title: "GloTm | Cross-border Trademark Operating Guides"
     });
     expect(pages).toEqual(
@@ -101,6 +103,37 @@ describe("SEO build helpers", () => {
       ["User-agent: *", "Allow: /", "Sitemap: https://ywkinfo.github.io/glotm/sitemap.xml"].join(
         "\n"
       )
+    );
+  });
+
+  it("renders og and twitter metadata with a base-path aware social image", () => {
+    const [page] = buildStaticPageDefinitions(documentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const html = renderStaticHtml(
+      [
+        "<!doctype html>",
+        "<html>",
+        "  <head>",
+        "    <title>Placeholder</title>",
+        "  </head>",
+        '  <body><div id="root"></div></body>',
+        "</html>"
+      ].join("\n"),
+      page
+    );
+
+    expect(html).toContain(
+      '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
+    );
+    expect(html).toContain(
+      '<meta property="og:image:alt" content="GloTm Gateway와 cross-border trademark operating guides를 소개하는 대표 공유 이미지" />'
+    );
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
+    expect(html).toContain(
+      '<meta name="twitter:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
     );
   });
 });
