@@ -7,7 +7,7 @@
 
 | Group | Source family | Why it matters |
 |------|---------------|----------------|
-| EU trademark office | EUIPO trade mark portal and guidance | EUTM 절차, 심사, 이의, 갱신, 취소의 기준선 |
+| EU trademark office | EUIPO trade mark portal, fees/payments, and renewal guidance | EUTM 절차, 심사, 이의, 갱신, 취소의 기준선 |
 | EU law text | EUR-Lex and European Commission materials | 제도 근거와 공식 용어 확인 |
 | International route | WIPO Madrid resources | 마드리드 경유 전략과 병행 설명 검증 |
 | UK split | UK IPO guidance | 영국 별도 트랙 처리 기준선 |
