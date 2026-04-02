@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
+import { reports } from "../reports/registry";
 import { liveShellReaderDefinitions } from "../products/liveShellReaders";
 import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
@@ -48,14 +49,60 @@ const documentDataByProduct = {
   uk: createMockDocumentData("영국 상표 실무 운영 가이드북", "영국 제1장. 제도 개요", "uk-overview")
 };
 
+const documentDataByReport = {
+  "global-use-evidence-system": {
+    meta: {
+      title: "글로벌 사용 증거 수집 운영 시스템 구축",
+      builtAt: "2026-04-02T09:00:00.000Z",
+      chapterCount: 1
+    },
+    chapters: [
+      {
+        id: "global-use-evidence-system",
+        slug: "global-use-evidence-system",
+        title: "글로벌 사용 증거 수집 운영 시스템 구축",
+        summary: "여러 국가에서 재사용 가능한 사용 증거 운영 체계를 어떻게 미리 설계할지 정리한 리포트입니다.",
+        html: [
+          '<p>증거는 나중에 모으면 된다는 접근은 담당자가 바뀌거나 판매 화면이 사라질 때 바로 무너집니다.</p>',
+          '<h3 id="최소-운영-구조">최소 운영 구조</h3>',
+          '<p>시장별로 같은 폴더 구조와 owner를 두면 미국, 중국, 멕시코 대응에 재사용하기 쉬워집니다.</p>'
+        ].join(""),
+        headings: [
+          {
+            id: "최소-운영-구조",
+            depth: 3,
+            title: "최소 운영 구조",
+            children: []
+          }
+        ]
+      }
+    ]
+  } satisfies DocumentData
+};
+
 function installFetchMock() {
   const fetchMock = vi.fn(async (input: string | URL | Request) => {
     const url = String(input);
+    const reportSlug = Object.keys(documentDataByReport).find((slug) =>
+      url.includes(`/generated/reports/${slug}/`)
+    );
     const productSlug = Object.keys(documentDataByProduct).find((slug) =>
       url.includes(`/generated/${slug}/`)
     );
 
     if (url.includes("document-data")) {
+      if (reportSlug) {
+        return new Response(
+          JSON.stringify(documentDataByReport[reportSlug as keyof typeof documentDataByReport]),
+          {
+            status: 200,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
+      }
+
       const documentData =
         documentDataByProduct[productSlug as keyof typeof documentDataByProduct]
         ?? documentDataByProduct.usa;
@@ -130,6 +177,7 @@ describe("App portfolio shell", () => {
 
     expect(within(nav).getByRole("link", { name: /Gateway/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /Brief/ })).toBeInTheDocument();
+    expect(within(nav).getByRole("link", { name: /Report/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /LatTm/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toBeInTheDocument();
     expect(within(nav).getByRole("link", { name: /UsaTm/ })).toBeInTheDocument();
@@ -148,6 +196,7 @@ describe("App portfolio shell", () => {
 
     expect(within(nav).getByRole("link", { name: /Gateway/ })).toHaveAttribute("href", "/");
     expect(within(nav).getByRole("link", { name: /Brief/ })).toHaveAttribute("href", "/briefs");
+    expect(within(nav).getByRole("link", { name: /Report/ })).toHaveAttribute("href", "/reports");
     expect(within(nav).getByRole("link", { name: /LatTm/ })).toHaveAttribute("href", "/latam");
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
     expect(within(nav).getByRole("link", { name: /UsaTm/ })).toHaveAttribute("href", "/usa");
@@ -209,6 +258,7 @@ describe("App portfolio shell", () => {
     expect(screen.getByRole("link", { name: "GloTm" })).toHaveAttribute("href", "/");
     expect(within(nav).getByRole("link", { name: /Gateway/ })).toHaveAttribute("href", "/");
     expect(within(nav).getByRole("link", { name: /Brief/ })).toHaveAttribute("href", "/briefs");
+    expect(within(nav).getByRole("link", { name: /Report/ })).toHaveAttribute("href", "/reports");
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
   });
 
@@ -530,6 +580,19 @@ describe("App portfolio shell", () => {
     expect(activeLink).toHaveClass("active");
   });
 
+  it("marks the report archive as an active route", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/reports");
+
+    await screen.findByRole("heading", { name: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트" });
+
+    const nav = screen.getByRole("navigation", { name: "제품 전환" });
+    const activeLink = within(nav).getByRole("link", { name: /Report/ });
+
+    expect(activeLink).toHaveClass("active");
+  });
+
   it("renders brief archive issues in latest-first order", async () => {
     installFetchMock();
 
@@ -581,6 +644,41 @@ describe("App portfolio shell", () => {
     trackEventSpy.mockRestore();
   });
 
+  it("renders report archive cards and links to the latest report", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/reports");
+
+    await screen.findByRole("heading", { name: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트" });
+
+    const archiveSection = screen
+      .getByRole("heading", { name: "최신순으로 스페셜 리포트를 모아 둡니다" })
+      .closest("section");
+
+    expect(archiveSection).not.toBeNull();
+    expect(within(archiveSection as HTMLElement).getByRole("heading", { name: reports[0]?.title ?? "" })).toBeInTheDocument();
+    expect(within(archiveSection as HTMLElement).getByRole("link", { name: "리포트 읽기" })).toHaveAttribute(
+      "href",
+      `/reports/${reports[0]?.slug}`
+    );
+    expect(screen.getByRole("link", { name: "최신 리포트 보기" })).toHaveAttribute(
+      "href",
+      `/reports/${reports[0]?.slug}`
+    );
+  });
+
+  it("renders report detail pages with generated article content and related guide links", async () => {
+    installFetchMock();
+
+    renderAppRouteTree(`/reports/${reports[0]?.slug}`);
+
+    await screen.findByRole("heading", { name: reports[0]?.title ?? "" });
+
+    expect(screen.getByText(/증거는 나중에 모으면 된다는 접근은 담당자가 바뀌거나 판매 화면이 사라질 때 바로 무너집니다\./)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "LatTm 기준 프레임" })).toHaveAttribute("href", "/latam");
+    expect(screen.getByRole("link", { name: "ChaTm 운영 가이드" })).toHaveAttribute("href", "/china");
+  });
+
   it("respects a deployment basename for deep links and rendered hrefs", async () => {
     installFetchMock();
 
@@ -593,6 +691,7 @@ describe("App portfolio shell", () => {
 
     expect(document.querySelector('a[href="/glotm/"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/latam"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/glotm/reports"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/japan"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/europe"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/uk"]')).not.toBeNull();

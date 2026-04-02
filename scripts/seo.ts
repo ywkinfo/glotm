@@ -9,6 +9,14 @@ import {
   formatBriefDate,
   type BriefIssue
 } from "../src/briefs/archive";
+import {
+  buildReportArchivePath,
+  buildReportDocumentTitle,
+  buildReportPath,
+  formatReportDate,
+  reports,
+  type ReportMeta
+} from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import {
   buildChapterPath,
@@ -328,6 +336,61 @@ function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
   `;
 }
 
+function renderReportArchiveBody(basePath: string) {
+  const reportLinks = reports.map((report) => ({
+    href: buildPublicHref(buildReportPath(report.slug), basePath),
+    label: `${formatReportDate(report.publishedAt)} · ${report.title}`
+  }));
+
+  return `
+    <main>
+      <nav>
+        <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
+      </nav>
+      <header>
+        <p>Special Report</p>
+        <h1>개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트</h1>
+        <p>특정 국가 하나의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 질문을 한 문서로 정리하는 심화 리포트 아카이브입니다.</p>
+      </header>
+      ${renderLinkList("리포트 목록", reportLinks, true)}
+    </main>
+  `;
+}
+
+function renderReportBody(report: ReportMeta, documentData: DocumentData, basePath: string) {
+  const chapter = documentData.chapters[0];
+
+  if (!chapter) {
+    throw new Error(`Missing report body chapter for ${report.slug}.`);
+  }
+
+  return `
+    <main>
+      <nav>
+        <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
+        <span> / </span>
+        <a href="${escapeHtml(buildPublicHref(buildReportArchivePath(), basePath))}">Special Report</a>
+      </nav>
+      <article>
+        <header>
+          <p>${escapeHtml(formatReportDate(report.publishedAt))}</p>
+          <h1>${escapeHtml(report.title)}</h1>
+          <p>${escapeHtml(report.summary)}</p>
+          <p>관할: ${escapeHtml(report.jurisdictions.join(" · "))}</p>
+        </header>
+        ${chapter.html}
+        ${renderLinkList(
+          "관련 GloTm 가이드",
+          report.relatedGuideLinks.map((link) => ({
+            href: buildPublicHref(link.href, basePath),
+            label: link.label
+          }))
+        )}
+      </article>
+    </main>
+  `;
+}
+
 function buildGatewayPage(
   basePath: string,
   siteOrigin: string,
@@ -358,6 +421,18 @@ function buildBriefIssueDescription(issue: BriefIssue) {
   );
 }
 
+function buildReportArchiveDescription() {
+  return trimDescription(
+    "Special Report 아카이브. 개별 국가 guide를 넘어, 여러 관할에서 반복되는 운영 질문과 대응 체계를 별도 문서로 정리한 GloTm 심화 리포트입니다."
+  );
+}
+
+function buildReportDescription(report: ReportMeta) {
+  return trimDescription(
+    `${report.summary} ${report.jurisdictions.join(", ")} 관할을 함께 보는 교차 관할권 운영 리포트입니다.`
+  );
+}
+
 function buildProductDescription(product: ProductMeta, documentData: DocumentData) {
   return trimDescription(
     `${product.summary} 현재 ${documentData.chapters.length}개 챕터로 구성된 ${product.title}를 GloTm에서 바로 읽을 수 있습니다.`
@@ -372,11 +447,20 @@ function buildChapterDescription(product: ProductMeta, chapter: Chapter) {
 
 export function buildStaticPageDefinitions(
   documentDataBySlug: Map<string, DocumentData>,
-  options: SeoRuntimeOptions = {}
+  reportDocumentDataBySlugOrOptions: Map<string, DocumentData> | SeoRuntimeOptions = new Map(),
+  maybeOptions: SeoRuntimeOptions = {}
 ) {
+  const reportDocumentDataBySlug = reportDocumentDataBySlugOrOptions instanceof Map
+    ? reportDocumentDataBySlugOrOptions
+    : new Map<string, DocumentData>();
+  const options = reportDocumentDataBySlugOrOptions instanceof Map
+    ? maybeOptions
+    : reportDocumentDataBySlugOrOptions;
   const { basePath, siteOrigin, distDir } = getSeoRuntimeOptions(options);
   const gatewayLastModified = [
     ...Array.from(documentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
+    ...Array.from(reportDocumentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
+    ...reports.map((report) => ensureIsoDate(report.updatedAt ?? report.publishedAt)),
     ...briefIssues.map((issue) => ensureIsoDate(issue.publishedAt))
   ]
     .sort()
@@ -390,18 +474,32 @@ export function buildStaticPageDefinitions(
 
   const briefArchivePath = buildBriefArchivePath();
   const latestBriefPublishedAt = briefIssues[0]?.publishedAt ?? gatewayLastModified;
+  const reportArchivePath = buildReportArchivePath();
+  const latestReportPublishedAt = reports[0]?.updatedAt ?? reports[0]?.publishedAt ?? gatewayLastModified;
 
-    pages.push({
-      routePath: briefArchivePath,
-      outputPath: buildOutputPath(briefArchivePath, distDir),
-      title: buildBriefDocumentTitle(),
-      description: buildBriefArchiveDescription(),
-      canonicalUrl: buildCanonicalUrl(briefArchivePath, siteOrigin, basePath),
-      ...buildDefaultSocialImage(siteOrigin, basePath),
-      ogType: "website",
-      lastModified: ensureIsoDate(latestBriefPublishedAt),
-      bodyHtml: renderBriefArchiveBody(basePath)
-    });
+  pages.push({
+    routePath: briefArchivePath,
+    outputPath: buildOutputPath(briefArchivePath, distDir),
+    title: buildBriefDocumentTitle(),
+    description: buildBriefArchiveDescription(),
+    canonicalUrl: buildCanonicalUrl(briefArchivePath, siteOrigin, basePath),
+    ...buildDefaultSocialImage(siteOrigin, basePath),
+    ogType: "website",
+    lastModified: ensureIsoDate(latestBriefPublishedAt),
+    bodyHtml: renderBriefArchiveBody(basePath)
+  });
+
+  pages.push({
+    routePath: reportArchivePath,
+    outputPath: buildOutputPath(reportArchivePath, distDir),
+    title: buildReportDocumentTitle(),
+    description: buildReportArchiveDescription(),
+    canonicalUrl: buildCanonicalUrl(reportArchivePath, siteOrigin, basePath),
+    ...buildDefaultSocialImage(siteOrigin, basePath),
+    ogType: "website",
+    lastModified: ensureIsoDate(latestReportPublishedAt),
+    bodyHtml: renderReportArchiveBody(basePath)
+  });
 
   for (const issue of briefIssues) {
     const issueRoutePath = buildBriefIssuePath(issue.slug);
@@ -416,6 +514,28 @@ export function buildStaticPageDefinitions(
       ogType: "article",
       lastModified: ensureIsoDate(issue.publishedAt),
       bodyHtml: renderBriefIssueBody(issue, basePath)
+    });
+  }
+
+  for (const report of reports) {
+    const reportDocumentData = reportDocumentDataBySlug.get(report.slug);
+
+    if (!reportDocumentData) {
+      throw new Error(`Missing generated report document data for ${report.slug}.`);
+    }
+
+    const reportRoutePath = buildReportPath(report.slug);
+
+    pages.push({
+      routePath: reportRoutePath,
+      outputPath: buildOutputPath(reportRoutePath, distDir),
+      title: buildReportDocumentTitle(report),
+      description: buildReportDescription(report),
+      canonicalUrl: buildCanonicalUrl(reportRoutePath, siteOrigin, basePath),
+      ...buildDefaultSocialImage(siteOrigin, basePath),
+      ogType: "article",
+      lastModified: ensureIsoDate(report.updatedAt ?? reportDocumentData.meta.builtAt),
+      bodyHtml: renderReportBody(report, reportDocumentData, basePath)
     });
   }
 
@@ -523,6 +643,26 @@ export async function loadDocumentDataBySlug(options: SeoRuntimeOptions = {}) {
       const rawDocument = await readFile(documentPath, "utf8");
 
       return [product.slug, JSON.parse(rawDocument) as DocumentData] as const;
+    })
+  );
+
+  return new Map(entries);
+}
+
+export async function loadReportDocumentDataBySlug(options: SeoRuntimeOptions = {}) {
+  const { distDir } = getSeoRuntimeOptions(options);
+  const entries = await Promise.all(
+    reports.map(async (report) => {
+      const documentPath = path.join(
+        distDir,
+        "generated",
+        "reports",
+        report.slug,
+        "document-data.json"
+      );
+      const rawDocument = await readFile(documentPath, "utf8");
+
+      return [report.slug, JSON.parse(rawDocument) as DocumentData] as const;
     })
   );
 

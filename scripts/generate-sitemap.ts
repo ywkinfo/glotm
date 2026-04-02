@@ -6,12 +6,14 @@ import {
   buildSitemapXml,
   buildStaticPageDefinitions,
   getSeoRuntimeOptions,
-  loadDocumentDataBySlug
+  loadDocumentDataBySlug,
+  loadReportDocumentDataBySlug
 } from "./seo";
 
 const runtime = getSeoRuntimeOptions();
 const documentDataBySlug = await loadDocumentDataBySlug(runtime);
-const pages = buildStaticPageDefinitions(documentDataBySlug, runtime);
+const reportDocumentDataBySlug = await loadReportDocumentDataBySlug(runtime);
+const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, runtime);
 const sitemapXml = buildSitemapXml(pages);
 const robotsTxt = buildRobotsTxt(runtime.siteOrigin, runtime.basePath);
 
