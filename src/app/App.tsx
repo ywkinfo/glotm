@@ -361,7 +361,7 @@ function BriefGuideLinks({
   );
 }
 
-function ReportCard({ report }: { report: ReportMeta }) {
+function ReportCard({ report, surface }: { report: ReportMeta; surface?: string }) {
   return (
     <article className="brief-card">
       <div className="brief-card-topline">
@@ -379,7 +379,20 @@ function ReportCard({ report }: { report: ReportMeta }) {
         ))}
       </div>
       <div className="brief-card-actions">
-        <FullDocumentLink className="product-card-link" to={buildReportPath(report.slug)}>
+        <FullDocumentLink
+          className="product-card-link"
+          to={buildReportPath(report.slug)}
+          onClick={() => {
+            if (!surface) {
+              return;
+            }
+
+            trackEngagement("report_open", {
+              report_slug: report.slug,
+              surface
+            });
+          }}
+        >
           리포트 읽기
         </FullDocumentLink>
       </div>
@@ -582,6 +595,7 @@ function GatewayLandingPage() {
   ];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
+  const latestReport = getLatestReport();
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
     {
@@ -868,6 +882,53 @@ function GatewayLandingPage() {
             <BriefIssueCard key={issue.slug} issue={issue} surface="gateway" />
           ))}
         </div>
+      </section>
+
+      <section className="gateway-section">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">Special Report</p>
+            <h2 className="gateway-section-title">교차 관할권 운영 판단은 Report 레인에서 따로 다룹니다</h2>
+          </div>
+          <p className="gateway-section-copy">
+            guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 구조화하는 레인입니다.
+          </p>
+        </div>
+        <p className="gateway-section-copy">
+          사용 증거, 플랫폼 대응, 긴급 의사결정처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
+        </p>
+        <div className="gateway-cta-actions">
+          <FullDocumentLink
+            className="gateway-cta-link"
+            to={buildReportArchivePath()}
+            onClick={() => {
+              trackEngagement("report_archive_open", {
+                surface: "gateway_section"
+              });
+            }}
+          >
+            리포트 전체 보기
+          </FullDocumentLink>
+          {latestReport ? (
+            <FullDocumentLink
+              className="gateway-cta-link gateway-cta-link--secondary"
+              to={buildReportPath(latestReport.slug)}
+              onClick={() => {
+                trackEngagement("report_open", {
+                  report_slug: latestReport.slug,
+                  surface: "gateway_section"
+                });
+              }}
+            >
+              최신 리포트 보기
+            </FullDocumentLink>
+          ) : null}
+        </div>
+        {latestReport ? (
+          <div className="brief-card-grid">
+            <ReportCard report={latestReport} surface="gateway_section" />
+          </div>
+        ) : null}
       </section>
 
       <section id="portfolio-focus" className="gateway-section">
@@ -1181,7 +1242,7 @@ function ReportArchivePage() {
         </div>
         <div className="brief-card-grid">
           {reports.map((report) => (
-            <ReportCard key={report.id} report={report} />
+            <ReportCard key={report.id} report={report} surface="report_archive" />
           ))}
         </div>
       </section>
