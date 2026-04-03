@@ -199,6 +199,31 @@ validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, d
 
 이 메모를 명시해 두면, 아직 넓히지 않은 범위를 숨기지 않으면서도 validate lane의 기준선을 명확히 유지할 수 있다.
 
+## evidence-to-enforcement reuse memo
+
+EuTm의 운영 장점은 evidence를 renewal 대응용 파일로만 두지 않고, 나중에 distribution / platform / domain 이슈에서도 재사용할 수 있게 만드는 데 있다. 권역형 문서에서는 이 연결을 미리 적어 두는 편이 훨씬 실무적이다.
+
+| evidence 묶음 | renewal / proof-of-use에서의 의미 | 분쟁 대응에서의 의미 |
+| --- | --- | --- |
+| 포장, brochure, listing | genuine use 설명 | market presence 설명 |
+| invoice, channel memo | goods/services 연결 | distribution / channel dispute 설명 |
+| owner-user-linkage | 권리 귀속 설명 | distributor / marketplace seller 사건 설명 |
+| EU / UK split row | launch timing 차이 설명 | jurisdiction split memo |
+
+이 메모를 두면 제8장은 등록 후 관리 장에서 끝나지 않고, EuTm 전체의 evidence backbone 역할을 하게 된다.
+
+## weak goods/services trim memo
+
+renewal과 genuine use를 같은 캘린더에 넣는 이유는, 약한 goods/services를 너무 늦게 발견하지 않기 위해서다. validate lane에서는 “계속 유지할 범위”만큼이나 “언제 trim 후보로 볼지”를 적어 두는 편이 좋다.
+
+| 상태 | 지금 남길 메모 | 기본 액션 |
+| --- | --- | --- |
+| strong | 핵심국, 핵심 채널, 설명 가능한 evidence가 있음 | 유지 우선 |
+| review | evidence는 있으나 국가/채널 메모가 약함 | linkage 보강 |
+| trim candidate | goods/services는 넓은데 실제 사용 설명이 약함 | renewal 전 재검토 |
+
+이 표가 있으면 제8장은 evidence 저장 장을 넘어서, renewal 직전 범위를 어떻게 정리할지까지 보여 주는 운영 장이 된다.
+
 ## 등록 후 90일 stabilization board
 
 등록 직후 90일은 evidence 시스템을 굳히는 핵심 구간이다. 이 시점에 owner-user-linkage와 EU / UK 분기 row를 잠그지 않으면, 이후 분기 루틴이 자료 찾기로 흘러가기 쉽다.

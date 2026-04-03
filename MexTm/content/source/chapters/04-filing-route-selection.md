@@ -102,6 +102,19 @@
 
 이 표를 두면 "경로를 골랐는데 제5장 입력값은 아직 안 잠겼다"는 상태를 줄일 수 있다.
 
+### local-fit vs central-management scoring table
+
+멕시코 경로 선택이 길어지는 가장 큰 이유는, 모두가 같은 사실을 보고도 어떤 축을 더 중요하게 볼지 다르기 때문이다. 그래서 이 장에서는 경로 선호를 감각적으로 말하기보다, local-fit과 중앙관리 효율을 나란히 점수화하는 편이 낫다.
+
+| 평가축 | direct 쪽 점수 높을 때 | Madrid 쪽 점수 높을 때 | 바로 남길 메모 |
+| --- | --- | --- | --- |
+| goods/services local-fit | 현지 유통 구조와 문구 조정이 많음 | 글로벌 문구를 거의 그대로 씀 | local-fit 여부 |
+| launch urgency | 멕시코 launch가 이번 분기 핵심 | 멕시코는 후속 wave 중 하나 | launch priority |
+| central management need | 국가 수가 적고 현지 대응을 깊게 봄 | 다수국 갱신·명의변경을 묶어야 함 | portfolio scale |
+| base-right stability | 기초권리가 아직 흔들림 | 기초권리가 안정적 | central attack memo |
+
+이 표를 두면 “무엇이 더 편하냐”가 아니라, 멕시코에서 어떤 비용을 어디에 먼저 쓰는 편이 더 합리적인지로 회의가 정리된다.
+
 ### central attack / local-fit red flag
 
 마드리드를 택하더라도 멕시코 로컬 fit이 약하면 결국 다시 현지 대응 비용이 커진다. 반대로 직접출원을 택해도 다국가 관리 구조를 전혀 안 보면 후속 파동이 커질 수 있다.
@@ -170,6 +183,19 @@ decision memo의 핵심은 “무엇이 더 싸냐”보다 “어느 구조가 
 
 이 표를 추가하면 “둘 중 하나”라는 잘못된 회의 구조를 줄이고, 실제 브랜드 포트폴리오에 더 가까운 선택을 남길 수 있다.
 
+### 경로 선택 직후 owner split memo
+
+경로를 고른 직후 흔히 생기는 문제는, 비용 owner와 실무 owner와 사건 owner가 같은 사람일 것이라고 가정하는 데 있다. 멕시코는 `MX-FEE-001`, `MX-DL-001`이 보여 주듯 filing, declaration, renewal의 절차가 분리돼 있기 때문에 owner도 같이 분리해 적는 편이 좋다.
+
+| 운영 축 | direct 선택 시 owner | Madrid 선택 시 owner | 빠지면 생기는 문제 |
+| --- | --- | --- | --- |
+| filing packet | IP + 현지 대리인 | IP + 글로벌 포트폴리오 담당 | 입력값이 마지막에 다시 흔들림 |
+| fee approval | 재무 + PM | 재무 + 글로벌 IP | 절차별 비용 구조가 섞임 |
+| Gaceta / notice monitoring | IP | IP + 현지 대리인 | opposition, office action 병목 |
+| declaration / renewal | 운영 + IP | 운영 + IP | 등록 후 관리가 경로 선택과 끊어짐 |
+
+이 owner split memo를 남겨 두면 제4장의 결론이 단순 선호가 아니라, 실제 운영 라인을 나누는 결정으로 이어진다.
+
 ### 경로 선택 후 14일 action board
 
 경로를 고른 뒤 2주가 가장 중요하다. 이 구간에서 입력값이 잠기지 않으면 제5장 출원 설계와 제7장 운영 캘린더가 다시 흔들린다.
@@ -201,6 +227,19 @@ decision memo의 핵심은 “무엇이 더 싸냐”보다 “어느 구조가 
 - `MX-DL-001`의 핵심 기한 세 개를 팀 공용 캘린더에 먼저 등록한다.
 - `MX-FEE-001`의 절차 분리 구조를 비용 승인표에 그대로 옮긴다.
 - 멕시코 launch owner와 현지 대리인 회신 owner를 따로 적는다.
+
+### 30일 packet lock board
+
+경로 선택 이후 30일 동안 어떤 packet을 잠그느냐가 멕시코 reader 실익을 좌우한다. 경로만 고르고 goods/services, owner map, 캘린더가 비어 있으면 제5장과 제7장에서 다시 같은 질문을 하게 된다.
+
+| 시점 | 먼저 잠글 packet | 다음 장으로 넘길 것 |
+| --- | --- | --- |
+| 1주차 | 경로 memo, owner split, local-fit note | 제5장 filing packet |
+| 2주차 | fee/deadline 캘린더 | 제6장, 제7장 운영 보드 |
+| 3주차 | mixed structure 여부, wave 2 국가 | portfolio memo |
+| 4주차 | declaration/renewal monitoring owner | 부록 체크리스트 |
+
+이 board가 있으면 제4장의 판단이 한 번의 선택으로 끝나지 않고, 이후 운영 체계까지 같은 문법으로 이어진다.
 
 ### 마무리
 

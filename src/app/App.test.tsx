@@ -287,7 +287,7 @@ describe("App portfolio shell", () => {
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
     const expectedSummaryParagraphs = [
       "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-      "지금은 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
+      "ChaTm, MexTm, EuTm의 buyer-facing 밀도 정렬을 마쳤고, 다음 active lane은 Report / Gateway trust layer입니다. LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
     ];
 
     expect(gatewayHero).not.toBeNull();
@@ -408,7 +408,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · JapTm 운영 가이드와 바로 이어 읽히도록 배치해/
+        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · EuTm 운영 가이드 · JapTm 운영 가이드와 바로 이어 읽히도록 배치해/
       )
     ).toBeInTheDocument();
     expect(
@@ -418,7 +418,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선순위: ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer"
+        "현재 우선순위: ChaTm -> MexTm -> EuTm 정렬 완료, 다음은 Report / Gateway trust layer"
       )
     ).toBeInTheDocument();
     expect(
@@ -753,7 +753,7 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /지금은 ChaTm·MexTm·EuTm에서 buyer-facing 밀도를 먼저 끌어올리고, report는 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문만 front placement합니다\./
+        /ChaTm·MexTm·EuTm의 buyer-facing 밀도 정렬을 마쳤고, report는 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · EuTm 운영 가이드 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다\./
       )
     ).toBeInTheDocument();
   });

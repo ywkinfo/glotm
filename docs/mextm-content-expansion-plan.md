@@ -2,7 +2,7 @@
 
 ## 목적
 
-이 문서는 `MexTm`을 현재의 강한 baseline에서, buyer entry 가치와 실무 밀도가 더 분명하게 드러나는 growth country guide로 끌어올리기 위한 실행 계획서다. 이미 15개 챕터와 309개 search entry를 갖춘 상태이므로, 이번 스프린트의 목적은 장 수 확대보다 핵심 장의 판단 밀도, 실행 표준형, reader 탐색 품질을 높이는 데 있다.
+이 문서는 `MexTm`을 현재의 강한 baseline에서, buyer entry 가치와 실무 밀도가 더 분명하게 드러나는 growth country guide로 끌어올리기 위한 실행 계획서다. 이미 15개 챕터와 320개 search entry를 갖춘 상태이므로, 이번 스프린트의 목적은 장 수 확대보다 핵심 장의 판단 밀도, 실행 표준형, reader 탐색 품질을 높이는 데 있다.
 
 핵심 목표는 세 가지다.
 
@@ -14,7 +14,7 @@
 
 - `MexTm`은 루트 `GloTm` 셸 `/mexico` 경로에 연결된 live country guide다.
 - 현재 공개본 기준 구조는 서문 포함 15개 챕터다.
-- 현재 루트 registry 기준 검색 엔트리는 309개다.
+- 현재 루트 registry 기준 검색 엔트리는 320개다.
 - `build-master -> qa-content -> build-content` 전체 파이프라인을 루트와 워크스페이스 로컬에서 모두 재현할 수 있다.
 - `content/research/mx_tm_fact_verification_log.md`에는 fee, deadline, terminology, enforcement 관련 핵심 항목이 `Body-ready` 상태로 정리돼 있다.
 
@@ -28,7 +28,7 @@
 ## v1 목표 산출물
 
 - 챕터 수: 15장 구조 유지
-- 검색 엔트리: 309 -> 330~380
+- 검색 엔트리: 320 current baseline, 후속 심화 시 330~380 범위 목표
 - 우선 장의 본문 도입부를 summary/search entry 재료가 되도록 재정렬
 - 우선 장별 실행형 표 또는 체크리스트 1개 이상 추가
 - `npm run content:mexico`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
@@ -52,7 +52,7 @@
 ### Phase 0 — 기준선 고정
 
 - 현재 15장 구조와 Sprint 1 우선 4장을 잠근다.
-- 현재 기준 수치를 `15장 / 검색 엔트리 309`로 잠근다.
+- 현재 기준 수치를 `15장 / 검색 엔트리 320`으로 갱신한다.
 - fact verification log의 `Body-ready` 항목이 어느 장에 승격되는지 표시한다.
 - 우선 장별 완료 기준을 문서화한다.
 - 글로벌 병렬 스프린트에서 `MexTm`은 dedicated single lane으로 운영하고, root gate는 통합 시점에만 실행한다고 명시한다.
@@ -93,3 +93,9 @@
 - `MexTm`은 이미 강한 baseline이 있으므로, 이번 스프린트에서는 장 수 확대보다 buyer entry 가치와 실무 decision density를 우선한다.
 - worker는 `MexTm` 디렉터리와 `mx_tm_fact_verification_log.md`만 수정하고, 루트 메타데이터는 리더가 마지막에 동기화한다.
 - 다음 스프린트 후보는 제5장, 제7장, 제10장처럼 후속 운영과 집행 판단을 이어 주는 장이다.
+
+## 2026-04-03 진행 메모
+
+- Sprint 1 잠금 4장에 IMPI 시스템 handoff board, buyer-entry escalation memo, local-fit vs central-management scoring, owner split memo, asset owner-linkage map, partner exit war-room, case-to-control mapping board를 추가했다.
+- `npm run content:mexico` 기준 생성 산출물은 15개 챕터 / 검색 엔트리 320개다.
+- `/mexico` 스프린트 addendum 수동 smoke를 마감했고, 남은 작업은 shared root gate 입력 정리다.

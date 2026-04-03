@@ -42,6 +42,10 @@ const reportSource: ReportMeta[] = [
         href: getProductPathBySlug("china")
       },
       {
+        label: "EuTm 운영 가이드",
+        href: getProductPathBySlug("europe")
+      },
+      {
         label: "JapTm 운영 가이드",
         href: getProductPathBySlug("japan")
       }
