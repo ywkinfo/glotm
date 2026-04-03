@@ -70,6 +70,19 @@ EUIPO guidance상 등록 만료 전 알림이 제공될 수 있지만, 사무소
 
 이 표를 두면 renewal은 비용 이벤트가 아니라 권리 범위를 다시 설명하는 이벤트가 된다.
 
+### EU / UK 분기 캘린더
+
+UK를 병행하더라도 launch timing이 다르면 갱신과 evidence 수집을 한 장표에만 두는 편이 오히려 위험하다. 같은 mark를 쓰더라도 권리 발생 시점, actual user, 증거 축적 시작점이 다를 수 있기 때문이다.
+
+| 구조 | 따로 적어야 할 것 | 운영 메모 |
+| --- | --- | --- |
+| EU 등록 먼저, UK 후행 | UK first-use 시점, UK evidence owner | EU calendar에 붙이지 말고 별도 row 생성 |
+| EU와 UK 동시 launch | shared mark 메모 + split evidence location | calendar는 병행하되 evidence 폴더는 분리 가능 |
+| EU는 distributor, UK는 direct channel | actual user와 linkage를 권역별로 분리 | 같은 invoice 묶음으로 설명하려 하지 않음 |
+| EU와 UK goods/services 차이 | 유지 우선 범위와 축소 후보를 별도 기록 | renewal review도 분기 |
+
+이 캘린더의 목적은 UK를 더 크게 다루는 데 있지 않다. EU 공통 프레임을 유지하되, launch timing이 어긋날 때 어떤 row에서 분기해야 하는지만 미리 고정해 genuine use와 renewal 설명이 흔들리지 않게 만드는 데 있다.
+
 ## 포트폴리오 정리 원칙
 
 모든 goods/services를 끝까지 유지하는 것이 항상 좋은 전략은 아니다. 실제 사용 중인 범위와 앞으로 유지할 범위를 나눠 보는 것이 중요하다.
@@ -126,6 +139,30 @@ EUIPO guidance상 등록 만료 전 알림이 제공될 수 있지만, 사무소
 | evidence location | 포장, invoice, listing, brochure 저장 위치 | 제출 속도가 크게 느려짐 |
 
 이 표를 운영 시트에 붙여 두면 제10장의 distribution 이슈와도 연결된다. 유럽 등록 이후의 핵심은 자료를 쌓는 일이 아니라, 그 자료가 어느 권리 구조를 설명하는지 즉시 말할 수 있게 만드는 일이다.
+
+## distributor / marketplace seller evidence triage
+
+validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, distributor나 marketplace seller가 만든 증거를 owner 권리와 어떻게 연결해 설명할지 모호한 상태다. 그래서 이 장에서는 “판매 흔적이 있나”보다 “그 판매 흔적이 누구의 genuine use로 읽혀야 하나”를 먼저 구분하는 편이 낫다.
+
+| actual user 유형 | 꼭 같이 남길 linkage | 대표 증거 | 약해지기 쉬운 지점 |
+| --- | --- | --- | --- |
+| 현지 판매법인 | 그룹사 관계, 내부 승인 owner | invoice, local listing, brochure | owner와 local entity 역할 분리가 안 적힘 |
+| distributor | 유통계약, 판매 권한, 채널 범위 | distributor invoice, retail listing, catalogue | distributor 독자 판매처럼 보일 수 있음 |
+| marketplace seller | 계정 owner, 판매 승인, 공급 경로 | seller storefront, product page, order flow | 계정만 보이고 owner와 공급 연결이 약함 |
+| mixed channel | owner map, 채널별 책임 구분 | D2C + distributor + marketplace 묶음 | 같은 표장을 서로 다른 user가 쓰는 구조 설명 누락 |
+
+이 표의 목적은 제3자를 배제하는 데 있지 않다. 제3자가 만든 사용 흔적도 owner 권리와 연결고리를 같이 붙이면 evidence로 설명 가능해지지만, 그 연결고리를 메모하지 않으면 genuine use 설명이 약해진다는 점을 분명히 하는 데 있다.
+
+### linkage memo 최소 기준
+
+| 항목 | 반드시 적을 것 | 빠지면 생기는 문제 |
+| --- | --- | --- |
+| 채널 권한 | 누가 어느 채널에서 판매를 승인받았는지 | seller 사용이 owner 사용으로 안 읽힘 |
+| 공급 경로 | owner, affiliate, distributor 중 누가 공급했는지 | 단순 재판매인지 공식 채널인지 모호해짐 |
+| 표장 버전 | register와 실제 listing/포장 버전의 연결 | 다른 mark 사용처럼 보일 수 있음 |
+| 증거 위치 | invoice, listing, brochure, order flow 저장 위치 | 제출 시점에 묶음 재구성이 느려짐 |
+
+이 메모를 owner-user-evidence 표 바로 옆에 두면, distributor / marketplace seller 자료도 “남의 판매 흔적”이 아니라 owner 권리를 설명하는 evidence pack으로 다시 묶을 수 있다.
 
 ## 이번 스프린트의 남은 controlled gap
 

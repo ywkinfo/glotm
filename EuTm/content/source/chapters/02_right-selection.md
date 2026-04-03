@@ -27,6 +27,23 @@
 
 이 표가 있으면 EUTM vs national filing이 단순 제도 비교가 아니라, 어떤 운영 구조가 validate lane에 더 맞는지로 정리된다.
 
+## 회원국별 clearance 편차 메모
+
+유럽 권리 선택에서 자주 놓치는 지점은 “EU search를 한 번 돌렸으니 clearance도 하나의 결론으로 끝난다”는 가정이다. 하지만 실제 buyer-facing 판단에서는 충돌 가능성이 한두 개 핵심 launch 국가나 특정 언어 시장에 몰려 있을 수 있다. 이 경우에는 EUTM 전체 리스크와 핵심국 리스크를 같은 버킷으로 다루지 않는 편이 낫다.
+
+EUIPO의 availability guidance는 TMview에서 EU national office와 EUIPO 기록을 함께 검색할 수 있다고 설명한다. 이 말은 곧, 검색 단계에서도 EU-wide search와 핵심 launch 국가 메모를 같은 표 안에서 나눠 적을 수 있다는 뜻이다. 여기에 UK는 EUTM 자동 커버 범위 밖이므로, 영국 런칭이 중요하면 처음부터 separate memo로 빼 두는 편이 더 안전하다.
+
+### clearance variance memo 표
+
+| 신호 | 어떤 메모를 따로 남길까 | 권리 선택에 미치는 영향 |
+| --- | --- | --- |
+| 충돌 후보가 한두 개 core launch 국가에 몰림 | EU-wide risk와 core-state risk를 분리 | mixed structure 검토 |
+| 현지 언어 의미나 descriptive risk가 특정 시장에서만 큼 | language-sensitive market 메모 | national filing 또는 filing order 재조정 |
+| distributor / legacy partner 흔적이 특정 국가에만 있음 | local earlier-rights memo | EUTM 단독보다 core-state 선행 정리 우선 |
+| UK launch가 같은 wave로 붙음 | UK separate rights memo | EUTM + UK 병행 구조로 잠금 |
+
+이 표의 목적은 회원국별 차이를 크게 늘어놓는 데 있지 않다. buyer가 실제로 launch 순서와 filing 순서를 바꾸게 만드는 편차만 짧게 남겨, EUTM 단독·national filing·mixed structure 중 무엇이 더 안전한지 빠르게 정하게 만드는 데 있다.
+
 ## EUTM가 유리한 경우
 
 EUTM는 아래 상황에서 우선 검토할 가치가 크다.
@@ -59,6 +76,19 @@ EUTM는 아래 상황에서 우선 검토할 가치가 크다.
 - 향후 분쟁 또는 플랫폼 집행에서 영국 별도 권리가 필요한가
 
 실무적으로는 “EU 먼저, UK 나중”이 가능한 경우도 있지만, 영국이 핵심 판매국이면 처음부터 병행 구조를 잡는 편이 안전하다.
+
+### EU / UK launch split memo
+
+EU와 UK가 같은 wave로 움직이지 않는 경우에는 권리 선택 문서에도 같은 표를 쓰지 않는 편이 낫다. 핵심은 “영국을 포함할지 말지”보다 “어느 시점부터 UK를 별도 calendar와 evidence owner로 분기할지”를 먼저 적는 것이다.
+
+| 상황 | 권장 메모 | 왜 분리하는가 |
+| --- | --- | --- |
+| EU 먼저, UK 후행 | EU filing memo와 UK pending memo 분리 | launch 순서와 renewal/evidence 시작점이 다름 |
+| UK 먼저, EU 후행 | UK rights memo를 core track으로 승격 | EUTM 기준 calendar를 그대로 쓰면 설명이 어긋남 |
+| 같은 분기 launch지만 유통 채널이 다름 | filing은 병행, evidence owner는 분리 | 같은 mark라도 actual user가 다를 수 있음 |
+| 같은 제품군이 아니고 mark만 공유 | goods/services 메모 자체를 분리 | one-size-fits-all 명세가 약해짐 |
+
+이 표가 있으면 UK 병행 여부가 단순 yes/no가 아니라, 언제부터 별도 rights calendar를 열어야 하는지까지 같이 잠긴다.
 
 ## Madrid를 붙일 때의 기준
 

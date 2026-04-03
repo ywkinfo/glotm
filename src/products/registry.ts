@@ -113,7 +113,7 @@ export const products: ProductMeta[] = [
     title: "EuTm 유럽 상표 운영 가이드북",
     summary: "EU 권리 선택과 등록 후 운영 구조를 안정화하는 validate regional guide입니다.",
     chapterCount: 14,
-    searchEntryCount: 200,
+    searchEntryCount: 206,
     portfolioTier: "validate",
     lifecycleStatus: "beta",
     lifecycleTone: "beta",
