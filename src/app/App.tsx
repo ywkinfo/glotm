@@ -616,7 +616,7 @@ function GatewayLandingPage() {
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    "ChaTm, MexTm, EuTm의 buyer-facing 밀도 정렬을 마쳤고, 다음 active lane은 Report / Gateway trust layer입니다. LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
+    "ChaTm은 Sprint 1 reader smoke QA까지 잠갔고, MexTm은 buyer next action이 바로 보이도록 잠금 4장을 마감했습니다. EuTm 안정화 이후 다음 active lane은 Report / Gateway trust layer입니다."
   ];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
@@ -627,18 +627,18 @@ function GatewayLandingPage() {
   const priorityRoadmap = [
     {
       id: "china",
-      title: "ChaTm Sprint 1 심화 완료",
+      title: "ChaTm Sprint 1 + reader smoke QA 완료",
       copy:
         "중국어 표기, 서브클래스, 출원 실무, 심사·집행 경로를 잠금 6장 기준으로 심화해 growth lane의 reader 밀도를 먼저 끌어올렸습니다.",
-      note: "제2장, 제3장, 제5장, 제6장, 제7장, 제10장 정렬 완료",
+      note: "제2장, 제3장, 제5장, 제6장, 제7장, 제10장 정렬 + smoke QA 완료",
       href: buildProductPath("/china")
     },
     {
       id: "mexico",
-      title: "MexTm 핵심 장 심화 완료",
+      title: "MexTm Sprint 1 buyer-entry 심화 마감",
       copy:
         "이미 강한 baseline 위에서 buyer entry 가치가 큰 잠금 4장을 더 두껍게 만들어, 단일국가 실행 질문이 바로 보이게 정리했습니다.",
-      note: "제1장, 제4장, 제11장, 제13장 정렬 완료",
+      note: "제1장, 제4장, 제11장, 제13장 정렬 + next action 메모 강화",
       href: buildProductPath("/mexico")
     },
     {

@@ -1,5 +1,9 @@
 # 제1장 멕시코 상표 제도 개요와 IMPI 운영 구조
 
+멕시코 상표 실무를 처음 읽는 buyer가 제1장에서 바로 가져가야 할 결론은 세 가지다. 첫째, IMPI는 출원 접수 창구만이 아니라 공고, 등록 후 관리, 행정 집행의 중심축이다. 둘째, `Tu cuenta PASE`, `Marca en Línea`, `MARCia`, `ClasNiza`, `MARCANET`, `SIGA/Gaceta`처럼 시스템명을 초반에 통일하지 않으면 뒤 장의 판단표가 계속 다시 열린다. 셋째, 국경 단계 자료는 ANAM pedimento/annex 흐름까지 염두에 두어야 buyer-entry가 search, filing, enforcement로 끊기지 않는다.
+
+즉, 이 장은 기관 소개가 아니라 "멕시코에서 상표를 어떻게 운영 체계로 잠글 것인가"를 정하는 입구다. 아래 표와 메모는 제3장 search brief, 제4장 경로 선택, 제9장·제10장 집행 보드로 바로 넘길 수 있는 최소 문장만 남기도록 설계했다.
+
 ### 왜 멕시코 상표는 따로 이해해야 할까
 
 많은 사람은 상표를 “이름을 등록해 두는 일” 정도로 생각한다.
@@ -87,6 +91,24 @@ IMPI라는 행정기관을 중심으로 상당 부분이 움직인다는 점이 
 
 이 decision map을 먼저 잠그면 멕시코 제도 개요가 추상적인 기관 설명이 아니라, buyer가 실제로 다음 액션을 정하는 운영 지도처럼 읽힌다.
 
+#### 첫 회의에서 바로 잠글 세 줄 메모
+
+제1장을 읽고도 회의가 길어지는 팀은 대개 시스템명은 이해했지만 "그래서 누구에게 무엇을 넘길 것인가"를 한 문장으로 못 적는다. 그래서 아래 세 줄만 먼저 고정해 두면 buyer-entry 속도가 훨씬 빨라진다.
+
+- search owner는 `MARCia` / `MARCANET` / `ClasNiza` 결과를 한 보드에 묶는다.
+- filing owner는 `Tu cuenta PASE` / `Marca en Línea` 제출과 비용 승인을 같은 라인에서 본다.
+- notice/enforcement owner는 `SIGA/Gaceta`, IMPI 절차, ANAM 문서 흐름을 따로 놓치지 않게 달력과 증거 보드를 분리한다.
+
+#### 시스템명 혼용 red flag
+
+멕시코 실무에서 자주 생기는 병목은 제도 자체가 어렵다기보다, 같은 시스템을 회의마다 다른 이름으로 불러서 owner가 바뀌는 문제다. 이 red flag를 초반에 적어 두면 제4장 경로 선택과 제6장 기한 관리가 훨씬 덜 흔들린다.
+
+| 혼용 신호 | 왜 위험한가 | 바로 할 일 |
+| --- | --- | --- |
+| PASE와 온라인 출원을 같은 말로 씀 | 계정 owner와 제출 owner가 분리되지 않음 | `Tu cuenta PASE` / `Marca en Línea` 역할 분리 메모 |
+| search와 공고 모니터링을 같은 조회 업무로 봄 | `MARCia` / `MARCANET`과 `SIGA/Gaceta`의 owner가 섞임 | search owner와 notice owner 분리 |
+| 국경 자료를 집행 이후 문제로만 봄 | ANAM pedimento/annex 확보 시점이 늦어짐 | 물류 owner와 IP owner를 같이 표기 |
+
 ### 공식 시스템명 표준안
 
 `MX-NORM-001`에서 잠근 핵심은 각 시스템을 한국어 번역어로만 뭉개지 말고, 공식 스페인어 명칭을 같이 써서 혼선을 줄이는 것이다.
@@ -142,6 +164,27 @@ IMPI라는 행정기관을 중심으로 상당 부분이 움직인다는 점이 
 | 분쟁·행정 대응 | IMPI 행정절차, ANAM 문서 흐름 | 사건번호, pedimento, evidence line | 제9장, 제10장 집행 보드 |
 
 이 handoff board를 두면 제1장이 제도 개요를 넘어서 "어떤 시스템을 보면 어떤 다음 행동이 나오는가"를 보여 주는 입구 장이 된다.
+
+### buyer-entry 첫 30일 owner lock 표
+
+제1장을 읽고도 다음 액션이 흐려지는 이유는, 시스템명은 알겠는데 누가 언제 무엇을 잠가야 하는지 일정으로 안 바뀌기 때문이다. 그래서 buyer-entry 단계에서는 아래처럼 첫 30일 owner lock 표를 붙여 두는 편이 좋다.
+
+| 시점 | 먼저 잠글 것 | owner |
+| --- | --- | --- |
+| 1주차 | `MARCia`/`MARCANET` search scope와 `ClasNiza` goods/services 초안 | IP + 브랜드팀 |
+| 2주차 | `Tu cuenta PASE`/`Marca en Línea` 제출 owner와 결제 라인 | IP + 재무 |
+| 3주차 | `SIGA/Gaceta` 모니터링 owner와 기준일 기록 방식 | IP |
+| 4주차 | IMPI 행정 대응·ANAM 문서 확보 owner split | IP + 법무 + 물류 |
+
+이 표를 두면 제1장이 단순 제도 설명이 아니라, 멕시코 진입 첫 달에 무엇을 누구 손에 얹어야 하는지 바로 보여 주는 control 장이 된다.
+
+#### owner lock red flag
+
+아래 신호가 보이면 시스템 이해보다 owner 재정리가 먼저다.
+
+- `Tu cuenta PASE` 로그인 주체와 비용 승인 주체가 다르다.
+- `SIGA/Gaceta`를 누가 본다고는 적었지만 대체 담당자가 없다.
+- ANAM 자료는 필요하다고 말하지만 물류 owner가 없다.
 
 
 ### 상표는 등록, 유지, 집행이 따로 놀지 않는다

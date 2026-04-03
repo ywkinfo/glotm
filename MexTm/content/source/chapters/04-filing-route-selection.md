@@ -1,5 +1,9 @@
 # 제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원) 비교
 
+이 장에서 buyer가 바로 내려야 할 판단은 "어느 경로가 더 싸 보이는가"가 아니다. 멕시코가 핵심 launch market인지, goods/services를 현지 유통 구조에 맞게 조정해야 하는지, 그리고 등록 후 `opposition`, `declaration of use`, `renewal` 캘린더를 누가 들고 갈 것인지를 같은 보드에 잠글 수 있는지가 더 중요하다.
+
+`MX-DL-001`, `MX-FEE-001`, `MX-NORM-001`이 같이 말하는 것은 단순하다. direct, Madrid, mixed route 중 무엇을 택하든 결국 멕시코 로컬 운영 문법은 따로 남는다. 그래서 이 장의 표들은 경로 선택 직후 제5장 filing packet과 제7장 등록 후 캘린더에 넘길 문장을 미리 적는 데 초점을 둔다.
+
 ### 도입
 
 멕시코에서 상표를 보호하려는 한국 기업이 가장 먼저 결정해야 할 사항 중 하나는 출원 경로다. 선택지는 크게 두 가지다. 하나는 멕시코 특허상표청(IMPI)에 개별 국가출원으로 진행하는 직접출원이고, 다른 하나는 마드리드 제도를 통해 국제출원을 하면서 멕시코를 지정하는 방식이다. 두 경로는 결국 멕시코에서 권리를 취득한다는 점에서는 같지만, 절차 구조와 관리 방식, 비용 배분, 리스크의 위치가 다르다. 따라서 어느 방식이 더 좋다고 단정하기보다, 멕시코의 사업 중요도와 전체 해외출원 포트폴리오 구조에 따라 적합성이 달라진다.
@@ -89,6 +93,49 @@
 
 이 handoff 표를 남기면 제7장과 부록의 캘린더/체크리스트가 경로 선택 직후부터 바로 채워진다.
 
+#### 경로 선택 직후 7일 캘린더
+
+경로 선택 회의가 끝난 뒤 1주 안에 무엇을 적느냐가 이후 병목을 크게 줄인다. 특히 멕시코에서는 경로를 정한 뒤에도 opposition 1개월, grant 후 3년+3개월 declaration, 10년 renewal 구조를 누가 볼 것인지 빨리 나누는 편이 낫다.
+
+| 시점 | 바로 잠글 것 | 이유 |
+| --- | --- | --- |
+| D+1 | direct / Madrid / mixed 결론 한 줄 | 제5장 packet 재오픈 방지 |
+| D+3 | `IMPI88`, `IMPI3170`, `IMPI-00-002` owner 메모 | filing / renewal / declaration 절차 분리 |
+| D+5 | `SIGA/Gaceta`와 등록 후 캘린더 owner 지정 | opposition, declaration, renewal 누락 방지 |
+| D+7 | 외부대리인 handoff 문장 확정 | local-fit과 central-management 충돌 정리 |
+
+### declaration / renewal owner quick-check
+
+경로 선택 뒤 buyer가 바로 놓치기 쉬운 것은 등록 후 owner다. `MX-DL-001`, `MX-FEE-001`이 보여 주듯 filing, declaration, renewal은 같은 절차가 아니므로, 경로를 고른 직후 아래 quick-check를 같이 남기는 편이 좋다.
+
+| 운영 항목 | 지금 바로 적을 질문 | 빠지면 생기는 문제 |
+| --- | --- | --- |
+| filing | 누가 IMPI 제출과 비용 승인을 묶어 책임지는가 | 출원 직전 승인 병목 |
+| declaration of use | grant 후 3년+3개월 캘린더를 누가 본다 | 등록 후 관리 누락 |
+| renewal | 10년 구조를 어느 포트폴리오 달력에 넣는가 | 갱신과 사용관리 분리 |
+| route switch | direct / Madrid / mixed 중 후속 owner가 달라지는가 | 제5장·제7장 입력값 재오픈 |
+
+이 quick-check가 있으면 제4장은 경로를 고르는 장에서 끝나지 않고, buyer가 "그다음 누구에게 무엇을 넘길지"까지 정리하는 장이 된다.
+
+#### mixed route owner split
+
+mixed route를 택한 팀이 자주 흔들리는 이유는 경로를 둘로 나눴는데 owner 메모는 하나로 남기기 때문이다. direct와 Madrid를 섞는 경우일수록 제출 owner, 등록 후 캘린더 owner, 외부대리인 owner를 따로 적는 편이 안전하다.
+
+| 운영 축 | mixed route에서 먼저 적을 것 |
+| --- | --- |
+| 핵심 표장 direct lane | local-fit goods/services와 현지 대리인 owner |
+| support 표장 Madrid lane | 기초권리 상태와 중앙관리 owner |
+| 등록 후 달력 | opposition / declaration / renewal 공통 owner |
+| 경영 판단 | 어느 시점에 route switch를 다시 열 수 있는지 |
+
+#### route memo minimum fields
+
+경로 선택 메모에는 최소한 `IMPI88`/`IMPI3170`/`IMPI-00-002` 중 어떤 절차가 당장 열리는지, 그리고 누가 그 owner인지 한 줄씩 남기는 편이 좋다. 그래야 경로 선택이 끝난 뒤 제5장과 제7장에서 같은 질문을 다시 하지 않는다.
+
+#### next-action 한 줄 요약
+
+회의를 마칠 때는 "direct", "Madrid", "mixed" 중 결론만 남기지 말고, 바로 다음 액션 한 줄도 붙여 두는 편이 좋다. 예를 들면 "멕시코 direct filing owner 잠금", "Madrid 지정과 declaration owner 분리"처럼 적으면 handoff가 훨씬 덜 흔들린다.
+
 ### 직접출원 vs 마드리드 readiness 보드
 
 경로 선택은 회의에서 끝나는 것이 아니라, 선택 직후 무엇을 잠그는가로 품질이 갈린다. 특히 멕시코는 국제출원이든 직접출원이든 결국 로컬 운영 캘린더를 따로 관리해야 하므로, 아래 readiness 보드를 바로 채우는 편이 안전하다.
@@ -124,6 +171,17 @@
 | 한국 기초권리가 아직 흔들리는데 멕시코를 핵심국으로 둠 | 초기 5년 리스크가 buyer-entry 핵심국에 직접 연결됨 | 직접출원 재검토 |
 | 멕시코 goods/services를 글로벌 문구에 그대로 맞춤 | 현지 유통 구조와 어긋나 보정·후속 대응 증가 | local-fit 표 별도 작성 |
 | 경로만 정하고 declaration/renewal owner를 안 정함 | 등록 후 운영에서 바로 병목 발생 | 제7장 캘린더 owner map 선행 |
+
+#### 경영진 escalation 질문
+
+경로 선택이 실무 회의에서 끝나지 않고 경영 판단까지 올라가야 하는 경우는 패턴이 비슷하다. 아래 질문을 따로 적어 두면 buyer가 어떤 사안을 바로 올리고, 어떤 사안은 실무자 선에서 잠글지 구분하기 쉬워진다.
+
+| 질문 | escalation이 필요한 이유 |
+| --- | --- |
+| 멕시코가 이번 분기 핵심 매출국인가 | 경로 선택이 launch 일정과 직접 연결되기 때문 |
+| goods/services local-fit이 글로벌 문구와 크게 다른가 | direct vs Madrid의 비용 구조가 달라지기 때문 |
+| 기초권리 흔들림을 핵심국이 감당할 수 있는가 | central attack 리스크가 사업 의사결정이 되기 때문 |
+| filing / declaration / renewal owner를 누가 맡는가 | 절차 분리가 예산 승인과 연결되기 때문 |
 
 | 상황 | 권장 경로 | 이유 |
 |---|---|---|
