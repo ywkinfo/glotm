@@ -287,7 +287,7 @@ describe("App portfolio shell", () => {
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
     const expectedSummaryParagraphs = [
       "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-      "지금은 ChaTm -> MexTm -> EuTm -> Brief/Gateway 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
+      "지금은 ChaTm -> MexTm -> EuTm -> Gateway sync 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
     ];
 
     expect(gatewayHero).not.toBeNull();
@@ -454,7 +454,7 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByText("지속 업데이트 중")).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByText("Sprint 1 잠금 6장 보강 완료")).toBeInTheDocument();
   });
 
   it("renders the operator intro section after the pilot scope with an external profile link", () => {

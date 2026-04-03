@@ -22,7 +22,7 @@
 - `content/source/manifest.json`, `content/source/chapters/`, `scripts/build-master.ts`, `scripts/qa-content.ts`가 모두 존재한다.
 - 현재 생성 산출물:
   - 14 chapters
-  - 192 search entries
+  - 206 search entries
 - 현재 `master.md`는 장별 원고를 조립한 공개본 기준이며, reader에서 읽을 수 있는 실사용 분량을 확보한 상태다.
 
 ### LatTm 대비 차이
@@ -34,7 +34,7 @@
 | 조립 스크립트 | `build-master.ts` 있음 | `build-master.ts` 있음 |
 | QA 스크립트 | `qa-content.ts` 있음 | `qa-content.ts` 있음 |
 | 챕터 수 | 20 | 14 |
-| 검색 엔트리 | 780 | 192 |
+| 검색 엔트리 | 780 | 206 |
 | 문서 깊이 | publish-grade | live regional guide baseline, 추가 심화 필요 |
 
 ### 현재 리스크
