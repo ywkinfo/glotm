@@ -70,7 +70,7 @@ export const products: ProductMeta[] = [
     title: "일본 상표 실무 운영 가이드북",
     summary: "JPO 중심 운영 흐름을 lighter depth로 유지하는 incubate country guide입니다.",
     chapterCount: 15,
-    searchEntryCount: 100,
+    searchEntryCount: 138,
     portfolioTier: "incubate",
     lifecycleStatus: "pilot",
     lifecycleTone: "pilot",
@@ -79,7 +79,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "일본 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "JapTm 보기",
-    maturityNote: "verification refresh 완료 · search density 보강 우선",
+    maturityNote: "search density 기준 충족 · QA 승격 대기",
     coverageType: "country",
     availability: "live_shell"
   },
