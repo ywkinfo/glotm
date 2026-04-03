@@ -18,3 +18,11 @@
 
 - 회원국별 세부 절차 차이와 개별국 집행 디테일은 이번 스프린트에서 전면 확장하지 않는다.
 - 본문은 EU 공통 프레임과 UK 병행 판단까지를 기준선으로 유지하고, 개별국 차이는 메모 수준으로 통제한다.
+
+## Next-round shortlist
+
+- `EU-SEL-001`: EUTM와 핵심국 national filing을 혼합할 때, buyer-facing 판단에 직접 영향을 주는 회원국별 clearance 편차만 별도 메모로 승격할지 검토
+- `EU-EVD-001`: distributor / marketplace seller 사용을 owner-user-evidence 표에서 어떻게 설명할지, genuine use 서술을 더 선명하게 좁히기
+- `EU-UK-001`: EU launch와 UK launch 시점이 어긋날 때 renewal/evidence calendar를 어디서 분기할지 Ch2/Ch8 기준으로 추가 명시
+
+이번 라운드에서는 위 세 항목 외의 회원국별 차이는 새 `Pending`으로 넓히지 않는다.

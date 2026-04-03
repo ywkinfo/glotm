@@ -121,7 +121,7 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
     id: "eu-priority",
     label: "Priority 3 · EuTm",
     order: 3,
-    notes: "Validate lane. Stabilize fact verification, document consistency, and density."
+    notes: "Validate lane. Stabilize docs sync, Ch2/Ch8, and the remaining controlled gap."
   },
   usa: {
     id: "incubate-pack",
@@ -146,9 +146,9 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
 export const nonProductHealthLanes = [
   {
     id: "brief-gateway",
-    label: "Priority 4 · Brief / Gateway",
+    label: "Priority 4 · Gateway sync",
     order: 4,
-    notes: "Align buyer-facing Gateway priority/copy with actual scorecard and verification state."
+    notes: "Align buyer-facing Gateway priority/copy with actual scorecard and verification state without adding new surface area."
   }
 ] as const;
 
