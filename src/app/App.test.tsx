@@ -287,7 +287,7 @@ describe("App portfolio shell", () => {
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
     const expectedSummaryParagraphs = [
       "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-      "지금은 ChaTm -> MexTm -> EuTm -> Gateway sync 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
+      "지금은 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
     ];
 
     expect(gatewayHero).not.toBeNull();
@@ -533,6 +533,36 @@ describe("App portfolio shell", () => {
       "operator_link_click",
       expect.objectContaining({
         surface: "gateway_operator_section"
+      })
+    );
+
+    measurementSpy.mockRestore();
+    trackEventSpy.mockRestore();
+  });
+
+  it("tracks report archive and latest report opens from the gateway", () => {
+    installFetchMock();
+    const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
+    const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+
+    renderAppRouteTree("/");
+
+    fireEvent.click(screen.getByRole("link", { name: "리포트 전체 보기" }));
+    fireEvent.click(screen.getByRole("link", { name: "최신 리포트 보기" }));
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_archive_open",
+      expect.objectContaining({
+        surface: "gateway_section"
+      })
+    );
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_open",
+      expect.objectContaining({
+        report_slug: reports[0]?.slug,
+        surface: "gateway_section"
       })
     );
 

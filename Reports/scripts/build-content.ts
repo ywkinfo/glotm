@@ -99,6 +99,7 @@ const markdownProcessor = unified()
   .use(rehypeStringify);
 
 async function main() {
+  const existingDocumentDataBySlug = await loadExistingDocumentDataBySlug();
   await fs.rm(generatedRootDir, { force: true, recursive: true });
   await fs.mkdir(generatedRootDir, { recursive: true });
 
@@ -128,14 +129,11 @@ async function main() {
     const documentDataPath = path.join(targetDir, "document-data.json");
     const searchIndexPath = path.join(targetDir, "search-index.json");
 
-    const documentData: DocumentData = {
-      meta: {
-        title: reportSource.title,
-        builtAt: new Date().toISOString(),
-        chapterCount: 1
-      },
-      chapters: [chapter]
-    };
+    const documentData = buildStableDocumentData(
+      reportSource.title,
+      chapter,
+      existingDocumentDataBySlug.get(slug)
+    );
 
     await fs.mkdir(targetDir, { recursive: true });
     await fs.writeFile(documentDataPath, JSON.stringify(documentData, null, 2) + "\n", "utf-8");
@@ -146,6 +144,83 @@ async function main() {
   }
 
   console.log(`Generated ${reportCount} reports and ${searchEntryCount} search entries.`);
+}
+
+async function loadExistingDocumentDataBySlug() {
+  const existingBySlug = new Map<string, DocumentData>();
+
+  const directoryEntries = await fs.readdir(generatedRootDir, { withFileTypes: true }).catch(
+    (error: NodeJS.ErrnoException) => {
+      if (error.code === "ENOENT") {
+        return [];
+      }
+
+      throw error;
+    }
+  );
+
+  for (const entry of directoryEntries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+
+    const documentDataPath = path.join(generatedRootDir, entry.name, "document-data.json");
+
+    try {
+      const existingSource = await fs.readFile(documentDataPath, "utf-8");
+      existingBySlug.set(entry.name, JSON.parse(existingSource) as DocumentData);
+    } catch {
+      continue;
+    }
+  }
+
+  return existingBySlug;
+}
+
+function buildStableDocumentData(
+  title: string,
+  chapter: Chapter,
+  existingDocumentData?: DocumentData
+): DocumentData {
+  const nextDocumentData: DocumentData = {
+    meta: {
+      title,
+      builtAt: new Date().toISOString(),
+      chapterCount: 1
+    },
+    chapters: [chapter]
+  };
+
+  if (!existingDocumentData) {
+    return nextDocumentData;
+  }
+
+  const existingComparable = {
+    ...existingDocumentData,
+    meta: {
+      ...existingDocumentData.meta,
+      builtAt: ""
+    }
+  };
+  const nextComparable = {
+    ...nextDocumentData,
+    meta: {
+      ...nextDocumentData.meta,
+      builtAt: ""
+    }
+  };
+
+  if (JSON.stringify(existingComparable) === JSON.stringify(nextComparable)) {
+    return {
+      ...nextDocumentData,
+      meta: {
+        ...nextDocumentData.meta,
+        builtAt: existingDocumentData.meta.builtAt
+      }
+    };
+  }
+
+  return nextDocumentData;
 }
 
 function parseDocument(source: string, fallbackSlug: string): ReportSource {

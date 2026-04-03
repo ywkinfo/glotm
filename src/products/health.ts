@@ -146,9 +146,9 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
 export const nonProductHealthLanes = [
   {
     id: "brief-gateway",
-    label: "Priority 4 · Gateway sync",
+    label: "Priority 4 · Report / Gateway trust layer",
     order: 4,
-    notes: "Align buyer-facing Gateway priority/copy with actual scorecard and verification state without adding new surface area."
+    notes: "Align buyer-facing Report and Gateway messaging with actual scorecard, verification state, and current landing order."
   }
 ] as const;
 

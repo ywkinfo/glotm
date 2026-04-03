@@ -591,7 +591,7 @@ function GatewayLandingPage() {
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    "지금은 ChaTm -> MexTm -> EuTm -> Gateway sync 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
+    "지금은 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer 순서로 buyer-facing 밀도를 먼저 끌어올리고, LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
   ];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
@@ -623,12 +623,12 @@ function GatewayLandingPage() {
       href: buildProductPath("/europe")
     },
     {
-      id: "gateway",
-      title: "Gateway 상태 동기화",
+      id: "report-gateway",
+      title: "Report / Gateway trust layer",
       copy:
-        "새 기능을 추가하기보다, registry와 gateway 카드가 실제 guide 상태를 그대로 말하게 맞춥니다.",
-      note: "status/copy sync only, no new feature",
-      href: buildProductPath("/")
+        "교차 관할권 운영 판단을 Report 레인에서 설명하고, Gateway에서는 현재 우선순위와 상태를 실제 메타데이터 기준으로 잠급니다.",
+      note: "report front placement + gateway state sync",
+      href: buildReportArchivePath()
     },
     {
       id: "incubate",

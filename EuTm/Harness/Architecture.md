@@ -30,7 +30,7 @@
 ## Current Verified Shape
 
 - 현재 기준 챕터 수: 14
-- 현재 기준 검색 엔트리 수: 196
+- 현재 기준 검색 엔트리 수: 206
 - 파이프라인 명령: 루트에서 `npm run content:europe`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 - 현재 상태: 권역형 구조를 유지한 채 문서 정합성 고정과 validate lane 안정화를 진행하는 live guide 기반
