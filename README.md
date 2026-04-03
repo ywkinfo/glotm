@@ -24,7 +24,7 @@ npm run health:report
 
 설명:
 
-- `npm run health:runtime`: `typecheck + test:runtime + npm run e2e:smoke`를 묶어 루트 셸 라우팅, 링크 계약, 공통 리더 동작, 실제 브라우저 스모크를 함께 검증한다. generated-content 의존 회귀 테스트는 여기서 제외해 pure runtime lane으로 유지한다.
+- `npm run health:runtime`: `typecheck:runtime + test:runtime + npm run e2e:smoke`를 묶어 루트 셸 라우팅, 링크 계약, 공통 리더 동작, 실제 브라우저 스모크를 함께 검증한다. generated-content 의존 회귀 테스트와 generated artifact가 필요한 node-side 검사는 여기서 제외해 pure runtime lane으로 유지한다.
 - `npm run health:content`: 루트 `content:prepare` 뒤에 `test:content`와 `ChaTm`·`MexTm`·`EuTm`의 workspace local full pipeline을 다시 재현한다. `UsaTm`·`JapTm`·`UKTm`은 lighter-track 기준으로 루트 `content:prepare`의 refresh 계약을 따른다.
 - `npm run health:release`: `build + build:pages:glotm`를 묶어 GitHub Pages subpath 출하 전 상태를 검증한다.
 - `npm run health:report`: 루트 lane 상태와 product scorecard 메타데이터를 같은 리포트 포맷으로 출력한다. `--format json`, `--runtime=pass` 같은 플래그를 받을 수 있다.
