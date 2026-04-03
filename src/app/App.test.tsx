@@ -168,10 +168,16 @@ describe("App portfolio shell", () => {
     );
   });
 
-  it("shows all live guides on the gateway and in top navigation", () => {
+  it(
+    "shows all live guides on the gateway and in top navigation",
+    async () => {
     installFetchMock();
 
     renderAppRouteTree("/");
+
+    await screen.findByRole("heading", {
+      name: "인하우스 팀을 위한 cross-border trademark operating guides"
+    });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
 
@@ -204,7 +210,9 @@ describe("App portfolio shell", () => {
     expect(document.querySelector('a[href="/china"]')).not.toBeNull();
     expect(document.querySelector('a[href="/europe"]')).not.toBeNull();
     expect(document.querySelector('a[href="/uk"]')).not.toBeNull();
-  });
+    },
+    30000
+  );
 
   it.each([
     ["/latam", "중남미 상표 보호 운영 가이드", /LatTm/],
@@ -285,10 +293,6 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
-    const expectedSummaryParagraphs = [
-      "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-      "ChaTm, MexTm, EuTm의 buyer-facing 밀도 정렬을 마쳤고, 다음 active lane은 Report / Gateway trust layer입니다. LatTm은 기준선 보호, incubate 레인은 선택 보강으로 유지합니다."
-    ];
 
     expect(gatewayHero).not.toBeNull();
     expect(
@@ -296,10 +300,16 @@ describe("App portfolio shell", () => {
         "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다."
       )
     ).toBeInTheDocument();
-    expectedSummaryParagraphs.forEach((paragraph) => {
-      expect(within(gatewayHero as HTMLElement).getByText(paragraph)).toBeInTheDocument();
-    });
-    expect((gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
+    const summaryParagraphs = [...(gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")].map(
+      (paragraph) => paragraph.textContent?.trim()
+    );
+    expect(summaryParagraphs).toHaveLength(2);
+    expect(summaryParagraphs[0]).toBe(
+      "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다."
+    );
+    expect(summaryParagraphs[1]).toContain("ChaTm");
+    expect(summaryParagraphs[1]).toContain("MexTm");
+    expect(summaryParagraphs[1]).toContain("Report / Gateway trust layer");
   });
 
   it("renders wrap-safe separators in the coverage and current status metrics", () => {

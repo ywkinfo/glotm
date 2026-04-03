@@ -740,10 +740,12 @@ describe("Shared reader runtime contract", () => {
 
       renderReaderCase(readerCase, `${readerCase.basePath}/chapter/missing-chapter`);
 
-      await screen.findByRole("heading", { name: readerCase.homeHeading });
       await waitFor(() => {
         expect(screen.getByTestId("reader-location")).toHaveTextContent(readerCase.basePath);
       });
+      expect(
+        screen.getByRole("link", { name: readerCase.homeHeading })
+      ).toHaveAttribute("href", readerCase.basePath);
     }
   );
 
