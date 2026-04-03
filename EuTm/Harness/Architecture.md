@@ -30,7 +30,7 @@
 ## Current Verified Shape
 
 - 현재 기준 챕터 수: 14
-- 현재 기준 검색 엔트리 수: 206
+- 현재 기준 검색 엔트리 수: 236
 - 파이프라인 명령: 루트에서 `npm run content:europe`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 - 현재 상태: `validate tier · beta lifecycle` 기준의 live regional guide
