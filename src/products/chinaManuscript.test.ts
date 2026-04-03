@@ -41,8 +41,11 @@ describe("ChaTm final manuscript", () => {
     );
 
     expect(routeChapter?.headings.map((heading) => heading.title)).toEqual([
+      "직접출원 vs 마드리드 readiness 보드",
+      "출원 경로 시나리오별 판단표",
       "직접출원이 유리한 경우",
       "마드리드가 유리한 경우",
+      "중국어 표기 전략과 경로 선택의 연결 고리",
       "경로를 고르기 전에 확인할 것",
       "경로 선택 메모를 남기는 방식"
     ]);

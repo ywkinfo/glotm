@@ -92,7 +92,7 @@ export const products: ProductMeta[] = [
     title: "중국 상표 실무 운영 가이드",
     summary: "중국어 표기, 서브클래스, 심사·집행 판단을 먼저 두껍게 만드는 growth country guide입니다.",
     chapterCount: 15,
-    searchEntryCount: 239,
+    searchEntryCount: 258,
     portfolioTier: "growth",
     lifecycleStatus: "beta",
     lifecycleTone: "beta",
