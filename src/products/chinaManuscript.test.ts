@@ -1,12 +1,36 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-
-import documentData from "../../ChaTm/content/generated/document-data.json";
-import searchEntries from "../../ChaTm/content/generated/search-index.json";
 
 type HeadingNode = {
   title: string;
   children?: HeadingNode[];
 };
+
+type GeneratedChapter = {
+  title: string;
+  headings: HeadingNode[];
+};
+
+type GeneratedDocumentData = {
+  meta: {
+    chapterCount: number;
+  };
+  chapters: GeneratedChapter[];
+};
+
+type GeneratedSearchEntry = {
+  sectionTitle: string;
+};
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const documentData = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../ChaTm/content/generated/document-data.json"), "utf-8")
+) as GeneratedDocumentData;
+const searchEntries = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../ChaTm/content/generated/search-index.json"), "utf-8")
+) as GeneratedSearchEntry[];
 
 function flattenHeadingTitles(
   headings: HeadingNode[] = []
@@ -41,13 +65,13 @@ describe("ChaTm final manuscript", () => {
 
   it("preserves the key final-manuscript sections that drive China reader navigation", () => {
     const routeChapter = documentData.chapters.find(
-      (chapter) => chapter.title === "제4장. 출원 경로 선택: 직접출원 vs 마드리드"
+      (chapter: GeneratedChapter) => chapter.title === "제4장. 출원 경로 선택: 직접출원 vs 마드리드"
     );
     const examinationChapter = documentData.chapters.find(
-      (chapter) => chapter.title === "제6장. 심사, 공고, 이의와 거절 대응"
+      (chapter: GeneratedChapter) => chapter.title === "제6장. 심사, 공고, 이의와 거절 대응"
     );
     const appendixChapter = documentData.chapters.find(
-      (chapter: { title: string }) => chapter.title === "제14장. 사례, 실패 패턴, 부록"
+      (chapter: GeneratedChapter) => chapter.title === "제14장. 사례, 실패 패턴, 부록"
     );
 
     expect(routeChapter?.headings.map((heading: { title: string }) => heading.title)).toEqual([

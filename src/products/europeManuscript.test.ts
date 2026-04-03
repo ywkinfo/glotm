@@ -1,12 +1,36 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-
-import documentData from "../../EuTm/content/generated/document-data.json";
-import searchEntries from "../../EuTm/content/generated/search-index.json";
 
 type HeadingNode = {
   title: string;
   children?: HeadingNode[];
 };
+
+type GeneratedChapter = {
+  title: string;
+  headings: HeadingNode[];
+};
+
+type GeneratedDocumentData = {
+  meta: {
+    chapterCount: number;
+  };
+  chapters: GeneratedChapter[];
+};
+
+type GeneratedSearchEntry = {
+  sectionTitle: string;
+};
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const documentData = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../EuTm/content/generated/document-data.json"), "utf-8")
+) as GeneratedDocumentData;
+const searchEntries = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../EuTm/content/generated/search-index.json"), "utf-8")
+) as GeneratedSearchEntry[];
 
 function flattenHeadingTitles(headings: HeadingNode[] = []): string[] {
   return headings.flatMap((heading) => [
@@ -28,10 +52,10 @@ describe("EuTm manuscript", () => {
 
   it("preserves the validate stabilization sections in Europe priority chapters", () => {
     const rightSelectionChapter = documentData.chapters.find(
-      (chapter) => chapter.title === "제2장. 권리 선택: EUTM, 개별국, 영국 병행"
+      (chapter: GeneratedChapter) => chapter.title === "제2장. 권리 선택: EUTM, 개별국, 영국 병행"
     );
     const evidenceChapter = documentData.chapters.find(
-      (chapter) => chapter.title === "제8장. 등록 후 사용, 갱신, 증거 관리"
+      (chapter: GeneratedChapter) => chapter.title === "제8장. 등록 후 사용, 갱신, 증거 관리"
     );
 
     expect(flattenHeadingTitles(rightSelectionChapter?.headings)).toContain("회원국별 clearance 편차 메모");
