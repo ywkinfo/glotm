@@ -4,6 +4,7 @@ import type {
 } from "./shared";
 import {
   assessProductLifecycle,
+  doesQaLevelMeetMinimum,
   getLifecycleCriteria,
   getSearchDensity
 } from "./scorecard";
@@ -68,11 +69,6 @@ const lifecycleRank: Record<LifecycleStatus, number> = {
   mature: 2
 };
 
-const qaLevelRank: Record<ProductMeta["qaLevel"], number> = {
-  smoke: 0,
-  standard: 1,
-  full: 2
-};
 
 export const rootHealthLanes: RootHealthLaneRecord[] = [
   {
@@ -174,7 +170,7 @@ export function getLifecycleCriteriaGaps(product: Pick<
     );
   }
 
-  if (criteria.minimumQaLevel !== product.qaLevel && qaLevelRank[criteria.minimumQaLevel] > qaLevelRank[product.qaLevel]) {
+  if (!doesQaLevelMeetMinimum(product.qaLevel, criteria.minimumQaLevel)) {
     gaps.push(`qa level ${product.qaLevel} < ${criteria.minimumQaLevel}`);
   }
 
@@ -190,9 +186,10 @@ export function getLifecycleCriteriaGaps(product: Pick<
   return gaps;
 }
 
-export function getProductHealthVerdict(product: ProductMeta): ProductHealthVerdict {
-  const assessment = assessProductLifecycle(product);
-
+export function getProductHealthVerdict(
+  product: ProductMeta,
+  assessment = assessProductLifecycle(product)
+): ProductHealthVerdict {
   if (!assessment.meetsCurrentLifecycleStatus) {
     return "verification-refresh-needed";
   }
@@ -213,7 +210,7 @@ export function buildProductHealthRecord(product: ProductMeta): ProductHealthRec
     portfolioTier: product.portfolioTier,
     currentLifecycleStatus: product.lifecycleStatus,
     targetLifecycleStatus: assessment.recommendedLifecycleStatus,
-    verdict: getProductHealthVerdict(product),
+    verdict: getProductHealthVerdict(product, assessment),
     meetsCurrentLifecycleStatus: assessment.meetsCurrentLifecycleStatus,
     searchDensity: assessment.searchDensity,
     verificationFreshnessDays: product.verificationFreshnessDays,
