@@ -12,14 +12,15 @@
 
 ## 현재 상태 요약
 
-2026-04-01 기준 확인된 사실:
+2026-04-03 기준 확인된 사실:
 
 - `ChaTm`은 루트 `GloTm` 셸 `/china` 경로에 연결된 live country guide다.
 - 현재 파이프라인은 `build-master -> qa-content -> build-content`로 정착돼 있다.
 - 현재 공개본 기준 구조는 서문 포함 15개 챕터다.
-- 현재 루트 registry 기준 검색 엔트리는 220개다.
+- 현재 루트 registry 기준 검색 엔트리는 239개다.
 - `content/research/cn_tm_fact_verification_log.md`의 핵심 큐는 구조화된 `claim_id` 기반 로그로 정리돼 있고, 주요 항목은 `Body-ready` 상태까지 올라와 있다.
-- 현재 병목은 "초기 장 수 확보"가 아니라, Sprint 1 우선 장의 실무 밀도와 검색 섹션 밀도를 더 끌어올리는 일이다.
+- Sprint 1 잠금 6장(`제2장`, `제3장`, `제5장`, `제6장`, `제7장`, `제10장`)은 심화 원고와 운영표 보강이 반영된 상태다.
+- 현재 병목은 "초기 장 수 확보"가 아니라, Sprint 1 반영분의 reader smoke 마감과 shared root gate 입력 정리다.
 
 ## 편집 원칙
 
@@ -31,7 +32,7 @@
 ## v1 목표 산출물
 
 - 챕터 수: 서문 포함 15장 구조 유지
-- 검색 엔트리: 220 -> 240~280
+- 검색 엔트리: 239 current baseline, 후속 심화 시 250~280 범위 목표
 - 장별 H3 이상 소제목: 최소 5개 이상
 - 각 장의 도입부는 summary/search entry 재료가 되도록 판단 프레임 역할을 하게 작성
 - `npm run content:china`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
@@ -99,7 +100,7 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 ### Phase 0 — 기준선 고정
 
 - 현재 15장 구조와 Sprint 1 우선 6장을 고정한다.
-- 현재 기준 수치를 `15장 / 검색 엔트리 220`으로 잠근다.
+- 현재 기준 수치를 `15장 / 검색 엔트리 239`로 갱신한다.
 - 사실 검증 로그의 핵심 `Body-ready` 항목을 어느 장에 승격할지 명시한다.
 - Sprint 1 완료 기준과 worktree 기준 머지 규칙을 문서화한다.
 
@@ -180,6 +181,12 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 - `content:china`가 workspace gate로 통과하고, 통합 이후 shared root gate가 1회 통과함
 - `/china` 리더의 홈/챕터/검색 흐름이 깨지지 않음
 - 배포 준비팀이 파일럿 배포 readiness 메모를 남김
+
+## 2026-04-03 진행 메모
+
+- Sprint 1 잠금 6장에 naming-search-filing language lock, 类似群 x business model 매핑, filing packet readiness, war-room board, evidence vault incident 연계, route switch 증거표를 추가했다.
+- `npm run content:china`, `npm run test:content`, `npm run build`, `npm run build:pages:glotm`를 통과했다.
+- `/china` 스프린트 addendum 수동 smoke와 전략 문서/Gateway 메타 sync까지 마감했다.
 
 ## 운영 메모
 
