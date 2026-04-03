@@ -79,7 +79,7 @@ describe("portfolio scorecard helpers", () => {
       meetsCurrentLifecycleStatus: true
     });
     expect(assessments.get("mexico")).toMatchObject({
-      recommendedLifecycleStatus: "beta",
+      recommendedLifecycleStatus: "mature",
       meetsCurrentLifecycleStatus: true
     });
     expect(assessments.get("china")).toMatchObject({
