@@ -32,8 +32,8 @@
     "health:all": "npm run health:runtime && npm run health:content && npm run health:release && npm run health:report -- --runtime=pass --content=pass --release=pass",
     "verify:release": "npm run health:runtime && npm run health:release && npm run health:report -- --runtime=pass --release=pass",
     "test": "vitest run",
-    "test:runtime": "vitest run --exclude src/products/chinaManuscript.test.ts --exclude src/products/mexicoManuscript.test.ts --exclude src/products/europeManuscript.test.ts --exclude Reports/scripts/build-content.test.ts --exclude scripts/seo.test.ts",
-    "test:content": "vitest run src/products/chinaManuscript.test.ts src/products/mexicoManuscript.test.ts src/products/europeManuscript.test.ts Reports/scripts/build-content.test.ts scripts/seo.test.ts",
+    "test:runtime": "vitest run --exclude src/products/chinaManuscript.test.ts --exclude src/products/mexicoManuscript.test.ts --exclude src/products/europeManuscript.test.ts --exclude src/products/contentLinks.test.ts --exclude Reports/scripts/build-content.test.ts --exclude scripts/seo.test.ts",
+    "test:content": "vitest run src/products/chinaManuscript.test.ts src/products/mexicoManuscript.test.ts src/products/europeManuscript.test.ts src/products/contentLinks.test.ts Reports/scripts/build-content.test.ts scripts/seo.test.ts",
     "test:watch": "vitest"
   },
   "dependencies": {
