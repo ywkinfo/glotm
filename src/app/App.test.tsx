@@ -407,6 +407,21 @@ describe("App portfolio shell", () => {
       within(reportSection as HTMLElement).getByRole("heading", { name: reports[0]?.title ?? "" })
     ).toBeInTheDocument();
     expect(
+      within(reportSection as HTMLElement).getByText(
+        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · JapTm 운영 가이드와 바로 이어 읽히도록 배치해/
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByText(
+        /현재 우선 레인 상태: ChaTm Beta · QA Standard · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByText(
+        "현재 우선순위: ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer"
+      )
+    ).toBeInTheDocument();
+    expect(
       (briefSection as HTMLElement).compareDocumentPosition(reportSection as HTMLElement)
       & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
@@ -736,6 +751,11 @@ describe("App portfolio shell", () => {
       "href",
       `/reports/${reports[0]?.slug}`
     );
+    expect(
+      screen.getByText(
+        /지금은 ChaTm·MexTm·EuTm에서 buyer-facing 밀도를 먼저 끌어올리고, report는 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문만 front placement합니다\./
+      )
+    ).toBeInTheDocument();
   });
 
   it("renders report detail pages with generated article content and related guide links", async () => {
