@@ -4,6 +4,8 @@
 
 인하우스 팀을 위한 cross-border trademark operating guides 루트 셸입니다. 현재 런타임은 루트 `GloTm` 하나이며, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`의 generated JSON을 읽어 Gateway와 각 가이드를 렌더링합니다.
 
+현재 phase, 우선순위, 활성 작업 범위는 `PROJECT-OVERVIEW.md`를 기준으로 확인합니다.
+
 ## Bootstrap
 
 ```bash
@@ -59,6 +61,7 @@ npm run health:all
 - 런타임 제품 메타데이터: `src/products/registry.ts`
 - 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
 - buyer-facing 포지셔닝: `docs/buyer-narrative.md`
+- 현재 phase / 우선순위 브리프: `PROJECT-OVERVIEW.md`
 - 루트 런타임 QA 체크리스트: `docs/phase1-runtime-qa.md`
 - 포트폴리오 우선순위 기준: `docs/portfolio-scorecard.md`
 - EuTm 확장 실행 계획: `docs/eutm-content-expansion-plan.md`
