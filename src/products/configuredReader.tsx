@@ -11,7 +11,6 @@ import {
 } from "react";
 import {
   Link,
-  NavLink,
   Navigate,
   Outlet,
   matchPath,
@@ -25,6 +24,22 @@ import {
   getGaMeasurementId,
   trackGaEvent
 } from "../analytics/ga";
+import {
+  useChapterBookmark,
+  useReadingProgress,
+  useTrackedActiveSection
+} from "./configuredReaderChapterHooks";
+import {
+  ReaderShellFooter,
+  ReaderShellScrim,
+  ReaderShellSidebar,
+  ReaderShellTopbar
+} from "./configuredReaderChrome";
+import {
+  ConfiguredChapterGrid,
+  ContinueReadingCard,
+  DraftNotice
+} from "./configuredReaderHomeSections";
 import { products } from "./registry";
 import {
   buildChapterPath,
@@ -36,7 +51,6 @@ import {
   formatBookmarkTimestamp,
   getAdjacentChapters,
   getChapterMeta,
-  getTrackedSectionId,
   setRuntimeDocumentTitle,
   type Chapter,
   type DocumentData,
@@ -49,8 +63,6 @@ import {
   MarkdownArticle,
   ReaderActionBar,
   ReadingProgressBar,
-  SearchPanel,
-  SidebarNav,
   StatusPage,
   flattenOutlineHeadings
 } from "./components";
@@ -115,7 +127,6 @@ type ReaderConfig = {
 };
 
 const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
-const operatorProfileUrl = "https://ywkinfo.github.io";
 
 function loadReaderActionBarDismissed() {
   if (typeof window === "undefined") {
@@ -390,55 +401,30 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     return (
       <div className="reader-shell">
         <div className="app-shell">
-          <header className="topbar">
-            <div className="topbar-brand">
-              <span className="topbar-kicker">{config.topbarKicker}</span>
-              <NavLink className="brand-link" to={productPath}>
-                {documentData.meta.title}
-              </NavLink>
-            </div>
-            <div className="topbar-actions">
-              <button
-                className="topbar-button mobile-only"
-                type="button"
-                onClick={() => setIsNavOpen((open) => !open)}
-              >
-                목차
-              </button>
-              {currentChapterSlug && isActionBarDismissed ? (
-                <button
-                  className="topbar-button reader-action-restore"
-                  type="button"
-                  onClick={() => {
-                    restoreActionBar();
-                  }}
-                >
-                  맨 위로 버튼 표시
-                </button>
-              ) : null}
-              <SearchPanel
-                onNavigate={navigateToSection}
-                onSearchResultSelect={handleSearchResultSelect}
-                onSearchSubmit={handleSearchSubmit}
-                searchContent={searchController.searchContent}
-                warmSearchContent={searchController.warmSearchContent}
-              />
-            </div>
-          </header>
+          <ReaderShellTopbar
+            currentChapterSlug={currentChapterSlug}
+            isActionBarDismissed={isActionBarDismissed}
+            onRestoreActionBar={restoreActionBar}
+            onSearchResultSelect={handleSearchResultSelect}
+            onSearchSubmit={handleSearchSubmit}
+            onToggleNav={() => setIsNavOpen((open) => !open)}
+            productPath={productPath}
+            searchContent={searchController.searchContent}
+            title={documentData.meta.title}
+            topbarKicker={config.topbarKicker}
+            warmSearchContent={searchController.warmSearchContent}
+            onNavigateToSection={navigateToSection}
+          />
 
           <div className="reader-layout">
-            <aside
-              className={`left-rail ${isNavOpen ? "open" : ""}`}
-              aria-hidden={isNavOpen ? undefined : true}
-            >
-              <SidebarNav
-                chapters={chapters}
-                basePath={productPath}
-                currentChapterSlug={currentChapterSlug}
-                currentSectionId={currentSectionId}
-                onNavigate={closeNavigation}
-              />
-            </aside>
+            <ReaderShellSidebar
+              chapters={chapters}
+              currentChapterSlug={currentChapterSlug}
+              currentSectionId={currentSectionId}
+              isNavOpen={isNavOpen}
+              onNavigate={closeNavigation}
+              productPath={productPath}
+            />
 
             <main className="content-pane">
               <Outlet
@@ -450,37 +436,11 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
                   jumpToSection
                 }}
               />
-              <footer className="reader-layout" style={{ paddingTop: 0 }}>
-                <div />
-                <div>
-                  <p className="reader-product-note reader-footer-note">
-                    운영자 소개·문의·강연 요청·심층 연구 안내:{" "}
-                    <a href={operatorProfileUrl} target="_blank" rel="noreferrer noopener">
-                      ywkinfo.github.io
-                    </a>
-                  </p>
-                  <div className="disclaimer">
-                    <strong>법적 고지:</strong> 이 가이드는 일반적인 정보 제공 목적이며 법률 자문이 아닙니다.
-                    수록된 정보는 작성 시점 기준이며, 법령·판례 변경에 따라 내용이 달라질 수 있습니다.
-                    구체적인 법률 문제는 자격 있는 변호사 또는 변리사에게 문의하시기 바랍니다.
-                    저자와 독자 사이에는 변호사·의뢰인 관계가 성립하지 않습니다.
-                  </div>
-                  <p className="copyright-notice">© 2026 GloTm. All rights reserved.</p>
-                </div>
-              </footer>
+              <ReaderShellFooter />
             </main>
           </div>
 
-          {isNavOpen ? (
-            <button
-              className="mobile-scrim"
-              type="button"
-              aria-label="열린 패널 닫기"
-              onClick={() => {
-                setIsNavOpen(false);
-              }}
-            />
-          ) : null}
+          <ReaderShellScrim isNavOpen={isNavOpen} onClose={() => setIsNavOpen(false)} />
         </div>
       </div>
     );
@@ -594,11 +554,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const chapters = documentData.chapters;
     const normalizedChapterSlug = decodeRouteSegment(chapterSlug);
     const articleRef = useRef<HTMLElement | null>(null);
-    const lastBookmarkSignatureRef = useRef<string | null>(null);
-    const [activeSectionId, setActiveSectionId] = useState<string | undefined>(
-      () => decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined
-    );
-    const [readingProgress, setReadingProgress] = useState(0);
+    const routeSectionId = decodeRouteSegment(location.hash.replace(/^#/, "")) || undefined;
 
     const chapter = normalizedChapterSlug
       ? chapters.find((entry) => entry.slug === normalizedChapterSlug)
@@ -611,6 +567,20 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const firstOutlineId = outlineItems[0]?.id;
     const outlineSignature = outlineItems.map((item) => item.id).join("|");
     const chapterMeta = chapter ? getChapterMeta(chapter) : null;
+    const [activeSectionId] = useTrackedActiveSection({
+      chapter,
+      firstOutlineId,
+      hasLocationHash: Boolean(location.hash),
+      initialSectionId: routeSectionId,
+      isProgrammaticScrollActive,
+      outlineItems,
+      outlineSignature,
+      syncCurrentSectionId
+    });
+    const readingProgress = useReadingProgress({
+      articleRef,
+      chapter
+    });
     const progressBucket = Math.round(readingProgress / 5) * 5;
     const activeOutlineItem = outlineItems.find((item) => item.id === activeSectionId);
     const commitReadingBookmark = useEffectEvent((bookmark: ReadingBookmark) => {
@@ -638,154 +608,13 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
 
       scrollToSection(anchor, "auto");
     }, [chapter, location.hash]);
-
-    useEffect(() => {
-      if (!chapter) {
-        setActiveSectionId(undefined);
-        return;
-      }
-
-      const anchor = decodeRouteSegment(location.hash.replace(/^#/, "")) || "";
-
-      if (anchor) {
-        setActiveSectionId(anchor);
-        return;
-      }
-
-      setActiveSectionId(firstOutlineId);
-    }, [chapter, firstOutlineId, location.hash, normalizedChapterSlug]);
-
-    useEffect(() => {
-      if (!chapter) {
-        return undefined;
-      }
-
-      if (location.hash) {
-        return undefined;
-      }
-
-      let frameId = 0;
-      let timeoutId = 0;
-
-      const collectTargets = () =>
-        outlineItems
-          .map((item) => document.getElementById(item.id))
-          .filter((element): element is HTMLElement => Boolean(element));
-
-      const updateActiveSection = () => {
-        if (isProgrammaticScrollActive) {
-          return;
-        }
-
-        const targets = collectTargets();
-
-        if (targets.length === 0) {
-          return;
-        }
-
-        const nextActiveSectionId = getTrackedSectionId(targets);
-
-        if (nextActiveSectionId) {
-          setActiveSectionId((currentSectionId) =>
-            currentSectionId === nextActiveSectionId ? currentSectionId : nextActiveSectionId
-          );
-        }
-      };
-
-      const scheduleUpdate = () => {
-        window.cancelAnimationFrame(frameId);
-        frameId = window.requestAnimationFrame(updateActiveSection);
-        window.clearTimeout(timeoutId);
-        timeoutId = window.setTimeout(updateActiveSection, 120);
-      };
-
-      updateActiveSection();
-      timeoutId = window.setTimeout(updateActiveSection, 180);
-      window.addEventListener("scroll", scheduleUpdate, { passive: true });
-      window.addEventListener("resize", scheduleUpdate);
-
-      return () => {
-        window.cancelAnimationFrame(frameId);
-        window.clearTimeout(timeoutId);
-        window.removeEventListener("scroll", scheduleUpdate);
-        window.removeEventListener("resize", scheduleUpdate);
-      };
-    }, [chapter, location.hash, outlineItems, outlineSignature]);
-
-    useEffect(() => {
-      syncCurrentSectionId(activeSectionId);
-    }, [activeSectionId, syncCurrentSectionId]);
-
-    useEffect(() => {
-      if (!chapter) {
-        setReadingProgress(0);
-        return undefined;
-      }
-
-      let frameId = 0;
-
-      const updateProgress = () => {
-        const articleElement = articleRef.current;
-
-        if (!articleElement) {
-          setReadingProgress(0);
-          return;
-        }
-
-        const articleTop = articleElement.offsetTop;
-        const articleHeight = articleElement.offsetHeight;
-        const viewportHeight = window.innerHeight;
-        const scrollTop = window.scrollY;
-        const maxScrollableDistance = Math.max(articleHeight - viewportHeight * 0.45, 1);
-        const nextProgress =
-          ((scrollTop - articleTop + viewportHeight * 0.22) / maxScrollableDistance) * 100;
-
-        setReadingProgress(Math.max(0, Math.min(100, nextProgress)));
-      };
-
-      const scheduleUpdate = () => {
-        window.cancelAnimationFrame(frameId);
-        frameId = window.requestAnimationFrame(updateProgress);
-      };
-
-      updateProgress();
-      window.addEventListener("scroll", scheduleUpdate, { passive: true });
-      window.addEventListener("resize", scheduleUpdate);
-
-      return () => {
-        window.cancelAnimationFrame(frameId);
-        window.removeEventListener("scroll", scheduleUpdate);
-        window.removeEventListener("resize", scheduleUpdate);
-      };
-    }, [chapter]);
-
-    useEffect(() => {
-      if (!chapter) {
-        return;
-      }
-
-      const bookmarkSignature = [
-        chapter.slug,
-        activeSectionId ?? "",
-        activeOutlineItem?.title ?? "",
-        String(progressBucket)
-      ].join("|");
-
-      if (lastBookmarkSignatureRef.current === bookmarkSignature) {
-        return;
-      }
-
-      lastBookmarkSignatureRef.current = bookmarkSignature;
-
-      commitReadingBookmark({
-        chapterSlug: chapter.slug,
-        chapterTitle: chapter.title,
-        sectionId: activeSectionId,
-        sectionTitle: activeOutlineItem?.title,
-        progress: Math.max(0, Math.min(100, progressBucket)),
-        updatedAt: new Date().toISOString()
-      });
-    }, [activeOutlineItem?.title, activeSectionId, chapter, commitReadingBookmark, progressBucket]);
+    useChapterBookmark({
+      activeSectionId,
+      activeSectionTitle: activeOutlineItem?.title,
+      chapter,
+      commitReadingBookmark,
+      progressBucket
+    });
 
     if (!normalizedChapterSlug || !chapter) {
       return <Navigate to={buildProductPath(productMeta)} replace />;
@@ -902,42 +731,15 @@ export function createConfiguredReader(config: ReaderConfig) {
         </section>
 
         {continueChapter && readingBookmark ? (
-          <section className="continue-card">
-            <div className="continue-copy">
-              <p className="continue-kicker">Continue Reading</p>
-              <h2 className="continue-title">{continueChapter.title}</h2>
-              <p className="continue-section">
-                {readingBookmark.sectionTitle
-                  ? `최근 읽은 위치: ${readingBookmark.sectionTitle}`
-                  : "최근 읽던 위치에서 바로 심화 읽기를 이어갈 수 있습니다."}
-              </p>
-              <div className="continue-meta">
-                <span>{Math.max(0, Math.min(100, readingBookmark.progress))}% 읽음</span>
-                <span>{getChapterMeta(continueChapter).readingMinutes}분 분량</span>
-                {continueTimestamp ? <span>마지막 열람 {continueTimestamp}</span> : null}
-              </div>
-            </div>
-            <NavLink
-              className="continue-link"
-              to={buildSectionLocation(
-                productPath,
-                continueChapter.slug,
-                readingBookmark.sectionId
-              )}
-            >
-              이어 읽기
-            </NavLink>
-          </section>
+          <ContinueReadingCard
+            continueChapter={continueChapter}
+            continueTimestamp={continueTimestamp}
+            productPath={productPath}
+            readingBookmark={readingBookmark}
+          />
         ) : null}
 
-        {config.contentStatus === "draft" ? (
-          <div className="draft-notice" role="note" aria-label="콘텐츠 준비 중 안내">
-            <span className="draft-notice-icon" aria-hidden="true">⚠</span>
-            <p className="draft-notice-text">
-              이 가이드는 현재 콘텐츠를 작성 중입니다. 일부 챕터는 개요 수준으로만 제공될 수 있으며, 순차적으로 보강될 예정입니다.
-            </p>
-          </div>
-        ) : null}
+        {config.contentStatus === "draft" ? <DraftNotice /> : null}
 
         <section className="gateway-section">
           <div className="gateway-section-header">
@@ -949,35 +751,11 @@ export function createConfiguredReader(config: ReaderConfig) {
           <p className="reader-product-note">{config.positioningNote}</p>
         </section>
 
-        <section className="chapter-grid">
-          {documentData.chapters.map((chapter) => {
-            const meta = getChapterMeta(chapter);
-
-            return (
-              <NavLink
-                key={chapter.slug}
-                className="chapter-card chapter-card--filing"
-                to={buildChapterPath(productPath, chapter.slug)}
-              >
-                <div className="chapter-card-header">
-                  <div className="chapter-card-badges">
-                    <span className="chapter-card-stage chapter-card-stage--filing">
-                      {config.chapterBadge}
-                    </span>
-                  </div>
-                </div>
-                <strong className="chapter-card-title">{chapter.title}</strong>
-                <p className="chapter-card-summary">
-                  {chapter.summary ?? "이 장의 핵심 실무 포인트를 탐색할 수 있습니다."}
-                </p>
-                <div className="chapter-card-meta">
-                  <span>{meta.sectionCount}개 섹션</span>
-                  <span>약 {meta.readingMinutes}분</span>
-                </div>
-              </NavLink>
-            );
-          })}
-        </section>
+        <ConfiguredChapterGrid
+          chapterBadge={config.chapterBadge}
+          chapters={documentData.chapters}
+          productPath={productPath}
+        />
       </div>
     );
   }
