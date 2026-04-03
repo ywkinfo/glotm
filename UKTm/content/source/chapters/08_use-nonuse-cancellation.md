@@ -24,11 +24,39 @@
 | 광고·SNS 소재 | 시장 노출 설명 | 실제 판매와 연결고리도 같이 확보 |
 | 유통·출하 자료 | 채널과 지역 설명 | EU 자료와 UK 자료를 구분 |
 
+## 최소 패킷 단위를 먼저 정한다
+
+영국에서 genuine use를 설명할 때는 자료가 많다는 사실보다 자료가 서로 이어진다는 점이 중요하다. 최소 패킷을 아래처럼 고정해 두면 weak-use mark를 점검할 때도 훨씬 빠르다.
+
+| 항목 | 최소 예시 | 빠지면 생기는 문제 |
+| --- | --- | --- |
+| 판매 페이지 | 영국 판매 페이지, UK 배송 안내, marketplace listing | 실제 영국 노출 문맥이 약해짐 |
+| 패키지·라벨 | 제품 사진, 포장, 라벨 | 등록형과 실제 사용형 연결이 흔들림 |
+| invoice / PO | 영국 거래 관련 문서 | 거래 실재성과 기간 설명이 약해짐 |
+| 광고 | UK 대상 SNS, promo asset, campaign log | 시장 노출 설명이 약해짐 |
+| 유통 자료 | seller, distributor, shipment memo | 채널과 지역 설명이 느려짐 |
+| owner-user linkage | licence, approval line, actual user note | 누구의 사용인지 설명이 비어 버림 |
+
 ## evidence cadence를 분기 루틴으로 만든다
 
 증거 관리가 가장 잘 되는 팀은 사건이 생겼을 때 모으지 않고 분기 루틴으로 정리한다. `표장`, `상품군`, `채널`, `기간`, `파일 위치`만 표준 카드에 넣어도 cancellation 대응 준비도가 크게 올라간다.
 
 실제 운영에는 `Appendix B` evidence vault card를 그대로 복사해 쓰면 분기 업데이트 기준을 맞추기 쉽다.
+
+### evidence vault card를 운영 카드로 올린다
+
+카드는 `무엇이 있나`를 적는 수준에서 끝나면 부족하다. 실제 운영에서는 아래 필드까지 들어가야 분기 점검과 취소 방어가 연결된다.
+
+| 필드 | 적어 둘 내용 |
+| --- | --- |
+| mark version | word / logo / composite |
+| channel | D2C, retail, distributor, marketplace |
+| proof | 포장, 판매 화면, invoice, promo asset |
+| last checked | 최근 검토일 |
+| owner / actual user | 권리자와 실제 사용 주체 |
+| source URL or doc id | listing URL, invoice id, shipment ref |
+| territory tag | UK / EU / Global |
+| file status | 원본 / 제출용 / working memo |
 
 | 주기 | 해야 할 일 | 담당 |
 | --- | --- | --- |

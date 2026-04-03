@@ -41,6 +41,21 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 | Appendix D | 기본 RACI 템플릿 |
 | Appendix E | Brexit 이후 운영 차이 빠른 확인표 |
 
+## Appendix B: evidence vault card
+
+| 필드 | 적어 둘 내용 |
+| --- | --- |
+| mark | house mark / product mark |
+| goods/services | 실제 사용 중인 핵심 범위 |
+| owner / actual user | 권리자, 판매 주체, approval line |
+| channel | D2C, retail, distributor, marketplace |
+| territory | UK / EU / Global |
+| 대표 증거 | 판매 페이지, 패키지, invoice, 광고 |
+| source URL or doc id | listing URL, order id, shipment ref |
+| file status | 원본 / 제출용 / working memo |
+| last checked | 분기 또는 반기 날짜 |
+| next action | hold / reinforce / narrow / drop |
+
 ## 마감 전 점검표
 
 - 모든 챕터에서 최소 1개 이상의 표 또는 체크리스트를 확인했는가

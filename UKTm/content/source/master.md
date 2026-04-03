@@ -433,11 +433,39 @@ cooling-off는 단순한 지연이 아니라 협상 기간이다. 이 기간에 
 | 광고·SNS 소재 | 시장 노출 설명 | 실제 판매와 연결고리도 같이 확보 |
 | 유통·출하 자료 | 채널과 지역 설명 | EU 자료와 UK 자료를 구분 |
 
+### 최소 패킷 단위를 먼저 정한다
+
+영국에서 genuine use를 설명할 때는 자료가 많다는 사실보다 자료가 서로 이어진다는 점이 중요하다. 최소 패킷을 아래처럼 고정해 두면 weak-use mark를 점검할 때도 훨씬 빠르다.
+
+| 항목 | 최소 예시 | 빠지면 생기는 문제 |
+| --- | --- | --- |
+| 판매 페이지 | 영국 판매 페이지, UK 배송 안내, marketplace listing | 실제 영국 노출 문맥이 약해짐 |
+| 패키지·라벨 | 제품 사진, 포장, 라벨 | 등록형과 실제 사용형 연결이 흔들림 |
+| invoice / PO | 영국 거래 관련 문서 | 거래 실재성과 기간 설명이 약해짐 |
+| 광고 | UK 대상 SNS, promo asset, campaign log | 시장 노출 설명이 약해짐 |
+| 유통 자료 | seller, distributor, shipment memo | 채널과 지역 설명이 느려짐 |
+| owner-user linkage | licence, approval line, actual user note | 누구의 사용인지 설명이 비어 버림 |
+
 ### evidence cadence를 분기 루틴으로 만든다
 
 증거 관리가 가장 잘 되는 팀은 사건이 생겼을 때 모으지 않고 분기 루틴으로 정리한다. `표장`, `상품군`, `채널`, `기간`, `파일 위치`만 표준 카드에 넣어도 cancellation 대응 준비도가 크게 올라간다.
 
 실제 운영에는 `Appendix B` evidence vault card를 그대로 복사해 쓰면 분기 업데이트 기준을 맞추기 쉽다.
+
+#### evidence vault card를 운영 카드로 올린다
+
+카드는 `무엇이 있나`를 적는 수준에서 끝나면 부족하다. 실제 운영에서는 아래 필드까지 들어가야 분기 점검과 취소 방어가 연결된다.
+
+| 필드 | 적어 둘 내용 |
+| --- | --- |
+| mark version | word / logo / composite |
+| channel | D2C, retail, distributor, marketplace |
+| proof | 포장, 판매 화면, invoice, promo asset |
+| last checked | 최근 검토일 |
+| owner / actual user | 권리자와 실제 사용 주체 |
+| source URL or doc id | listing URL, invoice id, shipment ref |
+| territory tag | UK / EU / Global |
+| file status | 원본 / 제출용 / working memo |
 
 | 주기 | 해야 할 일 | 담당 |
 | --- | --- | --- |
@@ -689,6 +717,16 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 | 반기 | licence / distributor / naming governance review | contract-risk note |
 | 연간 | renewals, comparable rights, HMRC high-risk list review | annual rights plan |
 
+분기 `portfolio memo`는 단순 회의 메모보다 운영 산출물에 가깝게 두는 편이 좋다. 최소한 아래 네 가지는 한 표로 남겨 두는 것이 좋다.
+
+| mark | 상태 | 보완 항목 | 다음 판단 |
+| --- | --- | --- | --- |
+| core mark | 정상 | 없음 | 유지 |
+| weak-use mark | 보완 | UK 거래 문서 부족 | reinforce |
+| legacy mark | 공백 | owner-user linkage 미정리 | drop 또는 narrow 검토 |
+
+여기서 상태값은 `정상 / 보완 / 공백`으로 단순화하고, 다음 판단은 `drop / narrow / reinforce / hold` 중 하나로 고정하면 분기 리뷰 속도가 훨씬 빨라진다.
+
 ### 보고 체계
 
 경영진 보고는 길 필요가 없다. 핵심 권리 변화, 고위험 사건, 다음 승인 필요 항목만 짧게 정리하면 된다. 중요한 것은 보고서 길이가 아니라 같은 지표를 반복적으로 본다는 점이다.
@@ -706,6 +744,7 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 - 외부 대리인에게 실질 `A`가 몰려 있지 않은가
 - evidence vault와 renewal tracker의 owner가 분리되지 않아 병목이 생기지 않는가
 - 월간 action board와 분기 portfolio memo를 누가 배포하는지 정했는가
+- evidence owner가 브랜드팀, 사업팀, 법무/IP 중 어디에 있는지 mark별로 분명한가
 
 ## 사례, 체크리스트, 실행 부록
 
@@ -749,6 +788,21 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 | Appendix C | 플랫폼 신고 공통 패킷 |
 | Appendix D | 기본 RACI 템플릿 |
 | Appendix E | Brexit 이후 운영 차이 빠른 확인표 |
+
+### Appendix B: evidence vault card
+
+| 필드 | 적어 둘 내용 |
+| --- | --- |
+| mark | house mark / product mark |
+| goods/services | 실제 사용 중인 핵심 범위 |
+| owner / actual user | 권리자, 판매 주체, approval line |
+| channel | D2C, retail, distributor, marketplace |
+| territory | UK / EU / Global |
+| 대표 증거 | 판매 페이지, 패키지, invoice, 광고 |
+| source URL or doc id | listing URL, order id, shipment ref |
+| file status | 원본 / 제출용 / working memo |
+| last checked | 분기 또는 반기 날짜 |
+| next action | hold / reinforce / narrow / drop |
 
 ### 마감 전 점검표
 
