@@ -375,6 +375,47 @@ describe("App portfolio shell", () => {
     ).not.toBe(0);
   });
 
+  it("introduces report as a separate cross-jurisdiction lane between the brief section and portfolio focus", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const briefSection = screen
+      .getByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다" })
+      .closest("section");
+    const reportSection = screen
+      .getByRole("heading", { name: "교차 관할권 운영 판단은 Report 레인에서 따로 다룹니다" })
+      .closest("section");
+    const portfolioSection = screen
+      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .closest("section");
+
+    expect(reportSection).not.toBeNull();
+    expect(
+      within(reportSection as HTMLElement).getByText(
+        /guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 구조화하는 레인입니다\./
+      )
+    ).toBeInTheDocument();
+    expect(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" })).toHaveAttribute(
+      "href",
+      "/reports"
+    );
+    expect(within(reportSection as HTMLElement).getByRole("link", { name: "최신 리포트 보기" })).toHaveAttribute(
+      "href",
+      `/reports/${reports[0]?.slug}`
+    );
+    expect(
+      within(reportSection as HTMLElement).getByRole("heading", { name: reports[0]?.title ?? "" })
+    ).toBeInTheDocument();
+    expect(
+      (briefSection as HTMLElement).compareDocumentPosition(reportSection as HTMLElement)
+      & Node.DOCUMENT_POSITION_FOLLOWING
+    ).not.toBe(0);
+    expect(
+      (reportSection as HTMLElement).compareDocumentPosition(portfolioSection as HTMLElement)
+      & Node.DOCUMENT_POSITION_FOLLOWING
+    ).not.toBe(0);
+  });
+
   it("applies the centered header modifier only to the why-late section", () => {
     installFetchMock();
     renderAppRouteTree("/");
