@@ -204,7 +204,13 @@ test("mobile drawer scrim smoke", async ({ page }) => {
 
   expect(box).not.toBeNull();
 
-  await page.mouse.click((box?.x ?? 0) + 20, (box?.y ?? 0) + 20);
+  await scrim.click({
+    force: true,
+    position: {
+      x: 20,
+      y: 20
+    }
+  });
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
 });
 
