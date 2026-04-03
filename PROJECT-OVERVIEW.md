@@ -75,7 +75,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `ChaTm` | 단일국가 | growth | beta | 15 | 186 | 중국 실무 밀도 강화 트랙 |
 | `EuTm` | 권역형 | validate | beta | 14 | 196 | 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 171 | lighter track |
-| `JapTm` | 단일국가 | incubate | pilot | 15 | 138 | lighter track |
+| `JapTm` | 단일국가 | incubate | beta | 15 | 138 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 90 | lighter track · draft 공개본 |
 
 ### 승격 기준
@@ -92,7 +92,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
 - `Brief`·`Gateway`: guide 본문 보강 뒤 buyer-facing cadence와 진입 신뢰 보강
-- `JapTm`·`UKTm`·`UsaTm`: JapTm QA 승격 준비, UKTm pilot 유지, UsaTm standard QA 유지
+- `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm pilot 유지, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -140,7 +140,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### JapTm (일본 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`JapTm`은 일본 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 138개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/japan` 경로에 연결된 상태다. verification refresh와 density push를 함께 통과하면서 search density는 beta 기준을 넘겼다. 다만 현재 lifecycle은 `pilot`로 유지하며, 다음 우선순위는 대형 확장보다 `qaLevel`을 `smoke`에서 더 강한 상태로 끌어올릴 수 있는 검증 근거를 만드는 일이다.
+`JapTm`은 일본 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 138개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/japan` 경로에 연결된 상태다. verification refresh와 density push 뒤에 root standard verification까지 통과하면서 `beta`와 `standard QA` 상태로 정렬했다. 다음 우선순위는 대형 확장보다, 지금 만든 검색/운영 utility가 실제 reader flow에서 잘 작동하는지 반복 검증하며 lighter track을 안정적으로 유지하는 일이다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 

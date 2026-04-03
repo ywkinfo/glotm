@@ -104,7 +104,7 @@ describe("portfolio health helpers", () => {
     expect(getProductHealthVerdict(europe!)).toBe("hold");
   });
 
-  it("treats the refreshed JapTm pilot state as hold with no current lifecycle gaps", () => {
+  it("treats the refreshed JapTm beta state as hold with no current lifecycle gaps", () => {
     const japan = products.find((product) => product.slug === "japan");
 
     expect(japan).toBeDefined();
