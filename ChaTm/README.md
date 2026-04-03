@@ -26,5 +26,6 @@
 
 - 현재 공개본 기준은 `content/source/master.md`이지만, 유지보수 시작점은 `content/source/chapters/`와 `manifest.json`입니다.
 - `master.md`는 조립 결과물로 취급하며, 수동 편집보다 재생성을 우선합니다.
+- 공개 원고와 리더 노출 문구에서는 저장소 경로나 `.md` 파일명을 직접 쓰지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로 표기합니다.
 - 변동성이 큰 사실은 `content/research/cn_tm_fact_verification_log.md`에서 먼저 검증합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/china` 리더를 렌더링합니다.

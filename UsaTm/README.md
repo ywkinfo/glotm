@@ -27,6 +27,7 @@
 
 - v1의 공개본 기준은 `content/source/master.md`이지만, 유지보수 시작점은 `content/source/chapters/`, `content/source/appendix/`, `manifest.json`입니다.
 - `master.md`는 조립 결과물로 취급하며, 수동 편집보다 재생성을 우선합니다.
+- 공개 원고와 리더 노출 문구에서는 저장소 경로나 `.md` 파일명을 직접 쓰지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로 표기합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/usa` 리더를 렌더링합니다.
 - 현재 루트 `GloTm`의 `content:prepare`에서는 `UsaTm`이 shortcut 예외 그룹으로 동작합니다. 즉 루트에서는 빠른 generated-content 갱신 경로를 사용하고, deeper content QA가 필요할 때는 `UsaTm` 로컬 `content:prepare`를 직접 실행합니다.
 - 현재 빌드 기준 산출물은 14개 챕터 / 검색 엔트리 171개입니다.

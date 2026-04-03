@@ -28,5 +28,6 @@
 
 - 루트 `GloTm` 셸은 `content/source/master.md`를 정본 입력으로 읽지만, 유지보수 시작점은 `content/source/chapters/`, `content/source/appendix/`, `manifest.json`입니다.
 - `master.md`는 조립 결과물로 관리하고, 수동 편집보다 재생성을 우선합니다.
+- 공개 원고와 리더 노출 문구에서는 저장소 경로나 `.md` 파일명을 직접 쓰지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로 표기합니다.
 - 변동성이 큰 사실은 `content/research/mx_tm_fact_verification_log.md`에서 먼저 검증합니다.
 - `content/generated/`는 빌드 산출물이므로 버전 관리에서 제외됩니다.
