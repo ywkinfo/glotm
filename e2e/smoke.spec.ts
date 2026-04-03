@@ -30,24 +30,24 @@ const readerSmokeCases = [
     path: "/mexico",
     storageKey: "mextm_reading_bookmark",
     homeHeading: "멕시코 상표 실무 운영 가이드북",
-    bookmarkChapterSlug: "제10장-관세세관국경-조치와-물류-통제",
-    bookmarkChapterTitle: "제10장 관세·세관(국경) 조치와 물류 통제",
-    bookmarkSectionId: "개요",
-    bookmarkSectionTitle: "개요",
-    searchQuery: "control sheet",
-    searchResultText: "control sheet"
+    bookmarkChapterSlug: "제4장-출원-경로-선택-직접출원-vs-마드리드국제출원-비교",
+    bookmarkChapterTitle: "제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원) 비교",
+    bookmarkSectionId: "buyer-entry-경로-선택표",
+    bookmarkSectionTitle: "buyer-entry 경로 선택표",
+    searchQuery: "buyer-entry",
+    searchResultText: "buyer-entry 경로 선택표"
   },
   {
     name: "EuTm",
     path: "/europe",
     storageKey: "eutm_reading_bookmark",
     homeHeading: "EuTm 유럽 상표 운영 가이드북",
-    bookmarkChapterSlug: "제11장-온라인-플랫폼-도메인-디지털-집행",
-    bookmarkChapterTitle: "제11장. 온라인 플랫폼, 도메인, 디지털 집행",
-    bookmarkSectionId: "개요",
-    bookmarkSectionTitle: "개요",
-    searchQuery: "coexistence",
-    searchResultText: "coexistence"
+    bookmarkChapterSlug: "제8장-등록-후-사용-갱신-증거-관리",
+    bookmarkChapterTitle: "제8장. 등록 후 사용, 갱신, 증거 관리",
+    bookmarkSectionId: "distributor--marketplace-seller-evidence-triage",
+    bookmarkSectionTitle: "distributor / marketplace seller evidence triage",
+    searchQuery: "marketplace seller",
+    searchResultText: "distributor / marketplace seller evidence triage"
   },
   {
     name: "UsaTm",

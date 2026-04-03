@@ -16,5 +16,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "ChaTm/content/generated/**/*.json",
+    "MexTm/content/generated/**/*.json",
+    "EuTm/content/generated/**/*.json",
+    "Reports/generated/**/*.json"
+  ]
 }

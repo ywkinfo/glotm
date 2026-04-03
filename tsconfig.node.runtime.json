@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.node.json",
+  "include": ["vite.config.ts", "scripts/**/*.ts"],
+  "exclude": ["scripts/seo.test.ts"]
+}

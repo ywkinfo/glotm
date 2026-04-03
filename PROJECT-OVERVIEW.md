@@ -6,10 +6,10 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-04-02 |
-| Verified on | 2026-04-02 |
+| Last updated | 2026-04-03 |
+| Verified on | 2026-04-03 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
-| Current focus | `ChaTm` Sprint 1 심화 -> `MexTm` 핵심 장 심화/계획 고정 -> `EuTm` 안정화 -> `Brief/Gateway` 신뢰 보강 -> incubate 유지보수 |
+| Current focus | `ChaTm` Sprint 1 심화 -> `MexTm` 핵심 장 심화/계획 고정 -> `EuTm` 안정화 -> `Report / Gateway` trust layer 정합화 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, prerender/SEO 2단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### 현재 운영 스냅샷
@@ -18,9 +18,9 @@
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영한다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - `LatTm`: 20개 챕터, 검색 엔트리 780개. `flagship` tier.
-- `MexTm`: 15개 챕터, 검색 엔트리 278개. `growth` tier.
-- `ChaTm`: 15개 챕터, 검색 엔트리 186개. `growth` tier.
-- `EuTm`: 14개 챕터, 검색 엔트리 196개. `validate` tier.
+- `MexTm`: 15개 챕터, 검색 엔트리 288개. `growth` tier.
+- `ChaTm`: 15개 챕터, 검색 엔트리 193개. `growth` tier.
+- `EuTm`: 14개 챕터, 검색 엔트리 206개. `validate` tier.
 - `UsaTm`: 14개 챕터, 검색 엔트리 171개. `incubate` tier.
 - `JapTm`: 15개 챕터, 검색 엔트리 138개. `incubate` tier.
 - `UKTm`: 14개 챕터, 검색 엔트리 90개. `incubate` tier.
@@ -71,9 +71,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | 가이드 | 유형 | 전략 tier | lifecycle | 챕터 수 | 검색 엔트리 | 현재 의미 |
 |------|------|------|------|------|------|------|
 | `LatTm` | 권역형 | flagship | mature | 20 | 780 | 기준 프레임 보호 |
-| `MexTm` | 단일국가 | growth | beta | 15 | 278 | buyer entry 핵심 트랙 |
-| `ChaTm` | 단일국가 | growth | beta | 15 | 186 | 중국 실무 밀도 강화 트랙 |
-| `EuTm` | 권역형 | validate | beta | 14 | 196 | 권역 검증·정합성 안정화 |
+| `MexTm` | 단일국가 | growth | beta | 15 | 288 | buyer entry 핵심 트랙 |
+| `ChaTm` | 단일국가 | growth | beta | 15 | 193 | 중국 실무 밀도 강화 트랙 |
+| `EuTm` | 권역형 | validate | beta | 14 | 206 | 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 171 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 138 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 90 | lighter track · draft 공개본 |
@@ -91,7 +91,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `ChaTm`: Sprint 1 우선 6장 강화로 growth 실질화
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
-- `Brief`·`Gateway`: guide 본문 보강 뒤 buyer-facing cadence와 진입 신뢰 보강
+- `Report`·`Gateway`: guide 본문 보강 뒤 교차 관할권 trust layer와 진입 신뢰 보강
 - `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm pilot 유지, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
@@ -100,7 +100,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 1. `ChaTm`
 2. `MexTm`
 3. `EuTm`
-4. `Brief` / `Gateway`
+4. `Report` / `Gateway`
 5. `JapTm`
 6. `UKTm`
 7. `UsaTm`
@@ -132,7 +132,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### MexTm (멕시코 상표 실무 가이드) — 파일럿 2단계 핵심 트랙, core reader parity 반영 완료 / 워크스페이스 파이프라인 구축 완료
 
-`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `npm run build`는 통과하며 `document-data.json` 기준 15개 챕터와 278개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다.
+`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `npm run build`는 통과하며 `document-data.json` 기준 15개 챕터와 288개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
@@ -144,11 +144,11 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 186개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, 카드에서는 "지속 업데이트 중" 상태를 함께 노출한다.
+`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 193개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, 카드에서는 "Sprint 1 잠금 6장 보강 완료" 상태를 함께 노출한다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 196개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 LatTm-lite 파이프라인 도입과 핵심 장 구조화 보강을 거치며 장별 원고 체계가 정리되고 검색 밀도도 다시 상승했다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 206개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 Ch2/Ch8 안정화와 validate shortlist 정리를 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 early track
 
@@ -187,18 +187,18 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | Live shell guides | `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm` |
 | LatTm 콘텐츠 빌드 | `build-master.ts` → `qa-content.ts` → `build-content.ts` |
 | LatTm 생성 산출물 | 20개 챕터 / 검색 엔트리 780개 |
-| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 278개 |
+| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 288개 |
 | UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 171개 |
 | JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 138개 |
-| ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 186개 |
-| EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 196개 |
+| ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 193개 |
+| EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 206개 |
 | UKTm 생성 산출물 | 14개 챕터 / 검색 엔트리 90개 |
 | GloTm build status | pass |
 | MexTm build status | pass |
 | 루트 `content:prepare` 특징 | 가이드별로 full pipeline과 `build-content.ts` shortcut이 혼재 |
 | Gateway 랜딩 | intro 문서 전체 복제가 아니라 복수의 핵심 섹션과 CTA 중심의 선별 랜딩 |
 | 추가 live routes | `/japan`, `/china`, `/europe`, `/uk` 연결 완료 |
-| 배포 상태 | 즉시 배포 안 함. 로컬 완성도 확보 후 파일럿 배포 예정 |
+| 배포 상태 | GitHub Pages 공개본 운영 중 (`/glotm/`) |
 
 ### 기술 스택
 

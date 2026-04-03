@@ -13,5 +13,10 @@
     "strict": true,
     "types": ["node", "vite/client", "vitest/globals"]
   },
-  "include": ["vite.config.ts", "scripts/**/*.ts"]
+  "include": [
+    "vite.config.ts",
+    "scripts/**/*.ts",
+    "public/generated/**/*.json",
+    "Reports/generated/**/*.json"
+  ]
 }
