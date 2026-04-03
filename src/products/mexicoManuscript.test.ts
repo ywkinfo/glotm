@@ -18,13 +18,13 @@ function flattenHeadingTitles(headings: HeadingNode[] = []): string[] {
 describe("MexTm manuscript", () => {
   it("ships the expected 15-chapter Mexico manuscript structure", () => {
     expect(documentData.meta.chapterCount).toBe(15);
-    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
       "제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원) 비교"
     );
-    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
       "제11장 도메인(.MX)·디자인·저작권(인다우토르)과의 결합 전략"
     );
-    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
       "제13장 실무 사례·판례 요약: 한국 기업이 멕시코 상표 분쟁에서 배워야 할 것"
     );
   });
@@ -53,7 +53,7 @@ describe("MexTm manuscript", () => {
   it("keeps the Mexico search index dense enough for the locked sprint slices", () => {
     expect(searchEntries.length).toBeGreaterThanOrEqual(280);
 
-    const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
+    const sectionTitles = new Set(searchEntries.map((entry: { sectionTitle: string }) => entry.sectionTitle));
 
     expect(sectionTitles.has("buyer-entry decision map")).toBe(true);
     expect(sectionTitles.has("buyer-entry 경로 선택표")).toBe(true);

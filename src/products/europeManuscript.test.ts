@@ -18,10 +18,10 @@ function flattenHeadingTitles(headings: HeadingNode[] = []): string[] {
 describe("EuTm manuscript", () => {
   it("ships the expected 14-chapter Europe manuscript structure", () => {
     expect(documentData.meta.chapterCount).toBe(14);
-    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
       "제2장. 권리 선택: EUTM, 개별국, 영국 병행"
     );
-    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
       "제8장. 등록 후 사용, 갱신, 증거 관리"
     );
   });
@@ -43,7 +43,7 @@ describe("EuTm manuscript", () => {
   it("keeps the Europe search index dense enough for validate navigation", () => {
     expect(searchEntries.length).toBeGreaterThanOrEqual(200);
 
-    const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
+    const sectionTitles = new Set(searchEntries.map((entry: { sectionTitle: string }) => entry.sectionTitle));
 
     expect(sectionTitles.has("회원국별 clearance 편차 메모")).toBe(true);
     expect(sectionTitles.has("EU / UK launch split memo")).toBe(true);

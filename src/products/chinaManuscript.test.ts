@@ -20,7 +20,7 @@ function flattenHeadingTitles(
 describe("ChaTm final manuscript", () => {
   it("ships the expanded 15-chapter China manuscript structure", () => {
     expect(documentData.meta.chapterCount).toBe(15);
-    expect(documentData.chapters.map((chapter) => chapter.title)).toEqual([
+    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toEqual([
       "서문",
       "제1장. 중국 상표제도 구조와 판단 프레임",
       "제2장. 브랜드 구조와 중국어 표기 전략",
@@ -47,10 +47,10 @@ describe("ChaTm final manuscript", () => {
       (chapter) => chapter.title === "제6장. 심사, 공고, 이의와 거절 대응"
     );
     const appendixChapter = documentData.chapters.find(
-      (chapter) => chapter.title === "제14장. 사례, 실패 패턴, 부록"
+      (chapter: { title: string }) => chapter.title === "제14장. 사례, 실패 패턴, 부록"
     );
 
-    expect(routeChapter?.headings.map((heading) => heading.title)).toEqual([
+    expect(routeChapter?.headings.map((heading: { title: string }) => heading.title)).toEqual([
       "직접출원이 유리한 경우",
       "마드리드가 유리한 경우",
       "경로를 고르기 전에 확인할 것",
@@ -59,10 +59,10 @@ describe("ChaTm final manuscript", () => {
     expect(flattenHeadingTitles(examinationChapter?.headings)).toContain(
       "사건 기록 보드는 반드시 표준화한다"
     );
-    expect(appendixChapter?.headings.map((heading) => heading.title)).toContain(
+    expect(appendixChapter?.headings.map((heading: { title: string }) => heading.title)).toContain(
       "부록 D. 2026-03-31 검증 메모"
     );
-    expect(appendixChapter?.headings.map((heading) => heading.title)).toContain(
+    expect(appendixChapter?.headings.map((heading: { title: string }) => heading.title)).toContain(
       "부록 E. 용어 표준화 초안"
     );
   });
@@ -70,7 +70,7 @@ describe("ChaTm final manuscript", () => {
   it("keeps the China search index dense enough for final-manuscript navigation", () => {
     expect(searchEntries.length).toBeGreaterThanOrEqual(175);
 
-    const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
+    const sectionTitles = new Set(searchEntries.map((entry: { sectionTitle: string }) => entry.sectionTitle));
 
     expect(sectionTitles.has("개요")).toBe(true);
     expect(sectionTitles.has("마드리드가 유리한 경우")).toBe(true);
