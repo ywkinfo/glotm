@@ -6,7 +6,7 @@
 
 핵심 목표는 세 가지다.
 
-1. `ChaTm`의 현재 6장 구조를 12~14장 수준의 운영형 가이드 구조로 확장한다.
+1. `ChaTm`의 현재 15장 구조를 유지한 채 Sprint 1 우선 6장을 운영형 기준까지 심화한다.
 2. 사실 검증 로그를 본문 집필과 분리해, 검증된 사실만 공개본으로 승격하는 흐름을 고정한다.
 3. 원고 작성, 검증, QA, 배포 준비를 병렬 레인으로 나눠 전체 리드타임을 줄인다.
 
@@ -17,7 +17,7 @@
 - `ChaTm`은 루트 `GloTm` 셸 `/china` 경로에 연결된 live country guide다.
 - 현재 파이프라인은 `build-master -> qa-content -> build-content`로 정착돼 있다.
 - 현재 공개본 기준 구조는 서문 포함 15개 챕터다.
-- 현재 루트 registry 기준 검색 엔트리는 186개다.
+- 현재 루트 registry 기준 검색 엔트리는 220개다.
 - `content/research/cn_tm_fact_verification_log.md`의 핵심 큐는 구조화된 `claim_id` 기반 로그로 정리돼 있고, 주요 항목은 `Body-ready` 상태까지 올라와 있다.
 - 현재 병목은 "초기 장 수 확보"가 아니라, Sprint 1 우선 장의 실무 밀도와 검색 섹션 밀도를 더 끌어올리는 일이다.
 
@@ -31,7 +31,7 @@
 ## v1 목표 산출물
 
 - 챕터 수: 서문 포함 15장 구조 유지
-- 검색 엔트리: 171 -> 200~240
+- 검색 엔트리: 220 -> 240~280
 - 장별 H3 이상 소제목: 최소 5개 이상
 - 각 장의 도입부는 summary/search entry 재료가 되도록 판단 프레임 역할을 하게 작성
 - `npm run content:china`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
@@ -74,47 +74,38 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 
 ## 병렬 팀 구성
 
-추천 구조는 `리더 1 + 병렬 레인 6`이다.
+이번 글로벌 병렬 스프린트에서 `ChaTm`은 `리더 1 + ChaTm 전용 레인 5` 기준으로 운영한다.
 
-- 레인 1. 편집 총괄: 장 구조 확정, 우선순위 조정, 머지 기준 관리
-- 레인 2. 원고 A: 제1~제4장 중심
-- 레인 3. 원고 B: 제5~제8장 중심
-- 레인 4. 원고 C: 제9~부록 중심
-- 레인 5. 사실 검증: CNIPA, SAMR, WIPO, 법원 공개자료 기준 검증 로그 관리
-- 레인 6. QA/배포 준비: 콘텐츠 QA, 검색/리더 QA, 루트 빌드 및 파일럿 배포 준비
+- 레인 1. 편집 총괄: 우선 6장 scope 고정, 머지 기준 관리, 다른 가이드와의 shared root gate 순서 조율
+- 레인 2. 원고 A: 제2장, 제3장, 제5장 심화
+- 레인 3. 원고 B: 제6장, 제7장, 제10장 심화
+- 레인 4. 사실 검증: `cn_tm_fact_verification_log.md`에서 우선 6장 claim 매핑, `Pending -> Verified -> Body-ready` 승격
+- 레인 5. QA/배포 준비: `content:china` 통과, reader smoke checklist 정리, 통합 root gate 입력 정리
 
-## 3개 원고 레인 분할안
+## 우선 6장 레인 분할안
 
 - 원고 레인 A
-  - 제1장. 중국 상표제도 구조와 판단 프레임
   - 제2장. 브랜드 구조와 중국어 표기 전략
   - 제3장. 검색, 분류, 서브클래스 충돌 분석
-  - 제4장. 출원 경로 선택: 직접출원 vs 마드리드
+  - 제5장. 출원서 작성 실무
 
 - 원고 레인 B
-  - 제5장. 출원서 작성 실무
   - 제6장. 심사, 공고, 이의와 거절 대응
   - 제7장. 등록 후 유지, 갱신과 사용 증거
-  - 제8장. 불사용취소, 무효와 권리 안정성
-
-- 원고 레인 C
-  - 제9장. 라이선스, 유통, 제조 구조와 상표 통제
   - 제10장. 분쟁 대응: 행정, 사법, 플랫폼, 세관
-  - 제11장. 도메인, 저작권, 부정경쟁과의 결합 전략
-  - 제12장. 모니터링, 포트폴리오 운영, 내부통제(RACI)
-  - 부록
 
 ## 실행 단계
 
 ### Phase 0 — 기준선 고정
 
 - 현재 15장 구조와 Sprint 1 우선 6장을 고정한다.
+- 현재 기준 수치를 `15장 / 검색 엔트리 220`으로 잠근다.
 - 사실 검증 로그의 핵심 `Body-ready` 항목을 어느 장에 승격할지 명시한다.
-- Sprint 1 완료 기준과 머지 기준을 문서화한다.
+- Sprint 1 완료 기준과 worktree 기준 머지 규칙을 문서화한다.
 
 ### Phase 1 — 병렬 집필
 
-- 원고 레인 A/B/C가 병렬로 장별 원고를 심화한다.
+- 원고 레인 A/B가 병렬로 우선 6장을 심화한다.
 - 각 장은 도입부, 판단 기준, 체크리스트/표, 리스크/예외, 운영 메모 구조를 우선 적용한다.
 
 ### Phase 2 — 사실 검증 동기화
@@ -154,24 +145,23 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 - `Body-ready`: 본문 반영 장/섹션과 번역 메모까지 정리 완료
 - `Conflict`: 출처가 충돌해 본문 반영 금지
 
-### Phase 3 — 콘텐츠 조립과 QA
+### Phase 3 — 워크스페이스 게이트
 
 - `npm run content:china`
 - 챕터 제목, 헤딩 구조, 표 형식, 검색 엔트리 증가 폭 확인
 - `/china` 홈, 챕터, 검색, continue reading 흐름 스모크
 
-### Phase 4 — 루트 게이트와 배포 준비
+### Phase 4 — 통합 머지와 shared root gate
 
-- `npm test`
-- `npm run build`
-- `npm run build:pages:glotm`
-- 파일럿 배포 체크리스트와 릴리즈 노트 초안 작성
+- 글로벌 스프린트 머지 순서에서 `ChaTm`을 첫 번째로 병합한다.
+- 다른 가이드가 workspace gate를 통과한 뒤 리더가 shared root gate를 1회만 실행한다.
+- 파일럿 배포 체크리스트와 릴리즈 노트 초안을 shared verification lane에 넘긴다.
 
 ## 검증 순서
 
 병렬 가능:
 
-- 원고 A/B/C 집필
+- 원고 A/B 집필
 - 사실 검증 로그 확장
 - 검색/리더 QA 체크리스트 설계
 
@@ -179,24 +169,26 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 
 1. 본문 원고 업데이트
 2. `npm run content:china`
-3. 루트 검증 (`npm test`, `npm run build`, `npm run build:pages:glotm`)
+3. 리더 머지
+4. shared root gate (`npm run test:content`, `npm run health:runtime`, `npm run health:release`)
 
 ## 완료 기준
 
 - 권장 챕터 구조가 `manifest.json`과 장별 원고에 반영됨
 - Sprint 1 우선 6개 장이 목표 밀도까지 확장됨
 - 사실 검증 로그의 핵심 큐가 `Pending-only` 상태가 아니고, Sprint 1 우선 장에 필요한 항목이 본문 반영 가능 상태로 정리됨
-- `content:china`와 루트 검증 명령이 모두 통과함
+- `content:china`가 workspace gate로 통과하고, 통합 이후 shared root gate가 1회 통과함
 - `/china` 리더의 홈/챕터/검색 흐름이 깨지지 않음
 - 배포 준비팀이 파일럿 배포 readiness 메모를 남김
 
 ## 운영 메모
 
-- 현재 세션은 tmux 밖이므로 `omx team` 직접 런 대신, 백그라운드 CLI 워커 또는 native subagent 중심 병렬화가 적합하다.
-- tmux 안으로 옮길 경우 `omx team 6:executor "ChaTm v1 content expansion, verification, QA, release-readiness"` 형태로 동일 구조를 재현한다.
+- 이번 스프린트는 `tmux` 기반 `omx team` 런타임을 기준으로 운영한다.
+- `omx team`은 dedicated worktree를 기본으로 사용하므로, worker는 `ChaTm` 디렉터리와 해당 research log만 수정한다.
+- launch 예시는 `omx team 6:executor "ChaTm/MexTm/EuTm parallel content sprint with shared verification"`이다.
 
 ## Lane Done Criteria
 
 - `writing` lane: `manifest.json` 제목과 장 H1이 일치하고, 장당 최소 3개 이상의 실무 섹션과 1개 이상의 체크리스트/표를 포함한다.
 - `verification` lane: 각 사실이 `Pending -> Verified -> Body-ready`를 통과하고, 기한/수수료/절차명/기관명은 공식 출처 기준으로 교차확인된다.
-- `release-prep` lane: `npm run content:china`, `npm test`, `npm run build`, `npm run build:pages:glotm`가 모두 통과하고 `/china` 핵심 reader flow 스모크가 끝난다.
+- `release-prep` lane: `npm run content:china`가 통과하고 `/china` 핵심 reader flow 스모크가 끝난 뒤, shared root gate 입력값을 리더에게 넘긴다.

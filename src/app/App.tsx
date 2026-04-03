@@ -646,7 +646,7 @@ function GatewayLandingPage() {
       title: "EuTm 안정화",
       copy:
         "범위 확대보다 문서 정합성, 권리 선택, 등록 후 사용·갱신 운영 구조를 먼저 고정해 validate lane을 안정화합니다.",
-      note: "README, Harness sync + 제2장, 제8장 우선",
+      note: "README, Harness sync + 핵심 6장 우선",
       href: buildProductPath("/europe")
     },
     {

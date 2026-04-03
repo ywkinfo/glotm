@@ -18,9 +18,9 @@
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영한다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - `LatTm`: 20개 챕터, 검색 엔트리 780개. `flagship` tier.
-- `MexTm`: 15개 챕터, 검색 엔트리 297개. `growth` tier.
-- `ChaTm`: 15개 챕터, 검색 엔트리 202개. `growth` tier.
-- `EuTm`: 14개 챕터, 검색 엔트리 206개. `validate` tier.
+- `MexTm`: 15개 챕터, 검색 엔트리 309개. `growth` tier.
+- `ChaTm`: 15개 챕터, 검색 엔트리 220개. `growth` tier.
+- `EuTm`: 14개 챕터, 검색 엔트리 224개. `validate` tier.
 - `UsaTm`: 14개 챕터, 검색 엔트리 171개. `incubate` tier.
 - `JapTm`: 15개 챕터, 검색 엔트리 140개. `incubate` tier.
 - `UKTm`: 14개 챕터, 검색 엔트리 93개. `incubate` tier.
@@ -71,9 +71,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | 가이드 | 유형 | 전략 tier | lifecycle | 챕터 수 | 검색 엔트리 | 현재 의미 |
 |------|------|------|------|------|------|------|
 | `LatTm` | 권역형 | flagship | mature | 20 | 780 | 기준 프레임 보호 |
-| `MexTm` | 단일국가 | growth | mature | 15 | 297 | buyer entry 핵심 트랙 |
-| `ChaTm` | 단일국가 | growth | beta | 15 | 202 | 중국 실무 밀도 강화 트랙 |
-| `EuTm` | 권역형 | validate | beta | 14 | 206 | 권역 검증·정합성 안정화 |
+| `MexTm` | 단일국가 | growth | mature | 15 | 309 | buyer entry 핵심 트랙 |
+| `ChaTm` | 단일국가 | growth | beta | 15 | 220 | 중국 실무 밀도 강화 트랙 |
+| `EuTm` | 권역형 | validate | beta | 14 | 224 | 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 171 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 140 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 93 | lighter track · draft 공개본 |
@@ -132,7 +132,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### MexTm (멕시코 상표 실무 가이드) — 파일럿 2단계 핵심 트랙, core reader parity 반영 완료 / 워크스페이스 파이프라인 구축 완료
 
-`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `npm run build`는 통과하며 `document-data.json` 기준 15개 챕터와 297개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다.
+`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `npm run build`는 통과하며 `document-data.json` 기준 15개 챕터와 309개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
@@ -144,11 +144,11 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 202개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, 카드에서는 "Sprint 1 잠금 6장 보강 완료" 상태를 함께 노출한다.
+`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 220개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, 카드에서는 "Sprint 1 우선 6장 심화" 상태를 함께 노출한다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 206개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리를 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 224개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 안정화를 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 early track
 
@@ -187,11 +187,11 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | Live shell guides | `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm` |
 | LatTm 콘텐츠 빌드 | `build-master.ts` → `qa-content.ts` → `build-content.ts` |
 | LatTm 생성 산출물 | 20개 챕터 / 검색 엔트리 780개 |
-| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 297개 |
+| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 309개 |
 | UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 171개 |
 | JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 140개 |
-| ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 202개 |
-| EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 206개 |
+| ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 220개 |
+| EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 224개 |
 | UKTm 생성 산출물 | 14개 챕터 / 검색 엔트리 93개 |
 | GloTm build status | pass |
 | MexTm build status | pass |

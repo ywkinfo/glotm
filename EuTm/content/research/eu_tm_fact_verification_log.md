@@ -27,3 +27,31 @@
 - none
 
 이번 라운드에서는 회원국별 차이를 새 `Pending`으로 넓히지 않는다.
+
+## Sprint handoff
+
+이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 여섯 장이다.
+
+| chapter_ref | 우선 반영할 verified item |
+| --- | --- |
+| Ch1 | EUTM vs national filing split, UK parallel track handling, Madrid linkage |
+| Ch2 | EUTM vs national filing split, EU-SEL-001 clearance variance memo, UK parallel track handling |
+| Ch4 | EU-SEL-001 clearance variance memo |
+| Ch5 | EUTM vs national filing split, Madrid linkage |
+| Ch7 | Opposition timeline |
+| Ch8 | EU-EVD-001 owner-user evidence memo, Proof of use window, Renewal timing and grace period, EU-UK-001 launch split calendar |
+
+이 표를 두면 검증 로그가 본문과 분리돼 있으면서도, 이번 스프린트의 chapter-to-claim 연결은 바로 읽을 수 있다.
+
+## Current controlled scope reminder
+
+이번 라운드의 writer는 아래 원칙을 벗어나지 않는다.
+
+| 항목 | 유지할 기준 |
+| --- | --- |
+| EU 공통 프레임 | 본문 중심 유지 |
+| UK 병행 판단 | calendar/evidence split 기준까지만 본문 반영 |
+| 회원국별 절차 차이 | 메모 수준으로만 통제 |
+| fee·세부 절차 deep dive | 후속 트랙으로 보류 |
+
+이 reminder를 붙여 두면 fact log가 단순 출처 목록이 아니라, 어디까지를 이번 validate lane 본문으로 승격할지 지켜 주는 가드레일 역할도 하게 된다.

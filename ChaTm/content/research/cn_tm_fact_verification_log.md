@@ -37,3 +37,31 @@
 | CN-FIL-001 | filing-design | Ch5 | 중국 출원에서는 `类似商品和服务区分表` 표준명칭과 공개된 수리가능 상품·서비스 명칭을 기준으로 분류를 설계하고, 비표준 항목도 분류원칙에 맞아야 한다 | CNIPA | Tier 1 | https://sbj.cnipa.gov.cn/sbj/tzgg/202005/t20200520_5482.html ; https://sbj.cnipa.gov.cn/sbj/sbsq/sphfwfl/200902/W020250103395269456465.pdf | CNIPA는 비표준 항목도 분류원칙에 맞는 구체적 명칭이어야 한다고 안내하고, 2025 구분표 수정본은 类似群/교차검토 구조가 계속 갱신된다는 점을 보여 준다 | 2026-03-31 | 2026-03-31 | Body-ready | 분류 가이드와 구분표 개정본 확인 + 본문 반영 시 Body-ready | Codex | 제3장 표준명칭 분리 기준과 제5장 `类似商品和服务区分表` handoff 표에 반영 완료. 중국 원문 용어 병기 유지 |
 | CN-MAD-001 | madrid | Ch4, Ch14 | 중국은 Madrid System 회원국이며, 국제등록 지정 후에도 보호 범위는 지정국의 국내법에 따라 정해진다 | WIPO | Tier 3 | https://www.wipo.int/en/web/office-china ; https://www.wipo.int/en/web/madrid-system/members/index | WIPO는 중국이 1989년에 Madrid System에 가입했고, 각 지정국의 국내법이 국제등록의 보호 범위를 정한다고 설명한다 | 2026-03-31 | 2026-03-31 | Body-ready | WIPO 회원 정보 일치 + 본문 반영 시 Body-ready | Codex | 직접출원 vs 마드리드의 우열은 법적 사실이 아니라 실무 판단이므로 본문에서는 분기표로 다룰 것 |
 | CN-NORM-001 | terminology | Ch10, Ch12, Ch14 | 기관명과 절차명 표준안: CNIPA, SAMR, 해관총서/해관, 인민법원, Madrid System, 商标侵权判断标准, 知识产权海关保护备案 | CNIPA/WIPO/Customs/Court | Tier 1 | https://www.cnipa.gov.cn/art/2019/7/30/art_95_28179.html ; https://www.wipo.int/en/web/office-china ; https://online.customs.gov.cn/static/pages/guides/002029002000/002029002000.html ; https://www.court.gov.cn/upload/file/2025/04/21/22/33/20250421223324_48280.pdf | 각 기관이 자사 공식 명칭과 절차명을 자사 문서에서 사용하고 있어, 한국어 본문 표준화의 근거로 삼을 수 있다 | 2026-03-31 | 2026-03-31 | Body-ready | 공식 문서 2건 이상 일치 + 본문 반영 시 Body-ready | Codex | 제10장 공식 용어 표준안과 관련 장 전반의 용어 통일에 반영 완료 |
+
+## Sprint handoff
+
+이번 스프린트에서 writer가 바로 쓰는 우선 6장 handoff는 아래 기준으로 잠근다.
+
+| chapter_ref | 우선 반영할 claim | writer handoff |
+| --- | --- | --- |
+| Ch2 | CN-FIL-001, CN-NORM-001 | 표기 전략에서 search/filing으로 넘길 공식 용어와 지정상품 입력 문구를 같은 언어로 유지한다 |
+| Ch3 | CN-FIL-001 | `类似商品和服务区分表` 기준 표준명칭, 수리가능 명칭, 类似群 접점을 search 브리프에 바로 연결한다 |
+| Ch5 | CN-FEE-001, CN-FIL-001, CN-MAD-001 | 비용·제출 채널·직접출원/Madrid 분기 메모를 출원 데이터 패킷에 같이 묶는다 |
+| Ch6 | CN-DL-001, CN-DL-002 | 공고 후 3개월, 거절 통지 후 15일 창을 fight / narrow / refile / drop decision table과 함께 잠근다 |
+| Ch7 | CN-EVD-001 | 2개월 triage와 부분 유지 판단표를 channel-based evidence ops와 owner-user-linkage 메모로 연결한다 |
+| Ch10 | CN-ENF-001, CN-NORM-001 | 행정·플랫폼·세관·사법 출구와 공식 기관명 표준안을 같은 incident memo에서 사용한다 |
+
+이 표의 목적은 fact log를 다시 풀어 읽지 않아도, 우선 6장 writer가 어떤 claim을 어떤 운영표와 연결해야 하는지 한눈에 보이게 만드는 데 있다.
+
+## Sprint handoff
+
+이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 여섯 장이다.
+
+| chapter_ref | 우선 연결할 claim_id | handoff 메모 |
+| --- | --- | --- |
+| Ch2 | CN-FIL-001 | 표기 잠금 결과를 search / filing 입력값으로 넘기는 기준 유지 |
+| Ch3 | CN-FIL-001 | `类似商品和服务区分表` 표준명칭과 search 브리프 연결 강조 |
+| Ch5 | CN-FEE-001, CN-FIL-001 | 예산·제출 메모와 지정상품 handoff 표 유지 |
+| Ch6 | CN-DL-001, CN-DL-002 | 공고 후 3개월, 거절 후 15일 triage를 사건 보드 기준일과 같이 운영 |
+| Ch7 | CN-EVD-001 | 2개월 제출 패킷과 부분 유지 판단표를 evidence vault와 연결 |
+| Ch10 | CN-ENF-001, CN-NORM-001 | 행정/플랫폼/세관/사법 quick route map과 공식 용어표를 같이 유지 |

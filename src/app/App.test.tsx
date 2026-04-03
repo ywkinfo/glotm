@@ -469,7 +469,7 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByText("Sprint 1 잠금 6장 보강 완료")).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).getByText("Sprint 1 우선 6장 심화 · search density 상승")).toBeInTheDocument();
   });
 
   it("renders the operator intro section after the pilot scope with an external profile link", () => {

@@ -140,6 +140,20 @@ UK를 병행하더라도 launch timing이 다르면 갱신과 evidence 수집을
 
 이 표를 운영 시트에 붙여 두면 제10장의 distribution 이슈와도 연결된다. 유럽 등록 이후의 핵심은 자료를 쌓는 일이 아니라, 그 자료가 어느 권리 구조를 설명하는지 즉시 말할 수 있게 만드는 일이다.
 
+## evidence quality scorecard
+
+evidence vault는 자료 수량보다 설명 가능성이 중요하다. 그래서 분기 점검 때 아래 scorecard를 같이 쓰는 편이 낫다.
+
+| 항목 | pass 기준 |
+| --- | --- |
+| 날짜 | 사용 시점이 명확하다 |
+| 채널 | 어떤 시장/채널 사용인지 보인다 |
+| 표장 버전 | register와 실제 사용형 연결이 된다 |
+| owner linkage | owner와 actual user 관계가 설명된다 |
+| goods/services | 어떤 범위를 방어하는 자료인지 바로 보인다 |
+
+이 scorecard를 두면 자료가 많아도 “설명 가능한 evidence인가”를 빠르게 걸러낼 수 있다.
+
 ## distributor / marketplace seller evidence triage
 
 validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, distributor나 marketplace seller가 만든 증거를 owner 권리와 어떻게 연결해 설명할지 모호한 상태다. 그래서 이 장에서는 “판매 흔적이 있나”보다 “그 판매 흔적이 누구의 genuine use로 읽혀야 하나”를 먼저 구분하는 편이 낫다.
@@ -172,7 +186,30 @@ validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, d
 | --- | --- |
 | 회원국별 세부 절차 차이와 개별국 집행 디테일은 본문 전면 확장 범위를 넘어감 | EU 공통 프레임 중심으로 유지하고, 개별국 차이는 메모 수준으로만 통제 |
 
+## renewal / proof-of-use handoff
+
+이 장의 출력값은 renewal 달력과 proof-of-use 대응으로 바로 이어져야 한다. 아래 handoff를 남기면 validate lane 설명이 더 안정적이다.
+
+| 이 장의 출력값 | 다음 운영 파일로 넘길 것 |
+| --- | --- |
+| owner-user-evidence 연결표 | cancellation / proof-of-use 대응 메모 |
+| EU / UK 분기 캘린더 | renewal calendar |
+| evidence quality scorecard | 분기 운영 루틴 |
+| weak goods/services 표시 | 포트폴리오 정리 후보 |
+
 이 메모를 명시해 두면, 아직 넓히지 않은 범위를 숨기지 않으면서도 validate lane의 기준선을 명확히 유지할 수 있다.
+
+## 등록 후 90일 stabilization board
+
+등록 직후 90일은 evidence 시스템을 굳히는 핵심 구간이다. 이 시점에 owner-user-linkage와 EU / UK 분기 row를 잠그지 않으면, 이후 분기 루틴이 자료 찾기로 흘러가기 쉽다.
+
+| 시점 | 반드시 잠글 것 | owner |
+| --- | --- | --- |
+| 등록 후 30일 | owner-user-evidence 연결표, 핵심 사용국 | IP |
+| 등록 후 60일 | 채널별 evidence naming rule, UK row 필요 여부 | IP + 사업팀 |
+| 등록 후 90일 | weak goods/services 표시, renewal prep note | IP |
+
+이 보드를 두면 제8장이 단순 보관 지침이 아니라, 등록 직후 어떤 구조를 먼저 굳혀야 genuine use와 renewal 설명이 흔들리지 않는지 보여 준다.
 
 ## EuTm용 체크리스트
 

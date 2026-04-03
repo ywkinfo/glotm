@@ -99,7 +99,7 @@
 - 14장 구조 유지
 - 핵심 장의 본문 밀도 대폭 확대
 - 장별 최소 실행형 체크리스트 1개 이상 포함
-- search entries를 현재 192에서 다음 목표 220~300 수준으로 확대
+- search entries를 현재 218에서 다음 목표 235~300 수준으로 확대
 
 ### v1 품질 목표
 
@@ -157,6 +157,7 @@
 - `EuTm/Harness/Architecture.md` 수정
 - `EuTm/Harness/Content-Spec.md` 수정
 - 현재 `live guide` 상태와 공개본 기준을 일관되게 정리
+- 현재 기준 수치를 `14장 / 검색 엔트리 218`으로 잠근다.
 
 ### 완료 기준
 - 문서 간 상태 충돌이 없음
@@ -185,39 +186,7 @@
 
 ---
 
-## Phase 2 — master.md를 장별 원고로 분해
-
-### 목표
-단일 초안을 장별 유지보수 가능한 원천 원고 체계로 전환한다.
-
-### 작업
-- 현재 `master.md`의 14장을 `chapters/*.md`로 분리
-- 각 장의 H1 제목을 manifest title과 일치시킴
-- `master.md`는 수동 편집보다 조립 결과물로 관리
-
-### 권장 파일 예시
-- `01_system-map.md`
-- `02_right-selection.md`
-- `03_portfolio-priority.md`
-- `04_clearance-risk.md`
-- `05_filing-route.md`
-- `06_absolute-grounds.md`
-- `07_opposition-coexistence.md`
-- `08_post-registration-evidence.md`
-- `09_cancellation-invalidity.md`
-- `10_licensing-distribution-exhaustion.md`
-- `11_platform-domain-digital-enforcement.md`
-- `12_customs-border-measures.md`
-- `13_member-state-forum-selection.md`
-- `14_governance-raci.md`
-
-### 완료 기준
-- 공개본 변경이 장별 원고에서 시작되도록 전환 완료
-- `master.md` 수동 편집 의존 제거
-
----
-
-## Phase 3 — 핵심 6장 우선 심화
+## Phase 2 — 핵심 6장 우선 심화와 fact verification 승격
 
 ### 목표
 reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
@@ -230,6 +199,11 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 5. 제7장 이의신청과 공존 전략
 6. 제8장 등록 후 사용, 갱신, 증거 관리
 
+### 작업
+- 핵심 6장 중 controlled Eu/UK scope를 깨지 않는 장부터 우선 보강한다.
+- `eu_tm_fact_verification_log.md`의 Verified 항목을 해당 장의 판단표와 운영 메모에 승격한다.
+- `eu_tm_source_register.md`를 실제 참조 목록으로 유지한다.
+
 ### 각 장의 최소 기준
 - H3 기준 최소 6개 이상
 - 실행형 표 또는 체크리스트 최소 1개
@@ -239,6 +213,22 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 ### 완료 기준
 - 검색 엔트리 수의 가시적 증가
 - `/europe` 검색 결과가 장 제목 나열이 아니라 실질 섹션 탐색 수준으로 개선
+
+---
+
+## Phase 3 — 워크스페이스 게이트
+
+### 목표
+`EuTm` 단독 lane이 root gate를 반복하지 않고도 merge-ready 상태에 도달하게 만든다.
+
+### 작업
+- `npm run content:europe`
+- 장 제목, 헤딩 구조, 표 형식, 검색 엔트리 증가 폭 확인
+- `/europe` 홈, 챕터, 검색, continue reading 흐름 스모크
+
+### 완료 기준
+- `content:europe`가 통과한다.
+- docs sync, controlled scope, 핵심 장 심화가 같은 기준선으로 설명된다.
 
 ---
 
@@ -263,28 +253,19 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ---
 
-## Phase 5 — 사실 검증 승격
+## Phase 5 — 통합 머지와 shared root gate
 
 ### 목표
-초안 문장을 publish-grade 실무 문장으로 승격한다.
+`EuTm` lane 결과를 세 가이드 통합 검증 체계에 올린다.
 
 ### 작업
-- `eu_tm_fact_verification_log.md`의 Pending 항목 순차 검증
-- 검증된 사실만 본문 반영
-- `eu_tm_source_register.md`를 실제 참조 목록으로 정리
-
-### 우선 검증 항목
-1. EUTM vs national filing split
-2. Opposition timeline
-3. Proof of use window
-4. Renewal timing and grace period
-5. UK parallel track handling
-6. Madrid linkage
-7. Customs application scope
+- 글로벌 스프린트 머지 순서에서 `EuTm`을 세 번째로 병합한다.
+- `EuTm` lane은 개별 root gate를 반복하지 않고, shared verification lane에 workspace gate 결과만 넘긴다.
+- 리더가 통합 후 `npm run test:content`, `npm run health:runtime`, `npm run health:release`를 1회 실행한다.
 
 ### 완료 기준
-- 본문에서 "추후 확인" 식 서술 제거
-- 고변동 정보가 출처 기준으로 정리됨
+- `EuTm`의 lane 산출물이 merge-ready 상태로 통합된다.
+- shared root gate가 1회 통과한다.
 
 ---
 
@@ -319,12 +300,11 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ### Sprint 2
 - Phase 2 완료
-- 장별 원고 분리
-- 조립본 재생성 체계 고정
+- 핵심 6장 심화와 fact verification 승격
 
 ### Sprint 3
 - Phase 3 진행
-- 핵심 6장 심화
+- workspace gate 통과
 
 ### Sprint 4
 - Phase 4 진행
@@ -332,8 +312,7 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ### Sprint 5
 - Phase 5 진행
-- fact verification 반영
-- 최종 문체 정리
+- 통합 머지와 shared root gate
 
 ---
 
@@ -343,10 +322,10 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 1. `manifest.json`, `build-master.ts`, `qa-content.ts`가 존재한다.
 2. `master.md`가 조립 결과물로 관리된다.
-3. 14개 장이 모두 장별 원고 파일로 분리돼 있다.
+3. 14개 장이 모두 장별 원고 파일로 이미 분리된 상태를 유지한다.
 4. 핵심 6장이 초안 수준을 벗어나 실무형 본문 구조를 갖는다.
-5. search entries가 baseline 180을 유지하면서 추가 심화 시 더 증가한다.
-6. `npm run build` 기준 루트 셸이 정상 동작한다.
+5. search entries가 baseline 218을 유지하면서 추가 심화 시 더 증가한다.
+6. `content:europe`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
 7. `README`, `Architecture`, `Content-Spec`, research docs의 상태 설명이 일치한다.
 
 ---
@@ -371,8 +350,10 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 1. 상태 문서 정합화
 2. baseline 파이프라인 유지
-3. 핵심 6장 심화
-4. 후반 장 보강
-5. 사실 검증 승격
+3. 핵심 6장 심화와 fact verification 승격
+4. workspace gate
+5. 후반 장 보강과 통합 shared root gate
+
+글로벌 병렬 스프린트에서는 `EuTm`을 dedicated single lane으로 운영하고, worker는 `EuTm` 디렉터리와 `eu_tm_fact_verification_log.md` 중심으로만 수정한다. 루트 메타데이터와 최종 Gateway/health sync는 리더가 마지막에 처리한다.
 
 이 순서를 지키면 `EuTm`은 현재의 live regional guide baseline에서, 루트 `GloTm` 셸에서 LatTm 다음 수준으로 더 깊게 읽히는 권역형 실무 가이드로 성장할 수 있다.
