@@ -191,9 +191,9 @@ function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
     .join(" / ");
 }
 
-function buildRelatedGuideSummary(report?: ReportMeta) {
+function buildRelatedGuideSummary(report?: ReportMeta): string | null {
   if (!report || report.relatedGuideLinks.length === 0) {
-    return "";
+    return null;
   }
 
   return report.relatedGuideLinks.map((link) => link.label).join(" · ");

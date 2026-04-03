@@ -37,8 +37,7 @@ function parseArgs(argv: string[]) {
   };
 }
 
-function formatMarkdown() {
-  const { statuses } = parseArgs(process.argv.slice(2));
+function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>) {
   const report = buildPortfolioHealthReport(products, statuses);
   const lines: string[] = [];
 
@@ -118,7 +117,7 @@ function main() {
     return;
   }
 
-  console.log(formatMarkdown());
+  console.log(formatMarkdown(statuses));
 }
 
 main();

@@ -1,70 +1,38 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-type HeadingNode = {
-  title: string;
-  children?: HeadingNode[];
-};
+import {
+  flattenHeadingTitles,
+  loadManuscriptData
+} from "./manuscriptTestUtils";
 
-type GeneratedChapter = {
-  title: string;
-  headings: HeadingNode[];
-};
-
-type GeneratedDocumentData = {
-  meta: {
-    chapterCount: number;
-  };
-  chapters: GeneratedChapter[];
-};
-
-type GeneratedSearchEntry = {
-  sectionTitle: string;
-};
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const documentData = JSON.parse(
-  readFileSync(path.resolve(__dirname, "../../MexTm/content/generated/document-data.json"), "utf-8")
-) as GeneratedDocumentData;
-const searchEntries = JSON.parse(
-  readFileSync(path.resolve(__dirname, "../../MexTm/content/generated/search-index.json"), "utf-8")
-) as GeneratedSearchEntry[];
-
-function flattenHeadingTitles(headings: HeadingNode[] = []): string[] {
-  return headings.flatMap((heading) => [
-    heading.title,
-    ...flattenHeadingTitles(heading.children ?? [])
-  ]);
-}
+const { documentData, searchEntries } = loadManuscriptData(import.meta.url, "../../MexTm");
 
 describe("MexTm manuscript", () => {
   it("ships the expected 15-chapter Mexico manuscript structure", () => {
     expect(documentData.meta.chapterCount).toBe(15);
-    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
       "제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원) 비교"
     );
-    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
       "제11장 도메인(.MX)·디자인·저작권(인다우토르)과의 결합 전략"
     );
-    expect(documentData.chapters.map((chapter: { title: string }) => chapter.title)).toContain(
+    expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
       "제13장 실무 사례·판례 요약: 한국 기업이 멕시코 상표 분쟁에서 배워야 할 것"
     );
   });
 
   it("preserves the buyer-entry sections in the locked Mexico chapters", () => {
     const overviewChapter = documentData.chapters.find(
-      (chapter: GeneratedChapter) => chapter.title === "제1장 멕시코 상표 제도 개요와 IMPI 운영 구조"
+      (chapter) => chapter.title === "제1장 멕시코 상표 제도 개요와 IMPI 운영 구조"
     );
     const routeChapter = documentData.chapters.find(
-      (chapter: GeneratedChapter) => chapter.title === "제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원) 비교"
+      (chapter) => chapter.title === "제4장 출원 경로 선택: 직접출원 vs 마드리드(국제출원) 비교"
     );
     const controlChapter = documentData.chapters.find(
-      (chapter: GeneratedChapter) => chapter.title === "제11장 도메인(.MX)·디자인·저작권(인다우토르)과의 결합 전략"
+      (chapter) => chapter.title === "제11장 도메인(.MX)·디자인·저작권(인다우토르)과의 결합 전략"
     );
     const caseChapter = documentData.chapters.find(
-      (chapter: GeneratedChapter) => chapter.title === "제13장 실무 사례·판례 요약: 한국 기업이 멕시코 상표 분쟁에서 배워야 할 것"
+      (chapter) => chapter.title === "제13장 실무 사례·판례 요약: 한국 기업이 멕시코 상표 분쟁에서 배워야 할 것"
     );
 
     expect(flattenHeadingTitles(overviewChapter?.headings)).toContain("buyer-entry decision map");
@@ -81,7 +49,7 @@ describe("MexTm manuscript", () => {
   it("keeps the Mexico search index dense enough for the locked sprint slices", () => {
     expect(searchEntries.length).toBeGreaterThanOrEqual(280);
 
-    const sectionTitles = new Set(searchEntries.map((entry: { sectionTitle: string }) => entry.sectionTitle));
+    const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));
 
     expect(sectionTitles.has("buyer-entry decision map")).toBe(true);
     expect(sectionTitles.has("buyer-entry 경로 선택표")).toBe(true);
