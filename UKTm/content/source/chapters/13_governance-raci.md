@@ -40,6 +40,16 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 | 반기 | licence / distributor / naming governance review | contract-risk note |
 | 연간 | renewals, comparable rights, HMRC high-risk list review | annual rights plan |
 
+분기 `portfolio memo`는 단순 회의 메모보다 운영 산출물에 가깝게 두는 편이 좋다. 최소한 아래 네 가지는 한 표로 남겨 두는 것이 좋다.
+
+| mark | 상태 | 보완 항목 | 다음 판단 |
+| --- | --- | --- | --- |
+| core mark | 정상 | 없음 | 유지 |
+| weak-use mark | 보완 | UK 거래 문서 부족 | reinforce |
+| legacy mark | 공백 | owner-user linkage 미정리 | drop 또는 narrow 검토 |
+
+여기서 상태값은 `정상 / 보완 / 공백`으로 단순화하고, 다음 판단은 `drop / narrow / reinforce / hold` 중 하나로 고정하면 분기 리뷰 속도가 훨씬 빨라진다.
+
 ## 보고 체계
 
 경영진 보고는 길 필요가 없다. 핵심 권리 변화, 고위험 사건, 다음 승인 필요 항목만 짧게 정리하면 된다. 중요한 것은 보고서 길이가 아니라 같은 지표를 반복적으로 본다는 점이다.
@@ -57,3 +67,4 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 - 외부 대리인에게 실질 `A`가 몰려 있지 않은가
 - evidence vault와 renewal tracker의 owner가 분리되지 않아 병목이 생기지 않는가
 - 월간 action board와 분기 portfolio memo를 누가 배포하는지 정했는가
+- evidence owner가 브랜드팀, 사업팀, 법무/IP 중 어디에 있는지 mark별로 분명한가
