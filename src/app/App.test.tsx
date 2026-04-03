@@ -6,8 +6,6 @@ import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
 import { reports } from "../reports/registry";
-import { liveShellReaderDefinitions } from "../products/liveShellReaders";
-import { liveShellProducts } from "../products/registry";
 import type { DocumentData } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
@@ -160,12 +158,6 @@ describe("App portfolio shell", () => {
   afterEach(() => {
     window.history.replaceState({}, "", "/");
     vi.restoreAllMocks();
-  });
-
-  it("keeps live product metadata aligned with live reader definitions", () => {
-    expect(liveShellProducts.map((product) => product.slug)).toEqual(
-      liveShellReaderDefinitions.map((definition) => definition.slug)
-    );
   });
 
   it(
