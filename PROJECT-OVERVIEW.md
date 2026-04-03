@@ -21,8 +21,8 @@
 - `MexTm`: 15개 챕터, 검색 엔트리 278개. `growth` tier.
 - `ChaTm`: 15개 챕터, 검색 엔트리 186개. `growth` tier.
 - `EuTm`: 14개 챕터, 검색 엔트리 196개. `validate` tier.
-- `UsaTm`: 14개 챕터, 검색 엔트리 165개. `incubate` tier.
-- `JapTm`: 15개 챕터, 검색 엔트리 75개. `incubate` tier.
+- `UsaTm`: 14개 챕터, 검색 엔트리 171개. `incubate` tier.
+- `JapTm`: 15개 챕터, 검색 엔트리 138개. `incubate` tier.
 - `UKTm`: 14개 챕터, 검색 엔트리 90개. `incubate` tier.
 - scorecard 기준 메타데이터는 `src/products/registry.ts`와 `src/products/scorecard.ts`에서 함께 관리한다.
 - 세부 실행 규칙은 `CODEX-INSTRUCTIONS.md`와 `Harness/` 문서에서 관리한다.
@@ -70,12 +70,12 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 | 가이드 | 유형 | 전략 tier | lifecycle | 챕터 수 | 검색 엔트리 | 현재 의미 |
 |------|------|------|------|------|------|------|
-| `LatTm` | 권역형 | flagship | pilot | 20 | 780 | 기준 프레임 보호 |
+| `LatTm` | 권역형 | flagship | mature | 20 | 780 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | beta | 15 | 278 | buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | beta | 15 | 186 | 중국 실무 밀도 강화 트랙 |
-| `EuTm` | 권역형 | validate | pilot | 14 | 196 | 권역 검증·정합성 안정화 |
-| `UsaTm` | 단일국가 | incubate | beta | 14 | 165 | lighter track |
-| `JapTm` | 단일국가 | incubate | beta | 15 | 75 | lighter track |
+| `EuTm` | 권역형 | validate | beta | 14 | 196 | 권역 검증·정합성 안정화 |
+| `UsaTm` | 단일국가 | incubate | beta | 14 | 171 | lighter track |
+| `JapTm` | 단일국가 | incubate | beta | 15 | 138 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 90 | lighter track · draft 공개본 |
 
 ### 승격 기준
@@ -92,7 +92,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
 - `Brief`·`Gateway`: guide 본문 보강 뒤 buyer-facing cadence와 진입 신뢰 보강
-- `JapTm`·`UKTm`·`UsaTm`: verification refresh, 문서 정합성, smoke QA 중심 선택 보강
+- `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm pilot 유지, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -136,11 +136,11 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 가이드다. 현재 `document-data.json` 기준 14개 챕터와 165개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/usa` 경로에 연결된 상태다. 최근에는 장별 원고 확장과 문체 정리를 거치며 검색 인덱스 밀도도 함께 증가했다. 다만 현재 `beta` 표시는 정렬 기간의 grandfathered 상태로 보고, 다음 scorecard review 전까지는 verification refresh와 structured QA 보강을 우선한다.
+`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 가이드다. 현재 `document-data.json` 기준 14개 챕터와 171개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/usa` 경로에 연결된 상태다. 이번 verification refresh에서 local full pipeline과 research review를 다시 통과해 `beta`를 유지한다. 다음 우선순위는 대형 확장보다 standard QA를 반복 재현하면서 운영 문구와 reader utility를 다듬는 일이다.
 
 ### JapTm (일본 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`JapTm`은 일본 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 75개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/japan` 경로에 연결된 상태다. 현재 `beta` 표시는 grandfathered 정렬 상태로 유지하고 있으며, 우선순위는 대형 확장보다 verification refresh와 핵심 장 구조화 보강이다.
+`JapTm`은 일본 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 138개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/japan` 경로에 연결된 상태다. verification refresh와 density push 뒤에 root standard verification까지 통과하면서 `beta`와 `standard QA` 상태로 정렬했다. 다음 우선순위는 대형 확장보다, 지금 만든 검색/운영 utility가 실제 reader flow에서 잘 작동하는지 반복 검증하며 lighter track을 안정적으로 유지하는 일이다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
@@ -152,7 +152,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 early track
 
-`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 90개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 다만 현재 Gateway 메시지에서는 다른 성숙한 country guide와 동등 승격하지 않고, draft 공개본 성격의 early track으로 약하게 노출한다.
+`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 90개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 이번 verification refresh에서 fact log와 local full pipeline을 다시 확인했고, lifecycle은 `pilot`로 유지한다. Gateway에서는 계속 draft 공개본 성격의 early track으로 약하게 노출하되, verification freshness와 고위험 gap은 이번 라운드 기준으로 정리된 상태다.
 
 ### 향후 확장 방향
 
@@ -188,8 +188,8 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | LatTm 콘텐츠 빌드 | `build-master.ts` → `qa-content.ts` → `build-content.ts` |
 | LatTm 생성 산출물 | 20개 챕터 / 검색 엔트리 780개 |
 | MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 278개 |
-| UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 165개 |
-| JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 75개 |
+| UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 171개 |
+| JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 138개 |
 | ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 186개 |
 | EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 196개 |
 | UKTm 생성 산출물 | 14개 챕터 / 검색 엔트리 90개 |
