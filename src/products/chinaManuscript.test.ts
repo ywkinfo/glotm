@@ -83,11 +83,17 @@ describe("ChaTm final manuscript", () => {
     expect(flattenHeadingTitles(examinationChapter?.headings)).toContain(
       "사건 기록 보드는 반드시 표준화한다"
     );
+    expect(flattenHeadingTitles(examinationChapter?.headings)).toContain(
+      "공식 기한 잠금표"
+    );
     expect(appendixChapter?.headings.map((heading: { title: string }) => heading.title)).toContain(
       "부록 D. 2026-03-31 검증 메모"
     );
     expect(appendixChapter?.headings.map((heading: { title: string }) => heading.title)).toContain(
       "부록 E. 용어 표준화 초안"
+    );
+    expect(appendixChapter?.headings.map((heading: { title: string }) => heading.title)).toContain(
+      "부록 F. 2026-04-03 release-readiness 메모"
     );
   });
 
@@ -100,6 +106,8 @@ describe("ChaTm final manuscript", () => {
     expect(sectionTitles.has("마드리드가 유리한 경우")).toBe(true);
     expect(sectionTitles.has("거절 대응은 사건별이 아니라 포트폴리오 기준으로 본다")).toBe(true);
     expect(sectionTitles.has("출구 선택 매트릭스")).toBe(true);
+    expect(sectionTitles.has("2개월 제출 패킷 표준안")).toBe(true);
+    expect(sectionTitles.has("행정·플랫폼·세관·사법 quick route map")).toBe(true);
     expect(sectionTitles.has("부록 D. 2026-03-31 검증 메모")).toBe(true);
   });
 });

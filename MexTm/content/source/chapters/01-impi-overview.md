@@ -101,6 +101,20 @@ IMPI라는 행정기관을 중심으로 상당 부분이 움직인다는 점이 
 
 이 표를 장 초반에 두면 제4장 경로 선택과 제6장 공고 대응에서 같은 이름을 반복 사용할 수 있다.
 
+### 시스템별 owner map
+
+멕시코 제도를 안다는 것은 기관 이름을 외우는 데서 끝나지 않는다. 실제로는 어느 시스템을 누가 보고, 어느 단계에서 어떤 owner가 움직이는지 먼저 정해야 절차가 운영으로 바뀐다.
+
+| 시스템/기관 | 누가 주로 볼 것인가 | 바로 남길 메모 |
+| --- | --- | --- |
+| `Tu cuenta PASE` / `Marca en Línea` | IP + 대리인 | 제출 계정, 결제 라인 |
+| `MARCia` / `MARCANET` | IP + 브랜드팀 | search 결과와 후보 표장 비교 |
+| `ClasNiza` | IP + 사업팀 | core/adjacent goods/services 메모 |
+| `SIGA/Gaceta` | IP | opposition, office action 모니터링 일정 |
+| IMPI 행정 절차 | IP + 외부대리인 | 사건번호, owner, escalation 라인 |
+
+이 owner map이 있으면 제1장이 제도 소개에서 멈추지 않고, buyer-entry control sheet의 실제 담당 구조로 바로 이어진다.
+
 
 ### 상표는 등록, 유지, 집행이 따로 놀지 않는다
 

@@ -174,6 +174,31 @@ function formatSearchDensity(product: ProductMeta) {
   return getSearchDensity(product).toFixed(1);
 }
 
+function getPriorityLaneProducts(products: ProductMeta[]) {
+  const prioritySlugs = ["china", "mexico", "europe"];
+
+  return prioritySlugs
+    .map((slug) => products.find((product) => product.slug === slug))
+    .filter((product): product is ProductMeta => Boolean(product));
+}
+
+function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
+  return getPriorityLaneProducts(products)
+    .map(
+      (product) =>
+        `${product.shortLabel} ${getLifecycleStatusLabel(product.lifecycleStatus)} · QA ${getQaLevelLabel(product.qaLevel)} · gap ${product.highRiskVerificationGapCount}`
+    )
+    .join(" / ");
+}
+
+function buildRelatedGuideSummary(report?: ReportMeta) {
+  if (!report || report.relatedGuideLinks.length === 0) {
+    return "";
+  }
+
+  return report.relatedGuideLinks.map((link) => link.label).join(" · ");
+}
+
 function buildGuideTrackingParams(
   product: ProductMeta,
   surface: string,
@@ -596,6 +621,8 @@ function GatewayLandingPage() {
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
   const latestReport = getLatestReport();
+  const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
+  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport);
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
     {
@@ -897,6 +924,15 @@ function GatewayLandingPage() {
         <p className="gateway-section-copy">
           사용 증거, 플랫폼 대응, 긴급 의사결정처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
         </p>
+        {latestReportGuideSummary ? (
+          <p className="gateway-section-copy gateway-section-copy--spaced">
+            현재 front report인 {latestReport?.title}은 {latestReportGuideSummary}와 바로 이어 읽히도록 배치해, 공통 운영 질문이 guide 바깥에서 따로 놀지 않게 잠그고 있습니다.
+          </p>
+        ) : null}
+        <ul className="gateway-bullet-list">
+          <li>{"현재 우선순위: ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer"}</li>
+          <li>현재 우선 레인 상태: {priorityLaneStatusSummary}</li>
+        </ul>
         <div className="gateway-cta-actions">
           <FullDocumentLink
             className="gateway-cta-link"
@@ -1200,6 +1236,9 @@ function BriefIssuePage() {
 
 function ReportArchivePage() {
   const latestReport = getLatestReport();
+  const orderedProducts = orderGatewayProducts(liveShellProducts);
+  const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
+  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport);
 
   useEffect(() => {
     setRuntimeDocumentTitle("Special Report");
@@ -1216,6 +1255,9 @@ function ReportArchivePage() {
           </p>
           <p className="gateway-summary">
             가이드가 국가별 실행 맥락을 정리한다면, 리포트는 사용 증거, 플랫폼 대응, 긴급 의사결정처럼 교차 관할권 문제를 별도 레인으로 묶어 보여줍니다.
+          </p>
+          <p className="gateway-summary gateway-summary--supporting">
+            지금은 ChaTm·MexTm·EuTm에서 buyer-facing 밀도를 먼저 끌어올리고, report는 {latestReportGuideSummary || "관련 live guide"}에 공통으로 걸리는 운영 질문만 front placement합니다. 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
           </p>
           <div className="gateway-actions">
             {latestReport ? (

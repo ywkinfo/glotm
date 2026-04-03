@@ -40,7 +40,7 @@
 ### 현재 리스크
 
 1. 기반 파이프라인은 갖춰졌지만 `LatTm` 대비 장별 밀도와 실무 사례 깊이가 아직 낮다.
-2. 리서치 검증 로그의 다수 핵심 항목은 이미 `Verified` 상태지만, 갱신 세부 문구와 일부 운영 표현은 아직 후속 정리가 필요하다.
+2. 리서치 검증 로그의 핵심 항목은 이미 본문 반영 가능한 수준까지 정리됐지만, EU 공통 프레임과 UK 병행 판단을 controlled scope로 유지한다는 설명을 문서와 reader copy에서 계속 일치시켜야 한다.
 3. 루트 전략 문서와 개별 워크스페이스 문서가 같은 속도로 갱신되지 않으면 shipped 상태 설명이 다시 어긋날 수 있다.
 4. 검색 엔트리는 baseline을 넘었지만, 핵심 장의 섹션 탐색 밀도는 더 높일 여지가 있다.
 
@@ -92,6 +92,7 @@
 - `content/source/master.md`를 조립 결과물로 관리 중
 - `scripts/build-master.ts`, `scripts/qa-content.ts` 운영 중
 - `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`는 현재 워크스페이스 기준 상태를 반영한다
+- 런타임 포지션은 `validate tier · beta lifecycle`이며, 범위는 EU 공통 프레임 + UK 병행 판단까지의 controlled scope로 유지한다
 
 ### v1 콘텐츠 목표
 

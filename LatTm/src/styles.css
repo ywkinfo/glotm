@@ -1553,7 +1553,7 @@ input {
     position: fixed;
     top: 5.4rem;
     bottom: 1rem;
-    z-index: 60;
+    z-index: 80;
     width: min(86vw, 340px);
     max-height: none;
     visibility: hidden;
@@ -1584,7 +1584,7 @@ input {
   .mobile-scrim {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 75;
     display: block;
     border: 0;
     background: rgba(22, 27, 29, 0.32);

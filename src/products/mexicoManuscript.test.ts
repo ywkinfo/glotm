@@ -68,10 +68,14 @@ describe("MexTm manuscript", () => {
     );
 
     expect(flattenHeadingTitles(overviewChapter?.headings)).toContain("buyer-entry decision map");
+    expect(flattenHeadingTitles(overviewChapter?.headings)).toContain("시스템별 owner map");
     expect(flattenHeadingTitles(routeChapter?.headings)).toContain("buyer-entry 경로 선택표");
+    expect(flattenHeadingTitles(routeChapter?.headings)).toContain("직접출원 vs 마드리드 readiness 보드");
     expect(flattenHeadingTitles(controlChapter?.headings)).toContain("통제 포트폴리오 보드");
+    expect(flattenHeadingTitles(controlChapter?.headings)).toContain("파트너 종료 asset recovery pack");
     expect(flattenHeadingTitles(caseChapter?.headings)).toContain("사례 회수 decision table");
     expect(flattenHeadingTitles(caseChapter?.headings)).toContain("사례별 예방 기준표");
+    expect(flattenHeadingTitles(caseChapter?.headings)).toContain("사례 회수 readiness 체크표");
   });
 
   it("keeps the Mexico search index dense enough for the locked sprint slices", () => {
@@ -83,5 +87,8 @@ describe("MexTm manuscript", () => {
     expect(sectionTitles.has("buyer-entry 경로 선택표")).toBe(true);
     expect(sectionTitles.has("통제 포트폴리오 보드")).toBe(true);
     expect(sectionTitles.has("사례 회수 decision table")).toBe(true);
+    expect(sectionTitles.has("시스템별 owner map")).toBe(true);
+    expect(sectionTitles.has("직접출원 vs 마드리드 readiness 보드")).toBe(true);
+    expect(sectionTitles.has("파트너 종료 asset recovery pack")).toBe(true);
   });
 });

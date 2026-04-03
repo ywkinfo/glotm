@@ -82,6 +82,20 @@
 | 知识产权海关保护备案 | 지재권 해관 보호 등록 | 세관 장에서는 원문 병기 권장 |
 | 人民法院 | 인민법원 | 사법 경로 설명 시 일관 표기 |
 
+### 부록 F. 2026-04-03 release-readiness 메모
+
+Sprint 1 잠금 6장 보강 뒤에는 원고 밀도만이 아니라 실제 reader와 빌드 흐름이 계속 살아 있는지도 같이 확인해야 한다. 아래 메모는 이번 라운드에서 루트 검증 레인과 연결해 유지해야 할 최소 readiness 기준이다.
+
+| 항목 | 이번 라운드 기준 |
+| --- | --- |
+| source 수정 시작점 | `chapters/`와 fact verification log에서만 시작 |
+| 콘텐츠 조립 | `npm run content:china` 통과 유지 |
+| 루트 리더 계약 | `/china` 홈, 챕터, 검색, continue reading 흐름 유지 |
+| 루트 검증 | `npm test`, `npm run build`, `npm run build:pages:glotm` 재현 가능 상태 유지 |
+| Gateway 노출 | ChaTm 카드 summary, freshness, maturity note가 실제 상태와 충돌하지 않음 |
+
+이 메모의 목적은 새 구조를 늘리는 것이 아니라, Sprint 1 보강이 reader 계약과 release 계약을 깨지 않았는지 반복 확인하는 데 있다.
+
 ### 이 장의 운영 메모
 
 실패 패턴을 정리해 두면 조직은 같은 실수를 덜 반복한다. 중국 상표 운영의 난점은 제도가 복잡해서가 아니라, 판단을 늦추고 구조를 미루는 데서 자주 생긴다. 그래서 이 장은 사례 모음이면서 동시에 운영팀용 압축 매뉴얼 역할을 한다.

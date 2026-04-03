@@ -33,7 +33,8 @@
 - 현재 기준 검색 엔트리 수: 206
 - 파이프라인 명령: 루트에서 `npm run content:europe`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
-- 현재 상태: 권역형 구조를 유지한 채 문서 정합성 고정과 validate lane 안정화를 진행하는 live guide 기반
+- 현재 상태: `validate tier · beta lifecycle` 기준의 live regional guide
+- 현재 운영 범위: EU 공통 프레임 + UK 병행 판단까지를 controlled scope로 유지
 
 ## Editing Rules
 
@@ -49,4 +50,4 @@
 - `build-content.ts`는 `master.md`의 H2를 챕터 경계로 보고, H3-H5를 outline과 검색 섹션 단위로 사용한다.
 - 챕터 도입부는 summary와 overview search entry의 재료가 된다.
 - 외부 링크는 유럽 상표 관련 공식 도메인 목록과 대조해 `official-link` 클래스를 부여한다.
-- 이번 스프린트의 우선 착수 장은 `제2장`과 `제8장`이며, 목적은 권리 선택·사용·갱신·evidence 운영 구조를 먼저 안정화하는 데 있다.
+- 이번 스프린트의 우선 착수 장은 `제2장`과 `제8장`이며, 목적은 권리 선택·사용·갱신·evidence 운영 구조를 먼저 안정화하고 그 설명을 EU/UK 기준선에 맞춰 잠그는 데 있다.
