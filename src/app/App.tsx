@@ -961,7 +961,7 @@ function GatewayLandingPage() {
           {validateProducts.length > 0 ? (
             <ProductGroup
               title="Validate"
-              description="EuTm은 범위 확대보다 docs sync, Ch2/Ch8 안정화, controlled gap 축소를 우선하는 권역 validate 가이드입니다."
+              description="EuTm은 범위 확대보다 docs sync와 EU/UK 기준선 고정을 우선하는 권역 validate 가이드입니다."
               products={validateProducts}
               surface="portfolio_validate"
             />
