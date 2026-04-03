@@ -1,7 +1,7 @@
 # GloTm Harness Constitution
 
 이 문서는 에이전트 종류와 무관하게 유지되는 영구 원칙만 다룬다.
-현재 phase, 우선순위, 활성 작업 범위는 `CODEX-INSTRUCTIONS.md`와 `PROJECT-OVERVIEW.md`에서 관리한다.
+현재 phase, 우선순위, 활성 작업 범위는 `PROJECT-OVERVIEW.md`를 기준으로 보고, 실행 명령과 현재 운영 계약은 `README.md`를 기준으로 확인한다.
 
 ## Core Principles
 

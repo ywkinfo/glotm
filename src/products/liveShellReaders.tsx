@@ -49,76 +49,78 @@ export type LiveShellReaderEntry = LiveShellReaderDefinition & {
   product: ProductMeta;
 };
 
-export const liveShellReaderDefinitions: LiveShellReaderDefinition[] = [
-  {
-    slug: "latam",
+type LiveShellReaderComponents = Omit<LiveShellReaderDefinition, "slug">;
+
+const liveShellReaderComponentsBySlug = {
+  latam: {
     ReaderRoot: LatamReaderRoot,
     HomePage: LatamHomePage,
     ChapterPage: LatamChapterPage
   },
-  {
-    slug: "mexico",
+  mexico: {
     ReaderRoot: MexicoReaderRoot,
     HomePage: MexicoHomePage,
     ChapterPage: MexicoChapterPage
   },
-  {
-    slug: "usa",
+  usa: {
     ReaderRoot: UsaReaderRoot,
     HomePage: UsaHomePage,
     ChapterPage: UsaChapterPage
   },
-  {
-    slug: "japan",
+  japan: {
     ReaderRoot: JapanReaderRoot,
     HomePage: JapanHomePage,
     ChapterPage: JapanChapterPage
   },
-  {
-    slug: "china",
+  china: {
     ReaderRoot: ChinaReaderRoot,
     HomePage: ChinaHomePage,
     ChapterPage: ChinaChapterPage
   },
-  {
-    slug: "europe",
+  europe: {
     ReaderRoot: EuropeReaderRoot,
     HomePage: EuropeHomePage,
     ChapterPage: EuropeChapterPage
   },
-  {
-    slug: "uk",
+  uk: {
     ReaderRoot: UkReaderRoot,
     HomePage: UkHomePage,
     ChapterPage: UkChapterPage
   }
-];
+} satisfies Record<string, LiveShellReaderComponents>;
 
-const readerDefinitionBySlug = new Map(
-  liveShellReaderDefinitions.map((definition) => [definition.slug, definition])
+type LiveShellReaderSlug = keyof typeof liveShellReaderComponentsBySlug;
+
+const unknownReaderDefinitionSlugs = Object.keys(liveShellReaderComponentsBySlug).filter(
+  (slug) => !liveShellProducts.some((product) => product.slug === slug)
 );
 
-const unmatchedReaderDefinitions = liveShellReaderDefinitions.filter(
-  (definition) => !liveShellProducts.some((product) => product.slug === definition.slug)
-);
-
-if (unmatchedReaderDefinitions.length > 0) {
+if (unknownReaderDefinitionSlugs.length > 0) {
   throw new Error(
-    `Unknown live shell reader definitions: ${unmatchedReaderDefinitions
-      .map((definition) => definition.slug)
-      .join(", ")}`
+    `Unknown live shell reader definitions: ${unknownReaderDefinitionSlugs.join(", ")}`
   );
 }
 
-export const liveShellReaderEntries: LiveShellReaderEntry[] = liveShellProducts.map((product) => {
-  const definition = readerDefinitionBySlug.get(product.slug);
-
-  if (!definition) {
-    throw new Error(`Missing live shell reader definition for ${product.slug}.`);
+function getLiveShellReaderComponents(productSlug: string) {
+  if (!(productSlug in liveShellReaderComponentsBySlug)) {
+    throw new Error(`Missing live shell reader definition for ${productSlug}.`);
   }
 
+  const components = liveShellReaderComponentsBySlug[productSlug as LiveShellReaderSlug];
+
+  return components;
+}
+
+export const liveShellReaderEntries: LiveShellReaderEntry[] = liveShellProducts.map((product) => {
+  const components = getLiveShellReaderComponents(product.slug);
+
   return {
-    ...definition,
+    slug: product.slug,
+    ...components,
     product
   };
 });
+
+export const liveShellReaderDefinitions: LiveShellReaderDefinition[] = liveShellReaderEntries.map(
+  ({ product: _product, ...definition }) => definition
+);
