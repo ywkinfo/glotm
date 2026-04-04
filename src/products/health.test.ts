@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { products } from "./registry";
 import {
   buildPortfolioHealthReport,
+  buildProductVerificationRecord,
   getLifecycleCriteriaGaps,
   getProductHealthVerdict
 } from "./health";
@@ -36,13 +37,35 @@ describe("portfolio health helpers", () => {
       },
       {
         id: "content",
-        status: "fail"
+        status: "fail",
+        verification: expect.objectContaining({
+          fullPipelineProductSlugs: ["latam", "mexico", "china", "europe", "uk"],
+          shortcutProductSlugs: ["usa", "japan"]
+        })
       },
       {
         id: "release",
         status: "not-run"
       }
     ]);
+  });
+
+  it("makes root shortcut verification scope explicit for UsaTm and JapTm", () => {
+    expect(buildProductVerificationRecord({ slug: "usa" })).toEqual({
+      mode: "root-shortcut-refresh",
+      scopeLabel: "root shortcut refresh",
+      reportSummary: "root content shortcut refresh only"
+    });
+    expect(buildProductVerificationRecord({ slug: "japan" })).toEqual({
+      mode: "root-shortcut-refresh",
+      scopeLabel: "root shortcut refresh",
+      reportSummary: "root content shortcut refresh only"
+    });
+    expect(buildProductVerificationRecord({ slug: "uk" })).toEqual({
+      mode: "root-full-pipeline",
+      scopeLabel: "root full pipeline",
+      reportSummary: "root content full pipeline"
+    });
   });
 
   it("marks grandfathered beta snapshots as verification refresh candidates", () => {

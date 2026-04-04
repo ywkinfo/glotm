@@ -31,7 +31,6 @@ const {
       이 트랙으로 내려오는 구성이 가장 자연스럽습니다.
     </>
   ),
-  homeStatusLabel: "Growth tier · Beta lifecycle의 멕시코 단일 시장 가이드",
   positioningKicker: "MexTm Positioning",
   positioningTitle: "LatTm 다음에 내려오는 growth country guide",
   positioningNote: (

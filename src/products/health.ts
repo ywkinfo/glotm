@@ -52,11 +52,13 @@ export type ProductHealthRecord = {
   qaLevel: ProductMeta["qaLevel"];
   highRiskVerificationGapCount: number;
   currentLifecycleGaps: string[];
+  verification: ProductVerificationRecord;
   lane: ProductHealthLane;
 };
 
 export type RootHealthRecord = RootHealthLaneRecord & {
   status: RootHealthLaneStatus;
+  verification?: RootHealthVerificationRecord;
 };
 
 export type PortfolioHealthReport = {
@@ -64,11 +66,27 @@ export type PortfolioHealthReport = {
   products: ProductHealthRecord[];
 };
 
+export type ProductVerificationMode = "root-full-pipeline" | "root-shortcut-refresh";
+
+export type ProductVerificationRecord = {
+  mode: ProductVerificationMode;
+  scopeLabel: string;
+  reportSummary: string;
+};
+
+export type RootHealthVerificationRecord = {
+  fullPipelineProductSlugs: string[];
+  shortcutProductSlugs: string[];
+  reportSummary: string;
+};
+
 const lifecycleRank: Record<LifecycleStatus, number> = {
   pilot: 0,
   beta: 1,
   mature: 2
 };
+
+const rootShortcutVerificationSlugs = new Set(["usa", "japan"]);
 
 
 export const rootHealthLanes: RootHealthLaneRecord[] = [
@@ -203,6 +221,40 @@ export function getProductHealthVerdict(
   return "hold";
 }
 
+export function buildProductVerificationRecord(product: Pick<ProductMeta, "slug">): ProductVerificationRecord {
+  const usesRootShortcutRefresh = rootShortcutVerificationSlugs.has(product.slug);
+
+  return usesRootShortcutRefresh
+    ? {
+        mode: "root-shortcut-refresh",
+        scopeLabel: "root shortcut refresh",
+        reportSummary: "root content shortcut refresh only"
+      }
+    : {
+        mode: "root-full-pipeline",
+        scopeLabel: "root full pipeline",
+        reportSummary: "root content full pipeline"
+      };
+}
+
+export function buildRootContentVerificationRecord(products: Pick<ProductMeta, "slug">[]): RootHealthVerificationRecord {
+  const fullPipelineProductSlugs = products
+    .filter((product) => !rootShortcutVerificationSlugs.has(product.slug))
+    .map((product) => product.slug);
+  const shortcutProductSlugs = products
+    .filter((product) => rootShortcutVerificationSlugs.has(product.slug))
+    .map((product) => product.slug);
+  const shortcutSummary = shortcutProductSlugs.length > 0
+    ? `; shortcut refresh: ${shortcutProductSlugs.join(", ")}`
+    : "";
+
+  return {
+    fullPipelineProductSlugs,
+    shortcutProductSlugs,
+    reportSummary: `full pipeline: ${fullPipelineProductSlugs.join(", ")}${shortcutSummary}`
+  };
+}
+
 export function buildProductHealthRecord(product: ProductMeta): ProductHealthRecord {
   const assessment = assessProductLifecycle(product);
   const verificationFreshnessDays = getVerificationFreshnessDays(product);
@@ -220,6 +272,7 @@ export function buildProductHealthRecord(product: ProductMeta): ProductHealthRec
     qaLevel: product.qaLevel,
     highRiskVerificationGapCount: product.highRiskVerificationGapCount,
     currentLifecycleGaps: getLifecycleCriteriaGaps(product, product.lifecycleStatus),
+    verification: buildProductVerificationRecord(product),
     lane: productHealthLaneBySlug[product.slug] ?? {
       id: "latam-baseline",
       label: "LatTm baseline reference",
@@ -233,10 +286,13 @@ export function buildPortfolioHealthReport(
   products: ProductMeta[],
   rootStatuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>> = {}
 ): PortfolioHealthReport {
+  const contentVerification = buildRootContentVerificationRecord(products);
+
   return {
     root: rootHealthLanes.map((lane) => ({
       ...lane,
-      status: rootStatuses[lane.id] ?? "not-run"
+      status: rootStatuses[lane.id] ?? "not-run",
+      verification: lane.id === "content" ? contentVerification : undefined
     })),
     products: [...products]
       .map((product) => buildProductHealthRecord(product))

@@ -32,7 +32,6 @@ const {
       renewal, online incident row를 빠르게 다시 보는 reader utility 유지에 초점을 둡니다.
     </>
   ),
-  homeStatusLabel: "Incubate tier · Pilot lifecycle · smoke QA를 유지하는 영국 단일 시장 가이드",
   positioningKicker: "UKTm Positioning",
   positioningTitle: "영국 단일 시장 실무를 lighter depth로 유지하는 incubate guide",
   positioningNote: (

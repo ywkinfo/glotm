@@ -24,6 +24,7 @@ import {
   FullDocumentLink,
   ReportCard,
   buildPriorityLaneLabelSequence,
+  buildPriorityLaneProgressNote,
   buildPriorityLaneStatusSummary,
   buildTrustLayerGuideSummary,
   getTrustLayerSummaryFallback,
@@ -98,6 +99,7 @@ export function ReportPage() {
   const report = params.reportSlug ? getReportBySlug(params.reportSlug) : undefined;
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
+  const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, report);
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const resourceLoaders = useMemo(() => {
@@ -210,7 +212,10 @@ export function ReportPage() {
             ))}
           </div>
           <p className="brief-issue-note">
-            이 리포트는 특정 국가의 절차 요약보다, 여러 관할에서 공통으로 반복되는 route decision과 owner map을 먼저 정리하는 trust layer입니다. 현재 active build order인 {priorityLaneLabelSequence} 다음 레인에서 바로 이어 읽히도록 배치합니다.
+            {buildTrustLayerGuideSummary(report, orderedProducts, {
+              laneLabelSequence: priorityLaneLabelSequence,
+              includeLaneBridge: true
+            }) || getTrustLayerSummaryFallback()} {priorityLaneProgressNote}
           </p>
         </div>
 

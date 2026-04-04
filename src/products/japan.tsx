@@ -32,7 +32,6 @@ const {
       maintenance, evidence hygiene를 빠르게 다시 확인할 수 있는 reader utility 유지에 초점을 둡니다.
     </>
   ),
-  homeStatusLabel: "Incubate tier · Beta lifecycle · standard QA를 유지하는 일본 단일 시장 가이드",
   positioningKicker: "JapTm Positioning",
   positioningTitle: "일본 단일 시장 실무를 lighter depth로 유지하는 incubate guide",
   positioningNote: (

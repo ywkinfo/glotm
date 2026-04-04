@@ -30,7 +30,7 @@ export const products: ProductMeta[] = [
     title: "멕시코 상표 실무 운영 가이드북",
     summary: "멕시코 buyer-entry 판단표, 출원 경로, 자산 통제 질문을 빠르게 정리하는 growth country guide입니다.",
     chapterCount: 15,
-    searchEntryCount: 369,
+    searchEntryCount: 379,
     portfolioTier: "growth",
     lifecycleStatus: "mature",
     lifecycleTone: "mature",

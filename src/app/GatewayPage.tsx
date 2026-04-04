@@ -19,6 +19,7 @@ import {
   ReportCard,
   buildGuideTrackingParams,
   buildPriorityLaneLabelSequence,
+  buildPriorityLaneProgressNote,
   buildPriorityLaneStatusSummary,
   buildTrustLayerGuideSummary,
   getTierComposition,
@@ -56,6 +57,7 @@ export function GatewayLandingPage() {
   const supportingReport = featuredReports.find((report) => report.slug !== leadReport?.slug) ?? null;
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
+  const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
   const trustLayerGuideSummary =
     leadReport
       ? buildTrustLayerGuideSummary(leadReport, orderedProducts)
@@ -490,7 +492,7 @@ export function GatewayLandingPage() {
           </div>
         ) : null}
         <ul className="gateway-bullet-list">
-          <li>{"현재 우선순위: ChaTm mature 유지 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"}</li>
+          <li>{priorityLaneProgressNote}</li>
           <li>현재 우선 레인 상태: {priorityLaneStatusSummary}</li>
         </ul>
         <div className="gateway-cta-actions">
@@ -618,7 +620,7 @@ export function GatewayLandingPage() {
           GloTm은 해외 진출 과정에서 무엇을 먼저 확인하고 어떤 운영 판단을 준비해야 하는지를, 20년 이상 축적된 상표 실무 경험을 바탕으로 구조화한 cross-border operating guide portfolio입니다.
         </p>
         <p className="gateway-section-copy">
-          지금은 LatTm flagship을 보호하면서, ChaTm mature 승격과 MexTm mature baseline, EuTm validate stabilization을 정렬했고, 다음으로 route decision Report / Gateway trust layer에서 buyer-facing 설명을 현재 truth에 맞추는 데 집중하고 있습니다.
+          지금은 LatTm flagship을 보호하면서 {priorityLaneProgressNote.replace("현재 우선 레인 상태: ", "").replace("입니다.", "에 집중하고 있습니다.")}
         </p>
         <p className="gateway-section-copy gateway-section-copy--spaced">
           문의, 강연 요청, 심층 연구 안내는{" "}

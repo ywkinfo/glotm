@@ -117,7 +117,6 @@ type ReaderConfig = {
   loadingMessage: string;
   homeHeroKicker: string;
   homeSummary: ReactNode;
-  homeStatusLabel: string;
   positioningKicker: string;
   positioningTitle: string;
   positioningNote: ReactNode;
@@ -167,6 +166,51 @@ function decodeRouteSegment(value?: string) {
   } catch {
     return value;
   }
+}
+
+function getPortfolioTierLabel(productMeta: ProductMeta) {
+  switch (productMeta.portfolioTier) {
+    case "flagship":
+      return "Flagship";
+    case "growth":
+      return "Growth";
+    case "validate":
+      return "Validate";
+    case "incubate":
+      return "Incubate";
+  }
+}
+
+function getLifecycleStatusLabel(productMeta: ProductMeta) {
+  switch (productMeta.lifecycleStatus) {
+    case "pilot":
+      return "Pilot";
+    case "beta":
+      return "Beta";
+    case "mature":
+      return "Mature";
+  }
+}
+
+function getQaLevelLabel(productMeta: ProductMeta) {
+  switch (productMeta.qaLevel) {
+    case "smoke":
+      return "Smoke";
+    case "standard":
+      return "Standard";
+    case "full":
+      return "Full";
+  }
+}
+
+function getCoverageLabel(productMeta: ProductMeta) {
+  return productMeta.coverageType === "region"
+    ? "권역 가이드"
+    : "단일 시장 가이드";
+}
+
+function buildHomeStatusLabel(productMeta: ProductMeta) {
+  return `${getPortfolioTierLabel(productMeta)} tier · ${getLifecycleStatusLabel(productMeta)} lifecycle · ${getQaLevelLabel(productMeta)} QA · ${getCoverageLabel(productMeta)}`;
 }
 
 export function createReaderRuntime(config: ReaderRuntimeConfig) {
@@ -726,7 +770,7 @@ export function createConfiguredReader(config: ReaderConfig) {
           <p className="hero-summary">{config.homeSummary}</p>
           <div className="hero-meta">
             <span>총 {documentData.meta.chapterCount}개 챕터</span>
-            <span>{config.homeStatusLabel}</span>
+            <span>{buildHomeStatusLabel(productMeta)}</span>
           </div>
         </section>
 
