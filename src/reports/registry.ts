@@ -1,4 +1,4 @@
-import { getProductPathBySlug } from "../products/registry";
+import { getProductBySlug, getProductPathBySlug } from "../products/registry";
 import {
   buildChapterPath,
   buildRuntimeDocumentTitle,
@@ -39,6 +39,11 @@ export type ReportMeta = {
   trustLayerChecklist: string[];
   focusPoints: ReportFocusPoint[];
   relatedGuideLinks: ReportGuideLink[];
+};
+
+export type GuideReportHandoff = {
+  report: ReportMeta;
+  focusPoint?: ReportFocusPoint;
 };
 
 export type ReportExperienceMeta = {
@@ -84,6 +89,13 @@ function createReportMeta(report: ReportRegistration): ReportMeta {
     ...report,
     gatewayPriority: report.gatewayPriority ?? defaultGatewayPriorityByPlacement[report.gatewayPlacement]
   };
+}
+
+function matchesGuidePath(target: string, productPath: string) {
+  return target === productPath
+    || target.startsWith(`${productPath}/`)
+    || target.startsWith(`${productPath}#`)
+    || target.startsWith(`${productPath}?`);
 }
 
 function sortReportsByPublishedAt(left: ReportMeta, right: ReportMeta) {
@@ -366,6 +378,50 @@ export function buildReportPath(reportSlug: string) {
 
 export function getReportBySlug(reportSlug: string) {
   return reports.find((report) => report.slug === reportSlug);
+}
+
+function findFocusPointForGuide(report: ReportMeta, guideSlug: string, productPath: string) {
+  return report.focusPoints.find((focusPoint) =>
+    focusPoint.guideSlug === guideSlug
+    || matchesGuidePath(focusPoint.href, productPath)
+  );
+}
+
+export function getReportsForGuideSlug(guideSlug: string): GuideReportHandoff[] {
+  const product = getProductBySlug(guideSlug);
+
+  if (!product) {
+    return [];
+  }
+
+  const productPath = getProductPathBySlug(product.slug);
+
+  return reportSource
+    .filter((report) => report.gatewayPlacement !== "archive")
+    .filter((report) =>
+      Boolean(findFocusPointForGuide(report, product.slug, productPath))
+      || report.relatedGuideLinks.some((link) => matchesGuidePath(link.href, productPath))
+    )
+    .sort(sortReportsForGateway)
+    .map((report) => ({
+      report,
+      focusPoint: findFocusPointForGuide(report, product.slug, productPath)
+    }));
+}
+
+export function getPrimaryFocusPointForGuide(guideSlug: string, reportSlug?: string) {
+  if (reportSlug) {
+    const product = getProductBySlug(guideSlug);
+    const report = getReportBySlug(reportSlug);
+
+    if (!product || !report) {
+      return undefined;
+    }
+
+    return findFocusPointForGuide(report, product.slug, getProductPathBySlug(product.slug));
+  }
+
+  return getReportsForGuideSlug(guideSlug)[0]?.focusPoint;
 }
 
 export function getLatestReport() {

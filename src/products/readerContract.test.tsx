@@ -634,6 +634,55 @@ describe("Shared reader runtime contract", () => {
     }
   );
 
+  it.each([
+    {
+      readerCase: readerCases.find((readerCase) => readerCase.productSlug === "china")!,
+      expectedSummary: "중문 표기, goods/services fit, owner split이 direct filing 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
+    },
+    {
+      readerCase: readerCases.find((readerCase) => readerCase.productSlug === "mexico")!,
+      expectedSummary: "IMPI 실행 흐름과 mixed route board를 기준으로, local execution control이 bundle 효율보다 먼저인지 정리합니다."
+    },
+    {
+      readerCase: readerCases.find((readerCase) => readerCase.productSlug === "europe")!,
+      expectedSummary: "권역형 guide답게 route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지할지 먼저 확인합니다."
+    }
+  ])(
+    "surfaces trust-layer report handoffs on $readerCase.name home without breaking base reader contracts",
+    async ({ readerCase, expectedSummary }) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const handoffSection = screen.getByRole("region", { name: "관련 Report / Trust Layer" });
+
+      expect(within(handoffSection).getByRole("link", { name: "Front Report 보기" })).toHaveAttribute(
+        "href",
+        "/reports/global-filing-route-framework"
+      );
+      expect(within(handoffSection).getByRole("link", { name: "Supporting Report 보기" })).toHaveAttribute(
+        "href",
+        "/reports/global-use-evidence-system"
+      );
+      expect(within(handoffSection).getByText(expectedSummary)).toBeInTheDocument();
+    }
+  );
+
+  it.each(
+    readerCases.filter((readerCase) => !["china", "mexico", "europe"].includes(readerCase.productSlug))
+  )(
+    "does not show trust-layer handoffs on non-priority $name home",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      expect(screen.queryByRole("heading", { name: "관련 Report / Trust Layer" })).toBeNull();
+    }
+  );
+
   it.each(readerCases)(
     "renders the operator profile note ahead of the legal disclaimer for $name",
     async (readerCase) => {

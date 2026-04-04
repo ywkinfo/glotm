@@ -366,6 +366,73 @@ describe("App portfolio shell", () => {
     );
   });
 
+  it.each([
+    {
+      path: "/china",
+      title: "중국 상표 실무 운영 가이드",
+      summary: "중문 표기, goods/services fit, owner split이 direct filing 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
+    },
+    {
+      path: "/mexico",
+      title: "멕시코 상표 실무 운영 가이드북",
+      summary: "IMPI 실행 흐름과 mixed route board를 기준으로, local execution control이 bundle 효율보다 먼저인지 정리합니다."
+    },
+    {
+      path: "/europe",
+      title: "EuTm 유럽 상표 운영 가이드북",
+      summary: "권역형 guide답게 route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지할지 먼저 확인합니다."
+    }
+  ])(
+    "shows report handoff cards on priority guide home $path",
+    async ({ path, title, summary }) => {
+      installFetchMock();
+
+      renderAppRouteTree(path);
+
+      await screen.findByRole("heading", { name: title });
+
+      const handoffSection = screen.getByRole("region", { name: "관련 Report / Trust Layer" });
+
+      expect(within(handoffSection).getByRole("link", { name: "Front Report 보기" })).toHaveAttribute(
+        "href",
+        `/reports/${primaryGatewayReport?.slug}`
+      );
+      expect(within(handoffSection).getByRole("link", { name: "Supporting Report 보기" })).toHaveAttribute(
+        "href",
+        `/reports/${supportingGatewayReport?.slug}`
+      );
+      expect(within(handoffSection).getByText(summary)).toBeInTheDocument();
+    }
+  );
+
+  it("tracks report opens from the priority guide home handoff cards", async () => {
+    installFetchMock();
+    const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
+    const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+
+    renderAppRouteTree("/china");
+
+    await screen.findByRole("heading", { name: "중국 상표 실무 운영 가이드" });
+
+    const handoffSection = screen.getByRole("region", { name: "관련 Report / Trust Layer" });
+    const reportLink = within(handoffSection).getByRole("link", { name: "Front Report 보기" });
+
+    clickTrackedLink(reportLink);
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_open",
+      expect.objectContaining({
+        report_slug: primaryGatewayReport?.slug,
+        guide_slug: "china",
+        surface: "guide_home_handoff"
+      })
+    );
+
+    measurementSpy.mockRestore();
+    trackEventSpy.mockRestore();
+  });
+
   it("renders the refreshed gateway intro as one lead and two summary paragraphs", () => {
     installFetchMock();
     renderAppRouteTree("/");

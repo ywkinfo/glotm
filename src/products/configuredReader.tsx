@@ -25,6 +25,10 @@ import {
   trackGaEvent
 } from "../analytics/ga";
 import {
+  getReportsForGuideSlug,
+  type GuideReportHandoff
+} from "../reports/registry";
+import {
   useChapterBookmark,
   useReadingProgress,
   useTrackedActiveSection
@@ -38,6 +42,7 @@ import {
 import {
   ConfiguredChapterGrid,
   ContinueReadingCard,
+  GuideReportHandoffSection,
   DraftNotice
 } from "./configuredReaderHomeSections";
 import { products } from "./registry";
@@ -87,6 +92,7 @@ export type ReaderHomePageProps = {
   documentData: DocumentData;
   productMeta: ProductMeta;
   readingBookmark: ReadingBookmark | null;
+  reportHandoffs?: GuideReportHandoff[];
 };
 
 export type ReaderChapterPresentationProps = {
@@ -126,6 +132,7 @@ type ReaderConfig = {
 };
 
 const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
+const priorityGuideHomeReportHandoffSlugs = new Set(["china", "mexico", "europe"]);
 
 function loadReaderActionBarDismissed() {
   if (typeof window === "undefined") {
@@ -569,6 +576,9 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const continueTimestamp = readingBookmark
       ? formatBookmarkTimestamp(readingBookmark.updatedAt)
       : "";
+    const reportHandoffs = priorityGuideHomeReportHandoffSlugs.has(productMeta.slug)
+      ? getReportsForGuideSlug(productMeta.slug).slice(0, 2)
+      : [];
 
     useEffect(() => {
       setRuntimeDocumentTitle(productMeta.title);
@@ -581,6 +591,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         documentData={documentData}
         productMeta={productMeta}
         readingBookmark={readingBookmark}
+        reportHandoffs={reportHandoffs}
       />
     );
   }
@@ -758,7 +769,8 @@ export function createConfiguredReader(config: ReaderConfig) {
     continueTimestamp,
     documentData,
     productMeta,
-    readingBookmark
+    readingBookmark,
+    reportHandoffs
   }: ReaderHomePageProps) {
     const productPath = buildProductPath(productMeta);
 
@@ -784,6 +796,11 @@ export function createConfiguredReader(config: ReaderConfig) {
         ) : null}
 
         {config.contentStatus === "draft" ? <DraftNotice /> : null}
+
+        <GuideReportHandoffSection
+          guideSlug={productMeta.slug}
+          reportHandoffs={reportHandoffs}
+        />
 
         <section className="gateway-section">
           <div className="gateway-section-header">

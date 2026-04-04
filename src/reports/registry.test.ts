@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { getGatewayFeaturedReports, getReportBySlug } from "./registry";
+import {
+  getGatewayFeaturedReports,
+  getPrimaryFocusPointForGuide,
+  getReportBySlug,
+  getReportsForGuideSlug
+} from "./registry";
 
 describe("report registry", () => {
   it("keeps the gateway featured order pinned to front then supporting trust layers", () => {
@@ -25,6 +30,34 @@ describe("report registry", () => {
     expect(report?.relatedGuideLinks).toContainEqual({
       label: "EuTm evidence triage",
       href: "/europe/chapter/제8장-등록-후-사용-갱신-증거-관리#distributor--marketplace-seller-evidence-triage"
+    });
+  });
+
+  it("reverse-indexes reports for a priority guide in front-then-supporting order", () => {
+    const handoffs = getReportsForGuideSlug("china");
+
+    expect(handoffs.map(({ report }) => report.slug)).toEqual([
+      "global-filing-route-framework",
+      "global-use-evidence-system"
+    ]);
+    expect(handoffs[0]?.focusPoint).toMatchObject({
+      id: "china-local-fit",
+      title: "ChaTm: local-fit pressure를 먼저 잠근다"
+    });
+    expect(handoffs[1]?.focusPoint).toMatchObject({
+      id: "china-evidence-handoff",
+      title: "ChaTm: route와 evidence를 같이 본다"
+    });
+  });
+
+  it("returns the direct focus point for a guide and specific report slug", () => {
+    expect(getPrimaryFocusPointForGuide("mexico", "global-filing-route-framework")).toMatchObject({
+      id: "mexico-control",
+      ctaLabel: "MexTm buyer-entry 표 보기"
+    });
+    expect(getPrimaryFocusPointForGuide("europe", "global-use-evidence-system")).toMatchObject({
+      id: "europe-evidence-triage",
+      ctaLabel: "EuTm evidence triage 보기"
     });
   });
 });
