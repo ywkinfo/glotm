@@ -39,6 +39,7 @@ export function GatewayLandingPage() {
     (total, product) => total + product.searchEntryCount,
     0
   );
+  const chinaProduct = orderedProducts.find((product) => product.slug === "china") ?? orderedProducts[0];
   const latamProduct = orderedProducts.find((product) => product.slug === "latam") ?? orderedProducts[0];
   const mexicoProduct = orderedProducts.find((product) => product.slug === "mexico") ?? orderedProducts[0];
   const featuredBriefs = briefIssues.slice(0, 2);
@@ -127,26 +128,26 @@ export function GatewayLandingPage() {
               </p>
             ))}
           </div>
-          {mexicoProduct ? (
+          {chinaProduct ? (
             <div className="gateway-actions">
               <FullDocumentLink
                 className="gateway-button gateway-button--primary"
-                to={buildProductPath(mexicoProduct)}
+                to={buildProductPath(chinaProduct)}
                 onClick={() => {
-                  trackEngagement("guide_cta_click", buildGuideTrackingParams(mexicoProduct, "gateway_hero"));
+                  trackEngagement("guide_cta_click", buildGuideTrackingParams(chinaProduct, "gateway_hero"));
                 }}
               >
-                MexTm 먼저 보기
+                ChaTm 보기
               </FullDocumentLink>
-              {latamProduct ? (
+              {mexicoProduct ? (
                 <FullDocumentLink
                   className="gateway-button gateway-button--secondary"
-                  to={buildProductPath(latamProduct)}
+                  to={buildProductPath(mexicoProduct)}
                   onClick={() => {
-                    trackEngagement("guide_cta_click", buildGuideTrackingParams(latamProduct, "gateway_hero"));
+                    trackEngagement("guide_cta_click", buildGuideTrackingParams(mexicoProduct, "gateway_hero"));
                   }}
                 >
-                  LatTm 기준 프레임 보기
+                  MexTm 먼저 보기
                 </FullDocumentLink>
               ) : null}
             </div>
@@ -230,9 +231,9 @@ export function GatewayLandingPage() {
 
       <section className="gateway-cta-card">
         <p className="gateway-kicker">Recommended Start</p>
-        <h2 className="gateway-cta-title">LatTm과 MexTm부터 보면 전체 구조와 즉시 실행 질문이 함께 잡힙니다</h2>
+        <h2 className="gateway-cta-title">ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다</h2>
         <p className="gateway-cta-copy">
-          LatTm은 cross-border 우선순위의 flagship이고, MexTm은 가장 빠르게 buyer entry value를 만드는 growth guide입니다. 두 가이드에서 큰 프레임과 단일 시장 실행 질문을 함께 잡는 흐름이 가장 자연스럽습니다.
+          {"ChaTm은 지금 월간 review 기준 `upgrade-ready` 상태까지 올라온 최우선 growth guide이고, MexTm은 mature baseline이 이미 잠긴 buyer-entry guide입니다. 큰 프레임이 필요할 때는 LatTm을 flagship baseline reference로 함께 보되, 현재 landing order와 active lane 기준 추천 시작은 ChaTm -> MexTm 흐름입니다."}
         </p>
         <div className="gateway-cta-actions">
           <a className="gateway-cta-link" href="#portfolio-focus">

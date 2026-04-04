@@ -324,13 +324,13 @@ describe("App portfolio shell", () => {
 
     expect(gatewayHero).not.toBeNull();
     expect(within(gatewayHero as HTMLElement).queryByRole("link", { name: "UsaTm 보기" })).toBeNull();
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toHaveAttribute(
+      "href",
+      "/china"
+    );
     expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toHaveAttribute(
       "href",
       "/mexico"
-    );
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "LatTm 기준 프레임 보기" })).toHaveAttribute(
-      "href",
-      "/latam"
     );
   });
 
@@ -383,8 +383,8 @@ describe("App portfolio shell", () => {
     expect(copyStack).not.toBeNull();
     expect(within(copyStack as HTMLElement).getByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" })).toBeInTheDocument();
     expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
-    expect(within(copyStack as HTMLElement).queryByRole("link", { name: "MexTm 먼저 보기" })).toBeNull();
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toBeInTheDocument();
+    expect(within(copyStack as HTMLElement).queryByRole("link", { name: "ChaTm 보기" })).toBeNull();
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toBeInTheDocument();
   });
 
   it("places the reading flow above the risk section and links to the grouped portfolio", () => {
@@ -392,7 +392,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const readingFlowHeading = screen.getByRole("heading", {
-      name: "LatTm과 MexTm부터 보면 전체 구조와 즉시 실행 질문이 함께 잡힙니다"
+      name: "ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다"
     });
     const whyLateHeading = screen.getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" });
 
@@ -400,7 +400,7 @@ describe("App portfolio shell", () => {
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
     expect(
-      screen.getByText(/LatTm은 cross-border 우선순위의 flagship이고, MexTm은 가장 빠르게 buyer entry value를 만드는 growth guide입니다\./)
+      screen.getByText(/ChaTm은 지금 월간 review 기준 `upgrade-ready` 상태까지 올라온 최우선 growth guide이고, MexTm은 mature baseline이 이미 잠긴 buyer-entry guide입니다\./)
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "포트폴리오 우선 가이드 보기" })).toHaveAttribute(
       "href",
@@ -414,7 +414,7 @@ describe("App portfolio shell", () => {
 
     const banner = screen.getByRole("region", { name: "최신 브리프 배너" });
     const readingFlowHeading = screen.getByRole("heading", {
-      name: "LatTm과 MexTm부터 보면 전체 구조와 즉시 실행 질문이 함께 잡힙니다"
+      name: "ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다"
     });
 
     expect(within(banner).getByRole("heading", { name: briefIssues[0]?.title ?? "" })).toBeInTheDocument();
@@ -588,7 +588,11 @@ describe("App portfolio shell", () => {
 
     renderAppRouteTree("/");
 
-    fireEvent.click(screen.getByRole("link", { name: "ChaTm 보기" }));
+    const portfolioSection = screen
+      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .closest("section");
+
+    fireEvent.click(within(portfolioSection as HTMLElement).getByRole("link", { name: "ChaTm 보기" }));
     fireEvent.click(screen.getByRole("link", { name: "ywkinfo.github.io" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(

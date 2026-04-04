@@ -53,7 +53,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 ## Current execution order
 
-- `ChaTm -> MexTm -> EuTm -> Brief/Gateway -> JapTm -> UKTm -> UsaTm`
+- `ChaTm -> MexTm -> EuTm -> Report/Gateway trust layer -> JapTm -> UKTm -> UsaTm`
 - `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
 
 ## Three practical outcomes
