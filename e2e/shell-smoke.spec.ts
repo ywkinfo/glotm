@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 test("gateway smoke", async ({ page }) => {
   await page.goto("/");
 
+  const gatewayHero = page.locator(".gateway-hero");
+
   await expect(
     page.getByRole("heading", {
       level: 1,
@@ -11,8 +13,8 @@ test("gateway smoke", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByText("Current Build Order")).toBeVisible();
   await expect(
-    page.getByRole("link", {
-      name: /ChaTm 보기|ChaTm · 중국 상표 실무 운영 가이드/
+    gatewayHero.getByRole("link", {
+      name: "ChaTm 보기"
     })
   ).toBeVisible();
 });
