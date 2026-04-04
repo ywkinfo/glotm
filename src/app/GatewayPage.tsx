@@ -51,7 +51,7 @@ export function GatewayLandingPage() {
   const latestBrief = getLatestBriefIssue();
   const latestReport = getLatestReport();
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport);
+  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport, orderedProducts);
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
     {

@@ -206,6 +206,32 @@ describe("App portfolio shell", () => {
     30000
   );
 
+  it("orders live guides in the current active lane sequence after utility routes", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/");
+
+    await screen.findByRole("heading", {
+      name: "인하우스 팀을 위한 cross-border trademark operating guides"
+    });
+
+    const nav = screen.getByRole("navigation", { name: "제품 전환" });
+    const navLabels = [...nav.querySelectorAll(".global-nav-label")].map((label) => label.textContent?.trim());
+
+    expect(navLabels).toEqual([
+      "Gateway",
+      "Brief",
+      "Report",
+      "ChaTm",
+      "MexTm",
+      "EuTm",
+      "LatTm",
+      "JapTm",
+      "UKTm",
+      "UsaTm"
+    ]);
+  });
+
   it.each([
     ["/latam", "중남미 상표 보호 운영 가이드", /LatTm/],
     ["/mexico", "멕시코 상표 실무 운영 가이드북", /MexTm/],
@@ -410,7 +436,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · EuTm 운영 가이드 · JapTm 운영 가이드와 바로 이어 읽히도록 배치해/
+        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 ChaTm 운영 가이드 · MexTm 운영 가이드 · EuTm 운영 가이드 · LatTm 기준 프레임 · JapTm 운영 가이드와 바로 이어 읽히도록 배치해/
       )
     ).toBeInTheDocument();
     expect(
@@ -755,7 +781,7 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm·MexTm·EuTm의 buyer-facing 밀도 정렬을 마쳤고, report는 LatTm 기준 프레임 · MexTm 운영 가이드 · ChaTm 운영 가이드 · EuTm 운영 가이드 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다\./
+        /ChaTm·MexTm·EuTm의 buyer-facing 밀도 정렬을 마쳤고, report는 ChaTm 운영 가이드 · MexTm 운영 가이드 · EuTm 운영 가이드 · LatTm 기준 프레임 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다\./
       )
     ).toBeInTheDocument();
   });

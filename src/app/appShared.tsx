@@ -89,7 +89,7 @@ export function joinProductLabels(
 }
 
 export function orderGatewayProducts(products: ProductMeta[]) {
-  const preferredOrder = ["latam", "mexico", "china", "europe", "usa", "japan", "uk"];
+  const preferredOrder = ["china", "mexico", "europe", "latam", "japan", "uk", "usa"];
   const productIndex = new Map(preferredOrder.map((slug, index) => [slug, index]));
 
   return [...products].sort((left, right) => {
@@ -151,12 +151,27 @@ export function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
     .join(" / ");
 }
 
-export function buildRelatedGuideSummary(report?: ReportMeta): string | null {
+export function buildRelatedGuideSummary(
+  report?: ReportMeta,
+  orderedProducts: ProductMeta[] = []
+): string | null {
   if (!report || report.relatedGuideLinks.length === 0) {
     return null;
   }
 
-  return report.relatedGuideLinks.map((link) => link.label).join(" · ");
+  const orderedProductPaths = new Map(
+    orderedProducts.map((product, index) => [buildProductPath(product), index])
+  );
+
+  return [...report.relatedGuideLinks]
+    .sort((left, right) => {
+      const leftIndex = orderedProductPaths.get(left.href) ?? Number.MAX_SAFE_INTEGER;
+      const rightIndex = orderedProductPaths.get(right.href) ?? Number.MAX_SAFE_INTEGER;
+
+      return leftIndex - rightIndex;
+    })
+    .map((link) => link.label)
+    .join(" · ");
 }
 
 export function buildGuideTrackingParams(

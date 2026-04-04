@@ -30,7 +30,7 @@ export function ReportArchivePage() {
   const latestReport = getLatestReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport);
+  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport, orderedProducts);
 
   useEffect(() => {
     setRuntimeDocumentTitle("Special Report");

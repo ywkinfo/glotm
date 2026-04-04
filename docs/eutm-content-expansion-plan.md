@@ -22,7 +22,7 @@
 - `content/source/manifest.json`, `content/source/chapters/`, `scripts/build-master.ts`, `scripts/qa-content.ts`가 모두 존재한다.
 - 현재 생성 산출물:
   - 14 chapters
-  - 236 search entries
+  - 258 search entries
 - 현재 `master.md`는 장별 원고를 조립한 공개본 기준이며, reader에서 읽을 수 있는 실사용 분량을 확보한 상태다.
 
 ### LatTm 대비 차이
@@ -34,7 +34,7 @@
 | 조립 스크립트 | `build-master.ts` 있음 | `build-master.ts` 있음 |
 | QA 스크립트 | `qa-content.ts` 있음 | `qa-content.ts` 있음 |
 | 챕터 수 | 20 | 14 |
-| 검색 엔트리 | 780 | 236 |
+| 검색 엔트리 | 780 | 258 |
 | 문서 깊이 | publish-grade | live regional guide baseline, 추가 심화 필요 |
 
 ### 현재 리스크
@@ -99,7 +99,7 @@
 - 14장 구조 유지
 - 핵심 장의 본문 밀도 대폭 확대
 - 장별 최소 실행형 체크리스트 1개 이상 포함
-- search entries를 현재 236 baseline으로 유지하면서 후속 심화 시 245~300 수준까지 확대
+- search entries를 현재 258 baseline으로 유지하면서 후속 심화 시 270~320 수준까지 확대
 
 ### v1 품질 목표
 
@@ -157,7 +157,7 @@
 - `EuTm/Harness/Architecture.md` 수정
 - `EuTm/Harness/Content-Spec.md` 수정
 - 현재 `live guide` 상태와 공개본 기준을 일관되게 정리
-- 현재 기준 수치를 `14장 / 검색 엔트리 236`으로 갱신한다.
+- 현재 기준 수치를 `14장 / 검색 엔트리 258`으로 갱신한다.
 
 ### 완료 기준
 - 문서 간 상태 충돌이 없음
@@ -324,14 +324,14 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 2. `master.md`가 조립 결과물로 관리된다.
 3. 14개 장이 모두 장별 원고 파일로 이미 분리된 상태를 유지한다.
 4. 핵심 6장이 초안 수준을 벗어나 실무형 본문 구조를 갖는다.
-5. search entries가 baseline 236을 유지하면서 추가 심화 시 더 증가한다.
+5. search entries가 baseline 258을 유지하면서 추가 심화 시 더 증가한다.
 
 ---
 
 ## 2026-04-03 진행 메모
 
 - 핵심 6장(`제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`)에 controlled scope decision board, rights calendar lock, search-to-opposition handoff, route pack lock, opposition/coexistence war-room, evidence-to-enforcement reuse memo를 추가했다.
-- `npm run content:europe` 기준 생성 산출물은 14개 챕터 / 검색 엔트리 236개다.
+- `npm run content:europe` 기준 생성 산출물은 14개 챕터 / 검색 엔트리 258개다.
 - `/europe` 스프린트 addendum 수동 smoke를 마감했고, 남은 작업은 shared root gate 입력 정리다.
 6. `content:europe`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
 7. `README`, `Architecture`, `Content-Spec`, research docs의 상태 설명이 일치한다.

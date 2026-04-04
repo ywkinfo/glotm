@@ -22,9 +22,9 @@
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영한다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - `LatTm`: 20개 챕터, 검색 엔트리 780개. `flagship` tier.
-- `MexTm`: 15개 챕터, 검색 엔트리 366개. `growth` tier.
+- `MexTm`: 15개 챕터, 검색 엔트리 368개. `growth` tier.
 - `ChaTm`: 15개 챕터, 검색 엔트리 258개. `growth` tier.
-- `EuTm`: 14개 챕터, 검색 엔트리 254개. `validate` tier.
+- `EuTm`: 14개 챕터, 검색 엔트리 258개. `validate` tier.
 - `UsaTm`: 14개 챕터, 검색 엔트리 172개. `incubate` tier.
 - `JapTm`: 15개 챕터, 검색 엔트리 141개. `incubate` tier.
 - `UKTm`: 14개 챕터, 검색 엔트리 94개. `incubate` tier.
@@ -75,9 +75,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | 가이드 | 유형 | 전략 tier | lifecycle | 챕터 수 | 검색 엔트리 | 현재 의미 |
 |------|------|------|------|------|------|------|
 | `LatTm` | 권역형 | flagship | mature | 20 | 780 | 기준 프레임 보호 |
-| `MexTm` | 단일국가 | growth | mature | 15 | 366 | Sprint 1 잠금 4장 심화 완료 · buyer entry 핵심 트랙 |
+| `MexTm` | 단일국가 | growth | mature | 15 | 368 | Sprint 1 잠금 4장 심화 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | beta | 15 | 258 | Sprint 1 잠금 6장 심화 완료 · 중국 실무 밀도 강화 트랙 |
-| `EuTm` | 권역형 | validate | beta | 14 | 254 | 핵심 6장 심화 완료 · 권역 검증·정합성 안정화 |
+| `EuTm` | 권역형 | validate | beta | 14 | 258 | 핵심 6장 심화 완료 · 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 172 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 141 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 94 | lighter track · draft 공개본 |
@@ -136,7 +136,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### MexTm (멕시코 상표 실무 가이드) — 파일럿 2단계 핵심 트랙, core reader parity 반영 완료 / 워크스페이스 파이프라인 구축 완료
 
-`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `npm run build`는 통과하며 `document-data.json` 기준 15개 챕터와 366개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다. 이번 라운드에서는 잠금 4장에 IMPI handoff board, 경로 선택 owner split, asset recovery readiness, 사례 회수 control mapping을 보강했다.
+`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `npm run build`는 통과하며 `document-data.json` 기준 15개 챕터와 368개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다. 이번 라운드에서는 잠금 4장에 IMPI handoff board, 경로 선택 owner split, asset recovery readiness, 사례 회수 control mapping을 보강했다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
@@ -152,7 +152,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 254개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 심화, rights/search/filing/opposition/evidence handoff 보강을 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 258개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 심화, rights/search/filing/opposition/evidence handoff 보강을 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 early track
 
@@ -191,11 +191,11 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | Live shell guides | `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm` |
 | LatTm 콘텐츠 빌드 | `build-master.ts` → `qa-content.ts` → `build-content.ts` |
 | LatTm 생성 산출물 | 20개 챕터 / 검색 엔트리 780개 |
-| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 366개 |
+| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 368개 |
 | UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 172개 |
 | JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 141개 |
 | ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 258개 |
-| EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 254개 |
+| EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 258개 |
 | UKTm 생성 산출물 | 14개 챕터 / 검색 엔트리 94개 |
 | GloTm build status | pass |
 | MexTm build status | pass |
