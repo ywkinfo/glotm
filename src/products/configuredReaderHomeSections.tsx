@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
 
 import {
+  buildReportOpenLabel,
+  buildReportPath,
+  type GuideReportHandoff
+} from "../reports/registry";
+import { trackEngagement } from "../app/appShared";
+import {
   buildChapterPath,
   buildSectionLocation,
   getChapterMeta,
@@ -19,6 +25,11 @@ type ConfiguredChapterGridProps = {
   chapterBadge: string;
   chapters: Chapter[];
   productPath: string;
+};
+
+type GuideReportHandoffSectionProps = {
+  guideSlug: string;
+  reportHandoffs?: GuideReportHandoff[];
 };
 
 export function ContinueReadingCard({
@@ -65,6 +76,55 @@ export function DraftNotice() {
         이 가이드는 현재 콘텐츠를 작성 중입니다. 일부 챕터는 개요 수준으로만 제공될 수 있으며, 순차적으로 보강될 예정입니다.
       </p>
     </div>
+  );
+}
+
+export function GuideReportHandoffSection({
+  guideSlug,
+  reportHandoffs
+}: GuideReportHandoffSectionProps) {
+  if (!reportHandoffs || reportHandoffs.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="gateway-section" aria-label="관련 Report / Trust Layer">
+      <div className="gateway-section-header">
+        <div>
+          <p className="gateway-kicker">Trust Layer Handoff</p>
+          <h2 className="gateway-section-title">관련 Report / Trust Layer</h2>
+        </div>
+      </div>
+      <p className="reader-product-note">
+        현재 가이드에서 잠근 실행 질문을 교차 관할권 report로 다시 묶어 보려면 아래 trust layer부터
+        이어 읽으면 됩니다.
+      </p>
+      <div className="gateway-card-grid">
+        {reportHandoffs.map(({ report, focusPoint }) => (
+          <article key={report.slug} className="gateway-card">
+            <p className="gateway-kicker">{report.gatewayLabel}</p>
+            <h3 className="gateway-card-title">{report.title}</h3>
+            {focusPoint ? (
+              <p className="gateway-card-copy">이 가이드 연결: {focusPoint.title}</p>
+            ) : null}
+            <p className="gateway-card-copy">{focusPoint?.summary ?? report.summary}</p>
+            <NavLink
+              className="gateway-cta-link"
+              to={buildReportPath(report.slug)}
+              onClick={() => {
+                trackEngagement("report_open", {
+                  report_slug: report.slug,
+                  guide_slug: guideSlug,
+                  surface: "guide_home_handoff"
+                });
+              }}
+            >
+              {buildReportOpenLabel(report)}
+            </NavLink>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
