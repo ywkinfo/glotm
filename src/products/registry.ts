@@ -51,7 +51,7 @@ export const products: ProductMeta[] = [
     title: "미국 상표 실무 운영 가이드북",
     summary: "USPTO 중심 실무를 lighter depth로 유지하는 incubate country guide입니다.",
     chapterCount: 14,
-    searchEntryCount: 172,
+    searchEntryCount: 178,
     portfolioTier: "incubate",
     lifecycleStatus: "beta",
     lifecycleTone: "beta",
@@ -60,7 +60,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "미국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "UsaTm 보기",
-    maturityNote: "verification refresh 완료 · 2026-04-04 local/root 재검증",
+    maturityNote: "verification refresh 완료 · reader utility 점검 · 2026-04-04 local/root 재검증",
     coverageType: "country",
     availability: "live_shell"
   },
@@ -72,7 +72,7 @@ export const products: ProductMeta[] = [
     title: "일본 상표 실무 운영 가이드북",
     summary: "JPO 중심 운영 흐름을 lighter depth로 유지하는 incubate country guide입니다.",
     chapterCount: 15,
-    searchEntryCount: 141,
+    searchEntryCount: 145,
     portfolioTier: "incubate",
     lifecycleStatus: "beta",
     lifecycleTone: "beta",
@@ -81,7 +81,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "일본 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "JapTm 보기",
-    maturityNote: "beta 유지 · 2026-04-04 local/root 재검증",
+    maturityNote: "beta 유지 · reader utility 점검 · 2026-04-04 local/root 재검증",
     coverageType: "country",
     availability: "live_shell"
   },
@@ -135,7 +135,7 @@ export const products: ProductMeta[] = [
     title: "영국 상표 실무 운영 가이드북",
     summary: "UKIPO 중심 실무를 verification refresh 중심으로 유지하는 incubate country guide입니다.",
     chapterCount: 14,
-    searchEntryCount: 94,
+    searchEntryCount: 100,
     portfolioTier: "incubate",
     lifecycleStatus: "pilot",
     lifecycleTone: "pilot",
@@ -144,7 +144,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "영국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "UKTm 보기",
-    maturityNote: "pilot 유지 · 2026-04-04 local/root 재검증",
+    maturityNote: "pilot 유지 · reader utility 점검 · 2026-04-04 local/root 재검증",
     coverageType: "country",
     availability: "live_shell"
   }

@@ -28,17 +28,19 @@ const {
     <>
       USPTO 중심의 미국 연방 상표 실무를 빠르게 점검하기 위한 단일국가 가이드입니다.
       권역 단위 구조를 먼저 잡고 싶다면 <Link to={latamPath}>LatTm</Link>에서 큰 흐름을 본 뒤,
-      미국 단일 시장 쟁점을 확인할 때 이 트랙으로 내려오는 구성이 자연스럽습니다.
+      미국 단일 시장 쟁점을 확인할 때 이 트랙으로 내려오는 구성이 자연스럽습니다. 현재는 대형 확장보다 filing basis,
+      specimen, monitoring row를 빠르게 다시 보는 reader utility 유지에 초점을 둡니다.
     </>
   ),
-  homeStatusLabel: "Incubate tier · Beta lifecycle의 미국 단일 시장 가이드",
+  homeStatusLabel: "Incubate tier · Beta lifecycle · standard QA를 유지하는 미국 단일 시장 가이드",
   positioningKicker: "UsaTm Positioning",
   positioningTitle: "미국 연방 실무를 lighter depth로 유지하는 incubate guide",
   positioningNote: (
     <>
       현재 UsaTm은 새로 추가된 미국 단일 시장 트랙으로, USPTO 출원, specimen 운영,
       등록 후 유지관리, marketplace 및 분쟁 대응을 미국 연방 기준으로 빠르게 점검하는 용도에
-      맞춰져 있습니다.
+      맞춰져 있습니다. 지금 라운드에서는 대형 확장보다 filing basis row, specimen owner map,
+      monitoring triage를 반복 검증하며 lighter track을 안정적으로 유지하는 쪽이 우선입니다.
     </>
   ),
   chapterBadge: "USA",

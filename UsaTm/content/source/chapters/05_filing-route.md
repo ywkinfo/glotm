@@ -4,6 +4,17 @@
 
 같은 표장이라도 어떤 경로를 고르느냐에 따라 출원서 문구, 내부 승인 순서, 증거 수집 방식, 후속 관리 비용이 달라진다. 그래서 이 선택은 “무엇이 더 그럴듯한가”보다 “우리 조직이 끝까지 감당할 수 있는가”로 봐야 한다.
 
+## lighter-track filing basis board
+
+UsaTm은 incubate lane이기 때문에, 이 장의 목적은 Section 1(a) / 1(b) / 66(a)의 모든 디테일을 길게 늘어놓는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 미국 출원을 실제 운영 기준으로 빠르게 다시 판단할 수 있다.
+
+| 먼저 적을 질문 | use-based 쪽 신호 | intent-to-use 쪽 신호 | Madrid 쪽 신호 |
+| --- | --- | --- | --- |
+| 미국에서 이미 실제 사용 중인가 | Yes | No | 꼭 필요하지 않음 |
+| launch 일정이 거의 고정됐는가 | 이미 사용 중 | 곧 launch | 다국가 launch bundle |
+| specimen owner를 바로 정할 수 있는가 | 바로 가능 | launch 전 필요 | 국가별로 별도 memo 필요 |
+| 미국을 단독 핵심국으로 보는가 | 자주 그렇다 | 자주 그렇다 | 다국가 운영 쪽에 가까움 |
+
 ## 세 경로의 구조
 
 use-based는 이미 미국에서 실제 사용이 시작된 상태를 전제로 한다. intent-to-use는 아직 런칭 전이지만 곧 사용할 계획이 있을 때 쓰는 경로다. Madrid는 미국만의 빠른 길이 아니라 여러 나라를 한 번에 묶어 관리하는 포트폴리오 방식이다.
@@ -194,3 +205,14 @@ Madrid는 “여러 나라를 이렇게 운영하겠다”는 선택이다.
 그래서 질문은 간단하다. 지금 우리 팀이 실제로 굴릴 수 있는 방식은 무엇인가.
 
 그 답이 경로다.
+
+## 7-day filing handoff memo
+
+| 시점 | 잠글 것 | owner |
+| --- | --- | --- |
+| D+1 | use-based / intent-to-use / Madrid 결론 | IP |
+| D+3 | owner-user 구조와 specimen owner | 법무 + 마케팅 |
+| D+5 | goods/services와 launch row | 브랜드팀 + PM |
+| D+7 | 제9장 specimen packet과 제12장 monitoring row 연결 | PM + IP |
+
+이 정도만 있어도 UsaTm은 lighter track 안에서 “어떤 basis를 왜 골랐는지”를 빠르게 다시 보여 주는 route memo 역할을 한다.

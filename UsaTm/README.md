@@ -30,5 +30,7 @@
 - 공개 원고와 리더 노출 문구에서는 저장소 경로나 `.md` 파일명을 직접 쓰지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로 표기합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/usa` 리더를 렌더링합니다.
 - 현재 루트 `GloTm`의 `content:prepare`에서는 `UsaTm`이 shortcut 예외 그룹으로 동작합니다. 즉 루트에서는 빠른 generated-content 갱신 경로를 사용하고, deeper content QA가 필요할 때는 `UsaTm` 로컬 `content:prepare`를 직접 실행합니다.
-- 현재 빌드 기준 산출물은 14개 챕터 / 검색 엔트리 172개입니다.
+- 현재 빌드 기준 산출물은 14개 챕터 / 검색 엔트리 178개입니다.
 - 수수료, 세부 기한, 시스템 명칭처럼 변동성이 큰 정보는 출판 직전 `content/research/us_tm_fact_verification_log.md`로 다시 확인합니다.
+- 현재 `UsaTm`의 런타임 포지션은 `incubate tier · beta lifecycle · standard QA`입니다.
+- 현재 유지 우선순위는 대형 확장보다 `verification refresh 유지 + filing/specimen/monitoring reader utility 반복 점검 + local/root 재검증 계약 유지`입니다.

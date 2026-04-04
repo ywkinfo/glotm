@@ -2,6 +2,17 @@
 
 미국 단일 시장에서도 침해 대응은 여러 채널로 나뉜다. 연방 등록만 확보해 두고 watch, marketplace, domain, CBP를 분리해서 운영하면 실제 피해를 줄이기 어렵다. 이 장의 목적은 최소 대응 체계를 하나로 묶는 것이다.
 
+## monitoring quick board
+
+UsaTm의 monitoring 장은 모든 채널 규칙을 깊게 설명하기보다, 사건을 어떤 row로 먼저 열지 보여 주는 편이 incubate lane에 더 맞다.
+
+| 먼저 적을 질문 | watch / registration row | marketplace / domain row | CBP row |
+| --- | --- | --- | --- |
+| 문제의 출발점이 출원/등록 충돌인가 | Yes | No | No |
+| 실제 판매 피해가 이미 보이는가 | 보조적 | Yes | 경우에 따라 |
+| 물류·수입 통제가 필요한가 | No | 가끔 | Yes |
+| 공통 증거팩으로 묶을 수 있는가 | watch memo 중심 | seller / domain packet | product ID packet |
+
 ## 시장 감시 체계
 
 핵심 브랜드는 적어도 출원·공고 모니터링과 온라인 셀러 모니터링을 함께 가져가야 한다. 시장 감시는 탐지 정확도보다 triage 속도가 더 중요하므로, 발견 즉시 어떤 유형인지 분류하는 표준을 둬야 한다. 유사상표, 위조, 무단 셀러, 병행수입, 리뷰 악용은 대응 수단이 다르다.
@@ -19,3 +30,13 @@ marketplace 신고는 속도와 증거 패키지 품질이 중요하다. domain 
 위조와 병행수입 이슈가 크다면 Principal Register 등록을 전제로 한 CBP recordation까지 시야에 넣어야 한다. 다만 이는 출원 직후의 과제가 아니라, 등록 포트폴리오와 제품 식별 자료가 어느 정도 안정화된 뒤 운영에 편입하는 편이 낫다. CBP는 "있으면 좋다" 수준이 아니라 물류 통제 필요성이 높은 브랜드에 선택적으로 붙이는 레버리지다.
 
 따라서 CBP는 등록 포트폴리오, 제품 식별 정보, 세관 대응 필요성이 한 번에 맞아떨어질 때 검토하는 편이 현실적이다. 무조건 붙이는 옵션이 아니라, 위조나 수입 통제 리스크가 큰 브랜드에 우선 적용하는 운영 수단으로 보는 것이 맞다.
+
+## first 48 hours monitoring memo
+
+| 시간대 | 바로 할 일 | 멈춰서 확인할 일 |
+| --- | --- | --- |
+| 0~4시간 | issue type를 `등록 충돌 / marketplace / domain / CBP 검토` 중 하나로 표시 | 모든 사건을 같은 채널 문제로 처리하고 있지 않은가 |
+| 4~24시간 | 공통 증거팩, seller/domain 정보, 권리자 정보 정리 | watch issue와 online issue가 섞이지 않았는가 |
+| 24~48시간 | escalation 채널과 desired remedy 결정 | CBP까지 볼 사건인지, marketplace/domain에서 끝날 사건인지 |
+
+이 정도만 있어도 UsaTm은 미국 단일 시장에서 “어느 대응 row부터 열어야 하는가”를 빠르게 다시 찾는 reader utility를 충분히 제공한다.

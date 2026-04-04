@@ -4,6 +4,17 @@
 
 영국 등록은 10년마다 갱신되며, 갱신 수수료는 첫 클래스 £200, 추가 클래스당 £50이다. 이 사실 자체보다 중요한 것은 갱신 이벤트를 포트폴리오 정비 이벤트로 쓰는 습관이다.
 
+## pilot-lane maintenance owner board
+
+UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 draft 공개본의 신뢰가 흔들릴까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 pilot lane에서도 유지관리 공백을 크게 줄일 수 있다.
+
+| 등록 후 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
+| --- | --- | --- | --- |
+| renewal horizon | 10년 주기를 실제 calendar row로 바꿈 | IP + 재무 | 갱신 준비표 |
+| comparable right 여부 | Brexit 이후 이중 관리 포인트 식별 | IP | renewal card |
+| owner / actual user | licence, distributor, group use 설명 | 법무 + 사업팀 | evidence vault |
+| 다음 점검일 | smoke QA 수준에서도 최소 점검 루틴 유지 | IP | 분기 triage |
+
 ## 10년 갱신 주기를 달력으로 바꾼다
 
 | 항목 | 공식 기준 | 운영 메모 |
@@ -65,3 +76,15 @@
 | channel | D2C, retail, distributor, marketplace |
 | proof | 포장, 판매 화면, invoice, promo asset |
 | last checked | 최근 검토일 |
+
+## 분기 운영 quick triage
+
+pilot lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 세 줄로 빠르게 나누는 편이 더 실용적이다.
+
+| 상태 | 의미 | 기본 액션 |
+| --- | --- | --- |
+| 정상 | renewal row, comparable mark 여부, recent proof가 최신 | 현 상태 유지 |
+| 보완 | evidence는 있으나 owner-user 또는 comparable memo가 약함 | 다음 점검 전 linkage 보강 |
+| 공백 | renewal row 또는 recent proof가 비어 있음 | 즉시 maintenance card 재구성 |
+
+이 triage 표가 있으면 UKTm은 smoke QA와 draft 공개본 유지라는 현재 lane 목적에 더 잘 맞게 작동한다.

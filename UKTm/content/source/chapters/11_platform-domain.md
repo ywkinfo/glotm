@@ -4,6 +4,17 @@
 
 특히 .uk 도메인 문제는 Nominet의 Domain Disputes Resolution Service를 활용할 수 있으므로, 플랫폼 신고와 도메인 분쟁을 한 사건으로 볼지 분리할지 초기에 정해야 한다.
 
+## online incident quick board
+
+UKTm의 online 장은 모든 플랫폼별 절차를 깊게 설명하기보다, 사건을 어떤 row로 먼저 열지 보여 주는 편이 early track에 더 맞다.
+
+| 먼저 적을 질문 | platform row 쪽 신호 | domain row 쪽 신호 | 다음 handoff |
+| --- | --- | --- | --- |
+| 문제의 핵심이 listing인가 도메인인가 | listing 삭제가 먼저 중요 | .uk 주소 자체를 막아야 함 | incident packet |
+| seller network가 여러 채널에 퍼졌는가 | platform 묶음 대응 필요 | 단일 도메인 중심 | 반복 seller memo |
+| 영국 채널만의 confusion이 큰가 | UK platform proof 우선 | DRS 또는 경고장 우선 | enforcement row |
+| 같은 사건을 EuTm과 묶어 볼 것인가 | EU/UK 병행 note 필요 | UK 단독 note면 충분 | 제10장 disputes |
+
 ## 채널별 대응 표
 
 | 채널 | 첫 대응 | 추가 escalation |
@@ -47,3 +58,13 @@
 - 플랫폼 신고 패킷과 도메인 분쟁 자료를 같은 사건 번호로 관리하는가
 - `.uk` 사건에서 Nominet DRS 검토 여부를 기록하는가
 - 반복 침해 seller의 이전 신고 이력을 남기는가
+
+## first 48 hours online memo
+
+| 시간대 | 바로 할 일 | 멈춰서 확인할 일 |
+| --- | --- | --- |
+| 0~4시간 | listing URL, seller ID, 도메인, 캡처일 확보 | platform row와 domain row를 섞어 적고 있지 않은가 |
+| 4~24시간 | incident packet, previous seller history, desired remedy 정리 | DRS가 맞는지 takedown이 더 빠른지 |
+| 24~48시간 | 반복 seller / linked domain 여부와 enforcement escalation 결정 | 같은 사건을 UK 단독으로 볼지 EU/UK 병행으로 볼지 |
+
+이 정도만 있어도 UKTm은 draft 공개본 단계에서 "어디서부터 사건을 열 것인가"를 빠르게 다시 찾는 reader utility를 충분히 제공한다.

@@ -2,6 +2,17 @@
 
 specimen은 미국 연방 상표에서 “우리가 진짜로 쓰고 있다”를 보여주는 핵심 증거다. intent-to-use로 가면 출원보다 더 중요한 구간이 뒤에 온다. 실제 사용, 증거 수집, 버전 통제, 제출 판단이 한 덩어리로 움직여야 한다.
 
+## lighter-track specimen owner board
+
+UsaTm의 specimen 장은 full handbook보다 “누가 어떤 증거를 언제 잠글까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 standard QA 유지 라운드에서도 실익이 크다.
+
+| 먼저 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
+| --- | --- | --- | --- |
+| specimen 유형 | product / service 중 무엇을 증명하는가 | IP | SOU readiness |
+| actual user | 누가 실제 사용 주체인가 | 법무 + 사업팀 | owner-user memo |
+| proof source | packaging / webpage / order flow 중 핵심 자료 | 마케팅 + 운영 | evidence storage SOP |
+| next deadline | NOA 이후 다음 판단일 | IP + PM | maintenance calendar |
+
 ## 1. 이 장이 다루는 범위
 
 이 장의 목적은 단순한 정의 설명이 아니다. 무엇이 좋은 specimen인지, 언제 Statement of Use를 준비해야 하는지, 누가 무엇을 보관해야 하는지, 그리고 어떤 실패를 막아야 하는지를 운영 관점에서 정리한다.
@@ -233,6 +244,16 @@ specimen 업무는 법무만의 일이 아니다. 실제로는 여러 팀이 한
 - 법무, 브랜드, 운영이 같은 상태표를 보는가
 - 누가 승인하고 누가 제출하는지 정해졌는가
 - 제출 후에도 다시 꺼내 설명할 수 있는가
+
+## specimen quick triage
+
+| 상태 | 의미 | 기본 액션 |
+| --- | --- | --- |
+| strong | 상품/서비스 맥락, 날짜, owner-user linkage가 함께 보임 | 제출 패킷으로 유지 |
+| review | 화면은 있으나 거래/서비스 맥락이 약함 | linkage 또는 공개 맥락 보강 |
+| weak | 목업, 내부안, 버전 혼선이 큼 | specimen 후보에서 제외 |
+
+이 triage 표가 있으면 UsaTm은 specimen 품질을 “예쁘게 보이느냐”가 아니라 “제출 가능한가” 기준으로 빠르게 다시 확인할 수 있다.
 
 ## 10. 마무리
 
