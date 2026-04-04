@@ -31,7 +31,6 @@ const {
       쟁점을 확인할 때 이 트랙으로 내려오는 구성이 자연스럽습니다.
     </>
   ),
-  homeStatusLabel: "Growth tier · Beta lifecycle의 중국 단일 시장 가이드",
   positioningKicker: "ChaTm Positioning",
   positioningTitle: "중국 실무 밀도를 우선 강화하는 growth guide",
   positioningNote: (

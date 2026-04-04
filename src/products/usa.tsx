@@ -32,7 +32,6 @@ const {
       specimen, monitoring row를 빠르게 다시 보는 reader utility 유지에 초점을 둡니다.
     </>
   ),
-  homeStatusLabel: "Incubate tier · Beta lifecycle · standard QA를 유지하는 미국 단일 시장 가이드",
   positioningKicker: "UsaTm Positioning",
   positioningTitle: "미국 연방 실무를 lighter depth로 유지하는 incubate guide",
   positioningNote: (

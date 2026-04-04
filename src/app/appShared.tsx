@@ -12,6 +12,7 @@ import {
 } from "../briefs/archive";
 import {
   buildReportOpenLabel,
+  buildReportStatusLabel,
   formatReportDate,
   buildReportPath,
   type ReportMeta
@@ -166,6 +167,15 @@ export function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
     .join(" / ");
 }
 
+export function buildPriorityLaneProgressNote(
+  products: ProductMeta[],
+  report?: Pick<ReportMeta, "gatewayPlacement">
+) {
+  const reportLabel = report ? buildReportStatusLabel(report) : "Trust layer";
+
+  return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel} / Gateway trust layer입니다.`;
+}
+
 export function buildTrustLayerGuideGroups(
   report?: ReportMeta,
   orderedProducts: ProductMeta[] = []
@@ -235,7 +245,7 @@ export function buildTrustLayerGuideSummary(
     ? ` ${options.laneLabelSequence} 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다.`
     : "";
 
-  return `${priorityGuides}에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`;
+  return `${priorityGuides}에서 이미 잠근 ${report.trustLayerSummaryObject} 교차 관할권 trust layer로 다시 묶습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`;
 }
 
 export function getTrustLayerSummaryFallback() {
@@ -434,7 +444,7 @@ export function ReportCard({ report, surface }: { report: ReportMeta; surface?: 
     <article className="brief-card">
       <div className="brief-card-topline">
         <p className="gateway-kicker">Special Report</p>
-        <span className="status-pill status-pill--neutral">{report.statusLabel}</span>
+        <span className="status-pill status-pill--neutral">{buildReportStatusLabel(report)}</span>
       </div>
       <p className="brief-card-date">{formatReportDate(report.publishedAt)}</p>
       <h3 className="brief-card-title">{report.title}</h3>

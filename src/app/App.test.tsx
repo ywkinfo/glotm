@@ -5,11 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
-import { getGatewayFeaturedReports, getPrimaryGatewayReport, reports } from "../reports/registry";
+import { getGatewayFeaturedReports, getPrimaryGatewayReport, getReportBySlug, reports } from "../reports/registry";
 import type { DocumentData } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
 const primaryGatewayReport = getPrimaryGatewayReport();
+const supportingGatewayReport = getReportBySlug("global-use-evidence-system");
 const gatewayFeaturedReports = getGatewayFeaturedReports(2);
 
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
@@ -295,6 +296,23 @@ describe("App portfolio shell", () => {
     }
   });
 
+  it.each([
+    ["/china", "Growth tier · Mature lifecycle · Full QA · 단일 시장 가이드"],
+    ["/mexico", "Growth tier · Mature lifecycle · Full QA · 단일 시장 가이드"],
+    ["/europe", "Validate tier · Beta lifecycle · Standard QA · 권역 가이드"],
+    ["/usa", "Incubate tier · Beta lifecycle · Standard QA · 단일 시장 가이드"],
+    ["/japan", "Incubate tier · Beta lifecycle · Standard QA · 단일 시장 가이드"],
+    ["/uk", "Incubate tier · Pilot lifecycle · Smoke QA · 단일 시장 가이드"]
+  ])("derives reader home status copy from registry truth for %s", async (pathname, statusLabel) => {
+    installFetchMock();
+
+    renderAppRouteTree(pathname);
+
+    await screen.findByText(statusLabel);
+
+    expect(screen.getByText(statusLabel)).toBeInTheDocument();
+  });
+
   it("scrolls the active product chip into view on route changes", async () => {
     installFetchMock();
     const scrollIntoView = vi.fn();
@@ -528,13 +546,13 @@ describe("App portfolio shell", () => {
       "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
     expect(
-      within(reportSection as HTMLElement).getByText(
+      within(reportSection as HTMLElement).getAllByText(
         /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
-      )
-    ).toBeInTheDocument();
+      ).length
+    ).toBeGreaterThan(0);
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선순위: ChaTm mature 유지 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"
+        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 Front trust layer / Gateway trust layer입니다."
       )
     ).toBeInTheDocument();
     expect(
@@ -883,7 +901,7 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\. 현재 우선 레인 상태는 ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0입니다\./
       )
     ).toBeInTheDocument();
     expect(
@@ -931,6 +949,30 @@ describe("App portfolio shell", () => {
     expect(screen.getByRole("link", { name: "ChaTm route decision matrix" })).toHaveAttribute(
       "href",
       "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+    );
+  });
+
+  it("renders supporting report detail with evidence-specific trust summary and EuTm handoff", async () => {
+    installFetchMock();
+
+    renderAppRouteTree(`/reports/${supportingGatewayReport?.slug}`);
+
+    await screen.findByRole("heading", { name: supportingGatewayReport?.title ?? "" });
+
+    expect(
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 잠근 evidence owner와 evidence vault 구조를 교차 관할권 trust layer로 다시 묶습니다\./)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Supporting trust layer \/ Gateway trust layer입니다\./)
+    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "EuTm: validate evidence handoff를 고정한다" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "EuTm evidence triage 보기" })).toHaveAttribute(
+      "href",
+      "/europe/chapter/제8장-등록-후-사용-갱신-증거-관리#distributor--marketplace-seller-evidence-triage"
+    );
+    expect(screen.getByRole("link", { name: "EuTm evidence triage" })).toHaveAttribute(
+      "href",
+      "/europe/chapter/제8장-등록-후-사용-갱신-증거-관리#distributor--marketplace-seller-evidence-triage"
     );
   });
 

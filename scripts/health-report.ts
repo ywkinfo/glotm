@@ -65,18 +65,21 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
 
   for (const lane of report.root) {
     const generatedLabel = lane.includesGeneratedContent ? "generated content 포함" : "pure runtime check";
-    lines.push(`| ${lane.label} | ${lane.status} | \`${lane.command}\` | ${lane.proves}; ${generatedLabel} |`);
+    const verificationSummary = lane.verification
+      ? `; verification scope: ${lane.verification.reportSummary}`
+      : "";
+    lines.push(`| ${lane.label} | ${lane.status} | \`${lane.command}\` | ${lane.proves}; ${generatedLabel}${verificationSummary} |`);
   }
 
   lines.push("");
   lines.push("## Product Health");
   lines.push("");
-  lines.push("| Guide | Tier | Current | Target | Verdict | Freshness | QA | Gap | Lane |");
-  lines.push("| --- | --- | --- | --- | --- | --- | --- | --- | --- |");
+  lines.push("| Guide | Tier | Current | Target | Verdict | Verification | Freshness | QA | Gap | Lane |");
+  lines.push("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |");
 
   for (const product of report.products) {
     lines.push(
-      `| ${product.slug} | ${product.portfolioTier} | ${product.currentLifecycleStatus} | ${product.targetLifecycleStatus} | ${product.verdict} | ${product.verificationFreshnessDays}d | ${product.qaLevel} | ${product.highRiskVerificationGapCount} | ${product.lane.label} |`
+      `| ${product.slug} | ${product.portfolioTier} | ${product.currentLifecycleStatus} | ${product.targetLifecycleStatus} | ${product.verdict} | ${product.verification.reportSummary} | ${product.verificationFreshnessDays}d | ${product.qaLevel} | ${product.highRiskVerificationGapCount} | ${product.lane.label} |`
     );
   }
 

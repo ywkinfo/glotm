@@ -31,7 +31,6 @@ const {
       자연스럽습니다.
     </>
   ),
-  homeStatusLabel: "Validate tier · Beta lifecycle의 유럽 권역 가이드",
   positioningKicker: "EuTm Positioning",
   positioningTitle: "유럽 권역 운영 구조를 검증하는 validate regional guide",
   positioningNote: (

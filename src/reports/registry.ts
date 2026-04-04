@@ -26,11 +26,11 @@ export type ReportMeta = {
   slug: string;
   title: string;
   summary: string;
+  trustLayerSummaryObject: string;
   publishedAt: string;
   updatedAt?: string;
   jurisdictions: string[];
   tags: string[];
-  statusLabel: string;
   audience: string;
   gatewayLabel: string;
   gatewayPlacement: ReportGatewayPlacement;
@@ -132,10 +132,10 @@ const reportSource: ReportMeta[] = [
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
     summary:
       "중국·멕시코·유럽·중남미·일본 가이드에 흩어진 route decision 질문을 하나의 trust layer로 묶어, local-fit과 central-management를 어떻게 나눠 볼지 정리한 스페셜 리포트입니다.",
+    trustLayerSummaryObject: "route decision 질문을",
     publishedAt: "2026-04-04T12:00:00.000Z",
     jurisdictions: ["Global", "China", "Mexico", "Europe", "Japan"],
     tags: ["출원 경로", "Madrid", "Route Memo"],
-    statusLabel: "Front trust layer",
     audience: "다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀",
     gatewayLabel: "Front Report",
     gatewayPlacement: "front",
@@ -237,10 +237,10 @@ const reportSource: ReportMeta[] = [
     title: "글로벌 사용 증거 수집 운영 시스템 구축",
     summary:
       "출원 이후에 증거를 뒤늦게 모으는 방식에서 벗어나, 여러 국가에서 재사용 가능한 사용 증거 운영 체계를 어떻게 미리 설계할지 정리한 스페셜 리포트입니다.",
+    trustLayerSummaryObject: "evidence owner와 evidence vault 구조를",
     publishedAt: "2026-04-02T09:00:00.000Z",
     jurisdictions: ["Global", "USA", "China", "Mexico", "Japan"],
     tags: ["사용 증거", "운영 시스템", "증거 보관"],
-    statusLabel: "Supporting trust layer",
     audience: "여러 국가에서 evidence owner와 evidence vault 구조를 먼저 잠가야 하는 운영팀, 법무팀, 브랜드팀",
     gatewayLabel: "Supporting Report",
     gatewayPlacement: "supporting",
@@ -272,6 +272,19 @@ const reportSource: ReportMeta[] = [
         ctaLabel: "MexTm 운영 가이드 보기"
       },
       {
+        id: "europe-evidence-triage",
+        title: "EuTm: validate evidence handoff를 고정한다",
+        summary:
+          "EuTm은 validate stabilization과 docs sync를 이미 마쳤으므로, distributor·marketplace·seller 증거를 어떤 triage 문법으로 넘길지 권역 기준선으로 바로 확인합니다.",
+        href: buildGuideSectionPath(
+          "europe",
+          "제8장-등록-후-사용-갱신-증거-관리",
+          "distributor--marketplace-seller-evidence-triage"
+        ),
+        guideSlug: "europe",
+        ctaLabel: "EuTm evidence triage 보기"
+      },
+      {
         id: "china-evidence-handoff",
         title: "ChaTm: route와 evidence를 같이 본다",
         summary:
@@ -295,8 +308,12 @@ const reportSource: ReportMeta[] = [
         href: getProductPathBySlug("china")
       },
       {
-        label: "EuTm 운영 가이드",
-        href: getProductPathBySlug("europe")
+        label: "EuTm evidence triage",
+        href: buildGuideSectionPath(
+          "europe",
+          "제8장-등록-후-사용-갱신-증거-관리",
+          "distributor--marketplace-seller-evidence-triage"
+        )
       },
       {
         label: "JapTm 운영 가이드",
@@ -326,6 +343,17 @@ export function buildReportOpenLabel(
   return emphasis === "immediate"
     ? `${report.gatewayLabel} 바로 보기`
     : `${report.gatewayLabel} 보기`;
+}
+
+export function buildReportStatusLabel(report: Pick<ReportMeta, "gatewayPlacement">) {
+  switch (report.gatewayPlacement) {
+    case "front":
+      return "Front trust layer";
+    case "supporting":
+      return "Supporting trust layer";
+    case "archive":
+      return "Archive report";
+  }
 }
 
 export function buildReportArchivePath() {
