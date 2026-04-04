@@ -24,7 +24,7 @@
 ## Current Verified Shape
 
 - 현재 기준 챕터 수: 20
-- 현재 기준 검색 엔트리 수: 780
+- 현재 기준 검색 엔트리 수: 781
 - 파이프라인 명령: 루트에서 `npm run content:latam`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 

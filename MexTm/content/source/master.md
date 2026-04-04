@@ -3799,6 +3799,21 @@ buyer가 사례 장에서 바로 다음 액션을 정하려면, 집행 owner가 
 - 현지 대리인용 문서와 사내용 문서를 따로 두되, 핵심 필드는 같게 유지하는 것이 좋다.
 - “파일은 있는데 찾을 수 없는 상태”가 가장 비효율적이므로 대장화가 필요하다.
 
+#### 2026-04-04 release-readiness 메모
+
+Sprint 1 잠금 4장을 buyer-entry 기준으로 보강한 뒤에는, 본문 밀도뿐 아니라 실제 reader와 출하 경로가 계속 살아 있는지도 같이 봐야 한다. 아래 메모는 2026-04-04 재검증 기준으로, `MexTm` 레인을 shared root gate와 맞춰 유지하기 위한 최소 readiness 기준이다.
+
+| 항목 | 2026-04-04 기준 |
+|---|---|
+| 원고 수정 시작점 | `chapters/`, `appendix/`, fact verification log에서만 시작 |
+| 콘텐츠 조립 | `npm run content:mexico` 통과 |
+| 루트 런타임 검증 | Gateway / `/mexico` reader 계약이 현재 copy와 함께 유지됨 |
+| 루트 빌드 검증 | `npm run build` 통과 |
+| Pages 출하 검증 | `npm run build:pages:glotm` 통과 |
+| Gateway 노출 | MexTm 카드 summary, freshness, maturity note가 registry 상태와 충돌하지 않음 |
+
+이 메모의 목적은 새로운 구조를 늘리는 것이 아니라, Sprint 1 잠금 4장 보강이 reader 계약과 release 계약을 깨지 않았는지 반복 확인하는 데 있다.
+
 #### 타임라인
 
 > [주의] 아래 표는 `공개본에 고정 가능한 기한`과 `사건별로 다시 확인해야 하는 단계`를 구분해 정리한 것이다. 실제 사건은 절대적 거절 사유, 선행권리 충돌, 이의 여부, 번역·증빙 준비 정도에 따라 달라질 수 있다.

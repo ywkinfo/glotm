@@ -218,6 +218,20 @@
 
 - 파일명 예시: `Brand_Country_YYYYMMDD_Type_Version`
 - 동일 증거의 원본과 제출용 가공본을 분리 저장한다.
+
+---
+
+## 2026-04-04 검증 메모
+
+2026-04-04 기준 LatTm 공개본 콘텐츠 검증을 다시 완료했다.
+
+- 검증 기준일: 2026-04-04
+- 검증 범위: 제1장~제19장과 부록 구조, 검색 색인 밀도, core reader 기준선
+- 검증 방법: local `content:prepare` 재현, shared root runtime/content/release lane 통과 확인
+- 이 버전에서 수정된 항목: 없음 (flagship baseline 재확인)
+- 다음 권장 검증 시점: 60일 이내 또는 기준선 구조 변경 시 즉시
+- 고위험 검증 갭: 0건
+- 운영 상태: flagship mature · full QA · 2026-04-04 local/root verification refreshed
 - 캡처 자료는 URL과 캡처자 메모를 함께 보관한다.
 - 국가별, 연도별, 자료 유형별 폴더를 유지한다.
 - 포트폴리오 대장에 각 증거 폴더 링크를 연결한다.

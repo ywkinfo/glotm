@@ -82,16 +82,18 @@
 | 知识产权海关保护备案 | 지재권 해관 보호 등록 | 세관 장에서는 원문 병기 권장 |
 | 人民法院 | 인민법원 | 사법 경로 설명 시 일관 표기 |
 
-### 부록 F. 2026-04-03 release-readiness 메모
+### 부록 F. 2026-04-04 release-readiness 메모
 
-Sprint 1 잠금 6장 보강 뒤에는 원고 밀도만이 아니라 실제 reader와 빌드 흐름이 계속 살아 있는지도 같이 확인해야 한다. 아래 메모는 이번 라운드에서 루트 검증 레인과 연결해 유지해야 할 최소 readiness 기준이다.
+Sprint 1 잠금 6장 보강 뒤에는 원고 밀도만이 아니라 실제 reader와 빌드 흐름이 계속 살아 있는지도 같이 확인해야 한다. 아래 메모는 2026-04-04 재검증 기준으로, 루트 검증 레인과 연결해 유지해야 할 최소 readiness 기준이다.
 
 | 항목 | 이번 라운드 기준 |
 | --- | --- |
 | 원고 수정 시작점 | 장별 원고와 사실 검증 로그에서만 시작 |
-| 콘텐츠 조립 | `npm run content:china` 통과 유지 |
+| 콘텐츠 조립 | `npm run content:china` 2026-04-04 통과 |
 | 루트 리더 계약 | `/china` 홈, 챕터, 검색, continue reading 흐름 유지 |
-| 루트 검증 | `npm test`, `npm run build`, `npm run build:pages:glotm` 재현 가능 상태 유지 |
+| 루트 런타임 검증 | `npm run health:runtime` 2026-04-04 통과 |
+| 루트 빌드 검증 | `npm run build` 2026-04-04 통과 |
+| Pages 출하 검증 | `npm run build:pages:glotm` 2026-04-04 통과 |
 | Gateway 노출 | ChaTm 카드 summary, freshness, maturity note가 실제 상태와 충돌하지 않음 |
 
 이 메모의 목적은 새 구조를 늘리는 것이 아니라, Sprint 1 보강이 reader 계약과 release 계약을 깨지 않았는지 반복 확인하는 데 있다.

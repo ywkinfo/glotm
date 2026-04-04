@@ -63,14 +63,14 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 - 부록 5종이 실제 복사 가능한 템플릿 형태인가
 - `content:master`, `content:qa`, `content:build`를 다시 돌렸는가
 
-## 2026-04-03 검증 메모
+## 2026-04-04 검증 메모
 
-2026-04-03 기준 UKTm 공개본 콘텐츠 검증을 완료했다.
+2026-04-04 기준 UKTm 공개본 콘텐츠 검증을 다시 완료했다.
 
-- 검증 기준일: 2026-04-03
+- 검증 기준일: 2026-04-04
 - 검증 범위: 제1장~제14장 전체 구조, 핵심 운영 섹션, 검색 색인 밀도
-- 검증 방법: 장별 heading 구조 점검, 검색 엔트리 분포 확인, UKIPO 기준 주요 절차 사실 확인
-- 이 버전에서 수정된 항목: 없음 (구조 안정 확인)
+- 검증 방법: 장별 heading 구조 점검, 검색 엔트리 분포 확인, UKIPO 기준 주요 절차 사실 확인, local `content:prepare` 재현
+- 이 버전에서 수정된 항목: 없음 (draft 공개본 stability 재확인)
 - 다음 권장 검증 시점: 60일 이내 (Brexit 이후 UKIPO 운영 변경 발생 시 즉시)
 - 고위험 검증 갭: 0건
-- 운영 상태: incubate pilot · smoke QA · 구조 hold
+- 운영 상태: incubate pilot · smoke QA · structure hold · 2026-04-04 local/root verification refreshed

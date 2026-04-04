@@ -34,7 +34,7 @@
 | 조립 스크립트 | `build-master.ts` 있음 | `build-master.ts` 있음 |
 | QA 스크립트 | `qa-content.ts` 있음 | `qa-content.ts` 있음 |
 | 챕터 수 | 20 | 14 |
-| 검색 엔트리 | 780 | 258 |
+| 검색 엔트리 | 781 | 258 |
 | 문서 깊이 | publish-grade | live regional guide baseline, 추가 심화 필요 |
 
 ### 현재 리스크

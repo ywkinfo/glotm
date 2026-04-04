@@ -62,7 +62,7 @@ describe("ChaTm final manuscript", () => {
       "부록 E. 용어 표준화 초안"
     );
     expect(appendixChapter?.headings.map((heading) => heading.title)).toContain(
-      "부록 F. 2026-04-03 release-readiness 메모"
+      "부록 F. 2026-04-04 release-readiness 메모"
     );
   });
 
