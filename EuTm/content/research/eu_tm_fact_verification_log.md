@@ -30,7 +30,7 @@
 
 ## Sprint handoff
 
-이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 여섯 장이다.
+핵심 6장 심화에서 writer가 바로 쓰는 핵심 handoff는 아래 여섯 장이다.
 
 | chapter_ref | 우선 반영할 verified item |
 | --- | --- |
@@ -42,6 +42,19 @@
 | Ch8 | EU-EVD-001 owner-user evidence memo, Proof of use window, Renewal timing and grace period, EU-UK-001 launch split calendar |
 
 이 표를 두면 검증 로그가 본문과 분리돼 있으면서도, 이번 스프린트의 chapter-to-claim 연결은 바로 읽을 수 있다.
+
+## Stabilization handoff
+
+이번 라운드의 목적은 verified item을 새 범위로 넓히는 것이 아니라, 이미 반영된 본문과 문서 설명을 같은 기준선으로 유지하는 것이다.
+
+| 항목 | 현재 유지할 기준 | 이번 라운드에서 하지 않을 것 |
+| --- | --- | --- |
+| Ch1 / Ch2 | EUTM, national filing, UK split, Madrid linkage를 EU 공통 프레임 기준으로 유지 | 회원국별 filing deep dive 추가 |
+| Ch4 / Ch5 | clearance variance, route pack, representative line을 operational memo 수준으로 유지 | 국가별 양식·fee 상세 확장 |
+| Ch7 / Ch8 | opposition calendar, genuine use, renewal, EU/UK split row를 validate lane 기준으로 유지 | country-by-country opposition / renewal 절차 확대 |
+| research log 전체 | verified item만 본문 기준선으로 유지 | 새 `Pending` 항목 확대 |
+
+이 stabilization handoff를 두면 이번 레인이 “무엇을 더 쓸까”보다 “이미 잠근 기준을 어디까지 유지할까”에 초점을 맞춘다는 점이 분명해진다.
 
 ## Current controlled scope reminder
 

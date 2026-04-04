@@ -66,7 +66,7 @@ export function GatewayLandingPage() {
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    `현재 active build order는 ${priorityLaneLabelSequence} 정렬 이후 route decision report / Gateway trust layer이며, growth·validate 레인의 scorecard truth와 buyer-facing entry copy를 route memo 문법으로 다시 맞추는 단계입니다.`
+    `현재 active build order는 ${priorityLaneLabelSequence} 정렬 이후 front/supporting report를 포함한 Gateway trust layer이며, growth·validate 레인의 scorecard truth와 buyer-facing entry copy를 route memo와 evidence handoff 문법으로 다시 맞추는 단계입니다.`
   ];
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
@@ -80,10 +80,10 @@ export function GatewayLandingPage() {
     },
     {
       id: "mexico",
-      title: "MexTm Sprint 1 buyer-entry 심화 + release 재검증 완료",
+      title: "MexTm Sprint 2 운영 handoff 정렬 완료",
       copy:
-        "이미 강한 baseline 위에서 buyer entry 가치가 큰 잠금 4장을 더 두껍게 만들어, 단일국가 실행 질문이 바로 보이게 정리했습니다.",
-      note: "제1장, 제4장, 제11장, 제13장 정렬 + content/build/pages/e2e 재검증 완료",
+        "buyer-entry baseline 위에 filing packet, declaration·renewal owner, border evidence pack까지 이어지는 운영 문법을 더 선명하게 정리했습니다.",
+      note: "제5장, 제7장, 제10장 정렬 + content/test/build/e2e 재검증 완료",
       href: buildProductPath("/mexico")
     },
     {
@@ -96,10 +96,10 @@ export function GatewayLandingPage() {
     },
     {
       id: "report-gateway",
-      title: "Route decision Report / Gateway trust layer",
+      title: "Report / Gateway trust layer 정합화",
       copy:
-        "출원 경로 결정 프레임워크를 front report로 올리고, Gateway에서는 growth·validate 결과를 buyer-facing route memo 문법으로 다시 읽히게 만드는 active lane입니다.",
-      note: "global filing route framework + latest brief deep link + gateway state sync",
+        "front report는 route decision을, supporting report는 evidence system을 맡기고, Gateway에서는 growth·validate 결과를 현재 scorecard truth와 같은 문법으로 다시 읽히게 만드는 active lane입니다.",
+      note: "global filing route framework + global use evidence system + gateway state sync",
       href: buildReportArchivePath()
     },
     {

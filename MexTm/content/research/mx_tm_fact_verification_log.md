@@ -20,7 +20,7 @@
 
 ## Sprint handoff
 
-이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 네 장이다.
+Sprint 1에서 writer가 바로 썼던 핵심 handoff는 아래 네 장이다.
 
 | chapter_ref | 우선 연결할 claim_id | handoff 메모 |
 | --- | --- | --- |
@@ -28,3 +28,13 @@
 | Ch4 | MX-DL-001, MX-FEE-001 | 경로 선택 직후 기한·비용 handoff 표와 mixed structure 메모 연결 |
 | Ch11 | MX-ENF-001 | 자산 통제 포트폴리오와 asset recovery pack, digital asset lockdown을 같이 설명 |
 | Ch13 | MX-ENF-001 | 사례 회수 표와 incident postmortem을 control sheet 보강으로 연결 |
+
+## Sprint 2 handoff
+
+이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 세 장이다.
+
+| chapter_ref | 우선 연결할 claim_id | handoff 메모 |
+| --- | --- | --- |
+| Ch5 | MX-NORM-001, MX-FEE-001 | `Tu cuenta PASE` / `Marca en Línea` / `ClasNiza` / `MARCia` / `MARCANET` / `SIGA/Gaceta` 용어를 filing packet 관점에서 고정하고, `IMPI88`와 후속 비용 owner를 분리해 적는다 |
+| Ch7 | MX-DL-001, MX-FEE-001 | `2018-08-10` 이후 등록분의 declaration of use와 10년 갱신 구조를 하나의 유지관리 캘린더로 연결하되, declaration/renewal owner는 별도 행으로 남긴다 |
+| Ch10 | MX-ENF-001 | IMPI `declaraciones administrativas`·`medidas provisionales`와 ANAM `pedimento/annex` 흐름을 one-pack evidence board로 묶고, first-48-hours escalation memo까지 같이 둔다 |

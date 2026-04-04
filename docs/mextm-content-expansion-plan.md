@@ -2,7 +2,7 @@
 
 ## 목적
 
-이 문서는 `MexTm`을 현재의 강한 baseline에서, buyer entry 가치와 실무 밀도가 더 분명하게 드러나는 growth country guide로 끌어올리기 위한 실행 계획서다. 이미 15개 챕터와 369개 search entry를 갖춘 상태이므로, 이번 스프린트의 목적은 장 수 확대보다 핵심 장의 판단 밀도, 실행 표준형, reader 탐색 품질을 높이는 데 있다.
+이 문서는 `MexTm`을 현재의 강한 baseline에서, buyer entry 가치와 실무 밀도가 더 분명하게 드러나는 growth country guide로 끌어올리기 위한 실행 계획서다. 이미 15개 챕터와 369개 search entry를 갖춘 상태이므로, 이번 스프린트의 목적은 장 수 확대보다 핵심 장의 판단 밀도, 실행 표준형, reader 탐색 품질을 높이는 데 있다. Sprint 1이 buyer-entry 입구를 잠갔다면, Sprint 2는 그 흐름을 filing, maintenance, enforcement 운영까지 이어 붙이는 단계다.
 
 핵심 목표는 세 가지다.
 
@@ -33,25 +33,23 @@
 - 우선 장별 실행형 표 또는 체크리스트 1개 이상 추가
 - `npm run content:mexico`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
 
-## Sprint 1 우선 장
+## Sprint 2 우선 장
 
-1. 제1장. 멕시코 상표 제도 개요와 IMPI 운영 구조
-2. 제4장. 출원 경로 선택: 직접출원 vs 마드리드
-3. 제11장. 도메인(.MX)·디자인·저작권(인다우토르)과의 결합 전략
-4. 제13장. 실무 사례·판례 요약
+1. 제5장. 출원서 작성 실무: 제출서류·권한·전자출원(PASE)
+2. 제7장. 등록 후 의무: 사용 선언·갱신·권리 유지 캘린더
+3. 제10장. 관세·세관(국경) 조치와 물류 통제
 
 선정 이유:
 
-- 제1장은 buyer가 MexTm을 열었을 때 전체 실무 구조를 이해하는 첫 장이다.
-- 제4장은 출원 경로 선택이라는 직접 의사결정 포인트를 다룬다.
-- 제11장은 멕시코 실무에서 자주 놓치는 디지털/브랜드 자산 통제를 다룬다.
-- 제13장은 앞 장의 원칙을 실제 사례와 실패 패턴으로 회수하는 장이다.
+- 제5장은 경로 선택 뒤 실제 filing packet을 잠그는 첫 운영 장이다.
+- 제7장은 declaration of use, renewal, evidence ownership을 하나의 유지관리 시스템으로 회수하는 장이다.
+- 제10장은 IMPI 집행과 ANAM 문서 흐름을 연결해 국경 단계 실행력을 만드는 장이다.
 
 ## 작업 단계
 
 ### Phase 0 — 기준선 고정
 
-- 현재 15장 구조와 Sprint 1 우선 4장을 잠근다.
+- 현재 15장 구조와 Sprint 2 우선 3장을 잠근다.
 - 현재 기준 수치를 `15장 / 검색 엔트리 369`로 갱신한다.
 - fact verification log의 `Body-ready` 항목이 어느 장에 승격되는지 표시한다.
 - 우선 장별 완료 기준을 문서화한다.
@@ -59,14 +57,15 @@
 
 ### Phase 1 — 우선 장 심화
 
-- 제1장: 운영 구조와 기한/모니터링 체계를 한 장 decision map으로 보강
-- 제4장: 직접출원 vs 마드리드 선택표와 escalation 기준 보강
-- 제11장: 상표, `.MX` 도메인, 디자인, 저작권을 하나의 통제 포트폴리오로 읽히게 재정리
-- 제13장: 한국 기업이 반복적으로 놓치는 패턴을 사례형 체크리스트로 회수
+- 제5장: filing owner, signing authority, `Tu cuenta PASE`/`Marca en Línea` handoff를 packet lock board로 보강
+- 제7장: declaration of use, renewal, goods/services 유지 범위, evidence linkage를 운영 캘린더와 escalation 보드로 보강
+- 제10장: IMPI 임시조치와 ANAM `pedimento/annex` 흐름을 border evidence pack과 incident memo로 보강
 
 ### Phase 2 — 사실 검증 동기화
 
-- `MX-FEE-001`, `MX-DL-001`, `MX-NORM-001`, `MX-ENF-001`을 우선 장과 연결
+- 제5장: `MX-NORM-001`, `MX-FEE-001`
+- 제7장: `MX-DL-001`, `MX-FEE-001`
+- 제10장: `MX-ENF-001`
 - 기한, 수수료, 시스템명, 절차명은 공식 소스 기준으로만 단정 표현
 - 변동 가능성이 큰 문구는 본문에서 "최신 공식 안내 기준" 표현으로 제한
 
@@ -83,7 +82,7 @@
 
 ## 완료 기준
 
-- 우선 4개 장이 기존 baseline보다 더 명확한 decision/supporting structure를 갖는다.
+- 우선 3개 장이 기존 baseline보다 더 명확한 decision/supporting structure를 갖는다.
 - fact verification log의 핵심 `Body-ready` 항목이 본문에 실제 승격된다.
 - `content:mexico`가 workspace gate로 통과하고, 통합 이후 shared root gate가 1회 통과한다.
 - `/mexico` reader의 홈/챕터/검색/continue reading 흐름에 회귀가 없다.
@@ -92,11 +91,11 @@
 
 - `MexTm`은 이미 강한 baseline이 있으므로, 이번 스프린트에서는 장 수 확대보다 buyer entry 가치와 실무 decision density를 우선한다.
 - worker는 `MexTm` 디렉터리와 `mx_tm_fact_verification_log.md`만 수정하고, 루트 메타데이터는 리더가 마지막에 동기화한다.
-- 다음 스프린트 후보는 제5장, 제7장, 제10장처럼 후속 운영과 집행 판단을 이어 주는 장이다.
+- Sprint 2 이후의 다음 handoff는 `EuTm` 안정화와 `Report / Gateway trust layer` 정합화다.
 
 ## 2026-04-04 진행 메모
 
 - Sprint 1 잠금 4장에 IMPI 시스템 handoff board, buyer-entry escalation memo, local-fit vs central-management scoring, owner split memo, asset owner-linkage map, partner exit war-room, case-to-control mapping board를 추가했다.
-- `npm run content:mexico` 기준 생성 산출물은 15개 챕터 / 검색 엔트리 369개다.
-- 2026-04-04 기준 `npm run content:mexico`, `npm run build`, `npm run build:pages:glotm`, `npm run e2e:smoke`를 다시 통과해 release-readiness를 한 번 더 잠갔다.
-- 남은 작업은 buyer-facing 결과를 Report / Gateway trust layer에 더 선명하게 넘기는 일이다.
+- Sprint 2에서는 제5장, 제7장, 제10장에 filing packet lock board, rights-maintenance triage board, border evidence pack control board를 추가해 buyer-entry 이후 운영 handoff를 더 빨리 읽히게 만든다.
+- 이번 라운드의 검증 목표는 `npm --prefix MexTm run content:prepare`, `npm run content:mexico`, `npm run test:content`, `npm run build` 재통과다.
+- 이후 handoff는 `EuTm` 안정화 -> `Report / Gateway trust layer` 정합화 순서를 유지한다.

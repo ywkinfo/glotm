@@ -369,7 +369,7 @@ describe("App portfolio shell", () => {
     );
     expect(summaryParagraphs[1]).toContain("ChaTm");
     expect(summaryParagraphs[1]).toContain("MexTm");
-    expect(summaryParagraphs[1]).toContain("route decision report / Gateway trust layer");
+    expect(summaryParagraphs[1]).toContain("front/supporting report를 포함한 Gateway trust layer");
   });
 
   it("renders wrap-safe separators in the coverage and current status metrics", () => {
@@ -515,7 +515,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다\./
+        /ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다\./
       )
     ).toBeInTheDocument();
     expect(
@@ -888,7 +888,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다\./
+        /ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다\./
       )
     ).toBeInTheDocument();
     expect(
@@ -913,7 +913,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다\./
+        /ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다\./
       )
     ).toBeInTheDocument();
     expect(screen.getByText("어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.")).toBeInTheDocument();

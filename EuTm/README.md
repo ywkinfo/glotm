@@ -31,6 +31,7 @@
 - 현재 빌드 기준 산출물은 14개 챕터 / 검색 엔트리 258개입니다.
 - 수수료, 공식 기한, 시스템 명칭처럼 변동성이 큰 정보는 본문에 확정하기 전에 `content/research/eu_tm_fact_verification_log.md`에서 먼저 검증합니다.
 - 현재 `EuTm`의 런타임 포지션은 `validate tier · beta lifecycle`입니다.
-- 현재 스프린트 우선순위는 상태 승격보다 `docs sync 유지 + controlled EU/UK scope 고정 + 핵심 6장(1/2/4/5/7/8) 심화`입니다.
+- 핵심 6장(`제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`)의 controlled scope 보강은 이미 공개본 기준에 반영됐습니다.
+- 현재 스프린트 우선순위는 상태 승격보다 `docs sync 유지 + controlled EU/UK scope 고정 + workspace gate 입력 정리`입니다.
 - 현재 포트폴리오 실행 순서상 `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer` 정렬 안에서, `EuTm`은 full expansion보다 validate lane 안정화와 controlled Eu/UK scope 유지를 맡습니다.
-- 현재 우선 보강 장은 `제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`이며, 목적은 권리 선택, search, filing, opposition, 사용·갱신 설명을 같은 운영 언어로 잠그는 데 있습니다.
+- 현재 우선 유지 포인트는 `제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`의 decision board, calendar, evidence handoff를 같은 운영 언어로 유지하는 데 있습니다.

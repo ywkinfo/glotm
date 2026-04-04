@@ -141,7 +141,7 @@ const reportSource: ReportMeta[] = [
     gatewayPlacement: "front",
     gatewayPriority: 0,
     whyNow:
-      "ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다. 그래서 이제 각 guide 안에서 잠근 route decision 질문을 buyer-facing trust layer로 다시 묶을 타이밍입니다.",
+      "ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다. EuTm도 validate stabilization과 docs sync를 마쳤기 때문에, 이제 route decision 질문을 Gateway 첫 화면의 buyer-facing trust layer로 다시 묶을 타이밍입니다.",
     trustLayerChecklist: [
       "어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.",
       "본국기초출원과 global bundle timing이 안정적인지 분리해 본다.",
@@ -246,7 +246,7 @@ const reportSource: ReportMeta[] = [
     gatewayPlacement: "supporting",
     gatewayPriority: 1,
     whyNow:
-      "국가별 가이드에서 evidence handoff를 다뤄도, 실제 운영팀은 관할마다 다른 폴더를 만드는 대신 재사용 가능한 증거 시스템을 먼저 잠가야 합니다.",
+      "front report가 route decision 질문을 먼저 잠갔다면, supporting report는 그 다음 handoff인 evidence owner와 evidence vault 구조를 관할 공통 문법으로 다시 묶어 줘야 합니다. 국가별 가이드만 읽고 끝내면 filing 이후 운영 체계가 다시 흩어지기 쉬우므로, 지금 supporting lane에서 같은 증거 시스템 문법을 고정할 필요가 있습니다.",
     trustLayerChecklist: [
       "누가 어떤 증거를 어떤 주기로 수집하는지 owner map을 적는다.",
       "판매 화면, 패키지, 플랫폼 로그를 같은 폴더 문법으로 정리한다.",

@@ -333,8 +333,17 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 - 핵심 6장(`제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`)에 controlled scope decision board, rights calendar lock, search-to-opposition handoff, route pack lock, opposition/coexistence war-room, evidence-to-enforcement reuse memo를 추가했다.
 - `npm run content:europe` 기준 생성 산출물은 14개 챕터 / 검색 엔트리 258개다.
 - `/europe` 스프린트 addendum 수동 smoke를 마감했고, 남은 작업은 shared root gate 입력 정리다.
-6. `content:europe`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
-7. `README`, `Architecture`, `Content-Spec`, research docs의 상태 설명이 일치한다.
+
+## 2026-04-04 안정화 메모
+
+- `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`, `content/research/eu_tm_fact_verification_log.md`의 상태 설명을 현재 baseline에 맞게 다시 잠근다.
+- 이번 라운드의 초점은 핵심 6장을 더 넓히는 것이 아니라, `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 설명을 문서와 fact log에서 일치시키는 데 있다.
+- shared root gate 이전에는 `content:europe`와 local workspace baseline 재현을 우선 증빙으로 사용한다.
+
+추가 완료 기준:
+
+- `content:europe`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
+- `README`, `Architecture`, `Content-Spec`, research docs의 상태 설명이 일치한다.
 
 ---
 

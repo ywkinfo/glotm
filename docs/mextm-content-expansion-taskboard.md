@@ -9,7 +9,7 @@
 
 ## 현재 스프린트 잠금
 
-- Sprint 1 우선 장은 `제1장`, `제4장`, `제11장`, `제13장`으로 고정한다.
+- Sprint 2 우선 장은 `제5장`, `제7장`, `제10장`으로 고정한다.
 - verification 레인은 `Body-ready` 항목의 본문 승격을 우선하며, 신규 `Pending` 항목을 불필요하게 늘리지 않는다.
 - generated 산출물 수정 금지, source chapters와 verification log에서만 작업 시작
 
@@ -24,27 +24,26 @@
 
 대상:
 
-- 제1장. 멕시코 상표 제도 개요와 IMPI 운영 구조
-- 제4장. 출원 경로 선택: 직접출원 vs 마드리드
+- 제5장. 출원서 작성 실무: 제출서류·권한·전자출원(PASE)
+- 제7장. 등록 후 의무: 사용 선언·갱신·권리 유지 캘린더
 
 완료 기준:
 
-- 멕시코 운영 구조와 기한/모니터링 흐름이 decision map으로 보임
-- 출원 경로 선택이 `직접출원 vs 마드리드` 표로 빠르게 비교 가능
-- buyer가 바로 다음 액션을 정할 수 있는 체크리스트 또는 escalation 표 포함
+- filing owner, signing authority, PASE/`Marca en Línea` handoff가 표로 빠르게 보임
+- declaration of use, renewal, evidence owner가 하나의 유지관리 triage로 읽힘
+- buyer가 바로 다음 액션을 정할 수 있는 체크리스트, handoff memo, escalation 표 포함
 
 ## 원고 레인 B
 
 대상:
 
-- 제11장. 도메인(.MX)·디자인·저작권(인다우토르)과의 결합 전략
-- 제13장. 실무 사례·판례 요약
+- 제10장. 관세·세관(국경) 조치와 물류 통제
 
 완료 기준:
 
-- 상표, 도메인, 디자인, 저작권이 하나의 통제 포트폴리오로 읽힘
-- 사례 장이 단순 판례 요약이 아니라 실패 패턴과 예방 기준을 회수함
-- 온라인 자산, 계약, 사용증빙이 어떻게 연결되는지 명확히 드러남
+- IMPI `declaraciones administrativas`·`medidas provisionales`와 ANAM `pedimento/annex` 흐름이 하나의 control board로 읽힘
+- 적발 직후 first-48-hours escalation memo와 border evidence pack이 같이 보임
+- importer/distributor/license 구조와 집행 구조의 연결이 명확히 드러남
 
 ## 사실 검증 레인
 
@@ -59,6 +58,7 @@
 
 - 각 항목에 마지막 확인일, 1차 출처, 본문 반영 장이 명시됨
 - 본문 승격 가능/보류 여부가 분명함
+- Sprint 2 handoff에서 `Ch5`, `Ch7`, `Ch10` 연결 메모가 별도로 정리됨
 
 ## QA / 배포 준비 레인
 
@@ -71,13 +71,13 @@
 
 순차 검증:
 
-1. `npm run content:mexico`
-2. `npm test`
-3. `npm run build`
-4. `npm run build:pages:glotm`
+1. `npm --prefix MexTm run content:prepare`
+2. `npm run content:mexico`
+3. `npm run test:content`
+4. `npm run build`
 
 완료 기준:
 
 - 콘텐츠 조립 실패 없음
-- 루트 검증 명령 통과
+- MexTm local pipeline과 루트 content/build 검증 통과
 - `/mexico` 홈/챕터/검색/continue reading 스모크 기준 충족
