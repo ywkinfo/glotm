@@ -436,7 +436,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 ChaTm 운영 가이드 · MexTm 운영 가이드 · EuTm 운영 가이드 · LatTm 기준 프레임 · JapTm 운영 가이드와 바로 이어 읽히도록 배치해/
+        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 ChaTm · MexTm · EuTm에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶습니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
       )
     ).toBeInTheDocument();
     expect(
@@ -783,7 +783,7 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm과 MexTm은 2026-04-04 기준 release-readiness를 다시 잠갔고, EuTm은 validate stabilization을 유지한 상태입니다\. report는 ChaTm 운영 가이드 · MexTm 운영 가이드 · EuTm 운영 가이드 · LatTm 기준 프레임 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다\./
+        /ChaTm · MexTm · EuTm에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶고, ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
       )
     ).toBeInTheDocument();
   });

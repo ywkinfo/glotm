@@ -100,6 +100,8 @@ export function orderGatewayProducts(products: ProductMeta[]) {
   });
 }
 
+const priorityLaneSlugs = ["china", "mexico", "europe"];
+
 function getProductCardCtaClass(product: ProductMeta) {
   return product.portfolioTier === "flagship" || product.portfolioTier === "growth"
     ? "product-card-link"
@@ -135,11 +137,18 @@ function formatSearchDensity(product: ProductMeta) {
 }
 
 function getPriorityLaneProducts(products: ProductMeta[]) {
-  const prioritySlugs = ["china", "mexico", "europe"];
-
-  return prioritySlugs
+  return priorityLaneSlugs
     .map((slug) => products.find((product) => product.slug === slug))
     .filter((product): product is ProductMeta => Boolean(product));
+}
+
+export function buildPriorityLaneLabelSequence(
+  products: ProductMeta[],
+  separator = " -> "
+) {
+  return getPriorityLaneProducts(products)
+    .map((product) => product.shortLabel)
+    .join(separator);
 }
 
 export function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
@@ -151,27 +160,44 @@ export function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
     .join(" / ");
 }
 
-export function buildRelatedGuideSummary(
+export function buildTrustLayerGuideGroups(
   report?: ReportMeta,
   orderedProducts: ProductMeta[] = []
-): string | null {
+) {
   if (!report || report.relatedGuideLinks.length === 0) {
-    return null;
+    return {
+      priorityGuides: null,
+      baselineGuides: null,
+      supportingGuides: null
+    };
   }
 
-  const orderedProductPaths = new Map(
-    orderedProducts.map((product, index) => [buildProductPath(product), index])
+  const relatedGuidePaths = new Set(report.relatedGuideLinks.map((link) => link.href));
+  const relatedProducts = orderedProducts.filter((product) =>
+    relatedGuidePaths.has(buildProductPath(product))
+  );
+  const priorityProducts = relatedProducts.filter((product) =>
+    priorityLaneSlugs.includes(product.slug)
+  );
+  const baselineProducts = relatedProducts.filter((product) => product.slug === "latam");
+  const supportingProducts = relatedProducts.filter(
+    (product) => !priorityLaneSlugs.includes(product.slug) && product.slug !== "latam"
   );
 
-  return [...report.relatedGuideLinks]
-    .sort((left, right) => {
-      const leftIndex = orderedProductPaths.get(left.href) ?? Number.MAX_SAFE_INTEGER;
-      const rightIndex = orderedProductPaths.get(right.href) ?? Number.MAX_SAFE_INTEGER;
-
-      return leftIndex - rightIndex;
-    })
-    .map((link) => link.label)
-    .join(" · ");
+  return {
+    priorityGuides:
+      priorityProducts.length > 0
+        ? joinProductLabels(priorityProducts, " · ")
+        : null,
+    baselineGuides:
+      baselineProducts.length > 0
+        ? joinProductLabels(baselineProducts, " · ")
+        : null,
+    supportingGuides:
+      supportingProducts.length > 0
+        ? joinProductLabels(supportingProducts, " · ")
+        : null
+  };
 }
 
 export function buildGuideTrackingParams(

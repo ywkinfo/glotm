@@ -21,16 +21,26 @@ import {
 import {
   FullDocumentLink,
   ReportCard,
+  buildPriorityLaneLabelSequence,
   buildPriorityLaneStatusSummary,
-  buildRelatedGuideSummary,
+  buildTrustLayerGuideGroups,
   orderGatewayProducts
 } from "./appShared";
 
 export function ReportArchivePage() {
   const latestReport = getLatestReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
+  const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport, orderedProducts);
+  const {
+    priorityGuides: trustLayerPriorityGuides,
+    baselineGuides: trustLayerBaselineGuides,
+    supportingGuides: trustLayerSupportingGuides
+  } = buildTrustLayerGuideGroups(latestReport, orderedProducts);
+  const trustLayerGuideSummary =
+    latestReport && trustLayerPriorityGuides
+      ? `${trustLayerPriorityGuides}에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶고, ${priorityLaneLabelSequence} 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다.${trustLayerBaselineGuides ? ` ${trustLayerBaselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${trustLayerSupportingGuides ? ` ${trustLayerSupportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`
+      : null;
 
   useEffect(() => {
     setRuntimeDocumentTitle("Special Report");
@@ -49,7 +59,7 @@ export function ReportArchivePage() {
             가이드가 국가별 실행 맥락을 정리한다면, 리포트는 사용 증거, 플랫폼 대응, 긴급 의사결정처럼 교차 관할권 문제를 별도 레인으로 묶어 보여줍니다.
           </p>
           <p className="gateway-summary gateway-summary--supporting">
-            ChaTm과 MexTm은 2026-04-04 기준 release-readiness를 다시 잠갔고, EuTm은 validate stabilization을 유지한 상태입니다. report는 {latestReportGuideSummary || "관련 live guide"}에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다. 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
+            {trustLayerGuideSummary || "리포트는 관련 live guide에 공통으로 걸리는 운영 질문을 front placement하는 trust layer입니다."} 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
           </p>
           <div className="gateway-actions">
             {latestReport ? (
@@ -87,6 +97,8 @@ export function ReportArchivePage() {
 export function ReportPage() {
   const params = useParams<{ reportSlug: string }>();
   const report = params.reportSlug ? getReportBySlug(params.reportSlug) : undefined;
+  const orderedProducts = orderGatewayProducts(liveShellProducts);
+  const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const resourceLoaders = useMemo(() => {
@@ -198,7 +210,7 @@ export function ReportPage() {
             ))}
           </div>
           <p className="brief-issue-note">
-            이 리포트는 특정 국가의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 판단과 문서 체계를 먼저 정리하는 심화 문서입니다.
+            이 리포트는 특정 국가의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 판단과 문서 체계를 먼저 정리하는 trust layer입니다. 현재 active build order인 {priorityLaneLabelSequence} 다음 레인에서 바로 이어 읽히도록 배치합니다.
           </p>
         </div>
 

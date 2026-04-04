@@ -11,8 +11,9 @@ import {
   ProductGroup,
   ReportCard,
   buildGuideTrackingParams,
+  buildPriorityLaneLabelSequence,
   buildPriorityLaneStatusSummary,
-  buildRelatedGuideSummary,
+  buildTrustLayerGuideGroups,
   getTierComposition,
   joinProductLabels,
   operatorProfileUrl,
@@ -40,18 +41,27 @@ export function GatewayLandingPage() {
   );
   const latamProduct = orderedProducts.find((product) => product.slug === "latam") ?? orderedProducts[0];
   const mexicoProduct = orderedProducts.find((product) => product.slug === "mexico") ?? orderedProducts[0];
+  const featuredBriefs = briefIssues.slice(0, 2);
+  const latestBrief = getLatestBriefIssue();
+  const latestReport = getLatestReport();
+  const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
+  const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
+  const {
+    priorityGuides: trustLayerPriorityGuides,
+    baselineGuides: trustLayerBaselineGuides,
+    supportingGuides: trustLayerSupportingGuides
+  } = buildTrustLayerGuideGroups(latestReport, orderedProducts);
+  const trustLayerGuideSummary =
+    latestReport && trustLayerPriorityGuides
+      ? `현재 front report인 ${latestReport.title}은 ${trustLayerPriorityGuides}에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶습니다.${trustLayerBaselineGuides ? ` ${trustLayerBaselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${trustLayerSupportingGuides ? ` ${trustLayerSupportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`
+      : null;
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guides";
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    "ChaTm은 Sprint 1 잠금 6장과 2026-04-04 release-readiness 재검증까지 잠갔고, MexTm은 buyer next action이 바로 보이도록 잠금 4장과 release 경로를 함께 다시 잠갔습니다. EuTm 안정화 이후 다음 active lane은 Report / Gateway trust layer입니다."
+    `현재 active build order는 ${priorityLaneLabelSequence} 정렬 이후 Report / Gateway trust layer이며, growth·validate 레인의 release-readiness와 scorecard truth를 buyer-facing entry copy에 맞추는 단계입니다.`
   ];
-  const featuredBriefs = briefIssues.slice(0, 2);
-  const latestBrief = getLatestBriefIssue();
-  const latestReport = getLatestReport();
-  const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const latestReportGuideSummary = buildRelatedGuideSummary(latestReport, orderedProducts);
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
     {
@@ -353,9 +363,9 @@ export function GatewayLandingPage() {
         <p className="gateway-section-copy">
           사용 증거, 플랫폼 대응, 긴급 의사결정처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
         </p>
-        {latestReportGuideSummary ? (
+        {trustLayerGuideSummary ? (
           <p className="gateway-section-copy gateway-section-copy--spaced">
-            현재 front report인 {latestReport?.title}은 {latestReportGuideSummary}와 바로 이어 읽히도록 배치해, ChaTm·MexTm release 재검증과 EuTm validate stabilization 뒤에 남는 공통 운영 질문을 guide 바깥에서 따로 놀지 않게 잠그는 다음 active 레인으로 두고 있습니다.
+            {trustLayerGuideSummary} 그래서 active lane에서 나온 실행 질문을 Gateway와 Report에서 같은 문법으로 읽히게 하는 것이 지금의 다음 active 레인입니다.
           </p>
         ) : null}
         <ul className="gateway-bullet-list">
@@ -418,7 +428,7 @@ export function GatewayLandingPage() {
           {growthProducts.length > 0 ? (
             <ProductGroup
               title="Growth"
-              description="ChaTm 잠금 6장과 MexTm 잠금 4장의 buyer-facing 정렬을 마쳤고, 두 가이드 모두 최신 release 경로를 다시 확인한 성장 트랙입니다. 다음 판단은 이 결과를 Report/Gateway trust layer에서 어떻게 보여 줄지로 이어집니다."
+              description="ChaTm 잠금 6장과 MexTm 잠금 4장의 buyer-facing 정렬을 마쳤고, EuTm 안정화와 함께 growth·validate 결과를 Report/Gateway trust layer로 넘기는 단계입니다."
               products={growthProducts}
               surface="portfolio_growth"
             />
