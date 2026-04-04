@@ -18,6 +18,7 @@ import {
 import { getSearchDensity } from "../products/scorecard";
 import {
   buildProductPath,
+  getVerificationFreshnessDays,
   type LifecycleStatus,
   type PortfolioTier,
   type ProductMeta,
@@ -136,6 +137,10 @@ function formatSearchDensity(product: ProductMeta) {
   return getSearchDensity(product).toFixed(1);
 }
 
+function formatVerificationFreshness(product: ProductMeta) {
+  return getVerificationFreshnessDays(product);
+}
+
 function getPriorityLaneProducts(products: ProductMeta[]) {
   return priorityLaneSlugs
     .map((slug) => products.find((product) => product.slug === slug))
@@ -172,10 +177,17 @@ export function buildTrustLayerGuideGroups(
     };
   }
 
-  const relatedGuidePaths = new Set(report.relatedGuideLinks.map((link) => link.href));
-  const relatedProducts = orderedProducts.filter((product) =>
-    relatedGuidePaths.has(buildProductPath(product))
-  );
+  const relatedGuideTargets = report.relatedGuideLinks.map((link) => link.href);
+  const relatedProducts = orderedProducts.filter((product) => {
+    const productPath = buildProductPath(product);
+
+    return relatedGuideTargets.some((target) =>
+      target === productPath
+      || target.startsWith(`${productPath}/`)
+      || target.startsWith(`${productPath}#`)
+      || target.startsWith(`${productPath}?`)
+    );
+  });
   const priorityProducts = relatedProducts.filter((product) =>
     priorityLaneSlugs.includes(product.slug)
   );
@@ -264,7 +276,7 @@ function ProductCard({ product, surface }: { product: ProductMeta; surface: stri
           총 {product.chapterCount}개 챕터 · 검색 {product.searchEntryCount}개 엔트리 · density {formatSearchDensity(product)}
         </p>
         <p className="product-card-scorecard">
-          검증 freshness {product.verificationFreshnessDays}일 · QA {getQaLevelLabel(product.qaLevel)} · 고위험 gap {product.highRiskVerificationGapCount}건
+          검증 freshness {formatVerificationFreshness(product)}일 · QA {getQaLevelLabel(product.qaLevel)} · 고위험 gap {product.highRiskVerificationGapCount}건
         </p>
         <h3 className="product-card-title">{product.title}</h3>
       </div>

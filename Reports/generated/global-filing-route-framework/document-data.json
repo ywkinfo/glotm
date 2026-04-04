@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
+    "builtAt": "2026-04-04T03:36:21.618Z",
+    "chapterCount": 1
+  },
+  "chapters": [
+    {
+      "id": "global-filing-route-framework",
+      "slug": "global-filing-route-framework",
+      "title": "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
+      "summary": "직접출원과 마드리드 비교는 각 국가 가이드마다 반복해서 등장하지만, 인하우스 팀이 실제로 먼저 잠가야 하는 질문은 생각보다 비슷합니다. 어느 시장이 local-fit을 더 강하게 요구하는지, 본국기초출원과 launch timing이 얼마나 안정적인지, owner split과 filing pack owner를 어디까지 조기에 고정해야 하는지가 핵심입니다.",
+      "html": "<p>직접출원과 마드리드 비교는 각 국가 가이드마다 반복해서 등장하지만, 인하우스 팀이 실제로 먼저 잠가야 하는 질문은 생각보다 비슷합니다. 어느 시장이 local-fit을 더 강하게 요구하는지, 본국기초출원과 launch timing이 얼마나 안정적인지, owner split과 filing pack owner를 어디까지 조기에 고정해야 하는지가 핵심입니다.</p>\n<p>이 리포트는 중국, 멕시코, 유럽, 일본, 중남미 가이드에 흩어진 route decision 포인트를 한 장의 trust layer로 다시 묶습니다. 목적은 국가별 세부 제도를 다시 설명하는 것이 아니라, buyer-facing 경로 판단을 어떤 질문 순서로 정리해야 guide 간 비교가 쉬워지는지 보여 주는 데 있습니다.</p>\n<p>실무에서 direct filing과 Madrid를 고를 때 가장 자주 생기는 실패는 어느 제도가 더 유리한지부터 토론하는 것입니다. 하지만 launch sequencing, owner-user linkage, local-fit pressure, route switch trigger가 잠기지 않으면 어떤 경로를 택해도 제5장 filing packet, 제7장 evidence system, 제9장 contract control에서 다시 같은 논의를 반복하게 됩니다.</p>\n<h3 id=\"현재-route-trust-snapshot\" class=\"article-heading depth-h3\">현재 route trust snapshot</h3>\n<p>2026-04-04 기준 <code>ChaTm</code>은 Sprint 2로 low-density 장을 보강하며 route, invalidation, contract, customs, governance를 같은 밀도로 읽히게 만드는 단계까지 올라왔습니다. <code>MexTm</code>은 buyer-entry route table과 mixed route board가 이미 강하고, <code>EuTm</code>은 route pack lock board와 filing-to-evidence handoff가 validate lane 기준으로 안정적입니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>현재 가이드 상태</th>\n<th>이 리포트가 회수하는 공통 질문</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>ChaTm: route memo, owner split, local-fit scoring 강화</td>\n<td>중국처럼 local-fit pressure가 큰 시장에서는 언제 direct filing으로 기울어야 하는가</td>\n</tr>\n<tr>\n<td>MexTm: buyer-entry route table, mixed structure board 유지</td>\n<td>bundle 관리보다 local execution control이 먼저인가</td>\n</tr>\n<tr>\n<td>EuTm: route pack lock board와 filing handoff 유지</td>\n<td>region-level governance와 filing control을 어떻게 묶을 것인가</td>\n</tr>\n<tr>\n<td>LatTm: flagship route decision baseline 유지</td>\n<td>여러 국가를 비교할 때 어떤 공통 decision box를 먼저 써야 하는가</td>\n</tr>\n<tr>\n<td>JapTm: lighter-track route checkpoint 유지</td>\n<td>비교적 단순한 market에서도 route memo를 왜 남겨야 하는가</td>\n</tr>\n</tbody>\n</table></div>\n<p>즉, 이 리포트는 route choice를 국가별 절차 비교에서 portfolio trust layer로 끌어올리는 문서라고 보면 됩니다.</p>\n<h3 id=\"먼저-잠글-네-가지-질문\" class=\"article-heading depth-h3\">먼저 잠글 네 가지 질문</h3>\n<p>각 가이드의 표현은 달라도, route decision은 아래 네 가지 질문으로 수렴합니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>질문</th>\n<th>왜 먼저 잠가야 하는가</th>\n<th>늦어지면 생기는 문제</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>중국/멕시코/유럽 중 어디가 local-fit을 더 요구하는가</td>\n<td>direct filing 필요도를 좌우</td>\n<td>naming, goods/services, owner split drift</td>\n</tr>\n<tr>\n<td>본국기초출원과 global bundle 일정이 안정적인가</td>\n<td>Madrid fit을 좌우</td>\n<td>launch timing과 route switch 혼선</td>\n</tr>\n<tr>\n<td>owner와 실제 사용자를 누가 설명하는가</td>\n<td>filing 이후 evidence까지 연결</td>\n<td>packet owner 불명확</td>\n</tr>\n<tr>\n<td>route switch를 언제 허용할 것인가</td>\n<td>mixed route나 fallback 구조 준비</td>\n<td>launch 직전 재결정 반복</td>\n</tr>\n</tbody>\n</table></div>\n<h4 id=\"질문-1-local-fit-pressure\" class=\"article-heading depth-h4\">질문 1. local-fit pressure</h4>\n<p>local-fit pressure는 단순히 법제가 다르다는 뜻이 아닙니다. 표기 구조, goods/services fit, 대리인 커뮤니케이션 빈도, 채널 통제까지 중국 단일시장 기준으로 더 세밀하게 조정해야 하는가를 묻는 질문입니다.</p>\n<h4 id=\"질문-2-central-management-confidence\" class=\"article-heading depth-h4\">질문 2. central-management confidence</h4>\n<p>Madrid가 자연스러운 상황은 여러 국가를 한 분기 안에 묶고, 본국기초출원과 owner governance가 안정적일 때입니다. 즉, 제도의 편의보다 central-management confidence가 먼저 있어야 합니다.</p>\n<h4 id=\"질문-3-owner-split-clarity\" class=\"article-heading depth-h4\">질문 3. owner split clarity</h4>\n<p>누가 권리자이고 누가 실제 사용자이며 누가 filing packet을 승인하는지 흐리면 route decision은 금방 무너집니다. direct filing을 고르든 Madrid를 고르든 owner split이 흐리면 evidence와 contract 통제에서 공백이 생깁니다.</p>\n<h4 id=\"질문-4-switch-trigger\" class=\"article-heading depth-h4\">질문 4. switch trigger</h4>\n<p>처음 route choice가 고정돼도 기초출원 지연, launch timing 변경, 추가 표장 등장, partner 구조 변경이 생기면 switch가 필요할 수 있습니다. 그래서 처음부터 switch trigger를 쓰지 않으면 later-stage chaos가 생깁니다.</p>\n<h3 id=\"route-memo-1-page-템플릿\" class=\"article-heading depth-h3\">route memo 1-page 템플릿</h3>\n<p>각 가이드에 들어가기 전에 아래 템플릿으로 1페이지 메모를 먼저 적는 편이 좋습니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>필드</th>\n<th>적을 내용</th>\n<th>guide에서 다시 보는 장</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>launch market priority</td>\n<td>중국 단독 / bundle / wait</td>\n<td>ChaTm 제4장, LatTm 제4장</td>\n</tr>\n<tr>\n<td>local-fit 사유</td>\n<td>표기, goods/services, channel timing</td>\n<td>ChaTm 제2-5장</td>\n</tr>\n<tr>\n<td>central-management 사유</td>\n<td>본국기초출원, 다국가 일정, owner governance</td>\n<td>MexTm 제4장, EuTm 제5장</td>\n</tr>\n<tr>\n<td>owner split</td>\n<td>권리자, 실제 사용자, filing owner</td>\n<td>ChaTm 제5장, EuTm 제5장</td>\n</tr>\n<tr>\n<td>switch trigger</td>\n<td>launch 변경, naming drift, bundle 확정</td>\n<td>ChaTm 제4장, MexTm mixed structure board</td>\n</tr>\n<tr>\n<td>next handoff</td>\n<td>evidence owner, contract owner</td>\n<td>ChaTm 제7장, 제9장</td>\n</tr>\n</tbody>\n</table></div>\n<p>메모는 길 필요가 없습니다. 중요한 것은 이 한 장이 각 가이드 deep link에서 무엇을 확인할지 알려 주는 역할을 하는 것입니다.</p>\n<h3 id=\"jurisdiction-by-jurisdiction-reading-notes\" class=\"article-heading depth-h3\">jurisdiction-by-jurisdiction reading notes</h3>\n<h4 id=\"china\" class=\"article-heading depth-h4\">China</h4>\n<p>중국은 local-fit pressure가 상대적으로 크기 때문에, direct filing이 자연스러운 상황이 자주 나타납니다. 특히 중문 표기, 지정상품 조정, launch timing이 함께 움직이면 route memo에서 local-fit 항목이 더 무거워집니다.</p>\n<p>중국에서는 route choice가 제5장 filing packet과 제7장 evidence system으로 빨리 이어집니다. 따라서 direct filing을 택했는지보다 owner split과 handoff가 잠겼는지가 더 중요합니다.</p>\n<h4 id=\"mexico\" class=\"article-heading depth-h4\">Mexico</h4>\n<p>멕시코는 buyer-entry control sheet 관점에서 route choice를 읽는 편이 유용합니다. IMPI 중심의 실행 흐름과 사용·갱신 owner를 같이 보는 구조가 강해서, direct vs Madrid를 비용 비교보다 operating control 비교로 읽기 쉽습니다.</p>\n<p>멕시코의 mixed route board는 central-management와 local execution을 섞어 볼 때 좋은 참고점입니다.</p>\n<h4 id=\"europe\" class=\"article-heading depth-h4\">Europe</h4>\n<p>유럽은 권역형 governance를 먼저 보는 편이 좋습니다. 그래서 route question도 direct filing vs Madrid 자체보다, route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지하는지가 핵심입니다.</p>\n<p>EuTm에서 route pack lock board가 중요한 이유는, 권역형 guide 특성상 하나의 filing decision이 여러 국가 후속 흐름에 영향을 주기 때문입니다.</p>\n<h4 id=\"japan\" class=\"article-heading depth-h4\">Japan</h4>\n<p>일본은 lighter-track이지만 route checkpoint가 명확합니다. 복잡한 mixed route보다, 언제 direct filing이 자연스럽고 언제 Madrid를 검토하는지가 비교적 단순하게 정리돼 있어 baseline comparison에 좋습니다.</p>\n<h4 id=\"latam-baseline\" class=\"article-heading depth-h4\">LatAm baseline</h4>\n<p>LatTm은 개별 국가의 route answer를 주기보다 어떤 decision box를 먼저 써야 하는지 보여 주는 flagship baseline입니다. 그래서 중국과 멕시코처럼 구체적이어야 하는 시장을 보기 전, 어떤 질문 순서가 자연스러운지 확인하는 데 좋습니다.</p>\n<h3 id=\"mixed-route를-허용하는-조건\" class=\"article-heading depth-h3\">mixed route를 허용하는 조건</h3>\n<p>mixed route는 예외 전략이 아니라 명시적 설계 전략일 수 있습니다. 다만 \"둘 다 해 보자\"가 아니라 아래 조건이 있을 때만 유의미합니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>조건</th>\n<th>mixed route가 유효한 이유</th>\n<th>메모</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>핵심 표장만 local-fit pressure가 높다</td>\n<td>핵심은 direct, 나머지는 Madrid 가능</td>\n<td>China-type situation</td>\n</tr>\n<tr>\n<td>본국기초출원은 안정적이나 일부 시장 launch가 급하다</td>\n<td>timing split 가능</td>\n<td>Mexico/China hybrid</td>\n</tr>\n<tr>\n<td>owner governance는 중앙집중형인데 channel execution은 현지형이다</td>\n<td>governance와 execution을 분리 가능</td>\n<td>Europe-like coordination</td>\n</tr>\n</tbody>\n</table></div>\n<h4 id=\"mixed-route의-최소-통제-장치\" class=\"article-heading depth-h4\">mixed route의 최소 통제 장치</h4>\n<ul>\n<li>어떤 표장을 direct filing에 실을지 명시한다.</li>\n<li>어떤 표장을 Madrid bundle에 실을지 명시한다.</li>\n<li>evidence owner와 contract owner를 같이 적는다.</li>\n<li>switch trigger와 review date를 메모에 남긴다.</li>\n</ul>\n<h3 id=\"route-switch를-언제-허용할까\" class=\"article-heading depth-h3\">route switch를 언제 허용할까</h3>\n<p>route switch는 실패의 증거가 아니라 governance의 일부여야 합니다. 다만 switch 기준이 없으면 혼란만 커집니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>switch trigger</th>\n<th>보통 의미하는 것</th>\n<th>권장 액션</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>본국기초출원 지연</td>\n<td>Madrid timing risk 상승</td>\n<td>China/Mexico direct fallback 검토</td>\n</tr>\n<tr>\n<td>중문 표기 추가 필요</td>\n<td>local-fit pressure 상승</td>\n<td>direct 또는 mixed 검토</td>\n</tr>\n<tr>\n<td>다국가 launch bundle 확정</td>\n<td>central advantage 상승</td>\n<td>Madrid 또는 mixed 확대</td>\n</tr>\n<tr>\n<td>owner split 단순화 완료</td>\n<td>central-management confidence 상승</td>\n<td>bundle route 재검토</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"30일-action-board\" class=\"article-heading depth-h3\">30일 action board</h3>\n<p>route memo를 쓴 뒤 30일 동안 무엇을 잠글지도 같이 적어 두는 편이 좋습니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>시점</th>\n<th>액션</th>\n<th>owner</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>D+3</td>\n<td>route memo 승인</td>\n<td>본사 IP</td>\n</tr>\n<tr>\n<td>D+7</td>\n<td>naming/search handoff 정리</td>\n<td>브랜드팀</td>\n</tr>\n<tr>\n<td>D+10</td>\n<td>filing packet owner 고정</td>\n<td>법무</td>\n</tr>\n<tr>\n<td>D+14</td>\n<td>evidence prep owner 지정</td>\n<td>운영팀</td>\n</tr>\n<tr>\n<td>D+21</td>\n<td>contract/control 영향 확인</td>\n<td>사업팀 + 법무</td>\n</tr>\n<tr>\n<td>D+30</td>\n<td>route memo review</td>\n<td>본사 decision owner</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"이-리포트를-읽고-나서-할-것\" class=\"article-heading depth-h3\">이 리포트를 읽고 나서 할 것</h3>\n<ol>\n<li>route memo 1페이지를 먼저 쓴다.</li>\n<li>local-fit과 central-management 중 어떤 축이 더 강한지 적는다.</li>\n<li>owner split과 switch trigger를 빈칸 없이 채운다.</li>\n<li>그 뒤에 각 guide deep link로 들어가 국가별 세부 차이를 본다.</li>\n</ol>\n<p>이 순서가 중요한 이유는, guide를 많이 읽는 것보다 먼저 같은 질문 문법을 잠그는 것이 later-stage confusion을 줄이기 때문입니다.</p>",
+      "headings": [
+        {
+          "id": "현재-route-trust-snapshot",
+          "depth": 3,
+          "title": "현재 route trust snapshot",
+          "children": []
+        },
+        {
+          "id": "먼저-잠글-네-가지-질문",
+          "depth": 3,
+          "title": "먼저 잠글 네 가지 질문",
+          "children": [
+            {
+              "id": "질문-1-local-fit-pressure",
+              "depth": 4,
+              "title": "질문 1. local-fit pressure",
+              "children": []
+            },
+            {
+              "id": "질문-2-central-management-confidence",
+              "depth": 4,
+              "title": "질문 2. central-management confidence",
+              "children": []
+            },
+            {
+              "id": "질문-3-owner-split-clarity",
+              "depth": 4,
+              "title": "질문 3. owner split clarity",
+              "children": []
+            },
+            {
+              "id": "질문-4-switch-trigger",
+              "depth": 4,
+              "title": "질문 4. switch trigger",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "route-memo-1-page-템플릿",
+          "depth": 3,
+          "title": "route memo 1-page 템플릿",
+          "children": []
+        },
+        {
+          "id": "jurisdiction-by-jurisdiction-reading-notes",
+          "depth": 3,
+          "title": "jurisdiction-by-jurisdiction reading notes",
+          "children": [
+            {
+              "id": "china",
+              "depth": 4,
+              "title": "China",
+              "children": []
+            },
+            {
+              "id": "mexico",
+              "depth": 4,
+              "title": "Mexico",
+              "children": []
+            },
+            {
+              "id": "europe",
+              "depth": 4,
+              "title": "Europe",
+              "children": []
+            },
+            {
+              "id": "japan",
+              "depth": 4,
+              "title": "Japan",
+              "children": []
+            },
+            {
+              "id": "latam-baseline",
+              "depth": 4,
+              "title": "LatAm baseline",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "mixed-route를-허용하는-조건",
+          "depth": 3,
+          "title": "mixed route를 허용하는 조건",
+          "children": [
+            {
+              "id": "mixed-route의-최소-통제-장치",
+              "depth": 4,
+              "title": "mixed route의 최소 통제 장치",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "route-switch를-언제-허용할까",
+          "depth": 3,
+          "title": "route switch를 언제 허용할까",
+          "children": []
+        },
+        {
+          "id": "30일-action-board",
+          "depth": 3,
+          "title": "30일 action board",
+          "children": []
+        },
+        {
+          "id": "이-리포트를-읽고-나서-할-것",
+          "depth": 3,
+          "title": "이 리포트를 읽고 나서 할 것",
+          "children": []
+        }
+      ]
+    }
+  ]
+}

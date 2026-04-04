@@ -48,6 +48,34 @@ const documentDataByProduct = {
 };
 
 const documentDataByReport = {
+  "global-filing-route-framework": {
+    meta: {
+      title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
+      builtAt: "2026-04-04T12:00:00.000Z",
+      chapterCount: 1
+    },
+    chapters: [
+      {
+        id: "global-filing-route-framework",
+        slug: "global-filing-route-framework",
+        title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
+        summary: "direct filing vs Madrid를 local-fit, owner split, route switch 기준으로 다시 정리한 리포트입니다.",
+        html: [
+          "<p>직접출원과 마드리드 비교에서 먼저 잠가야 하는 것은 local-fit pressure, central-management confidence, owner split, switch trigger입니다.</p>",
+          '<h3 id="route-memo-1-page-템플릿">route memo 1-page 템플릿</h3>',
+          "<p>메모는 길 필요가 없고, launch priority와 handoff owner가 보이면 충분합니다.</p>"
+        ].join(""),
+        headings: [
+          {
+            id: "route-memo-1-page-템플릿",
+            depth: 3,
+            title: "route memo 1-page 템플릿",
+            children: []
+          }
+        ]
+      }
+    ]
+  } satisfies DocumentData,
   "global-use-evidence-system": {
     meta: {
       title: "글로벌 사용 증거 수집 운영 시스템 구축",
@@ -327,7 +355,7 @@ describe("App portfolio shell", () => {
     );
     expect(summaryParagraphs[1]).toContain("ChaTm");
     expect(summaryParagraphs[1]).toContain("MexTm");
-    expect(summaryParagraphs[1]).toContain("Report / Gateway trust layer");
+    expect(summaryParagraphs[1]).toContain("route decision report / Gateway trust layer");
   });
 
   it("renders wrap-safe separators in the coverage and current status metrics", () => {
@@ -436,17 +464,17 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 front report인 글로벌 사용 증거 수집 운영 시스템 구축은 ChaTm · MexTm · EuTm에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶습니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+        /현재 front report인 출원 경로 결정 프레임워크: 직접출원 vs 마드리드은 ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
       )
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 우선 레인 상태: ChaTm Beta · QA Standard · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
+        /현재 우선 레인 상태: ChaTm Beta · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
       )
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선순위: ChaTm -> MexTm -> EuTm 정렬 완료, 다음은 Report / Gateway trust layer"
+        "현재 우선순위: ChaTm Sprint 2 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"
       )
     ).toBeInTheDocument();
     expect(
@@ -498,7 +526,7 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
     expect(
-      within(currentPilotScope as HTMLElement).getByText("Sprint 1 우선 6장 심화 · 2026-04-04 runtime/release 재검증 완료")
+      within(currentPilotScope as HTMLElement).getByText("Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 · 2026-04-04 release 재검증 완료")
     ).toBeInTheDocument();
   });
 
@@ -736,14 +764,17 @@ describe("App portfolio shell", () => {
 
     expect(
       screen.getByText(
-        /위조 대응은 판매가 커진 뒤 뒤늦게 처리하는 법무 문제가 아니라, 해외 진출을 준비할 때부터 함께 설계해야 하는 사업 운영 문제입니다\./
+        /이번 브리프의 목적은 어느 경로가 원칙적으로 더 좋다고 말하는 데 있지 않습니다\./
       )
     ).toBeInTheDocument();
-    expect(screen.getByText(/2025년 K-화장품 수출이 114억3000만 달러/)).toBeInTheDocument();
+    expect(screen.getByText(/route memo부터 작성하게 하는 데 있습니다\./)).toBeInTheDocument();
 
-    const guideLink = screen.getByRole("link", { name: "ChaTm 운영 가이드" });
+    const guideLink = screen.getByRole("link", { name: "ChaTm route decision matrix" });
 
-    expect(guideLink).toHaveAttribute("href", "/china");
+    expect(guideLink).toHaveAttribute(
+      "href",
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+    );
     fireEvent.click(guideLink);
 
     expect(trackEventSpy).toHaveBeenCalledWith(
@@ -751,8 +782,8 @@ describe("App portfolio shell", () => {
       "brief_guide_click",
       expect.objectContaining({
         issue_slug: briefIssues[0]?.slug,
-        item_id: "k-brand-counterfeit-strategy",
-        target_path: "/china"
+        item_id: "global-route-decision-questions",
+        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
       })
     );
 
@@ -773,7 +804,7 @@ describe("App portfolio shell", () => {
 
     expect(archiveSection).not.toBeNull();
     expect(within(archiveSection as HTMLElement).getByRole("heading", { name: reports[0]?.title ?? "" })).toBeInTheDocument();
-    expect(within(archiveSection as HTMLElement).getByRole("link", { name: "리포트 읽기" })).toHaveAttribute(
+    expect(within(archiveSection as HTMLElement).getAllByRole("link", { name: "리포트 읽기" })[0]).toHaveAttribute(
       "href",
       `/reports/${reports[0]?.slug}`
     );
@@ -783,7 +814,7 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm · MexTm · EuTm에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶고, ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶고, ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
       )
     ).toBeInTheDocument();
   });
@@ -795,9 +826,15 @@ describe("App portfolio shell", () => {
 
     await screen.findByRole("heading", { name: reports[0]?.title ?? "" });
 
-    expect(screen.getByText(/증거는 나중에 모으면 된다는 접근은 담당자가 바뀌거나 판매 화면이 사라질 때 바로 무너집니다\./)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "LatTm 기준 프레임" })).toHaveAttribute("href", "/latam");
-    expect(screen.getByRole("link", { name: "ChaTm 운영 가이드" })).toHaveAttribute("href", "/china");
+    expect(screen.getByText(/직접출원과 마드리드 비교에서 먼저 잠가야 하는 것은 local-fit pressure, central-management confidence, owner split, switch trigger입니다\./)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "LatTm route decision box" })).toHaveAttribute(
+      "href",
+      "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
+    );
+    expect(screen.getByRole("link", { name: "ChaTm route decision matrix" })).toHaveAttribute(
+      "href",
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+    );
   });
 
   it("respects a deployment basename for deep links and rendered hrefs", async () => {

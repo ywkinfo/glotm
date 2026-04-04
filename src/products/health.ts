@@ -2,6 +2,7 @@ import type {
   LifecycleStatus,
   ProductMeta
 } from "./shared";
+import { getVerificationFreshnessDays } from "./shared";
 import {
   assessProductLifecycle,
   doesQaLevelMeetMinimum,
@@ -150,11 +151,12 @@ export const nonProductHealthLanes = [
 
 export function getLifecycleCriteriaGaps(product: Pick<
   ProductMeta,
-  "chapterCount" | "searchEntryCount" | "verificationFreshnessDays" | "qaLevel" | "highRiskVerificationGapCount"
+  "chapterCount" | "searchEntryCount" | "verifiedOn" | "qaLevel" | "highRiskVerificationGapCount"
 >, lifecycleStatus: LifecycleStatus) {
   const criteria = getLifecycleCriteria(lifecycleStatus);
   const gaps: string[] = [];
   const searchDensity = getSearchDensity(product);
+  const verificationFreshnessDays = getVerificationFreshnessDays(product);
 
   if (product.chapterCount < criteria.minimumChapterCount) {
     gaps.push(`chapter count ${product.chapterCount} < ${criteria.minimumChapterCount}`);
@@ -164,9 +166,9 @@ export function getLifecycleCriteriaGaps(product: Pick<
     gaps.push(`search density ${searchDensity.toFixed(1)} < ${criteria.minimumSearchDensity.toFixed(1)}`);
   }
 
-  if (product.verificationFreshnessDays > criteria.maximumVerificationFreshnessDays) {
+  if (verificationFreshnessDays > criteria.maximumVerificationFreshnessDays) {
     gaps.push(
-      `verification freshness ${product.verificationFreshnessDays}d > ${criteria.maximumVerificationFreshnessDays}d`
+      `verification freshness ${verificationFreshnessDays}d > ${criteria.maximumVerificationFreshnessDays}d`
     );
   }
 
@@ -203,6 +205,7 @@ export function getProductHealthVerdict(
 
 export function buildProductHealthRecord(product: ProductMeta): ProductHealthRecord {
   const assessment = assessProductLifecycle(product);
+  const verificationFreshnessDays = getVerificationFreshnessDays(product);
 
   return {
     slug: product.slug,
@@ -213,7 +216,7 @@ export function buildProductHealthRecord(product: ProductMeta): ProductHealthRec
     verdict: getProductHealthVerdict(product, assessment),
     meetsCurrentLifecycleStatus: assessment.meetsCurrentLifecycleStatus,
     searchDensity: assessment.searchDensity,
-    verificationFreshnessDays: product.verificationFreshnessDays,
+    verificationFreshnessDays,
     qaLevel: product.qaLevel,
     highRiskVerificationGapCount: product.highRiskVerificationGapCount,
     currentLifecycleGaps: getLifecycleCriteriaGaps(product, product.lifecycleStatus),

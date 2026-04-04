@@ -3,6 +3,7 @@ import type {
   ProductMeta,
   QaLevel
 } from "./shared";
+import { getVerificationFreshnessDays } from "./shared";
 
 type DensityInput = Pick<ProductMeta, "chapterCount" | "searchEntryCount">;
 
@@ -10,7 +11,7 @@ type LifecycleScorecardInput = Pick<
   ProductMeta,
   | "chapterCount"
   | "searchEntryCount"
-  | "verificationFreshnessDays"
+  | "verifiedOn"
   | "qaLevel"
   | "highRiskVerificationGapCount"
 >;
@@ -85,7 +86,7 @@ export function meetsLifecycleCriteria(
     return false;
   }
 
-  if (input.verificationFreshnessDays > criteria.maximumVerificationFreshnessDays) {
+  if (getVerificationFreshnessDays(input) > criteria.maximumVerificationFreshnessDays) {
     return false;
   }
 

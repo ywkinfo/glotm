@@ -84,7 +84,7 @@
 
 ### 부록 F. 2026-04-04 release-readiness 메모
 
-Sprint 1 잠금 6장 보강 뒤에는 원고 밀도만이 아니라 실제 reader와 빌드 흐름이 계속 살아 있는지도 같이 확인해야 한다. 아래 메모는 2026-04-04 재검증 기준으로, 루트 검증 레인과 연결해 유지해야 할 최소 readiness 기준이다.
+Sprint 1 잠금 6장과 Sprint 2 저밀도 9장 보강 뒤에는 원고 밀도만이 아니라 실제 reader와 빌드 흐름이 계속 살아 있는지도 같이 확인해야 한다. 아래 메모는 2026-04-04 재검증 기준으로, 루트 검증 레인과 연결해 유지해야 할 최소 readiness 기준이다.
 
 | 항목 | 이번 라운드 기준 |
 | --- | --- |
@@ -96,7 +96,88 @@ Sprint 1 잠금 6장 보강 뒤에는 원고 밀도만이 아니라 실제 reade
 | Pages 출하 검증 | `npm run build:pages:glotm` 2026-04-04 통과 |
 | Gateway 노출 | ChaTm 카드 summary, freshness, maturity note가 실제 상태와 충돌하지 않음 |
 
-이 메모의 목적은 새 구조를 늘리는 것이 아니라, Sprint 1 보강이 reader 계약과 release 계약을 깨지 않았는지 반복 확인하는 데 있다.
+이 메모의 목적은 새 구조를 늘리는 것이 아니라, Sprint 1/2 보강이 reader 계약과 release 계약을 깨지 않았는지 반복 확인하는 데 있다.
+
+### 실패 패턴 4: route memo 없이 filing을 시작한다
+
+직접출원과 Madrid를 비교는 했지만, 왜 그 경로를 골랐는지를 남기지 않으면 후속 출원과 재검토 때 같은 논의를 반복한다. 결과적으로 launch timing이 바뀌거나 중국어 표기가 추가될 때 누가 어떤 기준으로 switch를 결정해야 하는지 흐려진다.
+
+실무 시사점은 간단하다. route choice는 장표가 아니라 memo로 남겨야 한다. owner split, local-fit, central-management, red flag 네 가지를 한 장에 적어 두면 후속 판단이 빨라진다.
+
+### 실패 패턴 5: 계약 종료를 사건 종료로 착각한다
+
+총판이나 OEM 계약이 종료되면 brand control도 끝났다고 생각하기 쉽다. 하지만 실제로는 seller page, 포장 파일, 계정명, 중문 표기가 채널에 오래 남을 수 있다. 이 흔적을 정리하지 않으면 분쟁과 취소 방어에서 통제 설명이 약해진다.
+
+그래서 종료는 법률 이벤트가 아니라 evidence와 channel asset 회수 이벤트로 같이 보는 편이 좋다.
+
+### 실패 패턴 6: 세관 incident를 온라인 사건과 분리한다
+
+국경 단계에서 보이는 shipment 정보와 온라인 seller 정보는 같은 흐름일 수 있다. 그런데 물류 incident를 따로 저장해 두면, seller tracing과 channel enforcement에서 같은 단서를 다시 찾게 된다.
+
+실무적으로는 customs memo와 platform memo를 같은 사건 보드 안에서 연결하는 편이 낫다.
+
+### 사례형 점검 질문 2
+
+- 이 incident는 filing, online, customs, contract 중 어느 bucket에 들어가는가
+- owner-user linkage 설명이 지금 바로 가능한가
+- direct filing과 Madrid 중 어느 경로로 후속 방어 표장을 넣는 것이 자연스러운가
+- 계약 종료 후 남은 channel asset가 있는가
+- scorecard review에서 어떤 input이 흔들리는가
+
+### 부록 G. route memo 1-page 템플릿
+
+| 필드 | 적을 내용 |
+| --- | --- |
+| launch market priority | 중국 단독 / bundle / 관망 |
+| 선택 경로 | direct / Madrid / mixed |
+| local-fit 사유 | 중문 표기, 지정상품, timing |
+| central-management 사유 | 다국가 묶음, 본국기초출원, owner 구조 |
+| red flag | naming 미확정, owner split 미정, launch 변경 |
+| 다음 handoff | filing owner, evidence owner, review date |
+
+### 부록 H. cancellation heatmap 템플릿
+
+| 표장군 | 사용 강도 | owner-user linkage | 공격 가능성 | 권장 액션 |
+| --- | --- | --- | --- | --- |
+| 코어 브랜드 | 높음 | 명확 | 중간 | 유지 |
+| 보조 표장 | 보통 | 일부 보완 필요 | 중간 | 보강 |
+| 방어 표장 | 낮음 | 약함 | 높음 | 축소/포기 검토 |
+| 중문 보조 표기 | 보통 | 명확 | 중간 | 유지 + monitoring |
+
+### 부록 I. partner exit 30-day 보드
+
+| 시점 | 액션 | owner |
+| --- | --- | --- |
+| D-30 | 재고·포장·페이지·파일 자산 목록화 | 운영팀 |
+| D-14 | 회수/비활성화 우선순위 잠금 | 브랜드팀 + 법무 |
+| D-7 | seller/account 권한 회수 | 디지털팀 |
+| D+7 | 잔류 흔적 재검색 | 브랜드팀 |
+| D+30 | 종료 incident close memo | 법무 |
+
+### 부록 J. 2026-04-04 mature 준비 메모
+
+Sprint 2 이후 ChaTm은 단순 beta 유지가 아니라 monthly scorecard review용 mature 증빙 후보로 정리할 필요가 있다. lifecycle status는 즉시 바꾸지 않더라도, 아래 근거는 미리 남겨 두는 편이 좋다.
+
+| 항목 | 2026-04-04 기준 준비 방향 |
+| --- | --- |
+| chapter structure | 15장 유지, 저밀도 9장 보강 |
+| search density | low-density 장에 decision table과 appendix 추가 |
+| QA 근거 | reader/search checklist와 smoke evidence 정리 |
+| verified freshness | `verifiedOn` 기준 자동 계산으로 drift 추적 |
+| high-risk gap | 0건 유지 |
+
+### 이 장의 사례 운영 메모
+
+실패 패턴은 과거 회고가 아니라 다음 판단을 빠르게 만드는 도구여야 한다. 그래서 부록은 문서 보관함이 아니라, 다음 주 route memo와 다음 달 scorecard review에 바로 복사해 쓸 수 있는 형식으로 남기는 편이 좋다.
+
+### 사례 장을 monthly review에 연결하는 법
+
+| review 질문 | 이 장에서 다시 보는 부록 |
+| --- | --- |
+| route choice가 흔들렸는가 | 부록 G |
+| cancellation risk가 커졌는가 | 부록 H |
+| partner exit residue가 남았는가 | 부록 I |
+| mature 증빙이 충분한가 | 부록 J |
 
 ### 이 장의 운영 메모
 

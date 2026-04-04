@@ -29,11 +29,11 @@
 
 ## Current Verified Shape
 
-- 현재 기준 챕터 수: 6
-- 현재 기준 검색 엔트리 수: 32
+- 현재 기준 챕터 수: 15
+- 현재 기준 검색 엔트리 수: 358
 - 파이프라인 명령: 루트에서 `npm run content:china`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
-- 현재 상태: 얇은 live guide이므로 콘텐츠 심화와 fact verification 보강이 다음 우선순위다.
+- 현재 상태: Sprint 2 저밀도 장 보강과 reader/search QA 정렬까지 반영된 growth lane guide다.
 
 ## Editing Rules
 

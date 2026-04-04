@@ -1,6 +1,6 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
-const readerSmokeCases = [
+export const readerSmokeCases = [
   {
     name: "LatTm",
     path: "/latam",
@@ -22,8 +22,8 @@ const readerSmokeCases = [
     bookmarkChapterTitle: "제10장. 침해 대응: 행정, 사법, 경고장, 증거 패키지",
     bookmarkSectionId: "출구-선택-매트릭스",
     bookmarkSectionTitle: "출구 선택 매트릭스",
-    searchQuery: "불사용취소",
-    searchResultText: "불사용취소"
+    searchQuery: "heatmap",
+    searchResultText: "cancellation heatmap"
   },
   {
     name: "MexTm",
@@ -97,13 +97,13 @@ function installBookmark(page: Page, guide: (typeof readerSmokeCases)[number]) {
         sectionId: bookmark.bookmarkSectionId,
         sectionTitle: bookmark.bookmarkSectionTitle,
         progress: 55,
-        updatedAt: "2026-03-28T09:30:00.000Z"
+        updatedAt: "2026-04-04T09:30:00.000Z"
       })
     );
   }, guide);
 }
 
-async function expectGuideSmoke(page: Page, guide: (typeof readerSmokeCases)[number]) {
+export async function expectGuideSmoke(page: Page, guide: (typeof readerSmokeCases)[number]) {
   await installBookmark(page, guide);
   await page.goto(guide.path);
 
@@ -131,100 +131,3 @@ async function expectGuideSmoke(page: Page, guide: (typeof readerSmokeCases)[num
   await expect(page).toHaveURL(new RegExp(`${guide.path}/.+#`));
   await expect(page.getByText(guide.searchResultText, { exact: false }).first()).toBeVisible();
 }
-
-test("gateway smoke", async ({ page }) => {
-  await page.goto("/");
-
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: /cross-border trademark operating guides/i
-    })
-  ).toBeVisible();
-  await expect(page.getByText("Current Build Order")).toBeVisible();
-  await expect(
-    page.getByRole("link", {
-      name: /ChaTm 보기|ChaTm · 중국 상표 실무 운영 가이드/
-    })
-  ).toBeVisible();
-});
-
-for (const guide of readerSmokeCases) {
-  test(`${guide.name} reader smoke`, async ({ page }) => {
-    await expectGuideSmoke(page, guide);
-  });
-}
-
-test("brief archive smoke", async ({ page }) => {
-  await page.goto("/briefs");
-
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 해설합니다"
-    })
-  ).toBeVisible();
-  await expect(
-    page.getByText(
-      "2026년 3월 Hot Global TM Brief | 중국 진출 직전에는 이름보다 표기·서브클래스 순서를 먼저 잠가야 합니다"
-    )
-  ).toBeVisible();
-});
-
-test("report archive smoke", async ({ page }) => {
-  await page.goto("/reports");
-
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트"
-    })
-  ).toBeVisible();
-  await expect(
-    page.getByText("글로벌 사용 증거 수집 운영 시스템 구축")
-  ).toBeVisible();
-});
-
-test("mobile drawer scrim smoke", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-
-  await page.goto("/china/chapter/제5장-출원서-작성-실무와-지정상품-설계");
-  await expect(
-    page.getByRole("heading", {
-      level: 3,
-      name: "제출 직전 7일 readiness 보드"
-    })
-  ).toBeVisible();
-
-  await page.locator("button.topbar-button.mobile-only", { hasText: "목차" }).click();
-  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
-
-  const scrim = page.locator(".mobile-scrim");
-  const box = await scrim.boundingBox();
-
-  expect(box).not.toBeNull();
-
-  await scrim.click({
-    force: true,
-    position: {
-      x: 20,
-      y: 20
-    }
-  });
-  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
-});
-
-test("report detail smoke", async ({ page }) => {
-  await page.goto("/reports/global-use-evidence-system");
-
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: "글로벌 사용 증거 수집 운영 시스템 구축"
-    })
-  ).toBeVisible();
-  await expect(
-    page.getByText("최소 운영 구조", { exact: false })
-  ).toBeVisible();
-  await expect(page.getByRole("link", { name: "LatTm 기준 프레임" })).toBeVisible();
-});

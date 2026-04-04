@@ -13,7 +13,7 @@
 | Last updated | 2026-04-04 |
 | Verified on | 2026-04-04 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
-| Current focus | `ChaTm` Sprint 1 심화 -> `MexTm` 핵심 장 심화/계획 고정 -> `EuTm` 안정화 -> `Report / Gateway` trust layer 정합화 -> incubate 유지보수 |
+| Current focus | `ChaTm` Sprint 2 저밀도 장 보강 + mature 증빙 정렬 -> `MexTm` mature baseline 유지 -> `EuTm` 안정화 -> `Report / Gateway` trust layer 정합화 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, prerender/SEO 2단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### 현재 운영 스냅샷
@@ -23,7 +23,7 @@
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - `LatTm`: 20개 챕터, 검색 엔트리 781개. `flagship` tier.
 - `MexTm`: 15개 챕터, 검색 엔트리 369개. `growth` tier.
-- `ChaTm`: 15개 챕터, 검색 엔트리 258개. `growth` tier.
+- `ChaTm`: 15개 챕터, 검색 엔트리 358개. `growth` tier.
 - `EuTm`: 14개 챕터, 검색 엔트리 258개. `validate` tier.
 - `UsaTm`: 14개 챕터, 검색 엔트리 172개. `incubate` tier.
 - `JapTm`: 15개 챕터, 검색 엔트리 141개. `incubate` tier.
@@ -76,7 +76,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 |------|------|------|------|------|------|------|
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | mature | 15 | 369 | Sprint 1 잠금 4장 심화 완료 · buyer entry 핵심 트랙 |
-| `ChaTm` | 단일국가 | growth | beta | 15 | 258 | Sprint 1 잠금 6장 심화 완료 · 중국 실무 밀도 강화 트랙 |
+| `ChaTm` | 단일국가 | growth | beta | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · reader/search QA 정렬 · mature review 후보 |
 | `EuTm` | 권역형 | validate | beta | 14 | 258 | 핵심 6장 심화 완료 · 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 172 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 141 | lighter track |
@@ -92,7 +92,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### 현재 집중 우선순위
 
-- `ChaTm`: Sprint 1 우선 6장 심화 완료, reader smoke와 Gateway sync 마감
+- `ChaTm`: Sprint 2 저밀도 장 보강 완료, reader/search QA와 Gateway sync 정렬
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
 - `Report`·`Gateway`: guide 본문 보강 뒤 교차 관할권 trust layer와 진입 신뢰 보강
@@ -148,7 +148,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 258개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, Sprint 1 잠금 6장 보강 뒤 naming-search-filing handoff와 심사·사용증거·집행 운영표 밀도를 함께 끌어올린 상태다. 2026-04-04 기준 `npm run content:china`, `npm run health:runtime`, `npm run build`, `npm run build:pages:glotm`을 다시 통과해 release-readiness를 한 번 더 잠갔다.
+`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 358개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, Sprint 2에서 제4장·제8장·제9장·제11장·제12장·제13장·제14장 보강을 통해 low-density gap과 reader/search handoff를 함께 끌어올린 상태다. 2026-04-04 기준 `npm run content:china`, `npm run health:runtime`, `npm run build`, `npm run build:pages:glotm`을 다시 통과해 release-readiness를 한 번 더 잠갔고, 월간 scorecard review용 mature 증빙 후보로 정렬했다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
@@ -194,7 +194,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 369개 |
 | UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 172개 |
 | JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 141개 |
-| ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 258개 |
+| ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 358개 |
 | EuTm 생성 산출물 | 14개 챕터 / 검색 엔트리 258개 |
 | UKTm 생성 산출물 | 14개 챕터 / 검색 엔트리 94개 |
 | GloTm build status | pass |

@@ -5,6 +5,7 @@ import {
   buildSectionLocation,
   buildChapterPath,
   buildGeneratedContentUrl,
+  getVerificationFreshnessDays,
   buildRuntimeDocumentTitle,
   createReadingBookmarkStorage,
     createSearchController,
@@ -106,6 +107,25 @@ describe("shared product helpers", () => {
     expect(buildRuntimeDocumentTitle("중남미 상표 보호 운영 가이드")).toBe(
       "중남미 상표 보호 운영 가이드 | GloTm"
     );
+  });
+
+  it("calculates verification freshness from verifiedOn instead of storing a static number", () => {
+    expect(
+      getVerificationFreshnessDays(
+        {
+          verifiedOn: "2026-04-04T00:00:00.000Z"
+        },
+        new Date("2026-04-04T23:59:59.000Z")
+      )
+    ).toBe(0);
+    expect(
+      getVerificationFreshnessDays(
+        {
+          verifiedOn: "2026-04-01T00:00:00.000Z"
+        },
+        new Date("2026-04-04T12:00:00.000Z")
+      )
+    ).toBe(3);
   });
 
   it("filters LatTm catalog chapters by summary and heading matches", () => {

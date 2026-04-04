@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { products } from "./registry";
 import {
@@ -7,7 +7,22 @@ import {
   getProductHealthVerdict
 } from "./health";
 
+function daysAgoIso(dayCount: number) {
+  const base = new Date("2026-04-04T00:00:00.000Z");
+  base.setUTCDate(base.getUTCDate() - dayCount);
+  return base.toISOString();
+}
+
 describe("portfolio health helpers", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-04T12:00:00.000Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("builds root lane records with explicit statuses", () => {
     const report = buildPortfolioHealthReport(products, {
       runtime: "pass",
@@ -41,7 +56,7 @@ describe("portfolio health helpers", () => {
         ...usa!,
         lifecycleStatus: "beta",
         lifecycleTone: "beta",
-        verificationFreshnessDays: 112,
+        verifiedOn: daysAgoIso(112),
         qaLevel: "smoke"
       })
     ).toBe("verification-refresh-needed");
@@ -69,7 +84,7 @@ describe("portfolio health helpers", () => {
       getLifecycleCriteriaGaps(
         {
           ...usa!,
-          verificationFreshnessDays: 112,
+          verifiedOn: daysAgoIso(112),
           qaLevel: "smoke"
         },
         "beta"

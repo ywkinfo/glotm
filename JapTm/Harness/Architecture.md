@@ -30,7 +30,7 @@
 ## Current Verified Shape
 
 - 목표 챕터 수: 15
-- 현재 기준 검색 엔트리 수: 75
+- 현재 기준 검색 엔트리 수: 141
 - 파이프라인 명령: 루트에서 `npm run content:japan`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 - 현재 런타임 경로: `/japan`, `/japan/chapter/:chapterSlug`

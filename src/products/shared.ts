@@ -76,7 +76,7 @@ export type ProductMeta = {
   portfolioTier: PortfolioTier;
   lifecycleStatus: LifecycleStatus;
   lifecycleTone: LifecycleTone;
-  verificationFreshnessDays: number;
+  verifiedOn: string;
   qaLevel: QaLevel;
   highRiskVerificationGapCount: number;
   audience: string;
@@ -286,6 +286,39 @@ export function normalizeBasePath(basePath: string) {
 export function buildProductPath(basePath: string | ProductMeta) {
   const path = typeof basePath === "string" ? basePath : basePath.path;
   return normalizeBasePath(path) || "/";
+}
+
+function startOfUtcDay(timestamp: number) {
+  const date = new Date(timestamp);
+
+  return Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate()
+  );
+}
+
+export function getVerificationFreshnessDays(
+  product: Pick<ProductMeta, "verifiedOn">,
+  now = new Date()
+) {
+  const verifiedAt = Date.parse(product.verifiedOn);
+
+  if (Number.isNaN(verifiedAt)) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const nowTimestamp = now.getTime();
+
+  if (Number.isNaN(nowTimestamp)) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const freshnessDays = Math.floor(
+    (startOfUtcDay(nowTimestamp) - startOfUtcDay(verifiedAt)) / 86_400_000
+  );
+
+  return Math.max(0, freshnessDays);
 }
 
 export function buildChapterPath(basePath: string, chapterSlug: string) {

@@ -53,23 +53,23 @@ export function GatewayLandingPage() {
   } = buildTrustLayerGuideGroups(latestReport, orderedProducts);
   const trustLayerGuideSummary =
     latestReport && trustLayerPriorityGuides
-      ? `현재 front report인 ${latestReport.title}은 ${trustLayerPriorityGuides}에서 이미 잠근 운영 질문을 교차 관할권 trust layer로 다시 묶습니다.${trustLayerBaselineGuides ? ` ${trustLayerBaselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${trustLayerSupportingGuides ? ` ${trustLayerSupportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`
+      ? `현재 front report인 ${latestReport.title}은 ${trustLayerPriorityGuides}에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다.${trustLayerBaselineGuides ? ` ${trustLayerBaselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${trustLayerSupportingGuides ? ` ${trustLayerSupportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`
       : null;
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guides";
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    `현재 active build order는 ${priorityLaneLabelSequence} 정렬 이후 Report / Gateway trust layer이며, growth·validate 레인의 release-readiness와 scorecard truth를 buyer-facing entry copy에 맞추는 단계입니다.`
+    `현재 active build order는 ${priorityLaneLabelSequence} 정렬 이후 route decision report / Gateway trust layer이며, growth·validate 레인의 scorecard truth와 buyer-facing entry copy를 route memo 문법으로 다시 맞추는 단계입니다.`
   ];
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
     {
       id: "china",
-      title: "ChaTm Sprint 1 + release-readiness 재검증 완료",
+      title: "ChaTm Sprint 2 + mature 준비 정렬",
       copy:
-        "중국어 표기, 서브클래스, 출원 실무, 심사·집행 경로를 잠금 6장 기준으로 심화해 growth lane의 reader 밀도를 먼저 끌어올렸습니다.",
-      note: "제2장, 제3장, 제5장, 제6장, 제7장, 제10장 정렬 + health:runtime/build/build:pages 재검증 완료",
+        "잠금 6장에 더해 route, invalidation, licensing, customs, governance, appendix를 보강해 growth lane의 low-density gap을 줄이고 mature review 근거를 정리했습니다.",
+      note: "제4장, 제8장, 제9장, 제11장, 제12장, 제13장, 제14장 보강 + reader/search QA checklist 정렬",
       href: buildProductPath("/china")
     },
     {
@@ -90,10 +90,10 @@ export function GatewayLandingPage() {
     },
     {
       id: "report-gateway",
-      title: "Report / Gateway trust layer",
+      title: "Route decision Report / Gateway trust layer",
       copy:
-        "교차 관할권 운영 판단을 Report 레인에서 설명하고, Gateway에서는 현재 우선순위와 상태를 실제 메타데이터 기준으로 잠그는 다음 active lane입니다.",
-      note: "next active lane · report front placement + gateway state sync",
+        "출원 경로 결정 프레임워크를 front report로 올리고, Gateway에서는 growth·validate 결과를 buyer-facing route memo 문법으로 다시 읽히게 만드는 active lane입니다.",
+      note: "global filing route framework + latest brief deep link + gateway state sync",
       href: buildReportArchivePath()
     },
     {
@@ -361,7 +361,7 @@ export function GatewayLandingPage() {
           </p>
         </div>
         <p className="gateway-section-copy">
-          사용 증거, 플랫폼 대응, 긴급 의사결정처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
+          출원 경로, owner split, mixed route 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
         </p>
         {trustLayerGuideSummary ? (
           <p className="gateway-section-copy gateway-section-copy--spaced">
@@ -369,7 +369,7 @@ export function GatewayLandingPage() {
           </p>
         ) : null}
         <ul className="gateway-bullet-list">
-          <li>{"현재 우선순위: ChaTm -> MexTm -> EuTm 정렬 완료, 다음은 Report / Gateway trust layer"}</li>
+          <li>{"현재 우선순위: ChaTm Sprint 2 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"}</li>
           <li>현재 우선 레인 상태: {priorityLaneStatusSummary}</li>
         </ul>
         <div className="gateway-cta-actions">
@@ -428,7 +428,7 @@ export function GatewayLandingPage() {
           {growthProducts.length > 0 ? (
             <ProductGroup
               title="Growth"
-              description="ChaTm 잠금 6장과 MexTm 잠금 4장의 buyer-facing 정렬을 마쳤고, EuTm 안정화와 함께 growth·validate 결과를 Report/Gateway trust layer로 넘기는 단계입니다."
+              description="ChaTm Sprint 2로 low-density 장을 보강했고 MexTm은 mature baseline을 유지합니다. 이제 growth 결과를 route decision report와 Gateway copy로 다시 묶는 단계입니다."
               products={growthProducts}
               surface="portfolio_growth"
             />
@@ -458,8 +458,8 @@ export function GatewayLandingPage() {
             <p className="gateway-kicker">Current Build Order</p>
             <h2 className="gateway-section-title">지금은 가장 얇은 가이드보다 가장 가치가 빨리 커지는 레인부터 보강합니다</h2>
           </div>
-          <p className="gateway-section-copy">
-            현재 정렬 기준은 `buyer impact + 포트폴리오 전략 + 실제 콘텐츠 밀도 부족`입니다. 그래서 growth와 validate 레인의 체감 가치를 먼저 키우고, incubate 레인은 가볍게 유지합니다.
+        <p className="gateway-section-copy">
+          현재 정렬 기준은 `buyer impact + 포트폴리오 전략 + 실제 콘텐츠 밀도 부족`입니다. 그래서 growth와 validate 레인의 체감 가치를 먼저 키우고, incubate 레인은 가볍게 유지합니다.
           </p>
         </div>
         <div className="gateway-card-grid">
@@ -497,7 +497,7 @@ export function GatewayLandingPage() {
           GloTm은 해외 진출 과정에서 무엇을 먼저 확인하고 어떤 운영 판단을 준비해야 하는지를, 20년 이상 축적된 상표 실무 경험을 바탕으로 구조화한 cross-border operating guide portfolio입니다.
         </p>
         <p className="gateway-section-copy">
-          지금은 LatTm flagship을 보호하면서, ChaTm·MexTm growth lane과 EuTm validate stabilization을 정렬했고, 다음으로 Report / Gateway trust layer에서 buyer-facing 설명을 현재 truth에 맞추는 데 집중하고 있습니다.
+          지금은 LatTm flagship을 보호하면서, ChaTm Sprint 2와 MexTm mature baseline, EuTm validate stabilization을 정렬했고, 다음으로 route decision Report / Gateway trust layer에서 buyer-facing 설명을 현재 truth에 맞추는 데 집중하고 있습니다.
         </p>
         <p className="gateway-section-copy gateway-section-copy--spaced">
           문의, 강연 요청, 심층 연구 안내는{" "}

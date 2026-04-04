@@ -68,10 +68,11 @@ npm run health:all
 - MexTm 확장 실행 계획: `docs/mextm-content-expansion-plan.md`
 - UKTm 확장 실행 계획: `docs/uktm-content-expansion-plan.md`
 - ChaTm 확장 실행 계획: `docs/chatm-content-expansion-plan.md`
+- ChaTm mature QA 체크리스트: `docs/chatm-mature-qa-checklist.md`
 - 워크스페이스별 콘텐츠 규칙: 각 디렉터리의 `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`
 
 현재 포트폴리오의 기본 실행 순서는 `ChaTm -> MexTm -> EuTm -> Report/Gateway trust layer -> JapTm -> UKTm -> UsaTm`입니다. `LatTm`은 기준 프레임 보호를 우선하며, 대형 신규 집필보다 freshness·density·reader QA 유지에 집중합니다.
 
-운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verificationFreshnessDays`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계산합니다.
+운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verifiedOn`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. verification freshness는 저장하지 않고 `verifiedOn`에서 계산하며, search density는 `searchEntryCount / chapterCount`로 계산합니다.
 
 월간 review에서는 위 메타데이터를 수동 상태표시가 아니라 scorecard 입력값으로 취급합니다. `npm run health:report`는 현재 메타데이터 기준으로 각 guide의 verdict를 `hold`, `upgrade-ready`, `verification-refresh-needed`로 정리합니다.

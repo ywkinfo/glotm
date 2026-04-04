@@ -2,25 +2,25 @@
 
 ## 목적
 
-이 문서는 `ChaTm`을 루트 `GloTm` 셸 `/china`에서 읽히는 live country guide baseline에서, 더 깊고 실행형인 중국 상표 실무 가이드 v1로 끌어올리기 위한 실행 계획서다.
+이 문서는 `ChaTm`을 루트 `GloTm` 셸 `/china`에서 읽히는 live country guide baseline에서, 더 깊고 실행형인 중국 상표 실무 가이드 v1로 끌어올리기 위한 실행 계획서이자 2026-04-04 기준 완료 상태 기록이다.
 
 핵심 목표는 세 가지다.
 
-1. `ChaTm`의 현재 15장 구조를 유지한 채 Sprint 1 우선 6장을 운영형 기준까지 심화한다.
+1. `ChaTm`의 현재 15장 구조를 유지한 채 Sprint 1 우선 6장과 Sprint 2 저밀도 9장을 운영형 기준까지 심화한다.
 2. 사실 검증 로그를 본문 집필과 분리해, 검증된 사실만 공개본으로 승격하는 흐름을 고정한다.
 3. 원고 작성, 검증, QA, 배포 준비를 병렬 레인으로 나눠 전체 리드타임을 줄인다.
 
 ## 현재 상태 요약
 
-2026-04-03 기준 확인된 사실:
+2026-04-04 기준 확인된 사실:
 
 - `ChaTm`은 루트 `GloTm` 셸 `/china` 경로에 연결된 live country guide다.
 - 현재 파이프라인은 `build-master -> qa-content -> build-content`로 정착돼 있다.
 - 현재 공개본 기준 구조는 서문 포함 15개 챕터다.
-- 현재 루트 registry 기준 검색 엔트리는 239개다.
+- 현재 루트 registry 기준 검색 엔트리는 358개다.
 - `content/research/cn_tm_fact_verification_log.md`의 핵심 큐는 구조화된 `claim_id` 기반 로그로 정리돼 있고, 주요 항목은 `Body-ready` 상태까지 올라와 있다.
-- Sprint 1 잠금 6장(`제2장`, `제3장`, `제5장`, `제6장`, `제7장`, `제10장`)은 심화 원고와 운영표 보강이 반영된 상태다.
-- 현재 병목은 "초기 장 수 확보"가 아니라, Sprint 1 반영분의 reader smoke 마감과 shared root gate 입력 정리다.
+- Sprint 1 잠금 6장(`제2장`, `제3장`, `제5장`, `제6장`, `제7장`, `제10장`)과 Sprint 2 저밀도 9장(`제4장`, `제8장`, `제9장`, `제11장`, `제12장`, `제13장`, `제14장`, `서문`, `제1장`) 보강이 반영된 상태다.
+- 현재 병목은 "초기 장 수 확보"가 아니라, mature review용 scorecard evidence와 문서 정합성을 계속 유지하는 일이다.
 
 ## 편집 원칙
 
@@ -32,7 +32,7 @@
 ## v1 목표 산출물
 
 - 챕터 수: 서문 포함 15장 구조 유지
-- 검색 엔트리: 239 current baseline, 후속 심화 시 250~280 범위 목표
+- 검색 엔트리: 358 current baseline, growth lane mature review 후보 기준 확보
 - 장별 H3 이상 소제목: 최소 5개 이상
 - 각 장의 도입부는 summary/search entry 재료가 되도록 판단 프레임 역할을 하게 작성
 - `npm run content:china`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
@@ -54,9 +54,9 @@
 13. 제12장. 모니터링, 포트폴리오 운영, 내부통제(RACI)
 14. 부록. 체크리스트, 타임라인, 공식 링크, FAQ
 
-## Sprint 1 우선순위
+## Sprint 1 완료 메모
 
-Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 심화한다.
+Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 심화했다.
 
 우선 대상:
 
@@ -71,7 +71,29 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 
 - 현재 ChaTm에서 가장 부족한 축이 중국어 표기, 서브클래스, 출원 실무, 집행 경로 분기다.
 - 위 6개 장이 보강되면 `/china` 검색과 챕터 탐색 품질이 가장 빠르게 올라간다.
-- 나머지 장은 Sprint 2에서 거래 구조, 무효/취소, 거버넌스, 부록으로 이어 붙이기 쉽다.
+- 나머지 장은 실제로 Sprint 2에서 거래 구조, 무효/취소, 거버넌스, 부록, system-map, 서문까지 이어 붙였다.
+
+## Sprint 2 완료 메모
+
+Sprint 2에서는 Sprint 1로 생긴 내부 밀도 격차를 줄이는 데 집중했다.
+
+우선 대상:
+
+1. 제4장. 출원 경로 선택: 직접출원 vs 마드리드
+2. 제8장. 불사용취소, 무효와 취소 리스크
+3. 제9장. 라이선스, 유통, OEM/제조 구조 통제
+4. 제11장. 플랫폼, 도메인, 저작권, 부정경쟁 결합 대응
+5. 제12장. 세관, 국경조치, 물류 통제
+6. 제13장. 모니터링, 내부통제, RACI
+7. 제14장. 사례, 실패 패턴, 부록
+8. 서문
+9. 제1장. 중국 상표제도 구조와 판단 프레임
+
+완료 결과:
+
+- 저밀도 9개 장을 모두 180줄 안팎 이상으로 끌어올렸다.
+- route memo, cancellation heatmap, licensing control sheet, customs escalation, mature QA checklist를 장별로 분산 배치했다.
+- `/china` 검색 밀도를 358 엔트리까지 끌어올려 `qaLevel: full` 근거를 확보했다.
 
 ## 병렬 팀 구성
 
@@ -99,14 +121,14 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 
 ### Phase 0 — 기준선 고정
 
-- 현재 15장 구조와 Sprint 1 우선 6장을 고정한다.
-- 현재 기준 수치를 `15장 / 검색 엔트리 239`로 갱신한다.
+- 현재 15장 구조와 Sprint 1/2 전체 범위를 고정한다.
+- 현재 기준 수치를 `15장 / 검색 엔트리 358`로 갱신한다.
 - 사실 검증 로그의 핵심 `Body-ready` 항목을 어느 장에 승격할지 명시한다.
-- Sprint 1 완료 기준과 worktree 기준 머지 규칙을 문서화한다.
+- Sprint 2 완료 기준과 mature review용 evidence 규칙을 문서화한다.
 
 ### Phase 1 — 병렬 집필
 
-- 원고 레인 A/B가 병렬로 우선 6장을 심화한다.
+- 원고 레인 A/B/C가 병렬로 전체 15장을 같은 밀도로 맞춘다.
 - 각 장은 도입부, 판단 기준, 체크리스트/표, 리스크/예외, 운영 메모 구조를 우선 적용한다.
 
 ### Phase 2 — 사실 검증 동기화
@@ -176,17 +198,18 @@ Sprint 1에서는 검색 밀도와 운영 판단 가치가 큰 장부터 먼저 
 ## 완료 기준
 
 - 권장 챕터 구조가 `manifest.json`과 장별 원고에 반영됨
-- Sprint 1 우선 6개 장이 목표 밀도까지 확장됨
-- 사실 검증 로그의 핵심 큐가 `Pending-only` 상태가 아니고, Sprint 1 우선 장에 필요한 항목이 본문 반영 가능 상태로 정리됨
+- Sprint 1 우선 6개 장과 Sprint 2 저밀도 9개 장이 모두 목표 밀도까지 확장됨
+- 사실 검증 로그의 핵심 큐가 `Pending-only` 상태가 아니고, Sprint 1/2 주요 장에 필요한 항목이 본문 반영 가능 상태로 정리됨
 - `content:china`가 workspace gate로 통과하고, 통합 이후 shared root gate가 1회 통과함
 - `/china` 리더의 홈/챕터/검색 흐름이 깨지지 않음
 - 배포 준비팀이 파일럿 배포 readiness 메모를 남김
 
-## 2026-04-03 진행 메모
+## 2026-04-04 진행 메모
 
 - Sprint 1 잠금 6장에 naming-search-filing language lock, 类似群 x business model 매핑, filing packet readiness, war-room board, evidence vault incident 연계, route switch 증거표를 추가했다.
-- `npm run content:china`, `npm run test:content`, `npm run build`, `npm run build:pages:glotm`를 통과했다.
-- `/china` 스프린트 addendum 수동 smoke와 전략 문서/Gateway 메타 sync까지 마감했다.
+- Sprint 2 저밀도 9장에 route memo, attack/defense 분기표, licensing control sheet, customs escalation matrix, mature QA checklist, appendix 템플릿을 추가했다.
+- `npm run content:china`, `npm run health:runtime`, `npm run health:content`, `npm run build:pages:glotm`를 통과했다.
+- `npm run health:report -- --runtime=pass --content=pass --release=pass` 기준 `ChaTm`은 `beta -> mature` `upgrade-ready` verdict를 확보했다.
 
 ## 운영 메모
 

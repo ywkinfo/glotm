@@ -15,6 +15,28 @@
 | 지정상품 중국 맞춤 조정 필요 | 높음 | 낮음 | 구분표 분류 구조 검토 |
 | 내부 승인 속도 빠름 | 보통 | 보통 | 양쪽 모두 내부 일정과 연동 |
 
+### launch market 우선순위를 먼저 적는다
+
+중국이 중요한 시장이라는 말만으로는 경로가 정해지지 않는다. 실제로는 중국이 첫 출시국인지, 제조 거점인지, 다국가 bundle의 일부인지에 따라 direct filing과 Madrid의 의미가 달라진다. 그래서 route choice는 제도 비교 전에 launch sequencing memo부터 적는 편이 낫다.
+
+| 질문 | 예시 답변 | route implication |
+| --- | --- | --- |
+| 중국이 첫 출시국인가 | 예 / 아니오 | 예면 direct urgency가 커진다 |
+| 중국어 표기 확정이 선행돼야 하는가 | 예 / 일부만 예 | 예면 local-fit 검토가 커진다 |
+| 본국기초출원 일정이 이미 고정됐는가 | 완료 / 진행중 / 미정 | 미정이면 Madrid timing risk가 커진다 |
+| launch 후 30일 안에 채널 노출이 있는가 | 자사몰 / Tmall / OEM sample / 총판 | 빠른 노출이면 filing pack owner까지 같이 잠가야 한다 |
+
+### owner split을 readiness 보드에 같이 올린다
+
+경로 판단은 누가 owner가 되고 누가 실제 사용자이며 누가 filing packet을 잠그는지와 붙어 있다. owner split이 비어 있으면 direct filing의 local-fit 장점도 약해지고 Madrid의 central-management 장점도 반감된다.
+
+| 역할 | 확인 질문 | direct filing에서 특히 중요한 이유 | Madrid에서 특히 중요한 이유 |
+| --- | --- | --- | --- |
+| 권리자 | 본사/계열사/지주사 중 누구인가 | 중국 단일시장 기준 명의 전략과 연결 | 기초출원과 국제출원 owner consistency 필요 |
+| 실제 사용자 | 누가 상품과 채널에 표장을 쓰는가 | filing 후 evidence handoff 준비 | central filing 뒤 local evidence gap 방지 |
+| 의사결정자 | 경로를 최종 승인하는 사람은 누구인가 | launch 일정과 직접 연결 | 국제 포트폴리오 우선순위와 연결 |
+| 실행자 | 대리인, 브랜드팀, 사업팀 중 누가 packet을 잠그는가 | local-fit 수정 속도 좌우 | central coordination 속도 좌우 |
+
 ## 출원 경로 시나리오별 판단표
 
 상황별로 어떤 경로가 더 실무적인지 빠르게 확인하는 표다.
@@ -28,6 +50,15 @@
 | 지정상품 범위가 복잡하고 자주 바뀜 | 직접출원 | 변경 여지 더 큼 |
 | 향후 M&A나 라이선스 구조 변경 가능성 있음 | 직접출원 | 출원인 변경 유연성 확보 |
 
+### red flag가 보이면 바로 escalation 한다
+
+| red flag | 왜 위험한가 | 권장 액션 |
+| --- | --- | --- |
+| 중국 launch date는 확정됐지만 본국기초출원이 미정 | Madrid 준비가 중국 일정과 어긋날 수 있다 | direct fallback 검토 |
+| 중국어 표기 후보가 3개 이상 열려 있다 | filing pack과 route memo가 동시에 흔들린다 | 제2장·제3장 재확인 후 결정 |
+| owner-user linkage가 아직 문서화되지 않았다 | filing 후 evidence 구조가 약해진다 | 제5장 handoff 전까지 conditional go |
+| 사업팀은 중국 단독 우선시장으로 보는데 본사는 global bundle로 본다 | 판단 기준이 충돌한다 | escalation memo 작성 |
+
 ## 직접출원이 유리한 경우
 
 중국이 초기 매출이나 생산 거점 관점에서 매우 중요하고, 지정상품 설계를 중국 실무에 맞게 세밀하게 조정해야 한다면 직접출원이 더 실무적일 수 있다. 특히 중국어 표기와 영문 표기를 따로 가져가거나, 현지 사용 구조를 세밀하게 나누어 설계해야 할 때는 직접출원 쪽이 운영이 편해질 가능성이 높다.
@@ -40,6 +71,19 @@
 
 반대로 중국이 첫 출시국이 아니고 본사에서 여러 국가를 한 묶음으로 관리해야 한다면, 내부 승인 구조와 일정표를 먼저 보고 마드리드 적합성을 판단하는 편이 낫다.
 
+### local-fit scoring table
+
+직접출원이 맞는지 볼 때는 중국에서만 필요한 조정이 얼마나 많은지를 점수처럼 보는 편이 도움이 된다.
+
+| local-fit 질문 | low | medium | high |
+| --- | --- | --- | --- |
+| 중국어 표기 설계 필요도 | 영문만 우선 | 영문 + 중문 병행 검토 | 중문 구조가 핵심 |
+| 지정상품 조정 필요도 | 글로벌 문구 그대로 가능 | 일부 조정 필요 | 중국 채널 기준 재설계 필요 |
+| 대리인 커뮤니케이션 빈도 | 제출 직전 점검 수준 | 주간 handoff 필요 | 실시간 조율 필요 |
+| launch timing pressure | 여유 있음 | 분기 내 | 30~60일 내 |
+
+점수가 높을수록 direct filing이 자연스러워진다. 중요한 것은 숫자보다 왜 local-fit이 필요한지를 route memo에 남기는 일이다.
+
 ## 마드리드가 유리한 경우
 
 중국만이 아니라 여러 시장을 동시에 관리해야 하고, 내부적으로 중앙 집중형 포트폴리오 관리가 중요하다면 마드리드 경로가 운영상 단순할 수 있다. 다만 이 경우에도 중국 단일시장 관점에서 충분한 범위와 이름 구조가 들어가 있는지 따로 점검해야 한다.
@@ -51,6 +95,15 @@
 마드리드를 검토할 때는 중국만 보는 것이 아니라, 본국기초출원 또는 국제출원 준비 속도가 실제 중국 일정과 맞는지 같이 봐야 한다. 본사 승인이나 기초출원 준비가 늦으면 중국 사업팀이 기대하는 보호 시점과 내부 문서 흐름이 어긋날 수 있다.
 
 따라서 마드리드 적합성은 제도 자체의 편의성보다, 본국 측 일정이 중국 출시 계획을 따라갈 수 있는지로 판단하는 편이 실무적이다.
+
+### central-management scoring table
+
+| 질문 | 예 | 아니오 | 해석 |
+| --- | --- | --- | --- |
+| 여러 국가가 같은 분기 안에 같이 잠기나 | central advantage 큼 | China standalone 검토 | 묶음 관리 필요도 확인 |
+| 본국기초출원 일정이 이미 안정적이냐 | route confidence 상승 | route timing risk 상승 | 기초출원 지연 리스크 확인 |
+| 본사 owner와 filing governance가 명확하냐 | central coordination 용이 | escalation 필요 | owner split 문서화 필요 |
+| 중국에서 추가 표장 변형이 적으냐 | Madrid fit 상승 | local-fit 보완 필요 | direct fallback 검토 |
 
 2026-03-31 기준 사실 검증 로그에서 잠근 사실을 기준으로 보면, 중국은 Madrid System 회원국이고 국제등록을 중국에 지정하더라도 실제 보호 범위는 중국 국내법에 따라 정해진다. 따라서 마드리드를 택해도 중국 단일시장 기준의 충돌 검토와 지정상품 설계를 생략할 수는 없다.
 
@@ -69,6 +122,14 @@
 
 혼합 구조를 쓰더라도 중국 단일시장 기준의 충돌 검토와 지정상품 설계는 별도로 남겨야 한다. 그래야 후속 출원이나 방어 단계에서 왜 특정 경로를 선택했는지 설명이 끊기지 않는다.
 
+#### mixed route를 쓸 때 최소한 남길 메모
+
+- 어떤 표장을 direct filing에 실을지
+- 어떤 표장을 Madrid에 실을지
+- China local-fit이 필요한 항목은 무엇인지
+- owner-user linkage와 filing pack owner는 누구인지
+- route switch가 가능한 시점과 승인자는 누구인지
+
 ## 중국어 표기 전략과 경로 선택의 연결 고리
 
 중국어 표기를 별도 출원으로 가져갈지, 같은 출원 묶음에 넣을지에 따라 경로 선택이 달라질 수 있다. 실무에서는 이 결정을 내부 상품 설명서나 마케팅 자료보다 먼저 정해야 이후 절차가 단순해진다.
@@ -84,11 +145,34 @@
 - 사업팀·마케팅팀이 동의한 우선 후보가 있는가
 - 최종 출원 전 현지 소비자 반응 테스트가 필요한가
 
+### naming-search-route handoff 메모
+
+경로 선택은 제2장과 제3장에서 이미 잠근 naming/search 구조를 받아서 움직여야 한다. route memo에는 아래 handoff 필드를 최소한 적어 두는 편이 좋다.
+
+| handoff 필드 | 왜 필요한가 |
+| --- | --- |
+| 최종 영문 표장 | filing pack 기준점 |
+| 우선 중문 표기 | route별 local-fit 필요도 판단 |
+| 보조 표기 후보 | mixed route 또는 fallback 검토 |
+| 핵심 상품군 | direct filing 적합성 판단 |
+| 인접 확장 상품군 | Madrid bundle 적합성 판단 |
+
 ## 경로를 고르기 전에 확인할 것
 
 경로 선택은 법무팀 단독 결정으로 끝나지 않는다. 사업팀이 언제 중국 시장에 들어가는지, 제조 파트너나 유통사가 언제 브랜드를 쓰기 시작하는지, 여러 국가를 같은 분기 안에 묶어 출원할 계획인지까지 연결해야 한다. 이 정보가 없으면 직접출원과 마드리드의 장단점이 실제 일정표에 반영되지 않는다.
 
 또한 중국어 표기와 영문 표장을 하나의 출원 묶음으로 볼지, 단계적으로 갈지 미리 정리해야 한다. 경로를 잘 골라도 표장 묶음 전략이 없으면 운영 효율이 떨어진다.
+
+### route decision 전 7일 readiness 보드
+
+| 시점 | 잠가야 할 것 | owner |
+| --- | --- | --- |
+| D-7 | launch market 우선순위와 owner split | 본사 브랜드/IP |
+| D-5 | naming/search handoff 메모 | 브랜드팀 + 대리인 |
+| D-4 | 기초출원/국제출원 일정 확인 | 본사 IP |
+| D-3 | local-fit scoring과 central-management scoring | 브랜드팀 |
+| D-2 | route memo 초안 및 red flag 체크 | 법무 |
+| D-1 | direct / Madrid / mixed 최종 승인 | 본사 decision owner |
 
 ## 경로 선택 메모를 남기는 방식
 
@@ -101,3 +185,17 @@
 - 본사 승인 일정과 중국 출시 일정을 같은 표에서 비교했는가
 - 같은 브랜드의 후속 출원에도 적용할 수 있는 선택 이유를 남겼는가
 - 2026-03-31 사실 검증 로그 기준 Madrid 회원 구조와 중국 국내법 적용 원칙을 다시 확인했는가
+
+### route memo 최소 필드
+
+| 필드 | 예시 |
+| --- | --- |
+| 선택 경로 | direct / Madrid / mixed |
+| 선택 이유 | local-fit, timing, owner split, budget |
+| red flag | 기초출원 지연, naming 미확정, owner-user linkage 미정 |
+| 다음 장 handoff | 제5장 filing pack owner, 제7장 evidence prep owner |
+| 재검토 시점 | launch plan 변경, 본국기초출원 지연, channel expansion |
+
+### 이 장의 운영 메모
+
+출원 경로 선택의 핵심은 제도 우열이 아니라 어떤 질문을 지금 잠가야 이후 장에서 다시 흔들리지 않는가에 있다. direct filing, Madrid, mixed route 어느 쪽을 택하더라도 route memo와 owner split, naming/search handoff를 같이 남겨야 제5장과 제7장으로 자연스럽게 넘어간다.

@@ -3,6 +3,7 @@ import documentDataEurope from "../public/generated/europe/document-data.json";
 import documentDataJapan from "../public/generated/japan/document-data.json";
 import documentDataLatam from "../public/generated/latam/document-data.json";
 import documentDataMexico from "../public/generated/mexico/document-data.json";
+import documentDataRouteReport from "../public/generated/reports/global-filing-route-framework/document-data.json";
 import documentDataReport from "../public/generated/reports/global-use-evidence-system/document-data.json";
 import documentDataUk from "../public/generated/uk/document-data.json";
 import documentDataUsa from "../public/generated/usa/document-data.json";
@@ -29,6 +30,7 @@ const documentDataBySlug = new Map<string, DocumentData>([
 ]);
 
 const reportDocumentDataBySlug = new Map<string, DocumentData>([
+  ["global-filing-route-framework", documentDataRouteReport as DocumentData],
   ["global-use-evidence-system", documentDataReport as DocumentData]
 ]);
 

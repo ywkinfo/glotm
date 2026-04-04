@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { products } from "./registry";
 import {
@@ -9,7 +9,22 @@ import {
   meetsLifecycleCriteria
 } from "./scorecard";
 
+function daysAgoIso(dayCount: number) {
+  const base = new Date("2026-04-04T00:00:00.000Z");
+  base.setUTCDate(base.getUTCDate() - dayCount);
+  return base.toISOString();
+}
+
 describe("portfolio scorecard helpers", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-04T12:00:00.000Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("calculates search density from chapter and search counts", () => {
     expect(getSearchDensity({ chapterCount: 20, searchEntryCount: 780 })).toBe(39);
     expect(getSearchDensity({ chapterCount: 0, searchEntryCount: 10 })).toBe(0);
@@ -42,7 +57,7 @@ describe("portfolio scorecard helpers", () => {
       getRecommendedLifecycleStatus({
         chapterCount: 12,
         searchEntryCount: 72,
-        verificationFreshnessDays: 120,
+        verifiedOn: daysAgoIso(120),
         qaLevel: "smoke",
         highRiskVerificationGapCount: 5
       })
@@ -52,7 +67,7 @@ describe("portfolio scorecard helpers", () => {
       getRecommendedLifecycleStatus({
         chapterCount: 15,
         searchEntryCount: 180,
-        verificationFreshnessDays: 75,
+        verifiedOn: daysAgoIso(75),
         qaLevel: "standard",
         highRiskVerificationGapCount: 2
       })
@@ -62,7 +77,7 @@ describe("portfolio scorecard helpers", () => {
       getRecommendedLifecycleStatus({
         chapterCount: 16,
         searchEntryCount: 224,
-        verificationFreshnessDays: 45,
+        verifiedOn: daysAgoIso(45),
         qaLevel: "full",
         highRiskVerificationGapCount: 0
       })
@@ -83,7 +98,7 @@ describe("portfolio scorecard helpers", () => {
       meetsCurrentLifecycleStatus: true
     });
     expect(assessments.get("china")).toMatchObject({
-      recommendedLifecycleStatus: "beta",
+      recommendedLifecycleStatus: "mature",
       meetsCurrentLifecycleStatus: true
     });
     expect(assessments.get("europe")).toMatchObject({
@@ -110,7 +125,7 @@ describe("portfolio scorecard helpers", () => {
         {
           chapterCount: 18,
           searchEntryCount: 300,
-          verificationFreshnessDays: 35,
+          verifiedOn: daysAgoIso(35),
           qaLevel: "full",
           highRiskVerificationGapCount: 1
         },
