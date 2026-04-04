@@ -11,6 +11,7 @@ import {
   type BriefIssue
 } from "../briefs/archive";
 import {
+  buildReportOpenLabel,
   formatReportDate,
   buildReportPath,
   type ReportMeta
@@ -212,6 +213,35 @@ export function buildTrustLayerGuideGroups(
   };
 }
 
+export function buildTrustLayerGuideSummary(
+  report?: ReportMeta,
+  orderedProducts: ProductMeta[] = [],
+  options?: {
+    laneLabelSequence?: string;
+    includeLaneBridge?: boolean;
+  }
+) {
+  const {
+    priorityGuides,
+    baselineGuides,
+    supportingGuides
+  } = buildTrustLayerGuideGroups(report, orderedProducts);
+
+  if (!report || !priorityGuides) {
+    return null;
+  }
+
+  const bridgeSentence = options?.includeLaneBridge && options.laneLabelSequence
+    ? ` ${options.laneLabelSequence} 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다.`
+    : "";
+
+  return `${priorityGuides}에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`;
+}
+
+export function getTrustLayerSummaryFallback() {
+  return "리포트는 관련 live guide에 공통으로 걸리는 운영 질문을 front placement하는 trust layer입니다.";
+}
+
 export function buildGuideTrackingParams(
   product: ProductMeta,
   surface: string,
@@ -404,11 +434,12 @@ export function ReportCard({ report, surface }: { report: ReportMeta; surface?: 
     <article className="brief-card">
       <div className="brief-card-topline">
         <p className="gateway-kicker">Special Report</p>
-        <span className="status-pill status-pill--neutral">{report.tags[0] ?? "Report"}</span>
+        <span className="status-pill status-pill--neutral">{report.statusLabel}</span>
       </div>
       <p className="brief-card-date">{formatReportDate(report.publishedAt)}</p>
       <h3 className="brief-card-title">{report.title}</h3>
       <p className="brief-card-summary">{report.summary}</p>
+      <p className="product-card-audience">대상: {report.audience}</p>
       <div className="brief-chip-row" aria-label="리포트 관할 목록">
         {report.jurisdictions.map((jurisdiction) => (
           <span key={jurisdiction} className="brief-chip">
@@ -431,7 +462,7 @@ export function ReportCard({ report, surface }: { report: ReportMeta; surface?: 
             });
           }}
         >
-          리포트 읽기
+          {buildReportOpenLabel(report)}
         </FullDocumentLink>
       </div>
     </article>

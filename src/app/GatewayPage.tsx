@@ -2,7 +2,14 @@ import { useEffect } from "react";
 
 import { briefIssues, buildBriefArchivePath, buildBriefIssuePath, formatBriefDate, getLatestBriefIssue } from "../briefs/archive";
 import { getIntroSection } from "../content/intro";
-import { buildReportArchivePath, buildReportPath, getLatestReport } from "../reports/registry";
+import {
+  buildReportArchivePath,
+  buildReportOpenLabel,
+  buildReportPath,
+  getGatewayFeaturedReports,
+  getPrimaryGatewayReport,
+  reportExperienceMeta
+} from "../reports/registry";
 import { liveShellProducts } from "../products/registry";
 import { buildProductPath, setRuntimeDocumentTitle } from "../products/shared";
 import {
@@ -13,7 +20,7 @@ import {
   buildGuideTrackingParams,
   buildPriorityLaneLabelSequence,
   buildPriorityLaneStatusSummary,
-  buildTrustLayerGuideGroups,
+  buildTrustLayerGuideSummary,
   getTierComposition,
   joinProductLabels,
   operatorProfileUrl,
@@ -44,18 +51,16 @@ export function GatewayLandingPage() {
   const mexicoProduct = orderedProducts.find((product) => product.slug === "mexico") ?? orderedProducts[0];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
-  const latestReport = getLatestReport();
+  const leadReport = getPrimaryGatewayReport();
+  const featuredReports = getGatewayFeaturedReports(2);
+  const supportingReport = featuredReports.find((report) => report.slug !== leadReport?.slug) ?? null;
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const {
-    priorityGuides: trustLayerPriorityGuides,
-    baselineGuides: trustLayerBaselineGuides,
-    supportingGuides: trustLayerSupportingGuides
-  } = buildTrustLayerGuideGroups(latestReport, orderedProducts);
   const trustLayerGuideSummary =
-    latestReport && trustLayerPriorityGuides
-      ? `현재 front report인 ${latestReport.title}은 ${trustLayerPriorityGuides}에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다.${trustLayerBaselineGuides ? ` ${trustLayerBaselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${trustLayerSupportingGuides ? ` ${trustLayerSupportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`
+    leadReport
+      ? buildTrustLayerGuideSummary(leadReport, orderedProducts)
       : null;
+  const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guides";
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
@@ -150,6 +155,20 @@ export function GatewayLandingPage() {
                   MexTm 먼저 보기
                 </FullDocumentLink>
               ) : null}
+              {leadReport ? (
+                <FullDocumentLink
+                  className="gateway-button gateway-button--secondary"
+                  to={buildReportPath(leadReport.slug)}
+                  onClick={() => {
+                    trackEngagement("report_open", {
+                      report_slug: leadReport.slug,
+                      surface: "gateway_hero"
+                    });
+                  }}
+                >
+                  {buildReportOpenLabel(leadReport)}
+                </FullDocumentLink>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -180,6 +199,77 @@ export function GatewayLandingPage() {
             </div>
           </div>
         </aside>
+      </section>
+
+      <section className="gateway-section">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
+            <h2 className="gateway-section-title">{reportExperienceMeta.gatewaySectionTitle}</h2>
+          </div>
+          <p className="gateway-section-copy">{reportExperienceMeta.gatewaySectionSummary}</p>
+        </div>
+        {trustLayerGuideSummary ? (
+          <p className="gateway-section-copy">
+            현재 front report인 {leadReport?.title}은 {trustLayerGuideSummary}
+          </p>
+        ) : null}
+        {leadReport?.whyNow ? (
+          <p className="gateway-section-copy gateway-section-copy--spaced">
+            {leadReport.whyNow}
+          </p>
+        ) : null}
+        <div className="gateway-card-grid">
+          {leadReport ? (
+            <article className="gateway-card">
+              <p className="gateway-kicker">{leadReport.gatewayLabel}</p>
+              <h3 className="gateway-card-title">{leadReport.title}</h3>
+              <p className="gateway-card-copy">{leadReport.summary}</p>
+              <p className="gateway-card-copy">대상: {leadReport.audience}</p>
+              <p className="gateway-card-copy">{leadReport.whyNow}</p>
+              <FullDocumentLink
+                className="gateway-cta-link"
+                to={buildReportPath(leadReport.slug)}
+                onClick={() => {
+                  trackEngagement("report_open", {
+                    report_slug: leadReport.slug,
+                    surface: "gateway_front_reports"
+                  });
+                }}
+              >
+                {buildReportOpenLabel(leadReport, "immediate")}
+              </FullDocumentLink>
+            </article>
+          ) : null}
+          {supportingReport ? (
+            <article className="gateway-card">
+              <p className="gateway-kicker">{supportingReport.gatewayLabel}</p>
+              <h3 className="gateway-card-title">{supportingReport.title}</h3>
+              <p className="gateway-card-copy">{supportingReport.summary}</p>
+              <p className="gateway-card-copy">대상: {supportingReport.audience}</p>
+              <p className="gateway-card-copy">{supportingReport.whyNow}</p>
+              <FullDocumentLink
+                className="gateway-cta-link"
+                to={buildReportPath(supportingReport.slug)}
+                onClick={() => {
+                  trackEngagement("report_open", {
+                    report_slug: supportingReport.slug,
+                    surface: "gateway_front_reports"
+                  });
+                }}
+              >
+                {buildReportOpenLabel(supportingReport)}
+              </FullDocumentLink>
+            </article>
+          ) : null}
+        </div>
+        {featuredReports.length > 0 ? (
+          <div className="brief-card-grid">
+            {featuredReports.map((report) => (
+              <ReportCard key={report.id} report={report} surface="gateway_front_reports" />
+            ))}
+          </div>
+        ) : null}
       </section>
 
       {latestBrief ? (
@@ -369,6 +459,36 @@ export function GatewayLandingPage() {
             {trustLayerGuideSummary} 그래서 active lane에서 나온 실행 질문을 Gateway와 Report에서 같은 문법으로 읽히게 하는 것이 지금의 다음 active 레인입니다.
           </p>
         ) : null}
+        {leadReport?.whyNow ? (
+          <p className="gateway-section-copy">
+            {leadReport.whyNow}
+          </p>
+        ) : null}
+        {leadReport && leadReportFocusPoints.length > 0 ? (
+          <div className="gateway-card-grid">
+            {leadReportFocusPoints.map((focusPoint) => (
+              <article key={focusPoint.id} className="gateway-card">
+                <p className="gateway-kicker">Trust Layer Handoff</p>
+                <h3 className="gateway-card-title">{focusPoint.title}</h3>
+                <p className="gateway-card-copy">{focusPoint.summary}</p>
+                <FullDocumentLink
+                  className="gateway-cta-link"
+                  to={focusPoint.href}
+                  onClick={() => {
+                    trackEngagement("report_handoff_click", {
+                      report_slug: leadReport.slug,
+                      target_path: focusPoint.href,
+                      guide_slug: focusPoint.guideSlug ?? "none",
+                      surface: "gateway_section"
+                    });
+                  }}
+                >
+                  {focusPoint.ctaLabel}
+                </FullDocumentLink>
+              </article>
+            ))}
+          </div>
+        ) : null}
         <ul className="gateway-bullet-list">
           <li>{"현재 우선순위: ChaTm mature 유지 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"}</li>
           <li>현재 우선 레인 상태: {priorityLaneStatusSummary}</li>
@@ -383,26 +503,26 @@ export function GatewayLandingPage() {
               });
             }}
           >
-            리포트 전체 보기
+            {reportExperienceMeta.archiveCtaLabel}
           </FullDocumentLink>
-          {latestReport ? (
+          {leadReport ? (
             <FullDocumentLink
               className="gateway-cta-link gateway-cta-link--secondary"
-              to={buildReportPath(latestReport.slug)}
+              to={buildReportPath(leadReport.slug)}
               onClick={() => {
                 trackEngagement("report_open", {
-                  report_slug: latestReport.slug,
+                  report_slug: leadReport.slug,
                   surface: "gateway_section"
                 });
               }}
             >
-              최신 리포트 보기
+              {buildReportOpenLabel(leadReport)}
             </FullDocumentLink>
           ) : null}
         </div>
-        {latestReport ? (
+        {leadReport ? (
           <div className="brief-card-grid">
-            <ReportCard report={latestReport} surface="gateway_section" />
+            <ReportCard report={leadReport} surface="gateway_section" />
           </div>
         ) : null}
       </section>

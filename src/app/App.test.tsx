@@ -5,10 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
-import { reports } from "../reports/registry";
+import { getGatewayFeaturedReports, getPrimaryGatewayReport, reports } from "../reports/registry";
 import type { DocumentData } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
+const primaryGatewayReport = getPrimaryGatewayReport();
+const gatewayFeaturedReports = getGatewayFeaturedReports(2);
 
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
   return {
@@ -340,6 +342,10 @@ describe("App portfolio shell", () => {
       "href",
       "/mexico"
     );
+    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "Front Report 보기" })).toHaveAttribute(
+      "href",
+      `/reports/${primaryGatewayReport?.slug}`
+    );
   });
 
   it("renders the refreshed gateway intro as one lead and two summary paragraphs", () => {
@@ -439,6 +445,38 @@ describe("App portfolio shell", () => {
     ).not.toBe(0);
   });
 
+  it("brings front reports above the latest brief banner on the gateway", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const frontReportsSection = screen
+      .getByRole("heading", { name: "지금 읽어야 할 Report를 Gateway 첫 화면에서 바로 엽니다" })
+      .closest("section");
+    const briefBanner = screen.getByRole("region", { name: "최신 브리프 배너" });
+
+    expect(frontReportsSection).not.toBeNull();
+    expect(
+      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: primaryGatewayReport?.title ?? "" }).length
+    ).toBeGreaterThan(0);
+    expect(
+      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: gatewayFeaturedReports[1]?.title ?? "" }).length
+    ).toBeGreaterThan(0);
+    expect(
+      within(frontReportsSection as HTMLElement).getByRole("link", { name: "Front Report 바로 보기" })
+    ).toHaveAttribute("href", `/reports/${primaryGatewayReport?.slug}`);
+    expect(
+      within(frontReportsSection as HTMLElement).getAllByRole("link", { name: "Supporting Report 보기" }).at(0)
+    ).toHaveAttribute("href", `/reports/${gatewayFeaturedReports[1]?.slug}`);
+    expect(
+      within(frontReportsSection as HTMLElement).getAllByText(
+        /대상: 다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
+      ).length
+    ).toBeGreaterThan(0);
+    expect(
+      (frontReportsSection as HTMLElement).compareDocumentPosition(briefBanner) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).not.toBe(0);
+  });
+
   it("introduces report as a separate cross-jurisdiction lane between the brief section and portfolio focus", () => {
     installFetchMock();
     renderAppRouteTree("/");
@@ -463,18 +501,32 @@ describe("App portfolio shell", () => {
       "href",
       "/reports"
     );
-    expect(within(reportSection as HTMLElement).getByRole("link", { name: "최신 리포트 보기" })).toHaveAttribute(
+    expect(within(reportSection as HTMLElement).getAllByRole("link", { name: "Front Report 보기" }).at(0)).toHaveAttribute(
       "href",
-      `/reports/${reports[0]?.slug}`
+      `/reports/${primaryGatewayReport?.slug}`
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: reports[0]?.title ?? "" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: primaryGatewayReport?.title ?? "" })
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 front report인 출원 경로 결정 프레임워크: 직접출원 vs 마드리드은 ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
       )
     ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByText(
+        /ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다\./
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: local-fit pressure를 먼저 잠근다" })
+    ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 판단표 보기" })
+    ).toHaveAttribute(
+      "href",
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+    );
     expect(
       within(reportSection as HTMLElement).getByText(
         /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
@@ -631,9 +683,14 @@ describe("App portfolio shell", () => {
     const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
 
     renderAppRouteTree("/");
+    const reportSection = screen
+      .getByRole("heading", { name: "교차 관할권 운영 판단은 Report 레인에서 따로 다룹니다" })
+      .closest("section");
 
-    clickTrackedLink(screen.getByRole("link", { name: "리포트 전체 보기" }));
-    clickTrackedLink(screen.getByRole("link", { name: "최신 리포트 보기" }));
+    clickTrackedLink(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" }));
+    const reportPrimaryLink = within(reportSection as HTMLElement).getAllByRole("link", { name: "Front Report 보기" }).at(0);
+    expect(reportPrimaryLink).toBeDefined();
+    clickTrackedLink(reportPrimaryLink as HTMLElement);
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -646,7 +703,7 @@ describe("App portfolio shell", () => {
       "G-TEST123",
       "report_open",
       expect.objectContaining({
-        report_slug: reports[0]?.slug,
+        report_slug: primaryGatewayReport?.slug,
         surface: "gateway_section"
       })
     );
@@ -816,28 +873,56 @@ describe("App portfolio shell", () => {
 
     expect(archiveSection).not.toBeNull();
     expect(within(archiveSection as HTMLElement).getByRole("heading", { name: reports[0]?.title ?? "" })).toBeInTheDocument();
-    expect(within(archiveSection as HTMLElement).getAllByRole("link", { name: "리포트 읽기" })[0]).toHaveAttribute(
+    expect(within(archiveSection as HTMLElement).getAllByRole("link", { name: "Front Report 보기" }).at(0)).toHaveAttribute(
       "href",
       `/reports/${reports[0]?.slug}`
     );
-    expect(screen.getByRole("link", { name: "최신 리포트 보기" })).toHaveAttribute(
+    expect(screen.getAllByRole("link", { name: "Front Report 보기" }).at(0)).toHaveAttribute(
       "href",
-      `/reports/${reports[0]?.slug}`
+      `/reports/${primaryGatewayReport?.slug}`
     );
     expect(
       screen.getByText(
-        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶고, ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다\./
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /대상: 다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
       )
     ).toBeInTheDocument();
   });
 
-  it("renders report detail pages with generated article content and related guide links", async () => {
+  it("renders report detail pages with trust-layer handoff cards and related guide links", async () => {
     installFetchMock();
 
-    renderAppRouteTree(`/reports/${reports[0]?.slug}`);
+    renderAppRouteTree(`/reports/${primaryGatewayReport?.slug}`);
 
-    await screen.findByRole("heading", { name: reports[0]?.title ?? "" });
+    await screen.findByRole("heading", { name: primaryGatewayReport?.title ?? "" });
 
+    expect(screen.getByRole("heading", { name: "왜 지금 이 리포트를 먼저 읽는가" })).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /대상: 다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /ChaTm은 mature baseline으로 올라왔고 MexTm은 buyer-entry 기준의 mature lane을 유지하며, EuTm도 validate stabilization까지 정리됐습니다\./
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText("어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Priority Guide Handoff" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "MexTm: bundle보다 execution control을 본다" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "EuTm lock board 보기" })).toHaveAttribute(
+      "href",
+      "/europe/chapter/제5장-출원-경로와-서류-설계#route-pack-lock-board"
+    );
     expect(screen.getByText(/직접출원과 마드리드 비교에서 먼저 잠가야 하는 것은 local-fit pressure, central-management confidence, owner split, switch trigger입니다\./)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "LatTm route decision box" })).toHaveAttribute(
       "href",
@@ -847,6 +932,59 @@ describe("App portfolio shell", () => {
       "href",
       "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
+  });
+
+  it("tracks trust-layer handoff clicks from the gateway and report detail", async () => {
+    installFetchMock();
+    const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
+    const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+
+    const gatewayRender = renderAppRouteTree("/");
+
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 판단표 보기" }));
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_handoff_click",
+      expect.objectContaining({
+        report_slug: primaryGatewayReport?.slug,
+        guide_slug: "china",
+        surface: "gateway_section",
+        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+      })
+    );
+
+    gatewayRender.unmount();
+
+    renderAppRouteTree(`/reports/${primaryGatewayReport?.slug}`);
+
+    await screen.findByRole("heading", { name: primaryGatewayReport?.title ?? "" });
+
+    clickTrackedLink(screen.getByRole("link", { name: "EuTm lock board 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "LatTm route decision box" }));
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_guide_click",
+      expect.objectContaining({
+        report_slug: primaryGatewayReport?.slug,
+        guide_slug: "europe",
+        surface: "report_detail_focus",
+        target_path: "/europe/chapter/제5장-출원-경로와-서류-설계#route-pack-lock-board"
+      })
+    );
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_guide_click",
+      expect.objectContaining({
+        report_slug: primaryGatewayReport?.slug,
+        surface: "report_detail_related",
+        target_path: "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
+      })
+    );
+
+    measurementSpy.mockRestore();
+    trackEventSpy.mockRestore();
   });
 
   it("respects a deployment basename for deep links and rendered hrefs", async () => {

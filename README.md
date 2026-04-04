@@ -59,6 +59,7 @@ npm run health:all
 ## Source Of Truth
 
 - 런타임 제품 메타데이터: `src/products/registry.ts`
+- Report / Gateway trust layer 메타데이터: `src/reports/registry.ts`
 - 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
 - buyer-facing 포지셔닝: `docs/buyer-narrative.md`
 - 현재 phase / 우선순위 브리프: `PROJECT-OVERVIEW.md`

@@ -3,10 +3,12 @@ import { Navigate, useParams } from "react-router-dom";
 
 import {
   buildReportArchivePath,
+  buildReportOpenLabel,
   buildReportPath,
   formatReportDate,
-  getLatestReport,
+  getPrimaryGatewayReport,
   getReportBySlug,
+  reportExperienceMeta,
   reports
 } from "../reports/registry";
 import { MarkdownArticle, StatusPage } from "../products/components";
@@ -23,24 +25,22 @@ import {
   ReportCard,
   buildPriorityLaneLabelSequence,
   buildPriorityLaneStatusSummary,
-  buildTrustLayerGuideGroups,
-  orderGatewayProducts
+  buildTrustLayerGuideSummary,
+  getTrustLayerSummaryFallback,
+  orderGatewayProducts,
+  trackEngagement
 } from "./appShared";
 
 export function ReportArchivePage() {
-  const latestReport = getLatestReport();
+  const leadReport = getPrimaryGatewayReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const {
-    priorityGuides: trustLayerPriorityGuides,
-    baselineGuides: trustLayerBaselineGuides,
-    supportingGuides: trustLayerSupportingGuides
-  } = buildTrustLayerGuideGroups(latestReport, orderedProducts);
   const trustLayerGuideSummary =
-    latestReport && trustLayerPriorityGuides
-      ? `${trustLayerPriorityGuides}에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶고, ${priorityLaneLabelSequence} 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다.${trustLayerBaselineGuides ? ` ${trustLayerBaselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${trustLayerSupportingGuides ? ` ${trustLayerSupportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`
-      : null;
+    buildTrustLayerGuideSummary(leadReport, orderedProducts, {
+      laneLabelSequence: priorityLaneLabelSequence,
+      includeLaneBridge: true
+    });
 
   useEffect(() => {
     setRuntimeDocumentTitle("Special Report");
@@ -50,21 +50,22 @@ export function ReportArchivePage() {
     <div className="gateway-page">
       <section className="brief-hero">
         <div className="brief-hero-card">
-          <p className="gateway-kicker">Special Report</p>
-          <h1 className="gateway-title">개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트</h1>
-          <p className="gateway-lead">
-            특정 국가 하나의 절차 요약보다, 여러 관할에서 반복해서 부딪히는 운영 질문을 한 문서로 정리하는 심화 리포트 아카이브입니다.
-          </p>
-          <p className="gateway-summary">
-            가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, owner split, mixed route 같은 교차 관할권 문제를 별도 레인으로 묶어 보여줍니다.
-          </p>
+          <p className="gateway-kicker">{reportExperienceMeta.archiveHeroKicker}</p>
+          <h1 className="gateway-title">{reportExperienceMeta.archiveHeroTitle}</h1>
+          <p className="gateway-lead">{reportExperienceMeta.archiveHeroLead}</p>
+          <p className="gateway-summary">{reportExperienceMeta.archiveHeroSummary}</p>
           <p className="gateway-summary gateway-summary--supporting">
-            {trustLayerGuideSummary || "리포트는 관련 live guide에 공통으로 걸리는 운영 질문을 front placement하는 trust layer입니다."} 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
+            {trustLayerGuideSummary || getTrustLayerSummaryFallback()} 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
           </p>
+          {leadReport?.whyNow ? (
+            <p className="gateway-summary gateway-summary--supporting">
+              {leadReport.whyNow}
+            </p>
+          ) : null}
           <div className="gateway-actions">
-            {latestReport ? (
-              <FullDocumentLink className="gateway-button gateway-button--primary" to={buildReportPath(latestReport.slug)}>
-                최신 리포트 보기
+            {leadReport ? (
+              <FullDocumentLink className="gateway-button gateway-button--primary" to={buildReportPath(leadReport.slug)}>
+                {buildReportOpenLabel(leadReport)}
               </FullDocumentLink>
             ) : null}
             <FullDocumentLink className="gateway-button gateway-button--secondary" to={buildProductPath("/")}>
@@ -77,12 +78,10 @@ export function ReportArchivePage() {
       <section className="gateway-section">
         <div className="gateway-section-header">
           <div>
-            <p className="gateway-kicker">Archive</p>
-            <h2 className="gateway-section-title">최신순으로 스페셜 리포트를 모아 둡니다</h2>
+            <p className="gateway-kicker">{reportExperienceMeta.archiveSectionKicker}</p>
+            <h2 className="gateway-section-title">{reportExperienceMeta.archiveSectionTitle}</h2>
           </div>
-          <p className="gateway-section-copy">
-            각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 먼저 구조화하고 관련 guide로 바로 이어지게 만듭니다.
-          </p>
+          <p className="gateway-section-copy">{reportExperienceMeta.archiveSectionSummary}</p>
         </div>
         <div className="brief-card-grid">
           {reports.map((report) => (
@@ -202,6 +201,7 @@ export function ReportPage() {
           <p className="brief-card-date">{formatReportDate(report.publishedAt)}</p>
           <h1 className="gateway-title">{report.title}</h1>
           <p className="gateway-lead">{report.summary}</p>
+          <p className="brief-issue-note">대상: {report.audience}</p>
           <div className="brief-chip-row" aria-label="리포트 관할 목록">
             {report.jurisdictions.map((jurisdiction) => (
               <span key={jurisdiction} className="brief-chip">
@@ -212,6 +212,60 @@ export function ReportPage() {
           <p className="brief-issue-note">
             이 리포트는 특정 국가의 절차 요약보다, 여러 관할에서 공통으로 반복되는 route decision과 owner map을 먼저 정리하는 trust layer입니다. 현재 active build order인 {priorityLaneLabelSequence} 다음 레인에서 바로 이어 읽히도록 배치합니다.
           </p>
+        </div>
+
+        <div className="brief-item-stack">
+          <article className="brief-item-card">
+            <div className="brief-item-header">
+              <span className="brief-item-index">01</span>
+              <div>
+                <h2 className="brief-item-title">왜 지금 이 리포트를 먼저 읽는가</h2>
+                <p className="brief-item-copy">{report.whyNow}</p>
+              </div>
+            </div>
+            <ul className="brief-card-list">
+              {report.trustLayerChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+
+          {report.focusPoints.length > 0 ? (
+            <article className="brief-item-card">
+              <div className="brief-item-header">
+                <span className="brief-item-index">02</span>
+                <div>
+                  <h2 className="brief-item-title">Priority Guide Handoff</h2>
+                  <p className="brief-item-copy">
+                    리포트에서 큰 질문을 잠근 뒤, 아래 deep link로 들어가 각 guide의 실행 기준을 바로 이어서 볼 수 있습니다.
+                  </p>
+                </div>
+              </div>
+              <div className="gateway-card-grid">
+                {report.focusPoints.map((focusPoint) => (
+                  <article key={focusPoint.id} className="gateway-card">
+                    <p className="gateway-kicker">Guide Handoff</p>
+                    <h3 className="gateway-card-title">{focusPoint.title}</h3>
+                    <p className="gateway-card-copy">{focusPoint.summary}</p>
+                    <FullDocumentLink
+                      className="gateway-cta-link"
+                      to={focusPoint.href}
+                      onClick={() => {
+                        trackEngagement("report_guide_click", {
+                          report_slug: report.slug,
+                          target_path: focusPoint.href,
+                          guide_slug: focusPoint.guideSlug ?? "none",
+                          surface: "report_detail_focus"
+                        });
+                      }}
+                    >
+                      {focusPoint.ctaLabel}
+                    </FullDocumentLink>
+                  </article>
+                ))}
+              </div>
+            </article>
+          ) : null}
         </div>
 
         <MarkdownArticle chapter={chapter} />
@@ -229,7 +283,18 @@ export function ReportPage() {
             </div>
             <div className="brief-link-row">
               {report.relatedGuideLinks.map((link) => (
-                <FullDocumentLink key={link.href} className="brief-guide-link" to={link.href}>
+                <FullDocumentLink
+                  key={link.href}
+                  className="brief-guide-link"
+                  to={link.href}
+                  onClick={() => {
+                    trackEngagement("report_guide_click", {
+                      report_slug: report.slug,
+                      target_path: link.href,
+                      surface: "report_detail_related"
+                    });
+                  }}
+                >
                   {link.label}
                 </FullDocumentLink>
               ))}
