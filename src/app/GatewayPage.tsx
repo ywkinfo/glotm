@@ -45,7 +45,7 @@ export function GatewayLandingPage() {
   const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
   const heroSummaryParagraphs = [
     "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    "ChaTm은 Sprint 1 reader smoke QA까지 잠갔고, MexTm은 buyer next action이 바로 보이도록 잠금 4장을 마감했습니다. EuTm 안정화 이후 다음 active lane은 Report / Gateway trust layer입니다."
+    "ChaTm은 Sprint 1 잠금 6장과 2026-04-04 release-readiness 재검증까지 잠갔고, MexTm은 buyer next action이 바로 보이도록 잠금 4장과 release 경로를 함께 다시 잠갔습니다. EuTm 안정화 이후 다음 active lane은 Report / Gateway trust layer입니다."
   ];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
@@ -56,18 +56,18 @@ export function GatewayLandingPage() {
   const priorityRoadmap = [
     {
       id: "china",
-      title: "ChaTm Sprint 1 + reader smoke QA 완료",
+      title: "ChaTm Sprint 1 + release-readiness 재검증 완료",
       copy:
         "중국어 표기, 서브클래스, 출원 실무, 심사·집행 경로를 잠금 6장 기준으로 심화해 growth lane의 reader 밀도를 먼저 끌어올렸습니다.",
-      note: "제2장, 제3장, 제5장, 제6장, 제7장, 제10장 정렬 + smoke QA 완료",
+      note: "제2장, 제3장, 제5장, 제6장, 제7장, 제10장 정렬 + health:runtime/build/build:pages 재검증 완료",
       href: buildProductPath("/china")
     },
     {
       id: "mexico",
-      title: "MexTm Sprint 1 buyer-entry 심화 마감",
+      title: "MexTm Sprint 1 buyer-entry 심화 + release 재검증 완료",
       copy:
         "이미 강한 baseline 위에서 buyer entry 가치가 큰 잠금 4장을 더 두껍게 만들어, 단일국가 실행 질문이 바로 보이게 정리했습니다.",
-      note: "제1장, 제4장, 제11장, 제13장 정렬 + next action 메모 강화",
+      note: "제1장, 제4장, 제11장, 제13장 정렬 + content/build/pages/e2e 재검증 완료",
       href: buildProductPath("/mexico")
     },
     {
@@ -355,7 +355,7 @@ export function GatewayLandingPage() {
         </p>
         {latestReportGuideSummary ? (
           <p className="gateway-section-copy gateway-section-copy--spaced">
-            현재 front report인 {latestReport?.title}은 {latestReportGuideSummary}와 바로 이어 읽히도록 배치해, 공통 운영 질문이 guide 바깥에서 따로 놀지 않게 잠그는 다음 active 레인으로 두고 있습니다.
+            현재 front report인 {latestReport?.title}은 {latestReportGuideSummary}와 바로 이어 읽히도록 배치해, ChaTm·MexTm release 재검증과 EuTm validate stabilization 뒤에 남는 공통 운영 질문을 guide 바깥에서 따로 놀지 않게 잠그는 다음 active 레인으로 두고 있습니다.
           </p>
         ) : null}
         <ul className="gateway-bullet-list">
@@ -418,7 +418,7 @@ export function GatewayLandingPage() {
           {growthProducts.length > 0 ? (
             <ProductGroup
               title="Growth"
-              description="ChaTm 잠금 6장과 MexTm 잠금 4장의 buyer-facing 정렬을 마친 성장 트랙입니다. 다음 판단은 이 결과를 Report/Gateway trust layer에서 어떻게 보여 줄지로 이어집니다."
+              description="ChaTm 잠금 6장과 MexTm 잠금 4장의 buyer-facing 정렬을 마쳤고, 두 가이드 모두 최신 release 경로를 다시 확인한 성장 트랙입니다. 다음 판단은 이 결과를 Report/Gateway trust layer에서 어떻게 보여 줄지로 이어집니다."
               products={growthProducts}
               surface="portfolio_growth"
             />

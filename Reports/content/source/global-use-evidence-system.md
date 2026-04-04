@@ -6,6 +6,18 @@
 
 이 리포트는 미국, 중국, 멕시코처럼 실무 요구가 자주 달라지는 국가를 함께 염두에 두고, 어떤 자료를 누가 어떤 이름으로 보관하고 언제 점검해야 하는지 공개용 실무 가이드 수준에서 정리합니다. 목표는 거대한 시스템을 만드는 것이 아니라, 누가 담당해도 같은 방식으로 계속 쌓이는 운영 구조를 만드는 것입니다.
 
+### 현재 운영 trust snapshot
+
+이 리포트가 지금 front report로 올라온 이유는 단순히 사용 증거가 중요한 주제여서가 아닙니다. 2026-04-04 기준으로 `ChaTm`과 `MexTm`은 Sprint 1 보강 뒤 release-readiness를 다시 잠갔고, `EuTm`은 validate stabilization을 유지한 상태라, 이제 국가별 장 안에 흩어진 공통 운영 질문을 별도 trust layer에서 다시 묶을 타이밍이 되었기 때문입니다.
+
+| 현재 가이드 상태 | 이 리포트가 회수하는 공통 질문 |
+|---|---|
+| ChaTm: naming-search-filing-evidence-enforcement handoff를 잠금 6장에 반영 | 국가가 달라도 같은 evidence packet 구조를 쓸 수 있는가 |
+| MexTm: buyer-entry 잠금 4장과 release 경로 재검증 완료 | filing, declaration, renewal, partner evidence를 어떤 owner map으로 묶을 것인가 |
+| EuTm: controlled scope와 validate stabilization 유지 | 권역형 가이드와 단일국가 가이드 사이에서 같은 운영 문법을 어떻게 유지할 것인가 |
+
+즉, 이 문서는 guide를 대체하려는 report가 아니라, 각 guide에서 이미 잠근 실행 질문을 교차 관할권 운영 구조로 다시 엮는 trust layer 역할을 한다고 보면 됩니다.
+
 ### 왜 지금 사용 증거 운영 시스템이 필요한가
 
 출원은 한 번으로 끝나도, 사용 증거는 시장이 커질수록 계속 쌓여야 합니다. 문제는 시간이 갈수록 복구가 더 어려워진다는 점입니다. 담당자가 바뀌면 파일 위치를 아무도 모르고, 플랫폼 화면이 교체되면 예전 판매 흔적이 사라지고, 유통 파트너는 과거 판매 기록을 오래 보관하지 않는 경우가 많습니다.

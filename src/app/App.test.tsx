@@ -497,7 +497,9 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByText("Sprint 1 우선 6장 심화 · search density 상승")).toBeInTheDocument();
+    expect(
+      within(currentPilotScope as HTMLElement).getByText("Sprint 1 우선 6장 심화 · 2026-04-04 runtime/release 재검증 완료")
+    ).toBeInTheDocument();
   });
 
   it("renders the operator intro section after the pilot scope with an external profile link", () => {
@@ -781,7 +783,7 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm·MexTm·EuTm의 buyer-facing 밀도 정렬을 마쳤고, report는 ChaTm 운영 가이드 · MexTm 운영 가이드 · EuTm 운영 가이드 · LatTm 기준 프레임 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다\./
+        /ChaTm과 MexTm은 2026-04-04 기준 release-readiness를 다시 잠갔고, EuTm은 validate stabilization을 유지한 상태입니다\. report는 ChaTm 운영 가이드 · MexTm 운영 가이드 · EuTm 운영 가이드 · LatTm 기준 프레임 · JapTm 운영 가이드에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다\./
       )
     ).toBeInTheDocument();
   });

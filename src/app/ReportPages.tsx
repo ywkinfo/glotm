@@ -49,7 +49,7 @@ export function ReportArchivePage() {
             가이드가 국가별 실행 맥락을 정리한다면, 리포트는 사용 증거, 플랫폼 대응, 긴급 의사결정처럼 교차 관할권 문제를 별도 레인으로 묶어 보여줍니다.
           </p>
           <p className="gateway-summary gateway-summary--supporting">
-            ChaTm·MexTm·EuTm의 buyer-facing 밀도 정렬을 마쳤고, report는 {latestReportGuideSummary || "관련 live guide"}에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다. 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
+            ChaTm과 MexTm은 2026-04-04 기준 release-readiness를 다시 잠갔고, EuTm은 validate stabilization을 유지한 상태입니다. report는 {latestReportGuideSummary || "관련 live guide"}에 공통으로 걸리는 운영 질문을 front placement하는 다음 active 레인입니다. 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
           </p>
           <div className="gateway-actions">
             {latestReport ? (
