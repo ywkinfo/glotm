@@ -178,6 +178,14 @@ function renderAppRouteTree(initialEntry: string, basename?: string) {
   );
 }
 
+function clickTrackedLink(link: HTMLElement) {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+  }, { once: true });
+
+  fireEvent.click(link);
+}
+
 describe("App portfolio shell", () => {
   beforeEach(() => {
     window.history.replaceState({}, "", "/");
@@ -400,7 +408,7 @@ describe("App portfolio shell", () => {
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
     expect(
-      screen.getByText(/ChaTm은 지금 월간 review 기준 `upgrade-ready` 상태까지 올라온 최우선 growth guide이고, MexTm은 mature baseline이 이미 잠긴 buyer-entry guide입니다\./)
+      screen.getByText(/ChaTm은 지금 growth lane의 mature baseline으로 승격 반영된 최우선 guide이고, MexTm은 buyer-entry 기준의 mature country baseline입니다\./)
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "포트폴리오 우선 가이드 보기" })).toHaveAttribute(
       "href",
@@ -469,12 +477,12 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /현재 우선 레인 상태: ChaTm Beta · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
+        /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
       )
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선순위: ChaTm Sprint 2 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"
+        "현재 우선순위: ChaTm mature 유지 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"
       )
     ).toBeInTheDocument();
     expect(
@@ -526,7 +534,7 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
     expect(
-      within(currentPilotScope as HTMLElement).getByText("Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 · 2026-04-04 release 재검증 완료")
+      within(currentPilotScope as HTMLElement).getByText("mature 승격 반영 · Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 완료")
     ).toBeInTheDocument();
   });
 
@@ -572,7 +580,7 @@ describe("App portfolio shell", () => {
       expect.objectContaining({
         product_slug: "china",
         portfolio_tier: "growth",
-        lifecycle_status: "beta",
+        lifecycle_status: "mature",
         route_kind: "home"
       })
     );
@@ -592,8 +600,8 @@ describe("App portfolio shell", () => {
       .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
       .closest("section");
 
-    fireEvent.click(within(portfolioSection as HTMLElement).getByRole("link", { name: "ChaTm 보기" }));
-    fireEvent.click(screen.getByRole("link", { name: "ywkinfo.github.io" }));
+    clickTrackedLink(within(portfolioSection as HTMLElement).getByRole("link", { name: "ChaTm 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ywkinfo.github.io" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -601,7 +609,7 @@ describe("App portfolio shell", () => {
       expect.objectContaining({
         product_slug: "china",
         portfolio_tier: "growth",
-        lifecycle_status: "beta",
+        lifecycle_status: "mature",
         surface: "portfolio_growth"
       })
     );
@@ -624,8 +632,8 @@ describe("App portfolio shell", () => {
 
     renderAppRouteTree("/");
 
-    fireEvent.click(screen.getByRole("link", { name: "리포트 전체 보기" }));
-    fireEvent.click(screen.getByRole("link", { name: "최신 리포트 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "리포트 전체 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "최신 리포트 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -779,7 +787,7 @@ describe("App portfolio shell", () => {
       "href",
       "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
-    fireEvent.click(guideLink);
+    clickTrackedLink(guideLink);
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",

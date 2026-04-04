@@ -29,7 +29,7 @@ npm run health:report
 - `npm run health:runtime`: `typecheck:runtime + test:runtime + npm run e2e:smoke`를 묶어 루트 셸 라우팅, 링크 계약, 공통 리더 동작, 실제 브라우저 스모크를 함께 검증한다. generated-content 의존 회귀 테스트와 generated artifact가 필요한 node-side 검사는 여기서 제외해 pure runtime lane으로 유지한다.
 - `npm run health:content`: 루트 `content:prepare` 뒤에 `test:content`와 `ChaTm`·`MexTm`·`EuTm`의 workspace local full pipeline을 다시 재현한다. `UsaTm`·`JapTm`·`UKTm`은 lighter-track 기준으로 루트 `content:prepare`의 refresh 계약을 따른다.
 - `npm run health:release`: `build + build:pages:glotm`를 묶어 GitHub Pages subpath 출하 전 상태를 검증한다.
-- `npm run health:report`: 루트 lane 상태와 product scorecard 메타데이터를 같은 리포트 포맷으로 출력한다. `--format json`, `--runtime=pass` 같은 플래그를 받을 수 있다.
+- `npm run health:report`: 최근 실행한 루트 lane 상태와 product scorecard 메타데이터를 같은 리포트 포맷으로 출력한다. 기본적으로 저장된 lane 결과를 읽고, 필요하면 `--format json`, `--runtime=pass` 같은 플래그로 덮어쓸 수 있다.
 - `npm run content:prepare`: 7개 live guide의 generated content를 재생성한다. 현재 루트 기준으로 `LatTm`·`MexTm`·`ChaTm`·`EuTm`·`UKTm`은 `build-master -> qa-content -> build-content` 전체 흐름을 타고, `UsaTm`·`JapTm`은 shortcut generated-content 갱신 경로를 사용한다. `UsaTm`·`JapTm`의 deeper content QA가 필요하면 각 워크스페이스 로컬 `content:prepare`를 직접 실행한다.
 
 릴리즈 직전 한 번에 돌릴 때는 아래 묶음 명령을 사용합니다.

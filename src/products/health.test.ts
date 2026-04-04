@@ -112,11 +112,14 @@ describe("portfolio health helpers", () => {
   it("treats the promoted LatTm and EuTm states as hold after the monthly review decision", () => {
     const latam = products.find((product) => product.slug === "latam");
     const europe = products.find((product) => product.slug === "europe");
+    const china = products.find((product) => product.slug === "china");
 
     expect(latam).toBeDefined();
     expect(europe).toBeDefined();
+    expect(china).toBeDefined();
     expect(getProductHealthVerdict(latam!)).toBe("hold");
     expect(getProductHealthVerdict(europe!)).toBe("hold");
+    expect(getProductHealthVerdict(china!)).toBe("hold");
   });
 
   it("treats the refreshed JapTm beta state as hold with no current lifecycle gaps", () => {

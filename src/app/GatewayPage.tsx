@@ -67,10 +67,10 @@ export function GatewayLandingPage() {
   const priorityRoadmap = [
     {
       id: "china",
-      title: "ChaTm Sprint 2 + mature 준비 정렬",
+      title: "ChaTm mature 승격 반영 완료",
       copy:
-        "잠금 6장에 더해 route, invalidation, licensing, customs, governance, appendix를 보강해 growth lane의 low-density gap을 줄이고 mature review 근거를 정리했습니다.",
-      note: "제4장, 제8장, 제9장, 제11장, 제12장, 제13장, 제14장 보강 + reader/search QA checklist 정렬",
+        "잠금 6장에 더해 route, invalidation, licensing, customs, governance, appendix를 보강한 뒤 월간 scorecard review까지 반영해 growth lane의 mature baseline으로 올렸습니다.",
+      note: "제4장, 제8장, 제9장, 제11장, 제12장, 제13장, 제14장 보강 + monthly review 반영",
       href: buildProductPath("/china")
     },
     {
@@ -233,7 +233,7 @@ export function GatewayLandingPage() {
         <p className="gateway-kicker">Recommended Start</p>
         <h2 className="gateway-cta-title">ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다</h2>
         <p className="gateway-cta-copy">
-          {"ChaTm은 지금 월간 review 기준 `upgrade-ready` 상태까지 올라온 최우선 growth guide이고, MexTm은 mature baseline이 이미 잠긴 buyer-entry guide입니다. 큰 프레임이 필요할 때는 LatTm을 flagship baseline reference로 함께 보되, 현재 landing order와 active lane 기준 추천 시작은 ChaTm -> MexTm 흐름입니다."}
+          {"ChaTm은 지금 growth lane의 mature baseline으로 승격 반영된 최우선 guide이고, MexTm은 buyer-entry 기준의 mature country baseline입니다. 큰 프레임이 필요할 때는 LatTm을 flagship baseline reference로 함께 보되, 현재 landing order와 active lane 기준 추천 시작은 ChaTm -> MexTm 흐름입니다."}
         </p>
         <div className="gateway-cta-actions">
           <a className="gateway-cta-link" href="#portfolio-focus">
@@ -370,7 +370,7 @@ export function GatewayLandingPage() {
           </p>
         ) : null}
         <ul className="gateway-bullet-list">
-          <li>{"현재 우선순위: ChaTm Sprint 2 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"}</li>
+          <li>{"현재 우선순위: ChaTm mature 유지 -> MexTm mature 유지 -> EuTm 안정화, 다음은 route decision Report / Gateway trust layer"}</li>
           <li>현재 우선 레인 상태: {priorityLaneStatusSummary}</li>
         </ul>
         <div className="gateway-cta-actions">
@@ -429,7 +429,7 @@ export function GatewayLandingPage() {
           {growthProducts.length > 0 ? (
             <ProductGroup
               title="Growth"
-              description="ChaTm Sprint 2로 low-density 장을 보강했고 MexTm은 mature baseline을 유지합니다. 이제 growth 결과를 route decision report와 Gateway copy로 다시 묶는 단계입니다."
+              description="ChaTm은 mature 승격을 반영했고 MexTm은 mature baseline을 유지합니다. 이제 growth 결과를 route decision report와 Gateway copy로 다시 묶는 단계입니다."
               products={growthProducts}
               surface="portfolio_growth"
             />
@@ -498,7 +498,7 @@ export function GatewayLandingPage() {
           GloTm은 해외 진출 과정에서 무엇을 먼저 확인하고 어떤 운영 판단을 준비해야 하는지를, 20년 이상 축적된 상표 실무 경험을 바탕으로 구조화한 cross-border operating guide portfolio입니다.
         </p>
         <p className="gateway-section-copy">
-          지금은 LatTm flagship을 보호하면서, ChaTm Sprint 2와 MexTm mature baseline, EuTm validate stabilization을 정렬했고, 다음으로 route decision Report / Gateway trust layer에서 buyer-facing 설명을 현재 truth에 맞추는 데 집중하고 있습니다.
+          지금은 LatTm flagship을 보호하면서, ChaTm mature 승격과 MexTm mature baseline, EuTm validate stabilization을 정렬했고, 다음으로 route decision Report / Gateway trust layer에서 buyer-facing 설명을 현재 truth에 맞추는 데 집중하고 있습니다.
         </p>
         <p className="gateway-section-copy gateway-section-copy--spaced">
           문의, 강연 요청, 심층 연구 안내는{" "}

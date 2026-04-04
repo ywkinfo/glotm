@@ -1,3 +1,5 @@
+import { pathToFileURL } from "node:url";
+
 import { products } from "../src/products/registry";
 import {
   buildPortfolioHealthReport,
@@ -5,14 +7,27 @@ import {
   type RootHealthLaneId,
   type RootHealthLaneStatus
 } from "../src/products/health";
+import { readStoredRootStatuses } from "./health-lane-state";
 
-type CliFormat = "markdown" | "json";
+export type CliFormat = "markdown" | "json";
 
-function parseArgs(argv: string[]) {
+export function parseArgs(argv: string[]) {
   let format: CliFormat = "markdown";
   const statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>> = {};
 
-  for (const argument of argv) {
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
+
+    if (argument === "--format") {
+      const nextArgument = argv[index + 1];
+
+      if (nextArgument === "json" || nextArgument === "markdown") {
+        format = nextArgument;
+        index += 1;
+        continue;
+      }
+    }
+
     if (argument === "--format=json") {
       format = "json";
       continue;
@@ -37,7 +52,7 @@ function parseArgs(argv: string[]) {
   };
 }
 
-function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>) {
+export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>) {
   const report = buildPortfolioHealthReport(products, statuses);
   const lines: string[] = [];
 
@@ -109,15 +124,29 @@ function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHealthLan
   return lines.join("\n");
 }
 
-function main() {
-  const { format, statuses } = parseArgs(process.argv.slice(2));
+export function buildCliOutput(
+  argv: string[],
+  storedStatuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>> = readStoredRootStatuses()
+) {
+  const { format, statuses } = parseArgs(argv);
+  const resolvedStatuses = {
+    ...storedStatuses,
+    ...statuses
+  };
 
   if (format === "json") {
-    console.log(JSON.stringify(buildPortfolioHealthReport(products, statuses), null, 2));
-    return;
+    return JSON.stringify(buildPortfolioHealthReport(products, resolvedStatuses), null, 2);
   }
 
-  console.log(formatMarkdown(statuses));
+  return formatMarkdown(resolvedStatuses);
 }
 
-main();
+function main() {
+  console.log(buildCliOutput(process.argv.slice(2)));
+}
+
+const entryArg = process.argv[1];
+
+if (entryArg && import.meta.url === pathToFileURL(entryArg).href) {
+  main();
+}

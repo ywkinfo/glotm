@@ -2,7 +2,7 @@
 
 ## Purpose
 
-이 문서는 `ChaTm`을 월간 scorecard review에서 `upgrade-ready` 후보로 올리기 위해 필요한 reader/search QA 증빙을 한 장으로 정리한다.
+이 문서는 `ChaTm`을 월간 scorecard review에서 `mature`로 승격 반영할 때 사용한 reader/search QA 증빙과, 이후 refresh 때 다시 확인할 기준을 한 장으로 정리한다.
 
 ## Evidence Snapshot
 
@@ -11,7 +11,7 @@
 | chapter count | 15 |
 | search entries | 358 |
 | qaLevel target | `full` |
-| lifecycle status | `beta` 유지 |
+| lifecycle status | `mature` 반영 |
 | high-risk verification gap | 0 |
 | verifiedOn source | `src/products/registry.ts`의 `verifiedOn` |
 
@@ -44,5 +44,5 @@ npm run build:pages:glotm
 
 ## Review Note
 
-- `qaLevel`은 `full`로 올리되, `lifecycleStatus`는 월간 scorecard review 전까지 `beta`를 유지한다.
-- 승격 판단은 자동 반영이 아니라 `health:report`의 `upgrade-ready` verdict와 이 체크리스트 증빙을 같이 보고 내린다.
+- `qaLevel`은 `full`, `lifecycleStatus`는 월간 scorecard review 반영 뒤 `mature`로 잠갔다.
+- 이후 refresh에서는 `health:report`가 다시 `hold`를 유지하는지와 이 체크리스트 증빙이 계속 재현되는지를 함께 본다.
