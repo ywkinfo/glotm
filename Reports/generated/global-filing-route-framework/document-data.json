@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
-    "builtAt": "2026-04-04T06:26:15.629Z",
+    "builtAt": "2026-04-06T08:29:07.869Z",
     "chapterCount": 1
   },
   "chapters": [
@@ -9,118 +9,80 @@
       "id": "global-filing-route-framework",
       "slug": "global-filing-route-framework",
       "title": "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
-      "summary": "직접출원과 마드리드 비교는 각 국가 가이드마다 반복해서 등장하지만, 인하우스 팀이 실제로 먼저 잠가야 하는 질문은 생각보다 비슷합니다. 어느 시장이 local-fit을 더 강하게 요구하는지, 본국기초출원과 launch timing이 얼마나 안정적인지, owner split과 filing pack owner를 어디까지 조기에 고정해야 하는지가 핵심입니다.",
-      "html": "<p>직접출원과 마드리드 비교는 각 국가 가이드마다 반복해서 등장하지만, 인하우스 팀이 실제로 먼저 잠가야 하는 질문은 생각보다 비슷합니다. 어느 시장이 local-fit을 더 강하게 요구하는지, 본국기초출원과 launch timing이 얼마나 안정적인지, owner split과 filing pack owner를 어디까지 조기에 고정해야 하는지가 핵심입니다.</p>\n<p>이 리포트는 중국, 멕시코, 유럽, 일본, 중남미 가이드에 흩어진 route decision 포인트를 한 장의 trust layer로 다시 묶습니다. 목적은 국가별 세부 제도를 다시 설명하는 것이 아니라, buyer-facing 경로 판단을 어떤 질문 순서로 정리해야 guide 간 비교가 쉬워지는지 보여 주는 데 있습니다.</p>\n<p>실무에서 direct filing과 Madrid를 고를 때 가장 자주 생기는 실패는 어느 제도가 더 유리한지부터 토론하는 것입니다. 하지만 launch sequencing, owner-user linkage, local-fit pressure, route switch trigger가 잠기지 않으면 어떤 경로를 택해도 제5장 filing packet, 제7장 evidence system, 제9장 contract control에서 다시 같은 논의를 반복하게 됩니다.</p>\n<h3 id=\"현재-route-trust-snapshot\" class=\"article-heading depth-h3\">현재 route trust snapshot</h3>\n<p>2026-04-04 기준 <code>ChaTm</code>은 growth lane의 mature baseline으로 잠겼고, <code>MexTm</code>은 Sprint 2에서 filing packet, rights maintenance, border control handoff까지 더 선명하게 연결했습니다. <code>EuTm</code>은 validate stabilization과 docs sync를 마치며 route pack lock board와 filing-to-evidence handoff를 현재 baseline으로 고정했습니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>현재 가이드 상태</th>\n<th>이 리포트가 회수하는 공통 질문</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>ChaTm: route memo, owner split, local-fit scoring 강화</td>\n<td>중국처럼 local-fit pressure가 큰 시장에서는 언제 direct filing으로 기울어야 하는가</td>\n</tr>\n<tr>\n<td>MexTm: buyer-entry route table + Sprint 2 filing/maintenance/enforcement handoff 유지</td>\n<td>bundle 관리보다 local execution control과 owner handoff가 먼저인가</td>\n</tr>\n<tr>\n<td>EuTm: route pack lock board와 filing handoff, docs sync 유지</td>\n<td>region-level governance와 filing control을 어떻게 묶을 것인가</td>\n</tr>\n<tr>\n<td>LatTm: flagship route decision baseline 유지</td>\n<td>여러 국가를 비교할 때 어떤 공통 decision box를 먼저 써야 하는가</td>\n</tr>\n<tr>\n<td>JapTm: lighter-track route checkpoint 유지</td>\n<td>비교적 단순한 market에서도 route memo를 왜 남겨야 하는가</td>\n</tr>\n</tbody>\n</table></div>\n<p>즉, 이 리포트는 route choice를 국가별 절차 비교에서 portfolio trust layer로 끌어올리는 문서라고 보면 됩니다.</p>\n<h3 id=\"먼저-잠글-네-가지-질문\" class=\"article-heading depth-h3\">먼저 잠글 네 가지 질문</h3>\n<p>각 가이드의 표현은 달라도, route decision은 아래 네 가지 질문으로 수렴합니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>질문</th>\n<th>왜 먼저 잠가야 하는가</th>\n<th>늦어지면 생기는 문제</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>중국/멕시코/유럽 중 어디가 local-fit을 더 요구하는가</td>\n<td>direct filing 필요도를 좌우</td>\n<td>naming, goods/services, owner split drift</td>\n</tr>\n<tr>\n<td>본국기초출원과 global bundle 일정이 안정적인가</td>\n<td>Madrid fit을 좌우</td>\n<td>launch timing과 route switch 혼선</td>\n</tr>\n<tr>\n<td>owner와 실제 사용자를 누가 설명하는가</td>\n<td>filing 이후 evidence까지 연결</td>\n<td>packet owner 불명확</td>\n</tr>\n<tr>\n<td>route switch를 언제 허용할 것인가</td>\n<td>mixed route나 fallback 구조 준비</td>\n<td>launch 직전 재결정 반복</td>\n</tr>\n</tbody>\n</table></div>\n<h4 id=\"질문-1-local-fit-pressure\" class=\"article-heading depth-h4\">질문 1. local-fit pressure</h4>\n<p>local-fit pressure는 단순히 법제가 다르다는 뜻이 아닙니다. 표기 구조, goods/services fit, 대리인 커뮤니케이션 빈도, 채널 통제까지 중국 단일시장 기준으로 더 세밀하게 조정해야 하는가를 묻는 질문입니다.</p>\n<h4 id=\"질문-2-central-management-confidence\" class=\"article-heading depth-h4\">질문 2. central-management confidence</h4>\n<p>Madrid가 자연스러운 상황은 여러 국가를 한 분기 안에 묶고, 본국기초출원과 owner governance가 안정적일 때입니다. 즉, 제도의 편의보다 central-management confidence가 먼저 있어야 합니다.</p>\n<h4 id=\"질문-3-owner-split-clarity\" class=\"article-heading depth-h4\">질문 3. owner split clarity</h4>\n<p>누가 권리자이고 누가 실제 사용자이며 누가 filing packet을 승인하는지 흐리면 route decision은 금방 무너집니다. direct filing을 고르든 Madrid를 고르든 owner split이 흐리면 evidence와 contract 통제에서 공백이 생깁니다.</p>\n<h4 id=\"질문-4-switch-trigger\" class=\"article-heading depth-h4\">질문 4. switch trigger</h4>\n<p>처음 route choice가 고정돼도 기초출원 지연, launch timing 변경, 추가 표장 등장, partner 구조 변경이 생기면 switch가 필요할 수 있습니다. 그래서 처음부터 switch trigger를 쓰지 않으면 later-stage chaos가 생깁니다.</p>\n<h3 id=\"route-memo-1-page-템플릿\" class=\"article-heading depth-h3\">route memo 1-page 템플릿</h3>\n<p>각 가이드에 들어가기 전에 아래 템플릿으로 1페이지 메모를 먼저 적는 편이 좋습니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>필드</th>\n<th>적을 내용</th>\n<th>guide에서 다시 보는 장</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>launch market priority</td>\n<td>중국 단독 / bundle / wait</td>\n<td>ChaTm 제4장, LatTm 제4장</td>\n</tr>\n<tr>\n<td>local-fit 사유</td>\n<td>표기, goods/services, channel timing</td>\n<td>ChaTm 제2-5장</td>\n</tr>\n<tr>\n<td>central-management 사유</td>\n<td>본국기초출원, 다국가 일정, owner governance</td>\n<td>MexTm 제4장, EuTm 제5장</td>\n</tr>\n<tr>\n<td>owner split</td>\n<td>권리자, 실제 사용자, filing owner</td>\n<td>ChaTm 제5장, EuTm 제5장</td>\n</tr>\n<tr>\n<td>switch trigger</td>\n<td>launch 변경, naming drift, bundle 확정</td>\n<td>ChaTm 제4장, MexTm mixed structure board</td>\n</tr>\n<tr>\n<td>next handoff</td>\n<td>evidence owner, contract owner</td>\n<td>ChaTm 제7장, 제9장</td>\n</tr>\n</tbody>\n</table></div>\n<p>메모는 길 필요가 없습니다. 중요한 것은 이 한 장이 각 가이드 deep link에서 무엇을 확인할지 알려 주는 역할을 하는 것입니다.</p>\n<h3 id=\"jurisdiction-by-jurisdiction-reading-notes\" class=\"article-heading depth-h3\">jurisdiction-by-jurisdiction reading notes</h3>\n<h4 id=\"china\" class=\"article-heading depth-h4\">China</h4>\n<p>중국은 local-fit pressure가 상대적으로 크기 때문에, direct filing이 자연스러운 상황이 자주 나타납니다. 특히 중문 표기, 지정상품 조정, launch timing이 함께 움직이면 route memo에서 local-fit 항목이 더 무거워집니다.</p>\n<p>중국에서는 route choice가 제5장 filing packet과 제7장 evidence system으로 빨리 이어집니다. 따라서 direct filing을 택했는지보다 owner split과 handoff가 잠겼는지가 더 중요합니다.</p>\n<h4 id=\"mexico\" class=\"article-heading depth-h4\">Mexico</h4>\n<p>멕시코는 buyer-entry control sheet 관점에서 route choice를 읽는 편이 유용합니다. IMPI 중심의 실행 흐름과 사용·갱신 owner를 같이 보는 구조가 강해서, direct vs Madrid를 비용 비교보다 operating control 비교로 읽기 쉽습니다. Sprint 2 이후에는 filing packet, declaration/renewal owner, border evidence pack까지 이어지는 문법이 더 선명해졌기 때문에 route memo에서도 handoff line을 같이 적는 편이 좋습니다.</p>\n<p>멕시코의 mixed route board는 central-management와 local execution을 섞어 볼 때 좋은 참고점입니다.</p>\n<h4 id=\"europe\" class=\"article-heading depth-h4\">Europe</h4>\n<p>유럽은 권역형 governance를 먼저 보는 편이 좋습니다. 그래서 route question도 direct filing vs Madrid 자체보다, route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지하는지가 핵심입니다.</p>\n<p>EuTm에서 route pack lock board가 중요한 이유는, 권역형 guide 특성상 하나의 filing decision이 여러 국가 후속 흐름에 영향을 주기 때문입니다.</p>\n<h4 id=\"japan\" class=\"article-heading depth-h4\">Japan</h4>\n<p>일본은 lighter-track이지만 route checkpoint가 명확합니다. 복잡한 mixed route보다, 언제 direct filing이 자연스럽고 언제 Madrid를 검토하는지가 비교적 단순하게 정리돼 있어 baseline comparison에 좋습니다.</p>\n<h4 id=\"latam-baseline\" class=\"article-heading depth-h4\">LatAm baseline</h4>\n<p>LatTm은 개별 국가의 route answer를 주기보다 어떤 decision box를 먼저 써야 하는지 보여 주는 flagship baseline입니다. 그래서 중국과 멕시코처럼 구체적이어야 하는 시장을 보기 전, 어떤 질문 순서가 자연스러운지 확인하는 데 좋습니다.</p>\n<h3 id=\"mixed-route를-허용하는-조건\" class=\"article-heading depth-h3\">mixed route를 허용하는 조건</h3>\n<p>mixed route는 예외 전략이 아니라 명시적 설계 전략일 수 있습니다. 다만 \"둘 다 해 보자\"가 아니라 아래 조건이 있을 때만 유의미합니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>조건</th>\n<th>mixed route가 유효한 이유</th>\n<th>메모</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>핵심 표장만 local-fit pressure가 높다</td>\n<td>핵심은 direct, 나머지는 Madrid 가능</td>\n<td>China-type situation</td>\n</tr>\n<tr>\n<td>본국기초출원은 안정적이나 일부 시장 launch가 급하다</td>\n<td>timing split 가능</td>\n<td>Mexico/China hybrid</td>\n</tr>\n<tr>\n<td>owner governance는 중앙집중형인데 channel execution은 현지형이다</td>\n<td>governance와 execution을 분리 가능</td>\n<td>Europe-like coordination</td>\n</tr>\n</tbody>\n</table></div>\n<h4 id=\"mixed-route의-최소-통제-장치\" class=\"article-heading depth-h4\">mixed route의 최소 통제 장치</h4>\n<ul>\n<li>어떤 표장을 direct filing에 실을지 명시한다.</li>\n<li>어떤 표장을 Madrid bundle에 실을지 명시한다.</li>\n<li>evidence owner와 contract owner를 같이 적는다.</li>\n<li>switch trigger와 review date를 메모에 남긴다.</li>\n</ul>\n<h3 id=\"route-switch를-언제-허용할까\" class=\"article-heading depth-h3\">route switch를 언제 허용할까</h3>\n<p>route switch는 실패의 증거가 아니라 governance의 일부여야 합니다. 다만 switch 기준이 없으면 혼란만 커집니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>switch trigger</th>\n<th>보통 의미하는 것</th>\n<th>권장 액션</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>본국기초출원 지연</td>\n<td>Madrid timing risk 상승</td>\n<td>China/Mexico direct fallback 검토</td>\n</tr>\n<tr>\n<td>중문 표기 추가 필요</td>\n<td>local-fit pressure 상승</td>\n<td>direct 또는 mixed 검토</td>\n</tr>\n<tr>\n<td>다국가 launch bundle 확정</td>\n<td>central advantage 상승</td>\n<td>Madrid 또는 mixed 확대</td>\n</tr>\n<tr>\n<td>owner split 단순화 완료</td>\n<td>central-management confidence 상승</td>\n<td>bundle route 재검토</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"30일-action-board\" class=\"article-heading depth-h3\">30일 action board</h3>\n<p>route memo를 쓴 뒤 30일 동안 무엇을 잠글지도 같이 적어 두는 편이 좋습니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>시점</th>\n<th>액션</th>\n<th>owner</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>D+3</td>\n<td>route memo 승인</td>\n<td>본사 IP</td>\n</tr>\n<tr>\n<td>D+7</td>\n<td>naming/search handoff 정리</td>\n<td>브랜드팀</td>\n</tr>\n<tr>\n<td>D+10</td>\n<td>filing packet owner 고정</td>\n<td>법무</td>\n</tr>\n<tr>\n<td>D+14</td>\n<td>evidence prep owner 지정</td>\n<td>운영팀</td>\n</tr>\n<tr>\n<td>D+21</td>\n<td>contract/control 영향 확인</td>\n<td>사업팀 + 법무</td>\n</tr>\n<tr>\n<td>D+30</td>\n<td>route memo review</td>\n<td>본사 decision owner</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"이-리포트를-읽고-나서-할-것\" class=\"article-heading depth-h3\">이 리포트를 읽고 나서 할 것</h3>\n<ol>\n<li>route memo 1페이지를 먼저 쓴다.</li>\n<li>local-fit과 central-management 중 어떤 축이 더 강한지 적는다.</li>\n<li>owner split과 switch trigger를 빈칸 없이 채운다.</li>\n<li>그 뒤에 각 guide deep link로 들어가 국가별 세부 차이를 본다.</li>\n</ol>\n<p>이 순서가 중요한 이유는, guide를 많이 읽는 것보다 먼저 같은 질문 문법을 잠그는 것이 later-stage confusion을 줄이기 때문입니다.</p>",
+      "summary": "해외 상표 출원을 앞두고 가장 자주 받는 질문은 \"마드리드가 싸지 않나요?\"입니다. 그런데 실무에서 더 자주 만나는 문제는 비용 계산 자체가 아니라, 어느 루트로 들어갔을 때 어떤 리스크가 언제 터지는지를 미리 설계하지 않은 채 출원해버리는 데 있습니다.",
+      "html": "<p>해외 상표 출원을 앞두고 가장 자주 받는 질문은 \"마드리드가 싸지 않나요?\"입니다. 그런데 실무에서 더 자주 만나는 문제는 비용 계산 자체가 아니라, 어느 루트로 들어갔을 때 어떤 리스크가 언제 터지는지를 미리 설계하지 않은 채 출원해버리는 데 있습니다.</p>\n<p>직접출원과 마드리드 프로토콜은 모두 유효한 도구이지만, 장점이 드러나는 순간이 다릅니다. 마드리드는 출원 행정의 중앙화와 포트폴리오 관리에 강하고, 직접출원은 국가별 커스터마이징과 현지 리스크 제어에 강합니다.</p>\n<p>이 리포트는 중국, 멕시코, 유럽, 일본, 중남미 가이드에 흩어진 route decision 포인트를 한 장의 trust layer로 다시 묶습니다. 목적은 국가별 세부 제도를 다시 설명하는 것이 아니라, buyer-facing 경로 판단을 어떤 질문 순서로 정리해야 guide 간 비교가 쉬워지는지 보여 주는 데 있습니다.</p>\n<p>실무에서 direct filing과 Madrid를 고를 때 가장 자주 생기는 실패는 어느 제도가 더 유리한지부터 토론하는 것입니다. 하지만 출시 일정, 권리자와 실제 사용자 연결, 현지 맞춤 필요성, 경로 재검토 기준이 먼저 정리되지 않으면 어떤 경로를 택해도 출원 준비 단계, 사용증빙 정리 단계, 계약·권리자 관리 단계에서 다시 같은 논의를 반복하게 됩니다.</p>\n<h3 id=\"지금-이-리포트를-먼저-보면-좋은-이유\" class=\"article-heading depth-h3\">지금 이 리포트를 먼저 보면 좋은 이유</h3>\n<p>2026-04-04 기준으로 <code>ChaTm</code>, <code>MexTm</code>, <code>EuTm</code>은 출원 경로 판단에 필요한 기준을 각 시장 특성에 맞게 어느 정도 정리해 둔 상태입니다. 이 리포트는 그 기준을 한곳에 모아, 국가별 세부 설명으로 들어가기 전에 먼저 큰 틀을 잡을 수 있게 돕습니다. <code>LatTm</code>은 여러 국가를 비교할 때 쓰는 기준 프레임이고, <code>JapTm</code>은 비교적 단순한 사례를 살펴볼 때 참고하기 좋은 자료입니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>먼저 참고할 가이드</th>\n<th>이 리포트에서 먼저 정리하는 질문</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>ChaTm: 중국 시장에서 직접출원 판단에 영향을 주는 요소를 정리한 가이드</td>\n<td>중국처럼 현지 조정이 많이 필요한 시장에서는 언제 직접출원 쪽으로 판단해야 하는가</td>\n</tr>\n<tr>\n<td>MexTm: 출원 이후 유지·집행까지 함께 보는 실행형 가이드</td>\n<td>여러 나라를 묶는 효율보다 현지 실행 통제를 먼저 봐야 하는 시장은 어디인가</td>\n</tr>\n<tr>\n<td>EuTm: 유럽 권역에서 출원 기준과 후속 관리 흐름을 연결한 가이드</td>\n<td>유럽처럼 여러 국가를 함께 관리하는 시장에서는 출원 기준과 후속 관리를 어떻게 연결할 것인가</td>\n</tr>\n<tr>\n<td>LatTm: 여러 국가 비교에 쓰는 기준 프레임</td>\n<td>여러 국가를 비교할 때 어떤 공통 기준으로 먼저 판단할 것인가</td>\n</tr>\n<tr>\n<td>JapTm: 비교적 단순한 사례를 참고할 수 있는 가이드</td>\n<td>비교적 단순한 시장에서도 왜 출원 경로 판단 메모가 필요한가</td>\n</tr>\n</tbody>\n</table></div>\n<p>즉, 이 리포트는 국가별 제도를 하나씩 설명하기보다, 여러 시장에서 반복되는 출원 경로 판단 기준을 먼저 정리해 주는 문서라고 보면 됩니다.</p>\n<h3 id=\"두-경로가-실제로-다른-것\" class=\"article-heading depth-h3\">두 경로가 실제로 다른 것</h3>\n<p>마드리드는 \"단일 출원서·단일 통화·중앙 관리\"로 행정 효율을 제공합니다. 그러나 각 지정국의 실체심사, 이의, 거절 대응은 결국 지정국 절차로 들어갑니다. WIPO는 형식심사와 등록 허브 역할을 하고, 그 이후의 분쟁·거절·사용증명은 각국 국내법으로 처리됩니다.</p>\n<p>즉, 마드리드는 \"완전 원스톱\"이 아닙니다. 출원 행정의 중앙화이지, 실체 처리의 통합이 아닙니다.</p>\n<p>직접출원은 각국 서식·언어·기한을 각자 관리해야 하는 부담이 있지만, 국가별 맞춤 설계가 처음부터 가능하다는 강점이 있습니다. 거절 가능성이 높은 시장, 사용증명 기준이 엄격한 시장에서는 이 설계 여지가 성패를 가릅니다.</p>\n<h3 id=\"마드리드의-구조적-리스크-기본상표-의존\" class=\"article-heading depth-h3\">마드리드의 구조적 리스크: 기본상표 의존</h3>\n<p>마드리드에서 가장 간과되는 리스크는 central attack입니다. 국제등록은 본국 기본상표(기초출원 또는 기본등록)에 의존하며, 기본상표가 등록 후 5년 이내에 취소·무효·범위 축소되면 국제등록 전체가 영향을 받습니다.</p>\n<p>실무적으로 이것이 의미하는 바는 다음과 같습니다.</p>\n<ul>\n<li>기본상표가 이의·무효 분쟁 중이거나 지정상품이 과다하게 설정된 상태라면, 마드리드로 다수 국가에 한 번에 확장했을 때 한 지점의 붕괴가 전 포트폴리오에 연쇄됩니다.</li>\n<li>기본상표 본국이 한국·일본처럼 3년 불사용 취소 제도를 운용하는 국가라면, 본국에서의 사용관리 실패가 국제 포트폴리오 리스크로 확대됩니다.</li>\n<li>마드리드를 쓰려면 기본상표가 (a) 등록 후 안정화되고, (b) 지정상품이 전략적으로 정제되며, (c) 실사용 증빙이 체계화된 상태가 이상적입니다.</li>\n</ul>\n<h3 id=\"국가별-핵심-변수-무엇이-다른가\" class=\"article-heading depth-h3\">국가별 핵심 변수: 무엇이 다른가</h3>\n<p>아래 표는 주요 시장에서 직접출원 기준으로 어떤 요소가 실무 난이도를 결정하는지 정리한 것입니다.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>관할</th>\n<th>대리인 요구</th>\n<th>거절 구조</th>\n<th>불사용 취소 기준</th>\n<th>대표 실무 리스크</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>미국</td>\n<td>외국 출원인/등록인은 미국 변호사 의무</td>\n<td>혼동가능성 포함 직권 심사</td>\n<td>5~6년차 사용선서·표본 제출 필수, 제3자 공격 제도 존재</td>\n<td>사용 타이밍과 표본의 정확성이 등록 유효성과 직결</td>\n</tr>\n<tr>\n<td>EU</td>\n<td>EEA 밖 출원인은 EEA 내 전문대리인 필요</td>\n<td>절대적 거절 직권 심사, 상대적 거절은 이의 중심</td>\n<td>등록 후 5년 내 진정사용 없으면 취소</td>\n<td>이의·무효 단계에서 \"진정사용\" 입증이 핵심 쟁점</td>\n</tr>\n<tr>\n<td>중국</td>\n<td>외국 출원인은 중국 대리기구 위임 원칙</td>\n<td>절대·상대 사유 모두 심사 가능</td>\n<td>3년 연속 미사용 시 누구나 취소 신청 가능</td>\n<td>상표 선점·3년 취소 빈번성·증빙의 현지성</td>\n</tr>\n<tr>\n<td>일본</td>\n<td>일본 내 주소 없으면 현지 대리인 필요</td>\n<td>심사관 심사·거절 구조 명확</td>\n<td>3년 미사용 시 불사용 취소심판 가능</td>\n<td>유통·대리판매 사용 관계 입증이 판례상 쟁점</td>\n</tr>\n<tr>\n<td>한국</td>\n<td>한국 내 주소 없으면 현지 대리인 필요</td>\n<td>등록주의, 출원 시 사용 요건 없음</td>\n<td>등록 후 3년 이상 연속 미사용 취소</td>\n<td>마드리드 경유 지정 시도 실체심사 동일 적용</td>\n</tr>\n<tr>\n<td>멕시코</td>\n<td>멕시코 내 송달주소 필요, 실무상 현지대리인 배정이 일반적</td>\n<td>공고 후 이의·절대/상대 사유 심사</td>\n<td>등록 후 3년 미사용 취소 가능, Madrid 지정도 3년+3개월 사용선언 필요</td>\n<td>송달주소·사용선언·가제타 추적을 함께 관리해야 함</td>\n</tr>\n</tbody>\n</table></div>\n<p>대리인 의무가 강한 국가(미국·중국·한국·일본 등)가 다수이며, 마드리드로 진입하더라도 거절이 발생하면 해당 국가 절차로 들어가 현지대리인이 필요해집니다. \"현지비용 0\"은 마드리드에서도 실현되지 않는 것이 일반적입니다.</p>\n<p>멕시코는 출원서에 국내 송달주소를 적어야 하고, 마드리드 지정이라도 사용선언은 IMPI에 직접 제출해야 합니다. 그래서 멕시코를 포함하는 포트폴리오는 \"마드리드면 현지 의무가 사라진다\"는 가정이 특히 위험합니다.</p>\n<h3 id=\"사용증명-요구가-발생하는-세-가지-경로\" class=\"article-heading depth-h3\">사용증명 요구가 발생하는 세 가지 경로</h3>\n<p>사용증명 문제는 출원 루트 선택보다 시장 운영 계획과 결합해 판단해야 합니다. 요구가 발생하는 경로는 크게 세 가지입니다.</p>\n<p><strong>첫째, 등록·유지 단계의 법정 제출.</strong> 미국이 대표적입니다. 5~6년차와 이후 10년 주기로 사용선서와 표본을 제출하지 않으면 등록이 취소됩니다. 마드리드의 중앙 갱신만으로는 이 의무가 대체되지 않습니다.</p>\n<p><strong>둘째, 이의·무효 단계에서 상대방이 요구하는 경우.</strong> EU에서 전형적으로 나타납니다. 이의 절차에서 상대방이 \"이전 상표의 사용증명\"을 요청할 수 있으며, EU 판례는 \"형식적·명목적 사용\"은 진정사용으로 인정하지 않는다는 기준을 축적해왔습니다.</p>\n<p><strong>셋째, 제3자의 불사용 취소 신청 또는 국가별 사용선언.</strong> 중국(3년)·한국(3년)·일본(3년) 모두 일정 기간 미사용 상표를 제3자가 취소 신청할 수 있는 제도를 운용합니다. 멕시코는 등록 후 3년 시점에 3개월 내 사용선언을 별도로 제출해야 하므로, 마드리드 지정이라도 유지 달력을 따로 관리해야 합니다. 특히 중국은 이 제도가 실무에서 매우 빈번하게 활용됩니다.</p>\n<p>미국에서 주목해야 할 판례가 있습니다. Couture v. Playdom에서 법원은 서비스가 실제로 제공되지 않은 상태에서 웹사이트로 \"제공 의사\"만 표시한 것은 사용요건을 충족하지 못해 등록이 처음부터 무효가 될 수 있다고 판단했습니다. 출원 루트와 무관하게 사용의 타이밍과 증빙이 분쟁 리스크의 중심이라는 점을 보여주는 사례입니다.</p>\n<h3 id=\"어느-경로가-합리적인가\" class=\"article-heading depth-h3\">어느 경로가 합리적인가</h3>\n<p>아래 기준은 총비용보다 리스크 구조를 먼저 보는 프레임입니다.</p>\n<h4 id=\"마드리드를-우선-검토할-상황\" class=\"article-heading depth-h4\">마드리드를 우선 검토할 상황</h4>\n<ul>\n<li>단기간에 <strong>3개국 이상</strong>에서 동일한 표장·동일(또는 근접한) 지정상품/서비스로 출원이 필요한 경우</li>\n<li>주소·명의 변경, 추가 지정, 중앙 갱신이 자주 발생하는 <strong>포트폴리오형 운영</strong> 구조인 경우</li>\n<li>본국 기본상표가 이미 <strong>등록 후 안정화</strong>되어 있고, 향후 5년 내 이의·무효·취소 리스크가 낮은 경우</li>\n</ul>\n<h4 id=\"직접출원을-우선-검토할-상황\" class=\"article-heading depth-h4\">직접출원을 우선 검토할 상황</h4>\n<ul>\n<li>대상국이 <strong>1~2개</strong>이고, 해당국이 초기 설계 커스터마이징이 성패를 좌우하는 시장인 경우 (미국의 사용·표본 요건, 중국의 대리·취소 빈번성, EU의 절대적 거절사유 위험 등)</li>\n<li>현지 파트너(유통사·라이선시)가 있어 <strong>현지어·음역·한자 표장</strong> 병행 출원이 필수인 경우</li>\n<li>본국 기본상표가 아직 <strong>출원 단계</strong>이고, 5년 의존 리스크를 회피하고 싶은 경우</li>\n</ul>\n<h3 id=\"혼합-전략-실무에서-가장-빈번\" class=\"article-heading depth-h3\">혼합 전략 (실무에서 가장 빈번)</h3>\n<p><strong>핵심 2~3개 시장은 직접출원, 나머지는 마드리드로 확장</strong>하는 방식이 실무 표준에 가장 가깝습니다. 기본상표가 불안정하거나, 특정 국가에서 분쟁 가능성이 높을 때 혼합 전략이 리스크 대비 효율이 높습니다.</p>\n<h3 id=\"비용-구조를-볼-때-놓치기-쉬운-것\" class=\"article-heading depth-h3\">비용 구조를 볼 때 놓치기 쉬운 것</h3>\n<p>공식 수수료만 놓고 보면 마드리드가 유리해 보일 수 있습니다. WIPO의 기본료는 흑백 기준 653 CHF이며, 지정국별로 표준 수수료 또는 개별료가 추가됩니다. WIPO는 Fee Calculator를 제공하여 지정국·클래스별 예측을 지원하지만, 실제 총비용은 현지대리인 비용과 거절·이의 대응 비용까지 합쳐 봐야 합니다.</p>\n<p>그러나 실제 총비용을 결정하는 것은 공식 수수료가 아닙니다.</p>\n<ul>\n<li><strong>현지대리인 비용</strong>: 거절·이의 발생 시 지정국 절차로 진입하면 발생</li>\n<li><strong>거절·이의 대응 비용</strong>: 대상 시장에서 충돌 가능성이 높을수록 누적</li>\n<li><strong>사용증명 준비 비용</strong>: 증빙 체계가 없으면 분쟁 시 사후 대응 비용이 급증</li>\n<li><strong>포트폴리오 관리 인건비</strong>: 국가 수가 많아질수록 기한·갱신·상태 추적 부담</li>\n</ul>\n<p>대상국이 2~3개뿐이라면 직접출원이 오히려 예측 가능성이 높을 수 있습니다. 지정국이 많아질수록 마드리드의 중앙관리 이점이 실질적으로 커집니다.</p>\n<h3 id=\"시나리오별-판단-예시\" class=\"article-heading depth-h3\">시나리오별 판단 예시</h3>\n<p><strong>미국 + EU 2개 시장이 최우선인 초기 해외 진출 기업</strong>\n직접출원이 실무적으로 유리한 경우가 많습니다. 미국은 외국인 대리(미국 변호사) 요건이 강하고 사용·표본·유지서류 체계가 등록 가치에 직결됩니다. EU는 상대적 충돌을 이의로 넘기는 구조라 모니터링·이의 전략이 중요합니다. 두 시장만 우선 확보한다면 \"마드리드의 중앙관리 이점\"보다 \"국가별 맞춤 설계\"의 이점이 큽니다.</p>\n<p><strong>6~10개국 동시 런칭, 상품군이 정형화된 중견기업</strong>\n본국 기본상표가 이미 등록·안정화되어 있고 지정상품이 표준화된 카테고리라면, 마드리드 일괄 출원으로 중앙관리 효과를 극대화할 수 있습니다. 주소·명의 변경, 추가 지정, 갱신을 WIPO에서 중앙 처리하는 이점은 포트폴리오가 커질수록 실질적인 비용·리스크 감소로 이어집니다.</p>\n<p><strong>중국·한국·일본·멕시코처럼 불사용 취소(3년) 또는 사용선언 리스크가 빠른 시장이 포함되고, 현지 판매 개시가 늦어질 수 있는 기업</strong>\n출원 루트보다 사용증빙 설계가 먼저입니다. 실제 판매·수입·광고 일정이 확정되지 않았다면 지정상품을 과도하게 넓히지 말고, 유통계약·인보이스·광고집행 등 증빙을 초기부터 축적하며, 핵심 상품군만 먼저 등록받고 후속 확장을 고려하는 것이 합리적입니다.</p>\n<h3 id=\"실행-시작점\" class=\"article-heading depth-h3\">실행 시작점</h3>\n<p><strong>이번 주</strong>: 진출 예정 국가를 나열하고, 각국의 대리인 요건·불사용 취소 기간·거절 빈도를 확인합니다. 본국 기본상표의 현재 상태(출원 중·등록·분쟁 중)를 파악합니다.</p>\n<p><strong>이번 분기</strong>: 대상국이 3개 미만이면 직접출원 경로로 국가별 설계를 시작합니다. 3개국 이상이고 기본상표가 안정적이면 마드리드 Fee Calculator로 공식 수수료를 비교하고, 현지대리인 견적을 함께 받아 총비용을 추산합니다.</p>\n<p><strong>이후</strong>: 어느 경로를 선택하든, 사용증빙 체계는 별도로 설계합니다. 판매 채널별·국가별로 어떤 증거를 언제 수집할지 결정하지 않으면, 등록 이후의 리스크 관리가 구조적으로 취약해집니다.</p>\n<p>어느 루트가 싸냐보다 중요한 질문은 **\"각 시장에서 어떤 리스크가 언제 발생하고, 그때 대응할 준비가 되어 있냐\"**입니다. 출원 경로는 그 준비의 일부입니다.</p>\n<hr>\n<p><em>관련 GloTm 가이드</em></p>\n<ul>\n<li><a href=\"/reports/global-use-evidence-system\">글로벌 사용 증거 수집 운영 시스템 구축</a></li>\n</ul>",
       "headings": [
         {
-          "id": "현재-route-trust-snapshot",
+          "id": "지금-이-리포트를-먼저-보면-좋은-이유",
           "depth": 3,
-          "title": "현재 route trust snapshot",
+          "title": "지금 이 리포트를 먼저 보면 좋은 이유",
           "children": []
         },
         {
-          "id": "먼저-잠글-네-가지-질문",
+          "id": "두-경로가-실제로-다른-것",
           "depth": 3,
-          "title": "먼저 잠글 네 가지 질문",
+          "title": "두 경로가 실제로 다른 것",
+          "children": []
+        },
+        {
+          "id": "마드리드의-구조적-리스크-기본상표-의존",
+          "depth": 3,
+          "title": "마드리드의 구조적 리스크: 기본상표 의존",
+          "children": []
+        },
+        {
+          "id": "국가별-핵심-변수-무엇이-다른가",
+          "depth": 3,
+          "title": "국가별 핵심 변수: 무엇이 다른가",
+          "children": []
+        },
+        {
+          "id": "사용증명-요구가-발생하는-세-가지-경로",
+          "depth": 3,
+          "title": "사용증명 요구가 발생하는 세 가지 경로",
+          "children": []
+        },
+        {
+          "id": "어느-경로가-합리적인가",
+          "depth": 3,
+          "title": "어느 경로가 합리적인가",
           "children": [
             {
-              "id": "질문-1-local-fit-pressure",
+              "id": "마드리드를-우선-검토할-상황",
               "depth": 4,
-              "title": "질문 1. local-fit pressure",
+              "title": "마드리드를 우선 검토할 상황",
               "children": []
             },
             {
-              "id": "질문-2-central-management-confidence",
+              "id": "직접출원을-우선-검토할-상황",
               "depth": 4,
-              "title": "질문 2. central-management confidence",
-              "children": []
-            },
-            {
-              "id": "질문-3-owner-split-clarity",
-              "depth": 4,
-              "title": "질문 3. owner split clarity",
-              "children": []
-            },
-            {
-              "id": "질문-4-switch-trigger",
-              "depth": 4,
-              "title": "질문 4. switch trigger",
+              "title": "직접출원을 우선 검토할 상황",
               "children": []
             }
           ]
         },
         {
-          "id": "route-memo-1-page-템플릿",
+          "id": "혼합-전략-실무에서-가장-빈번",
           "depth": 3,
-          "title": "route memo 1-page 템플릿",
+          "title": "혼합 전략 (실무에서 가장 빈번)",
           "children": []
         },
         {
-          "id": "jurisdiction-by-jurisdiction-reading-notes",
+          "id": "비용-구조를-볼-때-놓치기-쉬운-것",
           "depth": 3,
-          "title": "jurisdiction-by-jurisdiction reading notes",
-          "children": [
-            {
-              "id": "china",
-              "depth": 4,
-              "title": "China",
-              "children": []
-            },
-            {
-              "id": "mexico",
-              "depth": 4,
-              "title": "Mexico",
-              "children": []
-            },
-            {
-              "id": "europe",
-              "depth": 4,
-              "title": "Europe",
-              "children": []
-            },
-            {
-              "id": "japan",
-              "depth": 4,
-              "title": "Japan",
-              "children": []
-            },
-            {
-              "id": "latam-baseline",
-              "depth": 4,
-              "title": "LatAm baseline",
-              "children": []
-            }
-          ]
-        },
-        {
-          "id": "mixed-route를-허용하는-조건",
-          "depth": 3,
-          "title": "mixed route를 허용하는 조건",
-          "children": [
-            {
-              "id": "mixed-route의-최소-통제-장치",
-              "depth": 4,
-              "title": "mixed route의 최소 통제 장치",
-              "children": []
-            }
-          ]
-        },
-        {
-          "id": "route-switch를-언제-허용할까",
-          "depth": 3,
-          "title": "route switch를 언제 허용할까",
+          "title": "비용 구조를 볼 때 놓치기 쉬운 것",
           "children": []
         },
         {
-          "id": "30일-action-board",
+          "id": "시나리오별-판단-예시",
           "depth": 3,
-          "title": "30일 action board",
+          "title": "시나리오별 판단 예시",
           "children": []
         },
         {
-          "id": "이-리포트를-읽고-나서-할-것",
+          "id": "실행-시작점",
           "depth": 3,
-          "title": "이 리포트를 읽고 나서 할 것",
+          "title": "실행 시작점",
           "children": []
         }
       ]

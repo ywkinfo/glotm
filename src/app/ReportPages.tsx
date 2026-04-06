@@ -24,8 +24,6 @@ import {
   FullDocumentLink,
   ReportCard,
   buildPriorityLaneLabelSequence,
-  buildPriorityLaneProgressNote,
-  buildPriorityLaneStatusSummary,
   buildTrustLayerGuideSummary,
   getTrustLayerSummaryFallback,
   orderGatewayProducts,
@@ -36,7 +34,6 @@ export function ReportArchivePage() {
   const leadReport = getPrimaryGatewayReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
-  const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
   const trustLayerGuideSummary =
     buildTrustLayerGuideSummary(leadReport, orderedProducts, {
       laneLabelSequence: priorityLaneLabelSequence,
@@ -56,7 +53,7 @@ export function ReportArchivePage() {
           <p className="gateway-lead">{reportExperienceMeta.archiveHeroLead}</p>
           <p className="gateway-summary">{reportExperienceMeta.archiveHeroSummary}</p>
           <p className="gateway-summary gateway-summary--supporting">
-            {trustLayerGuideSummary || getTrustLayerSummaryFallback()} 현재 우선 레인 상태는 {priorityLaneStatusSummary}입니다.
+            {trustLayerGuideSummary || getTrustLayerSummaryFallback()}
           </p>
           {leadReport?.whyNow ? (
             <p className="gateway-summary gateway-summary--supporting">
@@ -99,7 +96,6 @@ export function ReportPage() {
   const report = params.reportSlug ? getReportBySlug(params.reportSlug) : undefined;
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
-  const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, report);
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const resourceLoaders = useMemo(() => {
@@ -215,7 +211,7 @@ export function ReportPage() {
             {buildTrustLayerGuideSummary(report, orderedProducts, {
               laneLabelSequence: priorityLaneLabelSequence,
               includeLaneBridge: true
-            }) || getTrustLayerSummaryFallback()} {priorityLaneProgressNote}
+            }) || getTrustLayerSummaryFallback()}
           </p>
         </div>
 

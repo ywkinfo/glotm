@@ -67,17 +67,17 @@ const documentDataByReport = {
         id: "global-filing-route-framework",
         slug: "global-filing-route-framework",
         title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
-        summary: "direct filing vs Madrid를 local-fit, owner split, route switch 기준으로 다시 정리한 리포트입니다.",
+        summary: "직접출원과 마드리드를 비교할 때 먼저 봐야 할 판단 기준을 다시 정리한 리포트입니다.",
         html: [
-          "<p>직접출원과 마드리드 비교에서 먼저 잠가야 하는 것은 local-fit pressure, central-management confidence, owner split, switch trigger입니다.</p>",
-          '<h3 id="route-memo-1-page-템플릿">route memo 1-page 템플릿</h3>',
-          "<p>메모는 길 필요가 없고, launch priority와 handoff owner가 보이면 충분합니다.</p>"
+          "<p>직접출원과 마드리드 비교에서 먼저 정리해야 하는 것은 현지 맞춤 필요성, 중앙 관리 적합성, 권리자 구분, 경로 재검토 기준입니다.</p>",
+          '<h3 id="출원-경로-판단-메모-템플릿">출원 경로 판단 메모 템플릿</h3>',
+          "<p>메모는 길 필요가 없고, 우선 시장과 출원 준비 책임자가 보이면 충분합니다.</p>"
         ].join(""),
         headings: [
           {
-            id: "route-memo-1-page-템플릿",
+            id: "출원-경로-판단-메모-템플릿",
             depth: 3,
-            title: "route memo 1-page 템플릿",
+            title: "출원 경로 판단 메모 템플릿",
             children: []
           }
         ]
@@ -375,7 +375,7 @@ describe("App portfolio shell", () => {
     {
       path: "/china",
       title: "중국 상표 실무 운영 가이드",
-      summary: "중문 표기, 상품·서비스 적합성, 권리자 분리가 직접출원 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
+      summary: "중문 표기, 상품·서비스 적합성, 권리자 구성이 직접출원 쪽으로 기우는지부터 보고 출원 경로 메모를 정리합니다."
     },
     {
       path: "/mexico",
@@ -385,7 +385,7 @@ describe("App portfolio shell", () => {
     {
       path: "/europe",
       title: "EuTm 유럽 상표 운영 가이드북",
-      summary: "권역형 guide답게 route pack을 누가 잠그고 출원에서 증거까지 이어지는 흐름을 어떻게 유지할지 먼저 확인합니다."
+      summary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다."
     }
   ])(
     "shows report handoff cards on priority guide home $path",
@@ -613,7 +613,7 @@ describe("App portfolio shell", () => {
       )
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: local-fit pressure를 먼저 잠근다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 현지 맞춤 필요성을 먼저 본다" })
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 판단표 보기" })
@@ -626,7 +626,7 @@ describe("App portfolio shell", () => {
     ).toBeNull();
     expect(
       within(reportSection as HTMLElement).queryByText(
-        /출원 경로, owner split, 혼합 경로 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다\./
+        /출원 경로, 권리자 구분, 혼합 경로 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다\./
       )
     ).toBeNull();
     expect(
@@ -994,12 +994,12 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm · MexTm · EuTm에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\. ChaTm -> MexTm -> EuTm 다음 레인에서는 안내와 현재 상태를 함께 확인합니다\. LatTm은 기준 프레임으로 유지합니다\. JapTm은 참고용으로 이어 읽히게 둡니다\. 현재 우선 레인 상태는 ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0입니다\./
+        /ChaTm · MexTm · EuTm에서 이미 다룬 출원 경로 판단 질문을 이 리포트에서 한 번에 다시 정리했습니다\. 관련 가이드는 ChaTm -> MexTm -> EuTm 순서로 이어서 보면 흐름을 잡기 쉽습니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\. JapTm은 필요할 때 이어서 보면 됩니다\./
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다\./
+        /ChaTm, MexTm, EuTm에서 이미 다룬 출원 경로 판단을 한 번에 다시 정리해, 여러 나라를 비교할 때 바로 참고할 수 있게 만든 리포트입니다\./
       )
     ).toBeInTheDocument();
     expect(
@@ -1024,17 +1024,21 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다\./
+        /ChaTm, MexTm, EuTm에서 이미 다룬 출원 경로 판단을 한 번에 다시 정리해, 여러 나라를 비교할 때 바로 참고할 수 있게 만든 리포트입니다\./
       )
     ).toBeInTheDocument();
-    expect(screen.getByText("어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.")).toBeInTheDocument();
+    expect(screen.getByText("어느 시장에서 현지 맞춤이 더 많이 필요한지 먼저 적는다.")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "가이드로 이어 보기" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "MexTm: bundle보다 execution control을 본다" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "MexTm: 일괄 출원보다 현지 실행 통제를 먼저 본다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm lock board 보기" })).toHaveAttribute(
       "href",
       "/europe/chapter/제5장-출원-경로와-서류-설계#route-pack-lock-board"
     );
-    expect(screen.getByText(/직접출원과 마드리드 비교에서 먼저 잠가야 하는 것은 local-fit pressure, central-management confidence, owner split, switch trigger입니다\./)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /직접출원과 마드리드 비교에서 먼저 정리해야 하는 것은 현지 맞춤 필요성, 중앙 관리 적합성, 권리자 구분, 경로 재검토 기준입니다\./
+      )
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "LatTm route decision box" })).toHaveAttribute(
       "href",
       "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
@@ -1053,10 +1057,7 @@ describe("App portfolio shell", () => {
     await screen.findByRole("heading", { name: supportingGatewayReport?.title ?? "" });
 
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 정리한 사용 증거 운영 구조를 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\./)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/다음은 Supporting Report입니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 사용 증거 운영 구조를 이 리포트에서 한 번에 다시 정리했습니다\. 관련 가이드는 ChaTm -> MexTm -> EuTm 순서로 이어서 보면 흐름을 잡기 쉽습니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\./)
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "EuTm: validate evidence handoff를 고정한다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm evidence triage 보기" })).toHaveAttribute(

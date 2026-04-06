@@ -635,6 +635,30 @@ describe("MarkdownArticle", () => {
     });
   });
 
+  it("routes internal report links through the SPA contract", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/reports/global-filing-route-framework"]}>
+        <MarkdownArticle
+          chapter={{
+            ...sidebarChapters[1]!,
+            html: '<p><a href="/reports/global-use-evidence-system">관련 리포트 보기</a></p>'
+          }}
+        />
+        <LocationProbe />
+      </MemoryRouter>
+    );
+
+    await user.click(screen.getByRole("link", { name: "관련 리포트 보기" }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("component-location")).toHaveTextContent(
+        "/reports/global-use-evidence-system"
+      );
+    });
+  });
+
   it("renders wide-table scroll buttons and syncs their state with viewport overflow", async () => {
     const restoreResizeObserver = stubResizeObserverForTest(undefined);
 

@@ -143,7 +143,7 @@ const reportSource: ReportMeta[] = [
     slug: "global-filing-route-framework",
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
     summary:
-      "여러 나라 가이드에 흩어진 출원 경로 판단 질문을 한곳에 모아, 어떤 시장은 현지 맞춤이 더 필요하고 어떤 시장은 중앙 관리가 더 나은지 정리한 스페셜 리포트입니다.",
+      "여러 나라에 동시에 출원할 때 먼저 필요한 판단 기준을 한 문서에 모았습니다. 어떤 시장은 직접출원이 낫고, 어떤 시장은 마드리드가 더 효율적인지 빠르게 비교할 수 있게 정리한 스페셜 리포트입니다.",
     trustLayerSummaryObject: "출원 경로 판단 질문을",
     publishedAt: "2026-04-04T12:00:00.000Z",
     jurisdictions: ["Global", "China", "Mexico", "Europe", "Japan"],
@@ -153,18 +153,18 @@ const reportSource: ReportMeta[] = [
     gatewayPlacement: "front",
     gatewayPriority: 0,
     whyNow:
-      "ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다. LatTm은 기준 프레임으로 유지하고, JapTm은 이어서 참고할 수 있는 보조 자료로 둡니다.",
+      "ChaTm, MexTm, EuTm에서 이미 다룬 출원 경로 판단을 한 번에 다시 정리해, 여러 나라를 비교할 때 바로 참고할 수 있게 만든 리포트입니다. LatTm은 전체 기준을 잡는 참고 프레임이고, JapTm은 필요할 때 이어 읽는 보조 자료입니다.",
     trustLayerChecklist: [
-      "어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.",
-      "본국기초출원과 global bundle timing이 안정적인지 분리해 본다.",
-      "owner split, filing pack owner, switch trigger를 빈칸 없이 잠근다."
+      "어느 시장에서 현지 맞춤이 더 많이 필요한지 먼저 적는다.",
+      "본국기초출원과 여러 국가를 함께 묶어 출원하는 일정이 안정적인지 나눠 본다.",
+      "권리자와 실제 사용자 구분, 출원 준비 책임자, 경로 재검토 기준을 빈칸 없이 정리한다."
     ],
     focusPoints: [
       {
         id: "china-local-fit",
-        title: "ChaTm: local-fit pressure를 먼저 잠근다",
+        title: "ChaTm: 현지 맞춤 필요성을 먼저 본다",
         summary:
-          "중문 표기, 상품·서비스 적합성, 권리자 분리가 직접출원 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다.",
+          "중문 표기, 상품·서비스 적합성, 권리자 구성이 직접출원 쪽으로 기우는지부터 보고 출원 경로 메모를 정리합니다.",
         href: buildGuideSectionPath(
           "china",
           "제4장-출원-경로-선택-직접출원-vs-마드리드",
@@ -175,7 +175,7 @@ const reportSource: ReportMeta[] = [
       },
       {
         id: "mexico-control",
-        title: "MexTm: bundle보다 execution control을 본다",
+        title: "MexTm: 일괄 출원보다 현지 실행 통제를 먼저 본다",
         summary:
           "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
         href: buildGuideSectionPath(
@@ -188,9 +188,9 @@ const reportSource: ReportMeta[] = [
       },
       {
         id: "europe-governance",
-        title: "EuTm: governance와 filing handoff를 묶는다",
+        title: "EuTm: 관리 기준과 출원 연결 흐름을 함께 본다",
         summary:
-          "권역형 guide답게 route pack을 누가 잠그고 출원에서 증거까지 이어지는 흐름을 어떻게 유지할지 먼저 확인합니다.",
+          "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다.",
         href: buildGuideSectionPath(
           "europe",
           "제5장-출원-경로와-서류-설계",

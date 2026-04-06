@@ -14,6 +14,7 @@ import {
   normalizeAppHref
 } from "./shared";
 import { liveShellProducts } from "./registry";
+import { buildReportArchivePath } from "../reports/registry";
 
 type MarkdownArticleProps = {
   chapter: Chapter;
@@ -45,6 +46,12 @@ function isOwnedAppHref(href: string) {
   }
 
   if (pathname === buildProductPath("/")) {
+    return true;
+  }
+
+  const reportArchivePath = buildReportArchivePath();
+
+  if (pathname === reportArchivePath || pathname.startsWith(`${reportArchivePath}/`)) {
     return true;
   }
 

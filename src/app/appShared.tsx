@@ -242,10 +242,10 @@ export function buildTrustLayerGuideSummary(
   }
 
   const bridgeSentence = options?.includeLaneBridge && options.laneLabelSequence
-    ? ` ${options.laneLabelSequence} 다음 레인에서는 안내와 현재 상태를 함께 확인합니다.`
+    ? ` 관련 가이드는 ${options.laneLabelSequence} 순서로 이어서 보면 흐름을 잡기 쉽습니다.`
     : "";
 
-  return `${priorityGuides}에서 이미 정리한 ${report.trustLayerSummaryObject} 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 기준 프레임으로 유지합니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 참고용으로 이어 읽히게 둡니다.` : ""}`;
+  return `${priorityGuides}에서 이미 다룬 ${report.trustLayerSummaryObject} 이 리포트에서 한 번에 다시 정리했습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 전체 기준을 잡을 때 참고하면 좋습니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 필요할 때 이어서 보면 됩니다.` : ""}`;
 }
 
 export function getTrustLayerSummaryFallback() {
