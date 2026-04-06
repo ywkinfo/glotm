@@ -93,7 +93,7 @@ type SearchIndexData = {
 };
 
 const CHARACTERS_PER_MINUTE = 850;
-const ROOT_DOCUMENT_TITLE = "GloTm | Cross-border Trademark Operating Guides";
+const ROOT_DOCUMENT_TITLE = "GloTm | Cross-border Trademark Operating Guide";
 const FALLBACK_APP_ORIGIN = "https://glotm.local";
 const SAFE_EXTERNAL_PROTOCOLS = new Set(["http:", "https:", "mailto:", "tel:"]);
 

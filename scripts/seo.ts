@@ -31,10 +31,10 @@ import {
 const DEFAULT_SITE_ORIGIN = "https://ywkinfo.github.io";
 const DEFAULT_SITE_NAME = "GloTm";
 const DEFAULT_SITE_DESCRIPTION =
-  "인하우스 팀을 위한 cross-border trademark operating guides GloTm. 시장 우선순위, 출원 경로, 유지·집행 판단을 한곳에서 탐색할 수 있습니다.";
+  "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다.";
 const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.svg";
 const DEFAULT_SOCIAL_IMAGE_ALT =
-  "GloTm Gateway와 cross-border trademark operating guides를 소개하는 대표 공유 이미지";
+  "GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지";
 const DEFAULT_SOCIAL_IMAGE_WIDTH = 1200;
 const DEFAULT_SOCIAL_IMAGE_HEIGHT = 630;
 
@@ -172,7 +172,7 @@ function renderGatewayBody(basePath: string) {
     <main>
       <header>
         <p>GloTm Gateway</p>
-        <h1>Cross-border Trademark Operating Guides</h1>
+        <h1>Cross-border Trademark Operating Guide</h1>
         <p>${escapeHtml(DEFAULT_SITE_DESCRIPTION)}</p>
       </header>
       ${latestBrief

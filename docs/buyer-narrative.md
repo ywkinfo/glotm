@@ -2,7 +2,7 @@
 
 ## One-line positioning
 
-GloTm is a portfolio of cross-border trademark operating guides for in-house teams.
+GloTm is a cross-border trademark operating guide portfolio for in-house teams.
 
 ## ICP
 

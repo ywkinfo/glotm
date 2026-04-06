@@ -129,7 +129,7 @@ function AppLayout() {
           <FullDocumentLink className="global-brand" to={buildProductPath("/")}>
             GloTm
           </FullDocumentLink>
-          <p className="global-tagline">인하우스 팀을 위한 cross-border trademark operating guides</p>
+          <p className="global-tagline">인하우스 팀을 위한 cross-border trademark operating guide</p>
         </div>
 
         <nav className="global-nav" aria-label="제품 전환">
