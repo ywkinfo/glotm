@@ -187,7 +187,7 @@ export function GatewayLandingPage() {
               <span className="gateway-metric-label">Portfolio</span>
               <strong className="gateway-metric-value">{getTierComposition(orderedProducts)}</strong>
               <p className="gateway-metric-note">
-                {liveProductCount}개 live guide를 하나의 셸에서 운영하되, 투자 강도와 승격 기준은 tier별로 다르게 관리합니다.
+                {liveProductCount}개 가이드를 하나의 체계로 운영해 안내하되, 각 가이드의 단계별 안내 수준과 확대 기준은 다르게 운영합니다.
               </p>
             </div>
             <div className="gateway-metric">
@@ -534,7 +534,7 @@ export function GatewayLandingPage() {
             <h2 className="gateway-section-title">포트폴리오를 flagship, growth, validate, incubate로 운영합니다</h2>
           </div>
           <p className="gateway-section-copy">
-            모든 guide는 하나의 셸에서 열리지만, 투자 강도와 승격 기준은 tier별로 다르게 운영합니다. 신규 시장 추가보다 기존 포트폴리오의 freshness, density, QA 정렬을 먼저 끌어올립니다.
+            모든 가이드는 하나의 체계로 운영해 안내하되, 각 가이드의 단계별 안내 수준과 확대 기준은 다르게 운영합니다. 신규 시장 추가보다 기존 포트폴리오의 freshness, density, QA 정렬을 먼저 끌어올립니다.
           </p>
         </div>
         <div className="product-group-stack">

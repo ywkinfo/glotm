@@ -13,7 +13,7 @@
 | Last updated | 2026-04-04 |
 | Verified on | 2026-04-04 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
-| Current focus | `ChaTm` mature 승격 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` 안정화 -> `Report / Gateway` trust layer 정합화 -> incubate 유지보수 |
+| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` 안정화 -> `Report / Gateway` trust layer 정합화 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, prerender/SEO 2단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### 현재 운영 스냅샷
@@ -68,7 +68,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 전체 제품 범위는 국가별·권역별 가이드를 축적하는 cross-border trademark operating guide 포트폴리오다.
 
-현재 개발된 포트폴리오는 권역형 2개(`LatTm`, `EuTm`)와 단일국가형 5개(`MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `UKTm`)로 구성되며, 현재는 7개 모두 루트 셸에서 직접 읽을 수 있다. 다만 투자 강도와 승격 기준은 tier별로 다르게 관리한다.
+현재 개발된 포트폴리오는 권역형 2개(`LatTm`, `EuTm`)와 단일국가형 5개(`MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `UKTm`)로 구성되며, 현재는 7개 모두 루트 셸에서 직접 읽을 수 있다. 다만 각 가이드의 단계별 안내 수준과 확대 기준은 tier별로 다르게 운영한다.
 
 ### 현재 개발된 포트폴리오
 
@@ -82,17 +82,17 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 100 | lighter track · draft 공개본 |
 
-### 승격 기준
+### 확대 기준
 
 - `Pilot`: 챕터 12+, search density 5+, verification freshness 120일 이하, root smoke QA 통과
 - `Beta`: 챕터 14+, search density 9+, verification freshness 90일 이하, workspace pipeline + root standard verification 통과
 - `Mature`: 챕터 15+, search density 12+, verification freshness 60일 이하, full pipeline + reader/search QA 통과, unresolved high-risk verification gap 0건
 
-현재 lifecycle status는 일단 유지하되, 이후 승격은 월 1회 scorecard 리뷰에서만 반영한다. 초기 정렬 기간에는 grandfathered status가 남을 수 있으며 자동 강등은 하지 않는다.
+현재 lifecycle status는 일단 유지하되, 이후 단계 상향은 월 1회 scorecard 리뷰에서만 반영한다. 초기 정렬 기간에는 grandfathered status가 남을 수 있으며 자동 강등은 하지 않는다.
 
 ### 현재 집중 우선순위
 
-- `ChaTm`: mature 승격 반영 완료, reader/search QA와 Gateway sync 유지
+- `ChaTm`: mature 단계 반영 완료, reader/search QA와 Gateway sync 유지
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
 - `Report`·`Gateway`: guide 본문 보강 뒤 교차 관할권 trust layer와 진입 신뢰 보강

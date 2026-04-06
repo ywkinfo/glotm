@@ -25,7 +25,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 ### Compared with search
 
 - 제도 설명이 아니라 시장 우선순위와 운영 순서 중심으로 읽힌다
-- chapter와 search index가 같은 셸 안에서 연결되어 빠르게 탐색된다
+- chapter와 search index가 같은 체계 안에서 연결되어 빠르게 탐색된다
 
 ### Compared with generic AI
 
@@ -37,19 +37,19 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - 로펌 미팅 전에 내부 판단 프레임을 먼저 정리할 수 있다
 - 시장 우선순위, 출원 경로, 유지·집행 판단을 한 번에 묶어서 질문 비용을 줄인다
 
-## Portfolio structure
+## 포트폴리오 구조
 
 - `LatTm`: flagship. cross-border 우선순위와 운영 구조의 기준 프레임
 - `MexTm`, `ChaTm`: growth. buyer entry 가치와 실무 밀도를 우선 강화하는 국가 가이드
 - `EuTm`: validate. 권역형 구조와 verification 정합성을 안정화하는 가이드
 - `UsaTm`, `JapTm`, `UKTm`: incubate. lighter track으로 유지하며 freshness와 smoke QA를 먼저 관리
 
-## Current recommended guides
+## 지금 보면 좋은 가이드
 
-- `ChaTm`: 중국어 표기, 서브클래스, 출원 실무, 집행 경로를 먼저 정리해야 할 때 현재 최우선 growth guide
-- `MexTm`: 멕시코 진입 직전의 출원 경로와 실무 질문을 빠르게 정리할 때 다음 우선 guide
-- `EuTm`: 유럽 권역 판단을 개별 국가 나열보다 운영 구조 중심으로 정리할 때 validate guide로 사용
-- `LatTm`: 여러 국가를 동시에 검토할 때 기준 프레임을 잡는 flagship guide
+- `ChaTm`: 중국어 표기, 서브클래스, 출원 실무, 집행 경로를 먼저 정리해야 할 때 현재 가장 우선순위가 높은 growth 가이드
+- `MexTm`: 멕시코 진입 직전의 출원 경로와 실무 질문을 빠르게 정리할 때 다음으로 볼 가이드
+- `EuTm`: 유럽 권역 판단을 개별 국가 나열보다 운영 구조 중심으로 정리할 때 validate 가이드로 활용
+- `LatTm`: 여러 국가를 동시에 검토할 때 기준 프레임을 잡는 flagship 가이드
 
 ## Current execution order
 
