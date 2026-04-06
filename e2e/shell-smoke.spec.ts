@@ -8,7 +8,7 @@ test("gateway smoke", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /cross-border trademark operating guides/i
+      name: /cross-border trademark operating guide/i
     })
   ).toBeVisible();
   await expect(page.getByText("Current Build Order")).toBeVisible();

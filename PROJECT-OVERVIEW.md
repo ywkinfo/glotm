@@ -1,4 +1,4 @@
-# GloTm — Cross-border Trademark Operating Guides
+# GloTm — Cross-border Trademark Operating Guide
 
 이 문서는 실행 지시서가 아니라, 현재 상태와 방향을 공유하기 위한 전략 브리프다.
 
@@ -35,7 +35,7 @@
 
 ## 한 줄 요약
 
-브랜드 관리자와 인하우스 IP 팀이 시장 우선순위, 출원 경로, 유지·집행 판단을 빠르게 정리하도록 돕는 cross-border trademark operating guides 포트폴리오.
+브랜드 관리자와 인하우스 IP 팀이 시장 우선순위, 출원 경로, 유지·집행 판단을 빠르게 정리하도록 돕는 cross-border trademark operating guide 포트폴리오.
 
 ---
 
@@ -66,7 +66,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ## 콘텐츠 구성
 
-전체 제품 범위는 국가별·권역별 가이드를 축적하는 cross-border trademark operating guides다.
+전체 제품 범위는 국가별·권역별 가이드를 축적하는 cross-border trademark operating guide 포트폴리오다.
 
 현재 개발된 포트폴리오는 권역형 2개(`LatTm`, `EuTm`)와 단일국가형 5개(`MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `UKTm`)로 구성되며, 현재는 7개 모두 루트 셸에서 직접 읽을 수 있다. 다만 투자 강도와 승격 기준은 tier별로 다르게 관리한다.
 

@@ -207,7 +207,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     await screen.findByRole("heading", {
-      name: "인하우스 팀을 위한 cross-border trademark operating guides"
+      name: "인하우스 팀을 위한 cross-border trademark operating guide"
     });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
@@ -251,7 +251,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     await screen.findByRole("heading", {
-      name: "인하우스 팀을 위한 cross-border trademark operating guides"
+      name: "인하우스 팀을 위한 cross-border trademark operating guide"
     });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
@@ -333,7 +333,7 @@ describe("App portfolio shell", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    await screen.findByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" });
+    await screen.findByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guide" });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
 
@@ -442,7 +442,7 @@ describe("App portfolio shell", () => {
     expect(gatewayHero).not.toBeNull();
     expect(
       within(gatewayHero as HTMLElement).getByText(
-        "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다."
+        "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다."
       )
     ).toBeInTheDocument();
     const summaryParagraphs = [...(gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")].map(
@@ -450,11 +450,11 @@ describe("App portfolio shell", () => {
     );
     expect(summaryParagraphs).toHaveLength(2);
     expect(summaryParagraphs[0]).toBe(
-      "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다."
+      "검색 결과를 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화하고 비교할 수 있습니다."
     );
-    expect(summaryParagraphs[1]).toContain("ChaTm");
-    expect(summaryParagraphs[1]).toContain("MexTm");
-    expect(summaryParagraphs[1]).toContain("front/supporting report를 포함한 Gateway trust layer");
+    expect(summaryParagraphs[1]).toBe(
+      "제공 정보는 참고용이며, 최신성 및 정확성은 각국 법령과 실무 변화에 따라 달라질 수 있으므로 현지 대리인 확인 후 활용하시기 바랍니다."
+    );
   });
 
   it("renders wrap-safe separators in the coverage and current status metrics", () => {
@@ -480,7 +480,8 @@ describe("App portfolio shell", () => {
 
     expect(gatewayHero).not.toBeNull();
     expect(copyStack).not.toBeNull();
-    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" })).toBeInTheDocument();
+    expect(within(copyStack as HTMLElement).getByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guide" })).toBeInTheDocument();
+    expect(within(copyStack as HTMLElement).getByText("여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다.")).toBeInTheDocument();
     expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
     expect(within(copyStack as HTMLElement).queryByRole("link", { name: "ChaTm 보기" })).toBeNull();
     expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toBeInTheDocument();
@@ -861,7 +862,7 @@ describe("App portfolio shell", () => {
 
     renderAppRouteTree("/missing");
 
-    await screen.findByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guides" });
+    await screen.findByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guide" });
     expect(screen.getByTestId("app-location")).toHaveTextContent("/");
   });
 

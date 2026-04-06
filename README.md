@@ -2,7 +2,7 @@
 
 [![Verify Release](https://github.com/ywkinfo/glotm/actions/workflows/verify-release.yml/badge.svg)](https://github.com/ywkinfo/glotm/actions/workflows/verify-release.yml)
 
-인하우스 팀을 위한 cross-border trademark operating guides 루트 셸입니다. 현재 런타임은 루트 `GloTm` 하나이며, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`의 generated JSON을 읽어 Gateway와 각 가이드를 렌더링합니다.
+인하우스 팀을 위한 cross-border trademark operating guide 루트 셸입니다. 현재 런타임은 루트 `GloTm` 하나이며, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`의 generated JSON을 읽어 Gateway와 각 가이드를 렌더링합니다.
 
 현재 phase, 우선순위, 활성 작업 범위는 `PROJECT-OVERVIEW.md`를 기준으로 확인합니다.
 

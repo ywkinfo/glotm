@@ -52,7 +52,11 @@ describe("SEO build helpers", () => {
       routePath: "/",
       canonicalUrl: "https://ywkinfo.github.io/glotm/",
       ogImageUrl: "https://ywkinfo.github.io/glotm/og/glotm-share-card.svg",
-      title: "GloTm | Cross-border Trademark Operating Guides"
+      title: "GloTm | Cross-border Trademark Operating Guide"
+    });
+    expect(pages[0]).toMatchObject({
+      description:
+        "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다."
     });
     expect(pages).toEqual(
       expect.arrayContaining([
@@ -155,10 +159,14 @@ describe("SEO build helpers", () => {
     );
 
     expect(html).toContain(
-      '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
+      '<meta name="description" content="여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다." />'
     );
     expect(html).toContain(
-      '<meta property="og:image:alt" content="GloTm Gateway와 cross-border trademark operating guides를 소개하는 대표 공유 이미지" />'
+      '<meta property="og:image:alt" content="GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지" />'
+    );
+    expect(html).toContain('<h1>Cross-border Trademark Operating Guide</h1>');
+    expect(html).toContain(
+      '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
     );
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
     expect(html).toContain(

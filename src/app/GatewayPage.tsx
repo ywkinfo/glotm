@@ -18,7 +18,6 @@ import {
   ProductGroup,
   ReportCard,
   buildGuideTrackingParams,
-  buildPriorityLaneLabelSequence,
   buildPriorityLaneProgressNote,
   buildPriorityLaneStatusSummary,
   buildTrustLayerGuideSummary,
@@ -55,7 +54,6 @@ export function GatewayLandingPage() {
   const leadReport = getPrimaryGatewayReport();
   const featuredReports = getGatewayFeaturedReports(2);
   const supportingReport = featuredReports.find((report) => report.slug !== leadReport?.slug) ?? null;
-  const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
   const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
   const trustLayerGuideSummary =
@@ -64,11 +62,11 @@ export function GatewayLandingPage() {
       : null;
   const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
-  const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guides";
-  const heroLead = "여러 국가·권역에서 시장 우선순위, 출원 경로, 유지·집행 판단을 하나의 셸과 검색 리더 경험으로 정리합니다.";
+  const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guide";
+  const heroLead = "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다.";
   const heroSummaryParagraphs = [
-    "검색 결과를 짜깁기하거나 일반 AI 답변을 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화할 수 있습니다.",
-    `현재 active build order는 ${priorityLaneLabelSequence} 정렬 이후 front/supporting report를 포함한 Gateway trust layer이며, growth·validate 레인의 scorecard truth와 buyer-facing entry copy를 route memo와 evidence handoff 문법으로 다시 맞추는 단계입니다.`
+    "검색 결과를 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화하고 비교할 수 있습니다.",
+    "제공 정보는 참고용이며, 최신성 및 정확성은 각국 법령과 실무 변화에 따라 달라질 수 있으므로 현지 대리인 확인 후 활용하시기 바랍니다."
   ];
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   const priorityRoadmap = [
