@@ -5,7 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
-import { getGatewayFeaturedReports, getPrimaryGatewayReport, getReportBySlug, reports } from "../reports/registry";
+import {
+  getGatewayFeaturedReports,
+  getPrimaryGatewayReport,
+  getReportBySlug,
+  reports
+} from "../reports/registry";
 import type { DocumentData } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
@@ -548,21 +553,24 @@ describe("App portfolio shell", () => {
       within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: gatewayFeaturedReports[1]?.title ?? "" }).length
     ).toBeGreaterThan(0);
     expect(
-      within(frontReportsSection as HTMLElement).getByRole("link", { name: "Front Report 바로 보기" })
+      within(frontReportsSection as HTMLElement).queryByRole("link", { name: "Front Report 바로 보기" })
+    ).toBeNull();
+    expect(
+      within(frontReportsSection as HTMLElement).getByRole("link", { name: "Front Report 보기" })
     ).toHaveAttribute("href", `/reports/${primaryGatewayReport?.slug}`);
     expect(
       within(frontReportsSection as HTMLElement).getAllByRole("link", { name: "Supporting Report 보기" }).at(0)
     ).toHaveAttribute("href", `/reports/${gatewayFeaturedReports[1]?.slug}`);
     expect(
-      within(frontReportsSection as HTMLElement).getByText(
+      within(frontReportsSection as HTMLElement).queryByText(
         /국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 질문부터 보고 싶다면 여기서 시작하면 됩니다\./
       )
-    ).toBeInTheDocument();
+    ).toBeNull();
     expect(
-      within(frontReportsSection as HTMLElement).getByText(
+      within(frontReportsSection as HTMLElement).queryByText(
         /현재 두 개의 리포트가 준비되어 있습니다\. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다\. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다\./
       )
-    ).toBeInTheDocument();
+    ).toBeNull();
     expect(
       (frontReportsSection as HTMLElement).compareDocumentPosition(briefBanner) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
@@ -584,10 +592,10 @@ describe("App portfolio shell", () => {
 
     expect(reportSection).not.toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByText(
+      within(reportSection as HTMLElement).queryByText(
         /guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 묶어 보는 영역입니다\./
       )
-    ).toBeInTheDocument();
+    ).toBeNull();
     expect(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" })).toHaveAttribute(
       "href",
       "/reports"
@@ -600,15 +608,10 @@ describe("App portfolio shell", () => {
       within(reportSection as HTMLElement).getByRole("heading", { name: primaryGatewayReport?.title ?? "" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByText(
+      within(reportSection as HTMLElement).queryByText(
         /ChaTm · MexTm · EuTm에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\. LatTm은 기준 프레임으로 유지합니다\. JapTm은 참고용으로 이어 읽히게 둡니다\./
       )
-    ).toBeInTheDocument();
-    expect(
-      within(reportSection as HTMLElement).getByText(
-        /ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다\./
-      )
-    ).toBeInTheDocument();
+    ).toBeNull();
     expect(
       within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: local-fit pressure를 먼저 잠근다" })
     ).toBeInTheDocument();
@@ -618,6 +621,19 @@ describe("App portfolio shell", () => {
       "href",
       "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
+    expect(
+      within(reportSection as HTMLElement).queryByText(primaryGatewayReport?.whyNow ?? "")
+    ).toBeNull();
+    expect(
+      within(reportSection as HTMLElement).queryByText(
+        /출원 경로, owner split, 혼합 경로 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다\./
+      )
+    ).toBeNull();
+    expect(
+      within(reportSection as HTMLElement).queryByText(
+        /그래서 여기서 나온 실행 질문을 Gateway와 Report에서 같은 기준으로 읽히게 하는 것이 지금의 다음 단계입니다\./
+      )
+    ).toBeNull();
     expect(
       within(reportSection as HTMLElement).getAllByText(
         /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/

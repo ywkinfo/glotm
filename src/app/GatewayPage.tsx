@@ -20,7 +20,6 @@ import {
   buildGuideTrackingParams,
   buildPriorityLaneProgressNote,
   buildPriorityLaneStatusSummary,
-  buildTrustLayerGuideSummary,
   getTierComposition,
   joinProductLabels,
   operatorProfileUrl,
@@ -53,13 +52,8 @@ export function GatewayLandingPage() {
   const latestBrief = getLatestBriefIssue();
   const leadReport = getPrimaryGatewayReport();
   const featuredReports = getGatewayFeaturedReports(2);
-  const supportingReport = featuredReports.find((report) => report.slug !== leadReport?.slug) ?? null;
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
   const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
-  const trustLayerGuideSummary =
-    leadReport
-      ? buildTrustLayerGuideSummary(leadReport, orderedProducts)
-      : null;
   const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guide";
@@ -207,60 +201,6 @@ export function GatewayLandingPage() {
             <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
             <h2 className="gateway-section-title">{reportExperienceMeta.gatewaySectionTitle}</h2>
           </div>
-        </div>
-        <div className="gateway-section-copy-stack gateway-section-copy-stack--full">
-          <p className="gateway-section-copy gateway-section-copy--full">
-            {reportExperienceMeta.gatewaySectionSummary}
-          </p>
-          {leadReport ? (
-            <p className="gateway-section-copy gateway-section-copy--full">
-              현재 두 개의 리포트가 준비되어 있습니다. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다.
-            </p>
-          ) : null}
-        </div>
-        <div className="gateway-card-grid">
-          {leadReport ? (
-            <article className="gateway-card">
-              <p className="gateway-kicker">{leadReport.gatewayLabel}</p>
-              <h3 className="gateway-card-title">{leadReport.title}</h3>
-              <p className="gateway-card-copy">{leadReport.summary}</p>
-              <p className="gateway-card-copy">대상: {leadReport.audience}</p>
-              <p className="gateway-card-copy">{leadReport.whyNow}</p>
-              <FullDocumentLink
-                className="gateway-cta-link"
-                to={buildReportPath(leadReport.slug)}
-                onClick={() => {
-                  trackEngagement("report_open", {
-                    report_slug: leadReport.slug,
-                    surface: "gateway_front_reports"
-                  });
-                }}
-              >
-                {buildReportOpenLabel(leadReport, "immediate")}
-              </FullDocumentLink>
-            </article>
-          ) : null}
-          {supportingReport ? (
-            <article className="gateway-card">
-              <p className="gateway-kicker">{supportingReport.gatewayLabel}</p>
-              <h3 className="gateway-card-title">{supportingReport.title}</h3>
-              <p className="gateway-card-copy">{supportingReport.summary}</p>
-              <p className="gateway-card-copy">대상: {supportingReport.audience}</p>
-              <p className="gateway-card-copy">{supportingReport.whyNow}</p>
-              <FullDocumentLink
-                className="gateway-cta-link"
-                to={buildReportPath(supportingReport.slug)}
-                onClick={() => {
-                  trackEngagement("report_open", {
-                    report_slug: supportingReport.slug,
-                    surface: "gateway_front_reports"
-                  });
-                }}
-              >
-                {buildReportOpenLabel(supportingReport)}
-              </FullDocumentLink>
-            </article>
-          ) : null}
         </div>
         {featuredReports.length > 0 ? (
           <div className="brief-card-grid">
@@ -446,23 +386,7 @@ export function GatewayLandingPage() {
             <p className="gateway-kicker">Special Report</p>
             <h2 className="gateway-section-title">여러 나라 공통 판단은 Report에서 따로 다룹니다</h2>
           </div>
-          <p className="gateway-section-copy">
-            guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 묶어 보는 영역입니다.
-          </p>
         </div>
-        <p className="gateway-section-copy">
-          출원 경로, owner split, 혼합 경로 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
-        </p>
-        {trustLayerGuideSummary ? (
-          <p className="gateway-section-copy gateway-section-copy--spaced">
-            {trustLayerGuideSummary} 그래서 여기서 나온 실행 질문을 Gateway와 Report에서 같은 기준으로 읽히게 하는 것이 지금의 다음 단계입니다.
-          </p>
-        ) : null}
-        {leadReport?.whyNow ? (
-          <p className="gateway-section-copy">
-            {leadReport.whyNow}
-          </p>
-        ) : null}
         {leadReport && leadReportFocusPoints.length > 0 ? (
           <div className="gateway-card-grid">
             {leadReportFocusPoints.map((focusPoint) => (
