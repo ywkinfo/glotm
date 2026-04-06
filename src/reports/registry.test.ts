@@ -19,7 +19,7 @@ describe("report registry", () => {
     const report = getReportBySlug("global-use-evidence-system");
 
     expect(report?.gatewayPlacement).toBe("supporting");
-    expect(report?.trustLayerSummaryObject).toBe("evidence owner와 evidence vault 구조를");
+    expect(report?.trustLayerSummaryObject).toBe("사용 증거 운영 구조를");
     expect(report?.focusPoints.map((focusPoint) => focusPoint.id)).toContain("europe-evidence-triage");
     expect(report?.focusPoints.find((focusPoint) => focusPoint.id === "europe-evidence-triage")).toMatchObject({
       title: "EuTm: validate evidence handoff를 고정한다",

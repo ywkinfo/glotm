@@ -96,9 +96,9 @@ export function GatewayLandingPage() {
     },
     {
       id: "report-gateway",
-      title: "Report / Gateway trust layer 정합화",
+      title: "리포트와 Gateway 연결 정리 완료",
       copy:
-        "front report는 route decision을, supporting report는 evidence system을 맡기고, Gateway에서는 growth·validate 결과를 현재 scorecard truth와 같은 문법으로 다시 읽히게 만드는 active lane입니다.",
+        "먼저 볼 리포트는 출원 경로 판단을, 이어 볼 리포트는 사용 증거 운영을 맡기고, Gateway에서는 growth·validate 결과를 현재 상태와 같은 흐름으로 다시 읽히게 만드는 단계입니다.",
       note: "global filing route framework + global use evidence system + gateway state sync",
       href: buildReportArchivePath()
     },
@@ -207,18 +207,17 @@ export function GatewayLandingPage() {
             <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
             <h2 className="gateway-section-title">{reportExperienceMeta.gatewaySectionTitle}</h2>
           </div>
-          <p className="gateway-section-copy">{reportExperienceMeta.gatewaySectionSummary}</p>
         </div>
-        {trustLayerGuideSummary ? (
-          <p className="gateway-section-copy">
-            현재 front report인 {leadReport?.title}은 {trustLayerGuideSummary}
+        <div className="gateway-section-copy-stack gateway-section-copy-stack--full">
+          <p className="gateway-section-copy gateway-section-copy--full">
+            {reportExperienceMeta.gatewaySectionSummary}
           </p>
-        ) : null}
-        {leadReport?.whyNow ? (
-          <p className="gateway-section-copy gateway-section-copy--spaced">
-            {leadReport.whyNow}
-          </p>
-        ) : null}
+          {leadReport ? (
+            <p className="gateway-section-copy gateway-section-copy--full">
+              현재 두 개의 리포트가 준비되어 있습니다. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다.
+            </p>
+          ) : null}
+        </div>
         <div className="gateway-card-grid">
           {leadReport ? (
             <article className="gateway-card">
@@ -323,7 +322,7 @@ export function GatewayLandingPage() {
         <p className="gateway-kicker">Recommended Start</p>
         <h2 className="gateway-cta-title">ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다</h2>
         <p className="gateway-cta-copy">
-          {"ChaTm은 지금 growth lane의 mature baseline으로 승격 반영된 최우선 guide이고, MexTm은 buyer-entry 기준의 mature country baseline입니다. 큰 프레임이 필요할 때는 LatTm을 flagship baseline reference로 함께 보되, 현재 landing order와 active lane 기준 추천 시작은 ChaTm -> MexTm 흐름입니다."}
+          {"ChaTm은 지금 가장 먼저 볼 guide이고, MexTm은 멕시코 운영 기준 guide입니다. 큰 그림이 필요할 때는 LatTm을 기준 프레임으로 함께 보되, 지금 추천 시작은 ChaTm -> MexTm 흐름입니다."}
         </p>
         <div className="gateway-cta-actions">
           <a className="gateway-cta-link" href="#portfolio-focus">
@@ -445,18 +444,18 @@ export function GatewayLandingPage() {
         <div className="gateway-section-header">
           <div>
             <p className="gateway-kicker">Special Report</p>
-            <h2 className="gateway-section-title">교차 관할권 운영 판단은 Report 레인에서 따로 다룹니다</h2>
+            <h2 className="gateway-section-title">여러 나라 공통 판단은 Report에서 따로 다룹니다</h2>
           </div>
           <p className="gateway-section-copy">
-            guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 구조화하는 레인입니다.
+            guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 묶어 보는 영역입니다.
           </p>
         </div>
         <p className="gateway-section-copy">
-          출원 경로, owner split, mixed route 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
+          출원 경로, owner split, 혼합 경로 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다.
         </p>
         {trustLayerGuideSummary ? (
           <p className="gateway-section-copy gateway-section-copy--spaced">
-            {trustLayerGuideSummary} 그래서 active lane에서 나온 실행 질문을 Gateway와 Report에서 같은 문법으로 읽히게 하는 것이 지금의 다음 active 레인입니다.
+            {trustLayerGuideSummary} 그래서 여기서 나온 실행 질문을 Gateway와 Report에서 같은 기준으로 읽히게 하는 것이 지금의 다음 단계입니다.
           </p>
         ) : null}
         {leadReport?.whyNow ? (
@@ -468,7 +467,7 @@ export function GatewayLandingPage() {
           <div className="gateway-card-grid">
             {leadReportFocusPoints.map((focusPoint) => (
               <article key={focusPoint.id} className="gateway-card">
-                <p className="gateway-kicker">Trust Layer Handoff</p>
+                <p className="gateway-kicker">이어 볼 가이드</p>
                 <h3 className="gateway-card-title">{focusPoint.title}</h3>
                 <p className="gateway-card-copy">{focusPoint.summary}</p>
                 <FullDocumentLink

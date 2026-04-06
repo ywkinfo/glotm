@@ -370,17 +370,17 @@ describe("App portfolio shell", () => {
     {
       path: "/china",
       title: "중국 상표 실무 운영 가이드",
-      summary: "중문 표기, goods/services fit, owner split이 direct filing 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
+      summary: "중문 표기, 상품·서비스 적합성, 권리자 분리가 직접출원 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
     },
     {
       path: "/mexico",
       title: "멕시코 상표 실무 운영 가이드북",
-      summary: "IMPI 실행 흐름과 mixed route board를 기준으로, local execution control이 bundle 효율보다 먼저인지 정리합니다."
+      summary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다."
     },
     {
       path: "/europe",
       title: "EuTm 유럽 상표 운영 가이드북",
-      summary: "권역형 guide답게 route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지할지 먼저 확인합니다."
+      summary: "권역형 guide답게 route pack을 누가 잠그고 출원에서 증거까지 이어지는 흐름을 어떻게 유지할지 먼저 확인합니다."
     }
   ])(
     "shows report handoff cards on priority guide home $path",
@@ -500,7 +500,7 @@ describe("App portfolio shell", () => {
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
     expect(
-      screen.getByText(/ChaTm은 지금 growth lane의 mature baseline으로 승격 반영된 최우선 guide이고, MexTm은 buyer-entry 기준의 mature country baseline입니다\./)
+      screen.getByText(/ChaTm은 지금 가장 먼저 볼 guide이고, MexTm은 멕시코 운영 기준 guide입니다\./)
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "포트폴리오 우선 가이드 보기" })).toHaveAttribute(
       "href",
@@ -536,7 +536,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const frontReportsSection = screen
-      .getByRole("heading", { name: "지금 읽어야 할 Report를 Gateway 첫 화면에서 바로 엽니다" })
+      .getByRole("heading", { name: "Gateway 첫 화면에서 지금 필요한 리포트를 먼저 보여줍니다" })
       .closest("section");
     const briefBanner = screen.getByRole("region", { name: "최신 브리프 배너" });
 
@@ -554,10 +554,15 @@ describe("App portfolio shell", () => {
       within(frontReportsSection as HTMLElement).getAllByRole("link", { name: "Supporting Report 보기" }).at(0)
     ).toHaveAttribute("href", `/reports/${gatewayFeaturedReports[1]?.slug}`);
     expect(
-      within(frontReportsSection as HTMLElement).getAllByText(
-        /대상: 다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
-      ).length
-    ).toBeGreaterThan(0);
+      within(frontReportsSection as HTMLElement).getByText(
+        /국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 질문부터 보고 싶다면 여기서 시작하면 됩니다\./
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(frontReportsSection as HTMLElement).getByText(
+        /현재 두 개의 리포트가 준비되어 있습니다\. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다\. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다\./
+      )
+    ).toBeInTheDocument();
     expect(
       (frontReportsSection as HTMLElement).compareDocumentPosition(briefBanner) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
@@ -571,7 +576,7 @@ describe("App portfolio shell", () => {
       .getByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다" })
       .closest("section");
     const reportSection = screen
-      .getByRole("heading", { name: "교차 관할권 운영 판단은 Report 레인에서 따로 다룹니다" })
+      .getByRole("heading", { name: "여러 나라 공통 판단은 Report에서 따로 다룹니다" })
       .closest("section");
     const portfolioSection = screen
       .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
@@ -580,7 +585,7 @@ describe("App portfolio shell", () => {
     expect(reportSection).not.toBeNull();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 구조화하는 레인입니다\./
+        /guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 묶어 보는 영역입니다\./
       )
     ).toBeInTheDocument();
     expect(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" })).toHaveAttribute(
@@ -596,12 +601,12 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\./
+        /ChaTm · MexTm · EuTm에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\. LatTm은 기준 프레임으로 유지합니다\. JapTm은 참고용으로 이어 읽히게 둡니다\./
       )
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).getByText(
-        /ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다\./
+        /ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다\./
       )
     ).toBeInTheDocument();
     expect(
@@ -620,7 +625,7 @@ describe("App portfolio shell", () => {
     ).toBeGreaterThan(0);
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 Front trust layer / Gateway trust layer입니다."
+        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 Front Report입니다."
       )
     ).toBeInTheDocument();
     expect(
@@ -770,7 +775,7 @@ describe("App portfolio shell", () => {
 
     renderAppRouteTree("/");
     const reportSection = screen
-      .getByRole("heading", { name: "교차 관할권 운영 판단은 Report 레인에서 따로 다룹니다" })
+      .getByRole("heading", { name: "여러 나라 공통 판단은 Report에서 따로 다룹니다" })
       .closest("section");
 
     clickTrackedLink(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" }));
@@ -919,16 +924,20 @@ describe("App portfolio shell", () => {
 
     expect(
       screen.getByText(
-        /이번 브리프의 목적은 어느 경로가 원칙적으로 더 좋다고 말하는 데 있지 않습니다\./
+        /위조 대응이 단순한 법무 이슈가 아니라, 한국 기업이 해외에서 브랜드를 지키기 위해 미리 갖춰야 할 사업 운영 역량이라는 점을 분명히 보여줬습니다\./
       )
     ).toBeInTheDocument();
-    expect(screen.getByText(/route memo부터 작성하게 하는 데 있습니다\./)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /지난주 이슈의 핵심은 정부 정책 자체보다, 한국 기업이 위조 대응을 수출 이후의 사후 조치가 아니라 브랜드 운영 체계로 끌어올려야 한다는 점입니다\./
+      )
+    ).toBeInTheDocument();
 
-    const guideLink = screen.getByRole("link", { name: "ChaTm route decision matrix" });
+    const guideLink = screen.getByRole("link", { name: "ChaTm 운영 가이드" });
 
     expect(guideLink).toHaveAttribute(
       "href",
-      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+      "/china"
     );
     clickTrackedLink(guideLink);
 
@@ -937,8 +946,8 @@ describe("App portfolio shell", () => {
       "brief_guide_click",
       expect.objectContaining({
         issue_slug: briefIssues[0]?.slug,
-        item_id: "global-route-decision-questions",
-        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+        item_id: "k-brand-counterfeit-strategy",
+        target_path: "/china"
       })
     );
 
@@ -969,17 +978,17 @@ describe("App portfolio shell", () => {
     );
     expect(
       screen.getByText(
-        /ChaTm · MexTm · EuTm에서 이미 잠근 route decision 질문을 교차 관할권 trust layer로 다시 묶습니다\. ChaTm -> MexTm -> EuTm 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다\. LatTm은 flagship baseline reference로 유지합니다\. JapTm은 supporting reference로만 이어 읽히게 둡니다\. 현재 우선 레인 상태는 ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0입니다\./
+        /ChaTm · MexTm · EuTm에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\. ChaTm -> MexTm -> EuTm 다음 레인에서는 안내와 현재 상태를 함께 확인합니다\. LatTm은 기준 프레임으로 유지합니다\. JapTm은 참고용으로 이어 읽히게 둡니다\. 현재 우선 레인 상태는 ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0입니다\./
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다\./
+        /ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다\./
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /대상: 다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
+        /대상: 여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
       )
     ).toBeInTheDocument();
   });
@@ -994,16 +1003,16 @@ describe("App portfolio shell", () => {
     expect(screen.getByRole("heading", { name: "왜 지금 이 리포트를 먼저 읽는가" })).toBeInTheDocument();
     expect(
       screen.getByText(
-        /대상: 다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
+        /대상: 여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다\./
+        /ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다\./
       )
     ).toBeInTheDocument();
     expect(screen.getByText("어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Priority Guide Handoff" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "가이드로 이어 보기" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "MexTm: bundle보다 execution control을 본다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm lock board 보기" })).toHaveAttribute(
       "href",
@@ -1028,10 +1037,10 @@ describe("App portfolio shell", () => {
     await screen.findByRole("heading", { name: supportingGatewayReport?.title ?? "" });
 
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 잠근 evidence owner와 evidence vault 구조를 교차 관할권 trust layer로 다시 묶습니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 정리한 사용 증거 운영 구조를 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\./)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Supporting trust layer \/ Gateway trust layer입니다\./)
+      screen.getByText(/다음은 Supporting Report입니다\./)
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "EuTm: validate evidence handoff를 고정한다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm evidence triage 보기" })).toHaveAttribute(

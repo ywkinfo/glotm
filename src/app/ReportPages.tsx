@@ -240,16 +240,16 @@ export function ReportPage() {
               <div className="brief-item-header">
                 <span className="brief-item-index">02</span>
                 <div>
-                  <h2 className="brief-item-title">Priority Guide Handoff</h2>
+                  <h2 className="brief-item-title">가이드로 이어 보기</h2>
                   <p className="brief-item-copy">
-                    리포트에서 큰 질문을 잠근 뒤, 아래 deep link로 들어가 각 guide의 실행 기준을 바로 이어서 볼 수 있습니다.
+                    리포트에서 큰 질문을 먼저 정리한 뒤, 아래 링크로 들어가 각 guide의 실행 기준을 바로 이어서 볼 수 있습니다.
                   </p>
                 </div>
               </div>
               <div className="gateway-card-grid">
                 {report.focusPoints.map((focusPoint) => (
                   <article key={focusPoint.id} className="gateway-card">
-                    <p className="gateway-kicker">Guide Handoff</p>
+                    <p className="gateway-kicker">이어 볼 가이드</p>
                     <h3 className="gateway-card-title">{focusPoint.title}</h3>
                     <p className="gateway-card-copy">{focusPoint.summary}</p>
                     <FullDocumentLink

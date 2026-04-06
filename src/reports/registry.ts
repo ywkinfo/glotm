@@ -115,16 +115,16 @@ function sortReportsForGateway(left: ReportMeta, right: ReportMeta) {
 }
 
 export const reportExperienceMeta: ReportExperienceMeta = {
-  gatewaySectionKicker: "Front Reports",
-  gatewaySectionTitle: "지금 읽어야 할 Report를 Gateway 첫 화면에서 바로 엽니다",
+  gatewaySectionKicker: "먼저 볼 리포트",
+  gatewaySectionTitle: "Gateway 첫 화면에서 지금 필요한 리포트를 먼저 보여줍니다",
   gatewaySectionSummary:
-    "국가별 guide에 들어가기 전에 교차 관할권 trust layer를 먼저 보고 싶다면 여기서 바로 시작하면 됩니다. Gateway는 메타데이터 기준으로 front placement report와 supporting report를 자동 정렬해 먼저 보여 줍니다.",
+    "국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 질문부터 보고 싶다면 여기서 시작하면 됩니다.",
   archiveHeroKicker: "Special Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트",
   archiveHeroLead:
     "특정 국가 하나의 절차 요약보다, 여러 관할에서 반복해서 부딪히는 운영 질문을 한 문서로 정리하는 심화 리포트 아카이브입니다.",
   archiveHeroSummary:
-    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, owner split, mixed route 같은 교차 관할권 문제를 별도 레인으로 묶어 보여줍니다.",
+    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 권리자 분리, 혼합 경로처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다.",
   archiveSectionKicker: "Archive",
   archiveSectionTitle: "최신순으로 스페셜 리포트를 모아 둡니다",
   archiveSectionSummary:
@@ -143,17 +143,17 @@ const reportSource: ReportMeta[] = [
     slug: "global-filing-route-framework",
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
     summary:
-      "중국·멕시코·유럽·중남미·일본 가이드에 흩어진 route decision 질문을 하나의 trust layer로 묶어, local-fit과 central-management를 어떻게 나눠 볼지 정리한 스페셜 리포트입니다.",
-    trustLayerSummaryObject: "route decision 질문을",
+      "여러 나라 가이드에 흩어진 출원 경로 판단 질문을 한곳에 모아, 어떤 시장은 현지 맞춤이 더 필요하고 어떤 시장은 중앙 관리가 더 나은지 정리한 스페셜 리포트입니다.",
+    trustLayerSummaryObject: "출원 경로 판단 질문을",
     publishedAt: "2026-04-04T12:00:00.000Z",
     jurisdictions: ["Global", "China", "Mexico", "Europe", "Japan"],
     tags: ["출원 경로", "Madrid", "Route Memo"],
-    audience: "다국가 launch sequencing과 filing route를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀",
+    audience: "여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀",
     gatewayLabel: "Front Report",
     gatewayPlacement: "front",
     gatewayPriority: 0,
     whyNow:
-      "ChaTm은 growth lane의 mature baseline으로 잠겼고, MexTm은 Sprint 2로 filing·maintenance·enforcement handoff까지 운영 문법을 더 선명하게 만들었습니다. EuTm도 validate stabilization과 docs sync를 마쳤기 때문에, 이제 route decision 질문을 Gateway 첫 화면의 buyer-facing trust layer로 다시 묶을 타이밍입니다.",
+      "ChaTm, MexTm, EuTm에서 이미 정리한 출원 경로 판단을 Gateway 첫 화면에서 다시 묶어 보여줄 때입니다. LatTm은 기준 프레임으로 유지하고, JapTm은 이어서 참고할 수 있는 보조 자료로 둡니다.",
     trustLayerChecklist: [
       "어느 시장에서 local-fit pressure가 더 강한지 먼저 적는다.",
       "본국기초출원과 global bundle timing이 안정적인지 분리해 본다.",
@@ -164,7 +164,7 @@ const reportSource: ReportMeta[] = [
         id: "china-local-fit",
         title: "ChaTm: local-fit pressure를 먼저 잠근다",
         summary:
-          "중문 표기, goods/services fit, owner split이 direct filing 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다.",
+          "중문 표기, 상품·서비스 적합성, 권리자 분리가 직접출원 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다.",
         href: buildGuideSectionPath(
           "china",
           "제4장-출원-경로-선택-직접출원-vs-마드리드",
@@ -177,7 +177,7 @@ const reportSource: ReportMeta[] = [
         id: "mexico-control",
         title: "MexTm: bundle보다 execution control을 본다",
         summary:
-          "IMPI 실행 흐름과 mixed route board를 기준으로, local execution control이 bundle 효율보다 먼저인지 정리합니다.",
+          "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
         href: buildGuideSectionPath(
           "mexico",
           "제4장-출원-경로-선택-직접출원-vs-마드리드국제출원-비교",
@@ -190,7 +190,7 @@ const reportSource: ReportMeta[] = [
         id: "europe-governance",
         title: "EuTm: governance와 filing handoff를 묶는다",
         summary:
-          "권역형 guide답게 route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지할지 먼저 확인합니다.",
+          "권역형 guide답게 route pack을 누가 잠그고 출원에서 증거까지 이어지는 흐름을 어떻게 유지할지 먼저 확인합니다.",
         href: buildGuideSectionPath(
           "europe",
           "제5장-출원-경로와-서류-설계",
@@ -248,17 +248,17 @@ const reportSource: ReportMeta[] = [
     slug: "global-use-evidence-system",
     title: "글로벌 사용 증거 수집 운영 시스템 구축",
     summary:
-      "출원 이후에 증거를 뒤늦게 모으는 방식에서 벗어나, 여러 국가에서 재사용 가능한 사용 증거 운영 체계를 어떻게 미리 설계할지 정리한 스페셜 리포트입니다.",
-    trustLayerSummaryObject: "evidence owner와 evidence vault 구조를",
+      "출원 뒤에 증거를 급하게 모으기보다, 여러 나라에서 재사용할 수 있는 사용 증거 운영 체계를 미리 설계하는 방법을 정리한 스페셜 리포트입니다.",
+    trustLayerSummaryObject: "사용 증거 운영 구조를",
     publishedAt: "2026-04-02T09:00:00.000Z",
     jurisdictions: ["Global", "USA", "China", "Mexico", "Japan"],
     tags: ["사용 증거", "운영 시스템", "증거 보관"],
-    audience: "여러 국가에서 evidence owner와 evidence vault 구조를 먼저 잠가야 하는 운영팀, 법무팀, 브랜드팀",
+    audience: "여러 나라의 사용 증거 운영 구조를 먼저 정리해야 하는 운영팀, 법무팀, 브랜드팀",
     gatewayLabel: "Supporting Report",
     gatewayPlacement: "supporting",
     gatewayPriority: 1,
     whyNow:
-      "front report가 route decision 질문을 먼저 잠갔다면, supporting report는 그 다음 handoff인 evidence owner와 evidence vault 구조를 관할 공통 문법으로 다시 묶어 줘야 합니다. 국가별 가이드만 읽고 끝내면 filing 이후 운영 체계가 다시 흩어지기 쉬우므로, 지금 supporting lane에서 같은 증거 시스템 문법을 고정할 필요가 있습니다.",
+      "먼저 볼 리포트가 출원 경로 판단을 먼저 잠갔다면, 이어 볼 리포트는 그다음에 필요한 증거 담당자와 보관 구조를 함께 정리할 차례입니다. 국가별 guide만 따라가면 filing 이후 운영이 다시 흩어지기 쉬우므로, 지금 이어 볼 리포트에서 같은 증거 문법을 묶어 두는 편이 좋습니다.",
     trustLayerChecklist: [
       "누가 어떤 증거를 어떤 주기로 수집하는지 owner map을 적는다.",
       "판매 화면, 패키지, 플랫폼 로그를 같은 폴더 문법으로 정리한다.",
@@ -269,7 +269,7 @@ const reportSource: ReportMeta[] = [
         id: "latam-baseline",
         title: "LatTm: 기준 evidence 문법부터 맞춘다",
         summary:
-          "여러 국가를 한 번에 운영할 때 어떤 증거 항목을 공통 기준으로 묶어야 하는지 flagship baseline으로 먼저 봅니다.",
+          "여러 나라를 한 번에 운영할 때 어떤 증거 항목을 공통 기준으로 묶어야 하는지 기준 프레임으로 먼저 봅니다.",
         href: getProductPathBySlug("latam"),
         guideSlug: "latam",
         ctaLabel: "LatTm 기준 프레임 보기"
@@ -278,7 +278,7 @@ const reportSource: ReportMeta[] = [
         id: "mexico-owner-map",
         title: "MexTm: 사용·갱신 owner를 함께 본다",
         summary:
-          "멕시코는 실행 owner와 갱신 owner를 분리해 적지 않으면 filing 이후 handoff가 흐려지기 쉬운 시장입니다.",
+          "멕시코는 실행 담당자와 갱신 담당자를 분리해 적지 않으면 filing 이후 handoff가 흐려지기 쉽습니다.",
         href: getProductPathBySlug("mexico"),
         guideSlug: "mexico",
         ctaLabel: "MexTm 운영 가이드 보기"
@@ -287,7 +287,7 @@ const reportSource: ReportMeta[] = [
         id: "europe-evidence-triage",
         title: "EuTm: validate evidence handoff를 고정한다",
         summary:
-          "EuTm은 validate stabilization과 docs sync를 이미 마쳤으므로, distributor·marketplace·seller 증거를 어떤 triage 문법으로 넘길지 권역 기준선으로 바로 확인합니다.",
+          "EuTm은 validate stabilization과 docs sync를 이미 마쳤으므로, 유통사·마켓플레이스·판매자 증거를 어떤 순서로 넘길지 권역 기준선으로 바로 확인합니다.",
         href: buildGuideSectionPath(
           "europe",
           "제8장-등록-후-사용-갱신-증거-관리",
@@ -300,7 +300,7 @@ const reportSource: ReportMeta[] = [
         id: "china-evidence-handoff",
         title: "ChaTm: route와 evidence를 같이 본다",
         summary:
-          "중국은 route decision과 사용 증거 운영이 빨리 연결되므로, evidence owner를 filing packet 단계에서 같이 잠가야 합니다.",
+          "중국은 출원 판단과 사용 증거 운영이 빨리 연결되므로, 증거 담당자를 filing packet 단계에서 함께 잠가야 합니다.",
         href: getProductPathBySlug("china"),
         guideSlug: "china",
         ctaLabel: "ChaTm 운영 가이드 보기"
@@ -360,11 +360,11 @@ export function buildReportOpenLabel(
 export function buildReportStatusLabel(report: Pick<ReportMeta, "gatewayPlacement">) {
   switch (report.gatewayPlacement) {
     case "front":
-      return "Front trust layer";
+      return "Front Report";
     case "supporting":
-      return "Supporting trust layer";
+      return "Supporting Report";
     case "archive":
-      return "Archive report";
+      return "Archived Report";
   }
 }
 

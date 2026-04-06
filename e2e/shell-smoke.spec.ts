@@ -30,7 +30,7 @@ test("brief archive smoke", async ({ page }) => {
   ).toBeVisible();
   await expect(
     page.getByText(
-      "2026년 4월 Hot Global TM Brief | 중국·멕시코·유럽에서 출원 경로를 같은 질문으로 보면 무엇이 달라지나"
+      "왜 한국 브랜드는 이제 위조 대응을 사업 전략으로 봐야 하나?"
     )
   ).toBeVisible();
 });

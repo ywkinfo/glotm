@@ -637,15 +637,15 @@ describe("Shared reader runtime contract", () => {
   it.each([
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "china")!,
-      expectedSummary: "중문 표기, goods/services fit, owner split이 direct filing 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
+      expectedSummary: "중문 표기, 상품·서비스 적합성, 권리자 분리가 직접출원 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
     },
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "mexico")!,
-      expectedSummary: "IMPI 실행 흐름과 mixed route board를 기준으로, local execution control이 bundle 효율보다 먼저인지 정리합니다."
+      expectedSummary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다."
     },
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "europe")!,
-      expectedSummary: "권역형 guide답게 route pack을 누가 잠그고 filing-to-evidence handoff를 어떻게 유지할지 먼저 확인합니다."
+      expectedSummary: "권역형 guide답게 route pack을 누가 잠그고 출원에서 증거까지 이어지는 흐름을 어떻게 유지할지 먼저 확인합니다."
     }
   ])(
     "surfaces trust-layer report handoffs on $readerCase.name home without breaking base reader contracts",

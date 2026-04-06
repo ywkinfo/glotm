@@ -528,6 +528,11 @@ body {
   color: var(--muted);
 }
 
+.gateway-section-copy--full {
+  max-width: none;
+  width: 100%;
+}
+
 .gateway-section-copy--spaced {
   margin-top: 0.8rem;
 }
@@ -535,6 +540,13 @@ body {
 .gateway-section-copy-stack {
   display: grid;
   gap: 0.75rem;
+}
+
+.gateway-section-copy-stack--full {
+  display: grid;
+  gap: 0.8rem;
+  width: 100%;
+  margin: 0.2rem 0 1rem;
 }
 
 .gateway-inline-link {

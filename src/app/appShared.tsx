@@ -169,11 +169,11 @@ export function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
 
 export function buildPriorityLaneProgressNote(
   products: ProductMeta[],
-  report?: Pick<ReportMeta, "gatewayPlacement">
+  report?: Pick<ReportMeta, "gatewayLabel">
 ) {
-  const reportLabel = report ? buildReportStatusLabel(report) : "Trust layer";
+  const reportLabel = report ? report.gatewayLabel : "Trust layer";
 
-  return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel} / Gateway trust layer입니다.`;
+  return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel}입니다.`;
 }
 
 export function buildTrustLayerGuideGroups(
@@ -242,14 +242,14 @@ export function buildTrustLayerGuideSummary(
   }
 
   const bridgeSentence = options?.includeLaneBridge && options.laneLabelSequence
-    ? ` ${options.laneLabelSequence} 다음 레인에서 buyer-facing 설명과 scorecard truth를 같은 문법으로 연결합니다.`
+    ? ` ${options.laneLabelSequence} 다음 레인에서는 안내와 현재 상태를 함께 확인합니다.`
     : "";
 
-  return `${priorityGuides}에서 이미 잠근 ${report.trustLayerSummaryObject} 교차 관할권 trust layer로 다시 묶습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 flagship baseline reference로 유지합니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 supporting reference로만 이어 읽히게 둡니다.` : ""}`;
+  return `${priorityGuides}에서 이미 정리한 ${report.trustLayerSummaryObject} 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 기준 프레임으로 유지합니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 참고용으로 이어 읽히게 둡니다.` : ""}`;
 }
 
 export function getTrustLayerSummaryFallback() {
-  return "리포트는 관련 live guide에 공통으로 걸리는 운영 질문을 front placement하는 trust layer입니다.";
+  return "리포트는 여러 guide에 흩어진 공통 질문을 먼저 묶어 보는 시작점입니다.";
 }
 
 export function buildGuideTrackingParams(

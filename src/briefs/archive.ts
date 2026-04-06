@@ -41,67 +41,6 @@ function buildGuideSectionPath(
 
 const briefIssueSource: BriefIssue[] = [
   {
-    slug: "2026-04-filing-route-decision-framework",
-    title: "2026년 4월 Hot Global TM Brief | 중국·멕시코·유럽에서 출원 경로를 같은 질문으로 보면 무엇이 달라지나",
-    summary:
-      "직접출원 vs 마드리드 선택은 제도 비교가 아니라 buyer entry, local-fit, owner split을 어떻게 잠글지에 대한 운영 결정이라는 점을 cross-guide 기준으로 묶은 issue입니다.",
-    cadenceLabel: "주간 브리프",
-    publishedAt: "2026-04-04T09:00:00.000Z",
-    jurisdictions: ["China", "Mexico", "Europe", "Madrid"],
-    bodyParagraphs: [
-      "같은 direct filing vs Madrid 질문이라도 중국, 멕시코, 유럽에서 실제로 보는 포인트는 조금씩 다릅니다. 하지만 buyer 입장에서는 국가별 제도 차이보다 먼저, 어느 시장이 local-fit을 더 요구하는지, owner와 사용자 구조를 어디까지 일찍 잠가야 하는지, 본사 중앙관리와 현지 대응 사이에서 무엇을 우선할지부터 정리하는 편이 더 실무적입니다.",
-      "이번 브리프의 목적은 어느 경로가 원칙적으로 더 좋다고 말하는 데 있지 않습니다. ChaTm의 route decision matrix, MexTm의 buyer-entry table, EuTm의 route pack lock board를 같은 질문 세트로 읽게 만들어, 인하우스 팀이 guide별 세부 비교 전에 한 장의 route memo부터 작성하게 하는 데 있습니다."
-    ],
-    items: [
-      {
-        id: "global-route-decision-questions",
-        headline: "경로 선택은 출원 방식보다 owner split과 local-fit 질문을 먼저 잠가야 빨라집니다",
-        whatChanged:
-          "중국·멕시코·유럽 가이드에서 direct filing vs Madrid를 다루는 방식이 이제 공통 질문 세트로 읽히도록 정렬됐습니다. 핵심은 경로 자체보다 어떤 시장에서 local-fit 조정이 더 필요하고, 어떤 owner map을 즉시 고정해야 하는지입니다.",
-        whoShouldCare:
-          "여러 국가를 한 분기 안에 검토하는 본사 브랜드팀, 인하우스 IP팀, 해외사업 PM, 외부 대리인과 handoff 기준을 잠가야 하는 운영 리드",
-        whyItMatters:
-          "경로 선택을 비용이나 편의성 비교로만 보면 filing 이후의 owner-user linkage, route switch, evidence handoff에서 다시 같은 논의를 반복하게 됩니다. 반대로 공통 질문을 먼저 잠그면 국가별 차이는 later-stage tuning으로 내려갑니다.",
-        nextAction:
-          "이번 주 안에 launch market 우선순위, local-fit 필요도, owner split, route switch red flag, filing 이후 handoff owner를 1페이지 route memo로 먼저 적고 각 guide의 deep link 섹션에서 국가별 차이만 보완하세요.",
-        relatedGuideLinks: [
-          {
-            label: "ChaTm route decision matrix",
-            href: buildGuideSectionPath(
-              "china",
-              "제4장-출원-경로-선택-직접출원-vs-마드리드",
-              "출원-경로-시나리오별-판단표"
-            )
-          },
-          {
-            label: "MexTm buyer-entry route table",
-            href: buildGuideSectionPath(
-              "mexico",
-              "제4장-출원-경로-선택-직접출원-vs-마드리드국제출원-비교",
-              "buyer-entry-경로-선택표"
-            )
-          },
-          {
-            label: "EuTm route pack lock board",
-            href: buildGuideSectionPath(
-              "europe",
-              "제5장-출원-경로와-서류-설계",
-              "route-pack-lock-board"
-            )
-          },
-          {
-            label: "LatTm route decision box",
-            href: buildGuideSectionPath(
-              "latam",
-              "제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드",
-              "4-decision-box-출원-경로-선택"
-            )
-          }
-        ]
-      }
-    ]
-  },
-  {
     slug: "2026-04-k-brand-counterfeit-strategy",
     title: "왜 한국 브랜드는 이제 위조 대응을 사업 전략으로 봐야 하나?",
     summary:
