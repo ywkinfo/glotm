@@ -11,7 +11,10 @@ test("gateway smoke", async ({ page }) => {
       name: /cross-border trademark operating guide/i
     })
   ).toBeVisible();
-  await expect(page.getByText("Current Build Order")).toBeVisible();
+  await expect(
+    page.getByText("이용자가 더 빨리 도움을 느낄 수 있는 레인부터 보강합니다")
+  ).toBeVisible();
+  await expect(page.getByText("ChaTm은 핵심 내용을 더 쉽게 보이게 다듬었어요")).toBeVisible();
   await expect(
     gatewayHero.getByRole("link", {
       name: "ChaTm 보기"

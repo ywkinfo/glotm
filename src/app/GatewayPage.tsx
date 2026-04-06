@@ -66,42 +66,42 @@ export function GatewayLandingPage() {
   const priorityRoadmap = [
     {
       id: "china",
-      title: "ChaTm mature 승격 반영 완료",
+      title: "ChaTm은 핵심 내용을 더 쉽게 보이게 다듬었어요",
       copy:
-        "잠금 6장에 더해 route, invalidation, licensing, customs, governance, appendix를 보강한 뒤 월간 scorecard review까지 반영해 growth lane의 mature baseline으로 올렸습니다.",
-      note: "제4장, 제8장, 제9장, 제11장, 제12장, 제13장, 제14장 보강 + monthly review 반영",
+        "자주 쓰는 흐름부터 먼저 정리해, 필요한 내용을 빠르게 찾기 쉽게 만들었습니다.",
+      note: "출원, 무효, 라이선스, 통관, 운영 기준을 한 번에 볼 수 있게 정리",
       href: buildProductPath("/china")
     },
     {
       id: "mexico",
-      title: "MexTm Sprint 2 운영 handoff 정렬 완료",
+      title: "MexTm은 다음 단계로 이어받기 쉽게 정리했어요",
       copy:
-        "buyer-entry baseline 위에 filing packet, declaration·renewal owner, border evidence pack까지 이어지는 운영 문법을 더 선명하게 정리했습니다.",
-      note: "제5장, 제7장, 제10장 정렬 + content/test/build/e2e 재검증 완료",
+        "출원 서류부터 담당자 역할까지 한 흐름으로 맞춰, 다음 작업을 바로 이어가기 쉽게 했습니다.",
+      note: "출원 서류, 갱신과 유지 책임, 국경 대응 자료를 한 흐름으로 정리",
       href: buildProductPath("/mexico")
     },
     {
       id: "europe",
-      title: "EuTm 핵심 6장 안정화 완료",
+      title: "EuTm은 꼭 필요한 6가지를 먼저 안정시켰어요",
       copy:
-        "범위 확대보다 문서 정합성, 권리 선택, 등록 후 사용·갱신 운영 구조를 먼저 고정해 validate lane의 core six를 안정화했습니다.",
-      note: "README, Harness sync + 핵심 6장 정렬 완료",
+        "범위를 넓히기보다, 문서와 기준을 먼저 맞춰서 더 믿고 볼 수 있게 했습니다.",
+      note: "핵심 기준과 안내 구조를 먼저 정리",
       href: buildProductPath("/europe")
     },
     {
       id: "report-gateway",
-      title: "리포트와 Gateway 연결 정리 완료",
+      title: "리포트와 Gateway를 한 흐름으로 이어뒀어요",
       copy:
-        "먼저 볼 리포트는 출원 경로 판단을, 이어 볼 리포트는 사용 증거 운영을 맡기고, Gateway에서는 growth·validate 결과를 현재 상태와 같은 흐름으로 다시 읽히게 만드는 단계입니다.",
-      note: "global filing route framework + global use evidence system + gateway state sync",
+        "출원 경로를 볼 때는 판단용 리포트를, 사용 증거를 볼 때는 운영용 리포트를 연결해서 한 번에 읽기 쉽게 만들었습니다.",
+      note: "경로 판단 리포트, 사용 증거 리포트, Gateway 상태를 함께 연결",
       href: buildReportArchivePath()
     },
     {
       id: "incubate",
-      title: "Incubate 선택 유지보수",
+      title: "Incubate는 필요한 부분만 가볍게 다듬고 있어요",
       copy:
-        "JapTm -> UKTm -> UsaTm 순서로 freshness, verification, smoke QA 위주 보강만 수행하고 대형 재작성은 뒤로 미룹니다.",
-      note: "lighter track 유지",
+        "JapTm, UKTm, UsaTm은 큰 개편보다 기본 확인과 작은 보완부터 차근차근 진행합니다.",
+      note: "가벼운 유지보수 중심",
       href: buildProductPath("/japan")
     }
   ];
@@ -500,10 +500,10 @@ export function GatewayLandingPage() {
         <div className="gateway-section-header">
           <div>
             <p className="gateway-kicker">Current Build Order</p>
-            <h2 className="gateway-section-title">지금은 가장 얇은 가이드보다 가장 가치가 빨리 커지는 레인부터 보강합니다</h2>
+            <h2 className="gateway-section-title">지금은 가장 얇은 가이드보다, 이용자가 더 빨리 도움을 느낄 수 있는 레인부터 보강합니다</h2>
           </div>
-        <p className="gateway-section-copy">
-          현재 정렬 기준은 `buyer impact + 포트폴리오 전략 + 실제 콘텐츠 밀도 부족`입니다. 그래서 growth와 validate 레인의 체감 가치를 먼저 키우고, incubate 레인은 가볍게 유지합니다.
+          <p className="gateway-section-copy">
+            현재 우선순위는 이용자가 바로 체감하는 가치, 전체 구성의 균형, 아직 내용이 덜 채워진 정도를 함께 보고 정합니다. 그래서 growth와 validate 레인을 먼저 더 보기 좋게 다듬고, incubate 레인은 가볍게 유지합니다.
           </p>
         </div>
         <div className="gateway-card-grid">
