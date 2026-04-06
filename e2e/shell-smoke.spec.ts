@@ -61,6 +61,6 @@ test("report detail smoke", async ({ page }) => {
       name: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드"
     })
   ).toBeVisible();
-  await expect(page.getByText("route memo 1-page 템플릿")).toBeVisible();
+  await expect(page.getByText("지금 이 리포트를 먼저 보면 좋은 이유")).toBeVisible();
   await expect(page.getByRole("link", { name: "ChaTm route decision matrix" })).toBeVisible();
 });

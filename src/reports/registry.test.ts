@@ -42,7 +42,7 @@ describe("report registry", () => {
     ]);
     expect(handoffs[0]?.focusPoint).toMatchObject({
       id: "china-local-fit",
-      title: "ChaTm: local-fit pressure를 먼저 잠근다"
+      title: "ChaTm: 현지 맞춤 필요성을 먼저 본다"
     });
     expect(handoffs[1]?.focusPoint).toMatchObject({
       id: "china-evidence-handoff",

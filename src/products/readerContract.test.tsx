@@ -637,7 +637,7 @@ describe("Shared reader runtime contract", () => {
   it.each([
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "china")!,
-      expectedSummary: "중문 표기, 상품·서비스 적합성, 권리자 분리가 직접출원 쪽으로 기우는지부터 본 뒤 route memo를 잠급니다."
+      expectedSummary: "중문 표기, 상품·서비스 적합성, 권리자 구성이 직접출원 쪽으로 기우는지부터 보고 출원 경로 메모를 정리합니다."
     },
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "mexico")!,
@@ -645,7 +645,7 @@ describe("Shared reader runtime contract", () => {
     },
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "europe")!,
-      expectedSummary: "권역형 guide답게 route pack을 누가 잠그고 출원에서 증거까지 이어지는 흐름을 어떻게 유지할지 먼저 확인합니다."
+      expectedSummary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다."
     }
   ])(
     "surfaces trust-layer report handoffs on $readerCase.name home without breaking base reader contracts",
