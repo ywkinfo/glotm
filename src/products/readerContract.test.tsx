@@ -786,11 +786,14 @@ describe("Shared reader runtime contract", () => {
     async (readerCase) => {
       installFetchMock();
       installNavigationMocks();
+      const escapedBasePath = readerCase.basePath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
       renderReaderCase(readerCase, `${readerCase.basePath}/chapter/missing-chapter`);
 
       await waitFor(() => {
-        expect(screen.getByTestId("reader-location")).toHaveTextContent(readerCase.basePath);
+        expect(screen.getByTestId("reader-location")).toHaveTextContent(
+          new RegExp(`^${escapedBasePath}$`)
+        );
       });
       expect(
         screen.getByRole("link", { name: readerCase.homeHeading })
