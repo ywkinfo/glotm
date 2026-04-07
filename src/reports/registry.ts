@@ -115,20 +115,20 @@ function sortReportsForGateway(left: ReportMeta, right: ReportMeta) {
 }
 
 export const reportExperienceMeta: ReportExperienceMeta = {
-  gatewaySectionKicker: "먼저 볼 리포트",
-  gatewaySectionTitle: "Gateway 첫 화면에서 지금 필요한 리포트를 먼저 보여줍니다",
+  gatewaySectionKicker: "리포트",
+  gatewaySectionTitle: "Gateway 첫 화면에서 최신 리포트를 먼저 보여줍니다",
   gatewaySectionSummary:
-    "국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 질문부터 보고 싶다면 여기서 시작하면 됩니다.",
-  archiveHeroKicker: "Special Report",
-  archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트",
+    "국가별 guide를 열기 전에 최신 리포트부터 먼저 훑고 싶다면 여기서 시작하면 됩니다.",
+  archiveHeroKicker: "Report",
+  archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
   archiveHeroLead:
-    "특정 국가 하나의 절차 요약보다, 여러 관할에서 반복해서 부딪히는 운영 질문을 한 문서로 정리하는 심화 리포트 아카이브입니다.",
+    "특정 국가 하나의 절차 요약보다, 여러 관할에서 반복해서 부딪히는 운영 질문을 한 문서로 정리하고 최신순으로 보여주는 리포트 아카이브입니다.",
   archiveHeroSummary:
-    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 권리자 분리, 혼합 경로처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다.",
-  archiveSectionKicker: "Archive",
-  archiveSectionTitle: "최신순으로 스페셜 리포트를 모아 둡니다",
+    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 표기 전략, 사용 증거처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다.",
+  archiveSectionKicker: "Latest Reports",
+  archiveSectionTitle: "최신 리포트를 먼저 보여줍니다",
   archiveSectionSummary:
-    "각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 먼저 구조화하고 관련 guide로 바로 이어지게 만듭니다.",
+    "각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 구조화하고 관련 guide로 바로 이어지게 만듭니다.",
   archiveCtaLabel: "리포트 전체 보기"
 };
 
@@ -143,13 +143,13 @@ const reportSource: ReportMeta[] = [
     slug: "global-filing-route-framework",
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
     summary:
-      "여러 나라에 동시에 출원할 때 먼저 필요한 판단 기준을 한 문서에 모았습니다. 어떤 시장은 직접출원이 낫고, 어떤 시장은 마드리드가 더 효율적인지 빠르게 비교할 수 있게 정리한 스페셜 리포트입니다.",
+      "여러 나라에 동시에 출원할 때 먼저 필요한 판단 기준을 한 문서에 모았습니다. 어떤 시장은 직접출원이 낫고, 어떤 시장은 마드리드가 더 효율적인지 빠르게 비교할 수 있게 정리한 리포트입니다.",
     trustLayerSummaryObject: "출원 경로 판단 질문을",
     publishedAt: "2026-04-04T12:00:00.000Z",
     jurisdictions: ["Global", "China", "Mexico", "Europe", "Japan"],
     tags: ["출원 경로", "Madrid", "Route Memo"],
     audience: "여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀",
-    gatewayLabel: "Front Report",
+    gatewayLabel: "Report",
     gatewayPlacement: "front",
     gatewayPriority: 0,
     whyNow:
@@ -248,13 +248,13 @@ const reportSource: ReportMeta[] = [
     slug: "global-use-evidence-system",
     title: "글로벌 사용 증거 수집 운영 시스템 구축",
     summary:
-      "출원 뒤에 증거를 급하게 모으기보다, 여러 나라에서 재사용할 수 있는 사용 증거 운영 체계를 미리 설계하는 방법을 정리한 스페셜 리포트입니다.",
+      "출원 뒤에 증거를 급하게 모으기보다, 여러 나라에서 재사용할 수 있는 사용 증거 운영 체계를 미리 설계하는 방법을 정리한 리포트입니다.",
     trustLayerSummaryObject: "사용 증거 운영 구조를",
     publishedAt: "2026-04-02T09:00:00.000Z",
     jurisdictions: ["Global", "USA", "China", "Mexico", "Japan"],
     tags: ["사용 증거", "운영 시스템", "증거 보관"],
     audience: "여러 나라의 사용 증거 운영 구조를 먼저 정리해야 하는 운영팀, 법무팀, 브랜드팀",
-    gatewayLabel: "Supporting Report",
+    gatewayLabel: "Report",
     gatewayPlacement: "supporting",
     gatewayPriority: 1,
     whyNow:
@@ -332,40 +332,110 @@ const reportSource: ReportMeta[] = [
         href: getProductPathBySlug("japan")
       }
     ]
+  }),
+  createReportMeta({
+    id: "brand-localization-vs-standardization-framework",
+    slug: "brand-localization-vs-standardization-framework",
+    title: "브랜드 표장 현지화 vs. 표준화: 글로벌 상표 운영 결정 프레임워크",
+    summary:
+      "글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다.",
+    trustLayerSummaryObject: "브랜드 표기와 현지 문자 운영 판단을",
+    publishedAt: "2026-04-07T00:00:00.000Z",
+    jurisdictions: ["Global", "China", "Japan", "Middle East", "Cyrillic"],
+    tags: ["브랜드 표기", "현지화", "표준화", "상표 전략"],
+    audience: "해외 진출 초기의 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅 리드",
+    gatewayLabel: "Report",
+    gatewayPlacement: "archive",
+    whyNow:
+      "출원 경로와 사용 증거보다 한 단계 앞에서, 어떤 이름과 표기를 먼저 운영 기준으로 확정할지에 대한 판단이 자주 빠집니다. 특히 중국·일본처럼 현지 문자 사용이 실제 검색과 유통 언어가 되는 시장에서는 표준화와 현지화의 경계를 먼저 정리해 두는 편이 훨씬 안전합니다.",
+    trustLayerChecklist: [
+      "현지에서 실제로 불리고 검색될 이름이 무엇인지 먼저 적는다.",
+      "글로벌 마스터 마크와 현지 표장을 같은 자산으로 볼지 별도 자산으로 볼지 구분한다.",
+      "음역·번역·혼합형 후보를 한꺼번에 출원하지 말고 file-now / search-only / reserve로 나눈다."
+    ],
+    focusPoints: [
+      {
+        id: "china-local-name-portfolio",
+        title: "ChaTm: 중국어 표기 포트폴리오부터 잠근다",
+        summary:
+          "영문, 중국어, 결합표장을 어떻게 나눠 관리할지부터 보고, 표기 후보를 go / revise / hold로 정리합니다.",
+        href: buildGuideSectionPath(
+          "china",
+          "제2장-브랜드-구조와-중국어-표기-전략",
+          "표기-후보를-gorevisehold로-자르는-기준"
+        ),
+        guideSlug: "china",
+        ctaLabel: "ChaTm 표기 전략 보기"
+      },
+      {
+        id: "japan-local-pronunciation-design",
+        title: "JapTm: 일본어 표기와 발음 변형을 같이 본다",
+        summary:
+          "영문 표장과 일본어 표기를 별도 자산으로 볼지, 실제 채널에서 어떤 이름이 굴러갈지 전략 단계에서 먼저 잠급니다.",
+        href: buildGuideSectionPath(
+          "japan",
+          "제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계",
+          "일본어-표기와-발음-변형-설계"
+        ),
+        guideSlug: "japan",
+        ctaLabel: "JapTm 표기 설계 보기"
+      },
+      {
+        id: "latam-baseline-structure",
+        title: "LatTm: 여러 시장의 공통 질문을 먼저 묶는다",
+        summary:
+          "문자권이 달라도 우선순위, 포트폴리오, 운영 owner를 어떻게 먼저 잠글지 기본 프레임으로 다시 확인합니다.",
+        href: getProductPathBySlug("latam"),
+        guideSlug: "latam",
+        ctaLabel: "LatTm 기준 프레임 보기"
+      }
+    ],
+    relatedGuideLinks: [
+      {
+        label: "ChaTm 중국어 표기 전략",
+        href: buildGuideSectionPath(
+          "china",
+          "제2장-브랜드-구조와-중국어-표기-전략",
+          "표기-후보를-gorevisehold로-자르는-기준"
+        )
+      },
+      {
+        label: "JapTm 일본어 표기 설계",
+        href: buildGuideSectionPath(
+          "japan",
+          "제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계",
+          "일본어-표기와-발음-변형-설계"
+        )
+      },
+      {
+        label: "LatTm 기준 프레임",
+        href: getProductPathBySlug("latam")
+      }
+    ]
   })
 ];
 
 export const reports = [...reportSource].sort(sortReportsByPublishedAt);
 
 export function getGatewayFeaturedReports(limit = 2) {
-  return [...reportSource]
-    .filter((report) => report.gatewayPlacement !== "archive")
-    .sort(sortReportsForGateway)
-    .slice(0, limit);
+  return reports.slice(0, limit);
 }
 
 export function getPrimaryGatewayReport() {
-  return getGatewayFeaturedReports(1)[0];
+  return reports[0];
 }
 
 export function buildReportOpenLabel(
-  report: ReportMeta,
+  _report: ReportMeta,
   emphasis: "default" | "immediate" = "default"
 ) {
   return emphasis === "immediate"
-    ? `${report.gatewayLabel} 바로 보기`
-    : `${report.gatewayLabel} 보기`;
+    ? "리포트 바로 보기"
+    : "리포트 보기";
 }
 
-export function buildReportStatusLabel(report: Pick<ReportMeta, "gatewayPlacement">) {
-  switch (report.gatewayPlacement) {
-    case "front":
-      return "Front Report";
-    case "supporting":
-      return "Supporting Report";
-    case "archive":
-      return "Archived Report";
-  }
+export function buildReportStatusLabel(_report: Pick<ReportMeta, "gatewayPlacement">) {
+  return "리포트";
 }
 
 export function buildReportArchivePath() {
@@ -396,13 +466,11 @@ export function getReportsForGuideSlug(guideSlug: string): GuideReportHandoff[] 
 
   const productPath = getProductPathBySlug(product.slug);
 
-  return reportSource
-    .filter((report) => report.gatewayPlacement !== "archive")
+  return reports
     .filter((report) =>
       Boolean(findFocusPointForGuide(report, product.slug, productPath))
       || report.relatedGuideLinks.some((link) => matchesGuidePath(link.href, productPath))
     )
-    .sort(sortReportsForGateway)
     .map((report) => ({
       report,
       focusPoint: findFocusPointForGuide(report, product.slug, productPath)
@@ -443,5 +511,5 @@ export function formatReportDate(publishedAt: string) {
 }
 
 export function buildReportDocumentTitle(report?: ReportMeta) {
-  return buildRuntimeDocumentTitle(report ? report.title : "Special Report");
+  return buildRuntimeDocumentTitle(report ? report.title : "Report");
 }

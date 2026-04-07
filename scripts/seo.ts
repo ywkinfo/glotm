@@ -348,9 +348,9 @@ function renderReportArchiveBody(basePath: string) {
         <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
       </nav>
       <header>
-        <p>Special Report</p>
-        <h1>개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트</h1>
-        <p>특정 국가 하나의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 질문을 한 문서로 정리하는 심화 리포트 아카이브입니다.</p>
+        <p>Report</p>
+        <h1>개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트</h1>
+        <p>특정 국가 하나의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 질문을 한 문서로 정리하고 최신순으로 보여주는 리포트 아카이브입니다.</p>
       </header>
       ${renderLinkList("리포트 목록", reportLinks, true)}
     </main>
@@ -369,7 +369,7 @@ function renderReportBody(report: ReportMeta, documentData: DocumentData, basePa
       <nav>
         <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
         <span> / </span>
-        <a href="${escapeHtml(buildPublicHref(buildReportArchivePath(), basePath))}">Special Report</a>
+        <a href="${escapeHtml(buildPublicHref(buildReportArchivePath(), basePath))}">Report</a>
       </nav>
       <article>
         <header>
@@ -423,7 +423,7 @@ function buildBriefIssueDescription(issue: BriefIssue) {
 
 function buildReportArchiveDescription() {
   return trimDescription(
-    "Special Report 아카이브. 개별 국가 guide를 넘어, 여러 관할에서 반복되는 운영 질문과 대응 체계를 별도 문서로 정리한 GloTm 심화 리포트입니다."
+    "Report 아카이브. 개별 국가 guide를 넘어, 여러 관할에서 반복되는 운영 질문과 대응 체계를 최신순으로 정리한 GloTm 리포트입니다."
   );
 }
 

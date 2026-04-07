@@ -8,8 +8,16 @@ import {
 } from "./registry";
 
 describe("report registry", () => {
-  it("keeps the gateway featured order pinned to front then supporting trust layers", () => {
+  it("keeps the gateway featured order pinned to latest-first", () => {
     expect(getGatewayFeaturedReports(2).map((report) => report.slug)).toEqual([
+      "brand-localization-vs-standardization-framework",
+      "global-filing-route-framework"
+    ]);
+  });
+
+  it("extends the gateway report lane in latest-first order", () => {
+    expect(getGatewayFeaturedReports(3).map((report) => report.slug)).toEqual([
+      "brand-localization-vs-standardization-framework",
       "global-filing-route-framework",
       "global-use-evidence-system"
     ]);
@@ -18,7 +26,6 @@ describe("report registry", () => {
   it("pins the supporting evidence report to the EuTm evidence handoff anchor", () => {
     const report = getReportBySlug("global-use-evidence-system");
 
-    expect(report?.gatewayPlacement).toBe("supporting");
     expect(report?.trustLayerSummaryObject).toBe("사용 증거 운영 구조를");
     expect(report?.focusPoints.map((focusPoint) => focusPoint.id)).toContain("europe-evidence-triage");
     expect(report?.focusPoints.find((focusPoint) => focusPoint.id === "europe-evidence-triage")).toMatchObject({
@@ -33,20 +40,21 @@ describe("report registry", () => {
     });
   });
 
-  it("reverse-indexes reports for a priority guide in front-then-supporting order", () => {
+  it("reverse-indexes reports for a priority guide in latest-first order", () => {
     const handoffs = getReportsForGuideSlug("china");
 
     expect(handoffs.map(({ report }) => report.slug)).toEqual([
+      "brand-localization-vs-standardization-framework",
       "global-filing-route-framework",
       "global-use-evidence-system"
     ]);
     expect(handoffs[0]?.focusPoint).toMatchObject({
-      id: "china-local-fit",
-      title: "ChaTm: 현지 맞춤 필요성을 먼저 본다"
+      id: "china-local-name-portfolio",
+      title: "ChaTm: 중국어 표기 포트폴리오부터 잠근다"
     });
     expect(handoffs[1]?.focusPoint).toMatchObject({
-      id: "china-evidence-handoff",
-      title: "ChaTm: route와 evidence를 같이 본다"
+      id: "china-local-fit",
+      title: "ChaTm: 현지 맞춤 필요성을 먼저 본다"
     });
   });
 

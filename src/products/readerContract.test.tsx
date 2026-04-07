@@ -637,34 +637,41 @@ describe("Shared reader runtime contract", () => {
   it.each([
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "china")!,
-      expectedSummary: "중문 표기, 상품·서비스 적합성, 권리자 구성이 직접출원 쪽으로 기우는지부터 보고 출원 경로 메모를 정리합니다."
+      expectedSummary: "영문, 중국어, 결합표장을 어떻게 나눠 관리할지부터 보고, 표기 후보를 go / revise / hold로 정리합니다.",
+      expectedReportSlugs: [
+        "brand-localization-vs-standardization-framework",
+        "global-filing-route-framework"
+      ]
     },
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "mexico")!,
-      expectedSummary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다."
+      expectedSummary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
+      expectedReportSlugs: [
+        "global-filing-route-framework",
+        "global-use-evidence-system"
+      ]
     },
     {
       readerCase: readerCases.find((readerCase) => readerCase.productSlug === "europe")!,
-      expectedSummary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다."
+      expectedSummary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다.",
+      expectedReportSlugs: [
+        "global-filing-route-framework",
+        "global-use-evidence-system"
+      ]
     }
   ])(
     "surfaces trust-layer report handoffs on $readerCase.name home without breaking base reader contracts",
-    async ({ readerCase, expectedSummary }) => {
+    async ({ readerCase, expectedSummary, expectedReportSlugs }) => {
       installFetchMock();
       renderReaderCase(readerCase, readerCase.basePath);
 
       await screen.findByRole("heading", { name: readerCase.homeHeading });
 
       const handoffSection = screen.getByRole("region", { name: "관련 Report / Trust Layer" });
+      const reportLinks = within(handoffSection).getAllByRole("link", { name: "리포트 보기" });
 
-      expect(within(handoffSection).getByRole("link", { name: "Front Report 보기" })).toHaveAttribute(
-        "href",
-        "/reports/global-filing-route-framework"
-      );
-      expect(within(handoffSection).getByRole("link", { name: "Supporting Report 보기" })).toHaveAttribute(
-        "href",
-        "/reports/global-use-evidence-system"
-      );
+      expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${expectedReportSlugs[0]}`);
+      expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${expectedReportSlugs[1]}`);
       expect(within(handoffSection).getByText(expectedSummary)).toBeInTheDocument();
     }
   );

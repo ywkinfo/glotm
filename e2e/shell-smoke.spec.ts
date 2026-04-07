@@ -44,7 +44,7 @@ test("report archive smoke", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 스페셜 리포트"
+      name: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트"
     })
   ).toBeVisible();
   await expect(

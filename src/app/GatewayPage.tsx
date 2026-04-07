@@ -51,7 +51,7 @@ export function GatewayLandingPage() {
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
   const leadReport = getPrimaryGatewayReport();
-  const featuredReports = getGatewayFeaturedReports(2);
+  const featuredReports = getGatewayFeaturedReports(3);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
   const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
   const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];
@@ -383,7 +383,7 @@ export function GatewayLandingPage() {
       <section className="gateway-section">
         <div className="gateway-section-header">
           <div>
-            <p className="gateway-kicker">Special Report</p>
+            <p className="gateway-kicker">Report</p>
             <h2 className="gateway-section-title">여러 나라 공통 판단은 Report에서 따로 다룹니다</h2>
           </div>
         </div>

@@ -184,7 +184,7 @@ function AppLayout() {
             </span>
           ) : isReportActive ? (
             <span className="status-pill status-pill--neutral">
-              Special Report
+              Report
             </span>
           ) : isBriefActive ? (
             <span className="status-pill status-pill--neutral">

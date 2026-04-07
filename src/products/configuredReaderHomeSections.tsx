@@ -102,7 +102,7 @@ export function GuideReportHandoffSection({
       <div className="gateway-card-grid">
         {reportHandoffs.map(({ report, focusPoint }) => (
           <article key={report.slug} className="gateway-card">
-            <p className="gateway-kicker">{report.gatewayLabel}</p>
+            <p className="gateway-kicker">Report</p>
             <h3 className="gateway-card-title">{report.title}</h3>
             {focusPoint ? (
               <p className="gateway-card-copy">이 가이드 연결: {focusPoint.title}</p>

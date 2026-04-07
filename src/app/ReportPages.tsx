@@ -41,7 +41,7 @@ export function ReportArchivePage() {
     });
 
   useEffect(() => {
-    setRuntimeDocumentTitle("Special Report");
+    setRuntimeDocumentTitle("Report");
   }, []);
 
   return (
@@ -157,7 +157,7 @@ export function ReportPage() {
   if (loadError) {
     return (
       <StatusPage
-        kicker="Special Report"
+        kicker="Report"
         title="리포트를 불러오지 못했습니다"
         message={loadError}
       />
@@ -167,7 +167,7 @@ export function ReportPage() {
   if (!documentData) {
     return (
       <StatusPage
-        kicker="Special Report"
+        kicker="Report"
         title="리포트를 준비하고 있습니다"
         message="리포트 데이터를 불러오는 중입니다."
       />
@@ -179,7 +179,7 @@ export function ReportPage() {
   if (!chapter) {
     return (
       <StatusPage
-        kicker="Special Report"
+        kicker="Report"
         title="리포트를 불러오지 못했습니다"
         message="리포트 본문이 비어 있습니다."
       />
@@ -192,10 +192,10 @@ export function ReportPage() {
         <div className="brief-breadcrumb">
           <FullDocumentLink to={buildProductPath("/")}>Gateway</FullDocumentLink>
           <span>/</span>
-          <FullDocumentLink to={buildReportArchivePath()}>Special Report</FullDocumentLink>
+          <FullDocumentLink to={buildReportArchivePath()}>Report</FullDocumentLink>
         </div>
         <div className="brief-issue-header">
-          <p className="gateway-kicker">Special Report</p>
+          <p className="gateway-kicker">Report</p>
           <p className="brief-card-date">{formatReportDate(report.publishedAt)}</p>
           <h1 className="gateway-title">{report.title}</h1>
           <p className="gateway-lead">{report.summary}</p>

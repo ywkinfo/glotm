@@ -171,7 +171,7 @@ export function buildPriorityLaneProgressNote(
   products: ProductMeta[],
   report?: Pick<ReportMeta, "gatewayLabel">
 ) {
-  const reportLabel = report ? report.gatewayLabel : "Trust layer";
+  const reportLabel = report ? "최신 리포트" : "리포트";
 
   return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel}입니다.`;
 }
@@ -443,7 +443,7 @@ export function ReportCard({ report, surface }: { report: ReportMeta; surface?: 
   return (
     <article className="brief-card">
       <div className="brief-card-topline">
-        <p className="gateway-kicker">Special Report</p>
+        <p className="gateway-kicker">Report</p>
         <span className="status-pill status-pill--neutral">{buildReportStatusLabel(report)}</span>
       </div>
       <p className="brief-card-date">{formatReportDate(report.publishedAt)}</p>
