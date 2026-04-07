@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  getGatewayLandingReports,
   getGatewayFeaturedReports,
   getPrimaryFocusPointForGuide,
   getPrimaryGatewayReport,
@@ -9,6 +10,13 @@ import {
 } from "./registry";
 
 describe("report registry", () => {
+  it("limits the gateway landing surface to front and supporting reports", () => {
+    expect(getGatewayLandingReports(3).map((report) => report.slug)).toEqual([
+      "global-filing-route-framework",
+      "global-use-evidence-system"
+    ]);
+  });
+
   it("keeps the gateway featured order pinned to placement, priority, then publishedAt", () => {
     expect(getGatewayFeaturedReports(2).map((report) => report.slug)).toEqual([
       "global-filing-route-framework",

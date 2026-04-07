@@ -6,7 +6,7 @@ import {
   buildReportArchivePath,
   buildReportOpenLabel,
   buildReportPath,
-  getGatewayFeaturedReports,
+  getGatewayLandingReports,
   getPrimaryGatewayReport,
   reportExperienceMeta
 } from "../reports/registry";
@@ -51,7 +51,7 @@ export function GatewayLandingPage() {
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
   const leadReport = getPrimaryGatewayReport();
-  const featuredReports = getGatewayFeaturedReports(3);
+  const featuredReports = getGatewayLandingReports(2);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
   const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
   const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];

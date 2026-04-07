@@ -6,8 +6,10 @@ import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
 import {
+  buildReportStatusLabel,
   buildReportOpenLabel,
   getGatewayFeaturedReports,
+  getGatewayLandingReports,
   getPrimaryGatewayReport,
   getReportBySlug,
   getReportsForGuideSlug,
@@ -20,7 +22,7 @@ const operatorProfileUrl = "https://ywkinfo.github.io";
 const primaryGatewayReport = getPrimaryGatewayReport();
 const supportingGatewayReport = getReportBySlug("global-use-evidence-system");
 const primaryChinaGuideHandoffReport = getReportsForGuideSlug("china")[0]?.report;
-const gatewayFeaturedReports = getGatewayFeaturedReports(2);
+const gatewayLandingReports = getGatewayLandingReports(2);
 const gatewayVisibleReports = getGatewayFeaturedReports(3);
 
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
@@ -582,7 +584,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const frontReportsSection = screen
-      .getByRole("heading", { name: "Gateway 첫 화면에서 먼저 봐야 할 리포트를 보여줍니다" })
+      .getByRole("heading", { name: "Gateway 첫 화면에서는 지금 필요한 trust layer report만 먼저 보여줍니다" })
       .closest("section");
     const briefBanner = screen.getByRole("region", { name: "최신 브리프 배너" });
 
@@ -591,21 +593,30 @@ describe("App portfolio shell", () => {
       within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: primaryGatewayReport?.title ?? "" }).length
     ).toBeGreaterThan(0);
     expect(
-      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: gatewayFeaturedReports[1]?.title ?? "" }).length
+      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: gatewayLandingReports[1]?.title ?? "" }).length
     ).toBeGreaterThan(0);
     expect(
-      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: gatewayVisibleReports[2]?.title ?? "" }).length
-    ).toBeGreaterThan(0);
+      within(frontReportsSection as HTMLElement).queryByRole("heading", { name: gatewayVisibleReports[2]?.title ?? "" })
+    ).toBeNull();
     expect(
       within(frontReportsSection as HTMLElement).queryByRole("link", { name: "리포트 바로 보기" })
     ).toBeNull();
     const reportLinks = within(frontReportsSection as HTMLElement).getAllByRole("link", { name: "리포트 보기" });
     expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${primaryGatewayReport?.slug}`);
-    expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${gatewayFeaturedReports[1]?.slug}`);
-    expect(reportLinks.at(2)).toHaveAttribute("href", `/reports/${gatewayVisibleReports[2]?.slug}`);
+    expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${gatewayLandingReports[1]?.slug}`);
+    expect(reportLinks).toHaveLength(2);
     expect(
       within(frontReportsSection as HTMLElement).getByText(reportExperienceMeta.gatewaySectionSummary)
     ).toBeInTheDocument();
+    expect(
+      within(frontReportsSection as HTMLElement).getByText(buildReportStatusLabel(primaryGatewayReport!))
+    ).toBeInTheDocument();
+    expect(
+      within(frontReportsSection as HTMLElement).getByText(buildReportStatusLabel(gatewayLandingReports[1]!))
+    ).toBeInTheDocument();
+    expect(
+      within(frontReportsSection as HTMLElement).queryByText("Archive")
+    ).toBeNull();
     expect(
       within(frontReportsSection as HTMLElement).queryByText(
         /현재 두 개의 리포트가 준비되어 있습니다\. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다\. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다\./
