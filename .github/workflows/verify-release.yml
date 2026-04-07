@@ -42,7 +42,8 @@ jobs:
              echo
              echo "- Includes generated content prep: \`npm run content:prepare\`"
              echo "- Workflow: \`npm run verify:release\`"
-             echo "- Includes: \`npm test\`, \`npm run e2e:smoke\`, \`npm run build:pages:glotm\`"
+             echo "- Includes: \`npm run health:runtime\`, \`npm run health:release\`, \`npm run health:report\`"
+             echo "- Pages artifacts verified via \`npm run build:pages:glotm\`: prerendered HTML, \`dist/sitemap.xml\`, \`dist/robots.txt\`, \`dist/404.html\`, \`dist/.nojekyll\`"
              echo "- Playwright HTML report artifact: \`playwright-report\`"
             echo "- Playwright raw results artifact: \`playwright-test-results\`"
           } >> "$GITHUB_STEP_SUMMARY"
