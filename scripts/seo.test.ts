@@ -1,3 +1,6 @@
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import documentDataBrandLocalizationReport from "../public/generated/reports/brand-localization-vs-standardization-framework/document-data.json";
 import documentDataChina from "../public/generated/china/document-data.json";
 import documentDataEurope from "../public/generated/europe/document-data.json";
@@ -19,6 +22,7 @@ import {
   buildStaticPageDefinitions,
   renderStaticHtml
 } from "./seo";
+import { preparePagesArtifacts } from "./prepare-pages";
 
 const documentDataBySlug = new Map<string, DocumentData>([
   ["latam", documentDataLatam as DocumentData],
@@ -170,9 +174,45 @@ describe("SEO build helpers", () => {
     expect(html).toContain(
       '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
     );
+    expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/" />');
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
     expect(html).toContain(
       '<meta name="twitter:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
     );
+  });
+
+  it("prepares GitHub Pages 404 and .nojekyll artifacts from the rendered shell", async () => {
+    const distDir = await mkdtemp(path.join(tmpdir(), "glotm-pages-"));
+    const indexHtml = [
+      "<!doctype html>",
+      "<html>",
+      "  <head>",
+      "    <title>Placeholder</title>",
+      '    <meta name="description" content="Placeholder description" />',
+      '    <meta name="robots" content="index, follow" />',
+      '    <meta name="twitter:card" content="summary_large_image" />',
+      '    <meta property="og:title" content="Placeholder OG" />',
+      '    <link rel="canonical" href="https://example.com" />',
+      "  </head>",
+      '  <body><div id="root"></div></body>',
+      "</html>"
+    ].join("\n");
+
+    await writeFile(path.join(distDir, "index.html"), indexHtml);
+
+    await preparePagesArtifacts(distDir);
+
+    const notFoundHtml = await readFile(path.join(distDir, "404.html"), "utf8");
+    const noJekyll = await readFile(path.join(distDir, ".nojekyll"), "utf8");
+
+    expect(notFoundHtml).toContain("<title>찾을 수 없는 페이지 | GloTm</title>");
+    expect(notFoundHtml).toContain(
+      '<meta name="description" content="GloTm에서 요청한 페이지를 찾을 수 없습니다." />'
+    );
+    expect(notFoundHtml).toContain('<meta name="robots" content="noindex, nofollow" />');
+    expect(notFoundHtml).not.toContain("twitter:card");
+    expect(notFoundHtml).not.toContain("og:title");
+    expect(notFoundHtml).not.toContain('rel="canonical"');
+    expect(noJekyll).toBe("");
   });
 });
