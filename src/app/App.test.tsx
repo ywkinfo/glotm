@@ -933,27 +933,25 @@ describe("App portfolio shell", () => {
     installFetchMock();
     const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
     const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
+    const firstBriefItem = briefIssues[0]?.items[0];
+    const firstGuideLink = firstBriefItem?.relatedGuideLinks[0];
 
     renderAppRouteTree(`/briefs/${briefIssues[0]?.slug}`);
 
     await screen.findByRole("heading", { name: briefIssues[0]?.title ?? "" });
 
     expect(
-      screen.getByText(
-        /위조 대응이 단순한 법무 이슈가 아니라, 한국 기업이 해외에서 브랜드를 지키기 위해 미리 갖춰야 할 사업 운영 역량이라는 점을 분명히 보여줬습니다\./
-      )
+      screen.getByText(briefIssues[0]?.summary ?? "")
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        /지난주 이슈의 핵심은 정부 정책 자체보다, 한국 기업이 위조 대응을 수출 이후의 사후 조치가 아니라 브랜드 운영 체계로 끌어올려야 한다는 점입니다\./
-      )
+      screen.getByText(firstBriefItem?.whatChanged ?? "")
     ).toBeInTheDocument();
 
-    const guideLink = screen.getByRole("link", { name: "ChaTm 운영 가이드" });
+    const guideLink = screen.getByRole("link", { name: firstGuideLink?.label ?? "" });
 
     expect(guideLink).toHaveAttribute(
       "href",
-      "/china"
+      firstGuideLink?.href
     );
     clickTrackedLink(guideLink);
 
@@ -962,8 +960,8 @@ describe("App portfolio shell", () => {
       "brief_guide_click",
       expect.objectContaining({
         issue_slug: briefIssues[0]?.slug,
-        item_id: "k-brand-counterfeit-strategy",
-        target_path: "/china"
+        item_id: firstBriefItem?.id,
+        target_path: firstGuideLink?.href
       })
     );
 
