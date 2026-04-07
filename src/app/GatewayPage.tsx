@@ -201,6 +201,7 @@ export function GatewayLandingPage() {
             <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
             <h2 className="gateway-section-title">{reportExperienceMeta.gatewaySectionTitle}</h2>
           </div>
+          <p className="gateway-section-copy">{reportExperienceMeta.gatewaySectionSummary}</p>
         </div>
         {featuredReports.length > 0 ? (
           <div className="brief-card-grid">
