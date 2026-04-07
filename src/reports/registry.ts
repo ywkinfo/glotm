@@ -116,19 +116,19 @@ function sortReportsForGateway(left: ReportMeta, right: ReportMeta) {
 
 export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
-  gatewaySectionTitle: "Gateway 첫 화면에서 먼저 봐야 할 리포트를 보여줍니다",
+  gatewaySectionTitle: "Gateway 첫 화면에서는 지금 필요한 trust layer report만 먼저 보여줍니다",
   gatewaySectionSummary:
-    "국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 판단 질문부터 먼저 보고 싶다면 여기서 시작하면 됩니다.",
+    "Gateway 첫 화면에는 front와 supporting trust layer report만 먼저 노출합니다. archive report는 Report 아카이브에서 이어서 보게 둡니다.",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
   archiveHeroLead:
     "특정 국가 하나의 절차 요약보다, 여러 관할에서 반복해서 부딪히는 운영 질문을 한 문서로 정리하고 최신순으로 보여주는 리포트 아카이브입니다.",
   archiveHeroSummary:
-    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 표기 전략, 사용 증거처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다.",
+    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 표기 전략, 사용 증거처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다. 여기에는 Gateway 첫 화면의 front/supporting report와 archive-only report가 함께 모입니다.",
   archiveSectionKicker: "Latest Reports",
   archiveSectionTitle: "최신 리포트를 먼저 보여줍니다",
   archiveSectionSummary:
-    "각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 구조화하고 관련 guide로 바로 이어지게 만듭니다.",
+    "각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 구조화하고 관련 guide로 바로 이어지게 만듭니다. archive-only report도 이 목록에서 함께 확인합니다.",
   archiveCtaLabel: "리포트 전체 보기"
 };
 
@@ -418,6 +418,11 @@ const reportSource: ReportMeta[] = [
 export const reports = [...reportSource].sort(sortReportsByPublishedAt);
 
 const gatewayReports = [...reports].sort(sortReportsForGateway);
+const gatewayLandingReports = gatewayReports.filter((report) => report.gatewayPlacement !== "archive");
+
+export function getGatewayLandingReports(limit = 2) {
+  return gatewayLandingReports.slice(0, limit);
+}
 
 export function getGatewayFeaturedReports(limit = 2) {
   return gatewayReports.slice(0, limit);
@@ -436,8 +441,17 @@ export function buildReportOpenLabel(
     : "리포트 보기";
 }
 
-export function buildReportStatusLabel(_report: Pick<ReportMeta, "gatewayPlacement">) {
-  return "리포트";
+export function buildReportStatusLabel(report: Pick<ReportMeta, "gatewayPlacement">) {
+  switch (report.gatewayPlacement) {
+    case "front":
+      return "Front";
+    case "supporting":
+      return "Supporting";
+    case "archive":
+      return "Archive";
+    default:
+      return "Report";
+  }
 }
 
 export function buildReportArchivePath() {
