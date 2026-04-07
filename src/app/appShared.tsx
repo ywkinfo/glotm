@@ -171,7 +171,7 @@ export function buildPriorityLaneProgressNote(
   products: ProductMeta[],
   report?: Pick<ReportMeta, "gatewayLabel">
 ) {
-  const reportLabel = report ? "최신 리포트" : "리포트";
+  const reportLabel = report ? "우선 리포트" : "리포트";
 
   return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel}입니다.`;
 }

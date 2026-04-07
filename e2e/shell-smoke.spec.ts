@@ -14,6 +14,9 @@ test("gateway smoke", async ({ page }) => {
   await expect(
     page.getByText("이용자가 더 빨리 도움을 느낄 수 있는 레인부터 보강합니다")
   ).toBeVisible();
+  await expect(
+    page.getByText("국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 판단 질문부터 먼저 보고 싶다면 여기서 시작하면 됩니다.")
+  ).toBeVisible();
   await expect(page.getByText("ChaTm은 핵심 내용을 더 쉽게 보이게 다듬었어요")).toBeVisible();
   await expect(
     gatewayHero.getByRole("link", {

@@ -10,6 +10,8 @@ import {
   getGatewayFeaturedReports,
   getPrimaryGatewayReport,
   getReportBySlug,
+  getReportsForGuideSlug,
+  reportExperienceMeta,
   reports
 } from "../reports/registry";
 import type { DocumentData } from "../products/shared";
@@ -17,6 +19,7 @@ import type { DocumentData } from "../products/shared";
 const operatorProfileUrl = "https://ywkinfo.github.io";
 const primaryGatewayReport = getPrimaryGatewayReport();
 const supportingGatewayReport = getReportBySlug("global-use-evidence-system");
+const primaryChinaGuideHandoffReport = getReportsForGuideSlug("china")[0]?.report;
 const gatewayFeaturedReports = getGatewayFeaturedReports(2);
 const gatewayVisibleReports = getGatewayFeaturedReports(3);
 
@@ -466,7 +469,7 @@ describe("App portfolio shell", () => {
       "G-TEST123",
       "report_open",
       expect.objectContaining({
-        report_slug: primaryGatewayReport?.slug,
+        report_slug: primaryChinaGuideHandoffReport?.slug,
         guide_slug: "china",
         surface: "guide_home_handoff"
       })
@@ -579,7 +582,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const frontReportsSection = screen
-      .getByRole("heading", { name: "Gateway 첫 화면에서 최신 리포트를 먼저 보여줍니다" })
+      .getByRole("heading", { name: "Gateway 첫 화면에서 먼저 봐야 할 리포트를 보여줍니다" })
       .closest("section");
     const briefBanner = screen.getByRole("region", { name: "최신 브리프 배너" });
 
@@ -601,10 +604,8 @@ describe("App portfolio shell", () => {
     expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${gatewayFeaturedReports[1]?.slug}`);
     expect(reportLinks.at(2)).toHaveAttribute("href", `/reports/${gatewayVisibleReports[2]?.slug}`);
     expect(
-      within(frontReportsSection as HTMLElement).queryByText(
-        /국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 질문부터 보고 싶다면 여기서 시작하면 됩니다\./
-      )
-    ).toBeNull();
+      within(frontReportsSection as HTMLElement).getByText(reportExperienceMeta.gatewaySectionSummary)
+    ).toBeInTheDocument();
     expect(
       within(frontReportsSection as HTMLElement).queryByText(
         /현재 두 개의 리포트가 준비되어 있습니다\. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다\. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다\./
@@ -652,13 +653,13 @@ describe("App portfolio shell", () => {
       )
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 현지 맞춤 필요성을 먼저 본다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 표기 전략 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 판단표 보기" })
     ).toHaveAttribute(
       "href",
-      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
     expect(
       within(reportSection as HTMLElement).queryByText(primaryGatewayReport?.whyNow ?? "")
@@ -680,7 +681,7 @@ describe("App portfolio shell", () => {
     ).toBeGreaterThan(0);
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 최신 리포트입니다."
+        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 우선 리포트입니다."
       )
     ).toBeInTheDocument();
     expect(
@@ -1032,7 +1033,7 @@ describe("App portfolio shell", () => {
       `/reports/${primaryGatewayReport?.slug}`
     );
     expect(
-      screen.getByText(/ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 경로 판단 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(/글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다\./)
@@ -1051,25 +1052,28 @@ describe("App portfolio shell", () => {
 
     expect(screen.getByRole("heading", { name: "왜 지금 이 리포트를 먼저 읽는가" })).toBeInTheDocument();
     expect(
-      screen.getByText(/대상: 해외 진출 초기의 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅 리드/)
+      screen.getByText(/대상: 여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀/)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다\./)
+      screen.getByText(/여러 나라에 동시에 출원할 때 먼저 필요한 판단 기준을 한 문서에 모았습니다\./)
     ).toBeInTheDocument();
-    expect(screen.getByText("현지에서 실제로 불리고 검색될 이름이 무엇인지 먼저 적는다.")).toBeInTheDocument();
+    expect(screen.getByText("어느 시장에서 현지 맞춤이 더 많이 필요한지 먼저 적는다.")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "가이드로 이어 보기" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "JapTm: 일본어 표기와 발음 변형을 같이 본다" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "JapTm 표기 설계 보기" })).toHaveAttribute(
+    expect(screen.getByRole("heading", { name: "ChaTm: 현지 맞춤 필요성을 먼저 본다" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "ChaTm 판단표 보기" })).toHaveAttribute(
       "href",
-      "/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#일본어-표기와-발음-변형-설계"
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
     expect(
-      screen.getByText(/출원 경로와 사용 증거보다 한 단계 앞에서, 어떤 이름과 표기를 먼저 운영 기준으로 확정할지에 대한 판단이 자주 빠집니다\./)
+      screen.getByText(/ChaTm, MexTm, EuTm에서 이미 다룬 출원 경로 판단을 한 번에 다시 정리해, 여러 나라를 비교할 때 바로 참고할 수 있게 만든 리포트입니다\./)
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "LatTm 기준 프레임 보기" })).toHaveAttribute("href", "/latam");
-    expect(screen.getByRole("link", { name: "ChaTm 표기 전략 보기" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "LatTm route decision box" })).toHaveAttribute(
       "href",
-      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
+      "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
+    );
+    expect(screen.getByRole("link", { name: "ChaTm route decision matrix" })).toHaveAttribute(
+      "href",
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
     );
   });
 
@@ -1101,7 +1105,7 @@ describe("App portfolio shell", () => {
 
     const gatewayRender = renderAppRouteTree("/");
 
-    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 표기 전략 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 판단표 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -1110,7 +1114,7 @@ describe("App portfolio shell", () => {
         report_slug: primaryGatewayReport?.slug,
         guide_slug: "china",
         surface: "gateway_section",
-        target_path: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
+        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
       })
     );
 
@@ -1120,17 +1124,17 @@ describe("App portfolio shell", () => {
 
     await screen.findByRole("heading", { name: primaryGatewayReport?.title ?? "" });
 
-    clickTrackedLink(screen.getByRole("link", { name: "JapTm 표기 설계 보기" }));
-    clickTrackedLink(screen.getByRole("link", { name: "LatTm 기준 프레임 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 판단표 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "LatTm route decision box" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
       "report_guide_click",
       expect.objectContaining({
         report_slug: primaryGatewayReport?.slug,
-        guide_slug: "japan",
+        guide_slug: "china",
         surface: "report_detail_focus",
-        target_path: "/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#일본어-표기와-발음-변형-설계"
+        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
       })
     );
     expect(trackEventSpy).toHaveBeenCalledWith(
@@ -1138,9 +1142,8 @@ describe("App portfolio shell", () => {
       "report_guide_click",
       expect.objectContaining({
         report_slug: primaryGatewayReport?.slug,
-        guide_slug: "latam",
-        surface: "report_detail_focus",
-        target_path: "/latam"
+        surface: "report_detail_related",
+        target_path: "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
       })
     );
 

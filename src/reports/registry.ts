@@ -116,9 +116,9 @@ function sortReportsForGateway(left: ReportMeta, right: ReportMeta) {
 
 export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
-  gatewaySectionTitle: "Gateway 첫 화면에서 최신 리포트를 먼저 보여줍니다",
+  gatewaySectionTitle: "Gateway 첫 화면에서 먼저 봐야 할 리포트를 보여줍니다",
   gatewaySectionSummary:
-    "국가별 guide를 열기 전에 최신 리포트부터 먼저 훑고 싶다면 여기서 시작하면 됩니다.",
+    "국가별 guide를 열기 전에 여러 나라에 공통으로 걸리는 판단 질문부터 먼저 보고 싶다면 여기서 시작하면 됩니다.",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
   archiveHeroLead:
@@ -417,12 +417,14 @@ const reportSource: ReportMeta[] = [
 
 export const reports = [...reportSource].sort(sortReportsByPublishedAt);
 
+const gatewayReports = [...reports].sort(sortReportsForGateway);
+
 export function getGatewayFeaturedReports(limit = 2) {
-  return reports.slice(0, limit);
+  return gatewayReports.slice(0, limit);
 }
 
 export function getPrimaryGatewayReport() {
-  return reports[0];
+  return gatewayReports[0];
 }
 
 export function buildReportOpenLabel(
