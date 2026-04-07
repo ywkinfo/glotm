@@ -1,6 +1,7 @@
 # Gateway 콘텐츠 정합화 상태 메모
 
 작성 기준: 2026-04-01
+상태: historical memo. 현재 SEO/Pages 상태는 `PROJECT-OVERVIEW.md`, `README.md`, `docs/phase1-runtime-qa.md`를 기준으로 본다.
 대상 프로젝트: GloTm (Vite + React + TypeScript)
 작업 범위: Phase 1 (로컬 웹앱 완성도 강화, 즉시 배포 전제 없음)
 
@@ -63,9 +64,9 @@
 2. ChaTm 콘텐츠 밀도 확장
 3. UKTm을 beta 수준으로 끌어올릴 콘텐츠/구조 안정화
 
-### Phase 2 이후 보류
+### 당시 Phase 2 이후 보류
 
-1. Prerender + SEO 메타데이터
+1. Prerender + SEO 메타데이터 (현재 구현 완료)
 2. MexTm 빌드 파이프라인 패리티
 3. 이메일 게이트 + 파일럿 배포
 
