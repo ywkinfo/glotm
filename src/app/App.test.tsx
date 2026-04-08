@@ -444,9 +444,10 @@ describe("App portfolio shell", () => {
 
       const handoffSection = screen.getByRole("region", { name: "관련 Report / Trust Layer" });
       const reportLinks = within(handoffSection).getAllByRole("link", { name: "리포트 보기" });
+      const expectedGuideSlug = path.replace(/^\//, "");
 
-      expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${expectedReportSlugs[0]}`);
-      expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${expectedReportSlugs[1]}`);
+      expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${expectedReportSlugs[0]}?fromGuide=${expectedGuideSlug}`);
+      expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${expectedReportSlugs[1]}?fromGuide=${expectedGuideSlug}`);
       expect(within(handoffSection).getByText(summary)).toBeInTheDocument();
     }
   );
@@ -1070,7 +1071,7 @@ describe("App portfolio shell", () => {
   it("renders report detail pages with trust-layer handoff cards and related guide links", async () => {
     installFetchMock();
 
-    renderAppRouteTree(`/reports/${routeDecisionReport?.slug}`);
+    const reportRender = renderAppRouteTree(`/reports/${routeDecisionReport?.slug}`);
 
     await screen.findByRole("heading", { name: routeDecisionReport?.title ?? "" });
 
@@ -1101,6 +1102,23 @@ describe("App portfolio shell", () => {
     );
   });
 
+  it("restores the matching guide return CTA when a report opens from a guide handoff", async () => {
+    installFetchMock();
+
+    renderAppRouteTree(`/reports/${routeDecisionReport?.slug}?fromGuide=mexico`);
+
+    await screen.findByRole("heading", { name: routeDecisionReport?.title ?? "" });
+
+    expect(
+      screen.getByText("MexTm 홈의 trust layer handoff에서 넘어왔다면, 아래 CTA로 방금 보던 guide deep link로 바로 돌아갈 수 있습니다.")
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "MexTm로 돌아가기" })).toHaveAttribute(
+      "href",
+      "/mexico/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드국제출원-비교#buyer-entry-경로-선택표"
+    );
+    expect(screen.getAllByRole("heading", { name: "MexTm: 일괄 출원보다 현지 실행 통제를 먼저 본다" }).at(0)).toBeInTheDocument();
+  });
+
   it("renders evidence report detail with evidence-specific trust summary and EuTm handoff", async () => {
     installFetchMock();
 
@@ -1119,6 +1137,24 @@ describe("App portfolio shell", () => {
     expect(screen.getByRole("link", { name: "EuTm evidence triage" })).toHaveAttribute(
       "href",
       "/europe/chapter/제8장-등록-후-사용-갱신-증거-관리#distributor--marketplace-seller-evidence-triage"
+    );
+  });
+
+  it("restores a deep-link return CTA for evidence reports opened from a MexTm handoff", async () => {
+    installFetchMock();
+
+    renderAppRouteTree(`/reports/${evidenceReport?.slug}?fromGuide=mexico`);
+
+    await screen.findByRole("heading", { name: evidenceReport?.title ?? "" });
+
+    expect(screen.getByRole("link", { name: "MexTm로 돌아가기" })).toHaveAttribute(
+      "href",
+      "/mexico/chapter/제7장-등록-후-의무-사용-선언갱신권리-유지-캘린더#declarationrenewal-handoff-memo"
+    );
+    expect(screen.getAllByRole("heading", { name: "MexTm: 사용·갱신 owner를 함께 본다" }).at(0)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "MexTm 운영 가이드 보기" })).toHaveAttribute(
+      "href",
+      "/mexico/chapter/제7장-등록-후-의무-사용-선언갱신권리-유지-캘린더#declarationrenewal-handoff-memo"
     );
   });
 
@@ -1144,7 +1180,7 @@ describe("App portfolio shell", () => {
 
     gatewayRender.unmount();
 
-    renderAppRouteTree(`/reports/${routeDecisionReport?.slug}`);
+    const reportRender = renderAppRouteTree(`/reports/${routeDecisionReport?.slug}`);
 
     await screen.findByRole("heading", { name: routeDecisionReport?.title ?? "" });
 
@@ -1168,6 +1204,25 @@ describe("App portfolio shell", () => {
         report_slug: routeDecisionReport?.slug,
         surface: "report_detail_related",
         target_path: "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
+      })
+    );
+
+    reportRender.unmount();
+
+    renderAppRouteTree(`/reports/${routeDecisionReport?.slug}?fromGuide=mexico`);
+
+    await screen.findByRole("heading", { name: routeDecisionReport?.title ?? "" });
+
+    clickTrackedLink(screen.getByRole("link", { name: "MexTm로 돌아가기" }));
+
+    expect(trackEventSpy).toHaveBeenCalledWith(
+      "G-TEST123",
+      "report_guide_click",
+      expect.objectContaining({
+        report_slug: routeDecisionReport?.slug,
+        guide_slug: "mexico",
+        surface: "report_detail_return",
+        target_path: "/mexico/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드국제출원-비교#buyer-entry-경로-선택표"
       })
     );
 

@@ -81,3 +81,11 @@
 - 콘텐츠 조립 실패 없음
 - MexTm local pipeline 통과 및 shared root gate 입력 정리 완료
 - `/mexico` 홈/챕터/검색/continue reading 스모크 기준 충족
+
+## 2026-04-08 Sprint 2 lane note
+
+- `Ch5`에 filing go/hold/rebuild memo와 filing packet handoff scorecard를 추가해 owner, signing authority, `IMPI88` 비용 분리, `Tu cuenta PASE` / `Marca en Línea` handoff를 더 빠르게 읽히게 정리했다.
+- `Ch7`에 keep / trim / refile decision memo와 maintenance escalation triggers를 추가해 declaration of use, renewal, owner-user linkage를 단순 일정표가 아니라 유지관리 판단 보드로 연결했다.
+- `Ch10`에 border incident classification board와 IMPI / ANAM one-pack escalation memo를 추가해 `pedimento/annex` 회수와 IMPI 임시조치 lane을 같은 사건 파일로 다루도록 정리했다.
+- `mx_tm_fact_verification_log.md` notes에 `MX-FEE-001`, `MX-DL-001`, `MX-NORM-001`, `MX-ENF-001`의 Sprint 2 body promotion 위치를 기록했고, 부록 체크리스트·템플릿에도 연결 메모를 남겼다.
+- lane-local gate는 `npm --prefix MexTm run content:prepare` 기준으로 확인하고, shared root gate 입력은 별도 통합 레인에 넘긴다.
