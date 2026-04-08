@@ -235,7 +235,11 @@ const reportSource: ReportMeta[] = [
         title: "MexTm: 사용·갱신 owner를 함께 본다",
         summary:
           "멕시코는 실행 담당자와 갱신 담당자를 분리해 적지 않으면 filing 이후 handoff가 흐려지기 쉽습니다.",
-        href: getProductPathBySlug("mexico"),
+        href: buildGuideSectionPath(
+          "mexico",
+          "제7장-등록-후-의무-사용-선언갱신권리-유지-캘린더",
+          "declarationrenewal-handoff-memo"
+        ),
         guideSlug: "mexico",
         ctaLabel: "MexTm 운영 가이드 보기"
       },
@@ -257,7 +261,11 @@ const reportSource: ReportMeta[] = [
         title: "ChaTm: route와 evidence를 같이 본다",
         summary:
           "중국은 출원 판단과 사용 증거 운영이 빨리 연결되므로, 증거 담당자를 filing packet 단계에서 함께 잠가야 합니다.",
-        href: getProductPathBySlug("china"),
+        href: buildGuideSectionPath(
+          "china",
+          "제7장-등록-후-유지와-사용-증거",
+          "owner-user-linkage-표"
+        ),
         guideSlug: "china",
         ctaLabel: "ChaTm 운영 가이드 보기"
       }
@@ -395,6 +403,10 @@ export function buildReportArchivePath() {
 
 export function buildReportPath(reportSlug: string) {
   return `${buildReportArchivePath()}/${reportSlug}`;
+}
+
+export function buildReportGuideHandoffPath(reportSlug: string, guideSlug: string) {
+  return `${buildReportPath(reportSlug)}?fromGuide=${encodeURIComponent(guideSlug)}`;
 }
 
 export function getReportBySlug(reportSlug: string) {

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 
 import {
   buildReportArchivePath,
@@ -7,12 +7,13 @@ import {
   buildReportPath,
   formatReportDate,
   getLatestReport,
+  getPrimaryFocusPointForGuide,
   getReportBySlug,
   reportExperienceMeta,
   reports
 } from "../reports/registry";
 import { MarkdownArticle, StatusPage } from "../products/components";
-import { liveShellProducts } from "../products/registry";
+import { getProductBySlug, liveShellProducts } from "../products/registry";
 import {
   buildGeneratedContentUrl,
   buildProductPath,
@@ -98,11 +99,23 @@ export function ReportArchivePage() {
 
 export function ReportPage() {
   const params = useParams<{ reportSlug: string }>();
+  const [searchParams] = useSearchParams();
   const report = params.reportSlug ? getReportBySlug(params.reportSlug) : undefined;
+  const sourceGuideSlug = searchParams.get("fromGuide") ?? undefined;
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const sourceGuide = sourceGuideSlug ? getProductBySlug(sourceGuideSlug) : undefined;
+  const sourceGuideFocusPoint = report && sourceGuideSlug
+    ? getPrimaryFocusPointForGuide(sourceGuideSlug, report.slug)
+    : undefined;
+  const orderedFocusPoints = sourceGuideFocusPoint && report
+    ? [
+        sourceGuideFocusPoint,
+        ...report.focusPoints.filter((focusPoint) => focusPoint.id !== sourceGuideFocusPoint.id)
+      ]
+    : report?.focusPoints ?? [];
   const resourceLoaders = useMemo(() => {
     if (!report) {
       return null;
@@ -218,6 +231,29 @@ export function ReportPage() {
               includeLaneBridge: true
             }) || getTrustLayerSummaryFallback()}
           </p>
+          {sourceGuide && sourceGuideFocusPoint ? (
+            <>
+              <p className="brief-issue-note">
+                {`${sourceGuide.shortLabel} 홈의 trust layer handoff에서 넘어왔다면, 아래 CTA로 방금 보던 guide deep link로 바로 돌아갈 수 있습니다.`}
+              </p>
+              <div className="gateway-actions">
+                <FullDocumentLink
+                  className="gateway-button gateway-button--secondary"
+                  to={sourceGuideFocusPoint.href}
+                  onClick={() => {
+                    trackEngagement("report_guide_click", {
+                      report_slug: report.slug,
+                      target_path: sourceGuideFocusPoint.href,
+                      guide_slug: sourceGuide.slug,
+                      surface: "report_detail_return"
+                    });
+                  }}
+                >
+                  {`${sourceGuide.shortLabel}로 돌아가기`}
+                </FullDocumentLink>
+              </div>
+            </>
+          ) : null}
         </div>
 
         <div className="brief-item-stack">
@@ -236,7 +272,7 @@ export function ReportPage() {
             </ul>
           </article>
 
-          {report.focusPoints.length > 0 ? (
+          {orderedFocusPoints.length > 0 ? (
             <article className="brief-item-card">
               <div className="brief-item-header">
                 <span className="brief-item-index">02</span>
@@ -248,7 +284,7 @@ export function ReportPage() {
                 </div>
               </div>
               <div className="gateway-card-grid">
-                {report.focusPoints.map((focusPoint) => (
+                {orderedFocusPoints.map((focusPoint) => (
                   <article key={focusPoint.id} className="gateway-card">
                     <p className="gateway-kicker">이어 볼 가이드</p>
                     <h3 className="gateway-card-title">{focusPoint.title}</h3>

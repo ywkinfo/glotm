@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 import {
+  buildReportGuideHandoffPath,
   buildReportOpenLabel,
   buildReportPath,
   type GuideReportHandoff
@@ -110,7 +111,9 @@ export function GuideReportHandoffSection({
             <p className="gateway-card-copy">{focusPoint?.summary ?? report.summary}</p>
             <NavLink
               className="gateway-cta-link"
-              to={buildReportPath(report.slug)}
+              to={focusPoint?.guideSlug
+                ? buildReportGuideHandoffPath(report.slug, focusPoint.guideSlug)
+                : buildReportPath(report.slug)}
               onClick={() => {
                 trackEngagement("report_open", {
                   report_slug: report.slug,
