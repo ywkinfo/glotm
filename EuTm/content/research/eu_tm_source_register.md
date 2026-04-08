@@ -1,7 +1,7 @@
 # EuTm Source Register
 
-이 문서는 `EuTm` v1 본문 작성 전에 우선 확인할 1차 출처 후보군을 정리한 레지스터다.
-아래 항목은 링크 모음이 아니라, 어떤 기관의 어떤 문서군을 봐야 하는지 범주를 고정하기 위한 초안이다.
+이 문서는 `EuTm` stabilization lane에서 우선 확인할 1차 출처군을 정리한 source-register companion artifact다.
+이번 라운드의 목적은 새 범위를 넓히는 것이 아니라, 이미 잠근 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 기준선이 문서와 본문에서 같은 방향을 유지하도록 출처 범위를 고정하는 데 있다.
 
 ## Core Source Groups
 
@@ -17,6 +17,7 @@
 
 ## Coverage Notes
 
-- `EuTm` 본문은 우선 EU 단위 운영 구조를 중심축으로 잡는다.
+- `EuTm` 본문은 EU 공통 운영 프레임을 중심축으로 잡고, UK 병행 판단은 controlled EU+UK scope 안에서만 다룬다.
 - 회원국별 예외는 공통 본문을 해치지 않는 범위에서만 넣고, 필요하면 별도 트랙으로 분리한다.
 - 기관명, 시스템명, 절차명은 반드시 공식 표기와 일치시킨다.
+- fee, 공식 기한, 세부 절차 deep dive는 이번 stabilization lane에서 새 범위로 넓히지 않고, 필요 시 fact verification log의 verified item 유지 여부만 먼저 확인한다.

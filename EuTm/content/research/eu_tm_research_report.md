@@ -2,12 +2,12 @@
 
 ## 목적
 
-이 문서는 현재 shipped `EuTm` baseline의 리서치 범위와 핵심 질문을 정리하는 작업용 노트다.
+이 문서는 현재 shipped `EuTm` baseline의 리서치 범위와 핵심 질문을 정리하는 stabilization working note다.
 이번 라운드의 목적은 새 범위를 넓히는 것이 아니라, `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 설명을 같은 기준선으로 유지하는 데 있다.
 
 ## 현재 범위 가정
 
-- 기본 축: EU 단위 상표 운영
+- 기본 축: EU 공통 상표 운영 프레임
 - 병행 검토: UK 병행 판단, 마드리드 연계, 주요 회원국 편차 메모
 - 제외: 회원국별 deep dive, 국가별 fee 표, 특허·디자인·저작권 심화 본문
 
@@ -47,4 +47,5 @@
 - 변동성이 큰 사실은 본문보다 `eu_tm_fact_verification_log.md`에 먼저 적는다.
 - 구체 수치나 기간은 공식 1차 출처를 확인하기 전에는 확정 문장으로 쓰지 않는다.
 - 회원국별 예외는 범용 본문을 흐릴 경우 메모 수준으로 제한하고, 필요하면 후속 국가 트랙으로 분리한다.
+- 문서 상태 문구는 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 기준선과 어긋나지 않게 유지한다.
 - local lane 증빙은 `npm run content:prepare`를 우선 사용하고, 루트 동등 경로가 필요할 때만 `npm run content:europe`를 다시 재현한다. shared root gate는 리더 통합 단계에서 1회만 실행한다.
