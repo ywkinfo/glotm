@@ -678,8 +678,8 @@ describe("Shared reader runtime contract", () => {
       const handoffSection = screen.getByRole("region", { name: "관련 Report / Trust Layer" });
       const reportLinks = within(handoffSection).getAllByRole("link", { name: "리포트 보기" });
 
-      expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${expectedReportSlugs[0]}`);
-      expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${expectedReportSlugs[1]}`);
+      expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${expectedReportSlugs[0]}?fromGuide=${readerCase.productSlug}`);
+      expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${expectedReportSlugs[1]}?fromGuide=${readerCase.productSlug}`);
       expect(within(handoffSection).getByText(expectedSummary)).toBeInTheDocument();
     }
   );
