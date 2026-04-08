@@ -1,0 +1,52 @@
+{
+  "workspace": "MexTm",
+  "productSlug": "mexico",
+  "version": 1,
+  "auditMode": "advisory",
+  "claims": [
+    {
+      "id": "MX-FEE-001",
+      "jurisdiction": "MX",
+      "claim": "IMPI 공식 fee 체계는 출원, 갱신, 사용 선언을 서로 다른 절차로 나누고, 직접출원은 IMPI88, 갱신은 IMPI3170, 사용 선언은 IMPI-00-002 흐름으로 관리한다.",
+      "chapterRefs": ["Ch4", "Ch5", "Ch7", "Ch13", "Appendix"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["gobmx-impi88", "gobmx-impi3170", "impi-pase-faq-2026"],
+      "lastVerified": "2026-04-01",
+      "status": "BODY_READY",
+      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료"
+    },
+    {
+      "id": "MX-DL-001",
+      "jurisdiction": "MX",
+      "claim": "멕시코 공개본에서 고정 가능한 핵심 기한은 공고 후 1개월 opposition, 2018-08-10 이후 등록은 grant 후 3년+3개월 내 declaration of use, 등록 존속 10년이다.",
+      "chapterRefs": ["Ch4", "Ch6", "Ch7", "Ch13", "Appendix"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["impi-opposition-triptico", "impi-pase-faq-2026", "gobmx-impi3170", "wipo-madrid-2024-32"],
+      "lastVerified": "2026-04-01",
+      "status": "BODY_READY",
+      "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금"
+    },
+    {
+      "id": "MX-NORM-001",
+      "jurisdiction": "MX",
+      "claim": "공식 시스템명은 Tu cuenta PASE, Marca en Línea, MARCia, ClasNiza, MARCANET, SIGA/Gaceta 축으로 통일한다.",
+      "chapterRefs": ["Ch1", "Ch3", "Ch4", "Ch5", "Appendix"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["gobmx-pase-faq", "gobmx-pase-guide-pdf", "impi-transparencia-focalizada"],
+      "lastVerified": "2026-04-01",
+      "status": "BODY_READY",
+      "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료"
+    },
+    {
+      "id": "MX-ENF-001",
+      "jurisdiction": "MX",
+      "claim": "멕시코의 행정 집행은 IMPI declaraciones administrativas와 medidas provisionales를 중심으로 돌고, 국경 단계에서는 ANAM pedimento 및 annex 흐름이 실무 증거 축이 된다.",
+      "chapterRefs": ["Ch9", "Ch10", "Ch11", "Ch13", "Appendix"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["wipolex-lfppi-2020", "anam-pedimento-copies", "anam-dpa-fees"],
+      "lastVerified": "2026-04-01",
+      "status": "BODY_READY",
+      "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료"
+    }
+  ]
+}

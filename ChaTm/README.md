@@ -19,8 +19,9 @@
 
 - `npm run content:master`: `master.md` 생성
 - `npm run content:qa`: 콘텐츠 구조 검사
+- `npm run content:qa:facts`: 사실 검증 로그 기준 사실 QA 실행
 - `npm run content:build`: 리더용 JSON 산출물 생성
-- `npm run content:prepare`: 마스터 생성, QA, 콘텐츠 빌드를 순서대로 실행
+- `npm run content:prepare`: 마스터 생성, 구조 QA, 사실 QA, 콘텐츠 빌드를 순서대로 실행
 
 ## Notes
 

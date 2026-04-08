@@ -1,0 +1,124 @@
+{
+  "workspace": "ChaTm",
+  "productSlug": "china",
+  "version": 1,
+  "auditMode": "advisory",
+  "claims": [
+    {
+      "id": "CN-FEE-001",
+      "jurisdiction": "CN",
+      "claim": "CNIPA 상표 출원 수수료는 현재 종이신청 300위안/류, 온라인신청 270위안/류를 기본으로 안내된다.",
+      "chapterRefs": ["Ch5", "Ch14"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cnipa-fee-guide-2019", "cnipa-fee-answer-2024"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "notes": "제5장 예산·제출 메모와 체크리스트에 반영 완료"
+    },
+    {
+      "id": "CN-DL-001",
+      "jurisdiction": "CN",
+      "claim": "이의신청은 예비승인 공고일부터 3개월 내 제기 가능하다.",
+      "chapterRefs": ["Ch6", "Ch14"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cnipa-trademark-law-article-33"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "conceptKey": "opposition_period",
+      "normalized": {
+        "trigger": "publication",
+        "value": "3",
+        "unit": "months",
+        "expression": "within 3 months from preliminary approval publication"
+      },
+      "notes": "한국어 본문은 예비승인 공고일부터 3개월로 통일"
+    },
+    {
+      "id": "CN-DL-002",
+      "jurisdiction": "CN",
+      "claim": "거절결정 불복은 통지 수령일부터 15일 내 복심 신청이 가능하다.",
+      "chapterRefs": ["Ch6", "Ch14"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cnipa-trademark-law-article-34"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "notes": "제6장 공식 기한 잠금표와 15일 triage에 반영 완료"
+    },
+    {
+      "id": "CN-EVD-001",
+      "jurisdiction": "CN",
+      "claim": "불사용취소 절차에서 등록인은 통지 수령 후 2개월 내 사용 증거나 정당한 불사용 사유를 제출해야 한다.",
+      "chapterRefs": ["Ch7", "Ch8", "Ch14"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cnipa-nonuse-cancellation-guide-2023"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "conceptKey": "use_requirement",
+      "normalized": {
+        "trigger": "non_use_cancellation_notice",
+        "value": "2",
+        "unit": "months",
+        "expression": "submit use evidence or excuse within 2 months from notice"
+      },
+      "notes": "제7장 2개월 triage와 부분 유지 판단표에 반영 완료"
+    },
+    {
+      "id": "CN-ENF-001",
+      "jurisdiction": "CN",
+      "claim": "중국 상표 집행 경로에는 행정집행, 전자상거래 플랫폼 조치, 세관 보호, 사법 절차가 함께 작동한다.",
+      "chapterRefs": ["Ch10", "Ch12"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cnipa-infringement-standard-2020", "china-customs-ipr-guide", "spc-ip-report-2024"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "notes": "제10장 출구 선택 매트릭스와 채널별 증거 패키지에 반영 완료"
+    },
+    {
+      "id": "CN-FIL-001",
+      "jurisdiction": "CN",
+      "claim": "중국 출원에서는 类似商品和服务区分表 표준명칭과 수리가능 상품·서비스 명칭 원칙을 기준으로 분류를 설계한다.",
+      "chapterRefs": ["Ch5"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cnipa-accepted-naming-guide-2020", "cnipa-nice-classification-2025"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "conceptKey": "filing_route",
+      "normalized": {
+        "trigger": "direct_filing",
+        "value": "accepted goods-services naming required",
+        "unit": "rule",
+        "expression": "use accepted naming and classification principles"
+      },
+      "notes": "제3장 표준명칭 분리 기준과 제5장 handoff 표에 반영 완료"
+    },
+    {
+      "id": "CN-MAD-001",
+      "jurisdiction": "CN",
+      "claim": "중국은 Madrid System 회원국이며 국제등록 지정 후 보호 범위는 지정국의 국내법에 따라 정해진다.",
+      "chapterRefs": ["Ch4", "Ch14"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["wipo-china-office", "wipo-madrid-members"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "conceptKey": "filing_route",
+      "normalized": {
+        "trigger": "madrid_designation",
+        "value": "domestic law governs protection scope",
+        "unit": "rule",
+        "expression": "scope determined by designated state domestic law"
+      },
+      "notes": "직접출원 vs 마드리드의 우열은 실무 판단이므로 본문에서는 분기표로 다룸"
+    },
+    {
+      "id": "CN-NORM-001",
+      "jurisdiction": "CN",
+      "claim": "기관명과 절차명 표준안은 CNIPA, SAMR, 해관총서/해관, 인민법원, Madrid System 기준으로 통일한다.",
+      "chapterRefs": ["Ch10", "Ch12", "Ch14"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["cnipa-trademark-law", "wipo-china-office", "china-customs-ipr-guide", "spc-ip-report-2024"],
+      "lastVerified": "2026-03-31",
+      "status": "BODY_READY",
+      "notes": "제10장 공식 용어 표준안과 관련 장 전반의 용어 통일에 반영 완료"
+    }
+  ]
+}

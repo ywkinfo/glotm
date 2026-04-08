@@ -6,8 +6,9 @@
   "scripts": {
     "content:master": "node ../node_modules/tsx/dist/cli.mjs scripts/build-master.ts",
     "content:qa": "node ../node_modules/tsx/dist/cli.mjs scripts/qa-content.ts",
+    "content:qa:facts": "node ../node_modules/tsx/dist/cli.mjs ../scripts/research-audit/run-workspace-audit.ts --workspace ChaTm --product china",
     "content:build": "node ../node_modules/tsx/dist/cli.mjs scripts/build-content.ts",
-    "content:prepare": "npm run content:master && npm run content:qa && npm run content:build"
+    "content:prepare": "npm run content:master && npm run content:qa && npm run content:qa:facts && npm run content:build"
   },
   "dependencies": {
     "minisearch": "^7.1.2",
