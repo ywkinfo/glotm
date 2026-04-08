@@ -489,7 +489,7 @@ export function GatewayLandingPage() {
           {incubateProducts.length > 0 ? (
             <ProductGroup
               title="Incubate"
-              description={`${joinProductLabels(incubateProducts, " · ")}은 verification refresh, 문서 정합성, smoke QA를 우선하는 lighter track입니다.`}
+              description={`${joinProductLabels(incubateProducts, " · ")}은 verification refresh, reader utility, 문서 정합성을 우선하는 lighter track입니다. UsaTm·JapTm은 beta / standard QA를 유지하고, UKTm은 draft 공개본 early track + smoke QA를 유지합니다.`}
               products={incubateProducts}
               surface="portfolio_incubate"
             />

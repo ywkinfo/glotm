@@ -6,6 +6,7 @@
 
 - repository entrypoint: [`../README.md`](../README.md)
 - root navigation guide: [`../AGENTS.md`](../AGENTS.md)
+  root-level parallel execution rule is also defined here (`native parallel` first, no default `omx team`)
 - root shell architecture: [`../ARCHITECTURE.md`](../ARCHITECTURE.md)
 - current operating brief: [`../PROJECT-OVERVIEW.md`](../PROJECT-OVERVIEW.md)
 - agent routing: [`../CLAUDE.md`](../CLAUDE.md)

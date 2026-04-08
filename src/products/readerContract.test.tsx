@@ -83,6 +83,7 @@ type ReaderCase = {
   bookmarkChapterTitle: string;
   bookmarkSectionId: string;
   bookmarkSectionTitle: string;
+  showsDraftNotice: boolean;
 };
 
 function createReaderDocumentData(config: {
@@ -191,7 +192,8 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterSlug: "enforcement",
     bookmarkChapterTitle: "제11장. Enforcement",
     bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
+    bookmarkSectionTitle: "모니터링",
+    showsDraftNotice: false
   },
   {
     name: "Mexico",
@@ -227,7 +229,8 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterSlug: "mexico-enforcement",
     bookmarkChapterTitle: "멕시코 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
+    bookmarkSectionTitle: "모니터링",
+    showsDraftNotice: false
   },
   {
     name: "Usa",
@@ -263,7 +266,8 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterSlug: "us-enforcement",
     bookmarkChapterTitle: "미국 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
+    bookmarkSectionTitle: "모니터링",
+    showsDraftNotice: false
   },
   {
     name: "Japan",
@@ -299,7 +303,8 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterSlug: "japan-enforcement",
     bookmarkChapterTitle: "일본 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
+    bookmarkSectionTitle: "모니터링",
+    showsDraftNotice: false
   },
   {
     name: "China",
@@ -335,7 +340,8 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterSlug: "china-enforcement",
     bookmarkChapterTitle: "중국 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
+    bookmarkSectionTitle: "모니터링",
+    showsDraftNotice: true
   },
   {
     name: "Europe",
@@ -371,7 +377,8 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterSlug: "europe-enforcement",
     bookmarkChapterTitle: "유럽 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
-    bookmarkSectionTitle: "모니터링"
+    bookmarkSectionTitle: "모니터링",
+    showsDraftNotice: true
   },
   ...(
     ukModule
@@ -409,7 +416,8 @@ const readerCases: ReaderCase[] = [
           bookmarkChapterSlug: "uk-enforcement",
           bookmarkChapterTitle: "영국 제3장. 집행 운영",
           bookmarkSectionId: "monitoring",
-          bookmarkSectionTitle: "모니터링"
+          bookmarkSectionTitle: "모니터링",
+          showsDraftNotice: true
         } satisfies ReaderCase]
       : []
   )
@@ -687,6 +695,25 @@ describe("Shared reader runtime contract", () => {
       await screen.findByRole("heading", { name: readerCase.homeHeading });
 
       expect(screen.queryByRole("heading", { name: "관련 Report / Trust Layer" })).toBeNull();
+    }
+  );
+
+  it.each(readerCases)(
+    "shows draft notice only when the lane is explicitly draft on $name home",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const draftNotice = screen.queryByLabelText("콘텐츠 준비 중 안내");
+
+      if (readerCase.showsDraftNotice) {
+        expect(draftNotice).toBeInTheDocument();
+        return;
+      }
+
+      expect(draftNotice).toBeNull();
     }
   );
 

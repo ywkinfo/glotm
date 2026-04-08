@@ -24,7 +24,7 @@
 ## 이번 refresh에서 다시 잠근 점
 
 - `UsaTm/content:prepare` local full pipeline 재실행 후 `QA 0 errors / 0 warnings` 확인
-- generated 산출물 재생성 후 14개 챕터 / 검색 엔트리 171개 재확인
+- generated 산출물 재생성 후 14개 챕터 / 검색 엔트리 178개 재확인
 - foreign-domiciled applicant attorney requirement, Trademark Center, registration maintenance, CBP e-Recordation, TTAB 권한 범위를 source register 기준으로 다시 점검
 - 본문에서 변동성이 큰 fee/세부 기한은 여전히 fact log 우선 원칙을 유지하는지 확인
 
@@ -49,4 +49,4 @@
 
 ## 현재 운영 결론
 
-`UsaTm`은 더 이상 grandfathered beta를 억지로 유지하는 상태는 아니다. local full pipeline과 최신 verification log 기준으로 refresh는 완료됐고, 이후에는 freshness를 유지하면서 standard QA 근거를 반복 재현하는 쪽이 맞다. 대형 확장보다 reader utility와 운영 문구 정교화가 다음 우선순위다.
+`UsaTm`은 더 이상 grandfathered beta를 억지로 유지하는 상태는 아니다. local full pipeline과 최신 verification log 기준으로 refresh는 완료됐고, 이후에는 freshness를 유지하면서 standard QA 근거를 반복 재현하는 쪽이 맞다. 대형 확장보다 filing basis, specimen, monitoring 중심 reader utility와 운영 문구 정교화가 다음 우선순위다.

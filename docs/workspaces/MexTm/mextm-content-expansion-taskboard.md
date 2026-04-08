@@ -74,10 +74,10 @@
 1. `npm --prefix MexTm run content:prepare`
 2. `npm run content:mexico`
 3. `npm run test:content`
-4. `npm run build`
+4. shared root gate 입력 메모 정리
 
 완료 기준:
 
 - 콘텐츠 조립 실패 없음
-- MexTm local pipeline과 루트 content/build 검증 통과
+- MexTm local pipeline 통과 및 shared root gate 입력 정리 완료
 - `/mexico` 홈/챕터/검색/continue reading 스모크 기준 충족

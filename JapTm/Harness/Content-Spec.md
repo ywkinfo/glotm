@@ -38,3 +38,5 @@
 - 장 제목을 바꿀 때는 원고 H1, `manifest.json`, `master.md` 생성 결과를 함께 확인한다.
 - 수수료, 제출기한, 시스템 명칭, 공식 폼 이름은 `content/research/jp_tm_fact_verification_log.md` 또는 공식 출처와 맞춘다.
 - 장별 최소 3개 이상의 실무 섹션(H2)을 유지하고, 가능한 경우 체크리스트나 비교표를 포함한다.
+- lighter-track 유지 구간에서는 대형 확장보다 route, maintenance, evidence hygiene 흐름을 더 빨리 찾게 하는 체크리스트, 비교표, handoff 문장을 우선 보강한다.
+- 현재 공개 포지션은 `beta` lighter-track / `standard` QA 유지이므로, 편집 문구가 draft-only 상태나 대형 확장 직전처럼 읽히지 않게 관리한다.

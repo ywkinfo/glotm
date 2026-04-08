@@ -1,6 +1,8 @@
 # EuTm Fact Verification Log
 
 이번 스프린트에서는 새 범위를 넓히지 않고, 이미 검증된 사실이 어느 장에 어떻게 반영되었는지와 어떤 controlled gap이 남는지를 명확히 정리한다.
+현재 stabilization 기준선은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`다.
+새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
 | Item | Why it matters | Primary source target | Chapter ref | Status | Notes |
 |------|----------------|-----------------------|-------------|--------|-------|

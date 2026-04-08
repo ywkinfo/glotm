@@ -80,7 +80,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `EuTm` | 권역형 | validate | beta | 14 | 258 | 핵심 6장 심화 완료 · 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 178 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
-| `UKTm` | 단일국가 | incubate | pilot | 14 | 100 | lighter track · draft 공개본 |
+| `UKTm` | 단일국가 | incubate | pilot | 14 | 100 | early track · draft 공개본 |
 
 ### 확대 기준
 

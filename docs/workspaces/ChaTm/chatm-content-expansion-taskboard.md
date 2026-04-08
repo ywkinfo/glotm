@@ -87,20 +87,20 @@
 - 장 제목과 `manifest.json` 일치 여부 점검
 - 헤딩 구조와 표 형식 점검
 - `/china` 리더 QA 시나리오 정리
-- release-readiness 체크리스트 초안 작성
-- mature review용 QA 체크리스트와 smoke evidence 정리
+- shared release-readiness evidence 정리
+- mature refresh용 QA 체크리스트와 smoke evidence 정리
 
 순차 검증:
 
 1. `npm run content:china`
-2. `npm test`
-3. `npm run build`
-4. `npm run build:pages:glotm`
+2. `/china` 홈/챕터/검색/continue reading 스모크 evidence 정리
+3. mature refresh용 QA 체크리스트와 shared release-readiness evidence를 리더에게 전달
+4. shared root gate(`npm run health:runtime`, `npm run health:content`, `npm run health:release`)는 리더가 통합 후 1회 실행
 
 완료 기준:
 
 - 콘텐츠 조립 실패 없음
-- 루트 검증 명령 통과
+- workspace gate 결과와 shared root gate 입력값이 정리됨
 - `/china` 홈/챕터/검색/continue reading 스모크 기준 충족
 
 ## 최종 완료 정의
@@ -108,5 +108,5 @@
 - 권장 챕터 구조 반영
 - Sprint 1 우선 6개 장과 Sprint 2 보강 9개 장 반영 완료
 - fact log의 핵심 `Body-ready` 항목이 Sprint 1/2 주요 장에 실제 반영됨
-- `content:china`와 루트 검증 통과
-- 파일럿 배포 준비 메모와 mature review 체크리스트 작성 완료
+- `content:china`가 통과하고 shared root gate 입력값이 리더에게 전달됨
+- shared release evidence와 mature refresh 증빙 정리 완료

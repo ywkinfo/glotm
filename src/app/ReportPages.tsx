@@ -23,6 +23,7 @@ import {
 import {
   FullDocumentLink,
   ReportCard,
+  buildPriorityLaneProgressNote,
   buildPriorityLaneLabelSequence,
   buildTrustLayerGuideSummary,
   getTrustLayerSummaryFallback,
@@ -34,6 +35,7 @@ export function ReportArchivePage() {
   const leadReport = getLatestReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
+  const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
   const trustLayerGuideSummary =
     buildTrustLayerGuideSummary(leadReport, orderedProducts, {
       laneLabelSequence: priorityLaneLabelSequence,
@@ -54,6 +56,9 @@ export function ReportArchivePage() {
           <p className="gateway-summary">{reportExperienceMeta.archiveHeroSummary}</p>
           <p className="gateway-summary gateway-summary--supporting">
             {trustLayerGuideSummary || getTrustLayerSummaryFallback()}
+          </p>
+          <p className="gateway-summary gateway-summary--supporting">
+            {priorityLaneProgressNote}
           </p>
           {leadReport?.whyNow ? (
             <p className="gateway-summary gateway-summary--supporting">

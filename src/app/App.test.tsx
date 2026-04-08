@@ -697,7 +697,7 @@ describe("App portfolio shell", () => {
     ).toBeGreaterThan(0);
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 최신 리포트입니다."
+        "현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다."
       )
     ).toBeInTheDocument();
     expect(
@@ -1052,6 +1052,14 @@ describe("App portfolio shell", () => {
       screen.getByText(/ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
+      screen.getByText(
+        "현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다."
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(/ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\. 현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report \/ Gateway trust layer입니다\./)
+    ).toBeNull();
+    expect(
       screen.getByText(/글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다\./)
     ).toBeInTheDocument();
     expect(
@@ -1101,7 +1109,7 @@ describe("App portfolio shell", () => {
     await screen.findByRole("heading", { name: evidenceReport?.title ?? "" });
 
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 사용 증거 운영 구조를 이 리포트에서 한 번에 다시 정리했습니다\. 관련 가이드는 ChaTm -> MexTm -> EuTm 순서로 이어서 보면 흐름을 잡기 쉽습니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 사용 증거 운영 구조를 이 리포트에서 한 번에 다시 정리했습니다\. 현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report \/ Gateway trust layer입니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\./)
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "EuTm: validate evidence handoff를 고정한다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm evidence triage 보기" })).toHaveAttribute(

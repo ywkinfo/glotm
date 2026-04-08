@@ -34,6 +34,7 @@
 - content edit 또는 deeper QA 기준 경로: 이 워크스페이스 로컬 `npm run content:prepare`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 - 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
+- 현재 lane 목표는 `beta`와 `standard QA`를 lighter-track으로 안정적으로 유지하는 것이다. 대형 신규 집필보다 filing basis, specimen, monitoring reader utility를 루트 리더와 어긋나지 않게 유지하는 쪽을 우선한다.
 
 ## Editing Rules
 

@@ -34,6 +34,13 @@
 6. 각 workspace 계약 문서
 7. supporting docs (`docs/README.md` 이하)
 
+## Parallel Execution Rule
+
+- 이 저장소에서 병렬 실행이 필요할 때는 Codex native subagents / native parallel agents를 사용한다.
+- `omx team`, `$team`, `swarm`, tmux worker orchestration은 이 저장소의 기본 병렬 실행 수단으로 사용하지 않는다.
+- 예외는 OMX tmux team runtime 자체를 디버깅하거나, 사용자가 그 런타임을 명시적으로 점검하라고 요청한 경우뿐이다.
+- 배경: 이 저장소에서는 `worker_notify_failed`와 `target_resolution_failed:target_not_found`가 반복 확인되었으므로, 기본 병렬 정책을 native parallel로 고정한다.
+
 ## Working Surface Map
 
 - `src/`: 루트 셸, Gateway, guide reader, report runtime

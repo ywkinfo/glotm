@@ -42,7 +42,8 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `LatTm`: flagship. cross-border 우선순위와 운영 구조의 기준 프레임
 - `MexTm`, `ChaTm`: growth. buyer entry 가치와 실무 밀도를 우선 강화하는 국가 가이드
 - `EuTm`: validate. 권역형 구조와 verification 정합성을 안정화하는 가이드
-- `UsaTm`, `JapTm`, `UKTm`: incubate. lighter track으로 유지하며 freshness와 smoke QA를 먼저 관리
+- `UsaTm`, `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 filing/route/maintenance reader utility를 다듬는 가이드
+- `UKTm`: incubate pilot. draft 공개본 early-track으로 유지하며 fact verification과 smoke QA를 먼저 고정하는 가이드
 
 ## 지금 보면 좋은 가이드
 
@@ -53,7 +54,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 ## Current execution order
 
-- `ChaTm -> MexTm -> EuTm -> Report/Gateway trust layer -> JapTm -> UKTm -> UsaTm`
+- `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> JapTm -> UKTm -> UsaTm`
 - `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
 
 ## Three practical outcomes

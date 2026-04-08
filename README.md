@@ -76,7 +76,7 @@ npm run health:all
 - QA rollout supporting note: `docs/factual-qa-rollout.md`
 - GitHub Pages SEO / prerender source of truth: `scripts/seo.ts`, `scripts/prerender.ts`, `scripts/generate-sitemap.ts`, `scripts/prepare-pages.ts`
 
-현재 포트폴리오의 기본 실행 순서는 `ChaTm -> MexTm -> EuTm -> Report/Gateway trust layer -> JapTm -> UKTm -> UsaTm`입니다. `LatTm`은 기준 프레임 보호를 우선하며, 대형 신규 집필보다 freshness·density·reader QA 유지에 집중합니다.
+현재 포트폴리오의 기본 실행 순서는 `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> JapTm -> UKTm -> UsaTm`입니다. `LatTm`은 기준 프레임 보호를 우선하며, 대형 신규 집필보다 freshness·density·reader QA 유지에 집중합니다.
 
 운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verifiedOn`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. verification freshness는 저장하지 않고 `verifiedOn`에서 계산하며, search density는 `searchEntryCount / chapterCount`로 계산합니다.
 
