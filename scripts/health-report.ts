@@ -1,15 +1,81 @@
-import { pathToFileURL } from "node:url";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { products } from "../src/products/registry";
+import { getLifecycleCriteria } from "../src/products/scorecard";
 import {
   buildPortfolioHealthReport,
   nonProductHealthLanes,
+  type ProductResearchRecord,
   type RootHealthLaneId,
   type RootHealthLaneStatus
 } from "../src/products/health";
 import { readStoredRootStatuses } from "./health-lane-state";
+import { runConsistencyAudit } from "./research-audit/audit-consistency";
+import { runFactsAudit } from "./research-audit/audit-facts";
+import { runStalenessAudit } from "./research-audit/audit-staleness";
+import {
+  buildResearchSummary,
+  claimMapExists,
+  getClaimMapPath,
+  readClaimMap,
+  validateClaimMap
+} from "./research-audit/shared";
 
 export type CliFormat = "markdown" | "json";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.resolve(__dirname, "..");
+const pilotWorkspaceBySlug: Partial<Record<string, string>> = {
+  china: "ChaTm",
+  mexico: "MexTm"
+};
+
+function loadResearchBySlug() {
+  const researchBySlug: Partial<Record<string, ProductResearchRecord>> = {};
+
+  for (const product of products) {
+    const workspaceName = pilotWorkspaceBySlug[product.slug];
+
+    if (!workspaceName) {
+      continue;
+    }
+
+    const claimMapPath = getClaimMapPath(rootDir, workspaceName);
+
+    if (!claimMapExists(claimMapPath)) {
+      continue;
+    }
+
+    try {
+      const claimMap = readClaimMap(claimMapPath);
+      const lifecycleCriteria = getLifecycleCriteria(product.lifecycleStatus);
+      const schemaIssues = validateClaimMap(claimMap);
+
+      if (schemaIssues.some((issue) => issue.level === "error")) {
+        continue;
+      }
+
+      const issues = [
+        ...schemaIssues,
+        ...runFactsAudit(claimMap),
+        ...runStalenessAudit(claimMap, lifecycleCriteria.maximumVerificationFreshnessDays),
+        ...runConsistencyAudit(claimMap)
+      ];
+
+      researchBySlug[product.slug] = buildResearchSummary(
+        claimMap,
+        issues,
+        product,
+        lifecycleCriteria.maximumVerificationFreshnessDays
+      );
+    } catch {
+      continue;
+    }
+  }
+
+  return researchBySlug;
+}
 
 export function parseArgs(argv: string[]) {
   let format: CliFormat = "markdown";
@@ -53,7 +119,7 @@ export function parseArgs(argv: string[]) {
 }
 
 export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>) {
-  const report = buildPortfolioHealthReport(products, statuses);
+  const report = buildPortfolioHealthReport(products, statuses, loadResearchBySlug());
   const lines: string[] = [];
 
   lines.push("# GloTm Health Report");
@@ -81,6 +147,25 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
     lines.push(
       `| ${product.slug} | ${product.portfolioTier} | ${product.currentLifecycleStatus} | ${product.targetLifecycleStatus} | ${product.verdict} | ${product.verification.reportSummary} | ${product.verificationFreshnessDays}d | ${product.qaLevel} | ${product.highRiskVerificationGapCount} | ${product.lane.label} |`
     );
+  }
+
+  lines.push("");
+  lines.push("## Research Coverage");
+  lines.push("");
+
+  const researchProducts = report.products.filter((product) => product.research);
+
+  if (researchProducts.length === 0) {
+    lines.push("- none");
+  } else {
+    lines.push("| Guide | Audit Mode | Fact Integrity | Consistency | Critical Freshness | Stale High-Risk | Effective Gap | Gate |");
+    lines.push("| --- | --- | --- | --- | --- | --- | --- | --- |");
+
+    for (const product of researchProducts) {
+      lines.push(
+        `| ${product.slug} | ${product.research?.auditMode} | ${product.research?.factIntegrityScore} | ${product.research?.consistencyScore} | ${product.research?.criticalClaimFreshnessDays}d | ${product.research?.staleHighRiskClaimCount} | ${product.research?.effectiveHighRiskGapCount} | ${product.research?.gate} |`
+      );
+    }
   }
 
   lines.push("");
@@ -136,9 +221,10 @@ export function buildCliOutput(
     ...storedStatuses,
     ...statuses
   };
+  const researchBySlug = loadResearchBySlug();
 
   if (format === "json") {
-    return JSON.stringify(buildPortfolioHealthReport(products, resolvedStatuses), null, 2);
+    return JSON.stringify(buildPortfolioHealthReport(products, resolvedStatuses, researchBySlug), null, 2);
   }
 
   return formatMarkdown(resolvedStatuses);

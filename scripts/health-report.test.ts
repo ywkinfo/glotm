@@ -21,11 +21,15 @@ describe("health report CLI", () => {
   it("emits machine-readable JSON when the spaced format flag is used", () => {
     const output = buildCliOutput(["--format", "json", "--runtime=pass"], {});
     const report = JSON.parse(output);
+    const researchProducts = report.products
+      .filter((product: { slug: string; research?: unknown }) => product.research)
+      .map((product: { slug: string }) => product.slug);
 
     expect(report.root[0]).toMatchObject({
       id: "runtime",
       status: "pass"
     });
+    expect(researchProducts).toEqual(["china", "mexico"]);
     expect(report.products.find((product: { slug: string }) => product.slug === "china")).toMatchObject({
       slug: "china",
       currentLifecycleStatus: "mature",
@@ -33,6 +37,29 @@ describe("health report CLI", () => {
         mode: "root-full-pipeline",
         scopeLabel: "root full pipeline",
         reportSummary: "root content full pipeline"
+      },
+      research: {
+        auditMode: "advisory",
+        factIntegrityScore: 100,
+        consistencyScore: 100,
+        staleHighRiskClaimCount: 0,
+        gate: "pass"
+      }
+    });
+    expect(report.products.find((product: { slug: string }) => product.slug === "mexico")).toMatchObject({
+      slug: "mexico",
+      currentLifecycleStatus: "mature",
+      verification: {
+        mode: "root-full-pipeline",
+        scopeLabel: "root full pipeline",
+        reportSummary: "root content full pipeline"
+      },
+      research: {
+        auditMode: "advisory",
+        factIntegrityScore: 100,
+        consistencyScore: 100,
+        staleHighRiskClaimCount: 0,
+        gate: "pass"
       }
     });
     expect(report.root.find((lane: { id: string }) => lane.id === "content")).toMatchObject({
@@ -55,5 +82,10 @@ describe("health report CLI", () => {
     expect(output).toContain("| health:release | fail |");
     expect(output).toContain("verification scope: full pipeline: latam, mexico, china, europe, uk; shortcut refresh: usa, japan");
     expect(output).toContain("| usa | incubate | beta | beta | hold | root content shortcut refresh only |");
+    expect(output).toContain("## Research Coverage");
+    expect(output).toContain("| china | advisory | 100 | 100 | 4d | 0 | 0 | pass |");
+    expect(output).toContain("| mexico | advisory | 100 | 100 | 3d | 0 | 0 | pass |");
+    expect(output).not.toContain("| europe | advisory |");
+    expect(output).not.toContain("| usa | advisory |");
   });
 });

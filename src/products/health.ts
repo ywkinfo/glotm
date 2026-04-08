@@ -53,6 +53,7 @@ export type ProductHealthRecord = {
   highRiskVerificationGapCount: number;
   currentLifecycleGaps: string[];
   verification: ProductVerificationRecord;
+  research?: ProductResearchRecord;
   lane: ProductHealthLane;
 };
 
@@ -64,6 +65,16 @@ export type RootHealthRecord = RootHealthLaneRecord & {
 export type PortfolioHealthReport = {
   root: RootHealthRecord[];
   products: ProductHealthRecord[];
+};
+
+export type ProductResearchRecord = {
+  auditMode: "advisory";
+  factIntegrityScore: number;
+  consistencyScore: number;
+  criticalClaimFreshnessDays: number;
+  staleHighRiskClaimCount: number;
+  effectiveHighRiskGapCount: number;
+  gate: "pass" | "warn" | "fail";
 };
 
 export type ProductVerificationMode = "root-full-pipeline" | "root-shortcut-refresh";
@@ -255,7 +266,10 @@ export function buildRootContentVerificationRecord(products: Pick<ProductMeta, "
   };
 }
 
-export function buildProductHealthRecord(product: ProductMeta): ProductHealthRecord {
+export function buildProductHealthRecord(
+  product: ProductMeta,
+  researchBySlug: Partial<Record<string, ProductResearchRecord>> = {}
+): ProductHealthRecord {
   const assessment = assessProductLifecycle(product);
   const verificationFreshnessDays = getVerificationFreshnessDays(product);
 
@@ -273,6 +287,7 @@ export function buildProductHealthRecord(product: ProductMeta): ProductHealthRec
     highRiskVerificationGapCount: product.highRiskVerificationGapCount,
     currentLifecycleGaps: getLifecycleCriteriaGaps(product, product.lifecycleStatus),
     verification: buildProductVerificationRecord(product),
+    research: researchBySlug[product.slug],
     lane: productHealthLaneBySlug[product.slug] ?? {
       id: "latam-baseline",
       label: "LatTm baseline reference",
@@ -284,7 +299,8 @@ export function buildProductHealthRecord(product: ProductMeta): ProductHealthRec
 
 export function buildPortfolioHealthReport(
   products: ProductMeta[],
-  rootStatuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>> = {}
+  rootStatuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>> = {},
+  researchBySlug: Partial<Record<string, ProductResearchRecord>> = {}
 ): PortfolioHealthReport {
   const contentVerification = buildRootContentVerificationRecord(products);
 
@@ -295,7 +311,7 @@ export function buildPortfolioHealthReport(
       verification: lane.id === "content" ? contentVerification : undefined
     })),
     products: [...products]
-      .map((product) => buildProductHealthRecord(product))
+      .map((product) => buildProductHealthRecord(product, researchBySlug))
       .sort((left, right) => {
         if (left.lane.order !== right.lane.order) {
           return left.lane.order - right.lane.order;

@@ -132,6 +132,49 @@ describe("portfolio health helpers", () => {
     ]);
   });
 
+  it("adds optional research data without changing product verdicts", () => {
+    const report = buildPortfolioHealthReport(products, {}, {
+      china: {
+        auditMode: "advisory",
+        factIntegrityScore: 100,
+        consistencyScore: 100,
+        criticalClaimFreshnessDays: 4,
+        staleHighRiskClaimCount: 0,
+        effectiveHighRiskGapCount: 0,
+        gate: "pass"
+      },
+      mexico: {
+        auditMode: "advisory",
+        factIntegrityScore: 100,
+        consistencyScore: 100,
+        criticalClaimFreshnessDays: 3,
+        staleHighRiskClaimCount: 0,
+        effectiveHighRiskGapCount: 0,
+        gate: "pass"
+      }
+    });
+    const china = report.products.find((product) => product.slug === "china");
+    const mexico = report.products.find((product) => product.slug === "mexico");
+
+    expect(china).toBeDefined();
+    expect(mexico).toBeDefined();
+    expect(china?.verdict).toBe("hold");
+    expect(mexico?.verdict).toBe("hold");
+    expect(china?.research).toMatchObject({
+      auditMode: "advisory",
+      factIntegrityScore: 100,
+      gate: "pass"
+    });
+    expect(mexico?.research).toMatchObject({
+      auditMode: "advisory",
+      factIntegrityScore: 100,
+      gate: "pass"
+    });
+    expect(report.products.find((product) => product.slug === "latam")?.research).toBeUndefined();
+    expect(report.products.find((product) => product.slug === "europe")?.research).toBeUndefined();
+    expect(report.products.find((product) => product.slug === "usa")?.research).toBeUndefined();
+  });
+
   it("treats the promoted LatTm and EuTm states as hold after the monthly review decision", () => {
     const latam = products.find((product) => product.slug === "latam");
     const europe = products.find((product) => product.slug === "europe");
