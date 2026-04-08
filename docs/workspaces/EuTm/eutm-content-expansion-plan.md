@@ -91,7 +91,7 @@
 - `content/source/chapters/*.md` 체계 운영 중
 - `content/source/master.md`를 조립 결과물로 관리 중
 - `scripts/build-master.ts`, `scripts/qa-content.ts` 운영 중
-- `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`는 현재 워크스페이스 기준 상태를 반영한다
+- `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`는 현재 워크스페이스 기준 상태를 반영한다
 - 런타임 포지션은 `validate tier · beta lifecycle`이며, 범위는 EU 공통 프레임 + UK 병행 판단까지의 controlled scope로 유지한다
 
 ### v1 콘텐츠 목표
@@ -133,15 +133,15 @@
 9. 취소, 무효, 불사용 리스크
    - cancellation / invalidity / proof of use 방어 구조
 10. 라이선스, 유통, 병행수입
-   - exhaustion, distribution, QC 메모
+    - exhaustion, distribution, QC 메모
 11. 온라인 플랫폼, 도메인, 디지털 집행
-   - platform takedown, domain, online seller triage
+    - platform takedown, domain, online seller triage
 12. 세관과 국경조치
-   - customs recordal, product ID pack, border ops
+    - customs recordal, product ID pack, border ops
 13. 회원국 분쟁과 포럼 선택
-   - 행정/민사/국가별 포럼 분기
+    - 행정/민사/국가별 포럼 분기
 14. 운영 거버넌스와 RACI
-   - 본사/현지/외부대리인 책임 구조
+    - 본사/현지/외부대리인 책임 구조
 
 ---
 
@@ -343,7 +343,7 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 추가 완료 기준:
 
 - `content:europe`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
-- `README`, `Architecture`, `Content-Spec`, research docs의 상태 설명이 일치한다.
+- `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`, research docs의 상태 설명이 일치한다.
 
 ---
 

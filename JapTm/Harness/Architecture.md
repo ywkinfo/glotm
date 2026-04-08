@@ -2,8 +2,8 @@
 
 ## Purpose
 
-`JapTm`은 일본 상표 실무를 다루는 단일국가 심화 워크스페이스다.
-현재는 장별 원고와 `manifest.json`을 기준으로 `master.md`를 조립한 뒤 QA와 generated JSON 생성을 거치는 콘텐츠 파이프라인으로 운영되며, 루트 `GloTm` 셸의 `/japan` 경로에 연결된 live country guide다.
+`JapTm`은 일본 상표 실무를 다루는 워크스페이스다.
+장별 원고와 `manifest.json`을 기준으로 `master.md`를 조립한 뒤 QA와 generated JSON 생성을 거치며, 루트 `GloTm` 셸의 `/japan` 리더가 이 워크스페이스 산출물을 소비한다.
 
 ## Source Of Truth
 
@@ -27,13 +27,12 @@
 4. `scripts/build-content.ts`가 `master.md`를 HTML, headings tree, summary, search entries로 변환한다.
 5. 루트 `GloTm` 셸은 generated JSON을 소비해 `/japan` 리더를 렌더링한다.
 
-## Current Verified Shape
+## Local Verification Contract
 
-- 목표 챕터 수: 15
-- 현재 기준 검색 엔트리 수: 141
-- 파이프라인 명령: 루트에서 `npm run content:japan`
+- 루트 refresh 명령: `npm run content:japan`
+- content edit 또는 deeper QA 기준 경로: 이 워크스페이스 로컬 `npm run content:prepare`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
-- 현재 런타임 경로: `/japan`, `/japan/chapter/:chapterSlug`
+- 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 
 ## Editing Rules
 

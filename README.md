@@ -56,22 +56,23 @@ npm run health:all
 
 루트 워크스페이스 명령은 각 가이드의 generated JSON을 현재 검증 계약에 맞게 재생성합니다. 다만 실행 깊이는 가이드마다 다릅니다. 현재 `LatTm`·`MexTm`·`ChaTm`·`EuTm`·`UKTm`은 루트에서도 full pipeline을 사용하고, `UsaTm`·`JapTm`은 루트에서 shortcut 예외 그룹으로 동작합니다. `UsaTm`·`JapTm`의 콘텐츠를 직접 수정하거나 deeper content QA가 필요할 때는 각 가이드의 로컬 `content:prepare`를 우선 실행하고, 편집 작업 전에는 각 가이드의 `README.md`와 `package.json`을 함께 확인합니다.
 
-## Source Of Truth
+## Documentation Map
+
+- 현재 operating brief: `PROJECT-OVERVIEW.md`
+- 루트 working rules: `Harness/Constitution.md`, `Harness/Style-Guide.md`, `Harness/QA-Gate.md`
+- supporting docs index: `docs/README.md`
+- 워크스페이스별 콘텐츠 규칙: 각 디렉터리의 `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`
+- historical root memos: `CODEX-GATEWAY-FIXES.md`, `FEASIBILITY-REVIEW.md`
+
+## Runtime Source Of Truth
 
 - 런타임 제품 메타데이터: `src/products/registry.ts`
 - Report / Gateway trust layer 메타데이터: `src/reports/registry.ts`
 - 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
 - buyer-facing 포지셔닝: `docs/buyer-narrative.md`
-- 현재 phase / 우선순위 브리프: `PROJECT-OVERVIEW.md`
 - 루트 런타임 QA 체크리스트: `docs/phase1-runtime-qa.md`
-- 포트폴리오 우선순위 기준: `docs/portfolio-scorecard.md`
+- QA rollout supporting note: `docs/factual-qa-rollout.md`
 - GitHub Pages SEO / prerender source of truth: `scripts/seo.ts`, `scripts/prerender.ts`, `scripts/generate-sitemap.ts`, `scripts/prepare-pages.ts`
-- EuTm 확장 실행 계획: `docs/eutm-content-expansion-plan.md`
-- MexTm 확장 실행 계획: `docs/mextm-content-expansion-plan.md`
-- UKTm 확장 실행 계획: `docs/uktm-content-expansion-plan.md`
-- ChaTm 확장 실행 계획: `docs/chatm-content-expansion-plan.md`
-- ChaTm mature QA 체크리스트: `docs/chatm-mature-qa-checklist.md`
-- 워크스페이스별 콘텐츠 규칙: 각 디렉터리의 `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`
 
 현재 포트폴리오의 기본 실행 순서는 `ChaTm -> MexTm -> EuTm -> Report/Gateway trust layer -> JapTm -> UKTm -> UsaTm`입니다. `LatTm`은 기준 프레임 보호를 우선하며, 대형 신규 집필보다 freshness·density·reader QA 유지에 집중합니다.
 

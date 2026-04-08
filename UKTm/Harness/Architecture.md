@@ -3,7 +3,7 @@
 ## Purpose
 
 `UKTm`은 영국 상표 실무를 다루는 단일국가 워크스페이스다.
-현재는 루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비하는 early-track 구조로 운영 중이다.
+루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비한다.
 
 ## Source Of Truth
 
@@ -23,13 +23,13 @@
 4. `scripts/build-content.ts`가 `master.md`를 HTML, headings tree, search entries로 변환한다.
 5. 루트 `GloTm` 셸이 generated JSON을 읽어 `/uk` 홈, 챕터, 검색 흐름을 렌더링한다.
 
-## Current Verified Shape
+## Local Verification Contract
 
-- 현재 목표 챕터 수: 14
-- 초기 공개 범위: draft 상태의 영국 단일국가 가이드
 - 파이프라인 명령: 루트에서 `npm run content:uk`
+- workspace local verification 기준 경로: 이 워크스페이스 로컬 `npm run content:prepare`
+- refresh review 메모: `content/research/uk_tm_accuracy_completeness_review.md`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
-- 현재 운영 우선순위: status 승격이 아니라 fact log 정합성과 루트 회귀 방지
+- 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 
 ## Editing Rules
 

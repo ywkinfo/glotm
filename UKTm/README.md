@@ -1,7 +1,7 @@
 # UKTm
 
 영국 상표 실무 운영 가이드북의 콘텐츠 원고, 리서치 문서, 빌드 스크립트를 관리하는 워크스페이스입니다.
-현재 활성 런타임은 루트 `GloTm` 셸이며, `UKTm`은 `/uk` 경로에 이미 연결된 영국 단일국가 early track입니다.
+현재 활성 런타임은 루트 `GloTm` 셸이며, `UKTm`은 `/uk` 경로로 연결된 영국 단일국가 가이드입니다.
 
 ## Structure
 
@@ -27,8 +27,6 @@
 - 공개본 기준은 `content/source/master.md`이지만, 유지보수 시작점은 `content/source/chapters/`, `content/source/appendix/`, `manifest.json`입니다.
 - `master.md`는 조립 결과물로 취급하며, 수동 편집보다 재생성을 우선합니다.
 - 영국 실무는 Brexit 이후 EU 경로와 분리된 운영 판단이 많으므로, `EuTm`과 중복 설명보다 UKIPO 실무 판단 기준을 우선 정리합니다.
-- 현재 빌드 기준 산출물은 14개 챕터 / 검색 엔트리 100개입니다.
 - 수수료, 기한, 기관명, 공식 시스템 명칭처럼 변동성이 큰 정보는 출판 직전 `content/research/uk_tm_fact_verification_log.md`로 다시 확인합니다.
-- verification refresh 판정은 `content/research/uk_tm_accuracy_completeness_review.md`와 로컬 `content:prepare` 재현 결과를 함께 기준으로 봅니다.
-- 현재 `UKTm`의 런타임 포지션은 `incubate tier · pilot lifecycle · smoke QA`입니다.
-- 현재 우선순위는 신규 대확장보다 `draft 공개본 · early track` 상태를 유지하면서 문서 정합성, fact log, route/maintenance/platform reader utility, 루트 회귀 방지 기준을 단단히 하는 것입니다.
+- verification refresh를 다시 잠글 때는 `content/research/uk_tm_accuracy_completeness_review.md`와 이 워크스페이스 로컬 `npm run content:prepare` 재현을 함께 확인합니다.
+- 런타임 메타데이터, lifecycle, 현재 우선순위, 포트폴리오 실행 순서, 루트 refresh 정책은 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인합니다.

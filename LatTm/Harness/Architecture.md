@@ -2,8 +2,8 @@
 
 ## Purpose
 
-`LatTm`은 현재 GloTm에서 가장 성숙한 콘텐츠 파이프라인이다.
-루트 셸의 `LatTm` 리더는 이 워크스페이스의 generated JSON을 소비한다.
+`LatTm`은 중남미 상표 보호 운영 가이드를 다루는 워크스페이스다.
+루트 `GloTm` 셸의 `LatTm` 리더는 이 워크스페이스의 generated JSON을 소비한다.
 
 ## Source Of Truth
 
@@ -21,12 +21,11 @@
 4. `scripts/build-content.ts`가 `master.md`를 HTML, headings tree, search entries로 변환한다.
 5. 루트 GloTm 셸이 generated JSON을 읽어 홈, 챕터, 검색 흐름을 렌더링한다.
 
-## Current Verified Shape
+## Local Verification Contract
 
-- 현재 기준 챕터 수: 20
-- 현재 기준 검색 엔트리 수: 781
 - 파이프라인 명령: 루트에서 `npm run content:latam`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
+- 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 
 ## Editing Rules
 

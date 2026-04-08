@@ -16,7 +16,7 @@
 
 ### 1. 문서 정합성 고정
 
-- `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`가 현재 early-track 상태를 일관되게 설명
+- `UKTm/README.md`, `UKTm/Harness/Architecture.md`, `UKTm/Harness/Content-Spec.md`가 현재 early-track 상태를 일관되게 설명
 - `/uk`가 이미 live route라는 사실과 `draft 공개본` 포지션을 문서에 명시
 
 ### 2. fact verification 우선

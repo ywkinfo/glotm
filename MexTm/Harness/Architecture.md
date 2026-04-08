@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`MexTm`은 루트 GloTm 셸에서 핵심 리더 기능 parity를 맞춘 멕시코 심화 워크스페이스다.
+`MexTm`은 멕시코 상표 실무를 다루는 워크스페이스다.
 현재는 루트 `GloTm` 셸의 `/mexico` 리더가 이 워크스페이스의 generated JSON을 소비한다.
 
 ## Source Of Truth
@@ -27,12 +27,11 @@
 4. `scripts/build-content.ts`가 `master.md`를 HTML, headings tree, summary, search entries로 변환한다.
 5. 루트 GloTm 셸이 generated JSON을 읽어 홈, 챕터, 검색 흐름을 렌더링한다.
 
-## Current Verified Shape
+## Local Verification Contract
 
-- 현재 기준 챕터 수: 15
-- 현재 기준 검색 엔트리 수: 266
 - 파이프라인 명령: 루트에서 `npm run content:mexico`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
+- 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 
 ## Editing Rules
 

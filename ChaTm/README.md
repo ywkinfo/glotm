@@ -1,7 +1,7 @@
 # ChaTm
 
 중국 상표제도와 중국 상표 실무 운영 이슈를 다루는 워크스페이스입니다.
-현재 활성 런타임은 루트 `GloTm` 셸이며, `ChaTm`는 `/china` 경로로 연결된 live country guide입니다.
+현재 활성 런타임은 루트 `GloTm` 셸이며, `ChaTm`는 `/china` 경로로 연결된 가이드입니다.
 
 ## Structure
 

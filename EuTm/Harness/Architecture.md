@@ -3,7 +3,7 @@
 ## Purpose
 
 `EuTm`은 유럽 상표 운영 가이드를 다루는 권역형 워크스페이스다.
-현재는 루트 `GloTm` 셸의 `/europe` 리더가 이 워크스페이스의 generated JSON을 소비한다.
+루트 `GloTm` 셸의 `/europe` 리더가 이 워크스페이스의 generated JSON을 소비한다.
 
 ## Source Of Truth
 
@@ -27,16 +27,11 @@
 4. `scripts/build-content.ts`가 `master.md`를 HTML, headings tree, search entries로 변환한다.
 5. 루트 `GloTm` 셸이 generated JSON을 읽어 `/europe` 홈, 챕터, 검색 흐름을 렌더링한다.
 
-## Current Verified Shape
+## Local Verification Contract
 
-- 현재 기준 챕터 수: 14
-- 현재 기준 검색 엔트리 수: 258
 - 파이프라인 명령: 루트에서 `npm run content:europe`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
-- 현재 상태: `validate tier · beta lifecycle` 기준의 live regional guide
-- 현재 운영 범위: EU 공통 프레임 + UK 병행 판단까지를 controlled scope로 유지
-- 현재 우선 안정화 범위: `제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`
-- 현재 lane 의미: 핵심 6장 심화 반영을 다시 넓히는 것이 아니라, docs sync와 reader copy를 현재 baseline과 같은 언어로 유지하는 것
+- 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 
 ## Editing Rules
 
@@ -46,7 +41,7 @@
 - generated JSON은 손으로 수정하지 않는다.
 - 정확 수치, 공식 기간, 수수료는 본문보다 `content/research/eu_tm_fact_verification_log.md`에서 먼저 검증한다.
 - 루트 메타데이터, Gateway copy, shared root gate는 이 워크스페이스가 아니라 리더 통합 단계에서 처리한다.
-- validate lane에서는 EU 공통 프레임과 UK 병행 판단까지를 본문 기준선으로 유지하고, 회원국 deep dive는 메모 수준을 넘겨 무리하게 확장하지 않는다.
+- 권역형 본문은 EU 공통 프레임을 기준으로 유지하고, UK 비교는 controlled scope로 다룬다.
 
 ## Implementation Notes
 
@@ -54,4 +49,4 @@
 - `build-content.ts`는 `master.md`의 H2를 챕터 경계로 보고, H3-H5를 outline과 검색 섹션 단위로 사용한다.
 - 챕터 도입부는 summary와 overview search entry의 재료가 된다.
 - 외부 링크는 유럽 상표 관련 공식 도메인 목록과 대조해 `official-link` 클래스를 부여한다.
-- 핵심 6장 보강은 이미 공개본에 반영되어 있으며, 현재 스프린트의 목적은 그 장들의 권리 선택·clearance·filing·opposition·사용·갱신 운영 구조를 docs sync와 같은 언어로 다시 잠그는 데 있다.
+- 핵심 장을 보강할 때는 권리 선택·clearance·filing·opposition·사용·갱신 흐름이 같은 운영 언어로 읽히도록 유지한다.
