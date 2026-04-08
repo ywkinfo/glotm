@@ -13,6 +13,8 @@
 - 생성 산출물: `content/generated/document-data.json`, `content/generated/search-index.json`
 - 루트 런타임 소비자: `../src/products/europe.tsx`
 - 리서치 자산: `content/research/*.md`
+- source-register companion: `content/research/eu_tm_source_register.md`
+- 사실 검증 기준선: `content/research/eu_tm_fact_verification_log.md`
 
 중요:
 
@@ -29,8 +31,11 @@
 
 ## Local Verification Contract
 
-- 파이프라인 명령: 루트에서 `npm run content:europe`
+- 워크스페이스 baseline 명령: `npm run content:prepare`
+- 루트 동등 경로: 루트에서 `npm run content:europe`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
+- 현재 lane baseline: `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle`
+- local workspace 증빙은 `content:prepare` 통과를 우선 사용하고, 루트 동등 경로가 필요할 때만 `content:europe`를 다시 재현한다. shared root gate는 리더 통합 단계에서 1회만 실행한다.
 - 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 
 ## Editing Rules
@@ -40,6 +45,7 @@
 - `master.md`는 조립 결과물이다. 수동 편집보다 재생성을 우선한다.
 - generated JSON은 손으로 수정하지 않는다.
 - 정확 수치, 공식 기간, 수수료는 본문보다 `content/research/eu_tm_fact_verification_log.md`에서 먼저 검증한다.
+- `eu_tm_source_register.md`와 fact verification log는 같은 controlled scope를 설명해야 하며, 본문보다 먼저 범위 drift를 막는 역할을 한다.
 - 루트 메타데이터, Gateway copy, shared root gate는 이 워크스페이스가 아니라 리더 통합 단계에서 처리한다.
 - 권역형 본문은 EU 공통 프레임을 기준으로 유지하고, UK 비교는 controlled scope로 다룬다.
 

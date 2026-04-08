@@ -5,6 +5,8 @@
 - 챕터 원고: `content/source/chapters/*.md`
 - 챕터 메타데이터: `content/source/manifest.json`
 - 조립 결과물: `content/source/master.md`
+- 사실 검증 로그: `content/research/eu_tm_fact_verification_log.md`
+- source register: `content/research/eu_tm_source_register.md`
 
 중요:
 
@@ -36,6 +38,7 @@
 
 - 장 제목을 바꿀 때는 원고 H1, `manifest.json`, `master.md` 생성 결과를 함께 확인한다.
 - 법률 사실, 기한, 기관명, 수수료, 제도 설명은 공식 출처 또는 검증 로그와 맞춘다.
+- 검증 로그에 올리는 항목은 `eu_tm_source_register.md`의 source family와 충돌하지 않게 유지한다.
 - 권역형 본문은 EU 공통 프레임과 UK 병행 판단을 먼저 설명하고, 회원국별 예외는 표나 메모 수준으로 제한한다.
 - 장별 최소 3개 이상의 실무 섹션(H2)을 유지하고, 가능한 경우 체크리스트나 표를 포함한다.
 - 핵심 6장(`제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`)의 판단표·운영 캘린더·evidence 구조는 현재 baseline에 이미 반영되어 있다.

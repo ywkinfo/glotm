@@ -99,7 +99,7 @@
 - 14장 구조 유지
 - 핵심 장의 본문 밀도 대폭 확대
 - 장별 최소 실행형 체크리스트 1개 이상 포함
-- search entries를 현재 258 baseline으로 유지하면서 후속 심화 시 270~320 수준까지 확대
+- search entries는 현재 258 baseline을 먼저 유지하고, 후속 심화 증분은 stabilization 이후 별도 판단한다
 
 ### v1 품질 목표
 
@@ -186,10 +186,10 @@
 
 ---
 
-## Phase 2 — 핵심 6장 우선 심화와 fact verification 승격
+## Phase 2 — 핵심 6장 정합성 유지와 fact verification 승격
 
 ### 목표
-reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
+이미 심화된 핵심 6장의 판단 언어와 fact verification 승격 상태를 현재 baseline에 맞게 잠근다.
 
 ### 우선 대상
 1. 제1장 시스템 지도
@@ -200,7 +200,7 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 6. 제8장 등록 후 사용, 갱신, 증거 관리
 
 ### 작업
-- 핵심 6장 중 controlled Eu/UK scope를 깨지 않는 장부터 우선 보강한다.
+- 핵심 6장에 이미 반영된 controlled Eu/UK scope 판단 언어와 운영 메모를 현재 baseline 기준으로 다시 맞춘다.
 - `eu_tm_fact_verification_log.md`의 Verified 항목을 해당 장의 판단표와 운영 메모에 승격한다.
 - `eu_tm_source_register.md`를 실제 참조 목록으로 유지한다.
 
@@ -211,8 +211,8 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 - "추가 리서치 게이트"는 작업용 메모에서 제거하고, 필요한 검증 항목은 research 문서로 이동
 
 ### 완료 기준
-- 검색 엔트리 수의 가시적 증가
-- `/europe` 검색 결과가 장 제목 나열이 아니라 실질 섹션 탐색 수준으로 개선
+- 핵심 6장의 판단표, 운영 메모, 검증 로그 연결이 같은 기준선으로 설명된다.
+- `/europe` 검색 결과가 현재 baseline을 유지하면서 실질 섹션 탐색 수준을 계속 보장한다.
 
 ---
 
@@ -222,12 +222,14 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 `EuTm` 단독 lane이 root gate를 반복하지 않고도 merge-ready 상태에 도달하게 만든다.
 
 ### 작업
-- `npm run content:europe`
+- `npm --prefix EuTm run content:prepare`
+- 필요하면 루트 동등 경로 `npm run content:europe` 재현
 - 장 제목, 헤딩 구조, 표 형식, 검색 엔트리 증가 폭 확인
 - `/europe` 홈, 챕터, 검색, continue reading 흐름 스모크
 
 ### 완료 기준
-- `content:europe`가 통과한다.
+- local workspace baseline인 `content:prepare`가 통과한다.
+- 필요 시 루트 동등 경로 `content:europe`도 재현 가능하다.
 - docs sync, controlled scope, 핵심 장 심화가 같은 기준선으로 설명된다.
 
 ---
@@ -338,11 +340,11 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 - `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`, `content/research/eu_tm_fact_verification_log.md`의 상태 설명을 현재 baseline에 맞게 다시 잠근다.
 - 이번 라운드의 초점은 핵심 6장을 더 넓히는 것이 아니라, `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 설명을 문서와 fact log에서 일치시키는 데 있다.
-- shared root gate 이전에는 `content:europe`와 local workspace baseline 재현을 우선 증빙으로 사용한다.
+- shared root gate 이전에는 local workspace baseline인 `npm --prefix EuTm run content:prepare`를 우선 증빙으로 사용하고, 필요 시 루트 `content:europe`를 동등 경로로 재현한다.
 
 추가 완료 기준:
 
-- `content:europe`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
+- local workspace baseline인 `content:prepare`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
 - `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`, research docs의 상태 설명이 일치한다.
 
 ---
@@ -361,13 +363,13 @@ reader 품질을 가장 크게 끌어올리는 장부터 보강한다.
 
 ## 최종 제안
 
-`EuTm` 보강은 지금도 계속할 가치가 있다. 다만 첫 단계는 더 이상 제작 체계 도입이 아니라, 이미 도입된 LatTm-lite baseline을 유지한 채 핵심 장을 심화하는 것이다. 그 위에서 fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
+`EuTm` 보강은 지금도 계속할 가치가 있다. 다만 현재 단계의 첫 일은 더 이상 제작 체계 도입이나 대형 확장이 아니라, 이미 도입된 LatTm-lite baseline과 핵심 6장 보강 결과를 안정적으로 잠그는 것이다. 그 위에서 fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
 
 즉, 실행 순서는 아래와 같다.
 
 1. 상태 문서 정합화
 2. baseline 파이프라인 유지
-3. 핵심 6장 심화와 fact verification 승격
+3. 핵심 6장 정합성 유지와 fact verification 승격
 4. workspace gate
 5. 후반 장 보강과 통합 shared root gate
 

@@ -37,4 +37,4 @@
 - 장 제목을 바꿀 때는 원고 H1, `manifest.json`, `master.md` 생성 결과를 함께 확인한다.
 - 법률 사실, 기한, 기관명, 수수료, 시스템 명칭은 `content/research/cn_tm_fact_verification_log.md` 또는 공식 출처와 맞춘다.
 - 공개본 원고(`content/source/chapters/*.md`, `content/source/master.md`)에서는 저장소 경로나 `.md` 파일명을 직접 노출하지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로만 쓴다.
-- 얇은 가이드 상태를 고려해 각 장에 최소 1개의 체크리스트, 판단 기준표, 운영 메모 중 하나를 유지한다.
+- growth mature lane 기준으로 각 장에 최소 1개의 체크리스트, 판단 기준표, 운영 메모 중 하나를 유지한다.

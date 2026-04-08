@@ -19,3 +19,4 @@ Key routing rules:
 - Design system, brand → invoke design-consultation
 - Visual audit, design polish → invoke design-review
 - Architecture review → invoke plan-eng-review
+- Parallel, multi-lane, or team-like execution in this repo → use native parallel subagents first; do not invoke `omx team` / `$team` / tmux team orchestration unless explicitly debugging that runtime

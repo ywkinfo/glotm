@@ -31,7 +31,8 @@
 - 검색 엔트리: 379 current baseline, 후속 심화 시 380+ 범위 목표
 - 우선 장의 본문 도입부를 summary/search entry 재료가 되도록 재정렬
 - 우선 장별 실행형 표 또는 체크리스트 1개 이상 추가
-- `npm run content:mexico`, `npm test`, `npm run build`, `npm run build:pages:glotm` 통과
+- `npm --prefix MexTm run content:prepare`, `npm run content:mexico`, `npm run test:content` 통과
+- 통합 이후 shared root gate 1회 통과
 
 ## Sprint 2 우선 장
 
@@ -97,5 +98,5 @@
 
 - Sprint 1 잠금 4장에 IMPI 시스템 handoff board, buyer-entry escalation memo, local-fit vs central-management scoring, owner split memo, asset owner-linkage map, partner exit war-room, case-to-control mapping board를 추가했다.
 - Sprint 2에서는 제5장, 제7장, 제10장에 filing packet lock board, rights-maintenance triage board, border evidence pack control board를 추가해 buyer-entry 이후 운영 handoff를 더 빨리 읽히게 만든다.
-- 이번 라운드의 검증 목표는 `npm --prefix MexTm run content:prepare`, `npm run content:mexico`, `npm run test:content`, `npm run build` 재통과다.
+- 이번 라운드의 검증 목표는 `npm --prefix MexTm run content:prepare`, `npm run content:mexico`, `npm run test:content` 재통과와 shared root gate 입력 정리다.
 - 이후 handoff는 `EuTm` 안정화 -> `Report / Gateway trust layer` 정합화 순서를 유지한다.

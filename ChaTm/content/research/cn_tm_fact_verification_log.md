@@ -52,16 +52,3 @@
 | Ch10 | CN-ENF-001, CN-NORM-001 | 행정·플랫폼·세관·사법 출구와 공식 기관명 표준안을 같은 incident memo에서 사용한다 |
 
 이 표의 목적은 fact log를 다시 풀어 읽지 않아도, 우선 6장 writer가 어떤 claim을 어떤 운영표와 연결해야 하는지 한눈에 보이게 만드는 데 있다.
-
-## Sprint handoff
-
-이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 여섯 장이다.
-
-| chapter_ref | 우선 연결할 claim_id | handoff 메모 |
-| --- | --- | --- |
-| Ch2 | CN-FIL-001 | 표기 잠금 결과를 search / filing 입력값으로 넘기는 기준 유지 |
-| Ch3 | CN-FIL-001 | `类似商品和服务区分表` 표준명칭과 search 브리프 연결 강조 |
-| Ch5 | CN-FEE-001, CN-FIL-001 | 예산·제출 메모와 지정상품 handoff 표 유지 |
-| Ch6 | CN-DL-001, CN-DL-002 | 공고 후 3개월, 거절 후 15일 triage를 사건 보드 기준일과 같이 운영 |
-| Ch7 | CN-EVD-001 | 2개월 제출 패킷과 부분 유지 판단표를 evidence vault와 연결 |
-| Ch10 | CN-ENF-001, CN-NORM-001 | 행정/플랫폼/세관/사법 quick route map과 공식 용어표를 같이 유지 |
