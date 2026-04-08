@@ -170,9 +170,10 @@ export function buildPriorityLaneProgressNote(
   products: ProductMeta[],
   report?: Pick<ReportMeta, "gatewayLabel">
 ) {
-  const reportLabel = report ? "최신 리포트" : "리포트";
+  const laneLabelSequence = buildPriorityLaneLabelSequence(products);
+  const reportLabel = report?.gatewayLabel ?? "Report";
 
-  return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel}입니다.`;
+  return `현재 공통 정렬 순서는 ${laneLabelSequence} -> ${reportLabel} / Gateway trust layer입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다.`;
 }
 
 export function buildTrustLayerGuideGroups(
@@ -183,7 +184,8 @@ export function buildTrustLayerGuideGroups(
     return {
       priorityGuides: null,
       baselineGuides: null,
-      supportingGuides: null
+      supportingGuides: null,
+      coversFullPriorityLane: false
     };
   }
 
@@ -218,7 +220,8 @@ export function buildTrustLayerGuideGroups(
     supportingGuides:
       supportingProducts.length > 0
         ? joinProductLabels(supportingProducts, " · ")
-        : null
+        : null,
+    coversFullPriorityLane: priorityProducts.length === priorityLaneSlugs.length
   };
 }
 
@@ -233,15 +236,16 @@ export function buildTrustLayerGuideSummary(
   const {
     priorityGuides,
     baselineGuides,
-    supportingGuides
+    supportingGuides,
+    coversFullPriorityLane
   } = buildTrustLayerGuideGroups(report, orderedProducts);
 
   if (!report || !priorityGuides) {
     return null;
   }
 
-  const bridgeSentence = options?.includeLaneBridge && options.laneLabelSequence
-    ? ` 관련 가이드는 ${options.laneLabelSequence} 순서로 이어서 보면 흐름을 잡기 쉽습니다.`
+  const bridgeSentence = options?.includeLaneBridge && options.laneLabelSequence && coversFullPriorityLane
+    ? ` 현재 공통 정렬 순서는 ${options.laneLabelSequence} -> Report / Gateway trust layer입니다.`
     : "";
 
   return `${priorityGuides}에서 이미 다룬 ${report.trustLayerSummaryObject} 이 리포트에서 한 번에 다시 정리했습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 전체 기준을 잡을 때 참고하면 좋습니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 필요할 때 이어서 보면 됩니다.` : ""}`;
