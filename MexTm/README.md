@@ -21,12 +21,13 @@
 
 - `npm run content:master`: `master.md` 생성
 - `npm run content:qa`: 콘텐츠 구조 검사
+- `npm run content:qa:facts`: 사실 검증 로그 기준 사실 QA 실행
 - `npm run content:build`: 리더용 JSON 산출물 생성
-- `npm run content:prepare`: 마스터 생성, QA, 콘텐츠 빌드를 순서대로 실행
+- `npm run content:prepare`: 마스터 생성, 구조 QA, 사실 QA, 콘텐츠 빌드를 순서대로 실행
 
 ## Notes
 
-- 루트 `GloTm` 셸은 `content/source/master.md`를 정본 입력으로 읽지만, 유지보수 시작점은 `content/source/chapters/`, `content/source/appendix/`, `manifest.json`입니다.
+- 루트 `GloTm` 셸은 `content/generated/` 산출물을 읽어 `/mexico` 리더를 렌더링하지만, 정본 입력과 유지보수 시작점은 `content/source/master.md`, `content/source/chapters/`, `content/source/appendix/`, `manifest.json`입니다.
 - `master.md`는 조립 결과물로 관리하고, 수동 편집보다 재생성을 우선합니다.
 - 공개 원고와 리더 노출 문구에서는 저장소 경로나 `.md` 파일명을 직접 쓰지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로 표기합니다.
 - 변동성이 큰 사실은 `content/research/mx_tm_fact_verification_log.md`에서 먼저 검증합니다.
