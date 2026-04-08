@@ -6,7 +6,7 @@ import {
   buildReportOpenLabel,
   buildReportPath,
   formatReportDate,
-  getPrimaryGatewayReport,
+  getLatestReport,
   getReportBySlug,
   reportExperienceMeta,
   reports
@@ -31,7 +31,7 @@ import {
 } from "./appShared";
 
 export function ReportArchivePage() {
-  const leadReport = getPrimaryGatewayReport();
+  const leadReport = getLatestReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
   const trustLayerGuideSummary =

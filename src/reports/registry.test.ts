@@ -1,42 +1,34 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  getGatewayLandingReports,
-  getGatewayFeaturedReports,
+  getLatestReport,
+  getLatestReports,
   getPrimaryFocusPointForGuide,
-  getPrimaryGatewayReport,
   getReportBySlug,
   getReportsForGuideSlug
 } from "./registry";
 
 describe("report registry", () => {
-  it("limits the gateway landing surface to front and supporting reports", () => {
-    expect(getGatewayLandingReports(3).map((report) => report.slug)).toEqual([
+  it("returns the latest reports in publishedAt order", () => {
+    expect(getLatestReports(2).map((report) => report.slug)).toEqual([
+      "brand-localization-vs-standardization-framework",
+      "global-filing-route-framework"
+    ]);
+  });
+
+  it("keeps the full report list sorted only by publishedAt", () => {
+    expect(getLatestReports(3).map((report) => report.slug)).toEqual([
+      "brand-localization-vs-standardization-framework",
       "global-filing-route-framework",
       "global-use-evidence-system"
     ]);
   });
 
-  it("keeps the gateway featured order pinned to placement, priority, then publishedAt", () => {
-    expect(getGatewayFeaturedReports(2).map((report) => report.slug)).toEqual([
-      "global-filing-route-framework",
-      "global-use-evidence-system"
-    ]);
+  it("pins the latest gateway report to the newest report entry", () => {
+    expect(getLatestReport()?.slug).toBe("brand-localization-vs-standardization-framework");
   });
 
-  it("extends the gateway report lane with archive-only reports after front and supporting entries", () => {
-    expect(getGatewayFeaturedReports(3).map((report) => report.slug)).toEqual([
-      "global-filing-route-framework",
-      "global-use-evidence-system",
-      "brand-localization-vs-standardization-framework"
-    ]);
-  });
-
-  it("pins the primary gateway report to the front trust-layer entry", () => {
-    expect(getPrimaryGatewayReport()?.slug).toBe("global-filing-route-framework");
-  });
-
-  it("pins the supporting evidence report to the EuTm evidence handoff anchor", () => {
+  it("keeps the evidence report pinned to the EuTm evidence handoff anchor", () => {
     const report = getReportBySlug("global-use-evidence-system");
 
     expect(report?.trustLayerSummaryObject).toBe("사용 증거 운영 구조를");

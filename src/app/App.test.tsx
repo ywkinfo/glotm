@@ -6,11 +6,9 @@ import { AppRoutes } from "./App";
 import * as ga from "../analytics/ga";
 import { briefIssues } from "../briefs/archive";
 import {
-  buildReportStatusLabel,
   buildReportOpenLabel,
-  getGatewayFeaturedReports,
-  getGatewayLandingReports,
-  getPrimaryGatewayReport,
+  getLatestReport,
+  getLatestReports,
   getReportBySlug,
   getReportsForGuideSlug,
   reportExperienceMeta,
@@ -19,11 +17,11 @@ import {
 import type { DocumentData } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
-const primaryGatewayReport = getPrimaryGatewayReport();
-const supportingGatewayReport = getReportBySlug("global-use-evidence-system");
+const latestReport = getLatestReport();
+const routeDecisionReport = getReportBySlug("global-filing-route-framework");
+const evidenceReport = getReportBySlug("global-use-evidence-system");
 const primaryChinaGuideHandoffReport = getReportsForGuideSlug("china")[0]?.report;
-const gatewayLandingReports = getGatewayLandingReports(2);
-const gatewayVisibleReports = getGatewayFeaturedReports(3);
+const latestGatewayReports = getLatestReports(2);
 
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
   return {
@@ -403,7 +401,7 @@ describe("App portfolio shell", () => {
     );
     expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "리포트 보기" })).toHaveAttribute(
       "href",
-      `/reports/${primaryGatewayReport?.slug}`
+      `/reports/${latestReport?.slug}`
     );
   });
 
@@ -579,51 +577,55 @@ describe("App portfolio shell", () => {
     ).not.toBe(0);
   });
 
-  it("brings front reports above the latest brief banner on the gateway", () => {
+  it("brings the latest reports above the latest brief banner on the gateway", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    const frontReportsSection = screen
-      .getByRole("heading", { name: "Gateway 첫 화면에서는 지금 필요한 trust layer report만 먼저 보여줍니다" })
+    const latestReportsSection = screen
+      .getByRole("heading", { name: "Gateway 첫 화면에서는 최신 리포트 2개를 먼저 보여줍니다" })
       .closest("section");
     const briefBanner = screen.getByRole("region", { name: "최신 브리프 배너" });
 
-    expect(frontReportsSection).not.toBeNull();
+    expect(latestReportsSection).not.toBeNull();
     expect(
-      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: primaryGatewayReport?.title ?? "" }).length
+      within(latestReportsSection as HTMLElement).getAllByRole("heading", { name: latestGatewayReports[0]?.title ?? "" }).length
     ).toBeGreaterThan(0);
     expect(
-      within(frontReportsSection as HTMLElement).getAllByRole("heading", { name: gatewayLandingReports[1]?.title ?? "" }).length
+      within(latestReportsSection as HTMLElement).getAllByRole("heading", { name: latestGatewayReports[1]?.title ?? "" }).length
     ).toBeGreaterThan(0);
     expect(
-      within(frontReportsSection as HTMLElement).queryByRole("heading", { name: gatewayVisibleReports[2]?.title ?? "" })
+      within(latestReportsSection as HTMLElement).queryByRole("heading", { name: reports[2]?.title ?? "" })
     ).toBeNull();
     expect(
-      within(frontReportsSection as HTMLElement).queryByRole("link", { name: "리포트 바로 보기" })
+      within(latestReportsSection as HTMLElement).queryByRole("link", { name: "리포트 바로 보기" })
     ).toBeNull();
-    const reportLinks = within(frontReportsSection as HTMLElement).getAllByRole("link", { name: "리포트 보기" });
-    expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${primaryGatewayReport?.slug}`);
-    expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${gatewayLandingReports[1]?.slug}`);
+    const reportLinks = within(latestReportsSection as HTMLElement).getAllByRole("link", { name: "리포트 보기" });
+    expect(reportLinks.at(0)).toHaveAttribute("href", `/reports/${latestGatewayReports[0]?.slug}`);
+    expect(reportLinks.at(1)).toHaveAttribute("href", `/reports/${latestGatewayReports[1]?.slug}`);
     expect(reportLinks).toHaveLength(2);
     expect(
-      within(frontReportsSection as HTMLElement).getByText(reportExperienceMeta.gatewaySectionSummary)
+      within(latestReportsSection as HTMLElement).getByText(reportExperienceMeta.gatewaySectionSummary)
     ).toBeInTheDocument();
     expect(
-      within(frontReportsSection as HTMLElement).getByText(buildReportStatusLabel(primaryGatewayReport!))
-    ).toBeInTheDocument();
-    expect(
-      within(frontReportsSection as HTMLElement).getByText(buildReportStatusLabel(gatewayLandingReports[1]!))
-    ).toBeInTheDocument();
-    expect(
-      within(frontReportsSection as HTMLElement).queryByText("Archive")
+      within(latestReportsSection as HTMLElement).queryByText("Front")
     ).toBeNull();
     expect(
-      within(frontReportsSection as HTMLElement).queryByText(
+      within(latestReportsSection as HTMLElement).queryByText(
+        "Supporting"
+      )
+    ).toBeNull();
+    expect(
+      within(latestReportsSection as HTMLElement).queryByText(
+        "Archive"
+      )
+    ).toBeNull();
+    expect(
+      within(latestReportsSection as HTMLElement).queryByText(
         /현재 두 개의 리포트가 준비되어 있습니다\. 첫 번째 리포트는 출원 경로 결정을 위한 프레임워크로, 직접출원 vs 마드리드 출원에 대한 내용을 다룹니다\. 이 리포트는 ChaTm · MexTm · EuTm 등에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 정리해 보여줍니다\./
       )
     ).toBeNull();
     expect(
-      (frontReportsSection as HTMLElement).compareDocumentPosition(briefBanner) & Node.DOCUMENT_POSITION_FOLLOWING
+      (latestReportsSection as HTMLElement).compareDocumentPosition(briefBanner) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
   });
 
@@ -653,10 +655,10 @@ describe("App portfolio shell", () => {
     );
     expect(within(reportSection as HTMLElement).getAllByRole("link", { name: "리포트 보기" }).at(0)).toHaveAttribute(
       "href",
-      `/reports/${primaryGatewayReport?.slug}`
+      `/reports/${latestReport?.slug}`
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: primaryGatewayReport?.title ?? "" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: latestReport?.title ?? "" })
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).queryByText(
@@ -664,16 +666,19 @@ describe("App portfolio shell", () => {
       )
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 현지 맞춤 필요성을 먼저 본다" })
+      within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 현지 맞춤 필요성을 먼저 본다" })
+    ).toBeNull();
+    expect(
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 판단표 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 표기 전략 보기" })
     ).toHaveAttribute(
       "href",
-      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
     );
     expect(
-      within(reportSection as HTMLElement).queryByText(primaryGatewayReport?.whyNow ?? "")
+      within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
     ).toBeNull();
     expect(
       within(reportSection as HTMLElement).queryByText(
@@ -692,7 +697,7 @@ describe("App portfolio shell", () => {
     ).toBeGreaterThan(0);
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 우선 리포트입니다."
+        "현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 / MexTm Mature · QA Full · gap 0 / EuTm Beta · QA Standard · gap 0. 다음은 최신 리포트입니다."
       )
     ).toBeInTheDocument();
     expect(
@@ -861,7 +866,7 @@ describe("App portfolio shell", () => {
       "G-TEST123",
       "report_open",
       expect.objectContaining({
-        report_slug: primaryGatewayReport?.slug,
+        report_slug: latestReport?.slug,
         surface: "gateway_section"
       })
     );
@@ -1041,10 +1046,10 @@ describe("App portfolio shell", () => {
     );
     expect(screen.getAllByRole("link", { name: "리포트 보기" }).at(0)).toHaveAttribute(
       "href",
-      `/reports/${primaryGatewayReport?.slug}`
+      `/reports/${latestReport?.slug}`
     );
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 경로 판단 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.getByText(/ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(/글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다\./)
@@ -1057,9 +1062,9 @@ describe("App portfolio shell", () => {
   it("renders report detail pages with trust-layer handoff cards and related guide links", async () => {
     installFetchMock();
 
-    renderAppRouteTree(`/reports/${primaryGatewayReport?.slug}`);
+    renderAppRouteTree(`/reports/${routeDecisionReport?.slug}`);
 
-    await screen.findByRole("heading", { name: primaryGatewayReport?.title ?? "" });
+    await screen.findByRole("heading", { name: routeDecisionReport?.title ?? "" });
 
     expect(screen.getByRole("heading", { name: "왜 지금 이 리포트를 먼저 읽는가" })).toBeInTheDocument();
     expect(
@@ -1088,12 +1093,12 @@ describe("App portfolio shell", () => {
     );
   });
 
-  it("renders supporting report detail with evidence-specific trust summary and EuTm handoff", async () => {
+  it("renders evidence report detail with evidence-specific trust summary and EuTm handoff", async () => {
     installFetchMock();
 
-    renderAppRouteTree(`/reports/${supportingGatewayReport?.slug}`);
+    renderAppRouteTree(`/reports/${evidenceReport?.slug}`);
 
-    await screen.findByRole("heading", { name: supportingGatewayReport?.title ?? "" });
+    await screen.findByRole("heading", { name: evidenceReport?.title ?? "" });
 
     expect(
       screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 사용 증거 운영 구조를 이 리포트에서 한 번에 다시 정리했습니다\. 관련 가이드는 ChaTm -> MexTm -> EuTm 순서로 이어서 보면 흐름을 잡기 쉽습니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\./)
@@ -1116,24 +1121,24 @@ describe("App portfolio shell", () => {
 
     const gatewayRender = renderAppRouteTree("/");
 
-    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 판단표 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 표기 전략 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
       "report_handoff_click",
       expect.objectContaining({
-        report_slug: primaryGatewayReport?.slug,
+        report_slug: latestReport?.slug,
         guide_slug: "china",
         surface: "gateway_section",
-        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
+        target_path: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
       })
     );
 
     gatewayRender.unmount();
 
-    renderAppRouteTree(`/reports/${primaryGatewayReport?.slug}`);
+    renderAppRouteTree(`/reports/${routeDecisionReport?.slug}`);
 
-    await screen.findByRole("heading", { name: primaryGatewayReport?.title ?? "" });
+    await screen.findByRole("heading", { name: routeDecisionReport?.title ?? "" });
 
     clickTrackedLink(screen.getByRole("link", { name: "ChaTm 판단표 보기" }));
     clickTrackedLink(screen.getByRole("link", { name: "LatTm route decision box" }));
@@ -1142,7 +1147,7 @@ describe("App portfolio shell", () => {
       "G-TEST123",
       "report_guide_click",
       expect.objectContaining({
-        report_slug: primaryGatewayReport?.slug,
+        report_slug: routeDecisionReport?.slug,
         guide_slug: "china",
         surface: "report_detail_focus",
         target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#출원-경로-시나리오별-판단표"
@@ -1152,7 +1157,7 @@ describe("App portfolio shell", () => {
       "G-TEST123",
       "report_guide_click",
       expect.objectContaining({
-        report_slug: primaryGatewayReport?.slug,
+        report_slug: routeDecisionReport?.slug,
         surface: "report_detail_related",
         target_path: "/latam/chapter/제04장-filing-전략-출원-경로-선택-직접출원-vs-마드리드#4-decision-box-출원-경로-선택"
       })

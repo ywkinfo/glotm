@@ -10,8 +10,6 @@ export type ReportGuideLink = {
   href: string;
 };
 
-export type ReportGatewayPlacement = "front" | "supporting" | "archive";
-
 export type ReportFocusPoint = {
   id: string;
   title: string;
@@ -33,8 +31,6 @@ export type ReportMeta = {
   tags: string[];
   audience: string;
   gatewayLabel: string;
-  gatewayPlacement: ReportGatewayPlacement;
-  gatewayPriority: number;
   whyNow: string;
   trustLayerChecklist: string[];
   focusPoints: ReportFocusPoint[];
@@ -60,35 +56,12 @@ export type ReportExperienceMeta = {
   archiveCtaLabel: string;
 };
 
-type ReportRegistration = Omit<ReportMeta, "gatewayPriority"> & {
-  gatewayPriority?: number;
-};
-
 function buildGuideSectionPath(
   productSlug: string,
   chapterSlug: string,
   sectionId?: string
 ) {
   return `${buildChapterPath(getProductPathBySlug(productSlug), chapterSlug)}${buildSectionHash(sectionId)}`;
-}
-
-const gatewayPlacementRank: Record<ReportGatewayPlacement, number> = {
-  front: 0,
-  supporting: 1,
-  archive: 2
-};
-
-const defaultGatewayPriorityByPlacement: Record<ReportGatewayPlacement, number> = {
-  front: 0,
-  supporting: 100,
-  archive: 1000
-};
-
-function createReportMeta(report: ReportRegistration): ReportMeta {
-  return {
-    ...report,
-    gatewayPriority: report.gatewayPriority ?? defaultGatewayPriorityByPlacement[report.gatewayPlacement]
-  };
 }
 
 function matchesGuidePath(target: string, productPath: string) {
@@ -102,43 +75,30 @@ function sortReportsByPublishedAt(left: ReportMeta, right: ReportMeta) {
   return new Date(right.publishedAt).getTime() - new Date(left.publishedAt).getTime();
 }
 
-function sortReportsForGateway(left: ReportMeta, right: ReportMeta) {
-  if (gatewayPlacementRank[left.gatewayPlacement] !== gatewayPlacementRank[right.gatewayPlacement]) {
-    return gatewayPlacementRank[left.gatewayPlacement] - gatewayPlacementRank[right.gatewayPlacement];
-  }
-
-  if (left.gatewayPriority !== right.gatewayPriority) {
-    return left.gatewayPriority - right.gatewayPriority;
-  }
-
-  return sortReportsByPublishedAt(left, right);
-}
-
 export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
-  gatewaySectionTitle: "Gateway 첫 화면에서는 지금 필요한 trust layer report만 먼저 보여줍니다",
+  gatewaySectionTitle: "Gateway 첫 화면에서는 최신 리포트 2개를 먼저 보여줍니다",
   gatewaySectionSummary:
-    "Gateway 첫 화면에는 front와 supporting trust layer report만 먼저 노출합니다. archive report는 Report 아카이브에서 이어서 보게 둡니다.",
+    "Gateway 첫 화면에서는 최신 리포트 2개만 먼저 보여주고, 나머지 리포트는 Report 아카이브에서 이어서 볼 수 있습니다.",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
   archiveHeroLead:
     "특정 국가 하나의 절차 요약보다, 여러 관할에서 반복해서 부딪히는 운영 질문을 한 문서로 정리하고 최신순으로 보여주는 리포트 아카이브입니다.",
   archiveHeroSummary:
-    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 표기 전략, 사용 증거처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다. 여기에는 Gateway 첫 화면의 front/supporting report와 archive-only report가 함께 모입니다.",
+    "가이드가 국가별 실행 맥락을 정리한다면, 리포트는 출원 경로, 표기 전략, 사용 증거처럼 여러 나라에서 반복되는 판단 문제를 따로 묶어 보여줍니다. Gateway와 Report 아카이브 모두 최신순 기준으로 같은 목록을 이어서 읽을 수 있습니다.",
   archiveSectionKicker: "Latest Reports",
   archiveSectionTitle: "최신 리포트를 먼저 보여줍니다",
   archiveSectionSummary:
-    "각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 구조화하고 관련 guide로 바로 이어지게 만듭니다. archive-only report도 이 목록에서 함께 확인합니다.",
+    "각 리포트는 특정 국가 하나를 길게 요약하기보다, 여러 시장에서 공통으로 반복되는 운영 질문을 구조화하고 관련 guide로 바로 이어지게 만듭니다. Gateway에서 먼저 본 최신 리포트도 이 목록에서 같은 순서로 다시 확인할 수 있습니다.",
   archiveCtaLabel: "리포트 전체 보기"
 };
 
 // Template for new report entries:
-// - Set gatewayPlacement before copywriting: front | supporting | archive
-// - Use gatewayPriority only to order reports within the same placement
+// - publishedAt drives Gateway and archive ordering
 // - whyNow should explain why this report deserves Gateway real estate now
 // - focusPoints should deep-link into the next guide actions the reader should take
 const reportSource: ReportMeta[] = [
-  createReportMeta({
+  {
     id: "global-filing-route-framework",
     slug: "global-filing-route-framework",
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
@@ -150,8 +110,6 @@ const reportSource: ReportMeta[] = [
     tags: ["출원 경로", "Madrid", "Route Memo"],
     audience: "여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀",
     gatewayLabel: "Report",
-    gatewayPlacement: "front",
-    gatewayPriority: 0,
     whyNow:
       "ChaTm, MexTm, EuTm에서 이미 다룬 출원 경로 판단을 한 번에 다시 정리해, 여러 나라를 비교할 때 바로 참고할 수 있게 만든 리포트입니다. LatTm은 전체 기준을 잡는 참고 프레임이고, JapTm은 필요할 때 이어 읽는 보조 자료입니다.",
     trustLayerChecklist: [
@@ -242,8 +200,8 @@ const reportSource: ReportMeta[] = [
         )
       }
     ]
-  }),
-  createReportMeta({
+  },
+  {
     id: "global-use-evidence-system",
     slug: "global-use-evidence-system",
     title: "글로벌 사용 증거 수집 운영 시스템 구축",
@@ -255,8 +213,6 @@ const reportSource: ReportMeta[] = [
     tags: ["사용 증거", "운영 시스템", "증거 보관"],
     audience: "여러 나라의 사용 증거 운영 구조를 먼저 정리해야 하는 운영팀, 법무팀, 브랜드팀",
     gatewayLabel: "Report",
-    gatewayPlacement: "supporting",
-    gatewayPriority: 1,
     whyNow:
       "먼저 볼 리포트가 출원 경로 판단을 먼저 잠갔다면, 이어 볼 리포트는 그다음에 필요한 증거 담당자와 보관 구조를 함께 정리할 차례입니다. 국가별 guide만 따라가면 filing 이후 운영이 다시 흩어지기 쉬우므로, 지금 이어 볼 리포트에서 같은 증거 문법을 묶어 두는 편이 좋습니다.",
     trustLayerChecklist: [
@@ -332,8 +288,8 @@ const reportSource: ReportMeta[] = [
         href: getProductPathBySlug("japan")
       }
     ]
-  }),
-  createReportMeta({
+  },
+  {
     id: "brand-localization-vs-standardization-framework",
     slug: "brand-localization-vs-standardization-framework",
     title: "브랜드 표장 현지화 vs. 표준화: 글로벌 상표 운영 결정 프레임워크",
@@ -345,7 +301,6 @@ const reportSource: ReportMeta[] = [
     tags: ["브랜드 표기", "현지화", "표준화", "상표 전략"],
     audience: "해외 진출 초기의 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅 리드",
     gatewayLabel: "Report",
-    gatewayPlacement: "archive",
     whyNow:
       "출원 경로와 사용 증거보다 한 단계 앞에서, 어떤 이름과 표기를 먼저 운영 기준으로 확정할지에 대한 판단이 자주 빠집니다. 특히 중국·일본처럼 현지 문자 사용이 실제 검색과 유통 언어가 되는 시장에서는 표준화와 현지화의 경계를 먼저 정리해 두는 편이 훨씬 안전합니다.",
     trustLayerChecklist: [
@@ -412,24 +367,17 @@ const reportSource: ReportMeta[] = [
         href: getProductPathBySlug("latam")
       }
     ]
-  })
+  }
 ];
 
 export const reports = [...reportSource].sort(sortReportsByPublishedAt);
 
-const gatewayReports = [...reports].sort(sortReportsForGateway);
-const gatewayLandingReports = gatewayReports.filter((report) => report.gatewayPlacement !== "archive");
-
-export function getGatewayLandingReports(limit = 2) {
-  return gatewayLandingReports.slice(0, limit);
+export function getLatestReports(limit = 2) {
+  return reports.slice(0, limit);
 }
 
-export function getGatewayFeaturedReports(limit = 2) {
-  return gatewayReports.slice(0, limit);
-}
-
-export function getPrimaryGatewayReport() {
-  return gatewayReports[0];
+export function getLatestReport() {
+  return reports[0];
 }
 
 export function buildReportOpenLabel(
@@ -439,19 +387,6 @@ export function buildReportOpenLabel(
   return emphasis === "immediate"
     ? "리포트 바로 보기"
     : "리포트 보기";
-}
-
-export function buildReportStatusLabel(report: Pick<ReportMeta, "gatewayPlacement">) {
-  switch (report.gatewayPlacement) {
-    case "front":
-      return "Front";
-    case "supporting":
-      return "Supporting";
-    case "archive":
-      return "Archive";
-    default:
-      return "Report";
-  }
 }
 
 export function buildReportArchivePath() {
@@ -506,10 +441,6 @@ export function getPrimaryFocusPointForGuide(guideSlug: string, reportSlug?: str
   }
 
   return getReportsForGuideSlug(guideSlug)[0]?.focusPoint;
-}
-
-export function getLatestReport() {
-  return reports[0];
 }
 
 export function formatReportDate(publishedAt: string) {

@@ -8,7 +8,7 @@
 
 ### 현재 운영 trust snapshot
 
-이 리포트가 지금 supporting report로 올라온 이유는 단순히 사용 증거가 중요한 주제여서가 아닙니다. 2026-04-04 기준으로 front report는 route decision 질문을 Gateway 첫 화면에서 먼저 잠그고 있고, `ChaTm`은 mature baseline, `MexTm`은 Sprint 2 운영 handoff, `EuTm`은 validate stabilization + docs sync를 현재 기준선으로 유지하고 있습니다. 그래서 이제 국가별 장 안에 흩어진 공통 운영 질문 중 evidence owner와 evidence vault 구조를 supporting trust layer에서 다시 묶을 타이밍이 된 것입니다.
+이 리포트가 지금 다시 중요한 이유는 단순히 사용 증거가 중요한 주제여서가 아닙니다. 2026-04-08 기준으로 Gateway와 Report 아카이브는 최신 리포트를 먼저 보여주고 있고, `ChaTm`은 mature baseline, `MexTm`은 Sprint 2 운영 handoff, `EuTm`은 validate stabilization + docs sync를 현재 기준선으로 유지하고 있습니다. 그래서 이제 국가별 장 안에 흩어진 공통 운영 질문 중 evidence owner와 evidence vault 구조를 별도 리포트로 다시 묶어 볼 타이밍이 된 것입니다.
 
 | 현재 가이드 상태 | 이 리포트가 회수하는 공통 질문 |
 |---|---|

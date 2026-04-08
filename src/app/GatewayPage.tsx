@@ -6,8 +6,8 @@ import {
   buildReportArchivePath,
   buildReportOpenLabel,
   buildReportPath,
-  getGatewayLandingReports,
-  getPrimaryGatewayReport,
+  getLatestReport,
+  getLatestReports,
   reportExperienceMeta
 } from "../reports/registry";
 import { liveShellProducts } from "../products/registry";
@@ -50,8 +50,8 @@ export function GatewayLandingPage() {
   const mexicoProduct = orderedProducts.find((product) => product.slug === "mexico") ?? orderedProducts[0];
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
-  const leadReport = getPrimaryGatewayReport();
-  const featuredReports = getGatewayLandingReports(2);
+  const leadReport = getLatestReport();
+  const featuredReports = getLatestReports(2);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
   const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
   const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];
@@ -92,8 +92,8 @@ export function GatewayLandingPage() {
       id: "report-gateway",
       title: "리포트와 Gateway를 한 흐름으로 이어뒀어요",
       copy:
-        "출원 경로를 볼 때는 판단용 리포트를, 사용 증거를 볼 때는 운영용 리포트를 연결해서 한 번에 읽기 쉽게 만들었습니다.",
-      note: "경로 판단 리포트, 사용 증거 리포트, Gateway 상태를 함께 연결",
+        "최신 리포트 2개를 Gateway 첫 화면에서 바로 확인하고, 더 많은 리포트는 아카이브에서 같은 순서로 이어 읽기 쉽게 만들었습니다.",
+      note: "최신 리포트, Report 아카이브, Gateway 상태를 함께 연결",
       href: buildReportArchivePath()
     },
     {
@@ -206,7 +206,7 @@ export function GatewayLandingPage() {
         {featuredReports.length > 0 ? (
           <div className="brief-card-grid">
             {featuredReports.map((report) => (
-              <ReportCard key={report.id} report={report} surface="gateway_front_reports" />
+              <ReportCard key={report.id} report={report} surface="gateway_latest_reports" />
             ))}
           </div>
         ) : null}

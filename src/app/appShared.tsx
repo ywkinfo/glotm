@@ -12,7 +12,6 @@ import {
 } from "../briefs/archive";
 import {
   buildReportOpenLabel,
-  buildReportStatusLabel,
   formatReportDate,
   buildReportPath,
   type ReportMeta
@@ -171,7 +170,7 @@ export function buildPriorityLaneProgressNote(
   products: ProductMeta[],
   report?: Pick<ReportMeta, "gatewayLabel">
 ) {
-  const reportLabel = report ? "우선 리포트" : "리포트";
+  const reportLabel = report ? "최신 리포트" : "리포트";
 
   return `현재 우선 레인 상태: ${buildPriorityLaneStatusSummary(products)}. 다음은 ${reportLabel}입니다.`;
 }
@@ -442,10 +441,7 @@ export function BriefGuideLinks({
 export function ReportCard({ report, surface }: { report: ReportMeta; surface?: string }) {
   return (
     <article className="brief-card">
-      <div className="brief-card-topline">
-        <p className="gateway-kicker">Report</p>
-        <span className="status-pill status-pill--neutral">{buildReportStatusLabel(report)}</span>
-      </div>
+      <p className="gateway-kicker">Report</p>
       <p className="brief-card-date">{formatReportDate(report.publishedAt)}</p>
       <h3 className="brief-card-title">{report.title}</h3>
       <p className="brief-card-summary">{report.summary}</p>
