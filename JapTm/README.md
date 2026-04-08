@@ -29,6 +29,8 @@
 - 공개 원고와 리더 노출 문구에서는 저장소 경로나 `.md` 파일명을 직접 쓰지 않고, `사실 검증 로그`, `공식 출처`, `회사 내부 자료`처럼 역할명으로 표기합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/japan` 리더를 렌더링합니다.
 - 루트 refresh와 별개로, content edit나 deeper content QA를 할 때는 이 워크스페이스 로컬 `npm run content:prepare`를 기준 경로로 봅니다.
+- 현재 `JapTm`의 운영 메타데이터는 루트 기준 `incubate / beta / standard QA`이며, 이번 유지보수의 우선순위는 lighter-track reader utility와 운영 문구 정합화입니다.
+- reader utility 정비는 route, maintenance, evidence hygiene 흐름을 home / continue reading / search에서 더 빨리 찾고 이어 읽게 만드는 방향을 우선합니다.
 - 콘텐츠 보강 작업은 원칙적으로 `content/source/chapters/`와 `content/source/appendix/`에서 시작하고, `master.md`는 조립 결과물로 취급합니다.
 - 수수료, 세부 기한, 시스템 명칭처럼 변동성이 큰 정보는 출판 직전 `content/research/jp_tm_fact_verification_log.md`로 다시 확인합니다.
 - 런타임 메타데이터, lifecycle, 현재 우선순위, 포트폴리오 실행 순서, 루트 refresh 정책은 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인합니다.

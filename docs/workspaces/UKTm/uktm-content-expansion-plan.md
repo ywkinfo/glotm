@@ -11,13 +11,14 @@
 3. 사실 검증은 본문보다 `uk_tm_fact_verification_log.md`에서 먼저 잠근다.
 4. 이번 스프린트에서는 status 승격보다 `정합성 + 검증 + 회귀 방지`를 우선한다.
 5. `EuTm`과 내용이 겹치면 영국 독자 판단이 필요한 차이만 남긴다.
+6. 포지션은 `pilot / smoke QA / draft 공개본 / early track`을 유지하고, beta 승격 암시는 피한다.
 
 ## 이번 스프린트 우선순위
 
 ### 1. 문서 정합성 고정
 
 - `UKTm/README.md`, `UKTm/Harness/Architecture.md`, `UKTm/Harness/Content-Spec.md`가 현재 early-track 상태를 일관되게 설명
-- `/uk`가 이미 live route라는 사실과 `draft 공개본` 포지션을 문서에 명시
+- `/uk`가 이미 live route라는 사실과 `draft 공개본 · pilot · smoke QA` 포지션을 문서에 명시
 
 ### 2. fact verification 우선
 
@@ -45,4 +46,4 @@
 - `build-master -> qa-content -> build-content` 정상 동작
 - `/uk` 홈/챕터/검색/continue reading 동작
 - 기존 live guide 회귀 없음
-- `draft 공개본 · early track` 포지션과 실제 문서 설명 사이 충돌 없음
+- `draft 공개본 · early track · pilot · smoke QA` 포지션과 실제 문서 설명 사이 충돌 없음

@@ -49,7 +49,7 @@ export const products: ProductMeta[] = [
     slug: "usa",
     path: "/usa",
     title: "미국 상표 실무 운영 가이드북",
-    summary: "USPTO 중심 실무를 lighter depth로 유지하는 incubate country guide입니다.",
+    summary: "USPTO filing basis, specimen, monitoring utility를 lighter track으로 유지하는 incubate country guide입니다.",
     chapterCount: 14,
     searchEntryCount: 178,
     portfolioTier: "incubate",
@@ -60,7 +60,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "미국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "UsaTm 보기",
-    maturityNote: "verification refresh 유지 · reader utility 점검 · 2026-04-07 root shortcut 재검증",
+    maturityNote: "beta 유지 · filing/specimen/monitoring utility 점검 · 2026-04-07 root shortcut 재검증",
     coverageType: "country",
     availability: "live_shell"
   },
@@ -70,7 +70,7 @@ export const products: ProductMeta[] = [
     slug: "japan",
     path: "/japan",
     title: "일본 상표 실무 운영 가이드북",
-    summary: "JPO 중심 운영 흐름을 lighter depth로 유지하는 incubate country guide입니다.",
+    summary: "JPO route, maintenance, evidence utility를 lighter track으로 유지하는 incubate country guide입니다.",
     chapterCount: 15,
     searchEntryCount: 145,
     portfolioTier: "incubate",
@@ -81,7 +81,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "일본 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "JapTm 보기",
-    maturityNote: "beta 유지 · reader utility 점검 · 2026-04-07 root shortcut 재검증",
+    maturityNote: "beta 유지 · route/maintenance/evidence utility 점검 · 2026-04-07 root shortcut 재검증",
     coverageType: "country",
     availability: "live_shell"
   },
@@ -133,7 +133,7 @@ export const products: ProductMeta[] = [
     slug: "uk",
     path: "/uk",
     title: "영국 상표 실무 운영 가이드북",
-    summary: "UKIPO 중심 실무를 verification refresh 중심으로 유지하는 incubate country guide입니다.",
+    summary: "UKIPO 중심 early-track 실무를 draft 공개본으로 유지하는 incubate country guide입니다.",
     chapterCount: 14,
     searchEntryCount: 100,
     portfolioTier: "incubate",
@@ -144,7 +144,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "영국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "UKTm 보기",
-    maturityNote: "pilot 유지 · reader utility 점검 · 2026-04-07 root full-pipeline 재검증",
+    maturityNote: "pilot 유지 · early-track draft 공개본 · 2026-04-07 root full-pipeline 재검증",
     coverageType: "country",
     availability: "live_shell"
   }

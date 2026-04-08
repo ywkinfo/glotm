@@ -38,6 +38,8 @@
 - 장 제목을 바꿀 때는 원고 H1, `manifest.json`, `master.md` 생성 결과를 함께 확인한다.
 - 법률 사실, 기한, 기관명, 수수료, 제도 설명은 공식 출처 또는 검증 로그와 맞춘다.
 - `EuTm`과 중복되는 내용은 EU 공통 설명으로 짧게 처리하고, 영국 독자 판단이 필요한 차이는 별도 문단으로 강조한다.
+- 홈/continue reading/search에 연결되는 reader-facing 요약은 `draft 공개본`, early-track, `pilot`, `smoke QA` 상태와 충돌하지 않게 유지한다.
+- filing, maintenance, platform/domain incident처럼 현재 reader utility의 중심 row를 독자가 빠르게 다시 찾을 수 있는 제목과 summary를 우선한다.
 - 장별 최소 3개 이상의 실무 섹션(H2)을 유지한다.
 - 각 장은 최소 1개 이상의 구조화 산출물(표 또는 체크리스트)을 포함한다.
 - `04`, `06`, `07`, `08`, `10`, `13`, `14`장은 실무자가 바로 복사해 쓸 수 있는 구조화 산출물 2개 이상을 권장한다.
