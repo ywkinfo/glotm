@@ -5,6 +5,8 @@
 ## Root Authority Docs
 
 - repository entrypoint: [`../README.md`](../README.md)
+- root navigation guide: [`../AGENTS.md`](../AGENTS.md)
+- root shell architecture: [`../ARCHITECTURE.md`](../ARCHITECTURE.md)
 - current operating brief: [`../PROJECT-OVERVIEW.md`](../PROJECT-OVERVIEW.md)
 - agent routing: [`../CLAUDE.md`](../CLAUDE.md)
 - root working rules: `../Harness/Constitution.md`, `../Harness/Style-Guide.md`, `../Harness/QA-Gate.md`

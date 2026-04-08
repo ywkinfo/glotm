@@ -58,6 +58,8 @@ npm run health:all
 
 ## Documentation Map
 
+- root navigation guide: `AGENTS.md`
+- root shell architecture: `ARCHITECTURE.md`
 - 현재 operating brief: `PROJECT-OVERVIEW.md`
 - 루트 working rules: `Harness/Constitution.md`, `Harness/Style-Guide.md`, `Harness/QA-Gate.md`
 - supporting docs index: `docs/README.md`
