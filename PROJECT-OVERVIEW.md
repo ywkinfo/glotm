@@ -10,16 +10,17 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-04-07 |
-| Verified on | 2026-04-07 |
+| Last updated | 2026-04-09 |
+| Verified on | 2026-04-09 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
-| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` 안정화 -> `Report / Gateway` trust layer 정합화 -> incubate 유지보수 |
+| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` 안정화 -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### 현재 운영 스냅샷
 
-- 루트 `GloTm`: `npm run build` 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`을 함께 연결한다.
-- Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영한다.
+- 루트 `GloTm`: 2026-04-09 기준 `npm run health:all` 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
+- Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 리포트 2개를 먼저 보여주는 trust layer / report handoff를 포함한다.
+- GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. 다만 production 상의 모바일 drawer close 이슈는 별도 관찰 사항으로 남아 있으므로, live verification 표현은 workflow artifact 검증과 구분해서 본다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - `LatTm`: 20개 챕터, 검색 엔트리 781개. `flagship` tier.
 - `MexTm`: 15개 챕터, 검색 엔트리 379개. `growth` tier.
@@ -95,7 +96,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `ChaTm`: mature 단계 반영 완료, reader/search QA와 Gateway sync 유지
 - `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
 - `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
-- `Report`·`Gateway`: guide 본문 보강 뒤 교차 관할권 trust layer와 진입 신뢰 보강
+- `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
 - `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm pilot 유지, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
@@ -199,8 +200,10 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | UKTm 생성 산출물 | 14개 챕터 / 검색 엔트리 100개 |
 | GloTm build status | pass |
 | MexTm build status | pass |
-| 루트 `content:prepare` 특징 | 가이드별로 full pipeline과 `build-content.ts` shortcut이 혼재 |
+| 루트 `content:prepare` 특징 | 7개 가이드 generated content + Reports generated content를 재생성하며, 가이드별로 full pipeline과 `build-content.ts` shortcut이 혼재 |
 | Gateway 랜딩 | intro 문서 전체 복제가 아니라 복수의 핵심 섹션과 CTA 중심의 선별 랜딩 |
+| Report / Gateway handoff | Gateway 첫 화면에 최신 리포트 2개를 노출하고, Report archive와 최신순 handoff를 공유 |
+| favicon / workflow path | favicon asset은 GitHub Pages 공개본에서 확인됐고, local release verification은 `build:pages:glotm`, workflow deploy는 env 주입 기반 `build:pages`를 사용 |
 | 추가 live routes | `/japan`, `/china`, `/europe`, `/uk` 연결 완료 |
 | 배포 상태 | GitHub Pages 공개본 운영 중 (`/glotm/`) |
 
@@ -255,11 +258,11 @@ Phase 1 런타임 QA 체크포인트는 `docs/phase1-runtime-qa.md`에 정리한
 | 작업 | 상세 |
 |------|------|
 | 대상 | 루트 `GloTm` 셸의 공개 URL (`/`, `/latam`, `/latam/chapter/:chapterSlug`, `/mexico`, `/mexico/chapter/:chapterSlug`, `/usa`, `/usa/chapter/:chapterSlug`, `/japan`, `/japan/chapter/:chapterSlug`, `/china`, `/china/chapter/:chapterSlug`, `/europe`, `/europe/chapter/:chapterSlug`, `/uk`, `/uk/chapter/:chapterSlug`) |
-| 현재 구현 | `build:pages`가 `build -> prerender.ts -> generate-sitemap.ts -> prepare-pages.ts` 순서로 Pages 산출물을 생성 |
+| 현재 구현 | local release verification은 `build:pages:glotm`, workflow deploy는 env 주입 기반 `build:pages`가 `build -> prerender.ts -> generate-sitemap.ts -> prepare-pages.ts` 순서로 Pages 산출물을 생성 |
 | 정적 메타데이터 | 홈·브리프·리포트·가이드·챕터별 `title`, `description`, canonical, Open Graph, Twitter 메타를 생성 |
 | GitHub Pages 산출물 | `dist/**/*.html`, `dist/sitemap.xml`, `dist/robots.txt`, `dist/404.html`, `dist/.nojekyll` 생성 |
 | 현재 남은 일 | release artifact 검증 유지, Search Console/색인 확인, custom domain 도입 시 `PAGES_SITE_ORIGIN` 동기화 |
-| 검증 | `npm run build:pages:glotm` 후 representative HTML, `sitemap.xml`, `robots.txt`, `404.html`을 함께 확인 |
+| 검증 | 로컬에서는 `npm run build:pages:glotm`, workflow에서는 env 주입 뒤 `npm run build:pages`로 representative HTML, `sitemap.xml`, `robots.txt`, `404.html`, favicon asset 반영을 확인 |
 
 ### Phase 3: 파일럿 배포 및 이메일 게이트
 
