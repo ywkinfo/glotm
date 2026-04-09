@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">GloTm favicon</title>
+  <desc id="desc">Gateway-inspired GloTm monogram favicon</desc>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="#FFFDF9" stroke="#F4ECDF" stroke-width="2"/>
+  <path d="M18 48V30C18 22.268 24.268 16 32 16C39.732 16 46 22.268 46 30V36" stroke="#273A3E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 36H46" stroke="#273A3E" stroke-width="8" stroke-linecap="round"/>
+  <path d="M22 19H42" stroke="#B45F2F" stroke-width="6" stroke-linecap="round"/>
+  <path d="M32 22V44" stroke="#0E6B6D" stroke-width="6" stroke-linecap="round"/>
+</svg>
