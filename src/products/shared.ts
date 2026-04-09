@@ -64,11 +64,15 @@ export type LifecycleTone = LifecycleStatus | "neutral";
 
 export type QaLevel = "smoke" | "standard" | "full";
 
+export type GatewayLaneRole = "priority" | "baseline" | "supporting";
+
 export type ProductMeta = {
   id: string;
   shortLabel: string;
   slug: string;
   path: string;
+  gatewayOrder?: number;
+  gatewayLaneRole?: GatewayLaneRole;
   title: string;
   summary: string;
   chapterCount: number;
@@ -85,6 +89,59 @@ export type ProductMeta = {
   coverageType: "region" | "country";
   availability: "live_shell" | "developed_workspace";
 };
+
+export function getPortfolioTierLabel(portfolioTier: PortfolioTier) {
+  switch (portfolioTier) {
+    case "flagship":
+      return "Flagship";
+    case "growth":
+      return "Growth";
+    case "validate":
+      return "Validate";
+    case "incubate":
+      return "Incubate";
+  }
+}
+
+export function getLifecycleStatusLabel(lifecycleStatus: LifecycleStatus) {
+  switch (lifecycleStatus) {
+    case "pilot":
+      return "Pilot";
+    case "beta":
+      return "Beta";
+    case "mature":
+      return "Mature";
+  }
+}
+
+export function getQaLevelLabel(qaLevel: QaLevel) {
+  switch (qaLevel) {
+    case "smoke":
+      return "Smoke";
+    case "standard":
+      return "Standard";
+    case "full":
+      return "Full";
+  }
+}
+
+export function getCoverageLabel(product: Pick<ProductMeta, "coverageType">) {
+  return product.coverageType === "region" ? "권역 가이드" : "국가 가이드";
+}
+
+export function isPriorityLaneProduct(product: Pick<ProductMeta, "gatewayLaneRole">) {
+  return product.gatewayLaneRole === "priority";
+}
+
+export function isBaselineLaneProduct(product: Pick<ProductMeta, "gatewayLaneRole">) {
+  return product.gatewayLaneRole === "baseline";
+}
+
+export function buildProductStatusLabel(
+  product: Pick<ProductMeta, "portfolioTier" | "lifecycleStatus" | "qaLevel" | "coverageType">
+) {
+  return `${getPortfolioTierLabel(product.portfolioTier)} tier · ${getLifecycleStatusLabel(product.lifecycleStatus)} lifecycle · ${getQaLevelLabel(product.qaLevel)} QA · ${getCoverageLabel(product)}`;
+}
 
 type SearchIndexData = {
   index: MiniSearch<SearchEntry>;
