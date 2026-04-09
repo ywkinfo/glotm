@@ -11,7 +11,15 @@ import {
   reportExperienceMeta
 } from "../reports/registry";
 import { liveShellProducts } from "../products/registry";
-import { buildProductPath, setRuntimeDocumentTitle } from "../products/shared";
+import {
+  buildProductPath,
+  getLifecycleStatusLabel,
+  getPortfolioTierLabel,
+  getQaLevelLabel,
+  isBaselineLaneProduct,
+  isPriorityLaneProduct,
+  setRuntimeDocumentTitle
+} from "../products/shared";
 import {
   BriefIssueCard,
   FullDocumentLink,
@@ -45,16 +53,60 @@ export function GatewayLandingPage() {
     (total, product) => total + product.searchEntryCount,
     0
   );
-  const chinaProduct = orderedProducts.find((product) => product.slug === "china") ?? orderedProducts[0];
-  const latamProduct = orderedProducts.find((product) => product.slug === "latam") ?? orderedProducts[0];
-  const mexicoProduct = orderedProducts.find((product) => product.slug === "mexico") ?? orderedProducts[0];
+  const priorityGuides = orderedProducts.filter(isPriorityLaneProduct);
+  const leadGuide = priorityGuides[0];
+  const secondGuide = priorityGuides[1];
+  const baselineGuide = orderedProducts.find(isBaselineLaneProduct);
   const featuredBriefs = briefIssues.slice(0, 2);
   const latestBrief = getLatestBriefIssue();
   const leadReport = getLatestReport();
   const featuredReports = getLatestReports(2);
   const priorityLaneStatusSummary = buildPriorityLaneStatusSummary(orderedProducts);
-  const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
+  const priorityLaneProgressNote = leadReport
+    ? buildPriorityLaneProgressNote(orderedProducts, leadReport)
+    : `${priorityGuides.map((product) => product.shortLabel).join(" -> ")} 순서로 guide를 먼저 정리하고 있습니다.`;
   const leadReportFocusPoints = leadReport?.focusPoints.slice(0, 3) ?? [];
+  const recommendedStartTitle =
+    leadGuide && secondGuide
+      ? `${leadGuide.shortLabel}과 ${secondGuide.shortLabel}부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다`
+      : "현재 우선 레인을 먼저 보면 실행 질문이 함께 잡힙니다";
+  const recommendedStartCopy = baselineGuide
+    ? `${priorityLaneProgressNote} 큰 그림이 필요할 때는 ${baselineGuide.shortLabel}을 기준 프레임으로 함께 보면 좋습니다.`
+    : priorityLaneProgressNote;
+  const priorityRoadmap = [
+    ...priorityGuides.map((product) => ({
+      id: product.slug,
+      title: `${product.shortLabel} · ${getPortfolioTierLabel(product.portfolioTier)} ${getLifecycleStatusLabel(product.lifecycleStatus)}`,
+      copy: product.summary,
+      note:
+        product.maturityNote
+        ?? `QA ${getQaLevelLabel(product.qaLevel)} · gap ${product.highRiskVerificationGapCount}건`,
+      href: buildProductPath(product)
+    })),
+    ...(leadReport
+      ? [
+          {
+            id: "report-gateway",
+            title: leadReport.gatewayBridgeLabel,
+            copy: reportExperienceMeta.gatewaySectionSummary,
+            note: priorityLaneProgressNote,
+            href: buildReportArchivePath()
+          }
+        ]
+      : []),
+    {
+      id: "incubate",
+      title: `${joinProductLabels(incubateProducts, " · ")} · Incubate`,
+      copy: `${joinProductLabels(incubateProducts, " · ")}은 lighter track으로 유지하며 verification refresh, reader utility, 문서 정합성을 우선합니다.`,
+      note: incubateProducts
+        .map(
+          (product) =>
+            `${product.shortLabel} ${getLifecycleStatusLabel(product.lifecycleStatus)} · QA ${getQaLevelLabel(product.qaLevel)}`
+        )
+        .join(" / "),
+      href: incubateProducts[0] ? buildProductPath(incubateProducts[0]) : buildProductPath("/")
+    }
+  ];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guide";
   const heroLead = "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다.";
@@ -63,49 +115,6 @@ export function GatewayLandingPage() {
     "제공 정보는 참고용이며, 최신성 및 정확성은 각국 법령과 실무 변화에 따라 달라질 수 있으므로 현지 대리인 확인 후 활용하시기 바랍니다."
   ];
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
-  const priorityRoadmap = [
-    {
-      id: "china",
-      title: "ChaTm은 핵심 내용을 더 쉽게 보이게 다듬었어요",
-      copy:
-        "자주 쓰는 흐름부터 먼저 정리해, 필요한 내용을 빠르게 찾기 쉽게 만들었습니다.",
-      note: "출원, 무효, 라이선스, 통관, 운영 기준을 한 번에 볼 수 있게 정리",
-      href: buildProductPath("/china")
-    },
-    {
-      id: "mexico",
-      title: "MexTm은 다음 단계로 이어받기 쉽게 정리했어요",
-      copy:
-        "출원 서류부터 담당자 역할까지 한 흐름으로 맞춰, 다음 작업을 바로 이어가기 쉽게 했습니다.",
-      note: "출원 서류, 갱신과 유지 책임, 국경 대응 자료를 한 흐름으로 정리",
-      href: buildProductPath("/mexico")
-    },
-    {
-      id: "europe",
-      title: "EuTm은 꼭 필요한 6가지를 먼저 안정시켰어요",
-      copy:
-        "범위를 넓히기보다, 문서와 기준을 먼저 맞춰서 더 믿고 볼 수 있게 했습니다.",
-      note: "핵심 기준과 안내 구조를 먼저 정리",
-      href: buildProductPath("/europe")
-    },
-    {
-      id: "report-gateway",
-      title: "리포트와 Gateway를 한 흐름으로 이어뒀어요",
-      copy:
-        "최신 리포트 2개를 Gateway 첫 화면에서 바로 확인하고, 더 많은 리포트는 아카이브에서 같은 순서로 이어 읽기 쉽게 만들었습니다.",
-      note: "최신 리포트, Report 아카이브, Gateway 상태를 함께 연결",
-      href: buildReportArchivePath()
-    },
-    {
-      id: "incubate",
-      title: "Incubate는 필요한 부분만 가볍게 다듬고 있어요",
-      copy:
-        "JapTm, UKTm, UsaTm은 큰 개편보다 기본 확인과 작은 보완부터 차근차근 진행합니다.",
-      note: "가벼운 유지보수 중심",
-      href: buildProductPath("/japan")
-    }
-  ];
-
   useEffect(() => {
     setRuntimeDocumentTitle();
   }, []);
@@ -127,26 +136,26 @@ export function GatewayLandingPage() {
               </p>
             ))}
           </div>
-          {chinaProduct ? (
+          {leadGuide ? (
             <div className="gateway-actions">
               <FullDocumentLink
                 className="gateway-button gateway-button--primary"
-                to={buildProductPath(chinaProduct)}
+                to={buildProductPath(leadGuide)}
                 onClick={() => {
-                  trackEngagement("guide_cta_click", buildGuideTrackingParams(chinaProduct, "gateway_hero"));
+                  trackEngagement("guide_cta_click", buildGuideTrackingParams(leadGuide, "gateway_hero"));
                 }}
               >
-                ChaTm 보기
+                {leadGuide.primaryCtaLabel}
               </FullDocumentLink>
-              {mexicoProduct ? (
+              {secondGuide ? (
                 <FullDocumentLink
                   className="gateway-button gateway-button--secondary"
-                  to={buildProductPath(mexicoProduct)}
+                  to={buildProductPath(secondGuide)}
                   onClick={() => {
-                    trackEngagement("guide_cta_click", buildGuideTrackingParams(mexicoProduct, "gateway_hero"));
+                    trackEngagement("guide_cta_click", buildGuideTrackingParams(secondGuide, "gateway_hero"));
                   }}
                 >
-                  MexTm 먼저 보기
+                  {secondGuide.primaryCtaLabel}
                 </FullDocumentLink>
               ) : null}
               {leadReport ? (
@@ -261,10 +270,8 @@ export function GatewayLandingPage() {
 
       <section className="gateway-cta-card">
         <p className="gateway-kicker">Recommended Start</p>
-        <h2 className="gateway-cta-title">ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다</h2>
-        <p className="gateway-cta-copy">
-          {"ChaTm은 지금 가장 먼저 볼 guide이고, MexTm은 멕시코 운영 기준 guide입니다. 큰 그림이 필요할 때는 LatTm을 기준 프레임으로 함께 보되, 지금 추천 시작은 ChaTm -> MexTm 흐름입니다."}
-        </p>
+        <h2 className="gateway-cta-title">{recommendedStartTitle}</h2>
+        <p className="gateway-cta-copy">{recommendedStartCopy}</p>
         <div className="gateway-cta-actions">
           <a className="gateway-cta-link" href="#portfolio-focus">
             포트폴리오 우선 가이드 보기
@@ -465,7 +472,7 @@ export function GatewayLandingPage() {
           {flagshipProducts.length > 0 ? (
             <ProductGroup
               title="Flagship"
-              description="LatTm은 cross-border 우선순위와 운영 흐름의 기준 제품입니다. 신규 시장 확장보다 freshness, search density, reader QA를 먼저 높입니다."
+              description="기준 프레임을 책임지는 레인입니다. 신규 시장 확장보다 freshness, search density, reader QA를 먼저 높입니다."
               products={flagshipProducts}
               surface="portfolio_flagship"
             />
@@ -473,7 +480,7 @@ export function GatewayLandingPage() {
           {growthProducts.length > 0 ? (
             <ProductGroup
               title="Growth"
-              description="ChaTm은 mature 승격을 반영했고 MexTm은 mature baseline을 유지합니다. 이제 growth 결과를 route decision report와 Gateway copy로 다시 묶는 단계입니다."
+              description="buyer entry 가치와 실무 밀도를 빠르게 끌어올리는 레인입니다. 각 guide 카드의 maturity note와 QA 상태를 기준으로 우선순위를 관리합니다."
               products={growthProducts}
               surface="portfolio_growth"
             />
@@ -481,7 +488,7 @@ export function GatewayLandingPage() {
           {validateProducts.length > 0 ? (
             <ProductGroup
               title="Validate"
-              description="EuTm은 범위 확대보다 docs sync와 EU/UK 기준선 고정을 우선하는 권역 validate 가이드이며, core six 안정화까지 마친 상태입니다."
+              description="범위 확대보다 verification, 문서 정합성, 기준선 안정화를 우선하는 레인입니다."
               products={validateProducts}
               surface="portfolio_validate"
             />
@@ -489,7 +496,7 @@ export function GatewayLandingPage() {
           {incubateProducts.length > 0 ? (
             <ProductGroup
               title="Incubate"
-              description={`${joinProductLabels(incubateProducts, " · ")}은 verification refresh, reader utility, 문서 정합성을 우선하는 lighter track입니다. UsaTm·JapTm은 beta / standard QA를 유지하고, UKTm은 draft 공개본 early track + smoke QA를 유지합니다.`}
+              description={`${joinProductLabels(incubateProducts, " · ")}은 lighter track으로 유지하며 verification refresh, reader utility, 문서 정합성을 우선합니다.`}
               products={incubateProducts}
               surface="portfolio_incubate"
             />
@@ -542,7 +549,7 @@ export function GatewayLandingPage() {
           GloTm은 해외 진출 과정에서 무엇을 먼저 확인하고 어떤 운영 판단을 준비해야 하는지를, 20년 이상 축적된 상표 실무 경험을 바탕으로 구조화한 cross-border operating guide portfolio입니다.
         </p>
         <p className="gateway-section-copy">
-          지금은 LatTm flagship을 보호하면서 {priorityLaneProgressNote.replace("현재 우선 레인 상태: ", "").replace("입니다.", "에 집중하고 있습니다.")}
+          지금은 {priorityLaneProgressNote}
         </p>
         <p className="gateway-section-copy gateway-section-copy--spaced">
           문의, 강연 요청, 심층 연구 안내는{" "}

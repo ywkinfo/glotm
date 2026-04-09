@@ -15,9 +15,12 @@ test("gateway smoke", async ({ page }) => {
     page.getByText("이용자가 더 빨리 도움을 느낄 수 있는 레인부터 보강합니다")
   ).toBeVisible();
   await expect(
-    page.getByText("Gateway 첫 화면에서는 최신 리포트 2개만 먼저 보여주고, 나머지 리포트는 Report 아카이브에서 이어서 볼 수 있습니다.")
+    page.getByRole("heading", {
+      level: 2,
+      name: "Gateway 첫 화면에서는 최신 리포트 2개를 먼저 보여줍니다"
+    })
   ).toBeVisible();
-  await expect(page.getByText("ChaTm은 핵심 내용을 더 쉽게 보이게 다듬었어요")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "ChaTm · Growth Mature" })).toBeVisible();
   await expect(
     gatewayHero.getByRole("link", {
       name: "ChaTm 보기"

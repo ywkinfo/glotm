@@ -36,7 +36,9 @@ export function ReportArchivePage() {
   const leadReport = getLatestReport();
   const orderedProducts = orderGatewayProducts(liveShellProducts);
   const priorityLaneLabelSequence = buildPriorityLaneLabelSequence(orderedProducts);
-  const priorityLaneProgressNote = buildPriorityLaneProgressNote(orderedProducts, leadReport ?? undefined);
+  const priorityLaneProgressNote = leadReport
+    ? buildPriorityLaneProgressNote(orderedProducts, leadReport)
+    : null;
   const trustLayerGuideSummary =
     buildTrustLayerGuideSummary(leadReport, orderedProducts, {
       laneLabelSequence: priorityLaneLabelSequence,
@@ -58,9 +60,11 @@ export function ReportArchivePage() {
           <p className="gateway-summary gateway-summary--supporting">
             {trustLayerGuideSummary || getTrustLayerSummaryFallback()}
           </p>
-          <p className="gateway-summary gateway-summary--supporting">
-            {priorityLaneProgressNote}
-          </p>
+          {priorityLaneProgressNote ? (
+            <p className="gateway-summary gateway-summary--supporting">
+              {priorityLaneProgressNote}
+            </p>
+          ) : null}
           {leadReport?.whyNow ? (
             <p className="gateway-summary gateway-summary--supporting">
               {leadReport.whyNow}

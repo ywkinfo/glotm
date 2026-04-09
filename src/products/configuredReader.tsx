@@ -47,6 +47,7 @@ import {
 } from "./configuredReaderHomeSections";
 import { products } from "./registry";
 import {
+  buildProductStatusLabel,
   buildChapterPath,
   buildProductPath,
   buildSectionLocation,
@@ -56,6 +57,7 @@ import {
   formatBookmarkTimestamp,
   getAdjacentChapters,
   getChapterMeta,
+  isPriorityLaneProduct,
   setRuntimeDocumentTitle,
   type Chapter,
   type DocumentData,
@@ -132,7 +134,6 @@ type ReaderConfig = {
 };
 
 const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
-const priorityGuideHomeReportHandoffSlugs = new Set(["china", "mexico", "europe"]);
 
 function loadReaderActionBarDismissed() {
   if (typeof window === "undefined") {
@@ -173,51 +174,6 @@ function decodeRouteSegment(value?: string) {
   } catch {
     return value;
   }
-}
-
-function getPortfolioTierLabel(productMeta: ProductMeta) {
-  switch (productMeta.portfolioTier) {
-    case "flagship":
-      return "Flagship";
-    case "growth":
-      return "Growth";
-    case "validate":
-      return "Validate";
-    case "incubate":
-      return "Incubate";
-  }
-}
-
-function getLifecycleStatusLabel(productMeta: ProductMeta) {
-  switch (productMeta.lifecycleStatus) {
-    case "pilot":
-      return "Pilot";
-    case "beta":
-      return "Beta";
-    case "mature":
-      return "Mature";
-  }
-}
-
-function getQaLevelLabel(productMeta: ProductMeta) {
-  switch (productMeta.qaLevel) {
-    case "smoke":
-      return "Smoke";
-    case "standard":
-      return "Standard";
-    case "full":
-      return "Full";
-  }
-}
-
-function getCoverageLabel(productMeta: ProductMeta) {
-  return productMeta.coverageType === "region"
-    ? "권역 가이드"
-    : "단일 시장 가이드";
-}
-
-function buildHomeStatusLabel(productMeta: ProductMeta) {
-  return `${getPortfolioTierLabel(productMeta)} tier · ${getLifecycleStatusLabel(productMeta)} lifecycle · ${getQaLevelLabel(productMeta)} QA · ${getCoverageLabel(productMeta)}`;
 }
 
 export function createReaderRuntime(config: ReaderRuntimeConfig) {
@@ -576,7 +532,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const continueTimestamp = readingBookmark
       ? formatBookmarkTimestamp(readingBookmark.updatedAt)
       : "";
-    const reportHandoffs = priorityGuideHomeReportHandoffSlugs.has(productMeta.slug)
+    const reportHandoffs = isPriorityLaneProduct(productMeta)
       ? getReportsForGuideSlug(productMeta.slug).slice(0, 2)
       : [];
 
@@ -782,7 +738,7 @@ export function createConfiguredReader(config: ReaderConfig) {
           <p className="hero-summary">{config.homeSummary}</p>
           <div className="hero-meta">
             <span>총 {documentData.meta.chapterCount}개 챕터</span>
-            <span>{buildHomeStatusLabel(productMeta)}</span>
+            <span>{buildProductStatusLabel(productMeta)}</span>
           </div>
         </section>
 

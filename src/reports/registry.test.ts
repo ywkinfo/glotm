@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  defaultReportBridgeLabel,
   getLatestReport,
   getLatestReports,
   getPrimaryFocusPointForGuide,
@@ -26,6 +27,7 @@ describe("report registry", () => {
 
   it("pins the latest gateway report to the newest report entry", () => {
     expect(getLatestReport()?.slug).toBe("brand-localization-vs-standardization-framework");
+    expect(getLatestReport()?.gatewayBridgeLabel).toBe(defaultReportBridgeLabel);
   });
 
   it("keeps the evidence report pinned to the EuTm evidence handoff anchor", () => {

@@ -37,9 +37,36 @@ import {
   UsaHomePage,
   UsaReaderRoot
 } from "./usa";
-import type { DocumentData, SearchEntry } from "./shared";
+import { products } from "./registry";
+import { isPriorityLaneProduct, type DocumentData, type SearchEntry } from "./shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
+const priorityGuideSlugs = new Set(
+  products.filter(isPriorityLaneProduct).map((product) => product.slug)
+);
+const priorityGuideHandoffExpectations = {
+  china: {
+    expectedSummary: "영문, 중국어, 결합표장을 어떻게 나눠 관리할지부터 보고, 표기 후보를 go / revise / hold로 정리합니다.",
+    expectedReportSlugs: [
+      "brand-localization-vs-standardization-framework",
+      "global-filing-route-framework"
+    ]
+  },
+  mexico: {
+    expectedSummary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
+    expectedReportSlugs: [
+      "global-filing-route-framework",
+      "global-use-evidence-system"
+    ]
+  },
+  europe: {
+    expectedSummary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다.",
+    expectedReportSlugs: [
+      "global-filing-route-framework",
+      "global-use-evidence-system"
+    ]
+  }
+} as const;
 
 type OptionalUkModule = {
   UkChapterPage: typeof LatamChapterPage;
@@ -642,32 +669,16 @@ describe("Shared reader runtime contract", () => {
     }
   );
 
-  it.each([
-    {
-      readerCase: readerCases.find((readerCase) => readerCase.productSlug === "china")!,
-      expectedSummary: "영문, 중국어, 결합표장을 어떻게 나눠 관리할지부터 보고, 표기 후보를 go / revise / hold로 정리합니다.",
-      expectedReportSlugs: [
-        "brand-localization-vs-standardization-framework",
-        "global-filing-route-framework"
-      ]
-    },
-    {
-      readerCase: readerCases.find((readerCase) => readerCase.productSlug === "mexico")!,
-      expectedSummary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
-      expectedReportSlugs: [
-        "global-filing-route-framework",
-        "global-use-evidence-system"
-      ]
-    },
-    {
-      readerCase: readerCases.find((readerCase) => readerCase.productSlug === "europe")!,
-      expectedSummary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다.",
-      expectedReportSlugs: [
-        "global-filing-route-framework",
-        "global-use-evidence-system"
-      ]
-    }
-  ])(
+  it.each(
+    readerCases
+      .filter((readerCase) => priorityGuideSlugs.has(readerCase.productSlug))
+      .map((readerCase) => ({
+        readerCase,
+        ...priorityGuideHandoffExpectations[
+          readerCase.productSlug as keyof typeof priorityGuideHandoffExpectations
+        ]
+      }))
+  )(
     "surfaces trust-layer report handoffs on $readerCase.name home without breaking base reader contracts",
     async ({ readerCase, expectedSummary, expectedReportSlugs }) => {
       installFetchMock();
@@ -685,7 +696,7 @@ describe("Shared reader runtime contract", () => {
   );
 
   it.each(
-    readerCases.filter((readerCase) => !["china", "mexico", "europe"].includes(readerCase.productSlug))
+    readerCases.filter((readerCase) => !priorityGuideSlugs.has(readerCase.productSlug))
   )(
     "does not show trust-layer handoffs on non-priority $name home",
     async (readerCase) => {

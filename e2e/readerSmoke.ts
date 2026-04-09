@@ -1,5 +1,14 @@
 import { expect, type Page } from "@playwright/test";
 
+export const mobileReaderViewport = {
+  width: 390,
+  height: 844
+} as const;
+
+export const readerActionBarHiddenStorageKey = "glotm_reader_action_bar_hidden";
+export const readerSearchEmptyStateText = "일치하는 섹션을 찾지 못했습니다.";
+export const readerZeroResultQuery = "픞쀍궭홝987654321";
+
 export const readerSmokeCases = [
   {
     name: "LatTm",
@@ -87,24 +96,72 @@ export const readerSmokeCases = [
   }
 ] as const;
 
-function installBookmark(page: Page, guide: (typeof readerSmokeCases)[number]) {
-  return page.addInitScript((bookmark: (typeof readerSmokeCases)[number]) => {
-    window.localStorage.setItem(
-      bookmark.storageKey,
-      JSON.stringify({
-        chapterSlug: bookmark.bookmarkChapterSlug,
-        chapterTitle: bookmark.bookmarkChapterTitle,
-        sectionId: bookmark.bookmarkSectionId,
-        sectionTitle: bookmark.bookmarkSectionTitle,
-        progress: 55,
-        updatedAt: "2026-04-04T09:30:00.000Z"
-      })
-    );
-  }, guide);
+export type ReaderSmokeCase = (typeof readerSmokeCases)[number];
+
+export function installReaderSmokeState(page: Page, guide: ReaderSmokeCase) {
+  return page.addInitScript(
+    ({ actionBarStorageKey, bookmark }: { actionBarStorageKey: string; bookmark: ReaderSmokeCase }) => {
+      window.localStorage.removeItem(actionBarStorageKey);
+
+      window.localStorage.setItem(
+        bookmark.storageKey,
+        JSON.stringify({
+          chapterSlug: bookmark.bookmarkChapterSlug,
+          chapterTitle: bookmark.bookmarkChapterTitle,
+          sectionId: bookmark.bookmarkSectionId,
+          sectionTitle: bookmark.bookmarkSectionTitle,
+          progress: 55,
+          updatedAt: "2026-04-04T09:30:00.000Z"
+        })
+      );
+    },
+    {
+      actionBarStorageKey: readerActionBarHiddenStorageKey,
+      bookmark: guide
+    }
+  );
 }
 
-export async function expectGuideSmoke(page: Page, guide: (typeof readerSmokeCases)[number]) {
-  await installBookmark(page, guide);
+export async function expectContinueReadingDeepLink(
+  page: Page,
+  guide: ReaderSmokeCase
+) {
+  const expectedChapterPath = `${guide.path}/chapter/${guide.bookmarkChapterSlug}`;
+  const expectedSectionPath = `${expectedChapterPath}#${guide.bookmarkSectionId}`;
+
+  await installReaderSmokeState(page, guide);
+  await page.goto(guide.path);
+
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: guide.homeHeading
+    })
+  ).toBeVisible();
+
+  const continueLink = page.getByRole("link", { name: "이어 읽기" });
+
+  await expect(page.getByText("Continue Reading")).toBeVisible();
+  await expect(continueLink).toHaveAttribute("href", expectedSectionPath);
+  await continueLink.click();
+
+  await expect(page).toHaveURL(expectedSectionPath);
+  await expect(page.getByRole("heading", { name: guide.bookmarkChapterTitle })).toBeVisible();
+  await expect(page.locator(`[id="${guide.bookmarkSectionId}"]`)).toBeVisible();
+
+  const chapterOutline = page.locator(".chapter-outline");
+  const activeOutlineLink = chapterOutline.getByRole("link", {
+    name: guide.bookmarkSectionTitle,
+    exact: true
+  });
+
+  await expect(chapterOutline).toBeVisible();
+  await expect(activeOutlineLink).toHaveAttribute("href", expectedSectionPath);
+  await expect(activeOutlineLink).toHaveAttribute("aria-current", "location");
+}
+
+export async function expectGuideSmoke(page: Page, guide: ReaderSmokeCase) {
+  await installReaderSmokeState(page, guide);
   await page.goto(guide.path);
 
   await expect(
