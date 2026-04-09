@@ -31,6 +31,7 @@ export type ReportMeta = {
   tags: string[];
   audience: string;
   gatewayLabel: string;
+  gatewayBridgeLabel: string;
   whyNow: string;
   trustLayerChecklist: string[];
   focusPoints: ReportFocusPoint[];
@@ -55,6 +56,8 @@ export type ReportExperienceMeta = {
   archiveSectionSummary: string;
   archiveCtaLabel: string;
 };
+
+export const defaultReportBridgeLabel = "Report / Gateway trust layer";
 
 function buildGuideSectionPath(
   productSlug: string,
@@ -110,6 +113,7 @@ const reportSource: ReportMeta[] = [
     tags: ["출원 경로", "Madrid", "Route Memo"],
     audience: "여러 나라의 출원 경로를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀",
     gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
     whyNow:
       "ChaTm, MexTm, EuTm에서 이미 다룬 출원 경로 판단을 한 번에 다시 정리해, 여러 나라를 비교할 때 바로 참고할 수 있게 만든 리포트입니다. LatTm은 전체 기준을 잡는 참고 프레임이고, JapTm은 필요할 때 이어 읽는 보조 자료입니다.",
     trustLayerChecklist: [
@@ -213,6 +217,7 @@ const reportSource: ReportMeta[] = [
     tags: ["사용 증거", "운영 시스템", "증거 보관"],
     audience: "여러 나라의 사용 증거 운영 구조를 먼저 정리해야 하는 운영팀, 법무팀, 브랜드팀",
     gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
     whyNow:
       "먼저 볼 리포트가 출원 경로 판단을 먼저 잠갔다면, 이어 볼 리포트는 그다음에 필요한 증거 담당자와 보관 구조를 함께 정리할 차례입니다. 국가별 guide만 따라가면 filing 이후 운영이 다시 흩어지기 쉬우므로, 지금 이어 볼 리포트에서 같은 증거 문법을 묶어 두는 편이 좋습니다.",
     trustLayerChecklist: [
@@ -309,6 +314,7 @@ const reportSource: ReportMeta[] = [
     tags: ["브랜드 표기", "현지화", "표준화", "상표 전략"],
     audience: "해외 진출 초기의 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅 리드",
     gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
     whyNow:
       "출원 경로와 사용 증거보다 한 단계 앞에서, 어떤 이름과 표기를 먼저 운영 기준으로 확정할지에 대한 판단이 자주 빠집니다. 특히 중국·일본처럼 현지 문자 사용이 실제 검색과 유통 언어가 되는 시장에서는 표준화와 현지화의 경계를 먼저 정리해 두는 편이 훨씬 안전합니다.",
     trustLayerChecklist: [
