@@ -8,6 +8,9 @@ on:
       - "codex/**"
   pull_request:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   verify-release:
     runs-on: ubuntu-latest
@@ -50,7 +53,7 @@ jobs:
 
       - name: Upload Playwright Report
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-report
           path: playwright-report
@@ -58,7 +61,7 @@ jobs:
 
       - name: Upload Playwright Results
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-test-results
           path: test-results
