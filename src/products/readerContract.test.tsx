@@ -46,10 +46,10 @@ const priorityGuideSlugs = new Set(
 );
 const priorityGuideHandoffExpectations = {
   china: {
-    expectedSummary: "영문, 중국어, 결합표장을 어떻게 나눠 관리할지부터 보고, 표기 후보를 go / revise / hold로 정리합니다.",
+    expectedSummary: "중국이 첫 출시국인지, 중국어 표기를 언제 잠글지, direct/Madrid 판단이 언제 갈리는지 readiness 보드에서 먼저 정리합니다.",
     expectedReportSlugs: [
-      "brand-localization-vs-standardization-framework",
-      "global-filing-route-framework"
+      "global-filing-priority-framework",
+      "brand-localization-vs-standardization-framework"
     ]
   },
   mexico: {

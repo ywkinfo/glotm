@@ -74,6 +74,35 @@ const documentDataByProduct = {
 };
 
 const documentDataByReport = {
+  "global-filing-priority-framework": {
+    meta: {
+      title: "글로벌 상표 출원 우선순위 결정 프레임워크",
+      builtAt: "2026-04-09T09:00:00.000Z",
+      chapterCount: 1
+    },
+    chapters: [
+      {
+        id: "global-filing-priority-framework",
+        slug: "global-filing-priority-framework",
+        title: "글로벌 상표 출원 우선순위 결정 프레임워크",
+        summary:
+          "매출 순서보다 출시 순서, 어떤 표장을 먼저 챙길지, 파트너 리스크, 권리 공백 비용을 기준으로 어느 국가에 먼저 출원할지 정리한 리포트입니다.",
+        html: [
+          "<p>출원 우선순위는 예산표가 아니라 launch sequencing memo에 가깝고, 국가 우선순위와 표장 우선순위를 같은 표에서 잠그는 편이 실수가 적습니다.</p>",
+          '<h3 id="시장-크기보다-먼저-잠가야-하는-하드-트리거">시장 크기보다 먼저 잠가야 하는 하드 트리거</h3>',
+          "<p>출시 직전 채널 노출, 파트너 계약, 현지 문자 표기, 위조 리스크가 붙는 국가는 점수 계산 전에 먼저 올려 보는 편이 실무적입니다.</p>"
+        ].join(""),
+        headings: [
+          {
+            id: "시장-크기보다-먼저-잠가야-하는-하드-트리거",
+            depth: 3,
+            title: "시장 크기보다 먼저 잠가야 하는 하드 트리거",
+            children: []
+          }
+        ]
+      }
+    ]
+  } satisfies DocumentData,
   "global-filing-route-framework": {
     meta: {
       title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
@@ -422,10 +451,10 @@ describe("App portfolio shell", () => {
     {
       path: "/china",
       title: "중국 상표 실무 운영 가이드",
-      summary: "영문, 중국어, 결합표장을 어떻게 나눠 관리할지부터 보고, 표기 후보를 go / revise / hold로 정리합니다.",
+      summary: "중국이 첫 출시국인지, 중국어 표기를 언제 잠글지, direct/Madrid 판단이 언제 갈리는지 readiness 보드에서 먼저 정리합니다.",
       expectedReportSlugs: [
-        "brand-localization-vs-standardization-framework",
-        "global-filing-route-framework"
+        "global-filing-priority-framework",
+        "brand-localization-vs-standardization-framework"
       ]
     },
     {
@@ -678,20 +707,20 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(reportSection as HTMLElement).queryByText(
-        /ChaTm · MexTm · EuTm에서 이미 정리한 출원 경로 판단 질문을 여러 나라에서 함께 볼 수 있는 공통 판단 기준으로 다시 묶어 보여줍니다\. LatTm은 기준 프레임으로 유지합니다\. JapTm은 참고용으로 이어 읽히게 둡니다\./
+        /ChaTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\. JapTm · UsaTm은 필요할 때 이어서 보면 됩니다\./
       )
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 현지 맞춤 필요성을 먼저 본다" })
+      within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 중국 launch sequencing부터 적는다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 표기 전략 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm sequencing 보기" })
     ).toHaveAttribute(
       "href",
-      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
+      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다"
     );
     expect(
       within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
@@ -1065,7 +1094,7 @@ describe("App portfolio shell", () => {
       `/reports/${latestReport?.slug}`
     );
     expect(
-      screen.getByText(/ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.getByText(/ChaTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -1075,15 +1104,15 @@ describe("App portfolio shell", () => {
     expect(
       screen.queryByText(
         new RegExp(
-          `ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\.`
+          `ChaTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\.`
         )
       )
     ).toBeNull();
     expect(
-      screen.getByText(/글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다\./)
+      screen.getByText(/매출 순서보다 출시 순서, 어떤 표장을 먼저 챙길지, 파트너 리스크, 권리 공백 비용을 기준으로 어느 국가에 먼저 출원할지 정리한 리포트입니다\./)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/대상: 해외 진출 초기의 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅 리드/)
+      screen.getByText(/대상: 여러 나라 진입 순서와 출원 우선순위를 먼저 정해야 하는 브랜드 관리자, 인하우스 IP 팀, 글로벌 사업 리드/)
     ).toBeInTheDocument();
   });
 
@@ -1188,7 +1217,7 @@ describe("App portfolio shell", () => {
 
     const gatewayRender = renderAppRouteTree("/");
 
-    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 표기 전략 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm sequencing 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -1197,7 +1226,7 @@ describe("App portfolio shell", () => {
         report_slug: latestReport?.slug,
         guide_slug: "china",
         surface: "gateway_section",
-        target_path: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준"
+        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다"
       })
     );
 

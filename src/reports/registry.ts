@@ -102,6 +102,123 @@ export const reportExperienceMeta: ReportExperienceMeta = {
 // - focusPoints should deep-link into the next guide actions the reader should take
 const reportSource: ReportMeta[] = [
   {
+    id: "global-filing-priority-framework",
+    slug: "global-filing-priority-framework",
+    title: "글로벌 상표 출원 우선순위 결정 프레임워크",
+    summary:
+      "매출 순서보다 출시 순서, 어떤 표장을 먼저 챙길지, 파트너 리스크, 권리 공백 비용을 기준으로 어느 국가에 먼저 출원할지 정리한 리포트입니다.",
+    trustLayerSummaryObject: "출원 우선순위와 표장 우선순위 질문을",
+    publishedAt: "2026-04-09T09:00:00.000Z",
+    jurisdictions: ["Global", "China", "United States", "Japan", "UAE", "Saudi Arabia", "Brazil", "Mexico", "Andean"],
+    tags: ["출원 우선순위", "시장 우선순위", "표장 잠금", "Portfolio Sequencing"],
+    audience: "여러 나라 진입 순서와 출원 우선순위를 먼저 정해야 하는 브랜드 관리자, 인하우스 IP 팀, 글로벌 사업 리드",
+    gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
+    whyNow:
+      "표기 전략과 출원 경로보다 한 단계 앞에서, 무엇을 먼저 권리 포트폴리오에 넣을지에 대한 판단이 실제로 가장 자주 비어 있습니다. 중국·미국·일본·중동·중남미처럼 출시 순서와 파트너 구조가 다른 시장을 함께 볼 때, 국가와 표장 우선순위를 먼저 정해야 이후 경로 선택과 evidence 설계가 흔들리지 않습니다.",
+    trustLayerChecklist: [
+      "출시 순서, 채널 노출 시점, 파트너 계약 시점을 같은 표에 적는다.",
+      "시장 크기보다 권리 공백 비용이 큰 국가와 표장을 먼저 file-now로 올린다.",
+      "현지 문자 표기, direct/Madrid, evidence owner는 우선순위가 잠긴 뒤에 붙인다."
+    ],
+    focusPoints: [
+      {
+        id: "china-launch-sequencing",
+        title: "ChaTm: 중국 launch sequencing부터 적는다",
+        summary:
+          "중국이 첫 출시국인지, 중국어 표기를 언제 잠글지, direct/Madrid 판단이 언제 갈리는지 readiness 보드에서 먼저 정리합니다.",
+        href: buildGuideSectionPath(
+          "china",
+          "제4장-출원-경로-선택-직접출원-vs-마드리드",
+          "launch-market-우선순위를-먼저-적는다"
+        ),
+        guideSlug: "china",
+        ctaLabel: "ChaTm sequencing 보기"
+      },
+      {
+        id: "usa-launch-wave",
+        title: "UsaTm: core mark와 launch wave를 같이 본다",
+        summary:
+          "미국은 표장을 많이 내기보다 house mark, product mark, owner-user 구조를 먼저 나누고 filing priority를 좁히는 편이 안정적입니다.",
+        href: buildGuideSectionPath(
+          "usa",
+          "브랜드포트폴리오-전략과-권리-범위-설계",
+          "launch-wave-체크리스트"
+        ),
+        guideSlug: "usa",
+        ctaLabel: "UsaTm launch wave 보기"
+      },
+      {
+        id: "latam-priority-matrix",
+        title: "LatTm: 브라질·멕시코를 최소 보호선으로 본다",
+        summary:
+          "중남미는 8개국을 한 번에 덮는 사고보다, 브라질·멕시코 우선과 안데스 공통 규범/국가별 출원 원칙을 먼저 나누는 편이 실무적입니다.",
+        href: buildGuideSectionPath(
+          "latam",
+          "제01장-중남미-상표-보호-전략-프레임-전체-구조",
+          "국가-우선순위-결정-매트릭스"
+        ),
+        guideSlug: "latam",
+        ctaLabel: "LatTm 우선순위 표 보기"
+      },
+      {
+        id: "japan-go-live-scenarios",
+        title: "JapTm: 일본 진출 시나리오부터 나눈다",
+        summary:
+          "영문 표장 유지, 일본어 표기 설계, 파트너 동행 진입처럼 일본에서 먼저 흔들리는 시나리오를 kickoff 단계에서 나눠 봅니다.",
+        href: buildGuideSectionPath(
+          "japan",
+          "서문",
+          "일본-진출-전형-시나리오"
+        ),
+        guideSlug: "japan",
+        ctaLabel: "JapTm 시나리오 보기"
+      }
+    ],
+    relatedGuideLinks: [
+      {
+        label: "ChaTm launch sequencing memo",
+        href: buildGuideSectionPath(
+          "china",
+          "제4장-출원-경로-선택-직접출원-vs-마드리드",
+          "launch-market-우선순위를-먼저-적는다"
+        )
+      },
+      {
+        label: "ChaTm naming lock board",
+        href: buildGuideSectionPath(
+          "china",
+          "제2장-브랜드-구조와-중국어-표기-전략",
+          "표기-후보를-gorevisehold로-자르는-기준"
+        )
+      },
+      {
+        label: "UsaTm launch wave checklist",
+        href: buildGuideSectionPath(
+          "usa",
+          "브랜드포트폴리오-전략과-권리-범위-설계",
+          "launch-wave-체크리스트"
+        )
+      },
+      {
+        label: "LatTm priority matrix",
+        href: buildGuideSectionPath(
+          "latam",
+          "제01장-중남미-상표-보호-전략-프레임-전체-구조",
+          "국가-우선순위-결정-매트릭스"
+        )
+      },
+      {
+        label: "JapTm go-live scenarios",
+        href: buildGuideSectionPath(
+          "japan",
+          "서문",
+          "일본-진출-전형-시나리오"
+        )
+      }
+    ]
+  },
+  {
     id: "global-filing-route-framework",
     slug: "global-filing-route-framework",
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
