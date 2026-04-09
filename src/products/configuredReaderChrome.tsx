@@ -8,6 +8,7 @@ const operatorProfileUrl = "https://ywkinfo.github.io";
 type ReaderTopbarProps = {
   currentChapterSlug?: string;
   isActionBarDismissed: boolean;
+  isNavOpen: boolean;
   onRestoreActionBar: () => void;
   onSearchResultSelect: (result: SearchEntry) => void;
   onSearchSubmit: (query: string, resultCount: number) => void;
@@ -29,6 +30,8 @@ type ReaderSidebarProps = {
   currentChapterSlug?: string;
   currentSectionId?: string;
   isNavOpen: boolean;
+  mobileTopOffset?: string;
+  onClose: () => void;
   onNavigate: () => void;
   productPath: string;
 };
@@ -36,6 +39,7 @@ type ReaderSidebarProps = {
 export function ReaderShellTopbar({
   currentChapterSlug,
   isActionBarDismissed,
+  isNavOpen,
   onRestoreActionBar,
   onSearchResultSelect,
   onSearchSubmit,
@@ -59,9 +63,11 @@ export function ReaderShellTopbar({
         <button
           className="topbar-button mobile-only"
           type="button"
+          aria-expanded={isNavOpen}
+          aria-controls="reader-sidebar-navigation"
           onClick={onToggleNav}
         >
-          목차
+          {isNavOpen ? "목차 닫기" : "목차"}
         </button>
         {currentChapterSlug && isActionBarDismissed ? (
           <button
@@ -89,19 +95,30 @@ export function ReaderShellSidebar({
   currentChapterSlug,
   currentSectionId,
   isNavOpen,
+  mobileTopOffset,
+  onClose,
   onNavigate,
   productPath
 }: ReaderSidebarProps) {
   return (
     <aside
+      id="reader-sidebar-navigation"
       className={`left-rail ${isNavOpen ? "open" : ""}`}
       aria-hidden={isNavOpen ? undefined : true}
+      style={isNavOpen && mobileTopOffset
+        ? {
+            top: mobileTopOffset,
+            bottom: "auto",
+            height: `calc(100dvh - ${mobileTopOffset} - 16px)`
+          }
+        : undefined}
     >
       <SidebarNav
         chapters={chapters}
         basePath={productPath}
         currentChapterSlug={currentChapterSlug}
         currentSectionId={currentSectionId}
+        onClose={onClose}
         onNavigate={onNavigate}
       />
     </aside>

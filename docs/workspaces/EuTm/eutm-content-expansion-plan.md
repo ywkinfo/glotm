@@ -1,14 +1,14 @@
-# EuTm 콘텐츠 보강 실행 계획서
+# EuTm 콘텐츠 안정화 실행 메모
 
 ## 목적
 
-이 문서는 `EuTm`의 현재 shipped baseline을 기준으로, 루트 `GloTm` 셸에서 더 깊고 안정적으로 읽히는 권역형 실무 가이드로 고도화하기 위한 실행 계획서다. 기반 제작 체계는 이미 갖춰져 있으며, 이제 남은 핵심은 장별 실무 밀도, fact verification, 문서 정합성을 끌어올리는 일이다.
+이 문서는 `EuTm`의 현재 shipped baseline을 기준으로, 루트 `GloTm` 셸의 `/europe` reader와 EuTm workspace 문서를 같은 기준선으로 다시 잠그기 위한 안정화 실행 메모다. 이번 라운드에서는 새 범위를 넓히지 않고, 이미 갖춘 제작 체계와 fact verification, 문서 정합성을 현재 baseline에 맞게 유지하는 데 집중한다.
 
 핵심 목표는 세 가지다.
 
 1. 이미 도입된 장별 원천 원고 + 조립 파이프라인 체계를 안정된 baseline으로 유지한다.
-2. EU 공통 실무 프레임을 중심으로 본문을 심화하되, 회원국별 편차는 통제된 범위에서만 반영한다.
-3. 리서치 검증 로그를 통과한 사실만 본문으로 승격해, 이후 런타임 확장과 파일럿 배포에 견딜 수 있는 정본을 만든다.
+2. EU 공통 실무 프레임과 UK 병행 판단을 controlled EU+UK scope 안에서만 유지하고, 회원국별 편차는 메모 수준으로 통제한다.
+3. 리서치 검증 로그를 통과한 사실과 현재 본문 설명을 같은 기준선으로 맞춰, local workspace gate에서 흔들리지 않는 정본 상태를 유지한다.
 
 ---
 
@@ -35,14 +35,14 @@
 | QA 스크립트 | `qa-content.ts` 있음 | `qa-content.ts` 있음 |
 | 챕터 수 | 20 | 14 |
 | 검색 엔트리 | 781 | 258 |
-| 문서 깊이 | publish-grade | live regional guide baseline, 추가 심화 필요 |
+| 문서 깊이 | publish-grade | live regional guide baseline, stabilization 우선 |
 
 ### 현재 리스크
 
 1. 기반 파이프라인은 갖춰졌지만 `LatTm` 대비 장별 밀도와 실무 사례 깊이가 아직 낮다.
 2. 리서치 검증 로그의 핵심 항목은 이미 본문 반영 가능한 수준까지 정리됐지만, EU 공통 프레임과 UK 병행 판단을 controlled scope로 유지한다는 설명을 문서와 reader copy에서 계속 일치시켜야 한다.
 3. 루트 전략 문서와 개별 워크스페이스 문서가 같은 속도로 갱신되지 않으면 shipped 상태 설명이 다시 어긋날 수 있다.
-4. 검색 엔트리는 baseline을 넘었지만, 핵심 장의 섹션 탐색 밀도는 더 높일 여지가 있다.
+4. 검색 엔트리는 baseline 258을 이미 확보했으므로, 이번 라운드에서는 추가 확장보다 현재 수치와 범위 설명을 흔들리지 않게 유지하는 편이 더 중요하다.
 
 ---
 
@@ -79,7 +79,7 @@
 
 ### 5. 현재 스프린트 방향을 고정
 
-이번 스프린트에서는 새 구조를 다시 만드는 것보다, 이미 있는 14장 구조를 기준으로 핵심 6장 심화와 검증 로그 승격에 집중한다. 즉, `status` 승격이나 대규모 범위 재설정보다, `/europe` reader 품질과 문서 정합성을 안정적으로 끌어올리는 쪽이 우선이다.
+이번 스프린트에서는 새 구조를 다시 만드는 것보다, 이미 있는 14장 구조를 기준으로 핵심 6장 wording drift 점검과 검증 로그 정합성 유지에 집중한다. 즉, `status` 승격이나 대규모 범위 재설정보다, `/europe` reader 품질과 문서 정합성을 안정적으로 잠그는 쪽이 우선이다.
 
 ---
 
@@ -94,12 +94,12 @@
 - `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`는 현재 워크스페이스 기준 상태를 반영한다
 - 런타임 포지션은 `validate tier · beta lifecycle`이며, 범위는 EU 공통 프레임 + UK 병행 판단까지의 controlled scope로 유지한다
 
-### v1 콘텐츠 목표
+### 이번 stabilization 목표
 
 - 14장 구조 유지
-- 핵심 장의 본문 밀도 대폭 확대
-- 장별 최소 실행형 체크리스트 1개 이상 포함
-- search entries는 현재 258 baseline을 먼저 유지하고, 후속 심화 증분은 stabilization 이후 별도 판단한다
+- 핵심 6장의 wording drift가 보이면 최소 수정으로만 정리
+- 장별 기존 실행형 표와 체크리스트 구조 유지
+- search entries는 현재 258 baseline을 유지하고, 후속 증분 판단은 stabilization 이후 별도 트랙으로 넘긴다
 
 ### v1 품질 목표
 
@@ -230,7 +230,7 @@
 ### 완료 기준
 - local workspace baseline인 `content:prepare`가 통과한다.
 - 필요 시 루트 동등 경로 `content:europe`도 재현 가능하다.
-- docs sync, controlled scope, 핵심 장 심화가 같은 기준선으로 설명된다.
+- docs sync, controlled scope, 핵심 장 wording lock이 같은 기준선으로 설명된다.
 
 ---
 
@@ -320,13 +320,13 @@
 
 ## 수용 기준
 
-다음 조건을 만족하면 `EuTm v1 content expansion`의 1차 완료로 본다.
+다음 조건을 만족하면 이번 `EuTm stabilization pass`가 완료된 것으로 본다.
 
 1. `manifest.json`, `build-master.ts`, `qa-content.ts`가 존재한다.
 2. `master.md`가 조립 결과물로 관리된다.
 3. 14개 장이 모두 장별 원고 파일로 이미 분리된 상태를 유지한다.
 4. 핵심 6장이 초안 수준을 벗어나 실무형 본문 구조를 갖는다.
-5. search entries가 baseline 258을 유지하면서 추가 심화 시 더 증가한다.
+5. search entries가 baseline 258을 유지하고, 문서와 본문 설명이 controlled EU+UK scope와 어긋나지 않는다.
 
 ---
 
@@ -363,7 +363,7 @@
 
 ## 최종 제안
 
-`EuTm` 보강은 지금도 계속할 가치가 있다. 다만 현재 단계의 첫 일은 더 이상 제작 체계 도입이나 대형 확장이 아니라, 이미 도입된 LatTm-lite baseline과 핵심 6장 보강 결과를 안정적으로 잠그는 것이다. 그 위에서 fact verification을 통과한 내용을 단계적으로 승격하는 방식이 가장 안전하다.
+`EuTm` 정리는 지금도 계속할 가치가 있다. 다만 현재 단계의 첫 일은 더 이상 제작 체계 도입이나 대형 확장이 아니라, 이미 도입된 LatTm-lite baseline과 핵심 6장 운영 문구를 안정적으로 잠그는 것이다. 그 위에서 fact verification을 통과한 내용을 같은 기준선으로 유지하는 방식이 가장 안전하다.
 
 즉, 실행 순서는 아래와 같다.
 

@@ -13,6 +13,7 @@ type SidebarNavProps = {
   basePath: string;
   currentChapterSlug?: string;
   currentSectionId?: string;
+  onClose?: () => void;
   onSectionJump?: (sectionId: string) => void;
   onNavigate?: () => void;
   showSections?: boolean;
@@ -68,12 +69,22 @@ export function SidebarNav({
   basePath,
   currentChapterSlug,
   currentSectionId,
+  onClose,
   onSectionJump,
   onNavigate,
   showSections = true
 }: SidebarNavProps) {
   return (
     <nav className="sidebar-nav" aria-label="전체 문서 목차">
+      {onClose ? (
+        <button
+          className="topbar-button mobile-only sidebar-close-button"
+          type="button"
+          onClick={onClose}
+        >
+          패널 닫기
+        </button>
+      ) : null}
       <div className="sidebar-eyebrow">문서 구조</div>
       <ul className="sidebar-list">
         {chapters.map((chapter) => {

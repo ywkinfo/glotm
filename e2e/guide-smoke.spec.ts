@@ -254,7 +254,7 @@ for (const guide of skeletonGuideZeroResultCases) {
   });
 }
 
-test("mobile drawer scrim smoke", async ({ page }) => {
+test("mobile drawer close controls smoke", async ({ page }) => {
   await page.setViewportSize(mobileReaderViewport);
 
   await page.goto("/china/chapter/제5장-출원서-작성-실무와-지정상품-설계");
@@ -268,7 +268,18 @@ test("mobile drawer scrim smoke", async ({ page }) => {
   await page.getByRole("button", { exact: true, name: "목차" }).click();
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
 
+  const closeButton = page.locator(".left-rail").getByRole("button", { exact: true, name: "패널 닫기" });
   const scrim = page.getByRole("button", { name: "열린 패널 닫기" });
+
+  await expect(closeButton).toBeVisible();
+  await closeButton.click();
+
+  await expect(scrim).toBeHidden();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
+
+  await page.getByRole("button", { exact: true, name: "목차" }).click();
+  await expect(closeButton).toBeVisible();
+
   const box = await scrim.boundingBox();
 
   expect(box).not.toBeNull();

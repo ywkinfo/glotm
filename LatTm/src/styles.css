@@ -182,6 +182,10 @@ input {
   padding: 1.2rem;
 }
 
+.sidebar-close-button {
+  margin: 0;
+}
+
 .sidebar-list {
   margin: 0;
   padding: 0;
@@ -1548,6 +1552,10 @@ input {
     padding: 1rem;
   }
 
+  .sidebar-nav {
+    padding-top: 4.5rem;
+  }
+
   .left-rail {
     display: none;
     position: fixed;
@@ -1579,6 +1587,15 @@ input {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .sidebar-close-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 1;
+    width: calc(100% - 2rem);
   }
 
   .mobile-scrim {

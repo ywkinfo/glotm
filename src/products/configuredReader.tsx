@@ -271,6 +271,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     const [currentSectionId, setCurrentSectionId] = useState<string | undefined>(routeSectionId);
     const [isActionBarDismissed, setIsActionBarDismissed] = useState(loadReaderActionBarDismissed);
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const [mobileNavTopOffset, setMobileNavTopOffset] = useState<string>();
 
     useEffect(() => {
       setIsNavOpen(false);
@@ -307,6 +308,62 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
 
       return () => {
         document.body.style.overflow = previousOverflow;
+      };
+    }, [isNavOpen]);
+
+    useEffect(() => {
+      if (!isNavOpen || typeof window === "undefined") {
+        return undefined;
+      }
+
+      const syncMobileNavTopOffset = () => {
+        const isMobileViewport =
+          typeof window.matchMedia === "function"
+          && window.matchMedia("(max-width: 920px)").matches;
+
+        if (!isMobileViewport) {
+          setMobileNavTopOffset(undefined);
+          return;
+        }
+
+        const globalTopbar = document.querySelector(".global-topbar");
+
+        if (!(globalTopbar instanceof HTMLElement)) {
+          setMobileNavTopOffset(undefined);
+          return;
+        }
+
+        setMobileNavTopOffset(`${Math.ceil(globalTopbar.getBoundingClientRect().bottom + 8)}px`);
+      };
+
+      const resizeHandler = () => {
+        syncMobileNavTopOffset();
+      };
+      const frameId = window.requestAnimationFrame(syncMobileNavTopOffset);
+
+      window.addEventListener("resize", resizeHandler);
+
+      return () => {
+        window.cancelAnimationFrame(frameId);
+        window.removeEventListener("resize", resizeHandler);
+      };
+    }, [isNavOpen, location.pathname]);
+
+    useEffect(() => {
+      if (!isNavOpen || typeof window === "undefined") {
+        return undefined;
+      }
+
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          setIsNavOpen(false);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
       };
     }, [isNavOpen]);
 
@@ -409,11 +466,12 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       <div className="reader-shell">
         <div className="app-shell">
           <ReaderShellTopbar
-            currentChapterSlug={currentChapterSlug}
-            isActionBarDismissed={isActionBarDismissed}
-            onRestoreActionBar={restoreActionBar}
-            onSearchResultSelect={handleSearchResultSelect}
-            onSearchSubmit={handleSearchSubmit}
+              currentChapterSlug={currentChapterSlug}
+              isActionBarDismissed={isActionBarDismissed}
+              isNavOpen={isNavOpen}
+              onRestoreActionBar={restoreActionBar}
+              onSearchResultSelect={handleSearchResultSelect}
+              onSearchSubmit={handleSearchSubmit}
             onToggleNav={() => setIsNavOpen((open) => !open)}
             productPath={productPath}
             searchContent={searchController.searchContent}
@@ -428,6 +486,8 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               chapters={chapters}
               currentChapterSlug={currentChapterSlug}
               currentSectionId={currentSectionId}
+              mobileTopOffset={mobileNavTopOffset}
+              onClose={closeNavigation}
               isNavOpen={isNavOpen}
               onNavigate={closeNavigation}
               productPath={productPath}
@@ -447,7 +507,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
             </main>
           </div>
 
-          <ReaderShellScrim isNavOpen={isNavOpen} onClose={() => setIsNavOpen(false)} />
+          <ReaderShellScrim isNavOpen={isNavOpen} onClose={closeNavigation} />
         </div>
       </div>
     );
