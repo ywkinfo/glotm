@@ -19,11 +19,15 @@ import {
 import { getSearchDensity } from "../products/scorecard";
 import {
   buildProductPath,
+  getCoverageLabel,
+  getLifecycleStatusLabel,
+  getPortfolioTierLabel,
+  getQaLevelLabel,
   getVerificationFreshnessDays,
-  type LifecycleStatus,
+  isBaselineLaneProduct,
+  isPriorityLaneProduct,
   type PortfolioTier,
   type ProductMeta,
-  type QaLevel
 } from "../products/shared";
 
 export const operatorProfileUrl = "https://ywkinfo.github.io";
@@ -36,45 +40,6 @@ export function trackEngagement(eventName: string, params: Record<string, string
   }
 
   trackGaEvent(measurementId, eventName, params);
-}
-
-function getCoverageLabel(product: ProductMeta) {
-  return product.coverageType === "region" ? "권역 가이드" : "국가 가이드";
-}
-
-export function getPortfolioTierLabel(portfolioTier: PortfolioTier) {
-  switch (portfolioTier) {
-    case "flagship":
-      return "Flagship";
-    case "growth":
-      return "Growth";
-    case "validate":
-      return "Validate";
-    case "incubate":
-      return "Incubate";
-  }
-}
-
-export function getLifecycleStatusLabel(lifecycleStatus: LifecycleStatus) {
-  switch (lifecycleStatus) {
-    case "pilot":
-      return "Pilot";
-    case "beta":
-      return "Beta";
-    case "mature":
-      return "Mature";
-  }
-}
-
-function getQaLevelLabel(qaLevel: QaLevel) {
-  switch (qaLevel) {
-    case "smoke":
-      return "Smoke";
-    case "standard":
-      return "Standard";
-    case "full":
-      return "Full";
-  }
 }
 
 function getAvailabilityLabel(product: ProductMeta) {
@@ -91,18 +56,13 @@ export function joinProductLabels(
 }
 
 export function orderGatewayProducts(products: ProductMeta[]) {
-  const preferredOrder = ["china", "mexico", "europe", "latam", "japan", "uk", "usa"];
-  const productIndex = new Map(preferredOrder.map((slug, index) => [slug, index]));
-
   return [...products].sort((left, right) => {
-    const leftIndex = productIndex.get(left.slug) ?? Number.MAX_SAFE_INTEGER;
-    const rightIndex = productIndex.get(right.slug) ?? Number.MAX_SAFE_INTEGER;
+    const leftIndex = left.gatewayOrder ?? Number.MAX_SAFE_INTEGER;
+    const rightIndex = right.gatewayOrder ?? Number.MAX_SAFE_INTEGER;
 
     return leftIndex - rightIndex;
   });
 }
-
-const priorityLaneSlugs = ["china", "mexico", "europe"];
 
 function getProductCardCtaClass(product: ProductMeta) {
   return product.portfolioTier === "flagship" || product.portfolioTier === "growth"
@@ -123,14 +83,6 @@ function getProductCardClass(product: ProductMeta) {
 }
 
 function getProductCardCtaLabel(product: ProductMeta) {
-  if (product.slug === "mexico") {
-    return "MexTm 먼저 보기";
-  }
-
-  if (product.slug === "latam") {
-    return "LatTm 기준 프레임 보기";
-  }
-
   return product.primaryCtaLabel;
 }
 
@@ -143,9 +95,7 @@ function formatVerificationFreshness(product: ProductMeta) {
 }
 
 function getPriorityLaneProducts(products: ProductMeta[]) {
-  return priorityLaneSlugs
-    .map((slug) => products.find((product) => product.slug === slug))
-    .filter((product): product is ProductMeta => Boolean(product));
+  return orderGatewayProducts(products).filter(isPriorityLaneProduct);
 }
 
 export function buildPriorityLaneLabelSequence(
@@ -168,12 +118,11 @@ export function buildPriorityLaneStatusSummary(products: ProductMeta[]) {
 
 export function buildPriorityLaneProgressNote(
   products: ProductMeta[],
-  report?: Pick<ReportMeta, "gatewayLabel">
+  report: Pick<ReportMeta, "gatewayBridgeLabel">
 ) {
   const laneLabelSequence = buildPriorityLaneLabelSequence(products);
-  const reportLabel = report?.gatewayLabel ?? "Report";
 
-  return `현재 공통 정렬 순서는 ${laneLabelSequence} -> ${reportLabel} / Gateway trust layer입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다.`;
+  return `현재 공통 정렬 순서는 ${laneLabelSequence} -> ${report.gatewayBridgeLabel}입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다.`;
 }
 
 export function buildTrustLayerGuideGroups(
@@ -201,11 +150,11 @@ export function buildTrustLayerGuideGroups(
     );
   });
   const priorityProducts = relatedProducts.filter((product) =>
-    priorityLaneSlugs.includes(product.slug)
+    isPriorityLaneProduct(product)
   );
-  const baselineProducts = relatedProducts.filter((product) => product.slug === "latam");
+  const baselineProducts = relatedProducts.filter((product) => isBaselineLaneProduct(product));
   const supportingProducts = relatedProducts.filter(
-    (product) => !priorityLaneSlugs.includes(product.slug) && product.slug !== "latam"
+    (product) => !isPriorityLaneProduct(product) && !isBaselineLaneProduct(product)
   );
 
   return {
@@ -221,7 +170,7 @@ export function buildTrustLayerGuideGroups(
       supportingProducts.length > 0
         ? joinProductLabels(supportingProducts, " · ")
         : null,
-    coversFullPriorityLane: priorityProducts.length === priorityLaneSlugs.length
+    coversFullPriorityLane: priorityProducts.length === getPriorityLaneProducts(orderedProducts).length
   };
 }
 
@@ -245,7 +194,7 @@ export function buildTrustLayerGuideSummary(
   }
 
   const bridgeSentence = options?.includeLaneBridge && options.laneLabelSequence && coversFullPriorityLane
-    ? ` 현재 공통 정렬 순서는 ${options.laneLabelSequence} -> Report / Gateway trust layer입니다.`
+    ? ` 현재 공통 정렬 순서는 ${options.laneLabelSequence} -> ${report.gatewayBridgeLabel}입니다.`
     : "";
 
   return `${priorityGuides}에서 이미 다룬 ${report.trustLayerSummaryObject} 이 리포트에서 한 번에 다시 정리했습니다.${bridgeSentence}${baselineGuides ? ` ${baselineGuides}은 전체 기준을 잡을 때 참고하면 좋습니다.` : ""}${supportingGuides ? ` ${supportingGuides}은 필요할 때 이어서 보면 됩니다.` : ""}`;
@@ -272,7 +221,7 @@ export function buildGuideTrackingParams(
 export function getTierComposition(products: ProductMeta[]) {
   const tierCounts = products.reduce(
     (counts, product) => {
-      counts[product.portfolioTier] += 1;
+      counts[product.portfolioTier] = (counts[product.portfolioTier] ?? 0) + 1;
       return counts;
     },
     {

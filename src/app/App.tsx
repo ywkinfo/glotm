@@ -25,6 +25,8 @@ import {
 import { liveShellReaderEntries } from "../products/liveShellReaders";
 import {
   buildProductPath,
+  getLifecycleStatusLabel,
+  getPortfolioTierLabel,
   getRouterBasename
 } from "../products/shared";
 import { BriefArchivePage, BriefIssuePage } from "./BriefPages";
@@ -33,8 +35,6 @@ import { ReportArchivePage, ReportPage } from "./ReportPages";
 import {
   FullDocumentLink,
   buildGuideTrackingParams,
-  getLifecycleStatusLabel,
-  getPortfolioTierLabel,
   orderGatewayProducts,
   trackEngagement
 } from "./appShared";

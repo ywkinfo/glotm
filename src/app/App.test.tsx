@@ -14,7 +14,12 @@ import {
   reportExperienceMeta,
   reports
 } from "../reports/registry";
-import type { DocumentData } from "../products/shared";
+import { products } from "../products/registry";
+import {
+  isBaselineLaneProduct,
+  isPriorityLaneProduct,
+  type DocumentData
+} from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
 const latestReport = getLatestReport();
@@ -22,6 +27,14 @@ const routeDecisionReport = getReportBySlug("global-filing-route-framework");
 const evidenceReport = getReportBySlug("global-use-evidence-system");
 const primaryChinaGuideHandoffReport = getReportsForGuideSlug("china")[0]?.report;
 const latestGatewayReports = getLatestReports(2);
+const orderedProducts = [...products].sort(
+  (left, right) => (left.gatewayOrder ?? Number.MAX_SAFE_INTEGER) - (right.gatewayOrder ?? Number.MAX_SAFE_INTEGER)
+);
+const priorityLaneLabelSequence = orderedProducts
+  .filter(isPriorityLaneProduct)
+  .map((product) => product.shortLabel)
+  .join(" -> ");
+const baselineGuide = orderedProducts.find(isBaselineLaneProduct);
 
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
   return {
@@ -336,12 +349,12 @@ describe("App portfolio shell", () => {
   });
 
   it.each([
-    ["/china", "Growth tier · Mature lifecycle · Full QA · 단일 시장 가이드"],
-    ["/mexico", "Growth tier · Mature lifecycle · Full QA · 단일 시장 가이드"],
+    ["/china", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"],
+    ["/mexico", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"],
     ["/europe", "Validate tier · Beta lifecycle · Standard QA · 권역 가이드"],
-    ["/usa", "Incubate tier · Beta lifecycle · Standard QA · 단일 시장 가이드"],
-    ["/japan", "Incubate tier · Beta lifecycle · Standard QA · 단일 시장 가이드"],
-    ["/uk", "Incubate tier · Pilot lifecycle · Smoke QA · 단일 시장 가이드"]
+    ["/usa", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"],
+    ["/japan", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"],
+    ["/uk", "Incubate tier · Pilot lifecycle · Smoke QA · 국가 가이드"]
   ])("derives reader home status copy from registry truth for %s", async (pathname, statusLabel) => {
     installFetchMock();
 
@@ -547,7 +560,9 @@ describe("App portfolio shell", () => {
       readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
     expect(
-      screen.getByText(/ChaTm은 지금 가장 먼저 볼 guide이고, MexTm은 멕시코 운영 기준 guide입니다\./)
+      screen.getByText(
+        `현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel}입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다. 큰 그림이 필요할 때는 ${baselineGuide?.shortLabel}을 기준 프레임으로 함께 보면 좋습니다.`
+      )
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "포트폴리오 우선 가이드 보기" })).toHaveAttribute(
       "href",
@@ -698,7 +713,7 @@ describe("App portfolio shell", () => {
     ).toBeGreaterThan(0);
     expect(
       within(reportSection as HTMLElement).getByText(
-        "현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다."
+        `현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel}입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다.`
       )
     ).toBeInTheDocument();
     expect(
@@ -1054,11 +1069,15 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다."
+        `현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel}입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다.`
       )
     ).toBeInTheDocument();
     expect(
-      screen.queryByText(/ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\. 현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report \/ Gateway trust layer입니다\./)
+      screen.queryByText(
+        new RegExp(
+          `ChaTm에서 이미 다룬 브랜드 표기와 현지 문자 운영 판단을 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\.`
+        )
+      )
     ).toBeNull();
     expect(
       screen.getByText(/글로벌 표장과 현지 문자 표장을 어떻게 나눠 설계할지, 어떤 시장에서 현지 표장이 실제 운영 자산이 되는지를 한 문서에 정리한 리포트입니다\./)
@@ -1127,7 +1146,11 @@ describe("App portfolio shell", () => {
     await screen.findByRole("heading", { name: evidenceReport?.title ?? "" });
 
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 사용 증거 운영 구조를 이 리포트에서 한 번에 다시 정리했습니다\. 현재 공통 정렬 순서는 ChaTm -> MexTm -> EuTm -> Report \/ Gateway trust layer입니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\./)
+      screen.getByText(
+        new RegExp(
+          `ChaTm · MexTm · EuTm에서 이미 다룬 사용 증거 운영 구조를 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${evidenceReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\. ${baselineGuide?.shortLabel}은 전체 기준을 잡을 때 참고하면 좋습니다\\.`
+        )
+      )
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "EuTm: validate evidence handoff를 고정한다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm evidence triage 보기" })).toHaveAttribute(
