@@ -1696,6 +1696,7 @@ input {
   }
 
   .reader-action-bar {
+    left: auto;
     right: 0.8rem;
     bottom: 0.8rem;
     gap: 0.3rem;
