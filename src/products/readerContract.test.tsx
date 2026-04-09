@@ -537,6 +537,33 @@ function installNavigationMocks() {
   return scrollIntoViewMock;
 }
 
+function installMobileViewportMock() {
+  const originalMatchMedia = window.matchMedia;
+
+  Object.defineProperty(window, "matchMedia", {
+    configurable: true,
+    writable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      matches: query.includes("max-width"),
+      media: query,
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn()
+    }))
+  });
+
+  return () => {
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      writable: true,
+      value: originalMatchMedia
+    });
+  };
+}
+
 function LocationProbe() {
   const location = useLocation();
 
@@ -874,6 +901,53 @@ describe("Shared reader runtime contract", () => {
       );
 
       consoleErrorSpy.mockRestore();
+    }
+  );
+
+  it.each([readerCases[4]!, readerCases[5]!])(
+    "adds an explicit mobile drawer close control and supports Escape dismissal for $name",
+    async (readerCase) => {
+      const user = userEvent.setup();
+      const restoreMatchMedia = installMobileViewportMock();
+
+      installFetchMock();
+      installNavigationMocks();
+
+      try {
+        renderReaderCase(
+          readerCase,
+          `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}`
+        );
+
+        await screen.findByRole("heading", { name: readerCase.targetChapterTitle });
+
+        await user.click(screen.getByRole("button", { name: /^목차$/ }));
+
+        expect(screen.getByRole("button", { name: "패널 닫기" })).toBeVisible();
+        expect(screen.getByRole("button", { name: "열린 패널 닫기" })).toBeVisible();
+        await waitFor(() => {
+          expect(document.body.style.overflow).toBe("hidden");
+        });
+
+        await user.click(screen.getByRole("button", { name: "패널 닫기" }));
+
+        await waitFor(() => {
+          expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
+          expect(document.body.style.overflow).toBe("");
+        });
+
+        await user.click(screen.getByRole("button", { name: /^목차$/ }));
+        expect(screen.getByRole("button", { name: "패널 닫기" })).toBeVisible();
+
+        await user.keyboard("{Escape}");
+
+        await waitFor(() => {
+          expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
+          expect(document.body.style.overflow).toBe("");
+        });
+      } finally {
+        restoreMatchMedia();
+      }
     }
   );
 
