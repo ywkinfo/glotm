@@ -14,7 +14,7 @@ npm ci
 
 ## Standard Verification
 
-루트 health 계약은 아래 4개 `health:*` lane으로 운영합니다. `npm run content:prepare`는 그 앞단에서 generated content를 맞추는 prerequisite입니다.
+루트 verification 계약은 3개 execution lane(`health:runtime`, `health:content`, `health:release`)으로 운영하고, `health:report`는 최근 lane 상태와 advisory research status를 묶는 reporting surface로 유지합니다. `npm run content:prepare`는 그 앞단에서 generated content를 맞추는 prerequisite입니다.
 
 먼저 generated content를 맞춥니다.
 
@@ -22,7 +22,7 @@ npm ci
 npm run content:prepare
 ```
 
-그다음 4개 health lane을 실행합니다.
+그다음 3개 execution lane과 report surface를 순서대로 실행합니다.
 
 ```bash
 npm run health:runtime

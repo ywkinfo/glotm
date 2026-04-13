@@ -8,7 +8,8 @@ The plan is intentionally narrow. Factual QA enters first as helper audits under
 
 ## Repo facts this plan assumes
 
-- The root health contract stays at 3 lanes only: `health:runtime`, `health:content`, `health:release`.
+- The root verification contract stays at 3 execution lanes: `health:runtime`, `health:content`, `health:release`.
+- `health:report` remains the reporting surface that summarizes lane state and advisory research status.
 - Lifecycle truth stays in `src/products/registry.ts` and `src/products/scorecard.ts`.
 - Health report shape stays in `src/products/health.ts` and `scripts/health-report.ts`.
 - No new npm dependency should be required for v1. Use Node, `tsx`, and the existing test stack.
@@ -88,10 +89,10 @@ Initial rollout targets:
 
 - `ChaTm/content/research/claim-map.json`
 - `MexTm/content/research/claim-map.json`
+- `EuTm/content/research/claim-map.json`
 
 Early follow-ons:
 
-- `EuTm/content/research/claim-map.json`
 - `UKTm/content/research/claim-map.json`
 - `UsaTm/content/research/claim-map.json`
 - `JapTm/content/research/claim-map.json`
@@ -454,6 +455,12 @@ Exit criteria:
 - factual QA works for both country and regional guides
 - source-registry support remains optional, not mandatory
 
+Current shipped state:
+
+- `EuTm/content/research/claim-map.json` is adopted.
+- `scripts/health-report.ts` already exposes advisory `research` coverage for `europe`.
+- the current EuTm follow-up stayed narrow: Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split.
+
 ### Phase 4, lighter-track adoption
 
 Scope:
@@ -552,17 +559,17 @@ Goal: extend the same boring pattern to the flagship after the model is proven.
 
 The rollout is working as intended when all of the following are true:
 
-1. The repo still has exactly three root health lanes: `health:runtime`, `health:content`, `health:release`.
+1. The repo still has exactly three root execution lanes: `health:runtime`, `health:content`, `health:release`, and `health:report` remains a reporting surface rather than a fourth execution lane.
 2. Factual QA runs only as helper audits under `health:content`.
 3. `src/products/registry.ts` and `src/products/scorecard.ts` remain the lifecycle source of truth in v1.
 4. `src/products/health.ts` and `scripts/health-report.ts` remain the report-shape source of truth, with only additive advisory research exposure.
-5. `claim-map.json` is the first required structured factual QA artifact for `ChaTm` and `MexTm`.
+5. `claim-map.json` is the first required structured factual QA artifact for adopted workspaces, and `ChaTm`, `MexTm`, `EuTm` have already crossed that line.
 6. `source-registry.json` remains optional and phased.
 7. Migrated products can show advisory `research` data in the health report before any scorecard coupling.
 8. `audit:facts`, `audit:staleness`, and `audit:consistency` all live under `health:content`.
 9. Hard-fail behavior is limited to schema integrity, adopted claim-map readability, and high-risk factual integrity for migrated workspaces.
 10. Coverage depth and source-registry adoption remain warn-only until the repo has enough stable usage to revisit enforcement.
-10. The rollout order stays `ChaTm -> MexTm -> EuTm -> UKTm/UsaTm/JapTm -> LatTm`.
+11. The rollout order stays `ChaTm -> MexTm -> EuTm -> UKTm/UsaTm/JapTm -> LatTm`.
 
 ## Decision summary
 
