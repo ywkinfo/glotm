@@ -36,6 +36,7 @@
 ## Next-round shortlist
 
 - none
+- 이번 라운드에서 Ch5, Ch11, Ch12의 좁은 operational follow-up를 이미 흡수했고, 회원국별 deep dive로는 넓히지 않았다.
 
 이번 라운드에서는 회원국별 차이를 새 `Pending`으로 넓히지 않는다.
 
@@ -48,9 +49,11 @@
 | Ch1 | EUTM vs national filing split, UK parallel track handling, Madrid linkage |
 | Ch2 | EUTM vs national filing split, EU-SEL-001 clearance variance memo, UK parallel track handling |
 | Ch4 | EU-SEL-001 clearance variance memo |
-| Ch5 | EUTM vs national filing split, Madrid linkage |
+| Ch5 | EUTM vs national filing split, Madrid linkage, Priority claim window |
 | Ch7 | Opposition timeline |
 | Ch8 | EU-EVD-001 owner-user evidence memo, Proof of use window, Renewal timing and grace period, EU-UK-001 launch split calendar |
+| Ch11 | Marketplace reporting channel memo |
+| Ch12 | Customs application scope, UK customs AFA split |
 
 이 표를 두면 검증 로그가 본문과 분리돼 있으면서도, 이번 스프린트의 chapter-to-claim 연결은 바로 읽을 수 있다.
 
