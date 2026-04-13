@@ -34,7 +34,7 @@
 - 워크스페이스 baseline 명령: `npm run content:prepare`
 - 루트 동등 경로: 루트에서 `npm run content:europe`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
-- 현재 lane baseline: `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`
+- 현재 validate-tier stabilization baseline: `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`
 - local workspace 증빙은 `content:prepare` 통과를 우선 사용하고, 루트 동등 경로가 필요할 때만 `content:europe`를 다시 재현한다. shared root gate는 리더 통합 단계에서 1회만 실행한다.
 - 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 

@@ -43,5 +43,5 @@
 - 장별 최소 3개 이상의 실무 섹션(H2)을 유지하고, 가능한 경우 체크리스트나 표를 포함한다.
 - 핵심 6장(`제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`)의 판단표·운영 캘린더·evidence 구조는 현재 baseline에 이미 반영되어 있다.
 - 현재 baseline 문구는 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`로 고정한다.
-- 이번 스프린트에서는 14장 전면 확장보다 docs sync, controlled EU+UK scope 유지, workspace gate 입력 정리를 우선하고, 나머지 장은 controlled scope를 깨지 않는 정합성 유지 수준으로 다룬다.
+- 이번 스프린트에서는 14장 전면 확장보다 validate-tier stabilization baseline 기준의 docs sync, controlled EU+UK scope 유지, workspace gate 입력 정리를 우선하고, 나머지 장은 controlled scope를 깨지 않는 정합성 유지 수준으로 다룬다.
 - `content:europe` 통과 전에는 루트 `health:*` 명령을 개별 반복하지 않고, lane 결과를 리더의 shared root gate로 넘긴다.
