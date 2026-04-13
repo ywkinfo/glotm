@@ -347,6 +347,12 @@
 - local workspace baseline인 `content:prepare`가 통과하고, 통합 이후 shared root gate 1회가 통과한다.
 - `EuTm/README.md`, `EuTm/Harness/Architecture.md`, `EuTm/Harness/Content-Spec.md`, research docs의 상태 설명이 일치한다.
 
+## 2026-04-13 shipped addendum
+
+- `EuTm/content/research/claim-map.json`을 도입했고, root `health:report`에서 `europe` advisory `research` block이 보이도록 정렬했다.
+- 후속 보강은 대형 scope expansion 대신 Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split처럼 controlled EU+UK lane 안의 좁은 operational note만 흡수하는 방식으로 마감했다.
+- 이 상태 이후의 우선순위는 EuTm 자체 확장보다 root docs sync, report/overview wording alignment, shared workflow hygiene를 정리하는 일이다.
+
 ---
 
 ## 비범위
