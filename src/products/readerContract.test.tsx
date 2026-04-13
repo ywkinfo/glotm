@@ -53,15 +53,17 @@ const priorityGuideHandoffExpectations = {
     ]
   },
   mexico: {
-    expectedSummary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
+    expectedSummary: "멕시코는 launch 직전에 도메인, 계정, goods/services, owner 메모를 같은 control board에 적어 두어야 buyer-entry 우선순위가 흔들리지 않습니다.",
     expectedReportSlugs: [
+      "global-filing-priority-framework",
       "global-filing-route-framework",
       "global-use-evidence-system"
     ]
   },
   europe: {
-    expectedSummary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다.",
+    expectedSummary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 validate lane이 다음 handoff까지 흔들리지 않습니다.",
     expectedReportSlugs: [
+      "global-filing-priority-framework",
       "global-filing-route-framework",
       "global-use-evidence-system"
     ]
@@ -924,16 +926,31 @@ describe("Shared reader runtime contract", () => {
         await user.click(screen.getByRole("button", { name: /^목차$/ }));
 
         expect(screen.getByRole("button", { name: "패널 닫기" })).toBeVisible();
-        expect(screen.getByRole("button", { name: "열린 패널 닫기" })).toBeVisible();
+        const scrim = screen.getByRole("button", { name: "열린 패널 닫기" });
+
+        expect(scrim).toBeVisible();
         await waitFor(() => {
           expect(document.body.style.overflow).toBe("hidden");
+          expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(true);
         });
+
+        await user.click(scrim);
+
+        await waitFor(() => {
+          expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
+          expect(document.body.style.overflow).toBe("");
+          expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(false);
+        });
+
+        await user.click(screen.getByRole("button", { name: /^목차$/ }));
+        expect(screen.getByRole("button", { name: "패널 닫기" })).toBeVisible();
 
         await user.click(screen.getByRole("button", { name: "패널 닫기" }));
 
         await waitFor(() => {
           expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
           expect(document.body.style.overflow).toBe("");
+          expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(false);
         });
 
         await user.click(screen.getByRole("button", { name: /^목차$/ }));
@@ -944,6 +961,7 @@ describe("Shared reader runtime contract", () => {
         await waitFor(() => {
           expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
           expect(document.body.style.overflow).toBe("");
+          expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(false);
         });
       } finally {
         restoreMatchMedia();

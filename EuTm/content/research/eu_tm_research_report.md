@@ -5,19 +5,25 @@
 이 문서는 현재 shipped `EuTm` baseline의 리서치 범위와 핵심 질문을 정리하는 stabilization working note다.
 이번 라운드의 목적은 새 범위를 넓히는 것이 아니라, `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 설명을 같은 기준선으로 유지하는 데 있다.
 
-## 현재 범위 가정
+## 기준선 증빙
+
+- `content/source/manifest.json`은 현재 14개 챕터를 정의한다.
+- `content/generated/search-index.json`의 현재 search entry 수는 258이다.
+- workspace 문서와 리서치 메모는 런타임 baseline 설명을 `validate tier · beta lifecycle / controlled EU+UK scope`로 고정하고, root/shared truth 갱신은 리더 통합 단계에서만 처리한다.
+
+## 고정된 범위
 
 - 기본 축: EU 공통 상표 운영 프레임
 - 병행 검토: UK 병행 판단, 마드리드 연계, 주요 회원국 편차 메모
 - 제외: 회원국별 deep dive, 국가별 fee 표, 특허·디자인·저작권 심화 본문
 
-## 우선 검증 질문
+## 우선 유지 체크
 
-1. EUTM와 개별국 출원의 의사결정 기준을 어떻게 구조화할 것인가
-2. 이의, 취소, 무효, 불사용 리스크를 어느 수준까지 본문에 넣을 것인가
-3. 회원국별 편차는 본문에 직접 풀지, 부록 또는 별도 국가 노트로 뺄 것인가
-4. 영국은 `EuTm` 안의 병행 장으로 둘지, 후속 단일국가 트랙으로 분리할지
-5. 세관, 온라인 플랫폼, 도메인 분쟁을 어느 깊이까지 포함할지
+1. EUTM와 개별국 출원의 의사결정 기준은 현재 본문 구조대로 유지하고, 회원국별 deep dive는 새 본문 범위로 승격하지 않는다.
+2. 이의, 취소, 무효, 불사용 리스크는 운영 캘린더와 evidence handoff를 설명하는 수준까지 유지하고, country-by-country 절차 확장은 이번 라운드에서 열지 않는다.
+3. 회원국별 편차는 본문 메모 수준으로만 통제하고, 별도 국가 노트나 후속 트랙 신설은 리더 통합 이후 판단 대상으로 남긴다.
+4. UK는 `EuTm` 안에서 병행 판단 기준과 calendar/evidence split까지 유지하고, 단일국가 deep dive 분리는 이번 stabilization 범위에 넣지 않는다.
+5. 세관, 온라인 플랫폼, 도메인 분쟁은 현재 장 구조에 있는 operational flow 수준으로 유지하고, 개별 채널별 세부 절차 확장은 후속 트랙으로 보류한다.
 
 ## 리서치 스트림
 

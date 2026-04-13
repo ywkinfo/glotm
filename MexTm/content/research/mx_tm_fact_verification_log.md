@@ -18,7 +18,7 @@
 | MX-NORM-001 | terminology | Ch1, Ch3, Ch4, Ch5, Appendix | 공식 시스템명은 `Tu cuenta PASE`, `Marca en Línea`, `MARCia`, `ClasNiza`, `MARCANET`, `SIGA/Gaceta` 축으로 통일한다 | IMPI | Tier 1 | https://www.gob.mx/impi/acciones-y-programas/preguntas-frecuentes-tu-cuenta-pase ; https://www.gob.mx/cms/uploads/attachment/file/826944/23_mayo_23_TU_CUENTA_PASE.pdf ; https://transparencia.impi.gob.mx/Paginas/Transparencia-Focalizada.aspx | gob.mx IMPI PASE page와 안내 PDF는 `Tu cuenta PASE` 안에서 `Marca en Línea`, `MARCia`, `Clasniza` 서비스를 함께 소개하고, transparency page는 `MARCANET`을 외부 조회 서비스로 설명한다 | 2026-04-01 | 2026-04-01 | Body-ready | Codex | 제1장 공식 시스템명 표준안, IMPI 운영 구조 control sheet, 제4장 buyer-entry 경로 선택표에 반영 완료. 2026-04-08 Sprint 2 lane에서 Ch5 PASE handoff board와 filing go/hold/rebuild memo, 부록 IMPI 링크표를 다시 맞춰 첫 등장 스페인어 병기와 역할 분리를 유지했다 |
 | MX-ENF-001 | enforcement | Ch9, Ch10, Ch11, Ch13, Appendix | 멕시코의 행정 집행은 IMPI의 `declaraciones administrativas`와 `medidas provisionales`를 중심으로 돌고, 국경 단계에서는 ANAM 문서와 pedimento/annex 흐름이 실무 증거 축이 된다 | IMPI/ANAM/WIPO Lex | Tier 1 | https://www.wipo.int/wipolex/en/text/577613 ; https://anam.gob.mx/copias-certificadas-de-pedimento/ ; https://anam.gob.mx/derechos-productos-y-aprovechamientos/ | LFPPI는 IMPI의 행정 선언과 임시조치, 그리고 import/export/transit goods의 자유로운 유통 정지 권한을 규정한다. ANAM은 pedimento와 anexos의 certified copies 절차 및 관련 DPA payment 구조를 공개한다 | 2026-04-01 | 2026-04-01 | Body-ready | Codex | 제11장 통제 포트폴리오 보드, 권리 조합 decision table, 제13장 사례 회수 표와 evidence bundle 표에서 IMPI 절차와 ANAM 문서 흐름 연결을 반영 완료. 2026-04-08 Sprint 2 lane에서 Ch10 border incident classification board, IMPI/ANAM one-pack escalation memo, 부록 1-9 체크리스트·ANAM 링크를 추가해 국경 사건 packet 연결을 명시했다 |
 
-## Sprint handoff
+## Sprint 1 baseline handoff
 
 Sprint 1에서 writer가 바로 썼던 핵심 handoff는 아래 네 장이다.
 
@@ -31,6 +31,7 @@ Sprint 1에서 writer가 바로 썼던 핵심 handoff는 아래 네 장이다.
 
 ## Sprint 2 handoff
 
+현재 lane truth는 Sprint 1 baseline을 유지한 채, Sprint 2 우선 장 `Ch5`, `Ch7`, `Ch10`을 filing, maintenance, enforcement 운영 기준으로 보강하는 것이다.
 이번 스프린트에서 writer가 바로 쓰는 핵심 handoff는 아래 세 장이다.
 
 | chapter_ref | 우선 연결할 claim_id | handoff 메모 |
@@ -38,3 +39,8 @@ Sprint 1에서 writer가 바로 썼던 핵심 handoff는 아래 네 장이다.
 | Ch5 | MX-NORM-001, MX-FEE-001 | `Tu cuenta PASE` / `Marca en Línea` / `ClasNiza` / `MARCia` / `MARCANET` / `SIGA/Gaceta` 용어를 filing packet 관점에서 고정하고, `IMPI88`와 후속 비용 owner를 분리해 적는다 |
 | Ch7 | MX-DL-001, MX-FEE-001 | `2018-08-10` 이후 등록분의 declaration of use와 10년 갱신 구조를 하나의 유지관리 캘린더로 연결하되, declaration/renewal owner는 별도 행으로 남긴다 |
 | Ch10 | MX-ENF-001 | IMPI `declaraciones administrativas`·`medidas provisionales`와 ANAM `pedimento/annex` 흐름을 one-pack evidence board로 묶고, first-48-hours escalation memo까지 같이 둔다 |
+
+## Lane Gate
+
+- lane-local verification: `npm --prefix MexTm run content:prepare`
+- shared root gate: root runtime/build/pages 및 registry/overview sync는 리더 통합 단계에서만 실행

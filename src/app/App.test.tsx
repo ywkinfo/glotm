@@ -460,8 +460,9 @@ describe("App portfolio shell", () => {
     {
       path: "/mexico",
       title: "멕시코 상표 실무 운영 가이드북",
-      summary: "멕시코의 실행 흐름과 혼합 경로 기준으로, 현지 실행 통제가 묶음 효율보다 먼저인지 정리합니다.",
+      summary: "멕시코는 launch 직전에 도메인, 계정, goods/services, owner 메모를 같은 control board에 적어 두어야 buyer-entry 우선순위가 흔들리지 않습니다.",
       expectedReportSlugs: [
+        "global-filing-priority-framework",
         "global-filing-route-framework",
         "global-use-evidence-system"
       ]
@@ -469,8 +470,9 @@ describe("App portfolio shell", () => {
     {
       path: "/europe",
       title: "EuTm 유럽 상표 운영 가이드북",
-      summary: "권역형 가이드답게 누가 출원 기준을 정하고, 출원 뒤 증거 관리까지 어떻게 이어지는지 먼저 확인합니다.",
+      summary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 validate lane이 다음 handoff까지 흔들리지 않습니다.",
       expectedReportSlugs: [
+        "global-filing-priority-framework",
         "global-filing-route-framework",
         "global-use-evidence-system"
       ]
@@ -721,6 +723,24 @@ describe("App portfolio shell", () => {
     ).toHaveAttribute(
       "href",
       "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다"
+    );
+    expect(
+      within(reportSection as HTMLElement).getByRole("heading", { name: "MexTm: buyer-entry 14일 control부터 잠근다" })
+    ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByRole("link", { name: "MexTm control board 보기" })
+    ).toHaveAttribute(
+      "href",
+      "/mexico/chapter/제1장-멕시코-상표-제도-개요와-impi-운영-구조#launch-직전-14일-control-board"
+    );
+    expect(
+      within(reportSection as HTMLElement).getByRole("heading", { name: "EuTm: launch wave 기준으로 우선순위를 나눈다" })
+    ).toBeInTheDocument();
+    expect(
+      within(reportSection as HTMLElement).getByRole("link", { name: "EuTm 우선순위 보기" })
+    ).toHaveAttribute(
+      "href",
+      "/europe/chapter/제3장-포트폴리오-설계와-우선순위#launch-wave-기준으로-우선순위를-나눈다"
     );
     expect(
       within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
@@ -1094,7 +1114,7 @@ describe("App portfolio shell", () => {
       `/reports/${latestReport?.slug}`
     );
     expect(
-      screen.getByText(/ChaTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -1102,12 +1122,12 @@ describe("App portfolio shell", () => {
       )
     ).toBeInTheDocument();
     expect(
-      screen.queryByText(
+      screen.getByText(
         new RegExp(
-          `ChaTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\.`
+          `ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\.`
         )
       )
-    ).toBeNull();
+    ).toBeInTheDocument();
     expect(
       screen.getByText(/매출 순서보다 출시 순서, 어떤 표장을 먼저 챙길지, 파트너 리스크, 권리 공백 비용을 기준으로 어느 국가에 먼저 출원할지 정리한 리포트입니다\./)
     ).toBeInTheDocument();

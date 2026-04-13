@@ -25,6 +25,13 @@
 - `npm run content:build`: 리더용 JSON 산출물 생성
 - `npm run content:prepare`: 마스터 생성, 구조 QA, 사실 QA, 콘텐츠 빌드를 순서대로 실행
 
+## Current Lane Truth
+
+- 현재 baseline은 `15개 챕터 구조 유지`다.
+- 현재 Sprint 2 우선 장은 `제5장`, `제7장`, `제10장`이다.
+- workspace-local gate는 `npm --prefix MexTm run content:prepare` 기준으로 확인한다.
+- Gateway, `/mexico` reader, root build/pages, registry sync는 `MexTm` 단독 레인이 아니라 리더 통합 단계의 shared root gate에서 처리한다.
+
 ## Notes
 
 - 루트 `GloTm` 셸은 `content/generated/` 산출물을 읽어 `/mexico` 리더를 렌더링하지만, 정본 입력과 유지보수 시작점은 `content/source/master.md`, `content/source/chapters/`, `content/source/appendix/`, `manifest.json`입니다.

@@ -4,6 +4,12 @@
 현재 stabilization 기준선은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`다.
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
+## Baseline evidence snapshot
+
+- 챕터 기준선: `content/source/manifest.json`에 14개 챕터가 정의돼 있다.
+- search 기준선: `content/generated/search-index.json`의 현재 entry 수는 258이다.
+- scope 기준선: 본문과 리서치 문서는 EU 공통 프레임 + UK 병행 판단까지만 유지하고, 회원국별 deep dive는 controlled gap으로 남긴다.
+
 | Item | Why it matters | Primary source target | Chapter ref | Status | Notes |
 |------|----------------|-----------------------|-------------|--------|-------|
 | EUTM vs national filing split | 권리 구조 설계의 기준선 | EUIPO trade mark guidance, GOV.UK IP in the EU and EEA | Ch2 | Verified | EUTM는 EU 전체 단위로 등록·양도·취소되며, national filing은 국가별 직접 출원 구조로 본문 반영 완료 |

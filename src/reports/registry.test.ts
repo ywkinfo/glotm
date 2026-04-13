@@ -31,7 +31,7 @@ describe("report registry", () => {
     expect(getLatestReport()?.gatewayBridgeLabel).toBe(defaultReportBridgeLabel);
   });
 
-  it("pins the priority report to the China sequencing anchor and cross-market guide set", () => {
+  it("pins the priority report to the current priority-lane anchors and baseline handoff", () => {
     const report = getReportBySlug("global-filing-priority-framework");
 
     expect(report?.trustLayerSummaryObject).toBe("출원 우선순위와 표장 우선순위 질문을");
@@ -40,6 +40,18 @@ describe("report registry", () => {
       href: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다",
       guideSlug: "china",
       ctaLabel: "ChaTm sequencing 보기"
+    });
+    expect(report?.focusPoints.find((focusPoint) => focusPoint.id === "mexico-launch-control")).toMatchObject({
+      title: "MexTm: buyer-entry 14일 control부터 잠근다",
+      href: "/mexico/chapter/제1장-멕시코-상표-제도-개요와-impi-운영-구조#launch-직전-14일-control-board",
+      guideSlug: "mexico",
+      ctaLabel: "MexTm control board 보기"
+    });
+    expect(report?.focusPoints.find((focusPoint) => focusPoint.id === "europe-launch-priority")).toMatchObject({
+      title: "EuTm: launch wave 기준으로 우선순위를 나눈다",
+      href: "/europe/chapter/제3장-포트폴리오-설계와-우선순위#launch-wave-기준으로-우선순위를-나눈다",
+      guideSlug: "europe",
+      ctaLabel: "EuTm 우선순위 보기"
     });
     expect(report?.relatedGuideLinks).toContainEqual({
       label: "LatTm priority matrix",
@@ -87,6 +99,14 @@ describe("report registry", () => {
     expect(getPrimaryFocusPointForGuide("china", "global-filing-priority-framework")).toMatchObject({
       id: "china-launch-sequencing",
       ctaLabel: "ChaTm sequencing 보기"
+    });
+    expect(getPrimaryFocusPointForGuide("mexico", "global-filing-priority-framework")).toMatchObject({
+      id: "mexico-launch-control",
+      ctaLabel: "MexTm control board 보기"
+    });
+    expect(getPrimaryFocusPointForGuide("europe", "global-filing-priority-framework")).toMatchObject({
+      id: "europe-launch-priority",
+      ctaLabel: "EuTm 우선순위 보기"
     });
     expect(getPrimaryFocusPointForGuide("mexico", "global-filing-route-framework")).toMatchObject({
       id: "mexico-control",

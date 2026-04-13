@@ -34,7 +34,7 @@ export const products: ProductMeta[] = [
     title: "멕시코 상표 실무 운영 가이드북",
     summary: "멕시코 buyer-entry 판단표, 출원 경로, 자산 통제 질문을 빠르게 정리하는 growth country guide입니다.",
     chapterCount: 15,
-    searchEntryCount: 379,
+    searchEntryCount: 385,
     portfolioTier: "growth",
     lifecycleStatus: "mature",
     lifecycleTone: "mature",
@@ -43,7 +43,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "멕시코 진출 직전 판단이 필요한 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "MexTm 먼저 보기",
-    maturityNote: "mature 유지 · Sprint 1 4장 buyer-entry 심화 · 2026-04-07 release 재검증 완료",
+    maturityNote: "mature 유지 · Sprint 2 운영 handoff 3장 보강 · 2026-04-07 release 재검증 완료",
     coverageType: "country",
     availability: "live_shell"
   },

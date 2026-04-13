@@ -89,3 +89,10 @@
 - `Ch10`에 border incident classification board와 IMPI / ANAM one-pack escalation memo를 추가해 `pedimento/annex` 회수와 IMPI 임시조치 lane을 같은 사건 파일로 다루도록 정리했다.
 - `mx_tm_fact_verification_log.md` notes에 `MX-FEE-001`, `MX-DL-001`, `MX-NORM-001`, `MX-ENF-001`의 Sprint 2 body promotion 위치를 기록했고, 부록 체크리스트·템플릿에도 연결 메모를 남겼다.
 - lane-local gate는 `npm --prefix MexTm run content:prepare` 기준으로 확인하고, shared root gate 입력은 별도 통합 레인에 넘긴다.
+
+## Leader Integration Inputs
+
+- `MexTm` workspace docs는 현재 baseline을 `15개 챕터 유지 + Sprint 1 잠금 4장 보존`으로 본다.
+- 현재 Sprint 2 우선 장은 `Ch5`, `Ch7`, `Ch10`으로 고정한다.
+- workspace-local readiness 메모와 fact log는 lane-local gate를 `npm --prefix MexTm run content:prepare`로 본다.
+- 리더는 root shared truth 파일에서 Sprint 2 우선 장, shared root gate 책임 분리, Gateway/registry copy sync를 후속 반영한다.

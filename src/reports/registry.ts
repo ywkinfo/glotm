@@ -109,13 +109,13 @@ const reportSource: ReportMeta[] = [
       "매출 순서보다 출시 순서, 어떤 표장을 먼저 챙길지, 파트너 리스크, 권리 공백 비용을 기준으로 어느 국가에 먼저 출원할지 정리한 리포트입니다.",
     trustLayerSummaryObject: "출원 우선순위와 표장 우선순위 질문을",
     publishedAt: "2026-04-09T09:00:00.000Z",
-    jurisdictions: ["Global", "China", "United States", "Japan", "UAE", "Saudi Arabia", "Brazil", "Mexico", "Andean"],
+    jurisdictions: ["Global", "China", "Mexico", "Europe", "Brazil", "Andean"],
     tags: ["출원 우선순위", "시장 우선순위", "표장 잠금", "Portfolio Sequencing"],
     audience: "여러 나라 진입 순서와 출원 우선순위를 먼저 정해야 하는 브랜드 관리자, 인하우스 IP 팀, 글로벌 사업 리드",
     gatewayLabel: "Report",
     gatewayBridgeLabel: defaultReportBridgeLabel,
     whyNow:
-      "표기 전략과 출원 경로보다 한 단계 앞에서, 무엇을 먼저 권리 포트폴리오에 넣을지에 대한 판단이 실제로 가장 자주 비어 있습니다. 중국·미국·일본·중동·중남미처럼 출시 순서와 파트너 구조가 다른 시장을 함께 볼 때, 국가와 표장 우선순위를 먼저 정해야 이후 경로 선택과 evidence 설계가 흔들리지 않습니다.",
+      "현재 포트폴리오에서 먼저 잠가 둔 레인은 ChaTm launch sequencing, MexTm buyer-entry control, EuTm validate governance입니다. 이 세 레인에서 반복되는 국가 우선순위·표장 잠금 질문을 먼저 한 장으로 묶어 두어야 이후 경로 선택과 evidence 설계가 같은 순서로 이어집니다.",
     trustLayerChecklist: [
       "출시 순서, 채널 노출 시점, 파트너 계약 시점을 같은 표에 적는다.",
       "시장 크기보다 권리 공백 비용이 큰 국가와 표장을 먼저 file-now로 올린다.",
@@ -136,17 +136,30 @@ const reportSource: ReportMeta[] = [
         ctaLabel: "ChaTm sequencing 보기"
       },
       {
-        id: "usa-launch-wave",
-        title: "UsaTm: core mark와 launch wave를 같이 본다",
+        id: "mexico-launch-control",
+        title: "MexTm: buyer-entry 14일 control부터 잠근다",
         summary:
-          "미국은 표장을 많이 내기보다 house mark, product mark, owner-user 구조를 먼저 나누고 filing priority를 좁히는 편이 안정적입니다.",
+          "멕시코는 launch 직전에 도메인, 계정, goods/services, owner 메모를 같은 control board에 적어 두어야 buyer-entry 우선순위가 흔들리지 않습니다.",
         href: buildGuideSectionPath(
-          "usa",
-          "브랜드포트폴리오-전략과-권리-범위-설계",
-          "launch-wave-체크리스트"
+          "mexico",
+          "제1장-멕시코-상표-제도-개요와-impi-운영-구조",
+          "launch-직전-14일-control-board"
         ),
-        guideSlug: "usa",
-        ctaLabel: "UsaTm launch wave 보기"
+        guideSlug: "mexico",
+        ctaLabel: "MexTm control board 보기"
+      },
+      {
+        id: "europe-launch-priority",
+        title: "EuTm: launch wave 기준으로 우선순위를 나눈다",
+        summary:
+          "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 validate lane이 다음 handoff까지 흔들리지 않습니다.",
+        href: buildGuideSectionPath(
+          "europe",
+          "제3장-포트폴리오-설계와-우선순위",
+          "launch-wave-기준으로-우선순위를-나눈다"
+        ),
+        guideSlug: "europe",
+        ctaLabel: "EuTm 우선순위 보기"
       },
       {
         id: "latam-priority-matrix",
@@ -160,19 +173,6 @@ const reportSource: ReportMeta[] = [
         ),
         guideSlug: "latam",
         ctaLabel: "LatTm 우선순위 표 보기"
-      },
-      {
-        id: "japan-go-live-scenarios",
-        title: "JapTm: 일본 진출 시나리오부터 나눈다",
-        summary:
-          "영문 표장 유지, 일본어 표기 설계, 파트너 동행 진입처럼 일본에서 먼저 흔들리는 시나리오를 kickoff 단계에서 나눠 봅니다.",
-        href: buildGuideSectionPath(
-          "japan",
-          "서문",
-          "일본-진출-전형-시나리오"
-        ),
-        guideSlug: "japan",
-        ctaLabel: "JapTm 시나리오 보기"
       }
     ],
     relatedGuideLinks: [
@@ -193,11 +193,19 @@ const reportSource: ReportMeta[] = [
         )
       },
       {
-        label: "UsaTm launch wave checklist",
+        label: "MexTm launch control board",
         href: buildGuideSectionPath(
-          "usa",
-          "브랜드포트폴리오-전략과-권리-범위-설계",
-          "launch-wave-체크리스트"
+          "mexico",
+          "제1장-멕시코-상표-제도-개요와-impi-운영-구조",
+          "launch-직전-14일-control-board"
+        )
+      },
+      {
+        label: "EuTm launch priority board",
+        href: buildGuideSectionPath(
+          "europe",
+          "제3장-포트폴리오-설계와-우선순위",
+          "launch-wave-기준으로-우선순위를-나눈다"
         )
       },
       {
@@ -206,14 +214,6 @@ const reportSource: ReportMeta[] = [
           "latam",
           "제01장-중남미-상표-보호-전략-프레임-전체-구조",
           "국가-우선순위-결정-매트릭스"
-        )
-      },
-      {
-        label: "JapTm go-live scenarios",
-        href: buildGuideSectionPath(
-          "japan",
-          "서문",
-          "일본-진출-전형-시나리오"
         )
       }
     ]

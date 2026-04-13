@@ -27,6 +27,12 @@ body {
   background-attachment: fixed;
 }
 
+body.reader-mobile-nav-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
 .glotm-app {
   min-height: 100vh;
 }
@@ -926,6 +932,14 @@ body {
 }
 
 @media (max-width: 920px) {
+  .mobile-scrim {
+    z-index: 125;
+  }
+
+  .reader-shell .left-rail {
+    z-index: 130;
+  }
+
   :root {
     --global-topbar-height: 5.15rem;
   }

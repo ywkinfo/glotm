@@ -23,7 +23,7 @@
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. 다만 production 상의 모바일 drawer close 이슈는 별도 관찰 사항으로 남아 있으므로, live verification 표현은 workflow artifact 검증과 구분해서 본다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - `LatTm`: 20개 챕터, 검색 엔트리 781개. `flagship` tier.
-- `MexTm`: 15개 챕터, 검색 엔트리 379개. `growth` tier.
+- `MexTm`: 15개 챕터, 검색 엔트리 385개. `growth` tier.
 - `ChaTm`: 15개 챕터, 검색 엔트리 358개. `growth` tier.
 - `EuTm`: 14개 챕터, 검색 엔트리 258개. `validate` tier.
 - `UsaTm`: 14개 챕터, 검색 엔트리 178개. `incubate` tier.
@@ -76,7 +76,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | 가이드 | 유형 | 전략 tier | lifecycle | 챕터 수 | 검색 엔트리 | 현재 의미 |
 |------|------|------|------|------|------|------|
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
-| `MexTm` | 단일국가 | growth | mature | 15 | 379 | Sprint 1 잠금 4장 심화 완료 · buyer entry 핵심 트랙 |
+| `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
 | `EuTm` | 권역형 | validate | beta | 14 | 258 | 핵심 6장 심화 완료 · 권역 검증·정합성 안정화 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 178 | lighter track |
@@ -137,7 +137,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### MexTm (멕시코 상표 실무 가이드) — 파일럿 2단계 핵심 트랙, core reader parity 반영 완료 / 워크스페이스 파이프라인 구축 완료
 
-`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `document-data.json` 기준 15개 챕터와 379개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다. 이번 라운드에서는 잠금 4장에 IMPI handoff board, 경로 선택 owner split, asset recovery readiness, 사례 회수 control mapping을 보강했고, 2026-04-07 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 release-readiness를 한 번 더 잠갔다.
+`MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `document-data.json` 기준 15개 챕터와 385개 검색 엔트리를 생성한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다. 이번 라운드에서는 제5장·제7장·제10장에 filing packet handoff scorecard, rights-maintenance triage board, border evidence pack control board를 보강했고, workspace-local gate는 `npm --prefix MexTm run content:prepare` 기준으로 잠근 뒤, shared root `health:runtime`/`health:content`/`health:release` lane에서 통합 검증한다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
@@ -192,7 +192,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | Live shell guides | `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm` |
 | LatTm 콘텐츠 빌드 | `build-master.ts` → `qa-content.ts` → `build-content.ts` |
 | LatTm 생성 산출물 | 20개 챕터 / 검색 엔트리 781개 |
-| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 379개 |
+| MexTm 생성 산출물 | 15개 챕터 / 검색 엔트리 385개 |
 | UsaTm 생성 산출물 | 14개 챕터 / 검색 엔트리 178개 |
 | JapTm 생성 산출물 | 15개 챕터 / 검색 엔트리 145개 |
 | ChaTm 생성 산출물 | 15개 챕터 / 검색 엔트리 358개 |
@@ -278,9 +278,9 @@ Phase 1 런타임 QA 체크포인트는 `docs/phase1-runtime-qa.md`에 정리한
 
 | 작업 | 상세 |
 |------|------|
-| 루트 검증 경로 | 루트 `content:prepare`가 계속 shortcut을 유지할지, 워크스페이스 `content:prepare`를 직접 호출할지 정리 |
-| 문서 계약 | README, QA 문서, 운영 브리프의 MexTm 설명을 실제 실행 경로와 일치시킴 |
-| prerender + 게이트 | LatTm과 동일한 공개 전략이 필요한지 별도 Phase 2 이후 판단 |
+| 루트 검증 경로 | 루트 `content:prepare`는 현재 full pipeline을 사용하고, 워크스페이스 lane baseline은 `npm --prefix MexTm run content:prepare`로 먼저 잠근 뒤 shared root gate에서 1회 통합 |
+| 문서 계약 | README, QA 문서, 운영 브리프, registry의 MexTm 설명을 Sprint 2 current lane truth와 일치시킴 |
+| prerender + 게이트 | LatTm과 동일한 공개 전략이 필요한지 별도 Phase 2 이후 판단하되, 현재는 shared root gate 계약을 유지 |
 
 ### Phase 4 시작 조건
 

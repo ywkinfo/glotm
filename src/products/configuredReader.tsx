@@ -303,11 +303,23 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         return undefined;
       }
 
+      const body = document.body;
       const previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = isNavOpen ? "hidden" : previousOverflow;
+      const previousOverscrollBehavior = document.body.style.overscrollBehavior;
+      const previousTouchAction = document.body.style.touchAction;
+
+      if (isNavOpen) {
+        body.classList.add("reader-mobile-nav-open");
+        body.style.overflow = "hidden";
+        body.style.overscrollBehavior = "none";
+        body.style.touchAction = "none";
+      }
 
       return () => {
-        document.body.style.overflow = previousOverflow;
+        body.classList.remove("reader-mobile-nav-open");
+        body.style.overflow = previousOverflow;
+        body.style.overscrollBehavior = previousOverscrollBehavior;
+        body.style.touchAction = previousTouchAction;
       };
     }, [isNavOpen]);
 

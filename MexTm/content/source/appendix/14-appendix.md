@@ -258,20 +258,20 @@
 - 현지 대리인용 문서와 사내용 문서를 따로 두되, 핵심 필드는 같게 유지하는 것이 좋다.
 - “파일은 있는데 찾을 수 없는 상태”가 가장 비효율적이므로 대장화가 필요하다.
 
-### 2026-04-04 release-readiness 메모
+### 2026-04-08 Sprint 2 release-readiness 메모
 
-Sprint 1 잠금 4장을 buyer-entry 기준으로 보강한 뒤에는, 본문 밀도뿐 아니라 실제 reader와 출하 경로가 계속 살아 있는지도 같이 봐야 한다. 아래 메모는 2026-04-04 재검증 기준으로, `MexTm` 레인을 shared root gate와 맞춰 유지하기 위한 최소 readiness 기준이다.
+Sprint 1에서 잠근 buyer-entry baseline 위에 Sprint 2 우선 장 `Ch5`, `Ch7`, `Ch10`을 filing, maintenance, enforcement 운영 기준으로 보강한 뒤에는, 본문 밀도뿐 아니라 workspace gate와 shared root gate handoff가 같이 정리돼 있어야 한다. 아래 메모는 2026-04-08 재정리 기준으로, `MexTm` 레인을 현재 Sprint 2 truth에 맞춰 유지하기 위한 최소 readiness 기준이다.
 
-| 항목 | 2026-04-04 기준 |
+| 항목 | 2026-04-08 기준 |
 |---|---|
+| 현재 baseline | `15개 챕터 구조` 유지, Sprint 1 잠금 4장은 baseline으로 보존 |
+| 현재 우선 장 | `Ch5` filing packet, `Ch7` rights maintenance, `Ch10` border control |
 | 원고 수정 시작점 | `chapters/`, `appendix/`, fact verification log에서만 시작 |
-| 콘텐츠 조립 | `npm run content:mexico` 통과 |
-| 루트 런타임 검증 | Gateway / `/mexico` reader 계약이 현재 copy와 함께 유지됨 |
-| 루트 빌드 검증 | `npm run build` 통과 |
-| Pages 출하 검증 | `npm run build:pages:glotm` 통과 |
-| Gateway 노출 | MexTm 카드 summary, freshness, maturity note가 registry 상태와 충돌하지 않음 |
+| lane-local verification | `npm --prefix MexTm run content:prepare` 통과 |
+| shared root gate handoff | Gateway / `/mexico` reader / root build / Pages 출하 / registry sync는 리더 통합 단계에서만 실행 |
+| leader follow-up input | root shared truth는 Sprint 2 우선 장과 lane-local gate 결과를 기준으로 후속 동기화 |
 
-이 메모의 목적은 새로운 구조를 늘리는 것이 아니라, Sprint 1 잠금 4장 보강이 reader 계약과 release 계약을 깨지 않았는지 반복 확인하는 데 있다.
+이 메모의 목적은 새로운 구조를 늘리는 것이 아니라, Sprint 2 우선 장 보강이 workspace 계약을 깨지 않고 shared root gate에 넘길 입력을 깨끗하게 정리하는 데 있다.
 
 ### 타임라인
 

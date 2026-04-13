@@ -56,6 +56,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 - `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> JapTm -> UKTm -> UsaTm`
 - `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
+- 최신 Report / Gateway trust layer는 `ChaTm`, `MexTm`, `EuTm`에서 먼저 잠근 공통 질문을 다시 묶고, `LatTm`을 기준 프레임으로 이어 읽게 설계한다
 
 ## Three practical outcomes
 
