@@ -29,7 +29,7 @@ describe("health report CLI", () => {
       id: "runtime",
       status: "pass"
     });
-    expect(researchProducts).toEqual(["china", "mexico"]);
+    expect(researchProducts).toEqual(["china", "mexico", "europe"]);
     expect(report.products.find((product: { slug: string }) => product.slug === "china")).toMatchObject({
       slug: "china",
       currentLifecycleStatus: "mature",
@@ -49,6 +49,22 @@ describe("health report CLI", () => {
     expect(report.products.find((product: { slug: string }) => product.slug === "mexico")).toMatchObject({
       slug: "mexico",
       currentLifecycleStatus: "mature",
+      verification: {
+        mode: "root-full-pipeline",
+        scopeLabel: "root full pipeline",
+        reportSummary: "root content full pipeline"
+      },
+      research: {
+        auditMode: "advisory",
+        factIntegrityScore: 100,
+        consistencyScore: 100,
+        staleHighRiskClaimCount: 0,
+        gate: "pass"
+      }
+    });
+    expect(report.products.find((product: { slug: string }) => product.slug === "europe")).toMatchObject({
+      slug: "europe",
+      currentLifecycleStatus: "beta",
       verification: {
         mode: "root-full-pipeline",
         scopeLabel: "root full pipeline",
@@ -85,7 +101,7 @@ describe("health report CLI", () => {
     expect(output).toContain("## Research Coverage");
     expect(output).toContain("| china | advisory | 100 | 100 | 4d | 0 | 0 | pass |");
     expect(output).toContain("| mexico | advisory | 100 | 100 | 3d | 0 | 0 | pass |");
-    expect(output).not.toContain("| europe | advisory |");
+    expect(output).toContain("| europe | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
     expect(output).not.toContain("| usa | advisory |");
   });
 });

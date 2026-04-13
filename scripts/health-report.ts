@@ -26,16 +26,17 @@ export type CliFormat = "markdown" | "json";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
-const pilotWorkspaceBySlug: Partial<Record<string, string>> = {
+const advisoryClaimMapWorkspaceBySlug: Partial<Record<string, string>> = {
   china: "ChaTm",
-  mexico: "MexTm"
+  mexico: "MexTm",
+  europe: "EuTm"
 };
 
 function loadResearchBySlug() {
   const researchBySlug: Partial<Record<string, ProductResearchRecord>> = {};
 
   for (const product of products) {
-    const workspaceName = pilotWorkspaceBySlug[product.slug];
+    const workspaceName = advisoryClaimMapWorkspaceBySlug[product.slug];
 
     if (!workspaceName) {
       continue;

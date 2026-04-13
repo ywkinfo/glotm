@@ -1,0 +1,102 @@
+{
+  "workspace": "EuTm",
+  "productSlug": "europe",
+  "version": 1,
+  "auditMode": "advisory",
+  "claims": [
+    {
+      "id": "EU-SEL-001",
+      "jurisdiction": "EU+UK",
+      "claim": "EUTM는 EU 전체 단위로 등록·양도·취소되는 regional right이고, UK는 자동 커버 범위가 아니므로 권리 선택은 EUTM와 national filing, 그리고 필요 시 UK 병행 트랙을 분리해 설계한다.",
+      "chapterRefs": ["Ch2"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["euipo-trade-mark-guidance", "govuk-ip-in-eu-and-eea", "govuk-eu-trade-mark-protection", "euipo-brexit-qa"],
+      "lastVerified": "2026-04-07",
+      "status": "BODY_READY",
+      "conceptKey": "filing_route",
+      "normalized": {
+        "trigger": "right_selection",
+        "value": "separate EU regional and UK parallel track",
+        "unit": "rule",
+        "expression": "EUTM covers the EU, UK requires separate handling"
+      },
+      "notes": "fact verification log의 EUTM vs national filing split, EU-SEL-001, UK parallel track handling 반영 범위를 최소 baseline claim으로 묶음"
+    },
+    {
+      "id": "EU-DL-001",
+      "jurisdiction": "EU",
+      "claim": "EUTM opposition period는 공고 후 3개월이다.",
+      "chapterRefs": ["Ch7"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["euipo-after-applying-guidance"],
+      "lastVerified": "2026-04-07",
+      "status": "BODY_READY",
+      "conceptKey": "opposition_period",
+      "normalized": {
+        "trigger": "publication",
+        "value": "3",
+        "unit": "months",
+        "expression": "within 3 months from publication"
+      },
+      "notes": "fact verification log Opposition timeline 항목 기준"
+    },
+    {
+      "id": "EU-EVD-001",
+      "jurisdiction": "EU",
+      "claim": "EUTM는 등록 후 연속 5년간 genuine use가 없으면 non-use revocation risk가 생기고, 부분 사용만 입증되면 보호 범위가 sub-category 수준으로 제한될 수 있다.",
+      "chapterRefs": ["Ch8"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["euipo-cancellation-guidance", "euipo-genuine-use-materials"],
+      "lastVerified": "2026-04-07",
+      "status": "BODY_READY",
+      "conceptKey": "use_requirement",
+      "normalized": {
+        "trigger": "registration",
+        "value": "5",
+        "unit": "years",
+        "expression": "continuous 5-year non-use creates revocation risk"
+      },
+      "notes": "fact verification log의 Proof of use window 항목 기준"
+    },
+    {
+      "id": "EU-RNW-001",
+      "jurisdiction": "EU",
+      "claim": "EUTM는 10년 단위로 갱신되며, 만료 전 6개월 basic renewal period와 추가 수수료가 붙는 6개월 grace period를 운영 기준으로 둔다.",
+      "chapterRefs": ["Ch8"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["euipo-fees-payments-guidance", "euipo-renewal-guidance"],
+      "lastVerified": "2026-04-07",
+      "status": "BODY_READY",
+      "conceptKey": "renewal_term",
+      "normalized": {
+        "trigger": "registration",
+        "value": "10",
+        "unit": "years",
+        "expression": "renew every 10 years with a 6-month standard window and 6-month grace window"
+      },
+      "notes": "fact verification log의 Renewal timing and grace period 항목 기준"
+    },
+    {
+      "id": "EU-UK-001",
+      "jurisdiction": "EU+UK",
+      "claim": "EU와 UK를 병행하더라도 launch timing, actual user, goods/services가 어긋나면 renewal과 evidence는 separate rights calendar row로 관리해야 한다.",
+      "chapterRefs": ["Ch8"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["govuk-eu-trade-mark-protection", "euipo-brexit-qa"],
+      "lastVerified": "2026-04-07",
+      "status": "BODY_READY",
+      "notes": "fact verification log의 EU-UK-001 launch split calendar 항목 기준"
+    },
+    {
+      "id": "EU-ENF-001",
+      "jurisdiction": "EU",
+      "claim": "EU customs enforcement에서는 AFA를 전제로 national AFA와 Union AFA를 구분하고, IPEP/COPIS 운영 구조를 함께 본다.",
+      "chapterRefs": ["Ch12"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ec-customs-defend-your-rights"],
+      "lastVerified": "2026-04-07",
+      "status": "BODY_READY",
+      "notes": "fact verification log의 Customs application scope 항목 기준"
+    }
+  ]
+}
