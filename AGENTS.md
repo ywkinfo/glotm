@@ -8,9 +8,27 @@
 - 현재 phase, 우선순위, 활성 작업 범위: [`PROJECT-OVERVIEW.md`](PROJECT-OVERVIEW.md)
 - 루트 실행 명령, verification lane, runtime source of truth: [`README.md`](README.md)
 - 루트 셸 구조와 workspace 관계: [`ARCHITECTURE.md`](ARCHITECTURE.md)
-- agent routing 규칙: [`CLAUDE.md`](CLAUDE.md)
 - 영구 working rules: [`Harness/Constitution.md`](Harness/Constitution.md), [`Harness/Style-Guide.md`](Harness/Style-Guide.md), [`Harness/QA-Gate.md`](Harness/QA-Gate.md)
 - supporting docs index: [`docs/README.md`](docs/README.md)
+
+## Codex Task Routing
+
+Codex는 Claude Code의 Skill(slash command) 호출을 사용하지 않는다. 아래 규칙으로 직접 실행한다.
+
+| 요청 유형 | 처리 방식 |
+|---|---|
+| 버그, 에러, 500 오류 | 관련 파일 읽고 코드 수정 후 `npm run typecheck:runtime` 확인 |
+| 테스트, QA | `npm run health:runtime` 또는 `npm run health:content` 실행 |
+| content 갱신 | 해당 workspace `content:*` 스크립트 실행 후 `npm run health:content` |
+| 빌드, 릴리즈 확인 | `npm run verify:release` 실행 |
+| 전체 검증 | `npm run health:all` 실행 |
+| 아키텍처, 설계 판단 | `ARCHITECTURE.md` → `PROJECT-OVERVIEW.md` → `Harness/Constitution.md` 순서로 읽고 판단 |
+| 문서 수정 | `docs/README.md`에서 관련 문서 찾아 편집 |
+
+**Codex가 하지 말아야 할 것:**
+- `CLAUDE.md`의 skill routing 지시 실행 (Codex용이 아님)
+- 사용자 지시 없이 `main` 브랜치로 직접 push
+- 법률·수수료·기관명 같은 콘텐츠를 검증 없이 수정
 
 ## If You Need X, Read Y
 
