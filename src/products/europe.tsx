@@ -40,8 +40,7 @@ const {
     </>
   ),
   chapterBadge: "Europe",
-  chapterEyebrow: "유럽 권역 읽기",
-  contentStatus: "draft"
+  chapterEyebrow: "유럽 권역 읽기"
 });
 
 export {

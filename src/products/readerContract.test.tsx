@@ -407,7 +407,7 @@ const readerCases: ReaderCase[] = [
     bookmarkChapterTitle: "유럽 제3장. 집행 운영",
     bookmarkSectionId: "monitoring",
     bookmarkSectionTitle: "모니터링",
-    showsDraftNotice: true
+    showsDraftNotice: false
   },
   ...(
     ukModule
