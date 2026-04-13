@@ -811,6 +811,8 @@ EUIPO는 EUTM Easy Filing과 EUTM Filing form을 구분해 제공하고, Fast Tr
 
 유럽 filing 단계에서 priority나 Madrid 연계가 있는 경우는 별도 관리가 필요하다. 우선권을 붙일지, 기본권리를 어떤 office에 둘지, Madrid를 병행할지 여부를 filing note에 남겨 두는 편이 좋다.
 
+EUIPO guideline 기준으로 priority는 first filing 후 6개월 안에 주장할 수 있고, priority claim을 뒷받침하는 자료는 filing date 기준 3개월 안에 정리해 두는 편이 안전하다. 따라서 priority를 붙일 사건이라면 filing pack의 timing row에 `first filing date / 6개월 만기 / priority document owner`를 같이 적어 두는 편이 좋다.
+
 WIPO 기준으로 Madrid를 쓰려면 national 또는 regional application/registration이 전제된다. 따라서 유럽 경로를 먼저 정리하지 않은 상태에서 Madrid만 앞세우면 오히려 구조가 불명확해질 수 있다.
 
 #### Madrid base-right preflight 표
@@ -1918,6 +1920,8 @@ Your Europe 안내는 trade mark, trade name과 연결된 domain dispute에서 c
 - 침해 포인트 메모
 - 비교 대상 자사 상품 링크
 
+플랫폼 이름과 제출 채널명도 같이 남기는 편이 좋다. 예를 들어 eBay는 VeRO(Verified Rights Owner) Program, Amazon은 Report Infringement form과 Brand Registry의 Report a Violation 같은 권리자용 채널을 따로 두기 때문에, 같은 listing이라도 어느 채널로 넣었는지와 `URL / ASIN 또는 item ID / seller storefront`를 같이 적어 두면 재신고와 escalation이 쉬워진다.
+
 이 규칙이 없으면 플랫폼별로 자료 품질이 들쭉날쭉해진다.
 
 ### 도메인 포트폴리오와 같이 본다
@@ -2045,6 +2049,8 @@ Commission guidance에 따르면 AFA는 national 또는 Union application 형태
 - 현지 세관과 커뮤니케이션할 운영 주체가 있는가
 
 이 판단에 따라 national AFA와 Union AFA 우선순위를 나눌 수 있다.
+
+여기에 영국을 그대로 묶어 넣으면 안 된다. 영국은 HMRC / Border Force 기준의 별도 Application for Action 트랙으로 움직이고, 다른 EU member state를 통해 보호 중인 신청이 자동으로 UK까지 이어지지 않기 때문이다. 따라서 EU에서 Union AFA를 쓰더라도 UK 판매·물류 비중이 의미 있으면 UK customs row를 parallel track으로 따로 적어 두는 편이 안전하다.
 
 ### 제출 채널과 운영 포털
 

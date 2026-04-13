@@ -21,6 +21,8 @@ Commission guidance에 따르면 AFA는 national 또는 Union application 형태
 
 이 판단에 따라 national AFA와 Union AFA 우선순위를 나눌 수 있다.
 
+여기에 영국을 그대로 묶어 넣으면 안 된다. 영국은 HMRC / Border Force 기준의 별도 Application for Action 트랙으로 움직이고, 다른 EU member state를 통해 보호 중인 신청이 자동으로 UK까지 이어지지 않기 때문이다. 따라서 EU에서 Union AFA를 쓰더라도 UK 판매·물류 비중이 의미 있으면 UK customs row를 parallel track으로 따로 적어 두는 편이 안전하다.
+
 ## 제출 채널과 운영 포털
 
 Commission 안내 기준으로, 현재 AFA는 IPEP Trader Portal for COPIS 또는 일부 국가 포털을 통해 전자 제출하는 구조가 중심이다. 또한 같은 포털을 통해 amendment, extension, withdrawal 같은 후속 운영도 이어진다.

@@ -77,6 +77,8 @@ EUIPO는 EUTM Easy Filing과 EUTM Filing form을 구분해 제공하고, Fast Tr
 
 유럽 filing 단계에서 priority나 Madrid 연계가 있는 경우는 별도 관리가 필요하다. 우선권을 붙일지, 기본권리를 어떤 office에 둘지, Madrid를 병행할지 여부를 filing note에 남겨 두는 편이 좋다.
 
+EUIPO guideline 기준으로 priority는 first filing 후 6개월 안에 주장할 수 있고, priority claim을 뒷받침하는 자료는 filing date 기준 3개월 안에 정리해 두는 편이 안전하다. 따라서 priority를 붙일 사건이라면 filing pack의 timing row에 `first filing date / 6개월 만기 / priority document owner`를 같이 적어 두는 편이 좋다.
+
 WIPO 기준으로 Madrid를 쓰려면 national 또는 regional application/registration이 전제된다. 따라서 유럽 경로를 먼저 정리하지 않은 상태에서 Madrid만 앞세우면 오히려 구조가 불명확해질 수 있다.
 
 ### Madrid base-right preflight 표

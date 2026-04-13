@@ -73,6 +73,8 @@ Your Europe 안내는 trade mark, trade name과 연결된 domain dispute에서 c
 - 침해 포인트 메모
 - 비교 대상 자사 상품 링크
 
+플랫폼 이름과 제출 채널명도 같이 남기는 편이 좋다. 예를 들어 eBay는 VeRO(Verified Rights Owner) Program, Amazon은 Report Infringement form과 Brand Registry의 Report a Violation 같은 권리자용 채널을 따로 두기 때문에, 같은 listing이라도 어느 채널로 넣었는지와 `URL / ASIN 또는 item ID / seller storefront`를 같이 적어 두면 재신고와 escalation이 쉬워진다.
+
 이 규칙이 없으면 플랫폼별로 자료 품질이 들쭉날쭉해진다.
 
 ## 도메인 포트폴리오와 같이 본다
