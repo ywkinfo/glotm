@@ -842,7 +842,7 @@ describe("App portfolio shell", () => {
     ).toBeInTheDocument();
     expect(
       within(currentPilotScope as HTMLElement).getByText(
-        "validate lane · claim-map adopted · controlled EU+UK scope · docs/report sync follow-through"
+        "validate lane · claim-map adopted · controlled EU+UK scope · shared root gate closeout reflected"
       )
     ).toBeInTheDocument();
   });

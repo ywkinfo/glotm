@@ -90,4 +90,4 @@ Pages build path는 둘로 나뉩니다. 로컬 release verification과 subpath 
 
 운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verifiedOn`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. verification freshness는 저장하지 않고 `verifiedOn`에서 계산하며, search density는 `searchEntryCount / chapterCount`로 계산합니다.
 
-월간 review에서는 위 메타데이터를 수동 상태표시가 아니라 scorecard 입력값으로 취급합니다. `npm run health:report`는 현재 메타데이터 기준으로 각 guide의 verdict를 `hold`, `upgrade-ready`, `verification-refresh-needed`로 정리합니다. 2026-04-09 기준 공유 verification run에서는 `npm run health:all`이 통과했고, live Pages에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. 다만 production 모바일 drawer close 이슈가 별도로 관찰됐으므로, live verification 서술은 artifact pass와 동일시하지 않습니다.
+월간 review에서는 위 메타데이터를 수동 상태표시가 아니라 scorecard 입력값으로 취급합니다. `npm run health:report`는 현재 메타데이터 기준으로 각 guide의 verdict를 `hold`, `upgrade-ready`, `verification-refresh-needed`로 정리합니다. 2026-04-14 기준 공유 verification run에서는 `npm run health:all`이 통과했고, live Pages에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. 다만 production 모바일 drawer close 이슈가 별도로 관찰됐으므로, live verification 서술은 artifact pass와 동일시하지 않습니다.
