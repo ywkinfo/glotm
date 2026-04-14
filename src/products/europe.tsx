@@ -26,17 +26,15 @@ const {
   homeHeroKicker: "유럽 권역 validate guide",
   homeSummary: (
     <>
-      유럽 권역 상표 운영 구조를 빠르게 점검하기 위한 validate guide입니다. 라틴아메리카와 유럽의
-      권역형 프레임을 비교해 보고 싶다면 <Link to={latamPath}>LatTm</Link>과 함께 읽는 구성이
-      자연스럽습니다.
+      유럽은 EU-wide, core-state, UK split을 같은 운영 표에서 잠그고 evidence triage까지 이어 읽기
+      위한 validate guide입니다. 라틴아메리카와 유럽의 권역형 프레임을 비교해 보고 싶다면 <Link to={latamPath}>LatTm</Link>과 함께 읽는 구성이 자연스럽습니다.
     </>
   ),
   positioningKicker: "EuTm Positioning",
-  positioningTitle: "유럽 권역 운영 구조를 검증하는 validate regional guide",
+  positioningTitle: "controlled EU+UK scope를 잠그는 validate regional guide",
   positioningNote: (
     <>
-      현재 EuTm은 EU 단위 전략, 권역 확장 구조, 유지관리, 집행 및 병행 국가 이슈를 유럽 권역
-      기준으로 빠르게 점검하는 용도에 맞춰져 있습니다.
+      현재 EuTm은 claim-map과 핵심 6장 기준선을 바탕으로 rights·route·evidence handoff를 controlled EU+UK scope 안에서 정리한 validate guide입니다.
     </>
   ),
   chapterBadge: "Europe",

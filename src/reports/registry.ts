@@ -369,7 +369,7 @@ const reportSource: ReportMeta[] = [
         id: "europe-evidence-triage",
         title: "EuTm: validate evidence handoff를 고정한다",
         summary:
-          "EuTm은 validate stabilization과 docs sync를 이미 마쳤으므로, 유통사·마켓플레이스·판매자 증거를 어떤 순서로 넘길지 권역 기준선으로 바로 확인합니다.",
+          "EuTm은 validate baseline을 controlled EU+UK scope로 잠근 상태이므로, 유통사·마켓플레이스·판매자 증거를 어떤 순서로 넘길지 권역 기준선으로 바로 확인합니다.",
         href: buildGuideSectionPath(
           "europe",
           "제8장-등록-후-사용-갱신-증거-관리",

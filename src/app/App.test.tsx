@@ -496,6 +496,25 @@ describe("App portfolio shell", () => {
     }
   );
 
+  it("renders EuTm home copy for the stabilized validate lane", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/europe");
+
+    await screen.findByRole("heading", { name: "EuTm 유럽 상표 운영 가이드북" });
+
+    expect(
+      screen.getByText(
+        /유럽은 EU-wide, core-state, UK split을 같은 운영 표에서 잠그고 evidence triage까지 이어 읽기 위한 validate guide입니다\./
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /현재 EuTm은 claim-map과 핵심 6장 기준선을 바탕으로 rights·route·evidence handoff를 controlled EU\+UK scope 안에서 정리한 validate guide입니다\./
+      )
+    ).toBeInTheDocument();
+  });
+
   it("tracks report opens from the priority guide home handoff cards", async () => {
     installFetchMock();
     const measurementSpy = vi.spyOn(ga, "getGaMeasurementId").mockReturnValue("G-TEST123");
@@ -800,7 +819,7 @@ describe("App portfolio shell", () => {
     ).not.toHaveClass("gateway-section-header--centered");
   });
 
-  it("groups the portfolio cards by tier and exposes the ChaTm maturity note", () => {
+  it("groups the portfolio cards by tier and exposes priority-lane maturity notes", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
@@ -815,6 +834,16 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
     expect(
       within(currentPilotScope as HTMLElement).getByText("mature 승격 반영 · Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 완료")
+    ).toBeInTheDocument();
+    expect(
+      within(currentPilotScope as HTMLElement).getByText(
+        "EU-wide, core-state, UK split과 evidence triage 기준선을 controlled EU+UK scope로 잠그는 validate regional guide입니다."
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(currentPilotScope as HTMLElement).getByText(
+        "validate lane · claim-map adopted · controlled EU+UK scope · docs/report sync follow-through"
+      )
     ).toBeInTheDocument();
   });
 

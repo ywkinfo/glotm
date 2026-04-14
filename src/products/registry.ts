@@ -124,7 +124,7 @@ export const products: ProductMeta[] = [
     gatewayOrder: 3,
     gatewayLaneRole: "priority",
     title: "EuTm 유럽 상표 운영 가이드북",
-    summary: "EU 권리 선택과 등록 후 운영 구조를 안정화하는 validate regional guide입니다.",
+    summary: "EU-wide, core-state, UK split과 evidence triage 기준선을 controlled EU+UK scope로 잠그는 validate regional guide입니다.",
     chapterCount: 14,
     searchEntryCount: 258,
     portfolioTier: "validate",
@@ -135,7 +135,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "유럽 권역 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "EuTm 보기",
-    maturityNote: "validate lane · core six deepened · docs sync + controlled scope maintained",
+    maturityNote: "validate lane · claim-map adopted · controlled EU+UK scope · docs/report sync follow-through",
     coverageType: "region",
     availability: "live_shell"
   },

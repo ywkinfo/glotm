@@ -66,6 +66,8 @@ describe("report registry", () => {
     expect(report?.focusPoints.map((focusPoint) => focusPoint.id)).toContain("europe-evidence-triage");
     expect(report?.focusPoints.find((focusPoint) => focusPoint.id === "europe-evidence-triage")).toMatchObject({
       title: "EuTm: validate evidence handoff를 고정한다",
+      summary:
+        "EuTm은 validate baseline을 controlled EU+UK scope로 잠근 상태이므로, 유통사·마켓플레이스·판매자 증거를 어떤 순서로 넘길지 권역 기준선으로 바로 확인합니다.",
       href: "/europe/chapter/제8장-등록-후-사용-갱신-증거-관리#distributor--marketplace-seller-evidence-triage",
       guideSlug: "europe",
       ctaLabel: "EuTm evidence triage 보기"
