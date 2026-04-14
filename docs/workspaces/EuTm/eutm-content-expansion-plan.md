@@ -42,7 +42,7 @@
 1. 기반 파이프라인은 갖춰졌지만 `LatTm` 대비 장별 밀도와 실무 사례 깊이가 아직 낮다.
 2. 리서치 검증 로그의 핵심 항목은 이미 본문 반영 가능한 수준까지 정리됐지만, EU 공통 프레임과 UK 병행 판단을 controlled scope로 유지한다는 설명을 문서와 reader copy에서 계속 일치시켜야 한다.
 3. 루트 전략 문서와 개별 워크스페이스 문서가 같은 속도로 갱신되지 않으면 shipped 상태 설명이 다시 어긋날 수 있다.
-4. 검색 엔트리는 baseline 258을 이미 확보했으므로, 이번 라운드에서는 추가 확장보다 현재 수치와 범위 설명을 흔들리지 않게 유지하는 편이 더 중요하다.
+4. 검색 엔트리는 baseline 258을 이미 확보했으므로, 이번 라운드에서는 추가 증분보다 현재 수치와 범위 설명을 흔들리지 않게 유지하는 편이 더 중요하다.
 
 ---
 
@@ -168,12 +168,12 @@
 ## Phase 1 — LatTm-lite 파이프라인 유지
 
 ### 목표
-콘텐츠를 안전하게 확장할 수 있는 현재 제작 기반을 유지한다.
+현재 제작 기반을 안정적으로 유지한다.
 
 ### 작업
 - `content/source/manifest.json`, `content/source/chapters/`, `scripts/build-master.ts`, `scripts/qa-content.ts`를 baseline으로 계속 유지
 - 루트 `package.json`과 워크스페이스 로컬 문서가 현재 실행 순서를 정확히 설명하는지 점검
-- 구조 확장 전 `master.md` 재생성, QA, generated JSON 생성 흐름이 계속 깨지지 않도록 유지
+- 구조 drift 없이 `master.md` 재생성, QA, generated JSON 생성 흐름이 계속 깨지지 않도록 유지
 
 ### LatTm에서 참고할 것
 - `LatTm/scripts/build-master.ts`
@@ -186,10 +186,10 @@
 
 ---
 
-## Phase 2 — 핵심 6장 정합성 유지와 fact verification 승격
+## Phase 2 — 핵심 6장 정합성 유지와 fact verification baseline 유지
 
 ### 목표
-이미 심화된 핵심 6장의 판단 언어와 fact verification 승격 상태를 현재 baseline에 맞게 잠근다.
+이미 심화된 핵심 6장의 판단 언어와 fact verification baseline을 현재 기준선에 맞게 잠근다.
 
 ### 우선 대상
 1. 제1장 시스템 지도
@@ -201,7 +201,7 @@
 
 ### 작업
 - 핵심 6장에 이미 반영된 controlled Eu/UK scope 판단 언어와 운영 메모를 현재 baseline 기준으로 다시 맞춘다.
-- `eu_tm_fact_verification_log.md`의 Verified 항목을 해당 장의 판단표와 운영 메모에 승격한다.
+- `eu_tm_fact_verification_log.md`의 Verified 항목이 해당 장의 판단표와 운영 메모 설명과 어긋나지 않게 정렬한다.
 - `eu_tm_source_register.md`를 실제 참조 목록으로 유지한다.
 
 ### 각 장의 최소 기준
@@ -234,39 +234,33 @@
 
 ---
 
-## Phase 4 — 후반 운영 장 보강
+## Phase 4 — root docs sync와 shared workflow hygiene
 
 ### 목표
-핵심 6장 이후 운영/분쟁/거버넌스 장을 보강해 문서의 후반부 완성도를 맞춘다.
+root shared truth, report/overview wording, workspace 설명을 같은 EuTm baseline으로 정렬한다.
 
 ### 대상
-- 제3장 포트폴리오 설계
-- 제6장 절대적 거절
-- 제9장 취소/무효/불사용
-- 제10장 라이선스/유통/병행수입
-- 제11장 플랫폼/도메인
-- 제12장 세관/국경조치
-- 제13장 포럼 선택
-- 제14장 RACI
+- `PROJECT-OVERVIEW.md`, `docs/portfolio-scorecard.md`, `docs/buyer-narrative.md`, `docs/README.md`의 EuTm 상태 설명 동기화
+- `/europe` reader home copy, Gateway metadata, report/overview wording이 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope` 기준선과 어긋나지 않는지 점검
+- shared workflow hygiene 기준으로 local workspace 증빙 우선, shared root gate 1회 원칙, controlled EU+UK scope 유지 문구를 같은 방향으로 잠금
 
 ### 완료 기준
-- 장별 밀도 편차 완화
-- 문체와 구조 일관성 확보
+- root docs, report/overview wording, workspace docs가 같은 baseline을 설명한다.
+- EuTm을 다시 확장 트랙처럼 읽히게 하는 문구가 남지 않는다.
 
 ---
 
-## Phase 5 — 통합 머지와 shared root gate
+## Phase 5 — shared root gate handoff
 
 ### 목표
-`EuTm` lane 결과를 세 가이드 통합 검증 체계에 올린다.
+`EuTm` lane 결과를 shared root gate 입력으로 넘겨 통합 검증 준비 상태를 만든다.
 
 ### 작업
-- 글로벌 스프린트 머지 순서에서 `EuTm`을 세 번째로 병합한다.
 - `EuTm` lane은 개별 root gate를 반복하지 않고, shared verification lane에 workspace gate 결과만 넘긴다.
 - 리더가 통합 후 `npm run test:content`, `npm run health:runtime`, `npm run health:release`를 1회 실행한다.
 
 ### 완료 기준
-- `EuTm`의 lane 산출물이 merge-ready 상태로 통합된다.
+- `EuTm`의 lane 산출물이 shared root gate 입력으로 정리된다.
 - shared root gate가 1회 통과한다.
 
 ---
@@ -302,7 +296,7 @@
 
 ### Sprint 2
 - Phase 2 완료
-- 핵심 6장 심화와 fact verification 승격
+- 핵심 6장 기준선과 fact verification baseline 유지
 
 ### Sprint 3
 - Phase 3 진행
@@ -310,11 +304,11 @@
 
 ### Sprint 4
 - Phase 4 진행
-- 후반 운영 장 보강
+- root docs sync와 shared workflow hygiene 정리
 
 ### Sprint 5
 - Phase 5 진행
-- 통합 머지와 shared root gate
+- shared root gate handoff
 
 ---
 
@@ -350,7 +344,7 @@
 ## 2026-04-13 shipped addendum
 
 - `EuTm/content/research/claim-map.json`을 도입했고, root `health:report`에서 `europe` advisory `research` block이 보이도록 정렬했다.
-- 후속 보강은 대형 scope expansion 대신 Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split처럼 controlled EU+UK lane 안의 좁은 operational note만 흡수하는 방식으로 마감했다.
+- 후속 보강은 대형 범위 확대 대신 Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split처럼 controlled EU+UK lane 안의 좁은 operational note만 흡수하는 방식으로 마감했다.
 - 이 상태 이후의 우선순위는 EuTm 자체 확장보다 root docs sync, report/overview wording alignment, shared workflow hygiene를 정리하는 일이다.
 
 ---
@@ -369,16 +363,16 @@
 
 ## 최종 제안
 
-`EuTm` 정리는 지금도 계속할 가치가 있다. 다만 현재 단계의 첫 일은 더 이상 제작 체계 도입이나 대형 확장이 아니라, 이미 도입된 LatTm-lite baseline과 핵심 6장 운영 문구를 안정적으로 잠그는 것이다. 그 위에서 fact verification을 통과한 내용을 같은 기준선으로 유지하는 방식이 가장 안전하다.
+`EuTm` 정리는 지금도 계속할 가치가 있다. 다만 현재 단계의 첫 일은 더 이상 제작 체계 도입이나 대형 확장이 아니라, 이미 도입된 LatTm-lite baseline과 핵심 6장 운영 문구를 안정적으로 잠그고 root shared truth를 같은 상태로 맞추는 것이다. 그 위에서 fact verification을 통과한 내용을 같은 기준선으로 유지하는 방식이 가장 안전하다.
 
 즉, 실행 순서는 아래와 같다.
 
 1. 상태 문서 정합화
 2. baseline 파이프라인 유지
-3. 핵심 6장 정합성 유지와 fact verification 승격
-4. workspace gate
-5. 후반 장 보강과 통합 shared root gate
+3. 핵심 6장 정합성 유지와 fact verification baseline 유지
+4. root docs sync와 shared workflow hygiene
+5. shared root gate handoff
 
 글로벌 병렬 스프린트에서는 `EuTm`을 dedicated single lane으로 운영하고, worker는 `EuTm` 디렉터리와 `eu_tm_fact_verification_log.md` 중심으로만 수정한다. 루트 메타데이터와 최종 Gateway/health sync는 리더가 마지막에 처리한다.
 
-이 순서를 지키면 `EuTm`은 현재의 live regional guide baseline에서, 루트 `GloTm` 셸에서 LatTm 다음 수준으로 더 깊게 읽히는 권역형 실무 가이드로 성장할 수 있다.
+이 순서를 지키면 `EuTm`은 현재의 live regional guide baseline을 흔들지 않고, validate lane 기준선과 controlled EU+UK scope를 root shared truth와 같은 상태로 유지할 수 있다.
