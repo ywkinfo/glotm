@@ -347,6 +347,13 @@ root shared truth, report/overview wording, workspace 설명을 같은 EuTm base
 - 후속 보강은 대형 범위 확대 대신 Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split처럼 controlled EU+UK lane 안의 좁은 operational note만 흡수하는 방식으로 마감했다.
 - 이 상태 이후의 우선순위는 EuTm 자체 확장보다 root docs sync, report/overview wording alignment, shared workflow hygiene를 정리하는 일이다.
 
+## 2026-04-14 closeout memo
+
+- `npm --prefix EuTm run content:prepare`가 다시 통과했고, local workspace baseline은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`를 유지했다.
+- shared root gate로 `npm run health:all`을 1회 재현했고, `health:runtime` · `health:content` · `health:release` · `health:report`가 모두 통과했다.
+- `PROJECT-OVERVIEW.md`, `README.md`, `docs/portfolio-scorecard.md`, `src/products/registry.ts`의 EuTm 및 freshness wording을 같은 실행 결과에 맞게 다시 잠갔다.
+- 이번 stabilization pass 기준으로 Phase 3 workspace gate, Phase 4 root docs sync, Phase 5 shared root gate handoff를 closeout 상태로 본다.
+
 ---
 
 ## 비범위
