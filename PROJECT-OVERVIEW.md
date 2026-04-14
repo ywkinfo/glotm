@@ -13,7 +13,7 @@
 | Last updated | 2026-04-09 |
 | Verified on | 2026-04-09 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
-| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` 안정화 -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
+| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` controlled EU+UK baseline 유지 + docs/report/workflow 정합화 -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### 현재 운영 스냅샷
@@ -78,7 +78,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
-| `EuTm` | 권역형 | validate | beta | 14 | 258 | 핵심 6장 심화 완료 · 권역 검증·정합성 안정화 |
+| `EuTm` | 권역형 | validate | beta | 14 | 258 | claim-map adopted · controlled EU+UK scope 유지 · docs/report 정합화 후속 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 178 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
 | `UKTm` | 단일국가 | incubate | pilot | 14 | 100 | early track · draft 공개본 |
@@ -94,8 +94,8 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 ### 현재 집중 우선순위
 
 - `ChaTm`: mature 단계 반영 완료, reader/search QA와 Gateway sync 유지
-- `MexTm`: growth 대표 트랙. buyer entry 가치와 실무 밀도 강화, 보강 계획과 taskboard를 먼저 고정
-- `EuTm`: 범위 확대 없이 fact verification와 문서 정합성 안정화
+- `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강을 잠갔고, 현재 남은 일은 shared root gate 입력과 Gateway/registry/root-doc sync 정리
+- `EuTm`: claim-map adopted 이후 controlled EU+UK scope 유지, root docs/report wording alignment, shared workflow hygiene 정리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
 - `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm pilot 유지, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선

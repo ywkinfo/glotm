@@ -18,6 +18,7 @@
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)
 - factual QA rollout: [`factual-qa-rollout.md`](factual-qa-rollout.md)
+- Report / Gateway trust layer와 workflow path wording truth는 `../README.md`, `../PROJECT-OVERVIEW.md`, `phase1-runtime-qa.md`, `portfolio-scorecard.md`를 함께 본다.
 
 ## Workspace Workstreams
 
@@ -36,7 +37,7 @@
 
 ### EuTm
 
-- content expansion plan: [`workspaces/EuTm/eutm-content-expansion-plan.md`](workspaces/EuTm/eutm-content-expansion-plan.md)
+- stabilization memo: [`workspaces/EuTm/eutm-content-expansion-plan.md`](workspaces/EuTm/eutm-content-expansion-plan.md)
 - workspace contracts: `../EuTm/README.md`, `../EuTm/Harness/Architecture.md`, `../EuTm/Harness/Content-Spec.md`
 
 ### UKTm

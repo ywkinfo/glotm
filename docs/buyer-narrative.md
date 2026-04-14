@@ -40,16 +40,16 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 ## 포트폴리오 구조
 
 - `LatTm`: flagship. cross-border 우선순위와 운영 구조의 기준 프레임
-- `MexTm`, `ChaTm`: growth. buyer entry 가치와 실무 밀도를 우선 강화하는 국가 가이드
-- `EuTm`: validate. 권역형 구조와 verification 정합성을 안정화하는 가이드
+- `MexTm`, `ChaTm`: growth. buyer entry 질문을 filing·maintenance·border-control handoff까지 이어 잠그는 국가 가이드
+- `EuTm`: validate. controlled EU+UK scope와 rights/route/evidence handoff 정합성을 잠그는 가이드
 - `UsaTm`, `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 filing/route/maintenance reader utility를 다듬는 가이드
 - `UKTm`: incubate pilot. draft 공개본 early-track으로 유지하며 fact verification과 smoke QA를 먼저 고정하는 가이드
 
 ## 지금 보면 좋은 가이드
 
 - `ChaTm`: 중국어 표기, 서브클래스, 출원 실무, 집행 경로를 먼저 정리해야 할 때 현재 가장 우선순위가 높은 growth 가이드
-- `MexTm`: 멕시코 진입 직전의 출원 경로와 실무 질문을 빠르게 정리할 때 다음으로 볼 가이드
-- `EuTm`: 유럽 권역 판단을 개별 국가 나열보다 운영 구조 중심으로 정리할 때 validate 가이드로 활용
+- `MexTm`: 멕시코 진입 직전 판단표를 filing packet, 유지관리 triage, border-control escalation까지 이어 볼 때 다음으로 볼 가이드
+- `EuTm`: 유럽 권역을 EU-wide, core-state, UK split 기준선과 evidence triage까지 함께 정리할 때 validate 가이드로 활용
 - `LatTm`: 여러 국가를 동시에 검토할 때 기준 프레임을 잡는 flagship 가이드
 
 ## Current execution order
@@ -57,6 +57,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> JapTm -> UKTm -> UsaTm`
 - `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
 - 최신 Report / Gateway trust layer는 `ChaTm`, `MexTm`, `EuTm`에서 먼저 잠근 공통 질문을 다시 묶고, `LatTm`을 기준 프레임으로 이어 읽게 설계한다
+- Gateway 첫 화면은 최신 report 2개를 먼저 보여 주고, report detail에서는 source guide context와 deep-link return CTA를 유지한다
 
 ## Three practical outcomes
 
