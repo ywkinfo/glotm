@@ -19,6 +19,7 @@ import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import type { DocumentData } from "../src/products/shared";
 import {
+  buildPublicHref,
   buildRobotsTxt,
   buildSitemapXml,
   buildStaticPageDefinitions,
@@ -73,7 +74,7 @@ describe("SEO build helpers", () => {
         expect.objectContaining({
           routePath: "/latam",
           outputPath: "/tmp/glotm-dist/latam/index.html",
-          canonicalUrl: "https://ywkinfo.github.io/glotm/latam",
+          canonicalUrl: "https://ywkinfo.github.io/glotm/latam/",
           title: "중남미 상표 보호 운영 가이드 | GloTm"
         })
       ])
@@ -83,7 +84,7 @@ describe("SEO build helpers", () => {
         expect.objectContaining({
           routePath: "/briefs",
           outputPath: "/tmp/glotm-dist/briefs/index.html",
-          canonicalUrl: "https://ywkinfo.github.io/glotm/briefs",
+          canonicalUrl: "https://ywkinfo.github.io/glotm/briefs/",
           title: "Hot Global TM Brief | GloTm"
         })
       ])
@@ -92,7 +93,7 @@ describe("SEO build helpers", () => {
       expect.arrayContaining([
         expect.objectContaining({
           routePath: `/briefs/${briefIssues[0]?.slug}`,
-          canonicalUrl: `https://ywkinfo.github.io/glotm/briefs/${briefIssues[0]?.slug}`,
+          canonicalUrl: `https://ywkinfo.github.io/glotm/briefs/${briefIssues[0]?.slug}/`,
           ogType: "article"
         })
       ])
@@ -102,7 +103,7 @@ describe("SEO build helpers", () => {
         expect.objectContaining({
           routePath: "/reports",
           outputPath: "/tmp/glotm-dist/reports/index.html",
-          canonicalUrl: "https://ywkinfo.github.io/glotm/reports",
+          canonicalUrl: "https://ywkinfo.github.io/glotm/reports/",
           title: "Report | GloTm"
         })
       ])
@@ -111,7 +112,7 @@ describe("SEO build helpers", () => {
       expect.arrayContaining([
         expect.objectContaining({
           routePath: `/reports/${reports[0]?.slug}`,
-          canonicalUrl: `https://ywkinfo.github.io/glotm/reports/${reports[0]?.slug}`,
+          canonicalUrl: `https://ywkinfo.github.io/glotm/reports/${reports[0]?.slug}/`,
           ogType: "article"
         })
       ])
@@ -120,7 +121,7 @@ describe("SEO build helpers", () => {
       expect.arrayContaining([
         expect.objectContaining({
           routePath: `/latam/chapter/${documentDataLatam.chapters[0]?.slug}`,
-          canonicalUrl: `https://ywkinfo.github.io/glotm/latam/chapter/${documentDataLatam.chapters[0]?.slug}`,
+          canonicalUrl: `https://ywkinfo.github.io/glotm/latam/chapter/${documentDataLatam.chapters[0]?.slug}/`,
           ogType: "article"
         })
       ])
@@ -138,10 +139,10 @@ describe("SEO build helpers", () => {
 
     expect(sitemapXml).toContain("<urlset");
     expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/");
-    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/briefs");
-    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/reports");
-    expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm/reports/${reports[0]?.slug}`);
-    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/latam");
+    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/briefs/");
+    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/reports/");
+    expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm/reports/${reports[0]?.slug}/`);
+    expect(sitemapXml).toContain("https://ywkinfo.github.io/glotm/latam/");
     expect(robotsTxt).toBe(
       ["User-agent: *", "Allow: /", "Sitemap: https://ywkinfo.github.io/glotm/sitemap.xml"].join(
         "\n"
@@ -218,5 +219,23 @@ describe("SEO build helpers", () => {
     expect(notFoundHtml).not.toContain("og:title");
     expect(notFoundHtml).not.toContain('rel="canonical"');
     expect(noJekyll).toBe("");
+  });
+
+  it("adds trailing slash for directory routes but not for file paths", () => {
+    expect(buildPublicHref("/", "/glotm")).toBe("/glotm/");
+    expect(buildPublicHref("/", "")).toBe("/");
+    expect(buildPublicHref("/china", "/glotm")).toBe("/glotm/china/");
+    expect(buildPublicHref("/briefs", "/glotm")).toBe("/glotm/briefs/");
+    expect(buildPublicHref("/reports/global-filing-priority-framework", "/glotm")).toBe(
+      "/glotm/reports/global-filing-priority-framework/"
+    );
+    expect(buildPublicHref("/latam/chapter/서문", "/glotm")).toBe("/glotm/latam/chapter/서문/");
+    expect(buildPublicHref("/og/glotm-share-card.svg", "/glotm")).toBe(
+      "/glotm/og/glotm-share-card.svg"
+    );
+    expect(buildPublicHref("/sitemap.xml", "/glotm")).toBe("/glotm/sitemap.xml");
+    expect(
+      buildPublicHref("/china/chapter/제4장-출원-경로#section-id", "/glotm")
+    ).toBe("/glotm/china/chapter/제4장-출원-경로/#section-id");
   });
 });

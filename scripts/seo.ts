@@ -130,7 +130,19 @@ export function buildPublicHref(routePath: string, basePath = "") {
     return basePath ? `${basePath}/` : "/";
   }
 
-  return `${basePath}${routePath}`;
+  const fullPath = `${basePath}${routePath}`;
+
+  const hashIndex = fullPath.indexOf("#");
+  const pathPart = hashIndex >= 0 ? fullPath.slice(0, hashIndex) : fullPath;
+  const hashPart = hashIndex >= 0 ? fullPath.slice(hashIndex) : "";
+
+  const lastSegment = pathPart.split("/").pop() ?? "";
+  if (lastSegment.includes(".")) {
+    return fullPath;
+  }
+
+  const normalizedPath = pathPart.endsWith("/") ? pathPart : `${pathPart}/`;
+  return `${normalizedPath}${hashPart}`;
 }
 
 export function buildCanonicalUrl(routePath: string, siteOrigin: string, basePath = "") {
