@@ -15,23 +15,21 @@ const trustLayerRoundtripCases = [
   {
     guideName: "ChaTm",
     guidePath: "/china",
-    reportTitle: "브랜드 표장 현지화 vs. 표준화: 글로벌 상표 운영 결정 프레임워크",
+    reportTitle: "한글 표장 글로벌 보호 운영 프레임워크",
     reportPath:
-      "/reports/brand-localization-vs-standardization-framework?fromGuide=china",
+      "/reports/hangul-mark-global-protection-framework?fromGuide=china",
     returnLinkName: "ChaTm로 돌아가기",
-    returnHref:
-      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준",
-    focusPointLinkName: "ChaTm 표기 전략 보기"
+    returnHref: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략",
+    focusPointLinkName: "ChaTm 표기 결정 보기"
   },
   {
     guideName: "MexTm",
     guidePath: "/mexico",
-    reportTitle: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
-    reportPath: "/reports/global-filing-route-framework?fromGuide=mexico",
+    reportTitle: "한글 표장 글로벌 보호 운영 프레임워크",
+    reportPath: "/reports/hangul-mark-global-protection-framework?fromGuide=mexico",
     returnLinkName: "MexTm로 돌아가기",
-    returnHref:
-      "/mexico/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드국제출원-비교#buyer-entry-경로-선택표",
-    focusPointLinkName: "MexTm buyer-entry 표 보기"
+    returnHref: "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase",
+    focusPointLinkName: "MexTm 출원 실무 보기"
   },
   {
     guideName: "EuTm",

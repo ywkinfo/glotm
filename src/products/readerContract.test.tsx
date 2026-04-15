@@ -46,18 +46,18 @@ const priorityGuideSlugs = new Set(
 );
 const priorityGuideHandoffExpectations = {
   china: {
-    expectedSummary: "중국이 첫 출시국인지, 중국어 표기를 언제 잠글지, direct/Madrid 판단이 언제 갈리는지 readiness 보드에서 먼저 정리합니다.",
+    expectedSummary: "한글 원표장을 원점으로 두고, 중국어 표기 후보를 어떤 순서로 search와 filing에 넘길지 먼저 정리합니다.",
     expectedReportSlugs: [
-      "global-filing-priority-framework",
-      "brand-localization-vs-standardization-framework"
+      "hangul-mark-global-protection-framework",
+      "global-filing-priority-framework"
     ]
   },
   mexico: {
-    expectedSummary: "멕시코는 launch 직전에 도메인, 계정, goods/services, owner 메모를 같은 control board에 적어 두어야 buyer-entry 우선순위가 흔들리지 않습니다.",
+    expectedSummary: "멕시코처럼 제출 직전 정렬이 중요한 시장에서는, 한글·영문·로고 사용본이 서로 충돌하지 않게 먼저 정리하는 편이 안전합니다.",
     expectedReportSlugs: [
+      "hangul-mark-global-protection-framework",
       "global-filing-priority-framework",
-      "global-filing-route-framework",
-      "global-use-evidence-system"
+      "global-filing-route-framework"
     ]
   },
   europe: {

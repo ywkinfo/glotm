@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import documentDataBrandLocalizationReport from "../public/generated/reports/brand-localization-vs-standardization-framework/document-data.json";
 import documentDataFilingPriorityReport from "../public/generated/reports/global-filing-priority-framework/document-data.json";
+import documentDataHangulReport from "../public/generated/reports/hangul-mark-global-protection-framework/document-data.json";
 import documentDataChina from "../public/generated/china/document-data.json";
 import documentDataEurope from "../public/generated/europe/document-data.json";
 import documentDataJapan from "../public/generated/japan/document-data.json";
@@ -38,6 +39,7 @@ const documentDataBySlug = new Map<string, DocumentData>([
 const reportDocumentDataBySlug = new Map<string, DocumentData>([
   ["brand-localization-vs-standardization-framework", documentDataBrandLocalizationReport as DocumentData],
   ["global-filing-priority-framework", documentDataFilingPriorityReport as DocumentData],
+  ["hangul-mark-global-protection-framework", documentDataHangulReport as DocumentData],
   ["global-filing-route-framework", documentDataRouteReport as DocumentData],
   ["global-use-evidence-system", documentDataReport as DocumentData]
 ]);

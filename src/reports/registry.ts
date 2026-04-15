@@ -219,6 +219,92 @@ const reportSource: ReportMeta[] = [
     ]
   },
   {
+    id: "hangul-mark-global-protection-framework",
+    slug: "hangul-mark-global-protection-framework",
+    title: "한글 표장 글로벌 보호 운영 프레임워크",
+    summary:
+      "한글을 원표장으로 가진 기업이 한글·로마자·로고 버전을 어떤 순서로 확정하고, 해외 채널에서 무엇을 먼저 보호 자산으로 봐야 하는지 정리한 리포트.",
+    trustLayerSummaryObject: "한글 표장 보호 판단을",
+    publishedAt: "2026-04-15T09:00:00.000Z",
+    jurisdictions: ["Global", "China", "Japan", "Mexico"],
+    tags: ["한글 표장", "브랜드 포트폴리오", "표기 전략", "Channel Language Lock"],
+    audience: "한글 원표장을 그대로 해외에 내보내는 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅·채널 운영 리드",
+    gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
+    whyNow:
+      "한글 표장을 실제 채널에서 쓰기 시작했는데도 출원형은 로마자만 관리하고, 사용 증거는 한글이나 로고 중심으로 쌓이는 분리가 자주 생깁니다. 이 단계에서 빠지는 판단은 문화적 설명이 아니라, 한글·로마자·로고 중 무엇이 먼저 보호 자산이고 어떤 채널에서 어떤 표기를 허용할지에 대한 운영 확정입니다.",
+    trustLayerChecklist: [
+      "한글 표장을 실제로 쓰는 채널과 제품이 어디인지 먼저 적는다.",
+      "한글·로마자·로고 중 무엇이 출원 자산인지 같은 표에서 구분한다.",
+      "사용형과 출원형이 벌어지지 않게 담당자와 승인 체계를 정한다."
+    ],
+    focusPoints: [
+      {
+        id: "china-hangul-handoff-lock",
+        title: "ChaTm: 표기 결정과 handoff 논리",
+        summary:
+          "한글 원표장을 원점으로 두고, 중국어 표기 후보를 어떤 순서로 search와 filing에 넘길지 먼저 정리합니다.",
+        href: buildGuideSectionPath(
+          "china",
+          "제2장-브랜드-구조와-중국어-표기-전략"
+        ),
+        guideSlug: "china",
+        ctaLabel: "ChaTm 표기 결정 보기"
+      },
+      {
+        id: "japan-hangul-pronunciation-design",
+        title: "JapTm: 일본어 발음 설계",
+        summary:
+          "한글 원표장과 어떤 일본어 표기가 실제 선반, 상품명, 딜러 문서에서 함께 쓰일지를 먼저 정리합니다.",
+        href: buildGuideSectionPath(
+          "japan",
+          "제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계"
+        ),
+        guideSlug: "japan",
+        ctaLabel: "JapTm 발음 설계 보기"
+      },
+      {
+        id: "mexico-mark-version-alignment",
+        title: "MexTm: 출원서 작성 및 제출",
+        summary:
+          "멕시코처럼 제출 직전 정렬이 중요한 시장에서는, 한글·영문·로고 사용본이 서로 충돌하지 않게 먼저 정리하는 편이 안전합니다.",
+        href: buildGuideSectionPath(
+          "mexico",
+          "제5장-출원서-작성-실무-제출서류권한전자출원pase"
+        ),
+        guideSlug: "mexico",
+        ctaLabel: "MexTm 출원 실무 보기"
+      }
+    ],
+    relatedGuideLinks: [
+      {
+        label: "ChaTm: 브랜드 구조와 중국어 표기 전략",
+        href: buildGuideSectionPath(
+          "china",
+          "제2장-브랜드-구조와-중국어-표기-전략"
+        )
+      },
+      {
+        label: "JapTm: 포트폴리오 설계와 표장·클래스 스코프",
+        href: buildGuideSectionPath(
+          "japan",
+          "제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계"
+        )
+      },
+      {
+        label: "MexTm: 출원 실무 — 출원서 작성 및 제출",
+        href: buildGuideSectionPath(
+          "mexico",
+          "제5장-출원서-작성-실무-제출서류권한전자출원pase"
+        )
+      },
+      {
+        label: "브랜드 표장 현지화 vs. 표준화 프레임워크",
+        href: buildReportPath("brand-localization-vs-standardization-framework")
+      }
+    ]
+  },
+  {
     id: "global-filing-route-framework",
     slug: "global-filing-route-framework",
     title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",

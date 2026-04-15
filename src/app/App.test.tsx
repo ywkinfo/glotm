@@ -103,6 +103,35 @@ const documentDataByReport = {
       }
     ]
   } satisfies DocumentData,
+  "hangul-mark-global-protection-framework": {
+    meta: {
+      title: "한글 표장 글로벌 보호 운영 프레임워크",
+      builtAt: "2026-04-15T09:00:00.000Z",
+      chapterCount: 1
+    },
+    chapters: [
+      {
+        id: "hangul-mark-global-protection-framework",
+        slug: "hangul-mark-global-protection-framework",
+        title: "한글 표장 글로벌 보호 운영 프레임워크",
+        summary:
+          "한글을 원표장으로 가진 기업이 한글·로마자·로고 버전을 어떤 순서로 확정하고, 해외 채널에서 무엇을 먼저 보호 자산으로 봐야 하는지 정리한 리포트.",
+        html: [
+          "<p>한글 표장은 국내에서는 하나의 이름처럼 보이지만, 해외에서는 한글 원표장, 로마자 표기, 로고 또는 결합표장으로 갈라져 움직입니다.</p>",
+          '<h3 id="한글-로마자로고-3버전-관리-기준">한글·로마자·로고 3버전 관리 기준</h3>',
+          "<p>로마자 표기는 영문으로 적으면 되는 부수 정보가 아니라, 출원형과 사용형을 함께 확정해 두는 공식 입력값으로 보는 편이 맞습니다.</p>"
+        ].join(""),
+        headings: [
+          {
+            id: "한글-로마자로고-3버전-관리-기준",
+            depth: 3,
+            title: "한글·로마자·로고 3버전 관리 기준",
+            children: []
+          }
+        ]
+      }
+    ]
+  } satisfies DocumentData,
   "global-filing-route-framework": {
     meta: {
       title: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
@@ -453,8 +482,8 @@ describe("App portfolio shell", () => {
       title: "중국 상표 실무 운영 가이드",
       summary: "중국이 첫 출시국인지, 중국어 표기를 언제 잠글지, direct/Madrid 판단이 언제 갈리는지 readiness 보드에서 먼저 정리합니다.",
       expectedReportSlugs: [
-        "global-filing-priority-framework",
-        "brand-localization-vs-standardization-framework"
+        "hangul-mark-global-protection-framework",
+        "global-filing-priority-framework"
       ]
     },
     {
@@ -462,9 +491,9 @@ describe("App portfolio shell", () => {
       title: "멕시코 상표 실무 운영 가이드북",
       summary: "멕시코는 launch 직전에 도메인, 계정, goods/services, owner 메모를 같은 control board에 적어 두어야 buyer-entry 우선순위가 흔들리지 않습니다.",
       expectedReportSlugs: [
+        "hangul-mark-global-protection-framework",
         "global-filing-priority-framework",
-        "global-filing-route-framework",
-        "global-use-evidence-system"
+        "global-filing-route-framework"
       ]
     },
     {
@@ -735,31 +764,31 @@ describe("App portfolio shell", () => {
       within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 중국 launch sequencing부터 적는다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 표기 결정과 handoff 논리" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm sequencing 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 표기 결정 보기" })
     ).toHaveAttribute(
       "href",
-      "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다"
+      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "MexTm: buyer-entry 14일 control부터 잠근다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "JapTm: 일본어 발음 설계" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "MexTm control board 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "JapTm 발음 설계 보기" })
     ).toHaveAttribute(
       "href",
-      "/mexico/chapter/제1장-멕시코-상표-제도-개요와-impi-운영-구조#launch-직전-14일-control-board"
+      "/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "EuTm: launch wave 기준으로 우선순위를 나눈다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "MexTm: 출원서 작성 및 제출" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "EuTm 우선순위 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "MexTm 출원 실무 보기" })
     ).toHaveAttribute(
       "href",
-      "/europe/chapter/제3장-포트폴리오-설계와-우선순위#launch-wave-기준으로-우선순위를-나눈다"
+      "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase"
     );
     expect(
       within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
@@ -1143,7 +1172,10 @@ describe("App portfolio shell", () => {
       `/reports/${latestReport?.slug}`
     );
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.queryByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/ChaTm · MexTm에서 이미 다룬 한글 표장 보호 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -1153,15 +1185,15 @@ describe("App portfolio shell", () => {
     expect(
       screen.getByText(
         new RegExp(
-          `ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\\. 현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel?.replace("/", "\\/")}입니다\\.`
+          `ChaTm · MexTm에서 이미 다룬 한글 표장 보호 판단을 이 리포트에서 한 번에 다시 정리했습니다\\. JapTm은 필요할 때 이어서 보면 됩니다\\.`
         )
       )
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/매출 순서보다 출시 순서, 어떤 표장을 먼저 챙길지, 파트너 리스크, 권리 공백 비용을 기준으로 어느 국가에 먼저 출원할지 정리한 리포트입니다\./)
+      screen.getByText(/한글을 원표장으로 가진 기업이 한글·로마자·로고 버전을 어떤 순서로 확정하고, 해외 채널에서 무엇을 먼저 보호 자산으로 봐야 하는지 정리한 리포트\./)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/대상: 여러 나라 진입 순서와 출원 우선순위를 먼저 정해야 하는 브랜드 관리자, 인하우스 IP 팀, 글로벌 사업 리드/)
+      screen.getByText(/대상: 한글 원표장을 그대로 해외에 내보내는 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅·채널 운영 리드/)
     ).toBeInTheDocument();
   });
 
@@ -1266,7 +1298,7 @@ describe("App portfolio shell", () => {
 
     const gatewayRender = renderAppRouteTree("/");
 
-    clickTrackedLink(screen.getByRole("link", { name: "ChaTm sequencing 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 표기 결정 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -1275,7 +1307,7 @@ describe("App portfolio shell", () => {
         report_slug: latestReport?.slug,
         guide_slug: "china",
         surface: "gateway_section",
-        target_path: "/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다"
+        target_path: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략"
       })
     );
 
