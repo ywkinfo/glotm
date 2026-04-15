@@ -931,6 +931,7 @@ describe("Shared reader runtime contract", () => {
         expect(scrim).toBeVisible();
         await waitFor(() => {
           expect(document.body.style.overflow).toBe("hidden");
+          expect(document.body.style.getPropertyValue("touch-action")).toBe("");
           expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(true);
         });
 
@@ -939,6 +940,7 @@ describe("Shared reader runtime contract", () => {
         await waitFor(() => {
           expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
           expect(document.body.style.overflow).toBe("");
+          expect(document.body.style.getPropertyValue("touch-action")).toBe("");
           expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(false);
         });
 
@@ -950,6 +952,7 @@ describe("Shared reader runtime contract", () => {
         await waitFor(() => {
           expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
           expect(document.body.style.overflow).toBe("");
+          expect(document.body.style.getPropertyValue("touch-action")).toBe("");
           expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(false);
         });
 
@@ -961,6 +964,7 @@ describe("Shared reader runtime contract", () => {
         await waitFor(() => {
           expect(screen.queryByRole("button", { name: "열린 패널 닫기" })).toBeNull();
           expect(document.body.style.overflow).toBe("");
+          expect(document.body.style.getPropertyValue("touch-action")).toBe("");
           expect(document.body.classList.contains("reader-mobile-nav-open")).toBe(false);
         });
       } finally {

@@ -265,6 +265,9 @@ test("mobile drawer close controls smoke", async ({ page }) => {
 
   await page.getByRole("button", { exact: true, name: "목차" }).click();
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
+  await expect
+    .poll(() => page.evaluate(() => getComputedStyle(document.body).touchAction))
+    .not.toBe("none");
 
   const closeButton = page.locator(".left-rail").getByRole("button", { exact: true, name: "패널 닫기" });
   const scrim = page.getByRole("button", { name: "열린 패널 닫기" });

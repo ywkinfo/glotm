@@ -55,6 +55,42 @@ IPEC는 중소 규모 지식재산 분쟁을 염두에 둔 포럼이고, small c
 
 특히 영국 전용 권리와 EU 권리를 함께 운영하는 조직은 `누가 UK-only 판단을 내리는지`를 명확히 적어야 한다. 그렇지 않으면 같은 브랜드라도 유럽 팀과 영국 팀이 서로 다른 전제를 가지고 움직이게 된다.
 
+### UK-only 운영 handoff rows
+
+UKTm 공개본은 제도 설명을 길게 늘리는 것보다, 실제 handoff row를 빠르게 다시 찾게 만드는 편이 더 유용하다. 아래 세 줄은 영국 독립 트랙을 팀 운영표에 옮길 때 바로 복사해 넣기 좋다.
+
+#### UKIPO issue와 court issue를 가르는 질문
+
+| 질문 | UKIPO row에 남길 신호 | court row로 올릴 신호 |
+| --- | --- | --- |
+| 지금 문제의 핵심이 register 입력값인가 | 명세, 절차, 공고, recordal | 금지, 손해, 복합 사실관계 |
+| 상대방과 직접 충돌이 이미 시작됐는가 | 아직 절차 단계 | 경고장, seller 확산, 유통 분쟁 |
+| 2주 안에 필요한 output이 무엇인가 | report, amendment, tribunal 대응 | injunction, evidence bundle, forum choice |
+| 외부 대리인에게 먼저 물어볼 질문이 무엇인가 | wording, filing, tribunal line | IPEC, High Court, settlement risk |
+
+#### comparable UK right tracker 필드
+
+Brexit 이후 comparable UK right는 번호만 따로 적는 것으로 끝나지 않는다. 갱신, 플랫폼 신고, evidence owner를 같은 row에 둬야 영국 전용 관리 누락을 줄일 수 있다.
+
+| 필드 | 왜 적나 |
+| --- | --- |
+| source EU mark | 원래 EUTM과의 연결점 유지 |
+| comparable UK number | 영국 전용 대응 경로 식별 |
+| renewal split | EU와 UK 달력이 갈리는 시점 표시 |
+| evidence owner | UK 자료를 누가 보관하는지 잠금 |
+| enforcement note | 플랫폼·도메인·세관 신고 시 UK 번호 즉시 사용 |
+
+#### launch 전 owner split 메모
+
+런치 직전에는 owner, actual user, representative가 서로 다를 수 있다. 영국에서는 이 셋이 비어 있으면 filing 이후 장들보다 먼저 운영이 꼬이므로 launch memo에 최소한 아래 네 줄은 남겨 두는 편이 좋다.
+
+| 항목 | 바로 적을 내용 |
+| --- | --- |
+| owner | UK right를 누가 보유하는가 |
+| actual user | 실제 판매·광고 주체가 누구인가 |
+| representative | UKIPO / dispute 창구를 누가 잡는가 |
+| UK-only escalation | EuTm과 분리해 누가 최종 판단하는가 |
+
 ### 시작 전 체크리스트
 
 - 영국을 EU의 하위 메모가 아니라 별도 운영 트랙으로 관리할지 결정했는가
@@ -103,6 +139,40 @@ IPEC는 중소 규모 지식재산 분쟁을 염두에 둔 포럼이고, small c
 대표적인 실패 패턴은 "검색은 했는데 무엇을 결정해야 하는지 모르는 상태"다. 검색 결과를 받은 날 바로 출원 경로와 fallback을 정하려면 처음 브리프에서 질문을 명시해야 한다.
 
 검색 브리프를 바로 복사해 쓰려면 `Appendix A` 템플릿을 기본 포맷으로 삼는 편이 가장 빠르다.
+
+### search memo 보강 포인트
+
+pilot 공개본에서는 검색 논리를 장문 의견서처럼 쓰기보다, launch와 filing으로 바로 넘길 수 있는 row를 먼저 잠그는 편이 실용적이다. 아래 세 row만 있어도 검색 결과를 받은 날 바로 다음 액션으로 이어지기 쉽다.
+
+#### TMview에서 같이 볼 변형
+
+| 변형 | 왜 같이 보나 |
+| --- | --- |
+| 띄어쓰기 / 하이픈 차이 | 영국 소비자 노출형과 register 표기가 어긋날 수 있음 |
+| house mark + product mark 결합형 | 공동 노출 구조에서 confusion을 키우기 쉬움 |
+| 약어 / campaign short form | 광고와 SNS에서 먼저 굳을 수 있음 |
+| 영국 retailer용 상품명 변형 | 실제 listing 문구가 core filing보다 먼저 사용될 수 있음 |
+
+#### fallback mark 우선순위 row
+
+fallback은 "있다"보다 순서가 중요하다. 1순위 mark가 흔들릴 때 어떤 대체안을 launch에 살려 둘지 정하지 않으면 검색 결과를 받아도 내부 결정이 늦어진다.
+
+| row | 적을 내용 |
+| --- | --- |
+| keep | 어떤 경우에도 지킬 core mark |
+| conditional | 일부 클래스·채널에서만 열어둘 후보 |
+| replace | red result면 곧바로 올릴 대체안 |
+| park | search-only로 남기고 이번 출원에서는 빼는 후보 |
+
+#### red result launch gate
+
+red 충돌은 법률 결론보다 launch gate 질문으로 다시 쓰는 편이 빠르다. 영국 출시 일정이 붙은 팀은 아래 세 줄을 같은 날 남겨야 search memo가 실제 결정 문서로 바뀐다.
+
+| 질문 | 바로 적을 답 |
+| --- | --- |
+| 출시를 늦출 수 있는가 | Yes / No / 조건부 |
+| 명세를 좁히면 사업이 유지되는가 | 핵심 SKU 유지 여부 |
+| 대체 표장을 바로 올릴 수 있는가 | fallback mark, 패키지, 광고 준비도 |
 
 ### 검색 브리프 체크리스트
 
@@ -284,6 +354,38 @@ UKTm은 pilot lane이기 때문에, 이 장의 목표는 영국 filing의 모든
 다국가 포트폴리오를 운영하는 조직이라면 영국 명세가 다른 국가 명세와 지나치게 어긋나지 않는지 봐야 한다. 특히 TM5 ID List나 글로벌 템플릿을 쓰는 팀은 `영국에서 수용되는 용어인지`를 최종 확인하는 단계가 필요하다.
 
 이 포인트는 법적 의무라기보다 운영 리스크 관리에 가깝다. 글로벌 명세를 그대로 붙였다가 영국에서만 과도한 보정이 생기면 이후 use evidence 관리도 분절되기 쉽다.
+
+### examination response handoff
+
+영국 심사는 issue 자체보다 response handoff가 느릴 때 비용이 커진다. 따라서 examination report를 받으면 아래 세 row를 같은 날 채우는 편이 launch 중심 팀에 더 잘 맞는다.
+
+#### same-day issue triage
+
+| 이슈 | owner | 그날 바로 남길 것 |
+| --- | --- | --- |
+| wording / class issue | 법무/IP + 대리인 | 좁히는 안 초안 |
+| distinctiveness issue | 브랜드팀 + 법무/IP | mark importance, fallback 존재 여부 |
+| conflict-facing comment | 법무/IP + 사업팀 | launch 영향, 협상 필요성 |
+
+#### narrow vs argue 질문표
+
+| 질문 | Narrow 쪽으로 기우는 신호 | Argue 쪽으로 기우는 신호 |
+| --- | --- | --- |
+| 핵심 자산인가 | 보조 브랜드, 한정 SKU | core mark, 장기 투자 자산 |
+| launch 일정이 촉박한가 | Yes, 빠른 통과가 우선 | No, 설명력 확보가 우선 |
+| use evidence story가 있는가 | 약함 | 강함 |
+| 다른 국가 정합성이 중요한가 | 낮음 | 높음 |
+
+#### 공고 전 launch 영향 메모
+
+심사 대응은 공고 전 handoff와 붙어 있다. 공고까지 가는 동안 어떤 business impact가 생기는지 네 줄만 적어 두면 opposition 장과도 연결이 빨라진다.
+
+| 항목 | 적을 내용 |
+| --- | --- |
+| affected SKU / channel | 어떤 제품과 채널이 영향을 받는가 |
+| copy / packaging hold | 멈춰야 할 제작물이나 카피가 있는가 |
+| fallback wording | 보정 시 살릴 최소 wording |
+| next review date | 대리인 회신 전 다시 볼 날짜 |
 
 ### 심사 대응 추적표
 
@@ -561,6 +663,41 @@ pilot lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 
 
 캠페인명, 협업명, 한정판 라벨은 짧게 쓰고 빨리 사라지는 것처럼 보여도 디지털 흔적은 오래 남는다. 따라서 공동브랜딩 프로젝트에서는 출원 여부보다 먼저 `누가 naming을 승인하고, 종료 후 누가 archive를 정리할지`를 정해야 한다.
 
+### licence control rows
+
+영국의 라이선스·유통 운영은 계약서 조항보다 row 관리가 더 자주 문제를 만든다. 아래 세 row를 먼저 두면 recorded licence, distributor listing, 공동브랜딩 종료 문제를 한 표에서 추적하기 쉽다.
+
+#### recorded licence decision row
+
+| 질문 | recorded licence 쪽이 더 맞는 경우 | unrecorded licence로 두기 쉬운 경우 |
+| --- | --- | --- |
+| 거래 기간이 긴가 | 장기·핵심 파트너십 | 단기 프로젝트 |
+| 실제 사용 설명이 중요한가 | owner-user 설명력이 중요 | 제한적 사용 |
+| register transparency가 필요한가 | 외부 이해관계자 확인 필요 | 내부 통제로 충분 |
+| 종료 후 분쟁 가능성이 큰가 | Yes | No |
+
+#### distributor listing approval row
+
+유통계약에서는 physical distribution보다 listing governance가 먼저 무너지기 쉽다. 승인 row를 두면 플랫폼·도메인 분쟁 장으로도 handoff가 쉬워진다.
+
+| row | 적을 내용 |
+| --- | --- |
+| allowed mark version | word / logo / co-brand 사용 범위 |
+| listing owner | 누가 제목·이미지·카피를 승인하는가 |
+| update cadence | 분기 / 캠페인별 재검토 주기 |
+| evidence save point | approved listing을 어디에 남길 것인가 |
+
+#### co-brand exit clean-up board
+
+공동브랜딩은 시작보다 종료가 더 길게 남는다. 종료일 이후 무엇을 회수하고 무엇을 archive로 남길지 적어 두면 residual use 리스크를 크게 줄일 수 있다.
+
+| 종료 후 항목 | 기본 액션 |
+| --- | --- |
+| SNS post / ad asset | keep / archive / delete 기준 명시 |
+| marketplace listing | 판매 종료일과 삭제 owner 지정 |
+| landing page / domain path | redirect 또는 close 여부 결정 |
+| leftover packaging | sell-through, relabel, scrap 기준 잠금 |
+
 ### 실무 예시
 
 예를 들어 영국 distributor가 자체 landing page를 만들고 프로모션용 공동 로고를 붙이는 구조라면, 판매는 정상이어도 실제 사용 형태가 통제되지 않을 수 있다. 이 경우 recorded licence 여부, listing 승인 절차, 종료 후 page 정리 규칙을 한 세트로 묶어야 다음 분쟁에서 설명이 쉽다.
@@ -608,6 +745,41 @@ pilot lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 
 | 24-48시간 | safety issue, counterfeit suspicion, 대형 seller | 법무 / 사업팀 / 플랫폼 owner |
 | 3-5영업일 | 경고장, 유통 위반, 광고 문구 침해 | 법무 / 외부 대리인 |
 | 2주+ | IPEC/High Court 전략, settlement negotiation | 법무 / 경영진 |
+
+### dispute escalation quick pack
+
+영국 집행은 발견 당일 1페이지 memo가 있으면 훨씬 빨라진다. 포럼 선택보다 먼저 아래 세 row를 적어 두면 경고장, 협상, 법원 검토를 같은 사건 보드에서 움직이기 쉽다.
+
+#### desired remedy memo
+
+| 원하는 구제 | 언제 먼저 두나 |
+| --- | --- |
+| listing 삭제 | seller 확산을 즉시 끊어야 할 때 |
+| 사용 중단 약속 | 유통 파트너 또는 협상 여지가 있을 때 |
+| injunction 검토 | 영국 시장 피해가 빠르게 커질 때 |
+| settlement frame | 비용 회수보다 조기 종료가 중요할 때 |
+
+#### cease and desist issue packet
+
+경고장은 문구보다 입력값이 먼저다. 아래 네 줄을 미리 묶어 두면 외부 대리인과 내부 팀이 같은 사실관계를 보게 된다.
+
+| packet 항목 | 왜 필요한가 |
+| --- | --- |
+| infringing use sample | 어떤 사용을 멈추게 하려는지 명확화 |
+| right basis | 등록번호, owner, UK-only 근거 |
+| target outcome | 삭제, 수정, 협상, 금지 중 무엇인지 |
+| deadline / escalation | 미응답 시 다음 포럼과 시점 |
+
+#### settlement vs filing gate
+
+모든 사건을 즉시 소송으로 넘길 필요는 없다. 반대로 합의로 오래 끌수록 비용이 커지는 사건도 있으니, gate 질문을 미리 적어 두는 편이 좋다.
+
+| 질문 | settlement 쪽 신호 | filing 쪽 신호 |
+| --- | --- | --- |
+| 상대방이 반복 침해자인가 | No | Yes |
+| 원하는 구제가 제한적인가 | Yes | No |
+| 영국 launch 피해가 즉각적인가 | No | Yes |
+| 증거와 owner story가 정리됐는가 | 협상 후 보강 가능 | 이미 정리돼 있어 바로 제출 가능 |
 
 ### 집행 체크리스트
 
@@ -734,6 +906,41 @@ Brexit 이후에는 EU 권리와 UK border action을 같은 이벤트로 보면 
 | 영국 유통 승인 구조와 맞는가 | distributor agreement | unauthorized import triage |
 | 재포장 또는 안전 리스크가 있는가 | 즉시 escalation | 일반 commercial issue 가능성 |
 
+### border incident operating rows
+
+HMRC 대응은 사건이 생긴 뒤 검색하는 문서보다 사전 row가 있을 때 훨씬 빨라진다. 아래 세 row를 먼저 만들어 두면 어떤 브랜드에 AFA를 넣고, detention 당일 누가 움직일지 분명해진다.
+
+#### AFA candidate brand row
+
+| 브랜드 유형 | HMRC row에 올리기 쉬운 신호 |
+| --- | --- |
+| core hero mark | 위조·안전 리스크가 높고 UK 판매 비중이 큼 |
+| seasonal launch mark | 짧은 기간에 counterfeit가 몰릴 수 있음 |
+| distributor-sensitive mark | 병행수입과 승인 수입 구분이 중요 |
+| low-risk legacy mark | 상시 모니터링 위주, 즉시 AFA는 보류 가능 |
+
+#### genuine vs suspicious compare pack
+
+세관 대응은 현장 식별이 핵심이라 "가짜다"라는 주장보다 비교 자료가 먼저다. compare pack은 아래 네 줄만 있어도 detention 판단 속도가 크게 올라간다.
+
+| 자료 | 왜 필요한가 |
+| --- | --- |
+| genuine packaging sample | 현장 식별 기준선 |
+| suspicious photo set | 차이를 바로 비교 |
+| approved importer note | 병행수입 / 승인 수입 구분 |
+| label / serial clue | 위조 의심 포인트를 짧게 설명 |
+
+#### detention day contact chain
+
+detention 당일 연락 순서가 없으면 HMRC 대응이 실제 business delay로 번지기 쉽다. 영국 row에서는 누가 판단하고 누가 자료를 보내는지 같은 날 바로 보이게 두는 편이 좋다.
+
+| 시점 | owner | 바로 할 일 |
+| --- | --- | --- |
+| 0-4시간 | 법무/IP | right basis, 권리 번호, 기본 입장 확인 |
+| 4-24시간 | 사업팀 / 물류 | genuine vs suspicious 자료 전송 |
+| same day | 외부 대리인 | HMRC communication 문안 정리 |
+| 24-48시간 | 경영진 / 리드 | 보관·폐기·합의 비용 판단 |
+
 ### 세관 대응 체크리스트
 
 - HMRC에 넣을 우선 브랜드를 정했는가
@@ -803,6 +1010,41 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 | red matters | opposition, cancellation, major seller issue가 있는가 |
 | evidence risk | 4년 차 이상 weak-use mark가 있는가 |
 | renewal load | 향후 12개월 내 갱신과 drop 후보는 무엇인가 |
+
+### quarterly governance outputs
+
+pilot lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
+
+#### quarterly portfolio memo 4-line format
+
+| 줄 | 적을 것 |
+| --- | --- |
+| new rights | 이번 분기 새로 들어온 UK filing / registration |
+| weak-use marks | 증거가 약한 mark와 이유 |
+| active disputes | opposition, seller issue, domain, court row |
+| next approvals | 경영진 또는 사업팀 승인 필요 항목 |
+
+#### weak-use mark escalation line
+
+weak-use mark는 evidence 장에서만 다루면 늦다. governance row에서 escalation line을 미리 적어 두면 5년 시점 직전에 허둥대지 않게 된다.
+
+| 상태 | 바로 올릴 라인 |
+| --- | --- |
+| proof는 있으나 linkage 약함 | 사업팀 + 법무/IP 보강 요청 |
+| UK proof 자체가 약함 | 브랜드팀 + 판매채널 owner 점검 |
+| commercial need도 약함 | drop / narrow 후보로 경영진 검토 |
+| 분쟁 노출 mark | enforcement row와 즉시 연결 |
+
+#### RACI drift check
+
+분기 리뷰에서는 누가 무엇을 했는지만 보지 말고, RACI가 실제로 drift 했는지 확인해야 한다. 아래 신호가 보이면 조직표보다 handoff row를 먼저 고치는 편이 맞다.
+
+| 흔들리는 신호 | 바로 고칠 것 |
+| --- | --- |
+| 외부 대리인이 사실상 `A` 역할까지 가져감 | 내부 승인자 재지정 |
+| evidence 업데이트가 회의 직전에만 이뤄짐 | owner와 cadence 분리 |
+| renewal / dispute가 서로 다른 시트에 흩어짐 | same board 재통합 |
+| UK-only issue가 계속 EuTm 메모에 묻힘 | UK escalation line 별도 생성 |
 
 ### RACI 도입 체크리스트
 

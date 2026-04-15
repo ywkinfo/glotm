@@ -149,7 +149,7 @@ export const products: ProductMeta[] = [
     title: "영국 상표 실무 운영 가이드북",
     summary: "UKIPO 중심 early-track 실무를 draft 공개본으로 유지하는 incubate country guide입니다.",
     chapterCount: 14,
-    searchEntryCount: 100,
+    searchEntryCount: 128,
     portfolioTier: "incubate",
     lifecycleStatus: "pilot",
     lifecycleTone: "pilot",
@@ -158,7 +158,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "영국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "UKTm 보기",
-    maturityNote: "pilot 유지 · early-track draft 공개본 · 2026-04-14 root full-pipeline 재검증",
+    maturityNote: "pilot 유지 · density 9+ 달성 · standard QA pending · 2026-04-14 root full-pipeline 재검증",
     coverageType: "country",
     availability: "live_shell"
   }

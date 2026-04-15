@@ -306,20 +306,16 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       const body = document.body;
       const previousOverflow = document.body.style.overflow;
       const previousOverscrollBehavior = document.body.style.overscrollBehavior;
-      const previousTouchAction = document.body.style.touchAction;
-
       if (isNavOpen) {
         body.classList.add("reader-mobile-nav-open");
         body.style.overflow = "hidden";
         body.style.overscrollBehavior = "none";
-        body.style.touchAction = "none";
       }
 
       return () => {
         body.classList.remove("reader-mobile-nav-open");
         body.style.overflow = previousOverflow;
         body.style.overscrollBehavior = previousOverscrollBehavior;
-        body.style.touchAction = previousTouchAction;
       };
     }, [isNavOpen]);
 

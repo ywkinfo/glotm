@@ -45,6 +45,41 @@ Brexit 이후에는 EU 권리와 UK border action을 같은 이벤트로 보면 
 | 영국 유통 승인 구조와 맞는가 | distributor agreement | unauthorized import triage |
 | 재포장 또는 안전 리스크가 있는가 | 즉시 escalation | 일반 commercial issue 가능성 |
 
+## border incident operating rows
+
+HMRC 대응은 사건이 생긴 뒤 검색하는 문서보다 사전 row가 있을 때 훨씬 빨라진다. 아래 세 row를 먼저 만들어 두면 어떤 브랜드에 AFA를 넣고, detention 당일 누가 움직일지 분명해진다.
+
+### AFA candidate brand row
+
+| 브랜드 유형 | HMRC row에 올리기 쉬운 신호 |
+| --- | --- |
+| core hero mark | 위조·안전 리스크가 높고 UK 판매 비중이 큼 |
+| seasonal launch mark | 짧은 기간에 counterfeit가 몰릴 수 있음 |
+| distributor-sensitive mark | 병행수입과 승인 수입 구분이 중요 |
+| low-risk legacy mark | 상시 모니터링 위주, 즉시 AFA는 보류 가능 |
+
+### genuine vs suspicious compare pack
+
+세관 대응은 현장 식별이 핵심이라 "가짜다"라는 주장보다 비교 자료가 먼저다. compare pack은 아래 네 줄만 있어도 detention 판단 속도가 크게 올라간다.
+
+| 자료 | 왜 필요한가 |
+| --- | --- |
+| genuine packaging sample | 현장 식별 기준선 |
+| suspicious photo set | 차이를 바로 비교 |
+| approved importer note | 병행수입 / 승인 수입 구분 |
+| label / serial clue | 위조 의심 포인트를 짧게 설명 |
+
+### detention day contact chain
+
+detention 당일 연락 순서가 없으면 HMRC 대응이 실제 business delay로 번지기 쉽다. 영국 row에서는 누가 판단하고 누가 자료를 보내는지 같은 날 바로 보이게 두는 편이 좋다.
+
+| 시점 | owner | 바로 할 일 |
+| --- | --- | --- |
+| 0-4시간 | 법무/IP | right basis, 권리 번호, 기본 입장 확인 |
+| 4-24시간 | 사업팀 / 물류 | genuine vs suspicious 자료 전송 |
+| same day | 외부 대리인 | HMRC communication 문안 정리 |
+| 24-48시간 | 경영진 / 리드 | 보관·폐기·합의 비용 판단 |
+
 ## 세관 대응 체크리스트
 
 - HMRC에 넣을 우선 브랜드를 정했는가

@@ -31,6 +31,38 @@
 
 이 포인트는 법적 의무라기보다 운영 리스크 관리에 가깝다. 글로벌 명세를 그대로 붙였다가 영국에서만 과도한 보정이 생기면 이후 use evidence 관리도 분절되기 쉽다.
 
+## examination response handoff
+
+영국 심사는 issue 자체보다 response handoff가 느릴 때 비용이 커진다. 따라서 examination report를 받으면 아래 세 row를 같은 날 채우는 편이 launch 중심 팀에 더 잘 맞는다.
+
+### same-day issue triage
+
+| 이슈 | owner | 그날 바로 남길 것 |
+| --- | --- | --- |
+| wording / class issue | 법무/IP + 대리인 | 좁히는 안 초안 |
+| distinctiveness issue | 브랜드팀 + 법무/IP | mark importance, fallback 존재 여부 |
+| conflict-facing comment | 법무/IP + 사업팀 | launch 영향, 협상 필요성 |
+
+### narrow vs argue 질문표
+
+| 질문 | Narrow 쪽으로 기우는 신호 | Argue 쪽으로 기우는 신호 |
+| --- | --- | --- |
+| 핵심 자산인가 | 보조 브랜드, 한정 SKU | core mark, 장기 투자 자산 |
+| launch 일정이 촉박한가 | Yes, 빠른 통과가 우선 | No, 설명력 확보가 우선 |
+| use evidence story가 있는가 | 약함 | 강함 |
+| 다른 국가 정합성이 중요한가 | 낮음 | 높음 |
+
+### 공고 전 launch 영향 메모
+
+심사 대응은 공고 전 handoff와 붙어 있다. 공고까지 가는 동안 어떤 business impact가 생기는지 네 줄만 적어 두면 opposition 장과도 연결이 빨라진다.
+
+| 항목 | 적을 내용 |
+| --- | --- |
+| affected SKU / channel | 어떤 제품과 채널이 영향을 받는가 |
+| copy / packaging hold | 멈춰야 할 제작물이나 카피가 있는가 |
+| fallback wording | 보정 시 살릴 최소 wording |
+| next review date | 대리인 회신 전 다시 볼 날짜 |
+
 ## 심사 대응 추적표
 
 | 심사 이슈 | 유형 | 권장 조치 | 내부 승인자 | 마감 | 상태 |

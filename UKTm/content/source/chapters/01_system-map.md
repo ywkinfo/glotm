@@ -50,6 +50,42 @@ IPEC는 중소 규모 지식재산 분쟁을 염두에 둔 포럼이고, small c
 
 특히 영국 전용 권리와 EU 권리를 함께 운영하는 조직은 `누가 UK-only 판단을 내리는지`를 명확히 적어야 한다. 그렇지 않으면 같은 브랜드라도 유럽 팀과 영국 팀이 서로 다른 전제를 가지고 움직이게 된다.
 
+## UK-only 운영 handoff rows
+
+UKTm 공개본은 제도 설명을 길게 늘리는 것보다, 실제 handoff row를 빠르게 다시 찾게 만드는 편이 더 유용하다. 아래 세 줄은 영국 독립 트랙을 팀 운영표에 옮길 때 바로 복사해 넣기 좋다.
+
+### UKIPO issue와 court issue를 가르는 질문
+
+| 질문 | UKIPO row에 남길 신호 | court row로 올릴 신호 |
+| --- | --- | --- |
+| 지금 문제의 핵심이 register 입력값인가 | 명세, 절차, 공고, recordal | 금지, 손해, 복합 사실관계 |
+| 상대방과 직접 충돌이 이미 시작됐는가 | 아직 절차 단계 | 경고장, seller 확산, 유통 분쟁 |
+| 2주 안에 필요한 output이 무엇인가 | report, amendment, tribunal 대응 | injunction, evidence bundle, forum choice |
+| 외부 대리인에게 먼저 물어볼 질문이 무엇인가 | wording, filing, tribunal line | IPEC, High Court, settlement risk |
+
+### comparable UK right tracker 필드
+
+Brexit 이후 comparable UK right는 번호만 따로 적는 것으로 끝나지 않는다. 갱신, 플랫폼 신고, evidence owner를 같은 row에 둬야 영국 전용 관리 누락을 줄일 수 있다.
+
+| 필드 | 왜 적나 |
+| --- | --- |
+| source EU mark | 원래 EUTM과의 연결점 유지 |
+| comparable UK number | 영국 전용 대응 경로 식별 |
+| renewal split | EU와 UK 달력이 갈리는 시점 표시 |
+| evidence owner | UK 자료를 누가 보관하는지 잠금 |
+| enforcement note | 플랫폼·도메인·세관 신고 시 UK 번호 즉시 사용 |
+
+### launch 전 owner split 메모
+
+런치 직전에는 owner, actual user, representative가 서로 다를 수 있다. 영국에서는 이 셋이 비어 있으면 filing 이후 장들보다 먼저 운영이 꼬이므로 launch memo에 최소한 아래 네 줄은 남겨 두는 편이 좋다.
+
+| 항목 | 바로 적을 내용 |
+| --- | --- |
+| owner | UK right를 누가 보유하는가 |
+| actual user | 실제 판매·광고 주체가 누구인가 |
+| representative | UKIPO / dispute 창구를 누가 잡는가 |
+| UK-only escalation | EuTm과 분리해 누가 최종 판단하는가 |
+
 ## 시작 전 체크리스트
 
 - 영국을 EU의 하위 메모가 아니라 별도 운영 트랙으로 관리할지 결정했는가

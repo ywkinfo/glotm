@@ -30,7 +30,6 @@ body {
 body.reader-mobile-nav-open {
   overflow: hidden;
   overscroll-behavior: none;
-  touch-action: none;
 }
 
 .glotm-app {

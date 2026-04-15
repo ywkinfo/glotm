@@ -28,6 +28,41 @@
 
 캠페인명, 협업명, 한정판 라벨은 짧게 쓰고 빨리 사라지는 것처럼 보여도 디지털 흔적은 오래 남는다. 따라서 공동브랜딩 프로젝트에서는 출원 여부보다 먼저 `누가 naming을 승인하고, 종료 후 누가 archive를 정리할지`를 정해야 한다.
 
+## licence control rows
+
+영국의 라이선스·유통 운영은 계약서 조항보다 row 관리가 더 자주 문제를 만든다. 아래 세 row를 먼저 두면 recorded licence, distributor listing, 공동브랜딩 종료 문제를 한 표에서 추적하기 쉽다.
+
+### recorded licence decision row
+
+| 질문 | recorded licence 쪽이 더 맞는 경우 | unrecorded licence로 두기 쉬운 경우 |
+| --- | --- | --- |
+| 거래 기간이 긴가 | 장기·핵심 파트너십 | 단기 프로젝트 |
+| 실제 사용 설명이 중요한가 | owner-user 설명력이 중요 | 제한적 사용 |
+| register transparency가 필요한가 | 외부 이해관계자 확인 필요 | 내부 통제로 충분 |
+| 종료 후 분쟁 가능성이 큰가 | Yes | No |
+
+### distributor listing approval row
+
+유통계약에서는 physical distribution보다 listing governance가 먼저 무너지기 쉽다. 승인 row를 두면 플랫폼·도메인 분쟁 장으로도 handoff가 쉬워진다.
+
+| row | 적을 내용 |
+| --- | --- |
+| allowed mark version | word / logo / co-brand 사용 범위 |
+| listing owner | 누가 제목·이미지·카피를 승인하는가 |
+| update cadence | 분기 / 캠페인별 재검토 주기 |
+| evidence save point | approved listing을 어디에 남길 것인가 |
+
+### co-brand exit clean-up board
+
+공동브랜딩은 시작보다 종료가 더 길게 남는다. 종료일 이후 무엇을 회수하고 무엇을 archive로 남길지 적어 두면 residual use 리스크를 크게 줄일 수 있다.
+
+| 종료 후 항목 | 기본 액션 |
+| --- | --- |
+| SNS post / ad asset | keep / archive / delete 기준 명시 |
+| marketplace listing | 판매 종료일과 삭제 owner 지정 |
+| landing page / domain path | redirect 또는 close 여부 결정 |
+| leftover packaging | sell-through, relabel, scrap 기준 잠금 |
+
 ## 실무 예시
 
 예를 들어 영국 distributor가 자체 landing page를 만들고 프로모션용 공동 로고를 붙이는 구조라면, 판매는 정상이어도 실제 사용 형태가 통제되지 않을 수 있다. 이 경우 recorded licence 여부, listing 승인 절차, 종료 후 page 정리 규칙을 한 세트로 묶어야 다음 분쟁에서 설명이 쉽다.

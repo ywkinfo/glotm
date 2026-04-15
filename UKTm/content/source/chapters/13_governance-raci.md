@@ -61,6 +61,41 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 | evidence risk | 4년 차 이상 weak-use mark가 있는가 |
 | renewal load | 향후 12개월 내 갱신과 drop 후보는 무엇인가 |
 
+## quarterly governance outputs
+
+pilot lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
+
+### quarterly portfolio memo 4-line format
+
+| 줄 | 적을 것 |
+| --- | --- |
+| new rights | 이번 분기 새로 들어온 UK filing / registration |
+| weak-use marks | 증거가 약한 mark와 이유 |
+| active disputes | opposition, seller issue, domain, court row |
+| next approvals | 경영진 또는 사업팀 승인 필요 항목 |
+
+### weak-use mark escalation line
+
+weak-use mark는 evidence 장에서만 다루면 늦다. governance row에서 escalation line을 미리 적어 두면 5년 시점 직전에 허둥대지 않게 된다.
+
+| 상태 | 바로 올릴 라인 |
+| --- | --- |
+| proof는 있으나 linkage 약함 | 사업팀 + 법무/IP 보강 요청 |
+| UK proof 자체가 약함 | 브랜드팀 + 판매채널 owner 점검 |
+| commercial need도 약함 | drop / narrow 후보로 경영진 검토 |
+| 분쟁 노출 mark | enforcement row와 즉시 연결 |
+
+### RACI drift check
+
+분기 리뷰에서는 누가 무엇을 했는지만 보지 말고, RACI가 실제로 drift 했는지 확인해야 한다. 아래 신호가 보이면 조직표보다 handoff row를 먼저 고치는 편이 맞다.
+
+| 흔들리는 신호 | 바로 고칠 것 |
+| --- | --- |
+| 외부 대리인이 사실상 `A` 역할까지 가져감 | 내부 승인자 재지정 |
+| evidence 업데이트가 회의 직전에만 이뤄짐 | owner와 cadence 분리 |
+| renewal / dispute가 서로 다른 시트에 흩어짐 | same board 재통합 |
+| UK-only issue가 계속 EuTm 메모에 묻힘 | UK escalation line 별도 생성 |
+
 ## RACI 도입 체크리스트
 
 - 각 업무에 `A`가 정확히 1명인지 확인했는가

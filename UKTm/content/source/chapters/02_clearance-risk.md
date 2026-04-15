@@ -40,6 +40,40 @@
 
 검색 브리프를 바로 복사해 쓰려면 `Appendix A` 템플릿을 기본 포맷으로 삼는 편이 가장 빠르다.
 
+## search memo 보강 포인트
+
+pilot 공개본에서는 검색 논리를 장문 의견서처럼 쓰기보다, launch와 filing으로 바로 넘길 수 있는 row를 먼저 잠그는 편이 실용적이다. 아래 세 row만 있어도 검색 결과를 받은 날 바로 다음 액션으로 이어지기 쉽다.
+
+### TMview에서 같이 볼 변형
+
+| 변형 | 왜 같이 보나 |
+| --- | --- |
+| 띄어쓰기 / 하이픈 차이 | 영국 소비자 노출형과 register 표기가 어긋날 수 있음 |
+| house mark + product mark 결합형 | 공동 노출 구조에서 confusion을 키우기 쉬움 |
+| 약어 / campaign short form | 광고와 SNS에서 먼저 굳을 수 있음 |
+| 영국 retailer용 상품명 변형 | 실제 listing 문구가 core filing보다 먼저 사용될 수 있음 |
+
+### fallback mark 우선순위 row
+
+fallback은 "있다"보다 순서가 중요하다. 1순위 mark가 흔들릴 때 어떤 대체안을 launch에 살려 둘지 정하지 않으면 검색 결과를 받아도 내부 결정이 늦어진다.
+
+| row | 적을 내용 |
+| --- | --- |
+| keep | 어떤 경우에도 지킬 core mark |
+| conditional | 일부 클래스·채널에서만 열어둘 후보 |
+| replace | red result면 곧바로 올릴 대체안 |
+| park | search-only로 남기고 이번 출원에서는 빼는 후보 |
+
+### red result launch gate
+
+red 충돌은 법률 결론보다 launch gate 질문으로 다시 쓰는 편이 빠르다. 영국 출시 일정이 붙은 팀은 아래 세 줄을 같은 날 남겨야 search memo가 실제 결정 문서로 바뀐다.
+
+| 질문 | 바로 적을 답 |
+| --- | --- |
+| 출시를 늦출 수 있는가 | Yes / No / 조건부 |
+| 명세를 좁히면 사업이 유지되는가 | 핵심 SKU 유지 여부 |
+| 대체 표장을 바로 올릴 수 있는가 | fallback mark, 패키지, 광고 준비도 |
+
 ## 검색 브리프 체크리스트
 
 - 우선 표장과 대체 표장을 구분했는가
