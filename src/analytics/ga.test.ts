@@ -34,10 +34,12 @@ describe("GA helpers", () => {
     const scripts = document.head.querySelectorAll('script[data-ga4-id="G-TEST123"]');
 
     expect(scripts).toHaveLength(1);
-    expect(window.dataLayer).toEqual([
-      ["js", expect.any(Date), undefined],
-      ["config", "G-TEST123", { send_page_view: false }]
-    ]);
+    expect(window.dataLayer).toHaveLength(2);
+    expect(window.dataLayer![0][0]).toBe("js");
+    expect(window.dataLayer![0][1]).toBeInstanceOf(Date);
+    expect(window.dataLayer![1][0]).toBe("config");
+    expect(window.dataLayer![1][1]).toBe("G-TEST123");
+    expect(window.dataLayer![1][2]).toEqual({ send_page_view: false });
   });
 
   it("sends page_view events through gtag", () => {

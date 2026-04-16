@@ -58,9 +58,10 @@ export function initializeGa(measurementId: string) {
   }
 
   if (!window.gtag) {
-    window.gtag = function gtag(command, target, params) {
-      window.dataLayer?.push([command, target, params]);
-    };
+    window.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer?.push(arguments as unknown as IArguments);
+    } as GtagFunction;
   }
 
   if (!configuredIds.includes(normalizedId)) {
