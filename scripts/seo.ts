@@ -31,7 +31,12 @@ import {
 const DEFAULT_SITE_ORIGIN = "https://ywkinfo.github.io";
 const DEFAULT_SITE_NAME = "GloTm";
 const DEFAULT_SITE_DESCRIPTION =
-  "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다.";
+  "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.";
+const DEFAULT_GATEWAY_HEADING = "인하우스 팀을 위한 cross-border trademark operating guide";
+const DEFAULT_GATEWAY_SUPPORTING_PARAGRAPHS = [
+  "ChaTm, MexTm, EuTm을 현재 canonical funnel로 두고 표기, filing packet, route pack처럼 launch 전에 흔들리기 쉬운 결정을 먼저 정리합니다.",
+  "Gateway 첫 화면에서는 ChaTm과 MexTm을 먼저 열고, 공통 질문은 최신 리포트로 이어 보게 설계했습니다."
+];
 const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.svg";
 const DEFAULT_SOCIAL_IMAGE_ALT =
   "GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지";
@@ -184,8 +189,11 @@ function renderGatewayBody(basePath: string) {
     <main>
       <header>
         <p>GloTm Gateway</p>
-        <h1>Cross-border Trademark Operating Guide</h1>
+        <h1>${escapeHtml(DEFAULT_GATEWAY_HEADING)}</h1>
         <p>${escapeHtml(DEFAULT_SITE_DESCRIPTION)}</p>
+        ${DEFAULT_GATEWAY_SUPPORTING_PARAGRAPHS.map(
+          (paragraph) => `<p>${escapeHtml(paragraph)}</p>`
+        ).join("\n        ")}
       </header>
       ${latestBrief
         ? `

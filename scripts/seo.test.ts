@@ -67,7 +67,7 @@ describe("SEO build helpers", () => {
     });
     expect(pages[0]).toMatchObject({
       description:
-        "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다."
+        "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다."
     });
     expect(pages).toEqual(
       expect.arrayContaining([
@@ -170,12 +170,15 @@ describe("SEO build helpers", () => {
     );
 
     expect(html).toContain(
-      '<meta name="description" content="여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다." />'
+      '<meta name="description" content="중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다." />'
     );
     expect(html).toContain(
       '<meta property="og:image:alt" content="GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지" />'
     );
-    expect(html).toContain('<h1>Cross-border Trademark Operating Guide</h1>');
+    expect(html).toContain('<h1>인하우스 팀을 위한 cross-border trademark operating guide</h1>');
+    expect(html).toContain(
+      '<p>ChaTm, MexTm, EuTm을 현재 canonical funnel로 두고 표기, filing packet, route pack처럼 launch 전에 흔들리기 쉬운 결정을 먼저 정리합니다.</p>'
+    );
     expect(html).toContain(
       '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
     );
