@@ -2,13 +2,13 @@
 
 ## One-line positioning
 
-GloTm is a cross-border trademark operating guide portfolio for in-house teams.
+중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕는 cross-border trademark operating guide 포트폴리오.
 
 ## ICP
 
 - Brand managers preparing market entry or launch sequencing across multiple jurisdictions
 - In-house IP teams that need to structure filing, maintenance, and enforcement decisions before engaging outside counsel
-- Korea/Asia-based consumer brands expanding into Latin America, Mexico, China, Europe, the United States, Japan, and the United Kingdom
+- Korea/Asia-based consumer brands prioritizing China, Mexico, and Europe before the wider portfolio
 
 ## Core problem
 
@@ -44,6 +44,18 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `EuTm`: validate. controlled EU+UK scope와 rights/route/evidence handoff 정합성을 잠그는 가이드
 - `UsaTm`, `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 filing/route/maintenance reader utility를 다듬는 가이드
 - `UKTm`: incubate pilot. draft 공개본 early-track으로 유지하며 fact verification과 smoke QA를 먼저 고정하는 가이드
+
+## Current locked funnel
+
+- `ChaTm`: canonical CTA는 `ChaTm 보기`. 중국어 표기와 launch sequencing을 먼저 잠그는 첫 진입 가이드다.
+- `MexTm`: canonical CTA는 `MexTm 먼저 보기`. filing packet, owner, border-control handoff를 buyer-entry 기준으로 잇는 두 번째 가이드다.
+- `EuTm`: canonical CTA는 `EuTm 보기`. validate lane에서 EU-wide, core-state, UK split과 route pack 기준을 정리하는 세 번째 가이드다.
+- Gateway hero CTA row는 `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`로 고정한다.
+
+## Current report handoff
+
+- 현재 primary report 1순위는 `한글 표장 글로벌 보호 운영 프레임워크`(`hangul-mark-global-protection-framework`)다.
+- 현재 primary report 2순위는 `글로벌 상표 출원 우선순위 결정 프레임워크`(`global-filing-priority-framework`)다.
 
 ## 지금 보면 좋은 가이드
 

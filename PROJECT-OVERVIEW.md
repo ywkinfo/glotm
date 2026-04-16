@@ -10,7 +10,7 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-04-14 |
+| Last updated | 2026-04-16 |
 | Verified on | 2026-04-14 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
 | Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` controlled EU+UK baseline 유지 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
@@ -36,7 +36,7 @@
 
 ## 한 줄 요약
 
-브랜드 관리자와 인하우스 IP 팀이 시장 우선순위, 출원 경로, 유지·집행 판단을 빠르게 정리하도록 돕는 cross-border trademark operating guide 포트폴리오.
+중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕는 cross-border trademark operating guide 포트폴리오.
 
 ---
 
@@ -60,7 +60,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 - 해외 진출 준비 또는 운영 중인 한국/아시아 소비재 기업의 브랜드 관리자
 - 기업 내 인하우스 IP 담당자
-- 현재 buyer entry 기준의 핵심 사용자: 라틴아메리카/멕시코/중국 진출 판단이 급한 팀
+- 현재 buyer entry 기준의 핵심 사용자: 중국/멕시코/유럽 진출 판단과 launch sequencing 정리가 급한 팀
 - 핵심 니즈: 로펌 연결 전 내부 판단을 위한 구조화된 운영 정보
 
 ---

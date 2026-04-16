@@ -34,9 +34,7 @@ import { GatewayLandingPage } from "./GatewayPage";
 import { ReportArchivePage, ReportPage } from "./ReportPages";
 import {
   FullDocumentLink,
-  buildGuideTrackingParams,
-  orderGatewayProducts,
-  trackEngagement
+  orderGatewayProducts
 } from "./appShared";
 
 function AppLayout() {
@@ -65,22 +63,6 @@ function AppLayout() {
       inline: "center"
     });
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (!activeProduct) {
-      return;
-    }
-
-    trackEngagement(
-      "guide_open",
-      buildGuideTrackingParams(activeProduct, "route", {
-        route_kind:
-          location.pathname === buildProductPath(activeProduct)
-            ? "home"
-            : "reader"
-      })
-    );
-  }, [activeProduct, location.pathname]);
 
   useEffect(() => {
     if (typeof document === "undefined") {

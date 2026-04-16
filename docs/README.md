@@ -17,6 +17,7 @@
 - runtime QA checklist: [`phase1-runtime-qa.md`](phase1-runtime-qa.md)
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)
+- monthly review template: [`monthly-review-template.md`](monthly-review-template.md)
 - factual QA rollout: [`factual-qa-rollout.md`](factual-qa-rollout.md)
 - Report / Gateway trust layer와 workflow path wording truth는 `../README.md`, `../PROJECT-OVERVIEW.md`, `phase1-runtime-qa.md`, `portfolio-scorecard.md`를 함께 본다.
 

@@ -109,10 +109,10 @@ export function GatewayLandingPage() {
   ];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guide";
-  const heroLead = "여러 국가·권역의 시장 우선순위, 출원 경로, 브랜드 포트폴리오 관리, 침해 대응, 집행 판단에 필요한 정보를 한곳에 모아 제공합니다.";
+  const heroLead = "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.";
   const heroSummaryParagraphs = [
-    "검색 결과를 그대로 믿기 전에, 내부 판단에 필요한 운영 질문을 빠르게 구조화하고 비교할 수 있습니다.",
-    "제공 정보는 참고용이며, 최신성 및 정확성은 각국 법령과 실무 변화에 따라 달라질 수 있으므로 현지 대리인 확인 후 활용하시기 바랍니다."
+    "ChaTm, MexTm, EuTm을 현재 canonical funnel로 두고 표기, filing packet, route pack처럼 launch 전에 흔들리기 쉬운 결정을 먼저 정리합니다.",
+    "Gateway 첫 화면에서는 ChaTm과 MexTm을 먼저 열고, 공통 질문은 최신 리포트로 이어 보게 설계했습니다."
   ];
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];
   useEffect(() => {
