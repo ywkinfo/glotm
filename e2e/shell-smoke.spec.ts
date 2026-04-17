@@ -17,7 +17,7 @@ test("gateway smoke", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 2,
-      name: "Gateway 첫 화면에서는 최신 리포트 2개를 먼저 보여줍니다"
+      name: "최신 리포트 2개는 우선 가이드에서 잠근 공통 질문을 다시 묶습니다"
     })
   ).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "ChaTm · Growth Mature" })).toBeVisible();

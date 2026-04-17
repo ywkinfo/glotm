@@ -177,7 +177,10 @@ describe("SEO build helpers", () => {
     );
     expect(html).toContain('<h1>인하우스 팀을 위한 cross-border trademark operating guide</h1>');
     expect(html).toContain(
-      '<p>ChaTm, MexTm, EuTm을 현재 canonical funnel로 두고 표기, filing packet, route pack처럼 launch 전에 흔들리기 쉬운 결정을 먼저 정리합니다.</p>'
+      '<p>ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm과 EuTm으로 buyer-entry control과 validate route pack을 이어 봅니다.</p>'
+    );
+    expect(html).toContain(
+      '<p>최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다.</p>'
     );
     expect(html).toContain(
       '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'

@@ -80,9 +80,9 @@ function sortReportsByPublishedAt(left: ReportMeta, right: ReportMeta) {
 
 export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
-  gatewaySectionTitle: "Gateway 첫 화면에서는 최신 리포트 2개를 먼저 보여줍니다",
+  gatewaySectionTitle: "최신 리포트 2개는 우선 가이드에서 잠근 공통 질문을 다시 묶습니다",
   gatewaySectionSummary:
-    "Gateway 첫 화면에서는 최신 리포트 2개만 먼저 보여주고, 나머지 리포트는 Report 아카이브에서 이어서 볼 수 있습니다.",
+    "Gateway 첫 화면에서는 최신 리포트 2개를 trust layer로 두고, guide에서 막힌 공통 질문만 다시 묶어 보여 줍니다. 나머지 리포트는 Report 아카이브에서 이어서 봅니다.",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
   archiveHeroLead:

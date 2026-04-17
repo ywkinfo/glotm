@@ -227,6 +227,15 @@ body.reader-mobile-nav-open {
   gap: 1rem;
 }
 
+.gateway-panel-card--supporting {
+  background: rgba(251, 249, 244, 0.84);
+  border-color: rgba(39, 58, 62, 0.08);
+}
+
+.gateway-panel-card--supporting .gateway-metric {
+  background: rgba(255, 255, 255, 0.58);
+}
+
 .gateway-copy-stack {
   display: grid;
   gap: 0.8rem;
@@ -263,6 +272,8 @@ body.reader-mobile-nav-open {
 
 .gateway-summary--supporting {
   color: rgba(84, 97, 101, 0.9);
+  font-size: 0.96rem;
+  line-height: 1.62;
 }
 
 .gateway-actions,
@@ -327,11 +338,21 @@ body.reader-mobile-nav-open {
   gap: 1rem;
 }
 
+.brief-card-grid--trust-layer {
+  gap: 0.85rem;
+}
+
 .brief-card {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   padding: 1.3rem;
+}
+
+.brief-card-grid--trust-layer .brief-card {
+  padding: 1.1rem;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 10px 22px rgba(29, 46, 48, 0.05);
 }
 
 .brief-card-topline,
@@ -362,11 +383,20 @@ body.reader-mobile-nav-open {
   font-size: 1.4rem;
 }
 
+.brief-card-grid--trust-layer .brief-card-title {
+  font-size: 1.28rem;
+}
+
 .brief-card-summary,
 .brief-item-copy,
 .brief-issue-note {
   margin: 0;
   color: var(--muted);
+}
+
+.brief-card-grid--trust-layer .brief-card-summary {
+  font-size: 0.95rem;
+  line-height: 1.58;
 }
 
 .brief-card-list {
@@ -508,6 +538,13 @@ body.reader-mobile-nav-open {
   padding: 1.4rem;
 }
 
+.gateway-section--trust-layer {
+  padding: 1.15rem 1.25rem;
+  border-color: rgba(39, 58, 62, 0.08);
+  background: rgba(251, 249, 244, 0.82);
+  box-shadow: 0 12px 26px rgba(29, 46, 48, 0.05);
+}
+
 .gateway-section-header {
   display: flex;
   align-items: end;
@@ -531,6 +568,21 @@ body.reader-mobile-nav-open {
   margin: 0;
   max-width: 72ch;
   color: var(--muted);
+}
+
+.gateway-section--trust-layer .gateway-section-header {
+  align-items: flex-start;
+  margin-bottom: 0.8rem;
+}
+
+.gateway-section--trust-layer .gateway-section-title {
+  font-size: clamp(1.35rem, 1.75vw, 1.68rem);
+}
+
+.gateway-section--trust-layer .gateway-section-copy {
+  max-width: 60ch;
+  font-size: 0.95rem;
+  line-height: 1.58;
 }
 
 .gateway-section-copy--full {
@@ -1083,7 +1135,9 @@ body.reader-mobile-nav-open {
   }
 
   .gateway-summary--supporting {
-    display: none;
+    display: block;
+    font-size: 0.92rem;
+    line-height: 1.58;
   }
 
   .gateway-actions,

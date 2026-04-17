@@ -9,7 +9,7 @@
 - report ordering: `../src/reports/registry.ts`
 - KPI sheet: `portfolio-scorecard.md`
 
-## Locked defaults (2026-04-16)
+## Locked defaults (2026-04-17)
 
 - One-line wedge: `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕는다.`
 - Funnel CTA: `ChaTm 보기 -> MexTm 먼저 보기 -> EuTm 보기`
@@ -18,8 +18,8 @@
   `글로벌 상표 출원 우선순위 결정 프레임워크` (`global-filing-priority-framework`, 2026-04-09)
 - Gateway hero copy:
   `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.`
-  `ChaTm, MexTm, EuTm을 현재 canonical funnel로 두고 표기, filing packet, route pack처럼 launch 전에 흔들리기 쉬운 결정을 먼저 정리합니다.`
-  `Gateway 첫 화면에서는 ChaTm과 MexTm을 먼저 열고, 공통 질문은 최신 리포트로 이어 보게 설계했습니다.`
+  `ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm과 EuTm으로 buyer-entry control과 validate route pack을 이어 봅니다.`
+  `최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다.`
 - Gateway hero CTA row: `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`
 - KPI sheet 6 events:
   `guide_cta_click`
@@ -57,12 +57,21 @@
 | 1 | `hangul-mark-global-protection-framework` |  |  |
 | 2 | `global-filing-priority-framework` |  |  |
 
+## Incubate Hygiene Check
+
+| Guide | Locked Promise | Status | Evidence |
+|------|------|------|------|
+| `UsaTm` | beta lighter-track, no draft notice, filing/specimen/monitoring utility 유지 |  |  |
+| `JapTm` | beta lighter-track, no draft notice, route/maintenance/evidence utility 유지 |  |  |
+| `UKTm` | pilot draft 공개본 유지, continue reading/search 안정성 유지 |  |  |
+
 ## Gateway hero check
 
 - Sentence 1:
 - Sentence 2:
 - Sentence 3:
 - CTA row:
+- First viewport trust-layer read:
 - Notes:
 
 ## KPI sheet check
