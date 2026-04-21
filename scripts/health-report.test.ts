@@ -25,6 +25,12 @@ describe("health report CLI", () => {
       .filter((product: { slug: string; research?: unknown }) => product.research)
       .map((product: { slug: string }) => product.slug);
 
+    expect(report.meta).toMatchObject({
+      summaryKind: "recent-lane-state-provenance-summary",
+      interpretation: "operational-snapshot",
+      isEndToEndVerificationProof: false,
+      provenanceLevels: ["live", "cached", "partial", "inferred"]
+    });
     expect(report.root[0]).toMatchObject({
       id: "runtime",
       status: "pass"
@@ -93,6 +99,11 @@ describe("health report CLI", () => {
       release: "fail"
     });
 
+    expect(output).toContain("This report is a recent lane-state provenance summary");
+    expect(output).toContain("## Report Semantics");
+    expect(output).toContain("- Summary kind: `recent-lane-state-provenance-summary`");
+    expect(output).toContain("- Interpretation: `operational-snapshot`");
+    expect(output).toContain("- Provenance levels: `live`, `cached`, `partial`, `inferred`");
     expect(output).toContain("| health:runtime | pass |");
     expect(output).toContain("| health:content | fail |");
     expect(output).toContain("| health:release | fail |");

@@ -30,6 +30,12 @@ describe("portfolio health helpers", () => {
       content: "fail"
     });
 
+    expect(report.meta).toMatchObject({
+      summaryKind: "recent-lane-state-provenance-summary",
+      interpretation: "operational-snapshot",
+      isEndToEndVerificationProof: false,
+      provenanceLevels: ["live", "cached", "partial", "inferred"]
+    });
     expect(report.root).toMatchObject([
       {
         id: "runtime",

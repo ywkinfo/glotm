@@ -5,6 +5,7 @@ import { products } from "../src/products/registry";
 import { getLifecycleCriteria } from "../src/products/scorecard";
 import {
   buildPortfolioHealthReport,
+  healthReportMeta,
   nonProductHealthLanes,
   type ProductResearchRecord,
   type RootHealthLaneId,
@@ -124,6 +125,15 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
   const lines: string[] = [];
 
   lines.push("# GloTm Health Report");
+  lines.push("");
+  lines.push("> This report is a recent lane-state provenance summary, not an end-to-end verification guarantee.");
+  lines.push("> Read it as an operational snapshot that shows where to look next, not as a proof that every path is currently verified.");
+  lines.push("");
+  lines.push("## Report Semantics");
+  lines.push("");
+  lines.push(`- Summary kind: \`${healthReportMeta.summaryKind}\``);
+  lines.push(`- Interpretation: \`${healthReportMeta.interpretation}\``);
+  lines.push(`- Provenance levels: ${healthReportMeta.provenanceLevels.map((level) => `\`${level}\``).join(", ")}`);
   lines.push("");
   lines.push("## Root Lanes");
   lines.push("");
