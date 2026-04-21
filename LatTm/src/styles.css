@@ -1628,7 +1628,7 @@ input {
   }
 
   .chapter-page {
-    padding-bottom: 8.2rem;
+    padding-bottom: calc(10.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .chapter-header-stats {
@@ -1715,9 +1715,13 @@ input {
   .reader-action-bar {
     left: auto;
     right: 0.8rem;
-    bottom: 0.8rem;
+    bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
     gap: 0.3rem;
     padding: 0.3rem;
+  }
+
+  .chapter-nav {
+    margin-bottom: calc(2.4rem + env(safe-area-inset-bottom, 0px));
   }
 
   .reader-action-button {
