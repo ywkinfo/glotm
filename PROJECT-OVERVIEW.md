@@ -5,6 +5,9 @@
 > Status: active operating brief
 > 현재 phase, 우선순위, 활성 작업 범위는 이 문서를 기준으로 본다.
 > 런타임 메타데이터, 제품 수치, 검증 명령의 기준값은 `README.md`와 `src/products/registry.ts`다.
+>
+> Locked status: GloTm is currently a *verified Phase 2 alignment-lock portfolio*, focused on tightening coherence across structure, provenance, and trust layers — not expansion.
+> 현재 라운드의 기본 해석은 `consistency over growth`이며, 모든 변경은 `alignment`, `provenance clarity`, `trust-layer coherence`를 강화하는 범위에서만 본다.
 
 ## 현재 검증된 상태
 
@@ -16,9 +19,23 @@
 | Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` controlled EU+UK baseline 유지 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
 
+### Priority 4 owner lane
+
+`Report / Gateway`는 단일 owner lane으로 본다. 이 레인의 역할은 새 콘텐츠 면을 늘리는 것이 아니라, 루트 진입에서 trust를 형성하고, 최신 report를 통해 guide lane으로 deterministic하게 넘기는 흐름을 유지하는 데 있다.
+
+현재 라운드에서 `Report / Gateway`가 책임지는 범위는 아래 네 가지다.
+
+- entry control
+- trust formation
+- latest-report handoff
+- registry/root-doc sync
+
+이 owner lane은 alignment-lock phase에서는 확장 레인이 아니다. 목표는 `flow clarity`와 `trust-layer coherence`이며, 콘텐츠 양 증가나 새 카테고리 확장은 현재 범위에 포함하지 않는다.
+
 ### 현재 운영 스냅샷
 
 - 루트 `GloTm`: 2026-04-21 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
+- `health:report`는 fresh proof가 아니라 최근 lane 상태와 provenance를 묶어 읽는 operational snapshot으로 해석한다.
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 리포트 2개를 먼저 보여주는 trust layer / report handoff를 포함한다.
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. 다만 production 상의 모바일 drawer close 이슈는 별도 관찰 사항으로 남아 있으므로, live verification 표현은 workflow artifact 검증과 구분해서 본다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.

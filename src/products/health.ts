@@ -13,6 +13,7 @@ import {
 export type RootHealthLaneId = "runtime" | "content" | "release";
 
 export type RootHealthLaneStatus = "not-run" | "pass" | "fail";
+export type HealthReportProvenanceLevel = "live" | "cached" | "partial" | "inferred";
 
 export type ProductHealthVerdict = "hold" | "upgrade-ready" | "verification-refresh-needed";
 
@@ -63,8 +64,16 @@ export type RootHealthRecord = RootHealthLaneRecord & {
 };
 
 export type PortfolioHealthReport = {
+  meta: HealthReportMeta;
   root: RootHealthRecord[];
   products: ProductHealthRecord[];
+};
+
+export type HealthReportMeta = {
+  summaryKind: "recent-lane-state-provenance-summary";
+  interpretation: "operational-snapshot";
+  isEndToEndVerificationProof: false;
+  provenanceLevels: HealthReportProvenanceLevel[];
 };
 
 export type ProductResearchRecord = {
@@ -99,6 +108,12 @@ const lifecycleRank: Record<LifecycleStatus, number> = {
 
 const rootShortcutVerificationSlugs = new Set(["usa", "japan"]);
 
+export const healthReportMeta: HealthReportMeta = {
+  summaryKind: "recent-lane-state-provenance-summary",
+  interpretation: "operational-snapshot",
+  isEndToEndVerificationProof: false,
+  provenanceLevels: ["live", "cached", "partial", "inferred"]
+};
 
 export const rootHealthLanes: RootHealthLaneRecord[] = [
   {
@@ -305,6 +320,7 @@ export function buildPortfolioHealthReport(
   const contentVerification = buildRootContentVerificationRecord(products);
 
   return {
+    meta: healthReportMeta,
     root: rootHealthLanes.map((lane) => ({
       ...lane,
       status: rootStatuses[lane.id] ?? "not-run",
