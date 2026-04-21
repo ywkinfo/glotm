@@ -97,7 +97,22 @@
 - `ChaTm`: `docs/workspaces/ChaTm/chatm-root-gate-input.md`
 - `MexTm`: `docs/workspaces/MexTm/mextm-root-sync-input.md`
 - `EuTm`: `docs/workspaces/EuTm/eutm-root-sync-input.md`
+- `JapTm`: `docs/workspaces/JapTm/japtm-root-sync-input.md`
+- `UKTm`: `docs/workspaces/UKTm/uktm-root-sync-input.md`
 - 현재 라운드 원칙: workspace handoff 문서까지는 병렬로 진행하고, 루트 truth와 shared root gate는 통합 단계에서 1회만 다룬다.
+
+## Next Lane
+
+- `JapTm` lighter-track alignment
+  - local `content:prepare` pass를 root sync input으로 정리했고, 현재 baseline은 `15 chapters / 145 search entries / incubate / beta / standard QA`다.
+  - immediate root metadata change는 없고, 다음 액션은 route / maintenance / evidence hygiene utility가 home / continue reading / search에서 충분히 빨리 읽히는지 확인하는 것이다.
+- `UKTm` standard-QA prep
+  - density는 beta 기준을 넘겼지만 lifecycle은 `pilot` 유지다.
+  - local `content:prepare` pass를 root sync input으로 정리했고, 현재 baseline은 `14 chapters / 128 search entries / incubate / pilot / smoke QA`다.
+  - 다음 액션은 `early-track filing decision board`, `pilot-lane maintenance owner board`, `online incident quick board` utility가 home / continue reading / search에서 충분히 빨리 읽히는지 잠그는 것이다.
+- `UsaTm` operating-copy maintenance
+  - root shortcut refresh는 잠겨 있다.
+  - 다음 액션은 filing basis / specimen / monitoring lighter-track utility를 문구와 reader flow에서 유지하는 것이다.
 
 ## Do Not Touch
 

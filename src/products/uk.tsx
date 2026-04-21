@@ -28,8 +28,9 @@ const {
     <>
       영국 시장 상표 실무를 빠르게 점검하기 위한 early-track draft 공개본입니다. EU 공통 프레임과 병행해
       읽고 싶다면 <Link to={europePath}>EuTm</Link>으로 큰 구조를 먼저 잡은 뒤, 영국 단일국가
-      판단이 필요한 순간 이 트랙으로 내려오는 구성이 자연스럽습니다. 현재는 대형 확장보다 filing,
-      renewal, online incident row를 빠르게 다시 보는 reader utility와 fact-verification / smoke QA refresh 유지에 초점을 둡니다.
+      판단이 필요한 순간 이 트랙으로 내려오는 구성이 자연스럽습니다. 현재는 대형 확장보다
+      `early-track filing decision board`, `pilot-lane maintenance owner board`, `online incident quick board`를
+      빠르게 다시 보는 reader utility와 fact-verification / standard-QA prep 유지에 초점을 둡니다.
     </>
   ),
   positioningKicker: "UKTm Positioning",
@@ -38,8 +39,8 @@ const {
     <>
       현재 UKTm은 UKIPO 중심 출원 흐름, 사용증거와 non-use cancellation, 영국 온라인 침해와
       분쟁 대응을 단일 시장 기준으로 빠르게 점검하는 용도에 맞춰져 있습니다. 지금 라운드에서는 대형
-      확장보다 filing route row, maintenance owner map, platform/domain incident memo를 반복
-      검증하며 pilot / smoke QA 기준의 draft 공개본 안정성을 유지하는 쪽이 우선입니다.
+      확장보다 `early-track filing decision board`, `pilot-lane maintenance owner board`, `online incident quick board`를
+      반복 검증하며 pilot / smoke QA 기준의 draft 공개본 안정성과 standard-QA prep을 함께 잠그는 쪽이 우선입니다.
     </>
   ),
   chapterBadge: "UK",

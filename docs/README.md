@@ -45,10 +45,16 @@
 - root sync input: [`workspaces/EuTm/eutm-root-sync-input.md`](workspaces/EuTm/eutm-root-sync-input.md)
 - workspace contracts: `../EuTm/README.md`, `../EuTm/Harness/Architecture.md`, `../EuTm/Harness/Content-Spec.md`
 
+### JapTm
+
+- root sync input: [`workspaces/JapTm/japtm-root-sync-input.md`](workspaces/JapTm/japtm-root-sync-input.md)
+- workspace contracts: `../JapTm/README.md`, `../JapTm/Harness/Architecture.md`, `../JapTm/Harness/Content-Spec.md`
+
 ### UKTm
 
 - content expansion plan: [`workspaces/UKTm/uktm-content-expansion-plan.md`](workspaces/UKTm/uktm-content-expansion-plan.md)
 - content expansion taskboard: [`workspaces/UKTm/uktm-content-expansion-taskboard.md`](workspaces/UKTm/uktm-content-expansion-taskboard.md)
+- root sync input: [`workspaces/UKTm/uktm-root-sync-input.md`](workspaces/UKTm/uktm-root-sync-input.md)
 - workspace contracts: `../UKTm/README.md`, `../UKTm/Harness/Architecture.md`, `../UKTm/Harness/Content-Spec.md`
 
 ## Historical Root Memos

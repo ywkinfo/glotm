@@ -75,24 +75,24 @@ export const readerSmokeCases = [
     path: "/japan",
     storageKey: "japtm_reading_bookmark",
     homeHeading: "일본 상표 실무 운영 가이드북",
-    bookmarkChapterSlug: "제10장-세관국경-조치와-물류-통제",
-    bookmarkChapterTitle: "제10장 세관·국경 조치와 물류 통제",
-    bookmarkSectionId: "도입",
-    bookmarkSectionTitle: "도입",
-    searchQuery: "JPO",
-    searchResultText: "JPO"
+    bookmarkChapterSlug: "제7장-등록-후-유지관리-갱신권리-유지-캘린더",
+    bookmarkChapterTitle: "제7장 등록 후 유지관리: 갱신·권리 유지 캘린더",
+    bookmarkSectionId: "evidence-hygiene-quick-check",
+    bookmarkSectionTitle: "evidence hygiene quick check",
+    searchQuery: "route memo board",
+    searchResultText: "lighter-track route memo board"
   },
   {
     name: "UKTm",
     path: "/uk",
     storageKey: "uktm_reading_bookmark",
     homeHeading: "영국 상표 실무 운영 가이드북",
-    bookmarkChapterSlug: "영국-상표-시스템-맵과-ukipo-운영-구조",
-    bookmarkChapterTitle: "영국 상표 시스템 맵과 UKIPO 운영 구조",
-    bookmarkSectionId: "시작-전-체크리스트",
-    bookmarkSectionTitle: "시작 전 체크리스트",
-    searchQuery: "시작 전 체크리스트",
-    searchResultText: "시작 전 체크리스트"
+    bookmarkChapterSlug: "등록-후-유지관리와-갱신-체계",
+    bookmarkChapterTitle: "등록 후 유지관리와 갱신 체계",
+    bookmarkSectionId: "pilot-lane-maintenance-owner-board",
+    bookmarkSectionTitle: "pilot-lane maintenance owner board",
+    searchQuery: "online incident quick board",
+    searchResultText: "online incident quick board"
   }
 ] as const;
 
