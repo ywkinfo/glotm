@@ -589,7 +589,7 @@ describe("App portfolio shell", () => {
     );
     expect(summaryParagraphs).toHaveLength(2);
     expect(summaryParagraphs[0]).toBe(
-      "ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm과 EuTm으로 buyer-entry control과 validate route pack을 이어 봅니다."
+      "ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm의 filing packet·maintenance·border-control handoff와 EuTm의 controlled EU+UK scope·evidence triage를 같은 흐름으로 이어 봅니다."
     );
     expect(summaryParagraphs[1]).toBe(
       "최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다."

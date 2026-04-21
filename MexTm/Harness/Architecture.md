@@ -29,7 +29,8 @@
 
 ## Local Verification Contract
 
-- 파이프라인 명령: 루트에서 `npm run content:mexico`
+- lane-local gate: 루트에서 `npm --prefix MexTm run content:prepare`
+- 루트 refresh 명령: `npm run content:mexico`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 - 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
 - 루트 `health:runtime`, `health:content`, `health:release`는 `MexTm` lane이 개별 반복하지 않고, 리더 통합 단계의 shared root gate에서 1회 실행한다.

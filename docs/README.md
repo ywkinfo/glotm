@@ -14,6 +14,7 @@
 
 ## Global Supporting Docs
 
+- current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
 - runtime QA checklist: [`phase1-runtime-qa.md`](phase1-runtime-qa.md)
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)
@@ -28,17 +29,20 @@
 - content expansion plan: [`workspaces/ChaTm/chatm-content-expansion-plan.md`](workspaces/ChaTm/chatm-content-expansion-plan.md)
 - content expansion taskboard: [`workspaces/ChaTm/chatm-content-expansion-taskboard.md`](workspaces/ChaTm/chatm-content-expansion-taskboard.md)
 - mature QA checklist: [`workspaces/ChaTm/chatm-mature-qa-checklist.md`](workspaces/ChaTm/chatm-mature-qa-checklist.md)
+- root gate input: [`workspaces/ChaTm/chatm-root-gate-input.md`](workspaces/ChaTm/chatm-root-gate-input.md)
 - workspace contracts: `../ChaTm/README.md`, `../ChaTm/Harness/Architecture.md`, `../ChaTm/Harness/Content-Spec.md`
 
 ### MexTm
 
 - content expansion plan: [`workspaces/MexTm/mextm-content-expansion-plan.md`](workspaces/MexTm/mextm-content-expansion-plan.md)
 - content expansion taskboard: [`workspaces/MexTm/mextm-content-expansion-taskboard.md`](workspaces/MexTm/mextm-content-expansion-taskboard.md)
+- root sync input: [`workspaces/MexTm/mextm-root-sync-input.md`](workspaces/MexTm/mextm-root-sync-input.md)
 - workspace contracts: `../MexTm/README.md`, `../MexTm/Harness/Architecture.md`, `../MexTm/Harness/Content-Spec.md`
 
 ### EuTm
 
 - stabilization memo: [`workspaces/EuTm/eutm-content-expansion-plan.md`](workspaces/EuTm/eutm-content-expansion-plan.md)
+- root sync input: [`workspaces/EuTm/eutm-root-sync-input.md`](workspaces/EuTm/eutm-root-sync-input.md)
 - workspace contracts: `../EuTm/README.md`, `../EuTm/Harness/Architecture.md`, `../EuTm/Harness/Content-Spec.md`
 
 ### UKTm

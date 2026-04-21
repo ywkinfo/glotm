@@ -111,7 +111,7 @@ export function GatewayLandingPage() {
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guide";
   const heroLead = "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.";
   const heroSummaryParagraphs = [
-    "ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm과 EuTm으로 buyer-entry control과 validate route pack을 이어 봅니다.",
+    "ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm의 filing packet·maintenance·border-control handoff와 EuTm의 controlled EU+UK scope·evidence triage를 같은 흐름으로 이어 봅니다.",
     "최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다."
   ];
   const latestBriefJurisdictions = latestBrief?.jurisdictions.slice(0, 4) ?? [];

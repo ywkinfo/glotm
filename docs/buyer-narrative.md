@@ -48,20 +48,20 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 ## Current locked funnel
 
 - `ChaTm`: canonical CTA는 `ChaTm 보기`. 중국어 표기와 launch sequencing을 먼저 잠그는 첫 진입 가이드다.
-- `MexTm`: canonical CTA는 `MexTm 먼저 보기`. filing packet, owner, border-control handoff를 buyer-entry 기준으로 잇는 두 번째 가이드다.
-- `EuTm`: canonical CTA는 `EuTm 보기`. validate lane에서 EU-wide, core-state, UK split과 route pack 기준을 정리하는 세 번째 가이드다.
+- `MexTm`: canonical CTA는 `MexTm 먼저 보기`. filing packet, maintenance triage, border-control handoff를 buyer-entry 기준으로 잇는 두 번째 가이드다.
+- `EuTm`: canonical CTA는 `EuTm 보기`. validate lane에서 controlled EU+UK scope와 evidence triage 기준을 정리하는 세 번째 가이드다.
 - Gateway hero CTA row는 `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`로 고정한다.
 
 ## Current gateway promise
 
-- Supporting copy 1: `ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm과 EuTm으로 buyer-entry control과 validate route pack을 이어 봅니다.`
+- Supporting copy 1: `ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm의 filing packet·maintenance·border-control handoff와 EuTm의 controlled EU+UK scope·evidence triage를 같은 흐름으로 이어 봅니다.`
 - Supporting copy 2: `최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다.`
 
 ## Current report handoff
 
 - 현재 primary report 1순위는 `한글 표장 글로벌 보호 운영 프레임워크`(`hangul-mark-global-protection-framework`)다.
 - 현재 primary report 2순위는 `글로벌 상표 출원 우선순위 결정 프레임워크`(`global-filing-priority-framework`)다.
-- Gateway 첫 화면의 최신 report 2개는 별도 주연 카드가 아니라, priority guides 아래에서 공통 질문을 다시 묶는 first trust layer로 유지한다.
+- Gateway 첫 화면의 최신 report 2개는 별도 주연 카드가 아니라, priority guides 아래에서 launch sequencing, filing packet, evidence triage 같은 공통 질문을 다시 묶는 first trust layer로 유지한다.
 
 ## 지금 보면 좋은 가이드
 
