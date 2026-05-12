@@ -412,7 +412,7 @@ describe("App portfolio shell", () => {
     ["/europe", "Validate tier · Beta lifecycle · Standard QA · 권역 가이드"],
     ["/usa", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"],
     ["/japan", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"],
-    ["/uk", "Incubate tier · Pilot lifecycle · Smoke QA · 국가 가이드"]
+    ["/uk", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"]
   ])("derives reader home status copy from registry truth for %s", async (pathname, statusLabel) => {
     installFetchMock();
 

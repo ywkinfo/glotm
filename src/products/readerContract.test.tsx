@@ -446,7 +446,7 @@ const readerCases: ReaderCase[] = [
           bookmarkChapterTitle: "영국 제3장. 집행 운영",
           bookmarkSectionId: "monitoring",
           bookmarkSectionTitle: "모니터링",
-          showsDraftNotice: true
+          showsDraftNotice: false
         } satisfies ReaderCase]
       : []
   )

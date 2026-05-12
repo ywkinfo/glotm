@@ -98,7 +98,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `EuTm` | 권역형 | validate | beta | 14 | 258 | claim-map adopted · controlled EU+UK scope 유지 · shared root gate closeout 반영 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 178 | lighter track |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
-| `UKTm` | 단일국가 | incubate | pilot | 14 | 128 | density 9+ 달성 · standard QA 전 pilot 유지 |
+| `UKTm` | 단일국가 | incubate | beta | 14 | 128 | standard QA evidence 4-file 정합 · 2026-05-12 verdict 적용 · early-track verified 공개본 |
 
 ### 확대 기준
 
@@ -114,7 +114,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, 현재 남은 일은 Gateway/registry/root-doc sync 정리
 - `EuTm`: claim-map adopted baseline 유지, controlled EU+UK scope와 shared root gate closeout 반영
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
-- `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm density 9+ 달성 후에도 standard QA 전까지 pilot 유지, UsaTm standard QA 유지
+- `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm 2026-05-12 standard QA verdict로 beta 승급, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -172,9 +172,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 `EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 258개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 심화, rights/search/filing/opposition/evidence handoff 보강을 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 validate lane baseline과 shared root gate closeout을 반영한다.
 
-### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 early track
+### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 verified track
 
-`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 128개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 이번 라운드에서는 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 9.14까지 끌어올렸다. 다만 lifecycle은 `pilot`로 유지한다. beta 기준의 density·freshness는 충족했지만, QA level이 아직 `smoke`이므로 다음 단계는 standard QA 증빙을 잠그는 일이다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 재현했고, Gateway에서는 계속 draft 공개본 성격의 early track으로 약하게 노출하되, verification freshness와 고위험 gap은 이번 라운드 기준으로 정리된 상태다.
+`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 128개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 직전 라운드에서 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 9.14까지 끌어올렸고, 2026-05-12 standard QA verdict로 4개 evidence 파일(Coverage Scope · Source Reliability Tier · Verification Method Summary · Known Limitations 기준)이 정합화되면서 `lifecycle: pilot → beta`, `qaLevel: smoke → standard`로 승급했다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane 통과 결과는 그대로 유효하며, `portfolioTier`는 `incubate` 유지(growth/validate로 끌어올리지 않음). Gateway 노출 톤은 early-track verified 공개본으로 격상하되, supporting role과 `gatewayOrder: 6`은 변경하지 않는다.
 
 ### 향후 확장 방향
 

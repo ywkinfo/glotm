@@ -210,7 +210,7 @@ describe("portfolio health helpers", () => {
     expect(getLifecycleCriteriaGaps(usa!, usa!.lifecycleStatus)).toEqual([]);
   });
 
-  it("treats the refreshed UKTm pilot state as hold with no current lifecycle gaps", () => {
+  it("treats the UKTm beta promotion state as hold with no current lifecycle gaps", () => {
     const uk = products.find((product) => product.slug === "uk");
 
     expect(uk).toBeDefined();
