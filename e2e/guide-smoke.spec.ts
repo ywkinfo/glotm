@@ -297,3 +297,102 @@ test("mobile drawer close controls smoke", async ({ page }) => {
   await expect(scrim).toBeHidden();
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
 });
+
+test("mobile drawer dismiss via Escape key", async ({ page }) => {
+  await page.setViewportSize(mobileReaderViewport);
+
+  await page.goto("/china/chapter/제5장-출원서-작성-실무와-지정상품-설계");
+
+  await page.getByRole("button", { exact: true, name: "목차" }).click();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
+
+  const scrim = page.getByRole("button", { name: "열린 패널 닫기" });
+
+  await expect(scrim).toBeVisible();
+
+  await page.keyboard.press("Escape");
+
+  await expect(scrim).toBeHidden();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
+});
+
+test("mobile drawer auto-closes on in-drawer chapter navigation", async ({ page }) => {
+  await page.setViewportSize(mobileReaderViewport);
+
+  await page.goto("/china/chapter/제5장-출원서-작성-실무와-지정상품-설계");
+
+  await page.getByRole("button", { exact: true, name: "목차" }).click();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
+
+  const scrim = page.getByRole("button", { name: "열린 패널 닫기" });
+
+  await expect(scrim).toBeVisible();
+
+  const otherChapter = page
+    .locator(".left-rail")
+    .getByRole("link", { name: /제2장/ })
+    .first();
+
+  await expect(otherChapter).toBeVisible();
+
+  await otherChapter.click();
+
+  await expect
+    .poll(() => decodeURIComponent(page.url()))
+    .toContain("/china/chapter/제2장-");
+  await expect(scrim).toBeHidden();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
+});
+
+test("mobile drawer auto-closes on browser back navigation", async ({ page }) => {
+  await page.setViewportSize(mobileReaderViewport);
+
+  await page.goto("/china/chapter/제2장-브랜드-구조와-중국어-표기-전략");
+  await page.goto("/china/chapter/제5장-출원서-작성-실무와-지정상품-설계");
+
+  await page.getByRole("button", { exact: true, name: "목차" }).click();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
+
+  const scrim = page.getByRole("button", { name: "열린 패널 닫기" });
+
+  await expect(scrim).toBeVisible();
+
+  await page.goBack();
+
+  await expect
+    .poll(() => decodeURIComponent(page.url()))
+    .toContain("/china/chapter/제2장-");
+  await expect(scrim).toBeHidden();
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
+});
+
+test.describe("mobile drawer with touch input", () => {
+  test.use({ hasTouch: true });
+
+  test("mobile drawer dismiss via scrim touch tap", async ({ page }) => {
+    await page.setViewportSize(mobileReaderViewport);
+
+    await page.goto("/china/chapter/제5장-출원서-작성-실무와-지정상품-설계");
+
+    await page.getByRole("button", { exact: true, name: "목차" }).click();
+    await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
+
+    const scrim = page.getByRole("button", { name: "열린 패널 닫기" });
+
+    await expect(scrim).toBeVisible();
+
+    const box = await scrim.boundingBox();
+
+    expect(box).not.toBeNull();
+
+    if (box) {
+      await page.touchscreen.tap(
+        box.x + Math.max(20, box.width - 20),
+        box.y + box.height / 2
+      );
+    }
+
+    await expect(scrim).toBeHidden();
+    await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("");
+  });
+});
