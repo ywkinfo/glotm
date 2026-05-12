@@ -13,8 +13,8 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-04-21 |
-| Verified on | 2026-04-21 |
+| Last updated | 2026-05-12 |
+| Verified on | 2026-05-12 |
 | Current phase | Phase 2 — 포지셔닝, tier governance, Gateway alignment |
 | Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` controlled EU+UK baseline 유지 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
@@ -34,7 +34,7 @@
 
 ### 현재 운영 스냅샷
 
-- 루트 `GloTm`: 2026-04-21 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
+- 루트 `GloTm`: 2026-05-12 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
 - `health:report`는 fresh proof가 아니라 최근 lane 상태와 provenance를 묶어 읽는 operational snapshot으로 해석한다.
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 리포트 2개를 먼저 보여주는 trust layer / report handoff를 포함한다.
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. live verification 표현은 workflow artifact 검증과 구분해서 보며, mobile drawer close 등 live-only 회귀는 `e2e/guide-smoke.spec.ts`의 mobile drawer close controls smoke로 보호한다.
@@ -131,7 +131,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### LatTm (중남미 상표 보호 운영 가이드) — 글로벌 확장을 위한 1차 기준 파일럿, 콘텐츠/앱 고도화 진행 중
 
-`LatTm`은 현재 GloTm의 기준 제품이다. 20개 챕터로 구성된 중남미 19개국 상표 출원·유지·집행 실무 가이드를 제공하며, 현재 우선순위는 배포보다 로컬 웹앱 완성도와 읽기 경험 안정화에 있다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 flagship baseline을 한 번 더 잠갔다.
+`LatTm`은 현재 GloTm의 기준 제품이다. 20개 챕터로 구성된 중남미 19개국 상표 출원·유지·집행 실무 가이드를 제공하며, 현재 우선순위는 배포보다 로컬 웹앱 완성도와 읽기 경험 안정화에 있다. 2026-05-12 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 flagship baseline을 한 번 더 잠갔다.
 
 | 영역 | 챕터 |
 |------|------|
@@ -158,23 +158,23 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 가이드다. 현재 `document-data.json` 기준 14개 챕터와 178개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/usa` 경로에 연결된 상태다. 이번 verification refresh의 운영 메타데이터는 `beta`를 유지한다. 2026-04-21 기준 root shortcut refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 재현했고, 이번 유지보수에서는 filing/specimen/monitoring reader utility를 더 또렷하게 다듬었다. 다음 우선순위는 대형 확장보다 standard QA를 반복 재현하면서 운영 문구와 reader utility를 다듬는 일이다.
+`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 가이드다. 현재 `document-data.json` 기준 14개 챕터와 178개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/usa` 경로에 연결된 상태다. 이번 verification refresh의 운영 메타데이터는 `beta`를 유지한다. 2026-05-12 기준 root shortcut refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 재현했고, 이번 유지보수에서는 filing/specimen/monitoring reader utility를 더 또렷하게 다듬었다. 다음 우선순위는 대형 확장보다 standard QA를 반복 재현하면서 운영 문구와 reader utility를 다듬는 일이다.
 
 ### JapTm (일본 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
-`JapTm`은 일본 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 145개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/japan` 경로에 연결된 상태다. verification refresh와 density push 뒤에 root standard verification까지 통과하면서 `beta`와 `standard QA` 상태로 정렬했다. 2026-04-21 기준 root shortcut refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 재현했고, 이번 유지보수에서는 route/maintenance reader utility를 더 또렷하게 다듬었다. 다음 우선순위는 대형 확장보다, 지금 만든 검색/운영 utility가 실제 reader flow에서 잘 작동하는지 반복 검증하며 lighter track을 안정적으로 유지하는 일이다.
+`JapTm`은 일본 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 145개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/japan` 경로에 연결된 상태다. verification refresh와 density push 뒤에 root standard verification까지 통과하면서 `beta`와 `standard QA` 상태로 정렬했다. 2026-05-12 기준 root shortcut refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 재현했고, 이번 유지보수에서는 route/maintenance reader utility를 더 또렷하게 다듬었다. 다음 우선순위는 대형 확장보다, 지금 만든 검색/운영 utility가 실제 reader flow에서 잘 작동하는지 반복 검증하며 lighter track을 안정적으로 유지하는 일이다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 growth mature lane
 
-`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 358개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, Sprint 2에서 제4장·제8장·제9장·제11장·제12장·제13장·제14장 보강을 통해 low-density gap과 reader/search handoff를 함께 끌어올린 상태다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과했고, 월간 scorecard review 반영으로 growth lane의 `mature` 상태를 잠갔다.
+`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 15개 챕터와 358개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/china` 경로에 연결된 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, Sprint 2에서 제4장·제8장·제9장·제11장·제12장·제13장·제14장 보강을 통해 low-density gap과 reader/search handoff를 함께 끌어올린 상태다. 2026-05-12 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과했고, 월간 scorecard review 반영으로 growth lane의 `mature` 상태를 잠갔다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 258개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 심화, rights/search/filing/opposition/evidence handoff 보강을 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 validate lane baseline과 shared root gate closeout을 반영한다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 14개 챕터와 258개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/europe` 경로에 연결된 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 심화, rights/search/filing/opposition/evidence handoff 보강을 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다. 2026-05-12 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 validate lane baseline과 shared root gate closeout을 반영한다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 verified track
 
-`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 128개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 직전 라운드에서 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 9.14까지 끌어올렸고, 2026-05-12 standard QA verdict로 4개 evidence 파일(Coverage Scope · Source Reliability Tier · Verification Method Summary · Known Limitations 기준)이 정합화되면서 `lifecycle: pilot → beta`, `qaLevel: smoke → standard`로 승급했다. 2026-04-21 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane 통과 결과는 그대로 유효하며, `portfolioTier`는 `incubate` 유지(growth/validate로 끌어올리지 않음). Gateway 노출 톤은 early-track verified 공개본으로 격상하되, supporting role과 `gatewayOrder: 6`은 변경하지 않는다.
+`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 14개 챕터와 128개 검색 엔트리를 생성하며, 루트 `GloTm` 셸 `/uk` 경로에 연결된 상태다. 직전 라운드에서 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 9.14까지 끌어올렸고, 2026-05-12 standard QA verdict로 4개 evidence 파일(Coverage Scope · Source Reliability Tier · Verification Method Summary · Known Limitations 기준)이 정합화되면서 `lifecycle: pilot → beta`, `qaLevel: smoke → standard`로 승급했다. 2026-05-12 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과한 결과를 그대로 유지하며, `portfolioTier`는 `incubate` 유지(growth/validate로 끌어올리지 않음). Gateway 노출 톤은 early-track verified 공개본으로 격상하되, supporting role과 `gatewayOrder: 6`은 변경하지 않는다.
 
 ### 향후 확장 방향
 

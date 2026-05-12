@@ -5,11 +5,11 @@
 
 ## Snapshot
 
-- Last updated: 2026-04-21
+- Last updated: 2026-05-12
 - Current phase: `Phase 2 — 포지셔닝, tier governance, Gateway alignment`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> JapTm -> UKTm -> UsaTm`
 - Current rule of thumb: 새 확장보다 기존 포트폴리오의 정합성과 verification provenance를 먼저 잠근다.
-- `2026-04-21` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
+- `2026-05-12` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
 
 ## Today
 
