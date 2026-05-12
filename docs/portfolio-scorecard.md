@@ -38,7 +38,7 @@ search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계�
 | `EuTm` | validate | beta | claim-map adopted · controlled EU+UK scope 유지 · shared root gate closeout reflected |
 | `UsaTm` | incubate | beta | verification refresh 완료, standard QA 유지 |
 | `JapTm` | incubate | beta | beta 유지, standard QA 유지 |
-| `UKTm` | incubate | pilot | density 9+ 달성, smoke QA 유지, standard QA 전 early-track pilot 유지 |
+| `UKTm` | incubate | beta | standard QA evidence 4-file 정합, 2026-05-12 verdict 적용, early-track verified 공개본 |
 
 ## Current execution order
 

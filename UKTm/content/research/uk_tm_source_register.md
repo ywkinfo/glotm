@@ -39,3 +39,7 @@
 - 본문에 수수료, 기한, 기관명, 공식 시스템명, 구제수단 범위를 넣기 전 이 레지스터에 출처를 추가한다.
 - 출처가 없는 문장은 `uk_tm_fact_verification_log.md`에서 `추가검증 필요`로 표시한다.
 - 요약 블로그나 2차 자료는 참고용으로만 두고, 공개본 확정 근거로는 1차 출처를 우선한다.
+
+---
+
+> Standard QA verified on 2026-05-12. 24개 entry 모두 T1(영국 1차) 또는 T2(국제 1차) 충족, `uk_tm_research_report.md` Source Reliability Tier 구분을 따른다.
