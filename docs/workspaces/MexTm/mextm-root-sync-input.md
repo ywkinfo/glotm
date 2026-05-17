@@ -13,7 +13,7 @@
 | search entry count | `385` | `src/products/registry.ts` |
 | portfolio tier / lifecycle | `growth` / `mature` | `src/products/registry.ts` |
 | qa level / high-risk gap | `full` / `0` | `src/products/registry.ts` |
-| root verified date | `2026-04-21` | `src/products/registry.ts`, `PROJECT-OVERVIEW.md` |
+| root verified date | `2026-05-12` | `src/products/registry.ts`, `PROJECT-OVERVIEW.md` |
 | claim-map lock | `MX-FEE-001`, `MX-DL-001`, `MX-NORM-001`, `MX-ENF-001` 모두 `BODY_READY` | `MexTm/content/research/claim-map.json` |
 | claim verification date | `2026-04-01` | `MexTm/content/research/claim-map.json`, `mx_tm_fact_verification_log.md` |
 | lane-local gate | `npm --prefix MexTm run content:prepare` | `MexTm/README.md`, `mextm-content-expansion-taskboard.md` |
@@ -42,9 +42,9 @@
 | --- | --- | --- |
 | `PROJECT-OVERVIEW.md` | `unchanged` | `15 chapters / 385 search entries / growth / mature`, Sprint 2 3장 잠금, lane-local gate와 shared root gate 분리가 이미 반영돼 있다. |
 | `README.md` | `unchanged` | 루트 verification lane, `content:mexico`, full-pipeline 설명은 현재 MexTm lane truth와 충돌하지 않는다. |
-| `src/products/registry.ts` | `follow-up` | 숫자와 tier는 유지하고, 필요하면 `summary` / `maturityNote`만 filing / maintenance / border-control triad가 더 직접 읽히게 다듬는다. |
-| Gateway hero / CTA copy | `follow-up` | 현재 priority ordering은 유지한다. 다만 MexTm 설명을 계속 buyer-entry generic copy로만 두지 말고 filing packet, maintenance triage, border-control escalation까지 이어지는 lane으로 읽히게 조정 후보를 검토한다. |
-| Report handoff copy | `follow-up` | trust-layer ordering은 유지한다. MexTm deep link는 이미 존재하므로, root integrator는 latest report focus point 문구만 Sprint 2 triad와 더 가깝게 조정할지 검토하면 된다. |
+| `src/products/registry.ts` | `done` | `maturityNote`는 2026-05-12 재검증 완료 기준으로 잠겨 있다. `summary`를 Sprint 2 triad(filing packet / maintenance triage / border-control)가 직접 읽히도록 다듬어 반영했다. |
+| Gateway hero / CTA copy | `deferred → Phase D` | ops taskboard 규칙상 registry/root-doc A·B·C 잠금 이후 D레인에서 처리한다. |
+| Report handoff copy | `deferred → Phase D` | ops taskboard 규칙상 registry/root-doc A·B·C 잠금 이후 D레인에서 처리한다. |
 
 ## Do-Not-Touch Boundary
 

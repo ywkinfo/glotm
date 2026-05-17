@@ -110,3 +110,12 @@
 - fact log의 핵심 `Body-ready` 항목이 Sprint 1/2 주요 장에 실제 반영됨
 - `content:china`가 통과하고 shared root gate 입력값이 리더에게 전달됨
 - shared release evidence와 mature refresh 증빙 정리 완료
+
+## Closeout — 2026-05-12
+
+- Sprint 1/2 원고 레인 A·B·C: 반영 완료
+- 사실 검증 레인: 핵심 claim 모두 `Body-ready` 상태, Pending/Conflict blocker 없음
+- QA / 배포 준비 레인: manifest 일치, reader smoke bundle 정리, shared root gate 입력값 전달 완료
+- 2026-05-12 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
+- `chatm-root-gate-input.md` 및 `chatm-mature-qa-checklist.md` 기준선을 2026-05-12로 갱신 완료
+- **ChaTm mature refresh closeout 잠금 완료**

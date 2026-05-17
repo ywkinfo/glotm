@@ -96,3 +96,13 @@
 - 현재 Sprint 2 우선 장은 `Ch5`, `Ch7`, `Ch10`으로 고정한다.
 - workspace-local readiness 메모와 fact log는 lane-local gate를 `npm --prefix MexTm run content:prepare`로 본다.
 - 리더는 root shared truth 파일에서 Sprint 2 우선 장, shared root gate 책임 분리, Gateway/registry copy sync를 후속 반영한다.
+
+## Closeout — 2026-05-17
+
+- Sprint 2 우선 장 `Ch5`, `Ch7`, `Ch10` 원고 반영 완료
+- 사실 검증 레인: `MX-FEE-001`, `MX-DL-001`, `MX-NORM-001`, `MX-ENF-001` 모두 `BODY_READY`
+- `mextm-root-sync-input.md` root verified date → 2026-05-12 갱신 완료
+- `src/products/registry.ts` MexTm summary → Sprint 2 triad(filing packet / maintenance triage / border-control) 반영 완료
+- Gateway / Report handoff copy → Phase D(This Week D)로 명시 defer
+- 2026-05-12 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
+- **MexTm Sprint 2 후속 통합 잠금 완료**

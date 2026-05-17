@@ -6,7 +6,7 @@
 
 ## Evidence Snapshot
 
-| 항목 | 2026-04-21 root refresh 기준 |
+| 항목 | 2026-05-12 root refresh 기준 |
 | --- | --- |
 | chapter count | 15 |
 | search entries | 358 |
@@ -46,5 +46,5 @@ npm run health:report
 ## Review Note
 
 - `qaLevel`은 `full`, `lifecycleStatus`는 월간 scorecard review 반영 뒤 `mature`로 잠갔다.
-- 2026-04-21 기준 root full-pipeline refresh와 shared `health:runtime` / `health:content` / `health:release`를 다시 통과한 상태를 현재 기준선으로 유지한다.
+- 2026-05-12 기준 root full-pipeline refresh와 shared `health:runtime` / `health:content` / `health:release`를 다시 통과한 상태를 현재 기준선으로 유지한다.
 - 이후 refresh에서는 `health:report`가 다시 `hold`를 유지하는지와 이 체크리스트 증빙이 계속 재현되는지를 함께 본다.
