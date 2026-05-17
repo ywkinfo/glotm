@@ -9,7 +9,19 @@
 - report ordering: `../src/reports/registry.ts`
 - KPI sheet: `portfolio-scorecard.md`
 
-## Locked defaults (2026-04-21)
+## health:report 해석 규칙
+
+`npm run health:report`는 **recent lane-state provenance summary**다. end-to-end verified proof가 아니다.
+
+| 항목 | 설명 |
+|---|---|
+| 읽는 방식 | 저장된 마지막 lane 결과(`.omx/state/health-lane-status.json`)를 읽어 출력한다. 실행 시점에 `health:runtime/content/release`를 다시 돌리지 않는다. |
+| 의미 | 가장 최근 shared root gate 실행 시점의 스냅샷이다. 그 이후 코드·콘텐츠 변경이 있으면 결과가 stale할 수 있다. |
+| verdict 해석 | `hold` = 현재 lifecycle 기준 충족, `upgrade-ready` = 다음 lifecycle 조건 충족, `verification-refresh-needed` = freshness 또는 gap 기준 미달 |
+| 월간 리뷰 활용 | verdict만 보지 말고, 마지막 `verifiedOn` 날짜와 오늘 사이의 freshness 경과일을 함께 확인한다. lifecycle 상향은 scorecard 리뷰에서만 반영한다. |
+| fresh 검증 필요 시 | `npm run health:runtime && npm run health:content && npm run health:release && npm run health:report` 순서로 full lane을 다시 돌린다. |
+
+## Locked defaults (2026-05-12)
 
 - One-line wedge: `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕는다.`
 - Funnel CTA: `ChaTm 보기 -> MexTm 먼저 보기 -> EuTm 보기`
@@ -63,7 +75,7 @@
 |------|------|------|------|
 | `UsaTm` | beta lighter-track, no draft notice, filing/specimen/monitoring utility 유지 |  |  |
 | `JapTm` | beta lighter-track, no draft notice, route/maintenance/evidence utility 유지 |  |  |
-| `UKTm` | pilot draft 공개본 유지, continue reading/search 안정성 유지 |  |  |
+| `UKTm` | beta early-track verified 공개본 유지, standard QA evidence 4-file 정합, continue reading/search 안정성 유지 |  |  |
 
 ## Gateway hero check
 
