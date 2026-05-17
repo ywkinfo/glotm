@@ -29,8 +29,8 @@
 | Search entry count | `258` | `src/products/registry.ts`, `EuTm/content/generated/search-index.json` |
 | Tier / lifecycle / QA | `validate` / `beta` / `standard` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
-| Root metadata verifiedOn | `2026-04-21` | `src/products/registry.ts` |
-| Workspace gate rerun | `2026-04-21` `npm --prefix EuTm run content:prepare` pass | local rerun in this lane |
+| Root metadata verifiedOn | `2026-05-12` | `src/products/registry.ts` |
+| Workspace gate rerun | `2026-04-21` `npm --prefix EuTm run content:prepare` pass (baseline); `2026-05-12` shared root gate 재현 통과 (workspace-local 미포함) | local rerun + shared root gate |
 | Research baseline | claim-map adopted, BODY_READY 6건, source-register companion 유지 | `claim-map.json`, fact log, source register |
 
 ## Chapter Drift Map
@@ -63,19 +63,20 @@
 
 ## Local Gate Evidence
 
-- `2026-04-21` `npm --prefix EuTm run content:prepare`
+- `2026-04-21` `npm --prefix EuTm run content:prepare` (baseline rerun)
   - `Generated EuTm master manuscript from 14 sources.`
   - `QA complete: 0 error(s), 0 warning(s), 14 source file(s) checked.`
   - `Generated 14 chapters and 258 search entries.`
 - `2026-04-21` direct count check
   - `EuTm/content/generated/search-index.json` entry count: `258`
 - changed docs reread and self-checked in this lane
+- `2026-05-12` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
 
 ## Root Sync Diff List
 
 | Root file | Sync note for integrator |
 | --- | --- |
-| `PROJECT-OVERVIEW.md` | metadata 자체는 현재 baseline과 맞다. `2026-04-21` shared root gate 재현이 끝났으므로 `shared root gate closeout reflected` 표현을 유지해도 된다. |
+| `PROJECT-OVERVIEW.md` | metadata 자체는 현재 baseline과 맞다. `2026-05-12` shared root gate 재현이 끝났으므로 `shared root gate closeout reflected` 표현을 유지해도 된다. |
 | `README.md` | EuTm를 root full-pipeline group으로 두는 설명은 그대로 맞다. 이번 lane에서는 local gate evidence만 갱신됐으므로, root lane 재실행 전 수치 변경은 필요 없다. |
 | `docs/portfolio-scorecard.md` | `validate / beta` assignment와 focus 문구는 대체로 맞다. closeout phrasing만 overview와 같은 기준으로 한 번 더 맞추면 충분하다. |
 | `docs/buyer-narrative.md` | 현재 `EU-wide, core-state, UK split` framing은 유지 가능하다. workspace packet과 더 강하게 맞추려면 `controlled EU+UK scope` 문구를 보조 문장에 한 번 더 노출하는 정도만 고려하면 된다. |

@@ -13,7 +13,7 @@
 | lifecycle status | `mature` | `src/products/registry.ts` |
 | qa level | `full` | `src/products/registry.ts` |
 | high-risk verification gap | `0` | `src/products/registry.ts` |
-| verifiedOn | `2026-04-21` | `src/products/registry.ts` |
+| verifiedOn | `2026-05-12` | `src/products/registry.ts` |
 | gateway lane role | `priority` | `src/products/registry.ts` |
 | maturity note | `mature 승격 반영 · Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 완료` | `src/products/registry.ts` |
 | workspace pipeline | `build-master -> qa-content -> build-content`, root command `npm run content:china` | `ChaTm/README.md`, `ChaTm/Harness/Architecture.md` |
@@ -49,10 +49,10 @@ reader smoke bundle은 `docs/workspaces/ChaTm/chatm-mature-qa-checklist.md`와 `
 
 ## Root Gate Input Memo
 
-- metadata gate: root authoritative metadata는 이미 `15 chapters / 358 search entries / growth / mature / full / gap 0 / verifiedOn 2026-04-14`로 잠겨 있다.
+- metadata gate: root authoritative metadata는 이미 `15 chapters / 358 search entries / growth / mature / full / gap 0 / verifiedOn 2026-05-12`로 잠겨 있다.
 - source-to-research gate: fact log의 `Body-ready` 대상과 source chapter 반영 메모가 충돌하지 않는다. 최소 샘플 확인 범위는 제2장, 제3장, 제5장, 제6장, 제7장, 제10장이다.
 - workspace contract gate: `ChaTm` 로컬 계약 문서는 source-first editing, full pipeline, reader/search materialization 규칙을 유지하고 있다.
-- shared root gate lane: `2026-04-21` 기준 `npm run content:prepare`, `npm run health:runtime`, `npm run health:content`, `npm run health:release`, `npm run health:report`를 shared verification으로 다시 재현했고 모두 통과했다.
+- shared root gate lane: `2026-05-12` 기준 `npm run content:prepare`, `npm run health:runtime`, `npm run health:content`, `npm run health:release`, `npm run health:report`를 shared verification으로 다시 재현했고 모두 통과했다.
 - non-blocking note: 이번 lane의 산출물은 root metadata 변경 요청이 아니라 closeout handoff 정리다. 루트 파일 수정은 shared gate 결과를 본 뒤에만 판단하면 된다.
 
 ## Root Sync Need

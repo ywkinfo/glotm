@@ -347,6 +347,38 @@ root shared truth, report/overview wording, workspace 설명을 같은 EuTm base
 - 후속 보강은 대형 범위 확대 대신 Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split처럼 controlled EU+UK lane 안의 좁은 operational note만 흡수하는 방식으로 마감했다.
 - 이 상태 이후의 우선순위는 EuTm 자체 확장보다 root docs sync, report/overview wording alignment, shared workflow hygiene를 정리하는 일이다.
 
+## 2026-05-17 stabilization closeout memo
+
+### Stabilization 리스크 ↔ Root Wording Drift 연결
+
+ops taskboard의 EuTm stabilization closeout 준비 완료 기준에 따라 두 가지를 명시한다.
+
+**리스크 1 (밀도 격차)** → root wording drift 위험 없음.
+`14개 챕터 / 258 search entries / validate tier · beta lifecycle` 수치는 `src/products/registry.ts`가 canonical이며, 이 수치가 변하지 않는 한 `PROJECT-OVERVIEW.md`, `README.md`, `docs/portfolio-scorecard.md`의 EuTm 항목은 drift 없이 유지된다.
+
+**리스크 2 (controlled EU+UK scope 설명 일치)** → 현재 drift 없음.
+`controlled EU+UK scope` 문구는 `registry.ts summary`, `maturityNote`, `portfolio-scorecard.md`, `eutm-root-sync-input.md Baseline One-Liner` 모두에서 같은 뜻으로 읽힌다. 새 챕터 보강이나 UK 실무 심화 없이는 이 scope 설명이 흔들리지 않는다.
+
+**리스크 3 (문서 갱신 속도 차이)** → root wording drift의 실질 원인.
+workspace docs(expansion-plan, root-sync-input)가 shared root gate 날짜보다 늦게 갱신되면 `verifiedOn` 기준이 어긋난다. 이번 closeout에서 `eutm-root-sync-input.md`의 `verifiedOn`을 `2026-05-12`로 갱신해 잠갔다.
+
+**리스크 4 (258 기준선 drift 방지)** → 정본 순서 확정.
+`14 chapters / 258 search entries / validate / beta` 수치의 authoritative read 순서:
+1. `src/products/registry.ts` — runtime canonical
+2. `EuTm/content/source/manifest.json` — chapter count source
+3. `EuTm/content/generated/search-index.json` — entry count source
+4. `docs/workspaces/EuTm/eutm-root-sync-input.md` — handoff snapshot
+
+root docs sync 전에 위 순서 밖에서 수치를 임의로 바꾸지 않는 것이 drift 방지의 실질 규칙이다.
+
+### 2026-05-12 기준 검증 상태
+
+- `src/products/registry.ts` verifiedOn: `2026-05-12` ✓
+- `maturityNote`: `validate lane · claim-map adopted · controlled EU+UK scope · shared root gate closeout reflected` ✓
+- `portfolio-scorecard.md`: `claim-map adopted · controlled EU+UK scope 유지 · shared root gate closeout reflected` ✓
+- `eutm-root-sync-input.md`: 날짜 갱신 완료 ✓
+- **EuTm stabilization closeout 준비 완료**
+
 ## 2026-04-14 closeout memo
 
 - `npm --prefix EuTm run content:prepare`가 다시 통과했고, local workspace baseline은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`를 유지했다.
