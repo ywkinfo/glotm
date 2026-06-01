@@ -11,9 +11,9 @@
       "chapterRefs": ["Ch4", "Ch5", "Ch7", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
       "sourceIds": ["gobmx-impi88", "gobmx-impi3170", "impi-pase-faq-2026"],
-      "lastVerified": "2026-04-01",
+      "lastVerified": "2026-06-01",
       "status": "BODY_READY",
-      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료"
+      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료. 2026-06-01 재확인: IMPI-00-002(사용 선언), gob.mx 트라미테 ficha IMPI88(출원)·IMPI3170(갱신, 10년 주기) 모두 현행 확인. IMPI88/IMPI3170은 formato IMPI-00-XXX와 별개의 gob.mx ficha ID 체계"
     },
     {
       "id": "MX-DL-001",
@@ -22,7 +22,7 @@
       "chapterRefs": ["Ch4", "Ch6", "Ch7", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
       "sourceIds": ["impi-opposition-triptico", "impi-pase-faq-2026", "gobmx-impi3170", "wipo-madrid-2024-32"],
-      "lastVerified": "2026-04-01",
+      "lastVerified": "2026-06-01",
       "status": "BODY_READY",
       "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금"
     },
@@ -33,7 +33,7 @@
       "chapterRefs": ["Ch1", "Ch3", "Ch4", "Ch5", "Appendix"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["gobmx-pase-faq", "gobmx-pase-guide-pdf", "impi-transparencia-focalizada"],
-      "lastVerified": "2026-04-01",
+      "lastVerified": "2026-06-01",
       "status": "BODY_READY",
       "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료"
     },
@@ -44,7 +44,7 @@
       "chapterRefs": ["Ch9", "Ch10", "Ch11", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
       "sourceIds": ["wipolex-lfppi-2020", "anam-pedimento-copies", "anam-dpa-fees"],
-      "lastVerified": "2026-04-01",
+      "lastVerified": "2026-06-01",
       "status": "BODY_READY",
       "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료"
     }
