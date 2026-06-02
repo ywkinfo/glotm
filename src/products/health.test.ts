@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { products } from "./registry";
 import {
   buildPortfolioHealthReport,
+  buildProductFactReviewRecord,
   buildProductVerificationRecord,
   getLifecycleCriteriaGaps,
   getProductHealthVerdict
@@ -85,7 +86,7 @@ describe("portfolio health helpers", () => {
         ...usa!,
         lifecycleStatus: "beta",
         lifecycleTone: "beta",
-        verifiedOn: daysAgoIso(112),
+        verifiedOn: daysAgoIso(160),
         qaLevel: "smoke"
       })
     ).toBe("verification-refresh-needed");
@@ -113,13 +114,13 @@ describe("portfolio health helpers", () => {
       getLifecycleCriteriaGaps(
         {
           ...usa!,
-          verifiedOn: daysAgoIso(112),
+          verifiedOn: daysAgoIso(160),
           qaLevel: "smoke"
         },
         "beta"
       )
     ).toEqual([
-      "verification freshness 112d > 90d",
+      "verification freshness 160d > 150d",
       "qa level smoke < standard"
     ]);
   });
@@ -179,6 +180,39 @@ describe("portfolio health helpers", () => {
     expect(report.products.find((product) => product.slug === "latam")?.research).toBeUndefined();
     expect(report.products.find((product) => product.slug === "europe")?.research).toBeUndefined();
     expect(report.products.find((product) => product.slug === "usa")?.research).toBeUndefined();
+  });
+
+  it("adds a non-gating fact-review record without changing product verdicts", () => {
+    const report = buildPortfolioHealthReport(products);
+    const china = report.products.find((product) => product.slug === "china");
+
+    expect(china).toBeDefined();
+    // registry에 factsReviewedOn이 없으므로 unrecorded이고, verdict는 영향받지 않는다.
+    expect(china?.factReview).toMatchObject({
+      track: "fact-review",
+      gating: false,
+      status: "unrecorded",
+      reviewedOn: null,
+      freshnessDays: null
+    });
+    expect(china?.verdict).toBe("hold");
+
+    for (const product of report.products) {
+      expect(product.factReview.gating).toBe(false);
+    }
+  });
+
+  it("renders a recorded fact-review with elapsed days when factsReviewedOn is set", () => {
+    // fake system time is 2026-04-04; a review 30 days earlier reads as recorded.
+    const record = buildProductFactReviewRecord({ factsReviewedOn: "2026-03-05T00:00:00.000Z" });
+
+    expect(record).toMatchObject({
+      track: "fact-review",
+      gating: false,
+      status: "recorded",
+      reviewedOn: "2026-03-05T00:00:00.000Z",
+      freshnessDays: 30
+    });
   });
 
   it("treats the promoted LatTm and EuTm states as hold after the monthly review decision", () => {

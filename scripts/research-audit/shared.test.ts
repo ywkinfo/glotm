@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-import { readClaimMap, validateClaimMap, type ClaimMapDocument } from "./shared";
+import { getCriticalClaimStalenessDays, readClaimMap, validateClaimMap, type ClaimMapDocument } from "./shared";
 
 const tempDirs: string[] = [];
 
@@ -107,5 +107,13 @@ describe("research audit shared helpers", () => {
     expect(validateClaimMap(document)).toContainEqual(
       expect.objectContaining({ claimId: "CN-TEST-001", message: expect.stringContaining("status") })
     );
+  });
+
+  it("keeps claim staleness thresholds decoupled from lane freshness", () => {
+    // fact-claim staleness는 scorecard의 lane freshness(180/150/120)와 분리돼야 한다.
+    // lane 윈도를 완화해도 이 값은 이전 기준(120/90/60)을 유지한다.
+    expect(getCriticalClaimStalenessDays("pilot")).toBe(120);
+    expect(getCriticalClaimStalenessDays("beta")).toBe(90);
+    expect(getCriticalClaimStalenessDays("mature")).toBe(60);
   });
 });

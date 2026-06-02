@@ -92,6 +92,22 @@ describe("health report CLI", () => {
     });
   });
 
+  it("surfaces fact-review as an advisory non-gating section", () => {
+    const markdown = buildCliOutput([], {});
+
+    expect(markdown).toContain("## Fact-Review (advisory, non-gating)");
+    expect(markdown).toContain("| china | unrecorded | — | unrecorded | non-gating |");
+
+    const json = JSON.parse(buildCliOutput(["--format", "json"], {}));
+    const china = json.products.find((product: { slug: string }) => product.slug === "china");
+
+    expect(china.factReview).toMatchObject({
+      track: "fact-review",
+      gating: false,
+      status: "unrecorded"
+    });
+  });
+
   it("merges stored lane statuses unless the CLI overrides them", () => {
     const output = buildCliOutput(["--content=fail"], {
       runtime: "pass",

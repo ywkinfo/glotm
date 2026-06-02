@@ -1,7 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { getLifecycleCriteria } from "../../src/products/scorecard";
 import { products } from "../../src/products/registry";
 import { runConsistencyAudit } from "./audit-consistency";
 import { runFactsAudit } from "./audit-facts";
@@ -9,6 +8,7 @@ import { runStalenessAudit } from "./audit-staleness";
 import {
   buildResearchSummary,
   getClaimMapPath,
+  getCriticalClaimStalenessDays,
   readClaimMap,
   validateClaimMap,
   type AuditIssue
@@ -73,17 +73,17 @@ function main() {
 
   try {
     const claimMap = readClaimMap(claimMapPath);
-    const lifecycleCriteria = getLifecycleCriteria(product.lifecycleStatus);
+    const claimStalenessDays = getCriticalClaimStalenessDays(product.lifecycleStatus);
     const schemaIssues = validateClaimMap(claimMap);
     const issues = schemaIssues.some((issue) => issue.level === "error")
       ? schemaIssues
       : [
           ...schemaIssues,
           ...runFactsAudit(claimMap),
-          ...runStalenessAudit(claimMap, lifecycleCriteria.maximumVerificationFreshnessDays),
+          ...runStalenessAudit(claimMap, claimStalenessDays),
           ...runConsistencyAudit(claimMap)
         ];
-    const summary = buildResearchSummary(claimMap, issues, product, lifecycleCriteria.maximumVerificationFreshnessDays);
+    const summary = buildResearchSummary(claimMap, issues, product, claimStalenessDays);
 
     printIssues(issues);
     console.log(

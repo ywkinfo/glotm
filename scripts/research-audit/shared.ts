@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-import type { ProductMeta } from "../../src/products/shared";
+import type { LifecycleStatus, ProductMeta } from "../../src/products/shared";
 
 export type ClaimStatus =
   | "VERIFIED"
@@ -170,6 +170,19 @@ export function getClaimFreshnessDays(lastVerified: string, now = new Date()) {
 
 export function isUnresolvedStatus(status: ClaimStatus) {
   return unresolvedStatuses.has(status);
+}
+
+// Fact-claim staleness 임계값. scorecard의 lane freshness와 분리된 fact-currency 기준이다.
+// lane 윈도(pilot 180 / beta 150 / mature 120)를 완화해도 claim staleness 보고가 흔들리지 않도록
+// 별도 값으로 고정한다. 값 자체는 이전 lane 윈도(120/90/60)를 그대로 이어받아 보고 강도를 보존한다.
+const claimStalenessDaysByLifecycle: Record<LifecycleStatus, number> = {
+  pilot: 120,
+  beta: 90,
+  mature: 60
+};
+
+export function getCriticalClaimStalenessDays(lifecycleStatus: LifecycleStatus): number {
+  return claimStalenessDaysByLifecycle[lifecycleStatus];
 }
 
 export function buildResearchSummary(
