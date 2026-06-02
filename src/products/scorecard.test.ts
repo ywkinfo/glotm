@@ -34,19 +34,19 @@ describe("portfolio scorecard helpers", () => {
     expect(getLifecycleCriteria("pilot")).toMatchObject({
       minimumChapterCount: 12,
       minimumSearchDensity: 5,
-      maximumVerificationFreshnessDays: 120,
+      maximumVerificationFreshnessDays: 180,
       minimumQaLevel: "smoke"
     });
     expect(getLifecycleCriteria("beta")).toMatchObject({
       minimumChapterCount: 14,
       minimumSearchDensity: 9,
-      maximumVerificationFreshnessDays: 90,
+      maximumVerificationFreshnessDays: 150,
       minimumQaLevel: "standard"
     });
     expect(getLifecycleCriteria("mature")).toMatchObject({
       minimumChapterCount: 15,
       minimumSearchDensity: 12,
-      maximumVerificationFreshnessDays: 60,
+      maximumVerificationFreshnessDays: 120,
       minimumQaLevel: "full",
       maximumHighRiskVerificationGapCount: 0
     });

@@ -1,5 +1,17 @@
 import { buildProductPath, type ProductMeta } from "./shared";
 
+// 운영 메타데이터 정본(single source of truth).
+// PROJECT-OVERVIEW.md·README.md·docs/* 의 수치는 이 파일에서 파생된 derived snapshot이며,
+// 불일치 시 이 파일이 정본이다. 문서에 수치를 또 적기보다 이 파일을 바꾼다.
+//
+// verifiedOn 의미: shared root lane(content:prepare / health:*) 재검증 시점이다.
+// 1차 출처(관보·기관 고지) 대조 같은 "사실 재검증"과는 다르다. 월간 re-stamp는
+// "lane을 다시 통과시켰다"는 뜻이지 "사실을 다시 확인했다"는 뜻이 아니다.
+// 따라서 scorecard freshness는 lane freshness로 읽고, fact freshness로 읽지 않는다.
+// 사실 재대조는 tier를 게이팅하지 않는 별도 advisory 트랙이다. 실제 재대조를 수행하면 각 제품의 선택 필드
+// factsReviewedOn에 그 날짜를 기록하고(미수행이면 비워 둔다), health:report의 "Fact-Review (advisory)" 섹션과
+// docs/monthly-review-template.md에서 함께 본다.
+
 export const products: ProductMeta[] = [
   {
     id: "latam",

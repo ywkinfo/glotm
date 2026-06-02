@@ -6,8 +6,8 @@
 
 현재 phase, 우선순위, 활성 작업 범위는 `PROJECT-OVERVIEW.md`를 기준으로 확인합니다.
 
-> Current status: GloTm is currently a *verified Phase 2 alignment-lock portfolio*, focused on tightening coherence across structure, provenance, and trust layers — not expansion.
-> 현재 변경 원칙은 `consistency over growth`이며, owner docs와 verification 표현은 `alignment`, `provenance clarity`, `trust-layer coherence`를 먼저 강화하는 방향으로만 조정합니다.
+> Current status: GloTm is a *deployed, indexed Phase 2.5 organic-indexing portfolio* — GitHub Pages 공개본(`/glotm/`)은 이미 라이브·색인 중이고, 현재 phase는 능동 프로모션 없이 유기 색인·계측·정합성을 운영하는 데 있습니다. "확장 금지"(신규 국가·pricing·새 파이프라인·의존성 추가) 가드레일은 그대로 유지합니다.
+> 현재 변경 원칙은 `consistency + promotion-free organic indexing`이며, owner docs와 verification 표현은 `alignment`, `provenance clarity`, `trust-layer coherence`, `organic discovery`를 강화하는 방향으로만 조정합니다.
 
 ## Bootstrap
 
@@ -81,6 +81,7 @@ npm run health:all
 
 - 런타임 제품 메타데이터: `src/products/registry.ts`
 - Report / Gateway trust layer 메타데이터: `src/reports/registry.ts`
+- 브리프 lane: 계약 `docs/briefs-lane.md`, 정본 콘텐츠·인벤토리 `src/briefs/archive.ts`
 - 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
 - buyer-facing 포지셔닝: `docs/buyer-narrative.md`
 - 루트 런타임 QA 체크리스트: `docs/phase1-runtime-qa.md`
@@ -91,6 +92,6 @@ Pages build path는 둘로 나뉩니다. 로컬 release verification과 subpath 
 
 현재 포트폴리오의 기본 실행 순서는 `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> JapTm -> UKTm -> UsaTm`입니다. `LatTm`은 기준 프레임 보호를 우선하며, 대형 신규 집필보다 freshness·density·reader QA 유지에 집중합니다.
 
-운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verifiedOn`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. verification freshness는 저장하지 않고 `verifiedOn`에서 계산하며, search density는 `searchEntryCount / chapterCount`로 계산합니다.
+운영 메타데이터(`portfolioTier`, `lifecycleStatus`, `verifiedOn`, `qaLevel`, `highRiskVerificationGapCount`, 챕터 수, 검색 엔트리 수)는 `src/products/registry.ts`를 기준으로 업데이트합니다. verification freshness는 저장하지 않고 `verifiedOn`(= shared root lane 재검증 시점, 1차 출처 fact 재대조와 구분)에서 계산하며, search density는 `searchEntryCount / chapterCount`로 계산합니다.
 
 월간 review에서는 위 메타데이터를 수동 상태표시가 아니라 scorecard 입력값으로 취급합니다. `npm run health:report`는 현재 메타데이터 기준으로 각 guide의 verdict를 `hold`, `upgrade-ready`, `verification-refresh-needed`로 정리합니다. 2026-06-02 기준 공유 verification run(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`)을 다시 재현했고, live Pages에서는 trust layer / report handoff와 favicon asset 반영이 별도 확인 상태로 유지된다. `health:report`와 live verification 서술은 artifact pass와 동일한 증명으로 읽지 않으며, mobile drawer close 등 live-only 회귀는 `e2e/guide-smoke.spec.ts`의 mobile drawer close controls smoke로 보호한다.

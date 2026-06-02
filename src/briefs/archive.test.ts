@@ -21,3 +21,60 @@ describe("brief archive", () => {
     ).toBe(false);
   });
 });
+
+describe("brief lane contract", () => {
+  const allowedCadenceLabels = new Set(["주간 브리프", "월간 브리프"]);
+
+  it("keeps slugs unique and date-prefixed to the publish month", () => {
+    const seenSlugs = new Set<string>();
+
+    for (const issue of briefIssues) {
+      expect(seenSlugs.has(issue.slug)).toBe(false);
+      seenSlugs.add(issue.slug);
+
+      const slugMonth = issue.slug.slice(0, 7);
+      expect(slugMonth).toMatch(/^\d{4}-\d{2}$/);
+      expect(issue.publishedAt.slice(0, 7)).toBe(slugMonth);
+    }
+  });
+
+  it("requires a valid publish date and an allowed cadence label", () => {
+    for (const issue of briefIssues) {
+      expect(Number.isNaN(new Date(issue.publishedAt).getTime())).toBe(false);
+      expect(allowedCadenceLabels.has(issue.cadenceLabel)).toBe(true);
+    }
+  });
+
+  it("requires provenance tags and core copy on every issue", () => {
+    for (const issue of briefIssues) {
+      expect(issue.title.trim().length).toBeGreaterThan(0);
+      expect(issue.summary.trim().length).toBeGreaterThan(0);
+      expect(issue.jurisdictions.length).toBeGreaterThan(0);
+      expect(issue.items.length).toBeGreaterThan(0);
+
+      for (const item of issue.items) {
+        expect(item.headline.trim().length).toBeGreaterThan(0);
+        expect(item.whatChanged.trim().length).toBeGreaterThan(0);
+        expect(item.whoShouldCare.trim().length).toBeGreaterThan(0);
+        expect(item.whyItMatters.trim().length).toBeGreaterThan(0);
+        expect(item.nextAction.trim().length).toBeGreaterThan(0);
+
+        expect(item.relatedGuideLinks.length).toBeGreaterThan(0);
+
+        for (const link of item.relatedGuideLinks) {
+          expect(link.label.trim().length).toBeGreaterThan(0);
+          expect(link.href.startsWith("/")).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("keeps the archive sorted newest-first with unique publish dates", () => {
+    const publishDays = briefIssues.map((issue) => issue.publishedAt.slice(0, 10));
+    expect(new Set(publishDays).size).toBe(publishDays.length);
+
+    const timestamps = briefIssues.map((issue) => new Date(issue.publishedAt).getTime());
+    const sortedDesc = [...timestamps].sort((left, right) => right - left);
+    expect(timestamps).toEqual(sortedDesc);
+  });
+});

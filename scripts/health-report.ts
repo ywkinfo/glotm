@@ -2,7 +2,6 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { products } from "../src/products/registry";
-import { getLifecycleCriteria } from "../src/products/scorecard";
 import {
   buildPortfolioHealthReport,
   healthReportMeta,
@@ -19,6 +18,7 @@ import {
   buildResearchSummary,
   claimMapExists,
   getClaimMapPath,
+  getCriticalClaimStalenessDays,
   readClaimMap,
   validateClaimMap
 } from "./research-audit/shared";
@@ -51,7 +51,7 @@ function loadResearchBySlug() {
 
     try {
       const claimMap = readClaimMap(claimMapPath);
-      const lifecycleCriteria = getLifecycleCriteria(product.lifecycleStatus);
+      const claimStalenessDays = getCriticalClaimStalenessDays(product.lifecycleStatus);
       const schemaIssues = validateClaimMap(claimMap);
 
       if (schemaIssues.some((issue) => issue.level === "error")) {
@@ -61,7 +61,7 @@ function loadResearchBySlug() {
       const issues = [
         ...schemaIssues,
         ...runFactsAudit(claimMap),
-        ...runStalenessAudit(claimMap, lifecycleCriteria.maximumVerificationFreshnessDays),
+        ...runStalenessAudit(claimMap, claimStalenessDays),
         ...runConsistencyAudit(claimMap)
       ];
 
@@ -69,7 +69,7 @@ function loadResearchBySlug() {
         claimMap,
         issues,
         product,
-        lifecycleCriteria.maximumVerificationFreshnessDays
+        claimStalenessDays
       );
     } catch {
       continue;
@@ -177,6 +177,27 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
         `| ${product.slug} | ${product.research?.auditMode} | ${product.research?.factIntegrityScore} | ${product.research?.consistencyScore} | ${product.research?.criticalClaimFreshnessDays}d | ${product.research?.staleHighRiskClaimCount} | ${product.research?.effectiveHighRiskGapCount} | ${product.research?.gate} |`
       );
     }
+  }
+
+  lines.push("");
+  lines.push("## Fact-Review (advisory, non-gating)");
+  lines.push("");
+  lines.push("> `factsReviewedOn` 기준 fact freshness다. tier·verdict를 게이팅하지 않으며 lane freshness와 별개다.");
+  lines.push("> `unrecorded`는 stale이 아니라 아직 1차 출처 재대조 기록이 없다는 뜻이다.");
+  lines.push("");
+  lines.push("| Guide | Fact-review | Reviewed on | Fact freshness | Gating |");
+  lines.push("| --- | --- | --- | --- | --- |");
+
+  for (const product of report.products) {
+    const reviewedOn = product.factReview.reviewedOn
+      ? product.factReview.reviewedOn.slice(0, 10)
+      : "—";
+    const factFreshness = product.factReview.freshnessDays === null
+      ? "unrecorded"
+      : `${product.factReview.freshnessDays}d`;
+    lines.push(
+      `| ${product.slug} | ${product.factReview.status} | ${reviewedOn} | ${factFreshness} | non-gating |`
+    );
   }
 
   lines.push("");

@@ -5,6 +5,7 @@ import {
   buildSectionLocation,
   buildChapterPath,
   buildGeneratedContentUrl,
+  getFactReviewFreshnessDays,
   getVerificationFreshnessDays,
   buildRuntimeDocumentTitle,
   createReadingBookmarkStorage,
@@ -123,6 +124,17 @@ describe("shared product helpers", () => {
         {
           verifiedOn: "2026-04-01T00:00:00.000Z"
         },
+        new Date("2026-04-04T12:00:00.000Z")
+      )
+    ).toBe(3);
+  });
+
+  it("returns fact-review freshness only when factsReviewedOn is recorded", () => {
+    expect(getFactReviewFreshnessDays({})).toBeNull();
+    expect(getFactReviewFreshnessDays({ factsReviewedOn: "not-a-date" })).toBeNull();
+    expect(
+      getFactReviewFreshnessDays(
+        { factsReviewedOn: "2026-04-01T00:00:00.000Z" },
         new Date("2026-04-04T12:00:00.000Z")
       )
     ).toBe(3);

@@ -2,7 +2,7 @@ import type {
   LifecycleStatus,
   ProductMeta
 } from "./shared";
-import { getVerificationFreshnessDays } from "./shared";
+import { getFactReviewFreshnessDays, getVerificationFreshnessDays } from "./shared";
 import {
   assessProductLifecycle,
   doesQaLevelMeetMinimum,
@@ -55,6 +55,7 @@ export type ProductHealthRecord = {
   currentLifecycleGaps: string[];
   verification: ProductVerificationRecord;
   research?: ProductResearchRecord;
+  factReview: ProductFactReviewRecord;
   lane: ProductHealthLane;
 };
 
@@ -84,6 +85,17 @@ export type ProductResearchRecord = {
   staleHighRiskClaimCount: number;
   effectiveHighRiskGapCount: number;
   gate: "pass" | "warn" | "fail";
+};
+
+export type ProductFactReviewStatus = "recorded" | "unrecorded";
+
+// fact-review는 advisory 트랙이다. gating은 항상 false이며 lifecycle verdict에 영향을 주지 않는다.
+export type ProductFactReviewRecord = {
+  track: "fact-review";
+  gating: false;
+  status: ProductFactReviewStatus;
+  reviewedOn: string | null;
+  freshnessDays: number | null;
 };
 
 export type ProductVerificationMode = "root-full-pipeline" | "root-shortcut-refresh";
@@ -281,6 +293,21 @@ export function buildRootContentVerificationRecord(products: Pick<ProductMeta, "
   };
 }
 
+export function buildProductFactReviewRecord(
+  product: Pick<ProductMeta, "factsReviewedOn">
+): ProductFactReviewRecord {
+  const freshnessDays = getFactReviewFreshnessDays(product);
+  const recorded = freshnessDays !== null;
+
+  return {
+    track: "fact-review",
+    gating: false,
+    status: recorded ? "recorded" : "unrecorded",
+    reviewedOn: recorded ? (product.factsReviewedOn ?? null) : null,
+    freshnessDays
+  };
+}
+
 export function buildProductHealthRecord(
   product: ProductMeta,
   researchBySlug: Partial<Record<string, ProductResearchRecord>> = {}
@@ -303,6 +330,7 @@ export function buildProductHealthRecord(
     currentLifecycleGaps: getLifecycleCriteriaGaps(product, product.lifecycleStatus),
     verification: buildProductVerificationRecord(product),
     research: researchBySlug[product.slug],
+    factReview: buildProductFactReviewRecord(product),
     lane: productHealthLaneBySlug[product.slug] ?? {
       id: "latam-baseline",
       label: "LatTm baseline reference",

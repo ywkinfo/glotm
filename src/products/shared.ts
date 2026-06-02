@@ -81,6 +81,10 @@ export type ProductMeta = {
   lifecycleStatus: LifecycleStatus;
   lifecycleTone: LifecycleTone;
   verifiedOn: string;
+  // factsReviewedOn: 1차 출처(관보·기관 고지)로 가이드 핵심 claim을 마지막으로 재대조한 시점.
+  // verifiedOn(= shared root lane 재검증)과 다른 별도 advisory 트랙이며 tier를 게이팅하지 않는다.
+  // 실제 재대조를 수행했을 때만 채운다. 미설정이면 health:report에서 "unrecorded"로 표시한다.
+  factsReviewedOn?: string;
   qaLevel: QaLevel;
   highRiskVerificationGapCount: number;
   audience: string;
@@ -373,6 +377,35 @@ export function getVerificationFreshnessDays(
 
   const freshnessDays = Math.floor(
     (startOfUtcDay(nowTimestamp) - startOfUtcDay(verifiedAt)) / 86_400_000
+  );
+
+  return Math.max(0, freshnessDays);
+}
+
+// fact-review advisory 트랙용 freshness. verifiedOn 기반 lane freshness와 분리된다.
+// factsReviewedOn이 없거나 파싱 불가하면 null(= unrecorded)을 돌려준다. tier 게이팅에 쓰지 않는다.
+export function getFactReviewFreshnessDays(
+  product: Pick<ProductMeta, "factsReviewedOn">,
+  now = new Date()
+): number | null {
+  if (!product.factsReviewedOn) {
+    return null;
+  }
+
+  const reviewedAt = Date.parse(product.factsReviewedOn);
+
+  if (Number.isNaN(reviewedAt)) {
+    return null;
+  }
+
+  const nowTimestamp = now.getTime();
+
+  if (Number.isNaN(nowTimestamp)) {
+    return null;
+  }
+
+  const freshnessDays = Math.floor(
+    (startOfUtcDay(nowTimestamp) - startOfUtcDay(reviewedAt)) / 86_400_000
   );
 
   return Math.max(0, freshnessDays);

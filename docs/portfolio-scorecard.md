@@ -13,11 +13,15 @@
 
 ## 단계별 기준
 
-- `Pilot`: 챕터 12+, search density 5+, verification freshness 120일 이하, root smoke QA 통과
-- `Beta`: 챕터 14+, search density 9+, verification freshness 90일 이하, workspace pipeline + root standard verification 통과
-- `Mature`: 챕터 15+, search density 12+, verification freshness 60일 이하, full pipeline + reader/search QA 통과, unresolved high-risk verification gap 0건
+이 기준의 정본은 코드(`../src/products/scorecard.ts`의 `lifecycleCriteriaByStatus`)다. 아래는 사람이 읽는 사본이며, 숫자가 어긋나면 코드가 정본이다.
+
+- `Pilot`: 챕터 12+, search density 5+, verification freshness 180일 이하, root smoke QA 통과
+- `Beta`: 챕터 14+, search density 9+, verification freshness 150일 이하, workspace pipeline + root standard verification 통과
+- `Mature`: 챕터 15+, search density 12+, verification freshness 120일 이하, full pipeline + reader/search QA 통과, unresolved high-risk verification gap 0건
 
 search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계산한다.
+
+여기서 verification freshness는 `verifiedOn`(= shared root lane 재검증 시점) 기준 경과일이며, **lane 재검증 freshness**를 뜻한다. 1차 출처(관보·기관 고지) 대조 같은 **fact freshness**와는 다르다. 따라서 월간 re-stamp로 freshness를 갱신하는 것은 "사실을 다시 확인했다"가 아니라 "lane을 다시 통과시켰다"는 뜻이다. 사실 재대조는 tier를 게이팅하지 않는 별도 advisory 트랙으로 `monthly-review-template.md`에서 본다.
 
 ## Review policy
 
@@ -29,6 +33,8 @@ search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계�
 - `upgrade-ready`는 다음 월간 review에서 상향 후보라는 뜻이지, 즉시 lifecycle status를 바꾼다는 뜻이 아니다.
 
 ## Current assignments
+
+> Tier·Lifecycle 값은 `../src/products/registry.ts` 기준 derived snapshot이다. 손으로 고치지 않고 registry.ts를 바꾼 뒤 맞춘다. 불일치 시 registry.ts가 정본이다.
 
 | Guide | Tier | Lifecycle | Focus |
 |------|------|------|------|
@@ -84,7 +90,7 @@ Hard constraints:
 
 - report는 guide handoff 없이 독립 surface처럼 확장하지 않는다.
 - guide 노출은 current priority order와 trust-layer 구조를 약화시키는 방향으로 넓히지 않는다.
-- alignment-lock phase에서는 `flow clarity`를 우선하고 `content volume` 확대는 목표로 두지 않는다.
+- 현재 organic-indexing phase에서도 `flow clarity`를 우선하고 `content volume` 확대는 목표로 두지 않는다.
 
 ## Report / Gateway trust layer rules
 
