@@ -6,11 +6,11 @@
 ## Snapshot
 
 - Last updated: 2026-06-02
-- Current phase: `Phase 2 — 포지셔닝, tier governance, Gateway alignment`
+- Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> JapTm -> UKTm -> UsaTm`
-- Current rule of thumb: 새 확장보다 기존 포트폴리오의 정합성과 verification provenance를 먼저 잠근다.
+- Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
 - `2026-06-02` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
-- Brief archive provenance: `2026-05-k-beauty-counterfeit-platform-evidence`(2026-05-20 publish)는 2026-05-17 doc lock 이후 추가됐고, 2026-06-02 shared root gate + `src/briefs/archive.test.ts` latest-issue 락으로 커버된다. 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본으로 본다.
+- Brief archive provenance: `2026-05-k-beauty-counterfeit-platform-evidence`(2026-05-20 publish)는 2026-05-17 doc lock 이후 추가됐고, 2026-06-02 shared root gate + `src/briefs/archive.test.ts` latest-issue 락으로 커버된다. 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본 인벤토리로 보며, lane cadence·provenance·publish 게이트 계약은 `briefs-lane.md`를 기준으로 본다.
 
 ## Today
 

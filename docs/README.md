@@ -15,6 +15,7 @@
 ## Global Supporting Docs
 
 - current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
+- briefs lane contract: [`briefs-lane.md`](briefs-lane.md) (정본 콘텐츠·인벤토리는 `../src/briefs/archive.ts`)
 - runtime QA checklist: [`phase1-runtime-qa.md`](phase1-runtime-qa.md)
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)
