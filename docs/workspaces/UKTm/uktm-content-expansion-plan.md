@@ -1,8 +1,10 @@
 # UKTm 콘텐츠 안정화 실행 계획서
 
+> **2026-05-12 갱신 (superseded)**: 이 계획서는 작성 당시 `pilot 유지` 전제였으나, 이후 #53로 `UKTm`이 `pilot→beta`·`smoke→standard`로 승급됐다. 아래 `pilot / smoke QA / draft 공개본` 전제 문구는 그 시점 기준의 historical 기록으로 읽고, 현재 lifecycle/QA의 정본은 `src/products/registry.ts`(= `beta` / `standard` / verified 공개본)를 기준으로 본다.
+
 ## 목적
 
-이 문서는 이미 `/uk`에 연결된 `UKTm` early track을 다음 스프린트에서 어떻게 안정화할지 정리한 실행 계획서다. 핵심 목표는 신규 대확장보다, `draft 공개본 · early track` 포지션을 유지하면서 장별 원고, fact verification, 조립/QA 파이프라인, 루트 셸 회귀 방지 기준을 단단히 하는 것이다.
+이 문서는 이미 `/uk`에 연결된 `UKTm` early track을 다음 스프린트에서 어떻게 안정화할지 정리한 실행 계획서다. 핵심 목표는 신규 대확장보다, `early track` 포지션을 유지하면서 장별 원고, fact verification, 조립/QA 파이프라인, 루트 셸 회귀 방지 기준을 단단히 하는 것이다.
 
 ## 현재 운영 원칙
 
@@ -11,14 +13,14 @@
 3. 사실 검증은 본문보다 `uk_tm_fact_verification_log.md`에서 먼저 잠근다.
 4. 이번 스프린트에서는 status 승격보다 `정합성 + 검증 + 회귀 방지`를 우선한다.
 5. `EuTm`과 내용이 겹치면 영국 독자 판단이 필요한 차이만 남긴다.
-6. 포지션은 `pilot / smoke QA / draft 공개본 / early track`을 유지하고, beta 승격 암시는 피한다.
+6. (작성 당시 원칙) 포지션은 `pilot / smoke QA / draft 공개본 / early track`을 유지하고 beta 승격 암시를 피했다. → 이후 #53(2026-05-12)로 `beta / standard QA / verified 공개본`으로 승급됐고, 현 포지션 정본은 `src/products/registry.ts`다.
 
 ## 이번 스프린트 우선순위
 
 ### 1. 문서 정합성 고정
 
 - `UKTm/README.md`, `UKTm/Harness/Architecture.md`, `UKTm/Harness/Content-Spec.md`가 현재 early-track 상태를 일관되게 설명
-- `/uk`가 이미 live route라는 사실과 `draft 공개본 · pilot · smoke QA` 포지션을 문서에 명시
+- `/uk`가 이미 live route라는 사실과 현재 `beta / standard QA / verified 공개본 · early-track` 포지션을 문서에 명시(2026-05-12 #53 승급 반영)
 
 ### 2. fact verification 우선
 
@@ -46,4 +48,4 @@
 - `build-master -> qa-content -> build-content` 정상 동작
 - `/uk` 홈/챕터/검색/continue reading 동작
 - 기존 live guide 회귀 없음
-- `draft 공개본 · early track · pilot · smoke QA` 포지션과 실제 문서 설명 사이 충돌 없음
+- `beta · standard QA · early-track verified 공개본` 포지션과 실제 문서 설명 사이 충돌 없음 (2026-06-03 정합 반영; 작성 당시 기준은 위 superseded 배너 참조)

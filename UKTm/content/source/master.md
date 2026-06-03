@@ -142,7 +142,7 @@ Brexit 이후 comparable UK right는 번호만 따로 적는 것으로 끝나지
 
 ### search memo 보강 포인트
 
-pilot 공개본에서는 검색 논리를 장문 의견서처럼 쓰기보다, launch와 filing으로 바로 넘길 수 있는 row를 먼저 잠그는 편이 실용적이다. 아래 세 row만 있어도 검색 결과를 받은 날 바로 다음 액션으로 이어지기 쉽다.
+early-track 공개본에서는 검색 논리를 장문 의견서처럼 쓰기보다, launch와 filing으로 바로 넘길 수 있는 row를 먼저 잠그는 편이 실용적이다. 아래 세 row만 있어도 검색 결과를 받은 날 바로 다음 액션으로 이어지기 쉽다.
 
 #### TMview에서 같이 볼 변형
 
@@ -190,7 +190,7 @@ Brexit 이후에는 EU 출원만으로 영국을 자동 커버할 수 없으므�
 
 ### early-track filing decision board
 
-UKTm은 pilot lane이기 때문에, 이 장의 목표는 영국 filing의 모든 예외를 길게 늘어놓는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 영국을 독립 row로 봐야 하는지, EuTm과 병행 row로 볼지 빠르게 다시 판단할 수 있다.
+UKTm은 beta lane이기 때문에, 이 장의 목표는 영국 filing의 모든 예외를 길게 늘어놓는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 영국을 독립 row로 봐야 하는지, EuTm과 병행 row로 볼지 빠르게 다시 판단할 수 있다.
 
 | 먼저 적을 질문 | UK national 쪽 신호 | UK+EU / Madrid 쪽 신호 | 다음 handoff |
 | --- | --- | --- | --- |
@@ -469,16 +469,16 @@ cooling-off는 단순한 지연이 아니라 협상 기간이다. 이 기간에 
 
 영국 등록은 10년마다 갱신되며, 갱신 수수료는 첫 클래스 £200, 추가 클래스당 £50이다. 이 사실 자체보다 중요한 것은 갱신 이벤트를 포트폴리오 정비 이벤트로 쓰는 습관이다.
 
-### pilot-lane maintenance owner board
+### beta-lane maintenance owner board
 
-UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 draft 공개본의 신뢰가 흔들릴까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 pilot lane에서도 유지관리 공백을 크게 줄일 수 있다.
+UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 verified 공개본의 신뢰가 흔들릴까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 beta lane에서도 유지관리 공백을 크게 줄일 수 있다.
 
 | 등록 후 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
 | --- | --- | --- | --- |
 | renewal horizon | 10년 주기를 실제 calendar row로 바꿈 | IP + 재무 | 갱신 준비표 |
 | comparable right 여부 | Brexit 이후 이중 관리 포인트 식별 | IP | renewal card |
 | owner / actual user | licence, distributor, group use 설명 | 법무 + 사업팀 | evidence vault |
-| 다음 점검일 | smoke QA 수준에서도 최소 점검 루틴 유지 | IP | 분기 triage |
+| 다음 점검일 | standard QA 수준에서도 최소 점검 루틴 유지 | IP | 분기 triage |
 
 ### 10년 갱신 주기를 달력으로 바꾼다
 
@@ -544,7 +544,7 @@ UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 dra
 
 ### 분기 운영 quick triage
 
-pilot lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 세 줄로 빠르게 나누는 편이 더 실용적이다.
+beta lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 세 줄로 빠르게 나누는 편이 더 실용적이다.
 
 | 상태 | 의미 | 기본 액션 |
 | --- | --- | --- |
@@ -552,7 +552,7 @@ pilot lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 
 | 보완 | evidence는 있으나 owner-user 또는 comparable memo가 약함 | 다음 점검 전 linkage 보강 |
 | 공백 | renewal row 또는 recent proof가 비어 있음 | 즉시 maintenance card 재구성 |
 
-이 triage 표가 있으면 UKTm은 smoke QA와 draft 공개본 유지라는 현재 lane 목적에 더 잘 맞게 작동한다.
+이 triage 표가 있으면 UKTm은 standard QA와 verified 공개본 유지라는 현재 lane 목적에 더 잘 맞게 작동한다.
 
 ## 사용증거와 Non-Use Cancellation 운영
 
@@ -857,7 +857,7 @@ UKTm의 online 장은 모든 플랫폼별 절차를 깊게 설명하기보다, �
 | 4~24시간 | incident packet, previous seller history, desired remedy 정리 | DRS가 맞는지 takedown이 더 빠른지 |
 | 24~48시간 | 반복 seller / linked domain 여부와 enforcement escalation 결정 | 같은 사건을 UK 단독으로 볼지 EU/UK 병행으로 볼지 |
 
-이 정도만 있어도 UKTm은 draft 공개본 단계에서 "어디서부터 사건을 열 것인가"를 빠르게 다시 찾는 reader utility를 충분히 제공한다.
+이 정도만 있어도 UKTm은 early-track 공개본 단계에서 "어디서부터 사건을 열 것인가"를 빠르게 다시 찾는 reader utility를 충분히 제공한다.
 
 ## 세관, 국경조치, 병행수입 이슈
 
@@ -1013,7 +1013,7 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 
 ### quarterly governance outputs
 
-pilot lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
+beta lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
 
 #### quarterly portfolio memo 4-line format
 
@@ -1129,4 +1129,4 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 - 이 버전에서 수정된 항목: 없음 (draft 공개본 stability 재확인)
 - 다음 권장 검증 시점: 60일 이내 (Brexit 이후 UKIPO 운영 변경 발생 시 즉시)
 - 고위험 검증 갭: 0건
-- 운영 상태: incubate pilot · smoke QA · structure hold · 2026-04-04 local/root verification refreshed
+- 운영 상태: 2026-04-04 시점 `incubate pilot · smoke QA · structure hold` 스냅샷 (이후 2026-05-12 #53로 `incubate beta · standard QA` 승급 — 현재 정본은 `src/products/registry.ts`)

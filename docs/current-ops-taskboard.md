@@ -5,12 +5,13 @@
 
 ## Snapshot
 
-- Last updated: 2026-06-02
+- Last updated: 2026-06-03
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> JapTm -> UKTm -> UsaTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
 - `2026-06-02` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
 - Brief archive provenance: `2026-05-k-beauty-counterfeit-platform-evidence`(2026-05-20 publish)는 2026-05-17 doc lock 이후 추가됐고, 2026-06-02 shared root gate + `src/briefs/archive.test.ts` latest-issue 락으로 커버된다. 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본 인벤토리로 보며, lane cadence·provenance·publish 게이트 계약은 `briefs-lane.md`를 기준으로 본다.
+- 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. registry와 어긋난 잔여 surface는 아래 `Known Drift to Reconcile` 섹션에 남긴다.
 
 ## Today
 
@@ -127,13 +128,13 @@
 - `JapTm` lighter-track alignment
   - local `content:prepare` pass를 root sync input으로 정리했고, 현재 baseline은 `15 chapters / 145 search entries / incubate / beta / standard QA`다.
   - immediate root metadata change는 없고, 다음 액션은 route / maintenance / evidence hygiene utility가 home / continue reading / search에서 충분히 빨리 읽히는지 확인하는 것이다.
-- `UKTm` standard-QA prep
-  - density는 beta 기준을 넘겼지만 lifecycle은 `pilot` 유지다.
-  - local `content:prepare` pass를 root sync input으로 정리했고, 현재 baseline은 `14 chapters / 128 search entries / incubate / pilot / smoke QA`다.
-  - 다음 액션은 `early-track filing decision board`, `pilot-lane maintenance owner board`, `online incident quick board` utility가 home / continue reading / search에서 충분히 빨리 읽히는지 잠그는 것이다.
+- `UKTm` reader-utility 정합 (lifecycle은 이미 `beta`)
+  - registry 정본 baseline: `14 chapters / 128 search entries / incubate / beta / standard QA` (2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급, verifiedOn 2026-06-02). 이전 `pilot / smoke QA` 표기는 승급 이전 잔재였다.
+  - 명칭 drift 해소 (2026-06-03, A안): 소스 챕터 헤딩·home copy·e2e bookmark를 모두 `beta-lane maintenance owner board`로 통일하고 `content:uk` 재생성(0 error). `e2e:smoke` UKTm reader smoke 통과로 reader가 home 문구로 같은 섹션을 찾는 흐름을 검증했다.
+  - 그다음 액션은 `early-track filing decision board`, 위 maintenance owner board, `online incident quick board` utility가 home / continue reading / search에서 충분히 빨리 읽히는지 확인하고 `uktm-root-sync-input.md`에 evidence를 기록하는 것이다.
 - `UsaTm` operating-copy maintenance
-  - root shortcut refresh는 잠겨 있다.
-  - 다음 액션은 filing basis / specimen / monitoring lighter-track utility를 문구와 reader flow에서 유지하는 것이다.
+  - registry 정본 baseline: `14 chapters / 185 search entries / incubate / beta / standard QA` (verifiedOn 2026-06-02).
+  - 직전 라운드(#61, 2026-06-02)에서 저밀도 장에 operating table·checklist를 보강했다. 유지 액션은 filing basis / specimen / monitoring lighter-track utility를 문구와 reader flow에서 계속 유지하는 것이다.
 
 ## Do Not Touch
 
@@ -158,3 +159,27 @@
   - `docs/workspaces/ChaTm/chatm-content-expansion-taskboard.md`
   - `docs/workspaces/MexTm/mextm-content-expansion-taskboard.md`
   - `docs/workspaces/EuTm/eutm-content-expansion-plan.md`
+
+## Known Drift to Reconcile (UKTm beta straggler)
+
+`UKTm`은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급됐고 `src/products/registry.ts`·`PROJECT-OVERVIEW.md`·`portfolio-scorecard.md`는 beta로 정합하다. 승급 이전 `pilot` 표현이 남아 있던 supporting 문서는 2026-06-03에 registry 정본(`incubate / beta / standard`)으로 정합화했다(정본은 registry.ts):
+
+- [x] `docs/workspaces/UKTm/uktm-root-sync-input.md` — beta/standard reader-utility 정합 레인으로 재작성 (2026-06-03).
+- [x] `docs/buyer-narrative.md` — UKTm 줄을 `incubate beta · standard · early-track verified`로 갱신 (2026-06-03).
+- [x] `docs/workspaces/UKTm/uktm-content-expansion-plan.md` — superseded 배너 + 현재형 pilot 단정 정정 (2026-06-03, 과거 라운드 narrative는 historical로 보존).
+
+명칭 drift (2026-06-03 해소, A안):
+
+- [x] 소스 헤딩을 `beta-lane maintenance owner board`로 변경하고 home copy·e2e bookmark와 통일, `content:uk` 재생성(0 error, slug `beta-lane-maintenance-owner-board`) + `e2e:smoke` UKTm reader smoke 통과. generated/public은 gitignored 빌드 산출물로 CI 재생성.
+
+### 추가 발견 — UKTm lifecycle-label 광역 drift (2026-06-03 해소)
+
+②·④ 정리 후 전체 tree sweep에서 동일 family(UKTm을 `pilot / smoke / draft 공개본`으로 단정)가 더 있는 것을 확인하고 registry 정본(`beta / standard / early-track verified`)으로 정합화했다:
+
+- [x] `UKTm/Harness/Architecture.md` (L6, L42) — lifecycle/QA 단정 + 편집 규칙을 `beta / standard / verified`로 정정(“beta 표현 회피” 규칙 → “growth/mature 회피, incubate 유지”).
+- [x] `UKTm/Harness/Content-Spec.md` (L41) — reader-facing 요약 정합 규칙을 `beta / standard / verified`로 정정.
+- [x] 소스 챕터 본문 lifecycle 라벨: `02_clearance-risk.md`(L45), `03_filing-strategy.md`(L9), `07_maintenance-renewal.md`, `11_platform-domain.md`(L70), `13_governance-raci.md`(L66) → `beta lane` / `early-track` / `verified 공개본`.
+- [x] `docs/workspaces/UKTm/uktm-content-expansion-plan.md` (L51) — 성공 기준 줄을 beta 포지션으로 정정.
+- [N/A] `UKTm/content/source/chapters/14_cases-appendix.md` (L68–76) — 2026-04-04 dated 검증 로그라 당시 라벨(pilot/smoke)은 historical로 보존하고, L76 운영-상태 줄에 “이후 2026-05-12 #53 beta 승급 · 정본 registry” forward-pointer만 추가.
+
+소스 챕터 변경분은 `content:uk` 재생성(0 error, 14 chapters / 128 search) + `npm test` 222 통과 + `e2e:smoke` 28 통과로 확인. 남은 `pilot/smoke` 문자열은 전부 ⓐ dated 검증 로그(2026-04-03/04-04), ⓑ 승급 transition 서술, ⓒ `portfolio-scorecard.md`의 `Pilot` tier 기준 정의(UKTm 무관)뿐이다.

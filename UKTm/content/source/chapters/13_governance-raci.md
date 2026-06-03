@@ -63,7 +63,7 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 
 ## quarterly governance outputs
 
-pilot lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
+beta lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
 
 ### quarterly portfolio memo 4-line format
 
