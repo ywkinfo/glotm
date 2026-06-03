@@ -73,4 +73,4 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 - 이 버전에서 수정된 항목: 없음 (draft 공개본 stability 재확인)
 - 다음 권장 검증 시점: 60일 이내 (Brexit 이후 UKIPO 운영 변경 발생 시 즉시)
 - 고위험 검증 갭: 0건
-- 운영 상태: incubate pilot · smoke QA · structure hold · 2026-04-04 local/root verification refreshed
+- 운영 상태: 2026-04-04 시점 `incubate pilot · smoke QA · structure hold` 스냅샷 (이후 2026-05-12 #53로 `incubate beta · standard QA` 승급 — 현재 정본은 `src/products/registry.ts`)

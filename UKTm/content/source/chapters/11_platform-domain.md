@@ -67,4 +67,4 @@ UKTm의 online 장은 모든 플랫폼별 절차를 깊게 설명하기보다, �
 | 4~24시간 | incident packet, previous seller history, desired remedy 정리 | DRS가 맞는지 takedown이 더 빠른지 |
 | 24~48시간 | 반복 seller / linked domain 여부와 enforcement escalation 결정 | 같은 사건을 UK 단독으로 볼지 EU/UK 병행으로 볼지 |
 
-이 정도만 있어도 UKTm은 draft 공개본 단계에서 "어디서부터 사건을 열 것인가"를 빠르게 다시 찾는 reader utility를 충분히 제공한다.
+이 정도만 있어도 UKTm은 early-track 공개본 단계에서 "어디서부터 사건을 열 것인가"를 빠르게 다시 찾는 reader utility를 충분히 제공한다.

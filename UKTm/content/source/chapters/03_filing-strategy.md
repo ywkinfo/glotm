@@ -6,7 +6,7 @@ Brexit 이후에는 EU 출원만으로 영국을 자동 커버할 수 없으므�
 
 ## early-track filing decision board
 
-UKTm은 pilot lane이기 때문에, 이 장의 목표는 영국 filing의 모든 예외를 길게 늘어놓는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 영국을 독립 row로 봐야 하는지, EuTm과 병행 row로 볼지 빠르게 다시 판단할 수 있다.
+UKTm은 beta lane이기 때문에, 이 장의 목표는 영국 filing의 모든 예외를 길게 늘어놓는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 영국을 독립 row로 봐야 하는지, EuTm과 병행 row로 볼지 빠르게 다시 판단할 수 있다.
 
 | 먼저 적을 질문 | UK national 쪽 신호 | UK+EU / Madrid 쪽 신호 | 다음 handoff |
 | --- | --- | --- | --- |

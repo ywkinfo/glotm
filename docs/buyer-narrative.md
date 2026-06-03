@@ -43,7 +43,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `MexTm`, `ChaTm`: growth. buyer entry 질문을 filing·maintenance·border-control handoff까지 이어 잠그는 국가 가이드
 - `EuTm`: validate. controlled EU+UK scope와 rights/route/evidence handoff 정합성을 잠그는 가이드
 - `UsaTm`, `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 filing/route/maintenance reader utility를 다듬는 가이드
-- `UKTm`: incubate pilot. draft 공개본 early-track으로 유지하며 fact verification과 smoke QA를 먼저 고정하는 가이드
+- `UKTm`: incubate beta. early-track verified 공개본과 standard QA를 유지하며 filing/maintenance/online-incident reader utility를 다듬는 가이드
 
 ## Current locked funnel
 

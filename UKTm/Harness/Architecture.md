@@ -3,7 +3,7 @@
 ## Purpose
 
 `UKTm`은 영국 상표 실무를 다루는 단일국가 워크스페이스다.
-루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비한다. 현재 lane 포지션은 early-track `draft 공개본`이며, 포트폴리오 메타데이터 기준 lifecycle은 `pilot`, QA level은 `smoke`다.
+루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비한다. 현재 lane 포지션은 early-track `verified 공개본`이며, 포트폴리오 메타데이터 기준 lifecycle은 `beta`, QA level은 `standard`다(2026-05-12 #53 승급, 정본은 `../src/products/registry.ts`).
 
 ## Source Of Truth
 
@@ -39,7 +39,7 @@
 - `master.md`는 조립 결과물이다. 수동 편집보다 재생성을 우선한다.
 - generated JSON은 손으로 수정하지 않는다.
 - 영국 fee, 기한, 제도 설명은 `content/research/uk_tm_fact_verification_log.md`에서 먼저 검증한다.
-- reader-facing 요약이나 운영 메모를 조정할 때는 `draft 공개본`, `pilot`, `smoke QA` 포지션과 충돌하는 beta/full-depth 표현을 피한다.
+- reader-facing 요약이나 운영 메모를 조정할 때는 `verified 공개본`, `beta`, `standard QA` 포지션과 충돌하는 growth/mature·full-depth 표현을 피한다(`portfolioTier`는 incubate 유지).
 
 ## Implementation Notes
 

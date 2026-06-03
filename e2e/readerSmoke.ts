@@ -89,8 +89,8 @@ export const readerSmokeCases = [
     homeHeading: "영국 상표 실무 운영 가이드북",
     bookmarkChapterSlug: "등록-후-유지관리와-갱신-체계",
     bookmarkChapterTitle: "등록 후 유지관리와 갱신 체계",
-    bookmarkSectionId: "pilot-lane-maintenance-owner-board",
-    bookmarkSectionTitle: "pilot-lane maintenance owner board",
+    bookmarkSectionId: "beta-lane-maintenance-owner-board",
+    bookmarkSectionTitle: "beta-lane maintenance owner board",
     searchQuery: "online incident quick board",
     searchResultText: "online incident quick board"
   }
