@@ -458,6 +458,7 @@ Exit criteria:
 Current shipped state:
 
 - `EuTm/content/research/claim-map.json` is adopted.
+- `EuTm` now chains `content:qa:facts` into its workspace `content:prepare` (same wiring as `ChaTm` and `MexTm`), so all three adopted workspaces hard-gate claim-map schema under root `health:content`. A root convenience command `npm run audit:facts` runs the three workspace audits directly without a full content refresh.
 - `scripts/health-report.ts` already exposes advisory `research` coverage for `europe`.
 - the current EuTm follow-up stayed narrow: Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split.
 
