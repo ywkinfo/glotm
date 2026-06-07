@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "content:latam": "node --import tsx LatTm/scripts/build-master.ts && node --import tsx LatTm/scripts/qa-content.ts && node --import tsx LatTm/scripts/build-content.ts",
     "content:mexico": "node --import tsx MexTm/scripts/build-master.ts && node --import tsx MexTm/scripts/qa-content.ts && node --import tsx MexTm/scripts/build-content.ts",
