@@ -31,9 +31,10 @@
     "health:report:json": "node --import tsx scripts/health-report.ts --format json",
     "health:all": "npm run health:runtime && npm run health:content && npm run health:release && npm run health:report",
     "verify:release": "npm run health:runtime && npm run health:release && npm run health:report",
+    "check:consistency": "node --import tsx scripts/check-portfolio-consistency.ts",
     "test": "vitest run",
-    "test:runtime": "vitest run --exclude src/products/chinaManuscript.test.ts --exclude src/products/mexicoManuscript.test.ts --exclude src/products/europeManuscript.test.ts --exclude src/products/contentLinks.test.ts --exclude Reports/scripts/build-content.test.ts --exclude scripts/seo.test.ts",
-    "test:content": "vitest run src/products/chinaManuscript.test.ts src/products/mexicoManuscript.test.ts src/products/europeManuscript.test.ts src/products/contentLinks.test.ts Reports/scripts/build-content.test.ts scripts/seo.test.ts",
+    "test:runtime": "vitest run --exclude src/products/chinaManuscript.test.ts --exclude src/products/mexicoManuscript.test.ts --exclude src/products/europeManuscript.test.ts --exclude src/products/contentLinks.test.ts --exclude Reports/scripts/build-content.test.ts --exclude scripts/seo.test.ts --exclude scripts/check-portfolio-consistency.test.ts",
+    "test:content": "vitest run src/products/chinaManuscript.test.ts src/products/mexicoManuscript.test.ts src/products/europeManuscript.test.ts src/products/contentLinks.test.ts Reports/scripts/build-content.test.ts scripts/seo.test.ts scripts/check-portfolio-consistency.test.ts",
     "test:watch": "vitest"
   },
   "dependencies": {
