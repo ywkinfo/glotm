@@ -83,7 +83,7 @@ export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
   gatewaySectionTitle: "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다",
   gatewaySectionSummary:
-    "중국에서 사용할 브랜드명과 시장별 출시 순서·출원 방식, 멕시코의 출원·등록 관리와 세관을 통한 위조품 대응, 유럽의 상표 보호 범위와 증거 준비처럼 여러 시장에서 반복되는 질문을 리포트로 정리했습니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
+    "중국·멕시코·유럽 가이드를 보다 보면 브랜드 표기를 어떻게 통일할지, 어느 시장에 먼저 출원할지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
   gatewayRoadmapTitle: "세 가이드의 공통 질문을 모은 리포트",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
