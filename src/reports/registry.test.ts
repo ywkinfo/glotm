@@ -6,7 +6,8 @@ import {
   getLatestReports,
   getPrimaryFocusPointForGuide,
   getReportBySlug,
-  getReportsForGuideSlug
+  getReportsForGuideSlug,
+  reportExperienceMeta
 } from "./registry";
 
 describe("report registry", () => {
@@ -151,5 +152,15 @@ describe("report registry", () => {
       id: "europe-evidence-triage",
       ctaLabel: "EuTm evidence triage 보기"
     });
+  });
+
+  it("uses plain-language gateway report-section and roadmap copy", () => {
+    expect(reportExperienceMeta.gatewaySectionTitle).toBe(
+      "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다"
+    );
+    expect(reportExperienceMeta.gatewayRoadmapTitle).toBe("세 가이드의 공통 질문을 모은 리포트");
+    expect(reportExperienceMeta.gatewaySectionSummary).toBe(
+      "중국에서 사용할 브랜드명과 시장별 출시 순서·출원 방식, 멕시코의 출원·등록 관리와 세관을 통한 위조품 대응, 유럽의 상표 보호 범위와 증거 준비처럼 여러 시장에서 반복되는 질문을 리포트로 정리했습니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다."
+    );
   });
 });
