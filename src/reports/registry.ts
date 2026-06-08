@@ -47,6 +47,7 @@ export type ReportExperienceMeta = {
   gatewaySectionKicker: string;
   gatewaySectionTitle: string;
   gatewaySectionSummary: string;
+  gatewayRoadmapTitle: string;
   archiveHeroKicker: string;
   archiveHeroTitle: string;
   archiveHeroLead: string;
@@ -80,9 +81,10 @@ function sortReportsByPublishedAt(left: ReportMeta, right: ReportMeta) {
 
 export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
-  gatewaySectionTitle: "최신 리포트 2개는 우선 가이드에서 잠근 공통 질문을 다시 묶습니다",
+  gatewaySectionTitle: "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다",
   gatewaySectionSummary:
-    "Gateway 첫 화면에서는 최신 리포트 2개를 trust layer로 두고, ChaTm launch sequencing, MexTm filing packet·maintenance·border-control handoff, EuTm controlled EU+UK scope에서 겹치는 질문만 다시 묶어 보여 줍니다. 나머지 리포트는 Report 아카이브에서 이어서 봅니다.",
+    "중국에서 사용할 브랜드명과 시장별 출시 순서·출원 방식, 멕시코의 출원·등록 관리와 세관을 통한 위조품 대응, 유럽의 상표 보호 범위와 증거 준비처럼 여러 시장에서 반복되는 질문을 리포트로 정리했습니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
+  gatewayRoadmapTitle: "세 가이드의 공통 질문을 모은 리포트",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
   archiveHeroLead:

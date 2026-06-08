@@ -4,7 +4,7 @@
 값을 바꿀 때는 먼저 source of truth를 업데이트한다.
 
 - positioning: `../PROJECT-OVERVIEW.md`, `buyer-narrative.md`
-- Gateway hero: `../src/app/GatewayPage.tsx`
+- Gateway hero: `../src/content/gateway.ts` (supporting 문단 정본), `../src/app/GatewayPage.tsx` (제목·리드)
 - funnel CTA: `../src/products/registry.ts`
 - report ordering: `../src/reports/registry.ts`
 - KPI sheet: `portfolio-scorecard.md`
@@ -51,8 +51,8 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
   `글로벌 상표 출원 우선순위 결정 프레임워크` (`global-filing-priority-framework`, 2026-04-09)
 - Gateway hero copy:
   `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.`
-  `ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm의 filing packet·maintenance·border-control handoff와 EuTm의 controlled EU+UK scope·evidence triage를 같은 흐름으로 이어 봅니다.`
-  `최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다.`
+  `중국 가이드(ChaTm)에서는 중국어 브랜드명, 시장별 출시 순서, 상표 출원 방식을 먼저 정리합니다. 이어 멕시코 가이드(MexTm)에서는 출원 준비와 등록 후 관리, 세관에서 위조품을 막기 위한 준비를 살펴봅니다. 유럽 가이드(EuTm)에서는 EU와 영국에서 상표를 어디까지 보호할지, 권리를 지키기 위해 어떤 증거가 필요한지 살펴봅니다.`
+  `최신 리포트 2개는 세 가이드에서 반복해서 나오는 질문을 한곳에 모아 정리한 자료입니다.`
 - Gateway hero CTA row: `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`
 - KPI sheet 6 events:
   `guide_cta_click`

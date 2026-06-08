@@ -18,6 +18,7 @@ import {
   type ReportMeta
 } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
+import { gatewayHeroSupportingParagraphs } from "../src/content/gateway";
 import {
   buildChapterPath,
   buildProductPath,
@@ -33,10 +34,6 @@ const DEFAULT_SITE_NAME = "GloTm";
 const DEFAULT_SITE_DESCRIPTION =
   "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.";
 const DEFAULT_GATEWAY_HEADING = "인하우스 팀을 위한 cross-border trademark operating guide";
-const DEFAULT_GATEWAY_SUPPORTING_PARAGRAPHS = [
-  "ChaTm에서 중국어 표기와 launch sequencing, 출원 경로를 먼저 잠그고, MexTm과 EuTm으로 buyer-entry control과 validate route pack을 이어 봅니다.",
-  "최신 리포트 2개는 별도 탐색면이 아니라 이 세 가이드에서 공통으로 부딪히는 질문을 다시 묶는 trust layer로 둡니다."
-];
 const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.svg";
 const DEFAULT_SOCIAL_IMAGE_ALT =
   "GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지";
@@ -191,7 +188,7 @@ function renderGatewayBody(basePath: string) {
         <p>GloTm Gateway</p>
         <h1>${escapeHtml(DEFAULT_GATEWAY_HEADING)}</h1>
         <p>${escapeHtml(DEFAULT_SITE_DESCRIPTION)}</p>
-        ${DEFAULT_GATEWAY_SUPPORTING_PARAGRAPHS.map(
+        ${gatewayHeroSupportingParagraphs.map(
           (paragraph) => `<p>${escapeHtml(paragraph)}</p>`
         ).join("\n        ")}
       </header>
