@@ -5,7 +5,7 @@ import { briefIssues, getBriefIssueBySlug, getLatestBriefIssue } from "./archive
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-06-k-brand-multi-country-trademark-portfolio");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-06-china-trademark-amendment-squatting-readiness");
     expect(getBriefIssueBySlug("2026-05-k-beauty-counterfeit-platform-evidence")?.title).toBe(
       "2026년 5월 Hot Global TM Brief | K-뷰티가 해외 플랫폼에서 커질수록 정품 채널·권리·안전 증빙을 한 장으로 묶어야 합니다"
     );
