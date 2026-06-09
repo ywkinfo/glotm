@@ -36,7 +36,7 @@
 
 - 루트 `GloTm`: 2026-06-02 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
 - `health:report`는 fresh proof가 아니라 최근 lane 상태와 provenance를 묶어 읽는 operational snapshot으로 해석한다.
-- Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 리포트 2개를 먼저 보여주는 trust layer / report handoff를 포함한다.
+- Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 브리프 배너를 먼저 보여주고 이어서 리포트 2개를 포함하는 trust layer / report handoff를 운영한다.
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. live verification 표현은 workflow artifact 검증과 구분해서 보며, mobile drawer close 등 live-only 회귀는 `e2e/guide-smoke.spec.ts`의 mobile drawer close controls smoke로 보호한다.
 - 현재 포트폴리오는 총 7개 가이드이며, 모두 루트 셸에서 직접 열 수 있다.
 - 가이드별 챕터 수·검색 엔트리·tier·lifecycle 수치는 이 문서 곳곳에 중복 기재하지 않는다. 런타임 정본은 `src/products/registry.ts`이며, 사람이 읽는 derived snapshot은 아래 "현재 개발된 포트폴리오" 표 하나로만 유지한다. 라이브 verdict는 `npm run health:report`로 본다.

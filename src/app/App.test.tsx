@@ -672,7 +672,7 @@ describe("App portfolio shell", () => {
     ).not.toBe(0);
   });
 
-  it("brings the latest reports above the latest brief banner on the gateway", () => {
+  it("leads the gateway with the latest brief banner above the latest reports trust layer", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
@@ -722,7 +722,7 @@ describe("App portfolio shell", () => {
       )
     ).toBeNull();
     expect(
-      (latestReportsSection as HTMLElement).compareDocumentPosition(briefBanner) & Node.DOCUMENT_POSITION_FOLLOWING
+      (briefBanner as HTMLElement).compareDocumentPosition(latestReportsSection as HTMLElement) & Node.DOCUMENT_POSITION_FOLLOWING
     ).not.toBe(0);
   });
 

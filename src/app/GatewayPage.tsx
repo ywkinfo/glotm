@@ -201,23 +201,6 @@ export function GatewayLandingPage() {
         </aside>
       </section>
 
-      <section className="gateway-section gateway-section--trust-layer">
-        <div className="gateway-section-header">
-          <div>
-            <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
-            <h2 className="gateway-section-title">{reportExperienceMeta.gatewaySectionTitle}</h2>
-          </div>
-          <p className="gateway-section-copy">{reportExperienceMeta.gatewaySectionSummary}</p>
-        </div>
-        {featuredReports.length > 0 ? (
-          <div className="brief-card-grid brief-card-grid--trust-layer">
-            {featuredReports.map((report) => (
-              <ReportCard key={report.id} report={report} surface="gateway_latest_reports" />
-            ))}
-          </div>
-        ) : null}
-      </section>
-
       {latestBrief ? (
         <section className="latest-brief-banner" aria-label="최신 브리프 배너">
           <div className="latest-brief-banner-copy">
@@ -264,6 +247,23 @@ export function GatewayLandingPage() {
           </div>
         </section>
       ) : null}
+
+      <section className="gateway-section gateway-section--trust-layer">
+        <div className="gateway-section-header">
+          <div>
+            <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
+            <h2 className="gateway-section-title">{reportExperienceMeta.gatewaySectionTitle}</h2>
+          </div>
+          <p className="gateway-section-copy">{reportExperienceMeta.gatewaySectionSummary}</p>
+        </div>
+        {featuredReports.length > 0 ? (
+          <div className="brief-card-grid brief-card-grid--trust-layer">
+            {featuredReports.map((report) => (
+              <ReportCard key={report.id} report={report} surface="gateway_latest_reports" />
+            ))}
+          </div>
+        ) : null}
+      </section>
 
       <section className="gateway-cta-card">
         <p className="gateway-kicker">Recommended Start</p>
