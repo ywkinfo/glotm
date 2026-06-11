@@ -91,7 +91,7 @@ Madrid는 유럽만을 위한 특수한 지름길이 아니라 국제 포트폴�
 
 ## EU-wide / core-state / UK split escalation board
 
-유럽 권역 전략이 validate lane에서 흔들리는 대표 이유는, 처음에는 같은 launch wave처럼 보였는데 실제 clearance, distributor 구조, launch timing이 뒤늦게 갈라지는 데 있다. 그래서 제1장에서는 "처음부터 무엇을 분리할까"보다 "어떤 신호가 보이면 EU-wide 구조를 core-state 또는 UK split 구조로 다시 자를까"를 먼저 적는 편이 좋다.
+유럽 권역 전략이 growth lane에서 흔들리는 대표 이유는, 처음에는 같은 launch wave처럼 보였는데 실제 clearance, distributor 구조, launch timing이 뒤늦게 갈라지는 데 있다. 그래서 제1장에서는 "처음부터 무엇을 분리할까"보다 "어떤 신호가 보이면 EU-wide 구조를 core-state 또는 UK split 구조로 다시 자를까"를 먼저 적는 편이 좋다.
 
 | 신호 | 지금 분리할 row | 왜 바로 분리해야 하는가 |
 | --- | --- | --- |
@@ -138,7 +138,7 @@ Madrid는 유럽만을 위한 특수한 지름길이 아니라 국제 포트폴�
 
 ## controlled scope decision board
 
-EuTm가 validate lane에서 흔들리지 않으려면, 첫 장에서부터 어디까지를 본문으로 승격하고 어디부터를 메모 수준으로 남길지 같이 잠그는 편이 좋다. 이 장은 권리 단위를 설명하는 장이지, 독일·프랑스·이탈리아·스페인·영국의 세부 절차를 모두 펼치는 장은 아니다.
+EuTm가 growth lane에서 흔들리지 않으려면, 첫 장에서부터 어디까지를 본문으로 승격하고 어디부터를 메모 수준으로 남길지 같이 잠그는 편이 좋다. 이 장은 권리 단위를 설명하는 장이지, 독일·프랑스·이탈리아·스페인·영국의 세부 절차를 모두 펼치는 장은 아니다.
 
 | 항목 | 이번 라운드에서 본문으로 다룰 것 | 메모 수준으로만 남길 것 |
 | --- | --- | --- |

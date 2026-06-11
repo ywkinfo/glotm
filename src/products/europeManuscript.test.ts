@@ -8,8 +8,8 @@ import {
 const { documentData, searchEntries } = loadManuscriptData(import.meta.url, "../../EuTm");
 
 describe("EuTm manuscript", () => {
-  it("ships the expected 14-chapter Europe manuscript structure", () => {
-    expect(documentData.meta.chapterCount).toBe(14);
+  it("ships the expected 15-chapter Europe manuscript structure", () => {
+    expect(documentData.meta.chapterCount).toBe(15);
     expect(documentData.chapters.map((chapter) => chapter.title)).toContain(
       "제2장. 권리 선택: EUTM, 개별국, 영국 병행"
     );
@@ -18,7 +18,7 @@ describe("EuTm manuscript", () => {
     );
   });
 
-  it("preserves the validate stabilization sections in Europe priority chapters", () => {
+  it("preserves the core stabilization sections in Europe priority chapters", () => {
     const rightSelectionChapter = documentData.chapters.find(
       (chapter) => chapter.title === "제2장. 권리 선택: EUTM, 개별국, 영국 병행"
     );
@@ -32,7 +32,7 @@ describe("EuTm manuscript", () => {
     expect(flattenHeadingTitles(evidenceChapter?.headings)).toContain("EU / UK 분기 캘린더");
   });
 
-  it("keeps the Europe search index dense enough for validate navigation", () => {
+  it("keeps the Europe search index dense enough for growth navigation", () => {
     expect(searchEntries.length).toBeGreaterThanOrEqual(200);
 
     const sectionTitles = new Set(searchEntries.map((entry) => entry.sectionTitle));

@@ -25,15 +25,21 @@
 
 세 질문 이상에 “예”라면 선행 출원 후보로 보는 편이 좋다. 반대로 캠페인성 자산이나 단기 문구는 후순위 또는 미출원 자산으로 남기는 것이 더 합리적일 수 있다.
 
-## launch wave 기준으로 우선순위를 나눈다
+## Launch-Wave × 권리단위 우선순위 매트릭스
 
-유럽 권역에서는 한 번에 모든 국가에 들어가는 경우보다 wave별 진입이 더 일반적이다. 따라서 포트폴리오도 launch wave에 맞춰 나누는 편이 좋다.
+유럽 포트폴리오의 우선순위는 Launch Wave와 권리 단위(EUTM vs National/UK)를 조합하여 결정합니다.
 
-- Wave 1: 당장 판매가 시작되는 국가와 브랜드
-- Wave 2: 12개월 안에 확장 예정인 국가와 브랜드
-- Wave 3: watch list로 남겨 둘 후보 자산
+| 권리 단위 | Wave 1 (Launch) | Wave 2 (12mo+) | Wave 3 (Watch) |
+| :--- | :--- | :--- | :--- |
+| **House Mark** | EUTM (전체) | UK 별도 | - |
+| **Product Mark (핵심)** | EUTM + UK | 국가별 확장 | - |
+| **Product Mark (실험)** | - | EUTM | UK/국가별 |
+| **Defensive Mark** | - | - | EUTM 변형 |
 
-이렇게 나누면 search, filing, evidence 준비가 현실적인 일정표 위에 올라간다.
+**EU/UK 출시 시나리오:**
+- **통합 출시**: EUTM 기반으로 UK를 동시에 launch하여 filing packet을 통합 관리합니다.
+- **분리 출시**: EUTM을 first filing으로 두고 그 **첫 출원일로부터 6개월 이내**에 UK 출원에서 우선권을 주장합니다. 우선권은 **동일 표장·동일 권리자·동일(또는 일부) 상품/서비스**에 한하며, 기준은 등록일이 아니라 첫 출원일입니다.
+- **별도 출시**: 새 EUTM은 UK 권리를 만들지 않으므로 UK는 항상 **별도 출원**이 필요합니다. Comparable UK mark는 2021-01-01(전환 종료) 시점에 **이미 등록돼 있던 기존 EUTM에만 일회성으로 자동 생성**된 권리이며, 신규 브랜드의 UK 진입 경로로 쓸 수 없습니다.
 
 ## house mark와 product mark를 분리해 본다
 

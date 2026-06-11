@@ -14,7 +14,7 @@
 
 이 다섯 축을 먼저 적어 놓으면 권리 선택이 “어떤 제도가 더 좋아 보이는가”가 아니라 “우리 사업에 맞는 운영 단위가 무엇인가”로 바뀐다.
 
-## validate lane용 빠른 분기표
+## growth lane용 빠른 분기표
 
 이번 스프린트에서 이 장을 먼저 다듬는 이유는, 유럽 권리 선택에서 가장 큰 고위험 gap이 “EU 전체로 묶을지, 핵심국만 먼저 갈지, UK를 같은 웨이브로 넣을지”가 초기에 흔들리는 데 있기 때문이다. 아래 표는 buyer가 회의에서 바로 잠가야 할 최소 분기다.
 
@@ -25,7 +25,7 @@
 | 운영 구조 | 중앙 달력·중앙 owner가 적합 | 국가별 owner가 필요 | 계약·유통 구조가 UK를 분리하는지 확인 |
 | 후속 집행 | 광역 설명력이 중요 | 국가별 유연성이 더 중요 | 플랫폼·유통 분쟁에 UK 권리가 필요한지 확인 |
 
-이 표가 있으면 EUTM vs national filing이 단순 제도 비교가 아니라, 어떤 운영 구조가 validate lane에 더 맞는지로 정리된다.
+이 표가 있으면 EUTM vs national filing이 단순 제도 비교가 아니라, 어떤 운영 구조가 growth lane에 더 맞는지로 정리된다.
 
 ## 회원국별 clearance 편차 메모
 
@@ -187,7 +187,7 @@ Madrid는 국제 포트폴리오에서 EU 또는 여러 국가를 함께 관리�
 
 ## rights calendar lock board
 
-EuTm의 validate lane에서 권리 선택이 흔들리는 순간은, 구조는 정했는데 그 구조를 어떤 캘린더 row로 운영할지 적지 않았을 때다. 특히 UK 병행 여부와 evidence 시작 시점이 빠지면, EUTM / national / mixed 결론이 filing 직전 다시 열린다.
+EuTm의 growth lane에서 권리 선택이 흔들리는 순간은, 구조는 정했는데 그 구조를 어떤 캘린더 row로 운영할지 적지 않았을 때다. 특히 UK 병행 여부와 evidence 시작 시점이 빠지면, EUTM / national / mixed 결론이 filing 직전 다시 열린다.
 
 | 구조 | 지금 잠글 캘린더 항목 | 다음 장과의 연결 |
 | --- | --- | --- |
@@ -200,7 +200,7 @@ EuTm의 validate lane에서 권리 선택이 흔들리는 순간은, 구조는 �
 
 ## rights packet 14-day memo
 
-권리 선택 결론 뒤 2주가 지나도록 input이 filing과 evidence 구조로 내려가지 않으면, validate lane에서는 거의 항상 다시 같은 회의를 연다. 그래서 제2장 끝에는 아래 packet memo를 두는 편이 좋다.
+권리 선택 결론 뒤 2주가 지나도록 input이 filing과 evidence 구조로 내려가지 않으면, growth lane에서는 거의 항상 다시 같은 회의를 연다. 그래서 제2장 끝에는 아래 packet memo를 두는 편이 좋다.
 
 | 시점 | 반드시 잠글 것 | owner |
 | --- | --- | --- |

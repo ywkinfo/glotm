@@ -117,7 +117,7 @@ const reportSource: ReportMeta[] = [
     gatewayLabel: "Report",
     gatewayBridgeLabel: defaultReportBridgeLabel,
     whyNow:
-      "현재 포트폴리오에서 먼저 잠가 둔 레인은 ChaTm launch sequencing, MexTm buyer-entry control, EuTm validate governance입니다. 이 세 레인에서 반복되는 국가 우선순위·표장 잠금 질문을 먼저 한 장으로 묶어 두어야 이후 경로 선택과 evidence 설계가 같은 순서로 이어집니다.",
+      "현재 포트폴리오에서 먼저 잠가 둔 레인은 ChaTm launch sequencing, MexTm buyer-entry control, EuTm EU+UK governance입니다. 이 세 레인에서 반복되는 국가 우선순위·표장 잠금 질문을 먼저 한 장으로 묶어 두어야 이후 경로 선택과 evidence 설계가 같은 순서로 이어집니다.",
     trustLayerChecklist: [
       "출시 순서, 채널 노출 시점, 파트너 계약 시점을 같은 표에 적는다.",
       "시장 크기보다 권리 공백 비용이 큰 국가와 표장을 먼저 file-now로 올린다.",
@@ -154,7 +154,7 @@ const reportSource: ReportMeta[] = [
         id: "europe-launch-priority",
         title: "EuTm: launch wave 기준으로 우선순위를 나눈다",
         summary:
-          "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 validate lane이 다음 handoff까지 흔들리지 않습니다.",
+          "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 growth lane이 다음 handoff까지 흔들리지 않습니다.",
         href: buildGuideSectionPath(
           "europe",
           "제3장-포트폴리오-설계와-우선순위",
@@ -455,9 +455,9 @@ const reportSource: ReportMeta[] = [
       },
       {
         id: "europe-evidence-triage",
-        title: "EuTm: validate evidence handoff를 고정한다",
+        title: "EuTm: EU+UK evidence handoff를 고정한다",
         summary:
-          "EuTm은 validate baseline을 controlled EU+UK scope로 잠근 상태이므로, 유통사·마켓플레이스·판매자 증거를 어떤 순서로 넘길지 권역 기준선으로 바로 확인합니다.",
+          "EuTm은 EU+UK scope baseline을 권역 기준선으로 정리한 상태이므로, 유통사·마켓플레이스·판매자 증거를 어떤 순서로 넘길지 바로 확인합니다.",
         href: buildGuideSectionPath(
           "europe",
           "제8장-등록-후-사용-갱신-증거-관리",

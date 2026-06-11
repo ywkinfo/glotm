@@ -174,7 +174,7 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
     id: "eu-priority",
     label: "Priority 3 · EuTm",
     order: 3,
-    notes: "Validate lane. Keep docs sync aligned and hold the controlled Eu/UK scope without widening into member-state detail."
+    notes: "Growth lane. Hold the EU+UK scope and keep docs, tests, and registry aligned after the mature promotion."
   },
   usa: {
     id: "incubate-pack",

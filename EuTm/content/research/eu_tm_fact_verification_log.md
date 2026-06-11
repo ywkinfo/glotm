@@ -12,21 +12,21 @@
 
 | Item | Why it matters | Primary source target | Chapter ref | Status | Notes |
 |------|----------------|-----------------------|-------------|--------|-------|
-| EUTM vs national filing split | 권리 구조 설계의 기준선 | EUIPO trade mark guidance, GOV.UK IP in the EU and EEA | Ch2 | Verified | EUTM는 EU 전체 단위로 등록·양도·취소되며, national filing은 국가별 직접 출원 구조로 본문 반영 완료 |
-| EU-SEL-001 clearance variance memo | EUTM vs mixed structure 판단을 더 정확히 자르기 위한 기준선 | EUIPO Availability/TMview guidance, GOV.UK EU trade mark protection and comparable UK trade marks | Ch2 | Verified | TMview는 EU national office와 EUIPO 기록을 함께 보여 주며, UK는 EUTM 자동 커버 범위가 아니므로, 충돌 가능성이 core launch 국가나 UK에 집중되면 right-selection memo를 EU-wide와 local-risk로 분리하는 운영 기준을 본문에 반영 |
-| Opposition timeline | 이의 대응 운영 달력 | EUIPO after applying guidance | Ch7 | Verified | 공고 후 3-month opposition period를 본문 반영했고, validate-tier stabilization baseline에서는 일정 관리 기준으로 유지 |
-| EU-EVD-001 owner-user evidence memo | distributor / marketplace seller 사용을 genuine use 설명으로 묶는 기준선 | EUIPO cancellation guidance and genuine use materials | Ch8 | Verified | 제3자 판매 흔적도 owner, actual user, linkage, evidence location을 같이 적으면 evidence pack으로 설명 가능하도록 Ch8 triage와 linkage memo에 반영 |
-| Proof of use window | 취소/방어 리스크 | EUIPO cancellation guidance and genuine use materials | Ch8 | Verified | 등록 후 continuous 5-year non-use revocation risk, 부분 사용 시 sub-category limitation 메모 반영 |
-| Renewal timing and grace period | 갱신 운영 핵심 | EUIPO fees/payments and renewal guidance | Ch8 | Verified | EUTM는 10년 단위 갱신, 만료 전 6개월 basic renewal period와 추가 수수료가 붙는 6개월 grace period를 운영 문구와 캘린더 표에 반영 |
-| Customs application scope | 물류 통제 설계 | European Commission customs "Defend your Rights" guidance | Ch12 | Verified | AFA 필요, national vs Union AFA, IPEP/COPIS 운영 구조를 본문 반영 |
-| UK parallel track handling | 권역 범위 확정 | GOV.UK Brexit/IP in EU guidance, EUIPO Brexit Q&A | Ch2, Ch8 | Verified | EUTM와 EU designation은 UK를 자동 커버하지 않으며, 권리 선택과 갱신 캘린더에서 UK 병행 여부를 별도 표기로 관리 |
-| EU-UK-001 launch split calendar | EU와 UK launch timing이 다를 때 renewal/evidence 설명을 흔들리지 않게 만드는 기준선 | GOV.UK EU trade mark protection guidance, EUIPO Brexit Q&A | Ch2, Ch8 | Verified | UK를 병행하더라도 launch timing, actual user, goods/services가 어긋나면 별도 rights calendar row와 evidence owner 메모를 두는 운영 기준을 Ch2/Ch8에 반영 |
-| Priority claim window | filing timing pack lock | EUIPO priority guidelines | Ch5 | Verified | priority는 first filing 후 6개월 안에 주장할 수 있고, priority claim supporting documents는 filing date 기준 3개월 안에 정리해야 하므로 Ch5 timing pack에 first filing date / 6개월 만기 / document owner를 같이 적도록 반영 |
-| Marketplace reporting channel memo | 디지털 제출 채널 재사용 속도 | eBay VeRO program guidance, Amazon rights owner reporting guidance | Ch11 | Verified | eBay VeRO, Amazon Report Infringement, Brand Registry Report a Violation 같은 채널명과 listing identifier를 같이 남기면 evidence pack 재사용과 재신고 속도가 좋아지도록 Ch11 capture rule에 반영 |
-| UK customs AFA split | EU/UK border enforcement split | GOV.UK Apply to protect your intellectual property rights | Ch12 | Verified | UK customs protection은 별도 UK Application for Action으로 움직이고, 다른 EU member state application이 자동으로 UK까지 이어지지 않으므로 Ch12에 parallel UK customs row 메모를 반영 |
-| Madrid linkage | 국제출원 연결 전략 | WIPO Madrid official pages | Ch2 | Verified | Madrid 사용에는 national or regional application/registration 전제가 있다는 점 반영 |
-| Exhaustion and parallel trade | 병행수입 판단 기준 | European Commission notice on exhaustion of IP rights | Ch10 | Verified | EU 단일시장 내 lawful placing on market와 third-country/UK 유통을 분리해서 본문 반영 |
-| Absolute grounds language risk | 설명적·영어 의미 리스크 | EUIPO Brexit Q&A and trade mark guidelines references | Ch6 | Verified | 영어 의미는 여전히 EU relevant public 관점에서 문제될 수 있다는 점을 본문 반영 |
+| EUTM vs national filing split | 권리 구조 설계의 기준선 | EUIPO trade mark guidance, GOV.UK IP in the EU and EEA | Ch2 | Verified (2026-06-09) | 2021-01-01(전환 종료) 기점으로 UK 마크의 EUTM 의존성 완전 분리 확인 |
+| EU-SEL-001 clearance variance memo | EUTM vs mixed structure 판단을 더 정확히 자르기 위한 기준선 | EUIPO Availability/TMview guidance, GOV.UK EU trade mark protection and comparable UK trade marks | Ch2 | Verified (2026-06-09) | Right-selection memo를 EU-wide와 local-risk로 분리 운영 |
+| Opposition timeline | 이의 대응 운영 달력 | EUIPO after applying guidance | Ch7 | Verified (2026-06-09) | 3-month opposition period 엄격 유지 확인 |
+| EU-EVD-001 owner-user evidence memo | distributor / marketplace seller 사용을 genuine use 설명으로 묶는 기준선 | EUIPO cancellation guidance and genuine use materials | Ch8 | Verified (2026-06-09) | Genuine use 입증 요건 확인 |
+| Proof of use window | 취소/방어 리스크 | EUIPO cancellation guidance and genuine use materials | Ch8 | Verified (2026-06-09) | 5-year genuine use 요건 유지 확인 |
+| Renewal timing and grace period | 갱신 운영 핵심 | EUIPO fees/payments and renewal guidance | Ch8 | Verified (2026-06-09) | 10년 갱신 및 6개월 grace period 유지 확인 |
+| Customs application scope | 물류 통제 설계 | European Commission customs "Defend your Rights" guidance | Ch12 | Verified (2026-06-09) | IPEP/COPIS 기반 AFA 전자 신청 필수 확인 |
+| UK parallel track handling | 권역 범위 확정 | GOV.UK Brexit/IP in EU guidance, EUIPO Brexit Q&A | Ch2, Ch8 | Verified (2026-06-09) | 2021-01-01(전환 종료) 이후 UK/EU genuine use 독립성 강화됨에 따라 관리 격리 필수 확인 |
+| EU-UK-001 launch split calendar | EU와 UK launch timing이 다를 때 renewal/evidence 설명을 흔들리지 않게 만드는 기준선 | GOV.UK EU trade mark protection guidance, EUIPO Brexit Q&A | Ch2, Ch8 | Verified (2026-06-09) | 별도 rights calendar row 관리 필수 |
+| Priority claim window | filing timing pack lock | EUIPO priority guidelines | Ch5 | Verified (2026-06-09) | Priority 기준 유지 확인 |
+| Marketplace reporting channel memo | 디지털 제출 채널 재사용 속도 | eBay VeRO program guidance, Amazon rights owner reporting guidance | Ch11 | Verified (2026-06-09) | 채널명 및 capture rule 유지 확인 |
+| UK customs AFA split | EU/UK border enforcement split | GOV.UK Apply to protect your intellectual property rights | Ch12 | Verified (2026-06-09) | UK customs AFA 별도 운영 확인 |
+| Madrid linkage | 국제출원 연결 전략 | WIPO Madrid official pages | Ch2 | Verified (2026-06-09) | Madrid 사용 전제 조건 유지 확인 |
+| Exhaustion and parallel trade | 병행수입 판단 기준 | European Commission notice on exhaustion of IP rights | Ch10 | Verified (2026-06-09) | 병행수입 판단 기준 확인 |
+| Absolute grounds language risk | 설명적·영어 의미 리스크 | EUIPO Brexit Q&A and trade mark guidelines references | Ch6 | Verified (2026-06-09) | 언어 리스크 요건 유지 확인 |
 
 ## Controlled gap
 

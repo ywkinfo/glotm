@@ -11,7 +11,7 @@
       "chapterRefs": ["Ch2"],
       "riskLevel": "HIGH",
       "sourceIds": ["euipo-trade-mark-guidance", "govuk-ip-in-eu-and-eea", "govuk-eu-trade-mark-protection", "euipo-brexit-qa"],
-      "lastVerified": "2026-04-07",
+      "lastVerified": "2026-06-09",
       "status": "BODY_READY",
       "conceptKey": "filing_route",
       "normalized": {
@@ -20,7 +20,7 @@
         "unit": "rule",
         "expression": "EUTM covers the EU, UK requires separate handling"
       },
-      "notes": "fact verification log의 EUTM vs national filing split, EU-SEL-001, UK parallel track handling 반영 범위를 최소 baseline claim으로 묶음"
+      "notes": "2026-06-09 재검증(2026-06-10 날짜 정정): 2021-01-01(Brexit 전환 종료) 기점으로 UK 마크의 EUTM 의존성(genuine use 연결 등) 완전 분리 확인. UK/EU 병행 트랙 유지 필수."
     },
     {
       "id": "EU-DL-001",
@@ -29,7 +29,7 @@
       "chapterRefs": ["Ch7"],
       "riskLevel": "HIGH",
       "sourceIds": ["euipo-after-applying-guidance"],
-      "lastVerified": "2026-04-07",
+      "lastVerified": "2026-06-09",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -38,7 +38,7 @@
         "unit": "months",
         "expression": "within 3 months from publication"
       },
-      "notes": "fact verification log Opposition timeline 항목 기준"
+      "notes": "2026-06-09 재검증: 3개월 opposition period 엄격 유지 확인."
     },
     {
       "id": "EU-EVD-001",
@@ -47,7 +47,7 @@
       "chapterRefs": ["Ch8"],
       "riskLevel": "HIGH",
       "sourceIds": ["euipo-cancellation-guidance", "euipo-genuine-use-materials"],
-      "lastVerified": "2026-04-07",
+      "lastVerified": "2026-06-09",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -56,7 +56,7 @@
         "unit": "years",
         "expression": "continuous 5-year non-use creates revocation risk"
       },
-      "notes": "fact verification log의 Proof of use window 항목 기준"
+      "notes": "2026-06-09 재검증: 5년 genuine use 요건 유지 확인."
     },
     {
       "id": "EU-RNW-001",
@@ -65,7 +65,7 @@
       "chapterRefs": ["Ch8"],
       "riskLevel": "HIGH",
       "sourceIds": ["euipo-fees-payments-guidance", "euipo-renewal-guidance"],
-      "lastVerified": "2026-04-07",
+      "lastVerified": "2026-06-09",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -74,7 +74,7 @@
         "unit": "years",
         "expression": "renew every 10 years with a 6-month standard window and 6-month grace window"
       },
-      "notes": "fact verification log의 Renewal timing and grace period 항목 기준"
+      "notes": "2026-06-09 재검증: 10년 갱신 및 6개월 grace period 유지 확인."
     },
     {
       "id": "EU-UK-001",
@@ -83,9 +83,9 @@
       "chapterRefs": ["Ch8"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["govuk-eu-trade-mark-protection", "euipo-brexit-qa"],
-      "lastVerified": "2026-04-07",
+      "lastVerified": "2026-06-09",
       "status": "BODY_READY",
-      "notes": "fact verification log의 EU-UK-001 launch split calendar 항목 기준"
+      "notes": "2026-06-09 재검증(2026-06-10 날짜 정정): 2021-01-01(Brexit 전환 종료) 이후 UK/EU genuine use 독립성에 따라 관리 격리 필수 확인."
     },
     {
       "id": "EU-ENF-001",
@@ -94,9 +94,57 @@
       "chapterRefs": ["Ch12"],
       "riskLevel": "HIGH",
       "sourceIds": ["ec-customs-defend-your-rights"],
-      "lastVerified": "2026-04-07",
+      "lastVerified": "2026-06-09",
       "status": "BODY_READY",
-      "notes": "fact verification log의 Customs application scope 항목 기준"
+      "notes": "2026-06-09 재검증: IPEP/COPIS 기반 AFA 전자 신청 필수 확인."
+    },
+    {
+      "id": "EU-FEE-001",
+      "jurisdiction": "EU+UK",
+      "claim": "UK 상표 수수료는 2026-04-01 개정으로 온라인·1개류 출원 £205, 갱신 £245다. EUTM은 온라인·1개류 출원·갱신 각 €850다.",
+      "chapterRefs": ["부록", "Ch5"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-fees-2026", "euipo-fees"],
+      "lastVerified": "2026-06-10",
+      "status": "BODY_READY",
+      "conceptKey": "official_fees",
+      "notes": "2026-06-10 1차 출처 대조: UK 출원 £205·갱신 £245(2026-04-01 개정), EUTM 1개류 €850. 류 추가 시 가산. 출처: gov.uk trade-mark-forms-and-fees, euipo.europa.eu fees."
+    },
+    {
+      "id": "EU-PRIO-001",
+      "jurisdiction": "EU+UK",
+      "claim": "Paris 우선권은 first filing date로부터 6개월 이내에 주장할 수 있고, 동일 표장·동일 권리자·동일(또는 일부) 상품/서비스 요건을 충족해야 한다. 기준은 등록일이 아니라 첫 출원일이다.",
+      "chapterRefs": ["Ch3", "Ch5"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["euipo-priority-guidelines"],
+      "lastVerified": "2026-06-10",
+      "status": "BODY_READY",
+      "conceptKey": "priority_window",
+      "notes": "2026-06-10 1차 출처 대조: EUIPO Guidelines 11.2 substantive requirements for priority claims. 첫 출원일 기준 6개월, 동일 표장·권리자·상품/서비스."
+    },
+    {
+      "id": "EU-UKCOMP-001",
+      "jurisdiction": "UK",
+      "claim": "Comparable UK trade mark은 2021-01-01(전환 종료) 시점에 등록돼 있던 기존 EUTM에 한해 일회성으로 자동 생성됐다. 이후 출원·등록되는 새 EUTM은 UK 권리를 만들지 않으므로 UK 보호는 별도 출원이 필요하다.",
+      "chapterRefs": ["Ch3"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["govuk-comparable-uk-marks"],
+      "lastVerified": "2026-06-10",
+      "status": "BODY_READY",
+      "conceptKey": "comparable_uk_mark",
+      "notes": "2026-06-10 1차 출처 대조: gov.uk EU trade mark protection and comparable UK trade marks. 신규 EUTM은 comparable mark를 생성하지 않음(2021 전환 일회성)."
+    },
+    {
+      "id": "EU-AG-001",
+      "jurisdiction": "EU",
+      "claim": "절대적 거절(식별력 부족: descriptive/generic/laudatory/geographic)은 표장과 상품/서비스 조합으로 판단되며, 영어 의미도 EU relevant public(아일랜드·몰타 등) 기준으로 거절 사유가 될 수 있다. 개별 표장 예시는 일반 패턴이며 특정 결정례가 아니다.",
+      "chapterRefs": ["Ch6"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["euipo-absolute-grounds-guidelines", "euipo-brexit-qa"],
+      "lastVerified": "2026-06-10",
+      "status": "BODY_READY",
+      "conceptKey": "absolute_grounds",
+      "notes": "2026-06-10 대조: EUIPO 심사 가이드라인 absolute grounds 및 Brexit Q&A(영어 relevant public). Ch6의 개별 예시는 일반화된 리스크 패턴으로 수정."
     }
   ]
 }

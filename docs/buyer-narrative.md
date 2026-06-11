@@ -41,7 +41,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 - `LatTm`: flagship. cross-border 우선순위와 운영 구조의 기준 프레임
 - `MexTm`, `ChaTm`: growth. buyer entry 질문을 filing·maintenance·border-control handoff까지 이어 잠그는 국가 가이드
-- `EuTm`: validate. controlled EU+UK scope와 rights/route/evidence handoff 정합성을 잠그는 가이드
+- `EuTm`: growth. EU+UK scope와 rights/route/evidence handoff를 두껍게 다루는 가이드
 - `UsaTm`, `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 filing/route/maintenance reader utility를 다듬는 가이드
 - `UKTm`: incubate beta. early-track verified 공개본과 standard QA를 유지하며 filing/maintenance/online-incident reader utility를 다듬는 가이드
 
@@ -49,7 +49,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 - `ChaTm`: canonical CTA는 `ChaTm 보기`. 중국어 표기와 launch sequencing을 먼저 잠그는 첫 진입 가이드다.
 - `MexTm`: canonical CTA는 `MexTm 먼저 보기`. filing packet, maintenance triage, border-control handoff를 buyer-entry 기준으로 잇는 두 번째 가이드다.
-- `EuTm`: canonical CTA는 `EuTm 보기`. validate lane에서 controlled EU+UK scope와 evidence triage 기준을 정리하는 세 번째 가이드다.
+- `EuTm`: canonical CTA는 `EuTm 보기`. growth lane에서 EU+UK scope와 evidence triage 기준을 정리하는 세 번째 가이드다.
 - Gateway hero CTA row는 `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`로 고정한다.
 
 ## Current gateway promise
@@ -67,7 +67,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 - `ChaTm`: 중국어 표기, 서브클래스, 출원 실무, 집행 경로를 먼저 정리해야 할 때 현재 가장 우선순위가 높은 growth 가이드
 - `MexTm`: 멕시코 진입 직전 판단표를 filing packet, 유지관리 triage, border-control escalation까지 이어 볼 때 다음으로 볼 가이드
-- `EuTm`: 유럽 권역을 EU-wide, core-state, UK split 기준선과 evidence triage까지 함께 정리할 때 validate 가이드로 활용
+- `EuTm`: 유럽 권역을 EU-wide, core-state, UK split 기준선과 evidence triage까지 함께 정리할 때 growth 가이드로 활용
 - `LatTm`: 여러 국가를 동시에 검토할 때 기준 프레임을 잡는 flagship 가이드
 
 ## Current execution order

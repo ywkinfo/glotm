@@ -127,7 +127,7 @@ EU opposition period는 3개월이지만, 실제 조직에서는 30일 단위로
 
 ## EU / UK / digital red-line decision board
 
-validate lane에서 실제로 비용이 커지는 순간은 opposition 자체보다, EU 사건을 정리하면서 UK 병행 구조와 platform/domain 통제 문구를 서로 다른 문서로 빼 놓는 때다. 그렇게 되면 협상은 하나 끝났는데 launch 구조와 디지털 채널 룰은 더 복잡해진다.
+growth lane에서 실제로 비용이 커지는 순간은 opposition 자체보다, EU 사건을 정리하면서 UK 병행 구조와 platform/domain 통제 문구를 서로 다른 문서로 빼 놓는 때다. 그렇게 되면 협상은 하나 끝났는데 launch 구조와 디지털 채널 룰은 더 복잡해진다.
 
 그래서 제7장에서는 적어도 한 번은 EU 본안 판단, UK 병행 메모, digital no-go 신호를 같은 보드에 올려 두는 편이 좋다. 이 표가 있으면 coexistence가 가능해 보여도 어떤 항목은 절대 양보하면 안 되는지, 또 어떤 항목은 UK separate track으로 빼야 하는지가 더 빨리 드러난다.
 
@@ -139,7 +139,7 @@ validate lane에서 실제로 비용이 커지는 순간은 opposition 자체보
 | goods/services 양보 범위 | EU와 UK에서 공통으로 줄일 수 있는지 여부 | 한쪽 양보가 다른 쪽 filing/evidence 구조를 흔들지 않게 하기 위해 |
 | cure / breach 구조 | 재분쟁 시 escalation line | cooling-off가 끝난 뒤 어떤 문서로 다시 올라갈지 미리 보이게 하기 위해 |
 
-이 decision board를 두면 제7장은 단순 opposition 장이 아니라, 제8장의 calendar, 제11장의 digital control memo, 그리고 이후 launch 구조까지 같이 지키는 validate lane 운영 장으로 읽히게 된다.
+이 decision board를 두면 제7장은 단순 opposition 장이 아니라, 제8장의 calendar, 제11장의 digital control memo, 그리고 이후 launch 구조까지 같이 지키는 growth lane 운영 장으로 읽히게 된다.
 
 ## UK 병행 출원과 동기화하는 기준
 
@@ -192,7 +192,7 @@ EU opposition이 있다고 해서 UK까지 같은 결론이 자동으로 나오�
 
 ## opposition packet handoff
 
-제7장의 결론은 negotiation note로만 남지 않고, 실제 filing / evidence 운영표와 다시 이어져야 한다. 다음 handoff를 남겨 두면 validate lane의 설명력이 훨씬 안정된다.
+제7장의 결론은 negotiation note로만 남지 않고, 실제 filing / evidence 운영표와 다시 이어져야 한다. 다음 handoff를 남겨 두면 growth lane의 설명력이 훨씬 안정된다.
 
 | 이 장의 출력값 | 다음 운영 파일로 넘길 것 |
 | --- | --- |
