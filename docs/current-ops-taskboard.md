@@ -40,18 +40,17 @@
 - [x] `mextm-content-expansion-taskboard.md`의 Leader Integration Inputs를 root sync 관점으로 옮길 수 있다.
 - [x] local gate 결과와 root wording 후보가 한 장의 메모로 묶여 있다.
 
-### 3. `EuTm` stabilization closeout 준비 — **완료 (2026-05-17)**
+### 3. EuTm growth expansion 착수 — **진행 중 (2026-06-09)**
 
-- `controlled EU+UK scope` 문구: workspace docs / portfolio-scorecard / registry.ts 모두 동일 표현으로 확인 → drift 없음
-- 핵심 6장 wording drift: `eutm-root-sync-input.md` Chapter Drift Map 기준 6개 장 모두 `no source drift`
-- `14 chapters / 258 search entries / validate / beta` canonical 순서 명시: `registry.ts` → `manifest.json` → `search-index.json` → `eutm-root-sync-input.md`
-- `eutm-root-sync-input.md` verifiedOn → 2026-05-12 갱신
-- `eutm-content-expansion-plan.md` 2026-05-17 closeout memo 추가 (stabilization 리스크 ↔ root wording drift 연결)
+- [ ] 1단계: 권한·계약 변경 (PROJECT-OVERVIEW / Harness docs)
+- [ ] 2단계: 공식 출처 사실 검증 (1차 출처 재대조)
+- [ ] 3단계: 집중 콘텐츠 보강 (Ch3·6·10·14 + 부록)
+- [ ] 4단계: QA 및 mature 승급 (scorecard review)
 
-완료 기준 충족:
-
-- [x] `eutm-content-expansion-plan.md`의 stabilization 리스크가 root wording drift와 연결돼 설명된다.
-- [x] root docs sync 전에 어떤 파일이 정본인지 분명하다.
+진행 기준:
+- `controlled EU+UK scope` 유지
+- `growth` tiers/contract 반영
+- `factual-freshness` 검증 선행
 
 ## This Week
 

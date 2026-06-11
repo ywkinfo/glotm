@@ -26,7 +26,7 @@
 ## Notes
 
 - 현재 `EuTm`의 공개본 기준은 `content/source/master.md`입니다.
-- 현재 workspace baseline은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`입니다.
+- 현재 workspace baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle / EU+UK범위`입니다.
 - structured factual QA baseline으로 `content/research/claim-map.json`을 사용하며, root `health:report`에서는 `europe` advisory `research` status가 함께 노출됩니다.
 - 장별 원고 수정은 가능한 한 `content/source/chapters/`에서 시작하고, `master.md`는 조립 결과물로 취급합니다.
 - 루트 `GloTm` 셸은 이 워크스페이스의 `content/generated/` 산출물을 읽어 `/europe` 리더를 렌더링합니다.

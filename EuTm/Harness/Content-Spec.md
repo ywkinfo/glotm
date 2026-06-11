@@ -42,8 +42,7 @@
 - 검증 로그와 claim-map에 올리는 항목은 `eu_tm_source_register.md`의 source family와 충돌하지 않게 유지한다.
 - 권역형 본문은 EU 공통 프레임과 UK 병행 판단을 먼저 설명하고, 회원국별 예외는 표나 메모 수준으로 제한한다.
 - 장별 최소 3개 이상의 실무 섹션(H2)을 유지하고, 가능한 경우 체크리스트나 표를 포함한다.
-- 핵심 6장(`제1장`, `제2장`, `제4장`, `제5장`, `제7장`, `제8장`)의 판단표·운영 캘린더·evidence 구조는 현재 baseline에 이미 반영되어 있다.
-- 후반 운영 장 follow-up은 Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split처럼 controlled EU+UK scope 안의 좁은 operational note만 허용한다.
-- 현재 baseline 문구는 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`로 고정한다.
-- 이번 스프린트에서는 14장 전면 확장보다 validate-tier stabilization baseline 기준의 docs sync, controlled EU+UK scope 유지, workspace gate 입력 정리를 우선하고, 나머지 장은 controlled scope를 깨지 않는 정합성 유지 수준으로 다룬다.
+- 핵심 장(제3, 6, 10, 14장)의 판단표·체크리스트·운영 매트릭스 추가 및 부록 보강을 진행한다.
+- 현재 baseline 문구는 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle / EU+UK범위`로 확정한다. (이전 14개 장/validate tier/beta lifecycle 기록은 dated history로 보존)
+- 이번 스프린트에서는 15장 체계로의 전환, growth-tier 집중 보강, 부록 추가, workspace gate 정합성을 우선한다.
 - `content:europe` 통과 전에는 루트 `health:*` 명령을 개별 반복하지 않고, lane 결과를 리더의 shared root gate로 넘긴다.

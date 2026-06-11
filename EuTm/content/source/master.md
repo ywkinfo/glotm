@@ -96,7 +96,7 @@ Madrid는 유럽만을 위한 특수한 지름길이 아니라 국제 포트폴�
 
 ### EU-wide / core-state / UK split escalation board
 
-유럽 권역 전략이 validate lane에서 흔들리는 대표 이유는, 처음에는 같은 launch wave처럼 보였는데 실제 clearance, distributor 구조, launch timing이 뒤늦게 갈라지는 데 있다. 그래서 제1장에서는 "처음부터 무엇을 분리할까"보다 "어떤 신호가 보이면 EU-wide 구조를 core-state 또는 UK split 구조로 다시 자를까"를 먼저 적는 편이 좋다.
+유럽 권역 전략이 growth lane에서 흔들리는 대표 이유는, 처음에는 같은 launch wave처럼 보였는데 실제 clearance, distributor 구조, launch timing이 뒤늦게 갈라지는 데 있다. 그래서 제1장에서는 "처음부터 무엇을 분리할까"보다 "어떤 신호가 보이면 EU-wide 구조를 core-state 또는 UK split 구조로 다시 자를까"를 먼저 적는 편이 좋다.
 
 | 신호 | 지금 분리할 row | 왜 바로 분리해야 하는가 |
 | --- | --- | --- |
@@ -143,7 +143,7 @@ Madrid는 유럽만을 위한 특수한 지름길이 아니라 국제 포트폴�
 
 ### controlled scope decision board
 
-EuTm가 validate lane에서 흔들리지 않으려면, 첫 장에서부터 어디까지를 본문으로 승격하고 어디부터를 메모 수준으로 남길지 같이 잠그는 편이 좋다. 이 장은 권리 단위를 설명하는 장이지, 독일·프랑스·이탈리아·스페인·영국의 세부 절차를 모두 펼치는 장은 아니다.
+EuTm가 growth lane에서 흔들리지 않으려면, 첫 장에서부터 어디까지를 본문으로 승격하고 어디부터를 메모 수준으로 남길지 같이 잠그는 편이 좋다. 이 장은 권리 단위를 설명하는 장이지, 독일·프랑스·이탈리아·스페인·영국의 세부 절차를 모두 펼치는 장은 아니다.
 
 | 항목 | 이번 라운드에서 본문으로 다룰 것 | 메모 수준으로만 남길 것 |
 | --- | --- | --- |
@@ -186,7 +186,7 @@ EuTm가 validate lane에서 흔들리지 않으려면, 첫 장에서부터 어�
 
 이 다섯 축을 먼저 적어 놓으면 권리 선택이 “어떤 제도가 더 좋아 보이는가”가 아니라 “우리 사업에 맞는 운영 단위가 무엇인가”로 바뀐다.
 
-### validate lane용 빠른 분기표
+### growth lane용 빠른 분기표
 
 이번 스프린트에서 이 장을 먼저 다듬는 이유는, 유럽 권리 선택에서 가장 큰 고위험 gap이 “EU 전체로 묶을지, 핵심국만 먼저 갈지, UK를 같은 웨이브로 넣을지”가 초기에 흔들리는 데 있기 때문이다. 아래 표는 buyer가 회의에서 바로 잠가야 할 최소 분기다.
 
@@ -197,7 +197,7 @@ EuTm가 validate lane에서 흔들리지 않으려면, 첫 장에서부터 어�
 | 운영 구조 | 중앙 달력·중앙 owner가 적합 | 국가별 owner가 필요 | 계약·유통 구조가 UK를 분리하는지 확인 |
 | 후속 집행 | 광역 설명력이 중요 | 국가별 유연성이 더 중요 | 플랫폼·유통 분쟁에 UK 권리가 필요한지 확인 |
 
-이 표가 있으면 EUTM vs national filing이 단순 제도 비교가 아니라, 어떤 운영 구조가 validate lane에 더 맞는지로 정리된다.
+이 표가 있으면 EUTM vs national filing이 단순 제도 비교가 아니라, 어떤 운영 구조가 growth lane에 더 맞는지로 정리된다.
 
 ### 회원국별 clearance 편차 메모
 
@@ -359,7 +359,7 @@ Madrid는 국제 포트폴리오에서 EU 또는 여러 국가를 함께 관리�
 
 ### rights calendar lock board
 
-EuTm의 validate lane에서 권리 선택이 흔들리는 순간은, 구조는 정했는데 그 구조를 어떤 캘린더 row로 운영할지 적지 않았을 때다. 특히 UK 병행 여부와 evidence 시작 시점이 빠지면, EUTM / national / mixed 결론이 filing 직전 다시 열린다.
+EuTm의 growth lane에서 권리 선택이 흔들리는 순간은, 구조는 정했는데 그 구조를 어떤 캘린더 row로 운영할지 적지 않았을 때다. 특히 UK 병행 여부와 evidence 시작 시점이 빠지면, EUTM / national / mixed 결론이 filing 직전 다시 열린다.
 
 | 구조 | 지금 잠글 캘린더 항목 | 다음 장과의 연결 |
 | --- | --- | --- |
@@ -372,7 +372,7 @@ EuTm의 validate lane에서 권리 선택이 흔들리는 순간은, 구조는 �
 
 ### rights packet 14-day memo
 
-권리 선택 결론 뒤 2주가 지나도록 input이 filing과 evidence 구조로 내려가지 않으면, validate lane에서는 거의 항상 다시 같은 회의를 연다. 그래서 제2장 끝에는 아래 packet memo를 두는 편이 좋다.
+권리 선택 결론 뒤 2주가 지나도록 input이 filing과 evidence 구조로 내려가지 않으면, growth lane에서는 거의 항상 다시 같은 회의를 연다. 그래서 제2장 끝에는 아래 packet memo를 두는 편이 좋다.
 
 | 시점 | 반드시 잠글 것 | owner |
 | --- | --- | --- |
@@ -450,15 +450,21 @@ Madrid는 국제 포트폴리오 도구이지, 유럽 충돌 분석이나 권리
 
 세 질문 이상에 “예”라면 선행 출원 후보로 보는 편이 좋다. 반대로 캠페인성 자산이나 단기 문구는 후순위 또는 미출원 자산으로 남기는 것이 더 합리적일 수 있다.
 
-### launch wave 기준으로 우선순위를 나눈다
+### Launch-Wave × 권리단위 우선순위 매트릭스
 
-유럽 권역에서는 한 번에 모든 국가에 들어가는 경우보다 wave별 진입이 더 일반적이다. 따라서 포트폴리오도 launch wave에 맞춰 나누는 편이 좋다.
+유럽 포트폴리오의 우선순위는 Launch Wave와 권리 단위(EUTM vs National/UK)를 조합하여 결정합니다.
 
-- Wave 1: 당장 판매가 시작되는 국가와 브랜드
-- Wave 2: 12개월 안에 확장 예정인 국가와 브랜드
-- Wave 3: watch list로 남겨 둘 후보 자산
+| 권리 단위 | Wave 1 (Launch) | Wave 2 (12mo+) | Wave 3 (Watch) |
+| :--- | :--- | :--- | :--- |
+| **House Mark** | EUTM (전체) | UK 별도 | - |
+| **Product Mark (핵심)** | EUTM + UK | 국가별 확장 | - |
+| **Product Mark (실험)** | - | EUTM | UK/국가별 |
+| **Defensive Mark** | - | - | EUTM 변형 |
 
-이렇게 나누면 search, filing, evidence 준비가 현실적인 일정표 위에 올라간다.
+**EU/UK 출시 시나리오:**
+- **통합 출시**: EUTM 기반으로 UK를 동시에 launch하여 filing packet을 통합 관리합니다.
+- **분리 출시**: EUTM을 first filing으로 두고 그 **첫 출원일로부터 6개월 이내**에 UK 출원에서 우선권을 주장합니다. 우선권은 **동일 표장·동일 권리자·동일(또는 일부) 상품/서비스**에 한하며, 기준은 등록일이 아니라 첫 출원일입니다.
+- **별도 출시**: 새 EUTM은 UK 권리를 만들지 않으므로 UK는 항상 **별도 출원**이 필요합니다. Comparable UK mark는 2021-01-01(전환 종료) 시점에 **이미 등록돼 있던 기존 EUTM에만 일회성으로 자동 생성**된 권리이며, 신규 브랜드의 UK 진입 경로로 쓸 수 없습니다.
 
 ### house mark와 product mark를 분리해 본다
 
@@ -716,7 +722,7 @@ search 결과가 많을수록 무엇을 filing 입력값으로 잠그고 무엇�
 
 ### search-to-opposition handoff
 
-search pack이 정말 잘 만들어졌는지는 filing이 아니라 opposition 단계에서 더 분명히 드러난다. 공고 이후 바로 쓸 수 있는 메모를 지금부터 남겨 두면, validate lane에서 같은 조사를 두 번 하지 않아도 된다.
+search pack이 정말 잘 만들어졌는지는 filing이 아니라 opposition 단계에서 더 분명히 드러난다. 공고 이후 바로 쓸 수 있는 메모를 지금부터 남겨 두면, growth lane에서 같은 조사를 두 번 하지 않아도 된다.
 
 | search 단계 출력값 | 제7장으로 넘길 것 | 왜 미리 넘겨야 하는가 |
 | --- | --- | --- |
@@ -783,7 +789,7 @@ EUTM filing은 하나의 권리 단위로 EU 전체를 다룰 때 강점이 있�
 
 ### core-state filing control board
 
-validate lane에서 제5장이 흔들리는 순간은 권리 선택 결론은 있는데, 그 결론을 어떤 filing packet row로 내려야 하는지 안 적혀 있을 때다. 특히 EUTM 단독, core-state national filing, UK split, mixed structure가 같이 보이는 경우에는 "무엇을 어느 packet에 넣을 것인가"를 먼저 고정하는 편이 좋다.
+growth lane에서 제5장이 흔들리는 순간은 권리 선택 결론은 있는데, 그 결론을 어떤 filing packet row로 내려야 하는지 안 적혀 있을 때다. 특히 EUTM 단독, core-state national filing, UK split, mixed structure가 같이 보이는 경우에는 "무엇을 어느 packet에 넣을 것인가"를 먼저 고정하는 편이 좋다.
 
 | launch 구조 | filing packet에서 먼저 분리할 것 | 왜 미리 적어야 하는가 |
 | --- | --- | --- |
@@ -946,19 +952,23 @@ EuTm에서는 filing이 잘 됐는지보다, 그 filing 구조가 나중에도 �
 
 따라서 EuTm에서 절대적 거절 검토는 search의 다음 단계가 아니라, 출원 전 표장 품질 점검에 가깝다.
 
-### 자주 만나는 위험 유형
+### Absolute Grounds 위험 × 대응 매트릭스
 
-#### descriptive signs
-상품이나 서비스의 성질, 종류, 목적, 가치, 지리적 출처를 직접 설명하는 표현은 거절 가능성이 높다. 특히 다언어 시장인 유럽에서는 영어 표현이라도 relevant public이 이해할 수 있으면 리스크가 생길 수 있다.
+심사 단계별 식별력 부족 위험에 대한 운영 대응 매트릭스입니다.
 
-#### generic or customary terms
-업계에서 보통명사처럼 쓰이는 표현은 식별력이 약하다. 브랜드팀이 멋있다고 느끼는 표현이 실제로는 시장에서 흔한 카테고리명일 수 있다.
+| 위험 유형 | 식별력 수준 | 대응 매트릭스 |
+| :--- | :--- | :--- |
+| **Descriptive** | 낮음 | (1) 시각 요소 보강, (2) 상품군 축소, (3) acquired distinctiveness 논리 준비 |
+| **Generic** | 매우 낮음 | (1) 표장 수정 필수, (2) 상품군 조정 효과 없음 |
+| **Laudatory** | 중간 | (1) 슬로건으로 분리, (2) 조합표장(로고 결합)으로 출원 |
+| **Geographic** | 중간/낮음 | (1) 출처 설명 추가, (2) 실제 사용국가 증거 제시 |
 
-#### laudatory claims
-“best”, “premium”, “super”, “quality”처럼 칭찬성 표현이 핵심을 이루면 식별력 확보가 어렵다. 이런 표현은 보조 문구로는 쓸 수 있어도 핵심 브랜드로는 약한 경우가 많다.
+**언어권 Screening 패턴** (출원 전 리스크 분류용 일반 유형이며, 특정 결정례가 아니다):
+- **영어(EN)**: 칭찬성 형용사(예: "최고/우수" 류)는 식별력이 약해 단독 워드마크로는 거절 위험이 높다 → 도형/로고 결합을 검토한다.
+- **라틴계(FR/ES)**: 짧은 일반 형용사는 상품군에 따라 설명적으로 읽혀 거절될 수 있다 → 식별 요소를 추가한다.
+- **지리적 명칭**: 도시·지역명은 출처를 직접 연상시키면 거절 위험이 커진다 → 도형 결합이나 실제 출처 설명으로 완화한다.
 
-#### geographic meaning
-지리적 명칭이나 특정 지역을 직접 연상시키는 표현은 주의가 필요하다. 특히 제품 origin, style, cultural association와 연결될 경우 리스크가 커질 수 있다.
+구체 표장의 등록 가능성은 EUIPO 심사 가이드라인(absolute grounds)과 개별 결정례로 확인하며, 위 항목은 일반화된 리스크 패턴이다.
 
 ### 영어 의미는 여전히 중요하다
 
@@ -1169,7 +1179,7 @@ EU opposition period는 3개월이지만, 실제 조직에서는 30일 단위로
 
 ### EU / UK / digital red-line decision board
 
-validate lane에서 실제로 비용이 커지는 순간은 opposition 자체보다, EU 사건을 정리하면서 UK 병행 구조와 platform/domain 통제 문구를 서로 다른 문서로 빼 놓는 때다. 그렇게 되면 협상은 하나 끝났는데 launch 구조와 디지털 채널 룰은 더 복잡해진다.
+growth lane에서 실제로 비용이 커지는 순간은 opposition 자체보다, EU 사건을 정리하면서 UK 병행 구조와 platform/domain 통제 문구를 서로 다른 문서로 빼 놓는 때다. 그렇게 되면 협상은 하나 끝났는데 launch 구조와 디지털 채널 룰은 더 복잡해진다.
 
 그래서 제7장에서는 적어도 한 번은 EU 본안 판단, UK 병행 메모, digital no-go 신호를 같은 보드에 올려 두는 편이 좋다. 이 표가 있으면 coexistence가 가능해 보여도 어떤 항목은 절대 양보하면 안 되는지, 또 어떤 항목은 UK separate track으로 빼야 하는지가 더 빨리 드러난다.
 
@@ -1181,7 +1191,7 @@ validate lane에서 실제로 비용이 커지는 순간은 opposition 자체보
 | goods/services 양보 범위 | EU와 UK에서 공통으로 줄일 수 있는지 여부 | 한쪽 양보가 다른 쪽 filing/evidence 구조를 흔들지 않게 하기 위해 |
 | cure / breach 구조 | 재분쟁 시 escalation line | cooling-off가 끝난 뒤 어떤 문서로 다시 올라갈지 미리 보이게 하기 위해 |
 
-이 decision board를 두면 제7장은 단순 opposition 장이 아니라, 제8장의 calendar, 제11장의 digital control memo, 그리고 이후 launch 구조까지 같이 지키는 validate lane 운영 장으로 읽히게 된다.
+이 decision board를 두면 제7장은 단순 opposition 장이 아니라, 제8장의 calendar, 제11장의 digital control memo, 그리고 이후 launch 구조까지 같이 지키는 growth lane 운영 장으로 읽히게 된다.
 
 ### UK 병행 출원과 동기화하는 기준
 
@@ -1234,7 +1244,7 @@ EU opposition이 있다고 해서 UK까지 같은 결론이 자동으로 나오�
 
 ### opposition packet handoff
 
-제7장의 결론은 negotiation note로만 남지 않고, 실제 filing / evidence 운영표와 다시 이어져야 한다. 다음 handoff를 남겨 두면 validate lane의 설명력이 훨씬 안정된다.
+제7장의 결론은 negotiation note로만 남지 않고, 실제 filing / evidence 운영표와 다시 이어져야 한다. 다음 handoff를 남겨 두면 growth lane의 설명력이 훨씬 안정된다.
 
 | 이 장의 출력값 | 다음 운영 파일로 넘길 것 |
 | --- | --- |
@@ -1310,7 +1320,7 @@ EUIPO guidance상 등록 만료 전 알림이 제공될 수 있지만, 사무소
 
 ### renewal + genuine use 운영 캘린더
 
-이 장의 안정화 포인트는 갱신과 사용증거를 따로 보지 않고 같은 캘린더에 묶는 데 있다. 그래야 validate lane에서 가장 흔한 “등록은 살아 있는데 설명 가능한 evidence가 약한 상태”를 줄일 수 있다.
+이 장의 안정화 포인트는 갱신과 사용증거를 따로 보지 않고 같은 캘린더에 묶는 데 있다. 그래야 growth lane에서 가장 흔한 “등록은 살아 있는데 설명 가능한 evidence가 약한 상태”를 줄일 수 있다.
 
 | 시점 | 반드시 같이 볼 것 | owner |
 | --- | --- | --- |
@@ -1408,7 +1418,7 @@ evidence vault는 자료 수량보다 설명 가능성이 중요하다. 그래�
 
 ### distributor / marketplace seller evidence triage
 
-validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, distributor나 marketplace seller가 만든 증거를 owner 권리와 어떻게 연결해 설명할지 모호한 상태다. 그래서 이 장에서는 “판매 흔적이 있나”보다 “그 판매 흔적이 누구의 genuine use로 읽혀야 하나”를 먼저 구분하는 편이 낫다.
+growth lane에서 자주 남는 약점은 증거가 없는 것이 아니라, distributor나 marketplace seller가 만든 증거를 owner 권리와 어떻게 연결해 설명할지 모호한 상태다. 그래서 이 장에서는 “판매 흔적이 있나”보다 “그 판매 흔적이 누구의 genuine use로 읽혀야 하나”를 먼저 구분하는 편이 낫다.
 
 | actual user 유형 | 꼭 같이 남길 linkage | 대표 증거 | 약해지기 쉬운 지점 |
 | --- | --- | --- | --- |
@@ -1440,7 +1450,7 @@ validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, d
 
 ### renewal / proof-of-use handoff
 
-이 장의 출력값은 renewal 달력과 proof-of-use 대응으로 바로 이어져야 한다. 아래 handoff를 남기면 validate lane 설명이 더 안정적이다.
+이 장의 출력값은 renewal 달력과 proof-of-use 대응으로 바로 이어져야 한다. 아래 handoff를 남기면 growth lane 설명이 더 안정적이다.
 
 | 이 장의 출력값 | 다음 운영 파일로 넘길 것 |
 | --- | --- |
@@ -1449,7 +1459,7 @@ validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, d
 | evidence quality scorecard | 분기 운영 루틴 |
 | weak goods/services 표시 | 포트폴리오 정리 후보 |
 
-이 메모를 명시해 두면, 아직 넓히지 않은 범위를 숨기지 않으면서도 validate lane의 기준선을 명확히 유지할 수 있다.
+이 메모를 명시해 두면, 아직 넓히지 않은 범위를 숨기지 않으면서도 growth lane의 기준선을 명확히 유지할 수 있다.
 
 ### evidence-to-enforcement reuse memo
 
@@ -1466,7 +1476,7 @@ EuTm의 운영 장점은 evidence를 renewal 대응용 파일로만 두지 않�
 
 ### weak goods/services trim memo
 
-renewal과 genuine use를 같은 캘린더에 넣는 이유는, 약한 goods/services를 너무 늦게 발견하지 않기 위해서다. validate lane에서는 “계속 유지할 범위”만큼이나 “언제 trim 후보로 볼지”를 적어 두는 편이 좋다.
+renewal과 genuine use를 같은 캘린더에 넣는 이유는, 약한 goods/services를 너무 늦게 발견하지 않기 위해서다. growth lane에서는 “계속 유지할 범위”만큼이나 “언제 trim 후보로 볼지”를 적어 두는 편이 좋다.
 
 | 상태 | 지금 남길 메모 | 기본 액션 |
 | --- | --- | --- |
@@ -1698,16 +1708,18 @@ EUIPO guidance는 사용이 일부 goods/services에만 입증될 경우, 보호
 - 누가 포장과 브랜드 표현을 승인하는가
 - 종료 후 재고와 마케팅 자산은 어떻게 회수하는가
 
-### 라이선스 운영의 핵심
+### 계약 → Evidence Handoff (운영 연계)
 
-라이선스는 단순 허락이 아니라 quality control과 기록 관리까지 포함해야 한다. 특히 유럽 권역에서 여러 국가에 걸쳐 유통되는 브랜드라면, 아래가 중요하다.
+라이선스/유통 계약은 단순한 문서가 아니라 evidence 수집을 위한 핵심 인프라입니다. 계약에서 수립된 권리 통제 조항이 실제 evidence pack으로 어떻게 변환되는지 운영 체계를 잠가야 합니다.
 
-- 사용 가능한 표장 버전
-- 포장·광고 문구 승인 구조
-- 국가별 언어 표현 통제
-- 종료 후 사용 중지와 재고 처리
+| 계약 조항 (Rights Control) | 증거 수집 지점 (Evidence Handoff) |
+| :--- | :--- |
+| 품질 승인권 (Quality Control) | 승인된 브랜드 표현 샘플 (승인 로그) |
+| 독점 판매권 (Exclusive Rights) | 독점 지역 내 플랫폼 listing identifier |
+| 마케팅 승인 (Marketing Approval) | 승인된 현지 언어 광고/패키지 디자인 |
+| 종료 후 통제 (Termination) | 재고 회수 확인서 및 도메인 이전 기록 |
 
-계약서보다 운영 흔적이 더 중요할 수 있기 때문에, 승인 메일, 샘플 승인 기록, 브랜드 가이드 업데이트 로그를 남기는 편이 좋다.
+이 체계가 없으면 법무팀이 계약을 잘 짜도 IP팀은 실질적인 genuine use를 입증할 수 없습니다. 계약서 작성 단계부터 "어떤 Evidence가 나올 것인가"를 역산해서 조항을 작성하십시오.
 
 ### 유통 계약에서 봐야 할 것
 
@@ -1737,6 +1749,8 @@ EUIPO guidance는 사용이 일부 goods/services에만 입증될 경우, 보호
 ### EEA 안과 밖을 분리해서 본다
 
 병행수입 문제는 특히 EEA 안의 적법 유통과 EEA 밖에서 들어오는 물량을 구분해야 한다. 같은 상품이라도 유통 경로와 최초 시장 투입 위치가 다르면 설명 방식이 달라질 수 있다. 따라서 실무 메모에는 최소한 “EEA 내 유통”, “영국/제3국 유입”, “재라벨링 동반” 여부를 구분해 두는 편이 좋다.
+
+특히 2021년 전환 이후 EU/EEA와 UK의 소진 체계는 비대칭이다. UK는 EEA에서 처음 적법하게 시장에 놓인 상품의 소진을 인정하는 쪽이라 EEA발 병행수입을 막기 어렵지만, EU/EEA는 UK에서 처음 놓인 상품의 소진을 인정하지 않으므로 UK발 물량의 EEA 유입은 권리자 동의가 없으면 차단 여지가 있다. 따라서 “EEA발”과 “UK발”을 같은 칸으로 묶지 말고 유입 방향까지 분리해 본다.
 
 ### 병행수입 민감 제품은 별도 표기
 
@@ -2347,18 +2361,22 @@ EuTm 본문은 권역형 guide이므로, 독일/프랑스/이탈리아/스페인
 
 유럽 포트폴리오는 제도보다 운영 체계가 먼저 무너지기 쉽다. 마지막 장의 목적은 누가 어떤 알림을 받고 어떤 의사결정을 내려야 하는지 고정하는 데 있다. 권역형 가이드는 본문이 좋아도, owner·brand·legal·local ops가 같은 상태표를 보지 않으면 실제로 굴러가지 않는다.
 
-### 최소 역할 구조
+### 운영 거버넌스 RACI 표
 
-EuTm 운영에서는 최소한 아래 역할이 필요하다.
+유럽 가이드 운영을 위한 핵심 역할 분담표입니다.
 
-- 본사 법무/IP
-- 브랜드팀
-- 현지 사업팀 또는 유통 담당
-- 외부 대리인
-- 물류/세관 담당
-- 디지털 집행 담당
+| 의사결정 / 작업 | 본사 IP | 브랜드팀 | 현지/유통 | 외부 대리인 | 물류/디지털 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| 신규 표장 검토 | R | A | C | I | - |
+| 출원 경로(Route) 확정 | A | C | - | R | - |
+| 절대적 거절 대응 | A | I | - | R | - |
+| 이의신청(Opposition) | A | C | I | R | - |
+| genuine use 증거 수집 | R | C | A | I | - |
+| customs AFA 제출 | A | - | I | R | R |
 
-핵심은 역할 수보다 비어 있는 책임 구간이 없게 하는 것이다.
+**월간 운영 Dashboard/Handover 사례:**
+- **Dashboard**: [전월] 출원 건수 vs 예정건, [핵심] 핵심 고위험 국가 이슈, [기한] 3개월 이내 갱신 건수
+- **Handover**: [IP → 현지/유통] genuine use 수집 기한 알림, [브랜드 → IP] 신규 마케팅 소재(언어권 리스크 포함) 전달 주기 명시.
 
 ### 어떤 의사결정을 누가 하나
 
@@ -2496,3 +2514,45 @@ RACI는 한번 쓰고 끝나는 표가 아니다. 분기마다 아래를 확인�
 ### 한 줄 결론
 
 유럽 포트폴리오 운영의 핵심은 좋은 문서보다, 누가 어떤 판단을 언제 내리는지 반복 가능한 구조를 만드는 일이다.
+
+## 부록: EU 브랜드 보호 실무 가이드
+
+이 부록은 EU 및 UK 상표 운영을 위한 핵심 기한·비용, 단계별 체크리스트, RACI, evidence card를 한눈에 볼 수 있도록 구성한 운영 가이드입니다.
+
+### 1. EU/UK 핵심 기한 및 비용 소스 시트
+
+| 항목 | EU (EUIPO) | UK (UKIPO) | 비고 |
+|---|---|---|---|
+| 출원 기한 | 상시 | 상시 | - |
+| 출원 비용 | 1개류 850 EUR | 1개류 205 GBP | 온라인·1개류 (UK 2026-04-01 개정) |
+| 갱신 기한 | 10년 단위 | 10년 단위 | - |
+| 갱신 비용 | 850 EUR | 245 GBP | 온라인·1개류 (UK 2026-04-01 개정) |
+| 이의제기 기간 | 공고 후 3개월 | 공고 후 2개월 | - |
+
+> **기준일·출처:** UK 수수료는 2026-04-01 개정 반영(온라인·1개류 출원 £205 / 갱신 £245), EUTM은 온라인·1개류 출원·갱신 각 €850이며 류 추가 시 가산. 공식 출처: [UKIPO 수수료](https://www.gov.uk/government/publications/trade-mark-forms-and-fees/trade-mark-forms-and-fees) · [EUIPO Fees and payments](https://www.euipo.europa.eu/en/trade-marks/apply-now/fees).
+
+### 2. 단계별 체크리스트
+
+- [ ] 출원 전: TMview 검색 및 검색 보고서 확보
+- [ ] 출원 단계: Goods/Services 4단계 분류법 적용
+- [ ] 공고 단계: 이의제기 모니터링 시작
+- [ ] 등록 후: 5년 genuine use 입증 자료 축적
+
+### 3. 핵심 RACI
+
+| 활동 | 본사 IP | 현지 대리인 | 외부 변호사 |
+|---|---|---|---|
+| 출원서 제출 | 승인 | 실무 대응 | 검토 |
+| 이의제기 대응 | 판단 | 증거 수집 | 전략 |
+| 갱신 관리 | 총괄 | 기한 모니터링 | - |
+
+### 4. Evidence Card (Genuine Use)
+
+- **핵심 원칙**: 5년 내 실제 사용 증거 (인보이스, 마케팅 자료, 매출 자료)
+- **필수 요소**: 시점(Time), 장소(Place), 범위(Extent), 성격(Nature)
+- **UK 분리 적용**: 2021-01-01(Brexit 전환 종료) 이후 UK 사용 증거 별도 관리 필수
+
+### 5. EU/UK Delta Card
+
+- **갱신/취소**: EU와 UK의 취소 요건은 2021년(전환 종료) 이후 완전히 독립적으로 판단됨
+- **관할**: EUIPO 관할(EU)과 UKIPO 관할(UK) 분리 운영

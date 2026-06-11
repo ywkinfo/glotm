@@ -56,6 +56,10 @@
     {
       "title": "제14장. 운영 거버넌스와 RACI",
       "path": "content/source/chapters/14_governance-raci.md"
+    },
+    {
+      "title": "부록: EU 브랜드 보호 실무 가이드",
+      "path": "content/source/appendix/appendix_eu_brand_protection.md"
     }
   ]
 }

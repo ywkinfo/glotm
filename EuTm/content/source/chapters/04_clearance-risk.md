@@ -158,7 +158,7 @@ search 결과가 많을수록 무엇을 filing 입력값으로 잠그고 무엇�
 
 ## search-to-opposition handoff
 
-search pack이 정말 잘 만들어졌는지는 filing이 아니라 opposition 단계에서 더 분명히 드러난다. 공고 이후 바로 쓸 수 있는 메모를 지금부터 남겨 두면, validate lane에서 같은 조사를 두 번 하지 않아도 된다.
+search pack이 정말 잘 만들어졌는지는 filing이 아니라 opposition 단계에서 더 분명히 드러난다. 공고 이후 바로 쓸 수 있는 메모를 지금부터 남겨 두면, growth lane에서 같은 조사를 두 번 하지 않아도 된다.
 
 | search 단계 출력값 | 제7장으로 넘길 것 | 왜 미리 넘겨야 하는가 |
 | --- | --- | --- |

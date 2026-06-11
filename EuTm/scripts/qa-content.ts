@@ -33,7 +33,7 @@ async function main() {
   const manifest = await readManifest();
   const issues: Issue[] = [];
 
-  if (manifest.chapters.length !== 14) {
+  if (manifest.chapters.length !== 15) {
     issues.push({
       level: "warning",
       file: relative(manifestPath),

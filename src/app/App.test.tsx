@@ -409,7 +409,7 @@ describe("App portfolio shell", () => {
   it.each([
     ["/china", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"],
     ["/mexico", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"],
-    ["/europe", "Validate tier · Beta lifecycle · Standard QA · 권역 가이드"],
+    ["/europe", "Growth tier · Mature lifecycle · Full QA · 권역 가이드"],
     ["/usa", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"],
     ["/japan", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"],
     ["/uk", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"]
@@ -499,7 +499,7 @@ describe("App portfolio shell", () => {
     {
       path: "/europe",
       title: "EuTm 유럽 상표 운영 가이드북",
-      summary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 validate lane이 다음 handoff까지 흔들리지 않습니다.",
+      summary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 growth lane이 다음 handoff까지 흔들리지 않습니다.",
       expectedReportSlugs: [
         "global-filing-priority-framework",
         "global-filing-route-framework",
@@ -525,7 +525,7 @@ describe("App portfolio shell", () => {
     }
   );
 
-  it("renders EuTm home copy for the stabilized validate lane", async () => {
+  it("renders EuTm home copy for the growth lane", async () => {
     installFetchMock();
 
     renderAppRouteTree("/europe");
@@ -534,12 +534,12 @@ describe("App portfolio shell", () => {
 
     expect(
       screen.getByText(
-        /유럽은 EU-wide, core-state, UK split을 같은 운영 표에서 잠그고 evidence triage까지 이어 읽기 위한 validate guide입니다\./
+        /유럽은 EU-wide, core-state, UK split을 같은 운영 표에서 잠그고 evidence triage까지 이어 읽기 위한 growth guide입니다\./
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /현재 EuTm은 claim-map과 핵심 6장 기준선을 바탕으로 rights·route·evidence handoff를 controlled EU\+UK scope 안에서 정리한 validate guide입니다\./
+        /현재 EuTm은 claim-map과 핵심 장 보강을 바탕으로 rights·route·evidence handoff를 EU\+UK scope 안에서 정리한 growth guide입니다\./
       )
     ).toBeInTheDocument();
   });
@@ -807,7 +807,7 @@ describe("App portfolio shell", () => {
     ).toBeNull();
     expect(
       within(reportSection as HTMLElement).getAllByText(
-        /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Beta · QA Standard · gap 0/
+        /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Mature · QA Full · gap 0/
       ).length
     ).toBeGreaterThan(0);
     expect(
@@ -861,19 +861,19 @@ describe("App portfolio shell", () => {
     expect(currentPilotScope).not.toBeNull();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Flagship" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Validate" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).queryByRole("heading", { name: "Validate" })).toBeNull();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
     expect(
       within(currentPilotScope as HTMLElement).getByText("mature 승격 반영 · Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 완료")
     ).toBeInTheDocument();
     expect(
       within(currentPilotScope as HTMLElement).getByText(
-        "EU-wide, core-state, UK split과 evidence triage 기준선을 controlled EU+UK scope로 잠그는 validate regional guide입니다."
+        "EU-wide·core-state·UK split과 evidence triage를 EU+UK 범위에서 두껍게 다루는 growth regional guide입니다."
       )
     ).toBeInTheDocument();
     expect(
       within(currentPilotScope as HTMLElement).getByText(
-        "validate lane · claim-map adopted · controlled EU+UK scope · shared root gate closeout reflected"
+        "mature 승급 · Ch3/6/10/14·부록 보강 · 2026-06-10 법률 사실정정(UK fee·우선권·comparable·Brexit 날짜) 및 claim-map 10건 반영"
       )
     ).toBeInTheDocument();
   });
@@ -1255,7 +1255,7 @@ describe("App portfolio shell", () => {
         )
       )
     ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "EuTm: validate evidence handoff를 고정한다" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "EuTm: EU+UK evidence handoff를 고정한다" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EuTm evidence triage 보기" })).toHaveAttribute(
       "href",
       "/europe/chapter/제8장-등록-후-사용-갱신-증거-관리#distributor--marketplace-seller-evidence-triage"

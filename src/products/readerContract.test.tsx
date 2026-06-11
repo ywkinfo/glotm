@@ -61,7 +61,7 @@ const priorityGuideHandoffExpectations = {
     ]
   },
   europe: {
-    expectedSummary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 validate lane이 다음 handoff까지 흔들리지 않습니다.",
+    expectedSummary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 growth lane이 다음 handoff까지 흔들리지 않습니다.",
     expectedReportSlugs: [
       "global-filing-priority-framework",
       "global-filing-route-framework",

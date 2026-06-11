@@ -49,7 +49,7 @@ EUTM filing은 하나의 권리 단위로 EU 전체를 다룰 때 강점이 있�
 
 ## core-state filing control board
 
-validate lane에서 제5장이 흔들리는 순간은 권리 선택 결론은 있는데, 그 결론을 어떤 filing packet row로 내려야 하는지 안 적혀 있을 때다. 특히 EUTM 단독, core-state national filing, UK split, mixed structure가 같이 보이는 경우에는 "무엇을 어느 packet에 넣을 것인가"를 먼저 고정하는 편이 좋다.
+growth lane에서 제5장이 흔들리는 순간은 권리 선택 결론은 있는데, 그 결론을 어떤 filing packet row로 내려야 하는지 안 적혀 있을 때다. 특히 EUTM 단독, core-state national filing, UK split, mixed structure가 같이 보이는 경우에는 "무엇을 어느 packet에 넣을 것인가"를 먼저 고정하는 편이 좋다.
 
 | launch 구조 | filing packet에서 먼저 분리할 것 | 왜 미리 적어야 하는가 |
 | --- | --- | --- |

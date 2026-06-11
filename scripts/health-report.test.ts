@@ -5,7 +5,7 @@ import { buildCliOutput, parseArgs } from "./health-report";
 describe("health report CLI", () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-06-01T12:00:00.000Z"));
+    vi.setSystemTime(new Date("2026-06-10T12:00:00.000Z"));
   });
 
   afterEach(() => {
@@ -70,7 +70,7 @@ describe("health report CLI", () => {
     });
     expect(report.products.find((product: { slug: string }) => product.slug === "europe")).toMatchObject({
       slug: "europe",
-      currentLifecycleStatus: "beta",
+      currentLifecycleStatus: "mature",
       verification: {
         mode: "root-full-pipeline",
         scopeLabel: "root full pipeline",
@@ -126,9 +126,9 @@ describe("health report CLI", () => {
     expect(output).toContain("verification scope: full pipeline: latam, mexico, china, europe, uk; shortcut refresh: usa, japan");
     expect(output).toContain("| usa | incubate | beta | beta | hold | root content shortcut refresh only |");
     expect(output).toContain("## Research Coverage");
-    expect(output).toContain("| china | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| mexico | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| europe | advisory | 100 | 100 | 55d | 0 | 0 | pass |");
+    expect(output).toContain("| china | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
+    expect(output).toContain("| mexico | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
+    expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 0 | 0 | pass |");
     expect(output).not.toContain("| usa | advisory |");
   });
 });

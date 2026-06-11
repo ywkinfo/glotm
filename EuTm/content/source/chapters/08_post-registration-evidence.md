@@ -58,7 +58,7 @@ EUIPO guidance상 등록 만료 전 알림이 제공될 수 있지만, 사무소
 
 ## renewal + genuine use 운영 캘린더
 
-이 장의 안정화 포인트는 갱신과 사용증거를 따로 보지 않고 같은 캘린더에 묶는 데 있다. 그래야 validate lane에서 가장 흔한 “등록은 살아 있는데 설명 가능한 evidence가 약한 상태”를 줄일 수 있다.
+이 장의 안정화 포인트는 갱신과 사용증거를 따로 보지 않고 같은 캘린더에 묶는 데 있다. 그래야 growth lane에서 가장 흔한 “등록은 살아 있는데 설명 가능한 evidence가 약한 상태”를 줄일 수 있다.
 
 | 시점 | 반드시 같이 볼 것 | owner |
 | --- | --- | --- |
@@ -156,7 +156,7 @@ evidence vault는 자료 수량보다 설명 가능성이 중요하다. 그래�
 
 ## distributor / marketplace seller evidence triage
 
-validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, distributor나 marketplace seller가 만든 증거를 owner 권리와 어떻게 연결해 설명할지 모호한 상태다. 그래서 이 장에서는 “판매 흔적이 있나”보다 “그 판매 흔적이 누구의 genuine use로 읽혀야 하나”를 먼저 구분하는 편이 낫다.
+growth lane에서 자주 남는 약점은 증거가 없는 것이 아니라, distributor나 marketplace seller가 만든 증거를 owner 권리와 어떻게 연결해 설명할지 모호한 상태다. 그래서 이 장에서는 “판매 흔적이 있나”보다 “그 판매 흔적이 누구의 genuine use로 읽혀야 하나”를 먼저 구분하는 편이 낫다.
 
 | actual user 유형 | 꼭 같이 남길 linkage | 대표 증거 | 약해지기 쉬운 지점 |
 | --- | --- | --- | --- |
@@ -188,7 +188,7 @@ validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, d
 
 ## renewal / proof-of-use handoff
 
-이 장의 출력값은 renewal 달력과 proof-of-use 대응으로 바로 이어져야 한다. 아래 handoff를 남기면 validate lane 설명이 더 안정적이다.
+이 장의 출력값은 renewal 달력과 proof-of-use 대응으로 바로 이어져야 한다. 아래 handoff를 남기면 growth lane 설명이 더 안정적이다.
 
 | 이 장의 출력값 | 다음 운영 파일로 넘길 것 |
 | --- | --- |
@@ -197,7 +197,7 @@ validate lane에서 자주 남는 약점은 증거가 없는 것이 아니라, d
 | evidence quality scorecard | 분기 운영 루틴 |
 | weak goods/services 표시 | 포트폴리오 정리 후보 |
 
-이 메모를 명시해 두면, 아직 넓히지 않은 범위를 숨기지 않으면서도 validate lane의 기준선을 명확히 유지할 수 있다.
+이 메모를 명시해 두면, 아직 넓히지 않은 범위를 숨기지 않으면서도 growth lane의 기준선을 명확히 유지할 수 있다.
 
 ## evidence-to-enforcement reuse memo
 
@@ -214,7 +214,7 @@ EuTm의 운영 장점은 evidence를 renewal 대응용 파일로만 두지 않�
 
 ## weak goods/services trim memo
 
-renewal과 genuine use를 같은 캘린더에 넣는 이유는, 약한 goods/services를 너무 늦게 발견하지 않기 위해서다. validate lane에서는 “계속 유지할 범위”만큼이나 “언제 trim 후보로 볼지”를 적어 두는 편이 좋다.
+renewal과 genuine use를 같은 캘린더에 넣는 이유는, 약한 goods/services를 너무 늦게 발견하지 않기 위해서다. growth lane에서는 “계속 유지할 범위”만큼이나 “언제 trim 후보로 볼지”를 적어 두는 편이 좋다.
 
 | 상태 | 지금 남길 메모 | 기본 액션 |
 | --- | --- | --- |
