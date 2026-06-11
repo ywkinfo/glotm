@@ -106,7 +106,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 - `ChaTm`: mature 단계 반영 완료, reader/search QA와 Gateway sync 유지
 - `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, 현재 남은 일은 Gateway/registry/root-doc sync 정리
-- `EuTm`: claim-map adopted baseline 유지, controlled EU+UK scope와 shared root gate closeout 반영
+- `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 10건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
 - `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm 2026-05-12 standard QA verdict로 beta 승급, UsaTm standard QA 유지
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
@@ -164,7 +164,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 최근에는 docs sync와 EU/UK 기준선 정리, 핵심 6장 심화, rights/search/filing/opposition/evidence handoff 보강을 거치며 장별 원고 체계와 reader 탐색 밀도가 함께 올라갔다. 2026-06-02 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 validate lane baseline과 shared root gate closeout을 반영한다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 10건 + 공식 URL 인덱스). 2026-06-09 mature 승급과 2026-06-10 factsReviewedOn 기록이 `src/products/registry.ts` 정본에 반영돼 있으며, 현재는 growth lane baseline으로 운영한다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 verified track
 
