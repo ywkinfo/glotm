@@ -13,8 +13,8 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-06-02 |
-| Verified on | 2026-06-02 |
+| Last updated | 2026-06-14 |
+| Verified on | 2026-06-14 |
 | Current phase | Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지) |
 | Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` growth expansion 반영 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
@@ -34,7 +34,7 @@
 
 ### 현재 운영 스냅샷
 
-- 루트 `GloTm`: 2026-06-02 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
+- 루트 `GloTm`: 2026-06-14 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
 - `health:report`는 fresh proof가 아니라 최근 lane 상태와 provenance를 묶어 읽는 operational snapshot으로 해석한다.
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 브리프 배너를 먼저 보여주고 이어서 리포트 2개를 포함하는 trust layer / report handoff를 운영한다.
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. live verification 표현은 workflow artifact 검증과 구분해서 보며, mobile drawer close 등 live-only 회귀는 `e2e/guide-smoke.spec.ts`의 mobile drawer close controls smoke로 보호한다.
@@ -91,7 +91,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
-| `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료 · 2026-06-09 factsReviewedOn 반영 |
+| `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료 · verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10 |
 | `UsaTm` | 단일국가 | incubate | beta | 14 | 185 | lighter track · 운영 표/체크리스트 보강 |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
 | `UKTm` | 단일국가 | incubate | beta | 14 | 128 | standard QA evidence 4-file 정합 · 2026-05-12 verdict 적용 · early-track verified 공개본 |
@@ -105,7 +105,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 ### 현재 집중 우선순위
 
 - `ChaTm`: mature 단계 반영 완료, reader/search QA와 Gateway sync 유지
-- `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, 현재 남은 일은 Gateway/registry/root-doc sync 정리
+- `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, Gateway/registry/root-doc sync도 정합 완료 — 현재는 sync 정합 유지(maintenance)만 남음
 - `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 10건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
 - `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm 2026-05-12 standard QA verdict로 beta 승급, UsaTm standard QA 유지

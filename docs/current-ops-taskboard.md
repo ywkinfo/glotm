@@ -5,13 +5,13 @@
 
 ## Snapshot
 
-- Last updated: 2026-06-03
+- Last updated: 2026-06-14
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> JapTm -> UKTm -> UsaTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
-- `2026-06-02` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
-- Brief archive provenance: `2026-05-k-beauty-counterfeit-platform-evidence`(2026-05-20 publish)는 2026-05-17 doc lock 이후 추가됐고, 2026-06-02 shared root gate + `src/briefs/archive.test.ts` latest-issue 락으로 커버된다. 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본 인벤토리로 보며, lane cadence·provenance·publish 게이트 계약은 `briefs-lane.md`를 기준으로 본다.
-- 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. registry와 어긋난 잔여 surface는 아래 `Known Drift to Reconcile` 섹션에 남긴다.
+- `2026-06-14` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
+- Brief archive provenance: 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본 인벤토리로 본다. lane cadence·provenance·publish 게이트 계약은 `briefs-lane.md`, 구조 강제(최신호 락 포함)는 `src/briefs/archive.test.ts`를 기준으로 본다.
+- 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61), EuTm growth/mature 승급(15장·부록·claim-map 10건·2026-06-10 법률 사실정정, #69/#70). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. 과거 registry drift 정합 기록은 아래 `Resolved Drift Archive` 섹션에 보존한다.
 
 ## Today
 
@@ -40,17 +40,17 @@
 - [x] `mextm-content-expansion-taskboard.md`의 Leader Integration Inputs를 root sync 관점으로 옮길 수 있다.
 - [x] local gate 결과와 root wording 후보가 한 장의 메모로 묶여 있다.
 
-### 3. EuTm growth expansion 착수 — **진행 중 (2026-06-09)**
+### 3. EuTm growth expansion → mature 승급 — **완료 (2026-06-10, #69/#70)**
 
-- [ ] 1단계: 권한·계약 변경 (PROJECT-OVERVIEW / Harness docs)
-- [ ] 2단계: 공식 출처 사실 검증 (1차 출처 재대조)
-- [ ] 3단계: 집중 콘텐츠 보강 (Ch3·6·10·14 + 부록)
-- [ ] 4단계: QA 및 mature 승급 (scorecard review)
+- [x] 1단계: 권한·계약 변경 (PROJECT-OVERVIEW / Harness docs)
+- [x] 2단계: 공식 출처 사실 검증 (1차 출처 재대조 · 2026-06-10 UK 수수료·우선권·comparable·Brexit 날짜 정정)
+- [x] 3단계: 집중 콘텐츠 보강 (Ch3·6·10·14 + 부록 → 15장 체계)
+- [x] 4단계: QA 및 mature 승급 (full QA · scorecard review)
 
-진행 기준:
-- `controlled EU+UK scope` 유지
-- `growth` tiers/contract 반영
-- `factual-freshness` 검증 선행
+closeout 요약:
+- `15장 / 260 엔트리 / growth tier / mature lifecycle / full QA`로 registry 정본 반영 (verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10)
+- claim-map 10건(2026-06-10 신규 4건 포함) 1차 출처 재대조 완료
+- `controlled EU+UK scope` 유지 · owner-doc·research 문서 정합 완료
 
 ## This Week
 
@@ -149,7 +149,7 @@
 ## Committee Warnings
 
 - 브리핑은 방향 신호일 뿐, 현재 우선순위를 덮어쓰는 실행 명령이 아니다.
-- 지금 GloTm의 다음 액션은 확장이 아니라 `ChaTm`, `MexTm`, `EuTm`, `Report/Gateway` 정합성 잠금이다.
+- 지금 GloTm의 다음 액션은 신규 확장이 아니라, owner-doc 정합 유지와 프로모션 없는 유기 색인·계측(Phase 2.5) + `JapTm`→`UKTm`→`UsaTm` reader-utility 유지보수다.
 - source 대신 generated 산출물부터 만지면 운영 truth가 먼저 깨진다.
 
 ## Working Notes
@@ -158,9 +158,9 @@
 - workspace taskboard 확인 순서:
   - `docs/workspaces/ChaTm/chatm-content-expansion-taskboard.md`
   - `docs/workspaces/MexTm/mextm-content-expansion-taskboard.md`
-  - `docs/workspaces/EuTm/eutm-content-expansion-plan.md`
+  - `docs/workspaces/EuTm/eutm-content-expansion-plan.md` (COMPLETED — growth/mature 승급 closeout)
 
-## Known Drift to Reconcile (UKTm beta straggler)
+## Resolved Drift Archive (UKTm beta straggler — 2026-06-03 해소)
 
 `UKTm`은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급됐고 `src/products/registry.ts`·`PROJECT-OVERVIEW.md`·`portfolio-scorecard.md`는 beta로 정합하다. 승급 이전 `pilot` 표현이 남아 있던 supporting 문서는 2026-06-03에 registry 정본(`incubate / beta / standard`)으로 정합화했다(정본은 registry.ts):
 

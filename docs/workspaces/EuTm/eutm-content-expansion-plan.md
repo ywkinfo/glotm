@@ -1,5 +1,10 @@
 # EuTm 콘텐츠 성장 실행 계획
 
+> **COMPLETED / SUPERSEDED (2026-06).** 이 실행 계획은 #69/#70에서 모두 반영되어 닫혔다. EuTm은 `15장 / 260 엔트리
+> / growth tier / mature lifecycle / full QA`로 승급됐고, 2026-06-10 법률 사실정정(UK 수수료·우선권·comparable·
+> Brexit 날짜)과 claim-map 10건이 반영됐다. 현재 정본 수치는 `src/products/registry.ts`이며, 아래 계획·시작 baseline은
+> 역사 기록(historical)으로 보존한다.
+
 ## 목적
 
 이 문서는 `EuTm`을 `validate` tier에서 `growth` tier로 승급하고, full QA를 통해 `mature` 단계로 진입하기 위한 실행 계획이다. 사용자의 확정 범위인 "Ch3·6·10·14 + 신규 부록 집중 보강"과 "EU 공통 + UK 병행 유지" 계약을 기반으로, `ChaTm` 및 `MexTm`과 동일한 구조화 산출물(판단 매트릭스·worked example)을 확보한다.
@@ -17,7 +22,7 @@
 ### 현재 확인된 사실
 
 - `EuTm`은 루트 `GloTm` 셸에서 `/europe` 경로로 연결된 live regional guide다.
-- 현재 baseline: 14장, 258 엔트리, `validate` tier, `beta` lifecycle.
+- 시작 baseline (historical, 2026-04~05): 14장, 258 엔트리, `validate` tier, `beta` lifecycle.
 - 달성 baseline: 15장(부록 추가), 260 엔트리(density 17.3, mature density 게이트 ≥12 충족), `growth` tier, `mature` lifecycle.
 
 ---
@@ -42,6 +47,8 @@
 ---
 
 ## 실행 단계
+
+> **[전 단계 완료 — #69/#70 반영]** 아래 5단계는 모두 실행·검증·통합 완료됐다.
 
 1. **권한·계약 변경**: 프로젝트 Overview 및 로컬 계약(Content-Spec, Architecture, README) 갱신.
 2. **사실 검증**: claim 공식 출처 재대조 및 claim-map 등록 (현재 10건 · 2026-06-10 UK fee·우선권·comparable·Brexit 날짜 정정 + 신규 4건).

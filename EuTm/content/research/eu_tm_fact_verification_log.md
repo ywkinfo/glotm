@@ -1,13 +1,18 @@
 # EuTm Fact Verification Log
 
-이번 스프린트에서는 새 범위를 넓히지 않고, 이미 검증된 사실이 어느 장에 어떻게 반영되었는지와 어떤 controlled gap이 남는지를 명확히 정리한다.
-현재 validate-tier stabilization baseline은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`다.
+> **Updated for growth/mature (2026-06).** EuTm은 2026-06 growth expansion으로 `growth tier · mature lifecycle`
+> (15개 챕터 / 검색 엔트리 260개)로 승급됐다(#69/#70). 아래 verified-item 표는 2026-06-09 재검증과 2026-06-10 법률
+> 사실정정(UK 수수료·우선권·comparable·Brexit 날짜)을 반영한다. pre-expansion baseline(`14개 챕터 / 258개 / validate ·
+> beta`)과 stabilization 시절 framing은 historical 맥락으로 보존한다. 정본 수치는 `src/products/registry.ts`.
+
+이 fact log는 이미 검증된 사실이 어느 장에 어떻게 반영되었는지와 어떤 controlled gap이 남는지를 정리한다.
+현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
 ## Baseline evidence snapshot
 
-- 챕터 기준선: `content/source/manifest.json`에 14개 챕터가 정의돼 있다.
-- search 기준선: `content/generated/search-index.json`의 현재 entry 수는 258이다.
+- 챕터 기준선: `content/source/manifest.json`에 15개 챕터가 정의돼 있다 (pre-expansion: 14개, historical).
+- search 기준선: `content/generated/search-index.json`의 현재 entry 수는 260이다 (pre-expansion: 258, historical).
 - scope 기준선: 본문과 리서치 문서는 EU 공통 프레임 + UK 병행 판단까지만 유지하고, 회원국별 deep dive는 controlled gap으로 남긴다.
 
 | Item | Why it matters | Primary source target | Chapter ref | Status | Notes |
@@ -65,7 +70,7 @@
 | --- | --- | --- |
 | Ch1 / Ch2 | EUTM, national filing, UK split, Madrid linkage를 EU 공통 프레임 기준으로 유지 | 회원국별 filing deep dive 추가 |
 | Ch4 / Ch5 | clearance variance, route pack, representative line을 operational memo 수준으로 유지 | 국가별 양식·fee 상세 확장 |
-| Ch7 / Ch8 | opposition calendar, genuine use, renewal, EU/UK split row를 validate-tier stabilization baseline 기준으로 유지 | country-by-country opposition / renewal 절차 확대 |
+| Ch7 / Ch8 | opposition calendar, genuine use, renewal, EU/UK split row를 growth/mature baseline 기준으로 유지 | country-by-country opposition / renewal 절차 확대 |
 | research log 전체 | verified item만 본문 기준선으로 유지 | 새 `Pending` 항목 확대 |
 
 이 stabilization handoff를 두면 이번 레인이 “무엇을 더 쓸까”보다 “이미 잠근 기준을 어디까지 유지할까”에 초점을 맞춘다는 점이 분명해진다.
@@ -81,4 +86,4 @@
 | 회원국별 절차 차이 | 메모 수준으로만 통제 |
 | fee·세부 절차 deep dive | 후속 트랙으로 보류 |
 
-이 reminder를 붙여 두면 fact log가 단순 출처 목록이 아니라, 어디까지를 이번 validate-tier stabilization baseline 본문으로 승격할지 지켜 주는 가드레일 역할도 하게 된다.
+이 reminder를 붙여 두면 fact log가 단순 출처 목록이 아니라, 어디까지를 growth/mature baseline 본문으로 유지할지 지켜 주는 가드레일 역할도 하게 된다.

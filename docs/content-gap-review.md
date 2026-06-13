@@ -38,7 +38,7 @@
 
 > density·chapters·search는 registry 정본. 깊이 avg·min~max와 "구조 산출물" 분모는 `chapters/*.md` 본문 측정값(부록 제외). chapters 열은 registry `chapterCount`(manifest 기준, 일부 부록 포함)라 측정 본문 파일 수와 다를 수 있다. 깊이는 incubate ~3,000자 vs growth/flagship ~7,000~12,000자로, 의도된 lighter-track 차이다.
 >
-> **Update (2026-06-09):** EuTm는 이후 growth/mature로 승급(15장 / 260 entries / density 17.3, registry 정본). 위 표는 2026-06-08 스냅샷이라 EuTm 행의 본문 깊이 컬럼은 재측정 전이다.
+> **Update (2026-06-09 · 2026-06-10):** EuTm는 이후 growth/mature로 승급(15장 / 260 entries / density 17.3, registry 정본, verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10). 위 표는 2026-06-08 스냅샷이라 EuTm 행의 tier/lifecycle(validate/beta)·본문 깊이 컬럼은 승급·재측정 전 값이다.
 
 ## 4. 콘텐츠 갭 — 3축 (갭 심각도 · 계약 위반 · 정본 실행순서)
 
