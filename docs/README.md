@@ -43,8 +43,9 @@
 
 ### EuTm
 
-- stabilization memo: [`workspaces/EuTm/eutm-content-expansion-plan.md`](workspaces/EuTm/eutm-content-expansion-plan.md)
-- root sync input: [`workspaces/EuTm/eutm-root-sync-input.md`](workspaces/EuTm/eutm-root-sync-input.md)
+- growth/mature expansion plan (COMPLETED): [`workspaces/EuTm/eutm-content-expansion-plan.md`](workspaces/EuTm/eutm-content-expansion-plan.md)
+- mature QA checklist: [`workspaces/EuTm/eutm-mature-qa-checklist.md`](workspaces/EuTm/eutm-mature-qa-checklist.md)
+- root sync input (CLOSED): [`workspaces/EuTm/eutm-root-sync-input.md`](workspaces/EuTm/eutm-root-sync-input.md)
 - workspace contracts: `../EuTm/README.md`, `../EuTm/Harness/Architecture.md`, `../EuTm/Harness/Content-Spec.md`
 
 ### JapTm

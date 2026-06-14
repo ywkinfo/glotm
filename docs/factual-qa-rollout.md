@@ -434,6 +434,9 @@ Exit criteria:
 
 ### Phase 3, `EuTm` validate-lane adoption
 
+> **Forward pointer (2026-06):** 이 단계는 EuTm이 `validate` 시절 도입된 rollout 기록이다. EuTm은 이후 2026-06
+> growth expansion으로 `growth / mature`(15장 / 260 엔트리)로 승급됐다(#69/#70). 정본 수치는 `src/products/registry.ts`.
+
 Scope:
 
 - add `EuTm/content/research/claim-map.json`

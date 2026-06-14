@@ -1,8 +1,13 @@
 # EuTm Root Sync Input
 
+> **CLOSED — EuTm growth/mature promotion shipped (#69/#70).** 이 handoff input은 2026-06 growth expansion
+> 통합으로 닫혔다. 현재 정본은 `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 260개 / growth tier · mature
+> lifecycle · full QA`, verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10)이며, 아래 metadata는 정본을 반영하도록
+> 갱신했다. 2026-04-21 기준 `14개 챕터 / 258개 / validate · beta` 수치는 pre-expansion baseline으로 historical 보존한다.
+
 ## Baseline One-Liner
 
-`EuTm`은 루트 `/europe`에 연결된 live validate regional guide이며, 현재 baseline은 `14개 챕터 / 검색 엔트리 258개 / validate tier · beta lifecycle / controlled EU+UK scope`다.
+`EuTm`은 루트 `/europe`에 연결된 live growth regional guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(정본: `src/products/registry.ts`, verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10). pre-expansion baseline(`14개 챕터 / 258개 / validate · beta`, 2026-04-21)은 아래 historical 기록으로 보존한다.
 
 ## Authority Order
 
@@ -24,14 +29,14 @@
 | Field | Value | Source |
 | --- | --- | --- |
 | Product | `EuTm` / `/europe` / `coverageType: region` / `availability: live_shell` | `src/products/registry.ts` |
-| Summary | `EU-wide, core-state, UK split` + evidence triage를 `controlled EU+UK scope`로 잠그는 validate regional guide | `src/products/registry.ts` |
-| Chapter count | `14` | `src/products/registry.ts`, `EuTm/content/source/manifest.json` |
-| Search entry count | `258` | `src/products/registry.ts`, `EuTm/content/generated/search-index.json` |
-| Tier / lifecycle / QA | `validate` / `beta` / `standard` | `src/products/registry.ts` |
+| Summary | `EU-wide·core-state·UK split`과 evidence triage를 EU+UK 범위에서 두껍게 다루는 growth regional guide | `src/products/registry.ts` |
+| Chapter count | `15` | `src/products/registry.ts`, `EuTm/content/source/manifest.json` |
+| Search entry count | `260` | `src/products/registry.ts`, `EuTm/content/generated/search-index.json` |
+| Tier / lifecycle / QA | `growth` / `mature` / `full` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
-| Root metadata verifiedOn | `2026-05-12` | `src/products/registry.ts` |
-| Workspace gate rerun | `2026-04-21` `npm --prefix EuTm run content:prepare` pass (baseline); `2026-05-12` shared root gate 재현 통과 (workspace-local 미포함) | local rerun + shared root gate |
-| Research baseline | claim-map adopted, BODY_READY 6건, source-register companion 유지 | `claim-map.json`, fact log, source register |
+| Root metadata verifiedOn / factsReviewedOn | `2026-06-09` / `2026-06-10` | `src/products/registry.ts` |
+| Workspace gate rerun | `2026-04-21` `npm --prefix EuTm run content:prepare` pass (pre-expansion baseline, historical); growth expansion 통합·검증은 #69/#70에서 처리 | local rerun + shared root gate |
+| Research baseline | claim-map 10건 (2026-06-10 신규 4건 포함), BODY_READY 6건, source-register companion 유지 | `claim-map.json`, fact log, source register |
 
 ## Chapter Drift Map
 
@@ -63,6 +68,9 @@
 
 ## Local Gate Evidence
 
+> 아래는 growth expansion 이전 **pre-expansion baseline (historical, 2026-04-21)** 기록이다. 현재 정본 수치는
+> `15개 챕터 / 260 엔트리`이며, growth expansion 통합·검증은 #69/#70에서 반영됐다.
+
 - `2026-04-21` `npm --prefix EuTm run content:prepare` (baseline rerun)
   - `Generated EuTm master manuscript from 14 sources.`
   - `QA complete: 0 error(s), 0 warning(s), 14 source file(s) checked.`
@@ -78,7 +86,7 @@
 | --- | --- |
 | `PROJECT-OVERVIEW.md` | metadata 자체는 현재 baseline과 맞다. `2026-05-12` shared root gate 재현이 끝났으므로 `shared root gate closeout reflected` 표현을 유지해도 된다. |
 | `README.md` | EuTm를 root full-pipeline group으로 두는 설명은 그대로 맞다. 이번 lane에서는 local gate evidence만 갱신됐으므로, root lane 재실행 전 수치 변경은 필요 없다. |
-| `docs/portfolio-scorecard.md` | `validate / beta` assignment와 focus 문구는 대체로 맞다. closeout phrasing만 overview와 같은 기준으로 한 번 더 맞추면 충분하다. |
+| `docs/portfolio-scorecard.md` | `growth / mature` assignment와 focus 문구가 정본과 맞는지 확인한다. growth/mature 승급은 #69/#70에서 반영됨. |
 | `docs/buyer-narrative.md` | 현재 `EU-wide, core-state, UK split` framing은 유지 가능하다. workspace packet과 더 강하게 맞추려면 `controlled EU+UK scope` 문구를 보조 문장에 한 번 더 노출하는 정도만 고려하면 된다. |
 | `src/products/registry.ts` | `chapterCount`, `searchEntryCount`, `portfolioTier`, `lifecycleStatus`, `qaLevel`, `highRiskVerificationGapCount`, `summary` 모두 현 baseline과 일치한다. 실질 검토 포인트는 `maturityNote`의 `shared root gate closeout reflected` 문구뿐이다. |
 | `src/products/europe.tsx` | optional. 현재 positioning/title/note는 claim-map + core-6 baseline과 일치한다. registry 또는 buyer copy를 조정할 때만 함께 손보면 된다. |
