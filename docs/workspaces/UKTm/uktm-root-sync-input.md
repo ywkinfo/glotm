@@ -67,6 +67,10 @@ lifecycle은 이미 beta(standard QA)다. 이 레인의 목적은 추가 승격�
   - `Generated UKTm master manuscript from 14 sources.`
   - `QA complete: 0 error(s), 0 warning(s), 14 source file(s) checked.`
   - `Generated 14 chapters and 128 search entries.`
+- `2026-06-14` reader-utility health pack 재확인 (incubate health pack 레인, Node 22)
+  - `npm run content:uk` 재현: `Generated UKTm master manuscript from 14 sources.` · `QA complete: 0 error(s), 0 warning(s)` · `Generated 14 chapters and 128 search entries.` (registry 정본 14/128 일치)
+  - 검색 인덱스 확인: `early-track filing decision board`, `beta-lane maintenance owner board`, `online incident quick board` 3개 utility 모두 `UKTm/content/generated/search-index.json`에 존재 → search로 도달 가능
+  - `npm run e2e:smoke` 28/28 통과 — UKTm reader smoke(home heading + Continue Reading `이어 읽기` + 검색 `online incident quick board` 도달) · UKTm zero-result empty state · UKTm mobile action bar/chapter-nav 비overlap 흐름 정상
 
 ## Root Sync Diff List
 

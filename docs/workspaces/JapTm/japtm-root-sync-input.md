@@ -31,8 +31,8 @@
 | Search entry count | `145` | `src/products/registry.ts`, `JapTm/content/generated/search-index.json` |
 | Tier / lifecycle / QA | `incubate` / `beta` / `standard` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
-| Root metadata verifiedOn | `2026-04-21` | `src/products/registry.ts` |
-| Workspace gate rerun | `2026-04-21` `npm --prefix JapTm run content:prepare` pass | local rerun in this lane |
+| Root metadata verifiedOn | `2026-06-02` | `src/products/registry.ts` |
+| Workspace gate rerun | `2026-04-21` `npm --prefix JapTm run content:prepare` pass (이 레인 마지막 로컬 재현; root verifiedOn은 이후 shared root gate로 2026-06-02 re-stamp) | local rerun + shared root gate |
 | Lighter-track intent | `route`, `maintenance`, `evidence hygiene` reader utility 유지 | `JapTm/README.md`, `JapTm/Harness/Architecture.md` |
 
 ## Lighter-Track Focus
@@ -58,6 +58,10 @@
   - `Generated JapTm master manuscript from 15 sources.`
   - `JapTm QA complete: 0 error(s), 0 warning(s), 15 source file(s) checked.`
   - `Generated 15 chapters and 145 search entries.`
+- `2026-06-14` lighter-track health pack 재확인 (incubate health pack 레인, Node 22)
+  - `npm run content:japan` 재현: `Generated 15 chapters and 145 search entries.` (registry 정본 15/145 일치)
+  - 검색 인덱스 확인: `route memo board`(Ch4 route), `maintenance`(Ch7), `evidence hygiene`(Ch7/Ch10/Ch12) utility 모두 `JapTm/content/generated/search-index.json`에 존재 → search로 도달 가능
+  - `npm run e2e:smoke` 28/28 통과 — JapTm reader smoke(home heading + Continue Reading `이어 읽기` → `evidence-hygiene-quick-check` 북마크 + 검색 `route memo board` → `lighter-track route memo board` 도달) · JapTm zero-result empty state 정상
 
 ## Root Sync Diff List
 
