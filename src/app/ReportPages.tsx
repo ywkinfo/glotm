@@ -21,6 +21,7 @@ import {
   setRuntimeDocumentTitle,
   type DocumentData
 } from "../products/shared";
+import { TrustLegalNotice } from "./TrustLegalNotice";
 import {
   FullDocumentLink,
   ReportCard,
@@ -96,6 +97,10 @@ export function ReportArchivePage() {
             <ReportCard key={report.id} report={report} surface="report_archive" />
           ))}
         </div>
+      </section>
+
+      <section className="gateway-section">
+        <TrustLegalNotice surface="report" />
       </section>
     </div>
   );
@@ -346,6 +351,7 @@ export function ReportPage() {
               ))}
             </div>
           </article>
+          <TrustLegalNotice surface="report" />
         </div>
       </section>
     </div>
