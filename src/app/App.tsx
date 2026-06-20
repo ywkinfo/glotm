@@ -29,8 +29,10 @@ import {
   getPortfolioTierLabel,
   getRouterBasename
 } from "../products/shared";
+import { legalNavLinks, legalPages } from "../trustLegal";
 import { BriefArchivePage, BriefIssuePage } from "./BriefPages";
 import { GatewayLandingPage } from "./GatewayPage";
+import { LegalPage } from "./LegalPages";
 import { ReportArchivePage, ReportPage } from "./ReportPages";
 import {
   FullDocumentLink,
@@ -53,6 +55,8 @@ function AppLayout() {
   const isReportActive =
     location.pathname === buildReportArchivePath()
     || location.pathname.startsWith(`${buildReportArchivePath()}/`);
+  const activeLegalLink = legalNavLinks.find((link) => location.pathname === link.path);
+  const isLegalActive = Boolean(activeLegalLink);
   const isGatewayActive = location.pathname === buildProductPath("/");
   const getGlobalNavClassName = (isActive: boolean) =>
     isActive ? "global-nav-link active" : "global-nav-link";
@@ -172,6 +176,10 @@ function AppLayout() {
             <span className="status-pill status-pill--neutral">
               Hot Global TM Brief
             </span>
+          ) : isLegalActive ? (
+            <span className="status-pill status-pill--neutral">
+              Trust / Legal
+            </span>
           ) : (
             <span className="status-pill status-pill--neutral">
               4-tier operating guide portfolio
@@ -231,6 +239,9 @@ export function AppRoutes() {
           <Route path={`${buildBriefArchivePath().replace(/^\//, "")}/:issueSlug`} element={<BriefIssuePage />} />
           <Route path={buildReportArchivePath().replace(/^\//, "")} element={<ReportArchivePage />} />
           <Route path={`${buildReportArchivePath().replace(/^\//, "")}/:reportSlug`} element={<ReportPage />} />
+          {legalPages.map((page) => (
+            <Route key={page.slug} path={page.slug} element={<LegalPage slug={page.slug} />} />
+          ))}
           {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
             <Route
               key={product.slug}
