@@ -161,21 +161,6 @@ function AppLayout() {
               </FullDocumentLink>
             );
           })}
-          {legalNavLinks.map((link) => {
-            const isActive = activeLegalLink?.path === link.path;
-
-            return (
-              <FullDocumentLink
-                key={link.path}
-                to={link.path}
-                ref={isActive ? activeNavItemRef : undefined}
-                className={getGlobalNavClassName(isActive)}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <span className="global-nav-label">{link.label}</span>
-              </FullDocumentLink>
-            );
-          })}
         </nav>
 
         <div className="global-status-panel">
