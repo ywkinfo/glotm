@@ -15,6 +15,7 @@
 ## Global Supporting Docs
 
 - Hermes Stage 1 baseline: [`hermes-stage1-baseline.md`](hermes-stage1-baseline.md)
+- Hermes Stage 1 advisory memo: [`hermes-stage1-advisory-memo.md`](hermes-stage1-advisory-memo.md)
 - current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
 - briefs lane contract: [`briefs-lane.md`](briefs-lane.md) (정본 콘텐츠·인벤토리는 `../src/briefs/archive.ts`)
 - runtime QA checklist: [`phase1-runtime-qa.md`](phase1-runtime-qa.md)
