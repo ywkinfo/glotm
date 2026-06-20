@@ -28,6 +28,7 @@ import {
   type DocumentData,
   type ProductMeta
 } from "../src/products/shared";
+import { legalPages, type LegalPageDefinition } from "../src/trustLegal";
 
 const DEFAULT_SITE_ORIGIN = "https://ywkinfo.github.io";
 const DEFAULT_SITE_NAME = "GloTm";
@@ -462,6 +463,45 @@ function buildChapterDescription(product: ProductMeta, chapter: Chapter) {
   return trimDescription(`${summarySource} ${product.shortLabel} 가이드 챕터.`);
 }
 
+function buildLegalPageDescription(page: LegalPageDefinition) {
+  return trimDescription(page.summary);
+}
+
+function renderLegalBody(page: LegalPageDefinition, basePath: string) {
+  const relatedLinks = legalPages
+    .filter((entry) => entry.slug !== page.slug)
+    .map((entry) => ({
+      href: buildPublicHref(entry.path, basePath),
+      label: entry.navLabel
+    }));
+  const sectionsHtml = page.sections
+    .map(
+      (section) => `
+      <section>
+        <h2>${escapeHtml(section.title)}</h2>
+        ${section.paragraphs
+          .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+          .join("\n        ")}
+      </section>`
+    )
+    .join("\n");
+
+  return `
+    <main>
+      <nav>
+        <a href="${escapeHtml(buildPublicHref("/", basePath))}">GloTm Gateway</a>
+      </nav>
+      <header>
+        <p>${escapeHtml(page.kicker)}</p>
+        <h1>${escapeHtml(page.title)}</h1>
+        <p>${escapeHtml(page.summary)}</p>
+      </header>
+      ${sectionsHtml}
+      ${renderLinkList("관련 고지", relatedLinks)}
+    </main>
+  `;
+}
+
 export function buildStaticPageDefinitions(
   documentDataBySlug: Map<string, DocumentData>,
   reportDocumentDataBySlugOrOptions: Map<string, DocumentData> | SeoRuntimeOptions = new Map(),
@@ -517,6 +557,20 @@ export function buildStaticPageDefinitions(
     lastModified: ensureIsoDate(latestReportPublishedAt),
     bodyHtml: renderReportArchiveBody(basePath)
   });
+
+  for (const legalPage of legalPages) {
+    pages.push({
+      routePath: legalPage.path,
+      outputPath: buildOutputPath(legalPage.path, distDir),
+      title: buildRuntimeDocumentTitle(legalPage.title),
+      description: buildLegalPageDescription(legalPage),
+      canonicalUrl: buildCanonicalUrl(legalPage.path, siteOrigin, basePath),
+      ...buildDefaultSocialImage(siteOrigin, basePath),
+      ogType: "website",
+      lastModified: ensureIsoDate(gatewayLastModified),
+      bodyHtml: renderLegalBody(legalPage, basePath)
+    });
+  }
 
   for (const issue of briefIssues) {
     const issueRoutePath = buildBriefIssuePath(issue.slug);
