@@ -255,7 +255,7 @@ export function AppRoutes() {
           <Route path={buildReportArchivePath().replace(/^\//, "")} element={<ReportArchivePage />} />
           <Route path={`${buildReportArchivePath().replace(/^\//, "")}/:reportSlug`} element={<ReportPage />} />
           {legalPages.map((page) => (
-            <Route key={page.slug} path={page.slug} element={<LegalPage />} />
+            <Route key={page.slug} path={page.slug} element={<LegalPage slug={page.slug} />} />
           ))}
           {liveShellReaderEntries.map(({ product, ReaderRoot, HomePage, ChapterPage }) => (
             <Route
