@@ -1,19 +1,19 @@
 import { useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import {
   getLegalPageBySlug,
   legalNavLinks,
   legalPages,
   legalNoticeBullets,
-  legalNoticeSummary
+  legalNoticeSummary,
+  type LegalPageSlug
 } from "../trustLegal";
 import { buildProductPath, setRuntimeDocumentTitle } from "../products/shared";
 import { FullDocumentLink } from "./appShared";
 
-export function LegalPage() {
-  const params = useParams<{ legalSlug: string }>();
-  const page = getLegalPageBySlug(params.legalSlug);
+export function LegalPage({ slug }: { slug: LegalPageSlug }) {
+  const page = getLegalPageBySlug(slug);
 
   useEffect(() => {
     if (!page) {
