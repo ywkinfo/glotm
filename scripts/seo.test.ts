@@ -18,6 +18,7 @@ import { briefIssues } from "../src/briefs/archive";
 import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import type { DocumentData } from "../src/products/shared";
+import { legalPages } from "../src/trustLegal";
 import {
   buildPublicHref,
   buildRobotsTxt,
@@ -53,7 +54,7 @@ describe("SEO build helpers", () => {
       siteOrigin: "https://ywkinfo.github.io"
     });
     const expectedPageCount =
-      1 + 1 + briefIssues.length + 1 + reports.length + liveShellProducts.length + Array.from(documentDataBySlug.values()).reduce(
+      1 + 1 + briefIssues.length + 1 + reports.length + legalPages.length + liveShellProducts.length + Array.from(documentDataBySlug.values()).reduce(
         (total, documentData) => total + documentData.chapters.length,
         0
       );
@@ -126,6 +127,61 @@ describe("SEO build helpers", () => {
         })
       ])
     );
+  });
+
+  it("prerenders legal/privacy/contact pages into the static mirror and sitemap", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const sitemapXml = buildSitemapXml(pages);
+
+    expect(legalPages.length).toBeGreaterThan(0);
+
+    for (const legalPage of legalPages) {
+      expect(pages).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            routePath: legalPage.path,
+            outputPath: `/tmp/glotm-dist${legalPage.path}/index.html`,
+            canonicalUrl: `https://ywkinfo.github.io/glotm${legalPage.path}/`,
+            ogType: "website"
+          })
+        ])
+      );
+      expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm${legalPage.path}/`);
+    }
+  });
+
+  it("keeps the trust/legal notice in the prerendered legal HTML for no-JS and crawlers", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const legalDefinition = legalPages.find((page) => page.slug === "legal");
+    const legalPageStatic = pages.find((page) => page.routePath === "/legal");
+
+    expect(legalDefinition).toBeDefined();
+    expect(legalPageStatic).toBeDefined();
+
+    const html = renderStaticHtml(
+      [
+        "<!doctype html>",
+        "<html>",
+        "  <head>",
+        "    <title>Placeholder</title>",
+        "  </head>",
+        '  <body><div id="root"></div></body>',
+        "</html>"
+      ].join("\n"),
+      legalPageStatic!
+    );
+
+    expect(html).toContain("법률 자문");
+    expect(html).toContain(`<h1>${legalDefinition!.title}</h1>`);
+    expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/legal/" />');
   });
 
   it("builds a sitemap and robots.txt with the public routes", () => {
