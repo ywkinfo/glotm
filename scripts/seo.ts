@@ -176,6 +176,13 @@ function renderLinkList(title: string, links: PageLink[], ordered = false) {
   `;
 }
 
+function buildLegalPageLinks(basePath: string): PageLink[] {
+  return legalPages.map((page) => ({
+    href: buildPublicHref(page.path, basePath),
+    label: page.navLabel
+  }));
+}
+
 function renderGatewayBody(basePath: string) {
   const productLinks = liveShellProducts.map((product) => ({
     href: buildPublicHref(buildProductPath(product), basePath),
@@ -371,6 +378,7 @@ function renderReportArchiveBody(basePath: string) {
         <p>특정 국가 하나의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 질문을 한 문서로 정리하고 최신순으로 보여주는 리포트 아카이브입니다.</p>
       </header>
       ${renderLinkList("리포트 목록", reportLinks, true)}
+      ${renderLinkList("Trust / Legal", buildLegalPageLinks(basePath))}
     </main>
   `;
 }
@@ -404,6 +412,7 @@ function renderReportBody(report: ReportMeta, documentData: DocumentData, basePa
             label: link.label
           }))
         )}
+        ${renderLinkList("Trust / Legal", buildLegalPageLinks(basePath))}
       </article>
     </main>
   `;

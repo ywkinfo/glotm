@@ -184,6 +184,38 @@ describe("SEO build helpers", () => {
     expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/legal/" />');
   });
 
+  it("keeps trust/legal links in prerendered report HTML for no-JS and crawlers", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const reportArchiveStatic = pages.find((page) => page.routePath === "/reports");
+    const reportDetailStatic = pages.find((page) => page.routePath === `/reports/${reports[0]?.slug}`);
+    const templateHtml = [
+      "<!doctype html>",
+      "<html>",
+      "  <head>",
+      "    <title>Placeholder</title>",
+      "  </head>",
+      '  <body><div id="root"></div></body>',
+      "</html>"
+    ].join("\n");
+
+    expect(reportArchiveStatic).toBeDefined();
+    expect(reportDetailStatic).toBeDefined();
+
+    const reportArchiveHtml = renderStaticHtml(templateHtml, reportArchiveStatic!);
+    const reportDetailHtml = renderStaticHtml(templateHtml, reportDetailStatic!);
+
+    for (const page of legalPages) {
+      const href = buildPublicHref(page.path, "/glotm");
+
+      expect(reportArchiveHtml).toContain(`href="${href}"`);
+      expect(reportDetailHtml).toContain(`href="${href}"`);
+    }
+  });
+
   it("builds a sitemap and robots.txt with the public routes", () => {
     const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
       basePath: "/glotm/",

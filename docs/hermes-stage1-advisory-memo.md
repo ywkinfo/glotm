@@ -1,64 +1,54 @@
-# GloTm Stage 1 Advisory Memo
+# GloTm Stage 1 Trust Closeout Advisory Memo
 
 작성일: 2026-06-21
-검증 기준: GitHub `main` 공개 저장소 파일 (`src/app/App.tsx`, `scripts/seo.ts`, `src/reports/registry.ts`, `package.json`, `.github/workflows/deploy-pages.yml`) 실측 대조
-적용 범위: Hermes Stage 1 산출물 정합성, 권한 경계, 운영 모니터링 어젠다 재분류
+검증 기준: GitHub `main` 공개 저장소 파일 실측 대조
+적용 범위: Stage 1 trust/legal hardening closeout, Hermes 권한 경계, owner-only handoff 정리
 관련 문서: [`hermes-stage1-baseline.md`](hermes-stage1-baseline.md)
 
 ## 결론
 
-Hermes의 Phase 2.5 운영·모니터링 방향성은 대체로 맞지만, Stage 1 baseline 계약이 아직 닫히지 않았다. 따라서 운영 모니터링 어젠다로 넘어가기 전에 trust/legal hardening 산출물을 먼저 PR 후보로 정리해야 한다. 또한 제안된 모니터링 항목의 일부(Search Console 색인, GA4 라이브 landing, interactive QA 최종 판정)는 Hermes 권한 밖이므로 owner handoff로 재분류한다.
+Stage 1 trust/legal hardening의 핵심 산출물은 이미 #76, #77, #79로 출하되었다. 이 메모의 역할은
+이전 advisory의 stale 상태진단을 정정하고, 남은 closeout delta를 좁게 고정하는 것이다.
 
-## 현재 확인된 상태 (2026-06-21, `main` 실측)
+이번 closeout은 Report static surface의 trust/legal 접근성과 release gate 검증을 닫는 범위로 제한한다.
+Hermes는 PR 후보 작성과 검증 증거 수집을 담당하되, Search Console, GA4 DebugView, live interactive QA
+같은 owner 자격이 필요한 판정은 handoff로 남긴다.
 
-증거 기반 진단. "전무/완료" 식 이분법 단정은 피한다.
+## Shipped In #76, #77, #79
 
-- `src/app/App.tsx`에 `/privacy`, `/legal`, `/contact` route **없음** (라우트는 `chapter/:chapterSlug`와 `*`뿐, 가이드 진입 경로는 `src/products/registry.ts`에서 구성)
-- `LICENSE` **없음**
-- `SECURITY.md` **없음**
-- `scripts/seo.ts`는 Gateway / Brief archive·detail / Report / Guide static mirror를 생성하지만, 별도 legal/privacy/contact static page나 공통 legal notice mirror는 **아직 없음**
-- 기존 guide reader footer 고지는 별개로 존재할 수 있으므로 "법적 고지가 전무"라고 단정하면 **안 됨**. 미완 항목은 *dedicated legal/privacy/contact route + 공통 source + static mirror*이지 *모든 고지의 부재*가 아니다
-- GA4는 코드에 wired되어 있고(`GatewayPage`, `ReportPages`, `BriefPages`, `appShared`의 6개 이벤트), 측정 ID `G-0XF5JG96CC`가 repo variable로 설정되어 `deploy-pages.yml`에서 주입됨 → 코드 wiring 존재는 확인됨. 라이브 이벤트 landing 여부는 별도 owner 확인 대상
+- #76: `LICENSE`와 `SECURITY.md`가 추가되어 공개 저장소의 license/security 기본 고지가 마련되었다.
+- #77: `/legal`, `/privacy`, `/contact` runtime route가 추가되었고, 공통 source인 `src/trustLegal.ts`에서
+  legal/privacy/contact 콘텐츠와 navigation 정의를 관리한다.
+- #77: App routing/footer가 trust/legal page 정의를 소비하도록 연결되어 CSR 경로에서 legal/privacy/contact
+  접근이 가능하다.
+- #79: `scripts/seo.ts` static mirror와 sitemap 생성이 legal/privacy/contact page를 prerender하도록 확장되었다.
+- #79: `scripts/seo.test.ts`는 prerender된 legal HTML에 legal notice가 포함되는지 검증한다.
 
-## Stage 1 미완 산출물
+## Remaining Closeout Delta
 
-- `LICENSE` 추가
-- `SECURITY.md` 추가
-- `/privacy`, `/legal` 또는 `/terms`, `/contact` route 추가
-- Report archive/detail full legal notice 정렬
-- 공통 trust/legal source 도입 (기존 footer 고지를 덮지 않고 single-source로 통합)
-- `scripts/seo.ts` static SEO mirror에 동일 고지 반영 (CSR hydration 후에만 보이는 고지 방지)
-- release gate에 legal/static 검증 추가
+이번 PR이 닫는 항목은 아래로 한정한다.
 
-## 권한 경계
+- Report archive static body에 `/legal`, `/privacy`, `/contact` 링크를 추가한다.
+- Report detail static body에 `/legal`, `/privacy`, `/contact` 링크를 추가한다.
+- `test:seo`를 독립 script로 분리하고, `health:release`가 `build:pages:glotm` 이후 SEO static 검증을 실행하도록
+  연결한다.
+- 본 메모를 현재 `main` 상태에 맞춰 정정한다.
 
-Hermes는 Stage 1 advisory / PR 후보 작성 역할로 제한한다.
+Gateway, Brief archive/detail, Guide static body의 trust/legal link 확대는 이번 HOLD SCOPE에서 제외한다. 필요하면
+별도 micro-PR에서 다룬다.
 
-Hermes가 할 수 있는 일:
-- 코드와 문서 상태 진단 (read-only)
-- PR 후보 작성
-- 정적 route, SEO mirror, release gate 구현 (owner review·머지 전제)
-- owner가 확인할 체크리스트 작성
+## Owner-Only Verification
 
-Hermes가 직접 완료 판정하면 안 되는 일:
-- Search Console 색인 확인 (owner 콘솔 자격 필요)
-- GA4 DebugView landing 확인 (owner 콘솔 필요)
-- live interactive QA 최종 판정 (drawer close·검색·continue reading 등 브라우저 필요)
-- owner review 없이 `main` 머지 (ruleset / owner bypass 변경 금지)
+아래 항목은 Hermes가 코드나 CI만으로 완료 판정할 수 없다.
 
-참고: health lane(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현은 hermes-host에 Node 22가 있을 때만 신뢰 가능하다. Node 24는 rollup dlopen 실패가 알려져 있으므로 lane 실패 시 Node 버전을 먼저 분리 진단한다.
+- Search Console에서 `/glotm/legal/`, `/glotm/privacy/`, `/glotm/contact/`, `/glotm/reports/` 색인 상태 확인
+- GA4 DebugView에서 Gateway, Report, Brief, Guide landing/read 이벤트가 실제 라이브 트래픽으로 도착하는지 확인
+- live interactive QA에서 drawer close, 검색, continue reading, report navigation, legal/footer navigation을 브라우저로 확인
+- owner review 없이 `main`에 merge하지 않는 ruleset / owner bypass 경계 유지
 
-## 우선순위
+## Guardrails Maintained
 
-1. `LICENSE` + `SECURITY.md` PR (순수 docs, 가장 안전한 첫 PR)
-2. `/privacy`, `/legal`, `/contact` route + 공통 trust/legal source PR
-3. Report archive/detail notice + static SEO mirror + release gate check PR
-4. 문서 정합성 read-only 진단 (`PROJECT-OVERVIEW.md` / `README.md` / `src/reports/registry.ts` / Gateway copy가 서로 다른 phase·우선순위를 말하지 않는지)
-5. monthly scorecard 후보 리스트 작성 (`health:report:json` + `src/products/registry.ts` 기준 hold / upgrade-ready / verification-refresh-needed 분류만 기록, 자동 승급·강등 금지)
-6. fact freshness vs lane freshness advisory note 작성 (`verifiedOn`=lane 재검증일 유지, 법률 사실 재대조는 별도. EuTm의 UK 수수료·Brexit·EU/UK scope는 high-sensitivity로 별도 fact-freshness 관리)
-7. Search Console / GA4 owner handoff checklist 작성 (Hermes는 URL·이벤트 목록만 채우고 실행은 owner)
-
-## 금지 유지
+이번 closeout에서 유지해야 하는 금지/보류 사항은 다음과 같다.
 
 - 신규 국가 추가 금지
 - pricing/paywall 금지
@@ -66,11 +56,14 @@ Hermes가 직접 완료 판정하면 안 되는 일:
 - 신규 파이프라인/의존성 추가 금지
 - active promotion 금지
 - ruleset / owner bypass 변경 금지
+- `dist/` 또는 `public/generated/` 산출물 수기 편집 금지
 
 ## 참조 확인
 
+- `LICENSE`
+- `SECURITY.md`
 - `src/app/App.tsx`
+- `src/trustLegal.ts`
 - `scripts/seo.ts`
-- `src/reports/registry.ts`
-- `package.json` (health lanes)
-- `.github/workflows/deploy-pages.yml` (GA4 주입)
+- `scripts/seo.test.ts`
+- `package.json`
