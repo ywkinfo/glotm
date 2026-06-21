@@ -69,12 +69,14 @@ host-side policy gate이며, task별 allow/deny와 semantic profile이 함께 �
 
 ## Slack / CLI 경계
 
-- Slack CLI는 일반 Slack 메시지/명령 발송 도구가 아니라 Slack app 개발·배포용 CLI이며, 로컬 non-TTY 환경에서는
-  로그인 상태가 없으면 사용할 수 없다.
+- Slack CLI는 일반 Slack 메시지/명령 발송 도구가 아니라 Slack app 개발·배포용 CLI이다.
+  Hermes는 **incoming webhook**으로 run 결과를 알리고, `slack-app-manifest.yml`로 app을 생성/배포한다.
 - Slack 연동은 Hermes task를 호출하는 **trigger/notify/approve 표면**으로만 설계한다. merge/force-push나
   법률 source 편집 권한은 Slack 명령에 붙이지 않는다.
 - Slack을 붙이기 전 선결조건은 API 키 또는 Business/Enterprise 토큰 기반 런타임, audit log, task slug
   allowlist, owner approval 경계다.
+- GitHub Actions scheduled trigger(`.github/workflows/hermes-trigger.yml`)는 VPS에 SSH로 task slug만
+  본다. 실제 편집·PR은 VPS host policy gate가 수행한다.
 
 ## 복구 / readiness 점검
 
