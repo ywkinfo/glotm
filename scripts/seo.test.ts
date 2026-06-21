@@ -1,24 +1,18 @@
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import documentDataBrandLocalizationReport from "../public/generated/reports/brand-localization-vs-standardization-framework/document-data.json";
-import documentDataFilingPriorityReport from "../public/generated/reports/global-filing-priority-framework/document-data.json";
-import documentDataHangulReport from "../public/generated/reports/hangul-mark-global-protection-framework/document-data.json";
-import documentDataChina from "../public/generated/china/document-data.json";
-import documentDataEurope from "../public/generated/europe/document-data.json";
-import documentDataJapan from "../public/generated/japan/document-data.json";
-import documentDataLatam from "../public/generated/latam/document-data.json";
-import documentDataMexico from "../public/generated/mexico/document-data.json";
-import documentDataRouteReport from "../public/generated/reports/global-filing-route-framework/document-data.json";
-import documentDataReport from "../public/generated/reports/global-use-evidence-system/document-data.json";
-import documentDataUk from "../public/generated/uk/document-data.json";
-import documentDataUsa from "../public/generated/usa/document-data.json";
 import { describe, expect, it } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
 import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
-import type { DocumentData } from "../src/products/shared";
-import { legalPages } from "../src/trustLegal";
+import { buildChapterPath, type DocumentData } from "../src/products/shared";
+import {
+  legalNavLinks,
+  legalNoticeBullets,
+  legalNoticeSummary,
+  legalNoticeTitle,
+  legalPages
+} from "../src/trustLegal";
 import {
   buildPublicHref,
   buildRobotsTxt,
@@ -28,23 +22,52 @@ import {
 } from "./seo";
 import { preparePagesArtifacts } from "./prepare-pages";
 
-const documentDataBySlug = new Map<string, DocumentData>([
-  ["latam", documentDataLatam as DocumentData],
-  ["mexico", documentDataMexico as DocumentData],
-  ["usa", documentDataUsa as DocumentData],
-  ["japan", documentDataJapan as DocumentData],
-  ["china", documentDataChina as DocumentData],
-  ["europe", documentDataEurope as DocumentData],
-  ["uk", documentDataUk as DocumentData]
-]);
+function buildDocumentDataFixture(title: string, slug: string): DocumentData {
+  return {
+    meta: {
+      title,
+      builtAt: "2026-06-14T00:00:00.000Z",
+      chapterCount: 1
+    },
+    chapters: [
+      {
+        id: `${slug}-chapter-1`,
+        slug: "chapter-1",
+        title: `${title} 대표 챕터`,
+        summary: `${title} 대표 챕터 요약`,
+        html: `<section><h2>${title} fixture section</h2><p>${title} fixture body.</p></section>`,
+        headings: []
+      }
+    ]
+  };
+}
 
-const reportDocumentDataBySlug = new Map<string, DocumentData>([
-  ["brand-localization-vs-standardization-framework", documentDataBrandLocalizationReport as DocumentData],
-  ["global-filing-priority-framework", documentDataFilingPriorityReport as DocumentData],
-  ["hangul-mark-global-protection-framework", documentDataHangulReport as DocumentData],
-  ["global-filing-route-framework", documentDataRouteReport as DocumentData],
-  ["global-use-evidence-system", documentDataReport as DocumentData]
-]);
+const documentDataBySlug = new Map<string, DocumentData>(
+  liveShellProducts.map((product) => [
+    product.slug,
+    buildDocumentDataFixture(product.title, product.slug)
+  ])
+);
+
+const reportDocumentDataBySlug = new Map<string, DocumentData>(
+  reports.map((report) => [report.slug, buildDocumentDataFixture(report.title, report.slug)])
+);
+
+function expectTrustLegalNotice(bodyHtml: string, surfaceLabel: "Gateway" | "Guide" | "Brief" | "Report") {
+  expect(bodyHtml).toContain(`aria-label="${surfaceLabel} legal notice"`);
+  expect(bodyHtml).toContain(legalNoticeTitle);
+  expect(bodyHtml).toContain(`<h2>${surfaceLabel} 공통 고지</h2>`);
+  expect(bodyHtml).toContain(legalNoticeSummary);
+
+  for (const bullet of legalNoticeBullets) {
+    expect(bodyHtml).toContain(`<li>${bullet}</li>`);
+  }
+
+  for (const link of legalNavLinks) {
+    expect(bodyHtml).toContain(`href="/glotm${link.path}/"`);
+    expect(bodyHtml).toContain(`>${link.label}</a>`);
+  }
+}
 
 describe("SEO build helpers", () => {
   it("builds static pages for the gateway, product homes, and chapters", () => {
@@ -121,8 +144,8 @@ describe("SEO build helpers", () => {
     expect(pages).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          routePath: `/latam/chapter/${documentDataLatam.chapters[0]?.slug}`,
-          canonicalUrl: `https://ywkinfo.github.io/glotm/latam/chapter/${documentDataLatam.chapters[0]?.slug}/`,
+          routePath: `/latam/chapter/${documentDataBySlug.get("latam")!.chapters[0]?.slug}`,
+          canonicalUrl: `https://ywkinfo.github.io/glotm/latam/chapter/${documentDataBySlug.get("latam")!.chapters[0]?.slug}/`,
           ogType: "article"
         })
       ])
@@ -182,6 +205,30 @@ describe("SEO build helpers", () => {
     expect(html).toContain("법률 자문");
     expect(html).toContain(`<h1>${legalDefinition!.title}</h1>`);
     expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/legal/" />');
+  });
+
+  it("keeps the trust/legal notice in representative static mirror routes", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const latamFirstChapter = documentDataBySlug.get("latam")!.chapters[0];
+    const representativeRoutes = [
+      { routePath: "/", surface: "Gateway" },
+      { routePath: buildChapterPath("/latam", latamFirstChapter.slug), surface: "Guide" },
+      { routePath: "/briefs", surface: "Brief" },
+      { routePath: `/briefs/${briefIssues[0]!.slug}`, surface: "Brief" },
+      { routePath: "/reports", surface: "Report" },
+      { routePath: `/reports/${reports[0]!.slug}`, surface: "Report" }
+    ] as const;
+
+    for (const route of representativeRoutes) {
+      const page = pages.find((entry) => entry.routePath === route.routePath);
+
+      expect(page).toBeDefined();
+      expectTrustLegalNotice(page!.bodyHtml, route.surface);
+    }
   });
 
   it("builds a sitemap and robots.txt with the public routes", () => {

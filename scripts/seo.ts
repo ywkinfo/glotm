@@ -28,7 +28,14 @@ import {
   type DocumentData,
   type ProductMeta
 } from "../src/products/shared";
-import { legalPages, type LegalPageDefinition } from "../src/trustLegal";
+import {
+  legalNavLinks,
+  legalNoticeBullets,
+  legalNoticeSummary,
+  legalNoticeTitle,
+  legalPages,
+  type LegalPageDefinition
+} from "../src/trustLegal";
 
 const DEFAULT_SITE_ORIGIN = "https://ywkinfo.github.io";
 const DEFAULT_SITE_NAME = "GloTm";
@@ -176,6 +183,27 @@ function renderLinkList(title: string, links: PageLink[], ordered = false) {
   `;
 }
 
+function renderTrustLegalNotice(surfaceLabel: string, basePath: string) {
+  return `
+    <aside aria-label="${escapeHtml(surfaceLabel)} legal notice">
+      <p>${escapeHtml(legalNoticeTitle)}</p>
+      <h2>${escapeHtml(surfaceLabel)} 공통 고지</h2>
+      <p>${escapeHtml(legalNoticeSummary)}</p>
+      <ul>
+        ${legalNoticeBullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+      <nav aria-label="${escapeHtml(surfaceLabel)} legal links">
+        ${legalNavLinks
+          .map(
+            (link) =>
+              `<a href="${escapeHtml(buildPublicHref(link.path, basePath))}">${escapeHtml(link.label)}</a>`
+          )
+          .join("")}
+      </nav>
+    </aside>
+  `;
+}
+
 function renderGatewayBody(basePath: string) {
   const productLinks = liveShellProducts.map((product) => ({
     href: buildPublicHref(buildProductPath(product), basePath),
@@ -207,6 +235,7 @@ function renderGatewayBody(basePath: string) {
         <p>현재 ${liveShellProducts.length}개의 권역형·국가형 guide를 flagship, growth, validate, incubate 구조로 운영하고 있습니다.</p>
       </section>
       ${renderLinkList("가이드 목록", productLinks)}
+      ${renderTrustLegalNotice("Gateway", basePath)}
     </main>
   `;
 }
@@ -229,6 +258,7 @@ function renderProductBody(product: ProductMeta, documentData: DocumentData, bas
         <p>${documentData.chapters.length}개 챕터로 구성된 ${escapeHtml(product.title)} 전체 목차입니다.</p>
       </header>
       ${renderLinkList("챕터 목록", chapterLinks, true)}
+      ${renderTrustLegalNotice("Guide", basePath)}
     </main>
   `;
 }
@@ -277,6 +307,7 @@ function renderChapterBody(
         ${chapter.html}
       </article>
       ${chapterNavLinks.length > 0 ? renderLinkList("다음 읽기", chapterNavLinks) : ""}
+      ${renderTrustLegalNotice("Guide", basePath)}
     </main>
   `;
 }
@@ -298,6 +329,7 @@ function renderBriefArchiveBody(basePath: string) {
         <p>해외 상표 뉴스를 그대로 모으는 대신, 한국 기업이 이번 주 바로 점검해야 할 브랜드 이슈를 골라 짧고 밀도 있게 정리합니다.</p>
       </header>
       ${renderLinkList("브리프 이슈 목록", issueLinks, true)}
+      ${renderTrustLegalNotice("Brief", basePath)}
     </main>
   `;
 }
@@ -350,6 +382,7 @@ function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
         ${bodyParagraphs}
         ${issueSections}
       </article>
+      ${renderTrustLegalNotice("Brief", basePath)}
     </main>
   `;
 }
@@ -371,6 +404,7 @@ function renderReportArchiveBody(basePath: string) {
         <p>특정 국가 하나의 절차 요약보다, 여러 관할에서 공통으로 반복되는 운영 질문을 한 문서로 정리하고 최신순으로 보여주는 리포트 아카이브입니다.</p>
       </header>
       ${renderLinkList("리포트 목록", reportLinks, true)}
+      ${renderTrustLegalNotice("Report", basePath)}
     </main>
   `;
 }
@@ -405,6 +439,7 @@ function renderReportBody(report: ReportMeta, documentData: DocumentData, basePa
           }))
         )}
       </article>
+      ${renderTrustLegalNotice("Report", basePath)}
     </main>
   `;
 }
