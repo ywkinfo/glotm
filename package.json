@@ -29,7 +29,7 @@
     "e2e:smoke": "env -u NO_COLOR playwright test e2e/*smoke.spec.ts",
     "health:runtime": "node --import tsx scripts/run-health-lane.ts runtime \"npm run typecheck:runtime && npm run test:runtime && npm run e2e:smoke\"",
     "health:content": "node --import tsx scripts/run-health-lane.ts content \"npm run content:prepare && npm run test:content && npm --prefix ChaTm run content:prepare && npm --prefix MexTm run content:prepare && npm --prefix EuTm run content:prepare\"",
-    "health:release": "node --import tsx scripts/run-health-lane.ts release \"npm run build:pages:glotm\"",
+    "health:release": "node --import tsx scripts/run-health-lane.ts release \"npm run build:pages:glotm && npm run test:seo\"",
     "health:report": "node --import tsx scripts/health-report.ts",
     "health:report:json": "node --import tsx scripts/health-report.ts --format json",
     "health:all": "npm run health:runtime && npm run health:content && npm run health:release && npm run health:report",
@@ -39,6 +39,7 @@
     "test": "vitest run",
     "test:runtime": "vitest run --exclude src/products/chinaManuscript.test.ts --exclude src/products/mexicoManuscript.test.ts --exclude src/products/europeManuscript.test.ts --exclude src/products/contentLinks.test.ts --exclude Reports/scripts/build-content.test.ts --exclude scripts/seo.test.ts --exclude scripts/check-portfolio-consistency.test.ts",
     "test:content": "vitest run src/products/chinaManuscript.test.ts src/products/mexicoManuscript.test.ts src/products/europeManuscript.test.ts src/products/contentLinks.test.ts Reports/scripts/build-content.test.ts scripts/seo.test.ts scripts/check-portfolio-consistency.test.ts",
+    "test:seo": "vitest run scripts/seo.test.ts",
     "test:watch": "vitest"
   },
   "dependencies": {

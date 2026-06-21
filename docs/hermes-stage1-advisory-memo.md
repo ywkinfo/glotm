@@ -5,30 +5,43 @@
 적용 범위: Hermes Stage 1 산출물 정합성, 권한 경계, 운영 모니터링 어젠다 재분류
 관련 문서: [`hermes-stage1-baseline.md`](hermes-stage1-baseline.md)
 
+## 정정 / Closeout 상태 (2026-06-21 갱신)
+
+> 이 메모의 최초 "현재 확인된 상태" 진단 중 일부는 **stale**였다. `LICENSE`·`SECURITY.md`(#76)와
+> `/privacy`·`/legal`·`/contact` route(#77)는 이 메모보다 **먼저** `main`에 머지돼 있었는데 "없음"으로
+> 단정했다(stale-tree 진단 오류). legal page static mirror는 이후 #79로 추가됐다.
+>
+> 남아 있던 실제 잔여 항목은 **(1) 공통 trust/legal notice의 full static parity**(Gateway·guide·Brief·
+> Report prerender body)와 **(2) `verify:release` 하위 gate에 legal/static 검증 배선** 두 가지였고,
+> 이는 Stage 1 static-trust closeout PR에서 닫는다(`scripts/seo.ts` `renderTrustLegalNotice` +
+> `test:seo`를 `health:release`에 편입). 아래 본문은 진단 이력 보존을 위해 남기되, 현재 참값은 이
+> 블록과 `hermes-stage1-baseline.md` 완료판정을 기준으로 본다.
+
 ## 결론
 
 Hermes의 Phase 2.5 운영·모니터링 방향성은 대체로 맞지만, Stage 1 baseline 계약이 아직 닫히지 않았다. 따라서 운영 모니터링 어젠다로 넘어가기 전에 trust/legal hardening 산출물을 먼저 PR 후보로 정리해야 한다. 또한 제안된 모니터링 항목의 일부(Search Console 색인, GA4 라이브 landing, interactive QA 최종 판정)는 Hermes 권한 밖이므로 owner handoff로 재분류한다.
 
-## 현재 확인된 상태 (2026-06-21, `main` 실측)
+## 현재 확인된 상태 (2026-06-21, `main` 실측) — *일부 stale, 위 Closeout 블록이 참값*
 
 증거 기반 진단. "전무/완료" 식 이분법 단정은 피한다.
 
-- `src/app/App.tsx`에 `/privacy`, `/legal`, `/contact` route **없음** (라우트는 `chapter/:chapterSlug`와 `*`뿐, 가이드 진입 경로는 `src/products/registry.ts`에서 구성)
-- `LICENSE` **없음**
-- `SECURITY.md` **없음**
-- `scripts/seo.ts`는 Gateway / Brief archive·detail / Report / Guide static mirror를 생성하지만, 별도 legal/privacy/contact static page나 공통 legal notice mirror는 **아직 없음**
+- ~~`src/app/App.tsx`에 `/privacy`, `/legal`, `/contact` route **없음**~~ → **정정: #77로 이미 존재**(`src/trustLegal.ts` + `src/app/TrustLegalNotice.tsx`)
+- ~~`LICENSE` **없음**~~ → **정정: #76로 이미 존재**
+- ~~`SECURITY.md` **없음**~~ → **정정: #76으로 이미 존재**
+- `scripts/seo.ts`는 Gateway / Brief archive·detail / Report / Guide static mirror를 생성한다. legal/privacy/contact static page는 #79로 추가됨. **남은 것은 공통 legal notice의 full static parity**(Gateway·guide·Brief·Report body)로, closeout PR에서 반영
 - 기존 guide reader footer 고지는 별개로 존재할 수 있으므로 "법적 고지가 전무"라고 단정하면 **안 됨**. 미완 항목은 *dedicated legal/privacy/contact route + 공통 source + static mirror*이지 *모든 고지의 부재*가 아니다
 - GA4는 코드에 wired되어 있고(`GatewayPage`, `ReportPages`, `BriefPages`, `appShared`의 6개 이벤트), 측정 ID `G-0XF5JG96CC`가 repo variable로 설정되어 `deploy-pages.yml`에서 주입됨 → 코드 wiring 존재는 확인됨. 라이브 이벤트 landing 여부는 별도 owner 확인 대상
 
-## Stage 1 미완 산출물
+## Stage 1 산출물 상태 (closeout 기준)
 
-- `LICENSE` 추가
-- `SECURITY.md` 추가
-- `/privacy`, `/legal` 또는 `/terms`, `/contact` route 추가
-- Report archive/detail full legal notice 정렬
-- 공통 trust/legal source 도입 (기존 footer 고지를 덮지 않고 single-source로 통합)
-- `scripts/seo.ts` static SEO mirror에 동일 고지 반영 (CSR hydration 후에만 보이는 고지 방지)
-- release gate에 legal/static 검증 추가
+- [x] `LICENSE` 추가 (#76)
+- [x] `SECURITY.md` 추가 (#76)
+- [x] `/privacy`, `/legal`, `/contact` route 추가 (#77)
+- [x] 공통 trust/legal source 도입 (`src/trustLegal.ts` single-source; 기존 footer 고지 미덮음)
+- [x] legal page static mirror 추가 (#79)
+- [x] Report archive/detail full legal notice — closeout PR에서 공통 notice를 static body에 반영
+- [x] `scripts/seo.ts` static mirror full parity (Gateway·guide·Brief·Report) — closeout PR (`renderTrustLegalNotice`)
+- [x] release gate에 legal/static 검증 추가 — closeout PR (`test:seo`를 `health:release`에 편입 → `verify:release` 커버)
 
 ## 권한 경계
 

@@ -18,7 +18,12 @@ import { briefIssues } from "../src/briefs/archive";
 import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import type { DocumentData } from "../src/products/shared";
-import { legalPages } from "../src/trustLegal";
+import {
+  legalNavLinks,
+  legalNoticeBullets,
+  legalNoticeSummary,
+  legalPages
+} from "../src/trustLegal";
 import {
   buildPublicHref,
   buildRobotsTxt,
@@ -182,6 +187,46 @@ describe("SEO build helpers", () => {
     expect(html).toContain("법률 자문");
     expect(html).toContain(`<h1>${legalDefinition!.title}</h1>`);
     expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/legal/" />');
+  });
+
+  it("renders the shared trust/legal notice in Gateway, guide, brief, and report static HTML", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const shell = [
+      "<!doctype html>",
+      "<html>",
+      "  <head>",
+      "    <title>Placeholder</title>",
+      "  </head>",
+      '  <body><div id="root"></div></body>',
+      "</html>"
+    ].join("\n");
+
+    const representativeRoutes = [
+      "/",
+      "/briefs",
+      `/briefs/${briefIssues[0]?.slug}`,
+      "/reports",
+      `/reports/${reports[0]?.slug}`,
+      `/latam/chapter/${documentDataLatam.chapters[0]?.slug}`
+    ];
+
+    for (const routePath of representativeRoutes) {
+      const page = pages.find((entry) => entry.routePath === routePath);
+      expect(page, `missing static page for ${routePath}`).toBeDefined();
+      const html = renderStaticHtml(shell, page!);
+
+      expect(html, `notice summary missing on ${routePath}`).toContain(legalNoticeSummary);
+      expect(html, `notice bullet missing on ${routePath}`).toContain(legalNoticeBullets[0]!);
+      for (const link of legalNavLinks) {
+        expect(html, `legal link ${link.path} missing on ${routePath}`).toContain(
+          `href="${buildPublicHref(link.path, "/glotm")}"`
+        );
+      }
+    }
   });
 
   it("builds a sitemap and robots.txt with the public routes", () => {

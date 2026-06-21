@@ -127,17 +127,23 @@ Gateway, Brief, Report, guide reader가 서로 다른 수준의 고지를 갖지
 - 기존 guide/Gateway/Brief 고지를 없다고 단정하고 중복 구현
 - dev-only audit 결과를 production outage처럼 처리
 
-## 완료 판정
+## 완료 판정 (closeout 기준, 2026-06-21 갱신)
 
-Stage 1은 다음 조건을 만족하면 완료로 본다.
+Stage 1은 다음 조건을 만족하면 완료로 본다. 각 항목의 현재 상태:
 
-- 이 baseline 문서가 저장소에 존재하고 docs index에서 찾을 수 있다.
-- privacy/legal/contact route가 runtime과 static output 양쪽에 반영된다.
-- Report archive/detail에 full legal/trust notice가 반영된다.
-- Gateway, Brief, Report, guide reader의 trust/legal facts가 정합적이다.
-- prerendered HTML에서 핵심 고지가 빠지지 않는다.
-- `LICENSE`와 `SECURITY.md`가 존재한다.
-- `npm run verify:release` 또는 그 하위 gate가 Stage 1 조건을 검증한다.
+- [x] 이 baseline 문서가 저장소에 존재하고 docs index에서 찾을 수 있다.
+- [x] privacy/legal/contact route가 runtime과 static output 양쪽에 반영된다. (route #77, static page #79)
+- [x] Report archive/detail에 full legal/trust notice가 반영된다. (closeout PR: static body에 공통 notice 삽입)
+- [x] Gateway, Brief, Report, guide reader의 trust/legal facts가 정합적이다. (single-source `src/trustLegal.ts`)
+- [x] prerendered HTML에서 핵심 고지가 빠지지 않는다. (closeout PR: `renderTrustLegalNotice` full static parity + `scripts/seo.test.ts` 대표 라우트 assert)
+- [x] `LICENSE`와 `SECURITY.md`가 존재한다. (#76)
+- [x] `npm run verify:release` 또는 그 하위 gate가 Stage 1 조건을 검증한다. (closeout PR: `test:seo`를 `health:release`에 편입 → `verify:release`가 legal/static 커버)
+
+> closeout 증거: `scripts/seo.ts`의 공통 `renderTrustLegalNotice`가 Gateway·guide home/chapter·
+> Brief archive/detail·Report archive/detail static body에 삽입되고, `scripts/seo.test.ts`가 대표
+> 라우트(`/`, guide chapter, `/briefs`, brief detail, `/reports`, report detail)에 notice·legal
+> 링크 포함을 검증한다. `package.json`의 `health:release`가 `build:pages:glotm && test:seo`를 실행해
+> release gate가 이를 잡는다.
 
 ## 후속 작업 순서
 
