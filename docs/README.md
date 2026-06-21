@@ -14,6 +14,7 @@
 
 ## Global Supporting Docs
 
+- Hermes operations runbook (운영 레이어 · VPS 경로 · 트리거 · PAT 로테이션): [`hermes-operations-runbook.md`](hermes-operations-runbook.md)
 - Hermes Stage 1 baseline: [`hermes-stage1-baseline.md`](hermes-stage1-baseline.md)
 - Hermes Stage 1 advisory memo: [`hermes-stage1-advisory-memo.md`](hermes-stage1-advisory-memo.md)
 - current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
