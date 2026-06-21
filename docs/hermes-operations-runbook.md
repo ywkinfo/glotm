@@ -11,10 +11,11 @@
 
 ## 오케스트레이터 정체
 
-- **무엇**: GloTm을 관리하는 **PR-제안 전용** 에이전트 러너. owner-only SSH on-demand 파일럿(v1).
+- **무엇**: GloTm을 관리하는 **V2 bounded operator**. owner-only SSH on-demand 러너이며,
+  task별 prompt·allowlist·denylist·semantic profile을 분리한다.
 - **소스**: 로컬 `~/glotm-hermes`, remote `github.com/ywkinfo/glotm-hermes`.
 - **정본 셋업 문서**: `glotm-hermes/docs/SETUP.md`, `glotm-hermes/README.md`.
-- **GloTm repo와의 관계**: Hermes는 이 저장소를 *읽고 PR을 제안*할 뿐, 머지·배포는 사람이 한다.
+- **GloTm repo와의 관계**: Hermes는 이 저장소를 *읽고 draft PR을 제안*할 뿐, 머지·배포는 사람이 한다.
 
 ## VPS truth (경로)
 
@@ -33,19 +34,36 @@ VPS HostName: `srv1650501.hstgr.cloud` (Hostinger), SSH user `hermes`.
 
 ```bash
 ssh hermes-host sync-derived-docs   # forced-command → bin/hermes-run; task id는 slug로만 전달
+ssh hermes-host audit-content-quality
+ssh hermes-host webapp-quality-maintenance
+ssh hermes-host static-trust-maintenance
 ```
 
 - `hermes-host`는 **forced-command 전용**이라 임의 셸 명령을 받지 않는다(허용 task slug만).
-- 현재 허용 task는 `glotm-hermes/lib/config.sh`(또는 V2의 `lib/task-config.sh`)의 화이트리스트가 정본이다.
+- 현재 허용 task는 `glotm-hermes/lib/task-config.sh`의 화이트리스트가 정본이다.
 
-## 현재 권한 범위 (v1)
+## 현재 task surface (V2)
 
-- **derived-doc drift만** 수정: `PROJECT-OVERVIEW.md`, `docs/portfolio-scorecard.md`,
-  `docs/buyer-narrative.md`를 `src/products/registry.ts` 정본에 맞춰 재생성.
-- **draft PR only · no direct merge · no force-push.**
-- host policy gate가 **registry·workflow·deps·법률 콘텐츠** 편집을 차단(`policy/deny.txt`).
-- 실질 통제는 host policy gate다(소유자 PAT는 main ruleset을 기술적으로 bypass 가능 — 잔여 리스크 P0-7,
-  하드닝 단계에서 non-bypass GitHub App 신원으로 전환).
+모든 task는 **draft PR only · no direct merge · no force-push** 원칙을 공유한다. 실질 통제는
+host-side policy gate이며, task별 allow/deny와 semantic profile이 함께 적용된다. 소유자 PAT는 main ruleset을
+기술적으로 bypass할 수 있으므로 잔여 리스크 P0-7은 남아 있고, 하드닝 단계에서는 non-bypass GitHub App 신원으로
+전환한다.
+
+| Task slug | 역할 | 허용 편집면 | 차단/승인 경계 |
+|-----------|------|-------------|----------------|
+| `sync-derived-docs` | registry-derived 문서 drift 수정 | `PROJECT-OVERVIEW.md`, `docs/portfolio-scorecard.md`, `docs/buyer-narrative.md` | registry·workflow·deps·콘텐츠 source 차단 |
+| `audit-content-quality` | 콘텐츠 품질 audit queue 작성 | `docs/hermes-content-quality-queue.md`만 | source content 직접 편집 금지; 법률/사실 판단은 queue로만 제안 |
+| `webapp-quality-maintenance` | 웹앱/runtime/테스트/SEO 품질 유지보수 | `src/`, `scripts/`, `e2e/` | registry·scorecard·workflow·deps·generated·content source 차단 |
+| `static-trust-maintenance` | trust/static mirror 회귀 수정 | `scripts/seo.ts`, `scripts/seo.test.ts`, 제한된 문서와 `package.json` script wiring | 법률 copy 재작성·workflow·lockfile·workspace deps 차단 |
+
+운영 원칙:
+
+- Hermes가 더 적극적으로 움직여야 하는 영역은 **기계 검증 가능한 drift, webapp 품질, static trust parity,
+  콘텐츠 품질 queue**다.
+- 법률·사실 source content는 Hermes가 직접 고치지 않는다. Hermes는 불일치·저밀도·근거 부족 항목을 queue로
+  올리고, owner가 source 수정 여부를 결정한다.
+- `health:*`, `test:seo`, task-specific verification은 task가 PR을 열기 전에 가능한 범위에서 실행한다.
+- no-op이면 원격 부작용 없이 로그만 남기고 종료한다.
 
 ## 운영 주의사항
 
@@ -56,6 +74,20 @@ ssh hermes-host sync-derived-docs   # forced-command → bin/hermes-run; task id
   `hermes-host`(→ `/srv/hermes`)로 라우팅을 바로잡는다.
 - **admin 작업 선결**: `bootstrap.sh`/`doctor.sh`는 `sudo` 필요인데 `hermes-host`는 forced-command라
   실행 불가. 복구·점검은 별도 admin 경로(예: `hermes-admin` root/sudo alias)나 owner 직접 실행이 필요하다.
+- **컨테이너 내부 sandbox**: Hostinger Docker에서는 Codex의 nested `bwrap`/user namespace sandbox가 막힐 수
+  있다. 현재 오케스트레이터는 Docker container를 격리 경계로 삼고, 컨테이너 안의 Codex에는
+  `CODEX_SANDBOX_MODE=danger-full-access`를 명시한다. 컨테이너에는 GitHub token·SSH·host env를 넘기지 않고,
+  worktree와 Codex auth volume만 mount한다.
+
+## Slack / CLI 경계
+
+- 현재 운영 트리거의 정본은 `ssh hermes-host <task-slug>`다.
+- Slack CLI는 일반 Slack 메시지/명령 발송 도구가 아니라 Slack app 개발·배포용 CLI이며, 로컬 non-TTY 환경에서는
+  로그인 상태가 없으면 사용할 수 없다.
+- Slack 연동은 Hermes task를 호출하는 **trigger/notify/approve 표면**으로만 설계한다. merge/force-push나
+  법률 source 편집 권한은 Slack 명령에 붙이지 않는다.
+- Slack을 붙이기 전 선결조건은 API 키 또는 Business/Enterprise 토큰 기반 런타임, audit log, task slug
+  allowlist, owner approval 경계다.
 
 ## 복구 / readiness 점검
 
@@ -67,16 +99,7 @@ sudo -u hermes -H git clone https://github.com/ywkinfo/glotm-hermes.git /srv/her
 cd /srv/hermes/glotm-hermes && sudo scripts/bootstrap.sh        # 권한·deps·이미지·primary clone
 ```
 
-## V2 로드맵 (bounded operator)
-
-v1 안전모델을 유지한 채 task별 권한·게이트를 가진 V2로 확장한다. 추가 task(예시):
-
-- `audit-content-quality`: health/report/사실 audit 실행 → `docs/hermes-content-quality-queue.md`만
-  갱신(콘텐츠 source 편집 없음).
-- `webapp-quality-maintenance`: runtime/webapp 품질 수정 전용 bounded draft PR.
-- `static-trust-maintenance`: trust/static mirror 회귀 전용 bounded draft PR(법률 copy 재작성 아님).
-
-광역 자동화 전제조건:
+## 로드맵
 
 - **Slack/스케줄/외부 입력**을 붙이기 전에 ChatGPT 구독 런타임 → **API 키 또는 Business/Enterprise
   토큰**으로 전환(공개 저장소 자동화 OpenAI 권고).
