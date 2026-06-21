@@ -1,0 +1,11 @@
+# Hermes Content Quality Queue
+
+GloTm content-quality audit queue. 이 문서는 source 편집 없이 확인된 후보만 기록한다.
+
+| 발견일 | 대상 | 유형 | 근거 | 권고 | 소유권 |
+|---|---|---|---|---|---|
+| 2026-06-21 | `LatTm/content/source/chapters/09_contracts-and-licensing-control.md` | broken-link | Node markdown link scan: `LatTm/content/source/chapters/09_contracts-and-licensing-control.md:405`에서 `[본사명](이하 "허락자")`, `[파트너명](이하 "수허락자")`가 상대 링크로 파싱됨. 원문 확인: `sed -n '396,410p' LatTm/content/source/chapters/09_contracts-and-licensing-control.md`. | 계약 템플릿 placeholder가 링크로 렌더링되지 않도록 owner 확인 후 escape 또는 문구 재작성. | mechanical |
+| 2026-06-21 | `UsaTm/content/research/us_tm_fact_verification_log.md` | legal-fact-review-candidate | `rg -n "확인 필요\|부분 확인" UsaTm/content/research/us_tm_fact_verification_log.md`: L10 USPTO 기본 출원 수수료 `확인 필요`, L15 Statement of Use 제출 구조 `부분 확인`, L22 Assignment Center 명칭 `확인 필요`, L23 Letter of Protest 제출 방식 `부분 확인`; L30/L36은 공개 직전 재검증 큐로 유지한다고 명시. | USPTO fee, SOU, Assignment Center, LOP 제출 방식은 공식 출처로 owner 재확인 후 본문 반영 여부 판단. | owner-gated |
+| 2026-06-21 | `MexTm/content/source/appendix/14-appendix.md` | freshness | `rg -n "최신 요건 재확인" MexTm/content/source/appendix/14-appendix.md`: L397 IMPI 갱신 안내 행에 `최신 요건 재확인 필요`; L51도 갱신 packet 및 사용선언 병행 여부 확인 필요를 본문 체크리스트에 포함. | IMPI 갱신 절차/사용선언 병행 요건을 공식 페이지 기준으로 owner 재확인하고, 필요한 경우 갱신 관련 본문·부록 문구 갱신. | owner-gated |
+| 2026-06-21 | `JapTm/content/source/chapters/11-domain-design-copyright-unfair-competition.md` | legal-fact-review-candidate | `rg -n "출판 직전.*재확인" JapTm/content/source/chapters/11-domain-design-copyright-unfair-competition.md`: L41에서 부정경쟁방지법 세부 조문과 최신 영문 번역 버전을 Japanese Law Translation으로 출판 직전 재확인한다고 명시. | 일본 부정경쟁방지법 관련 세부 조문/영문 번역 최신성을 owner가 공식 출처 기준으로 확인한 뒤 본문 유지 또는 보강 판단. | owner-gated |
+| 2026-06-21 | root verification commands (`npm run health:report:json`, `npm run check:consistency`) | consistency | 두 명령 모두 `Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'tsx' imported from /work/`로 실패. 환경 확인: `ls -ld node_modules /srv/hermes/glotm/node_modules` 결과 `node_modules -> /srv/hermes/glotm/node_modules`, 대상 경로 없음. 의존성 설치는 audit 쓰기 범위 밖이라 미실행. | 후속 host lane에서 의존성 symlink/설치 상태를 복구한 뒤 `health:report:json`과 `check:consistency`를 재실행해 provenance·registry 정합성 신호를 다시 수집. | mechanical |
