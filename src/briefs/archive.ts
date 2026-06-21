@@ -1,7 +1,7 @@
 import { getProductPathBySlug } from "../products/registry";
 import { buildRuntimeDocumentTitle } from "../products/shared";
 import { briefIssues as legacyBriefIssues } from "./archiveLegacy";
-import type { BriefGuideLink, BriefIssue, BriefItem } from "./archiveLegacy";
+import type { BriefIssue } from "./archiveLegacy";
 
 export type { BriefGuideLink, BriefIssue, BriefItem } from "./archiveLegacy";
 
