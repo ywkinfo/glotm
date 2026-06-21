@@ -46,7 +46,7 @@ Hermes가 직접 완료 판정하면 안 되는 일:
 - live interactive QA 최종 판정 (drawer close·검색·continue reading 등 브라우저 필요)
 - owner review 없이 `main` 머지 (ruleset / owner bypass 변경 금지)
 
-참고: health lane(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현은 hermes-host에 Node 22가 있을 때만 신뢰 가능하다. Node 24는 rollup dlopen 실패가 알려져 있으므로 lane 실패 시 Node 버전을 먼저 분리 진단한다.
+참고: health lane(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현은 실행 호스트에 Node 22가 있을 때만 신뢰 가능하다. Node 24는 rollup dlopen 실패가 알려져 있으므로 lane 실패 시 Node 버전을 먼저 분리 진단한다.
 
 ## 우선순위
 

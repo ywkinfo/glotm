@@ -11,7 +11,7 @@
 
 ## 오케스트레이터 정체
 
-- **무엇**: GloTm을 관리하는 **V2 bounded operator**. owner-only SSH on-demand 러너이며,
+- **무엇**: GloTm을 관리하는 **V2 bounded operator**. owner/admin on-demand 러너이며,
   task별 prompt·allowlist·denylist·semantic profile을 분리한다.
 - **소스**: 로컬 `~/glotm-hermes`, remote `github.com/ywkinfo/glotm-hermes`.
 - **정본 셋업 문서**: `glotm-hermes/docs/SETUP.md`, `glotm-hermes/README.md`.
@@ -28,19 +28,7 @@
 | scoped PAT(host 전용, 600) | `/srv/hermes/secrets/gh-token` |
 | Codex auth(영속, 토큰 자동갱신) | `/srv/hermes/codex/auth.json` |
 
-VPS HostName: `srv1650501.hstgr.cloud` (Hostinger), SSH user `hermes`.
-
-## 트리거
-
-```bash
-ssh hermes-host sync-derived-docs   # forced-command → bin/hermes-run; task id는 slug로만 전달
-ssh hermes-host audit-content-quality
-ssh hermes-host webapp-quality-maintenance
-ssh hermes-host static-trust-maintenance
-```
-
-- `hermes-host`는 **forced-command 전용**이라 임의 셸 명령을 받지 않는다(허용 task slug만).
-- 현재 허용 task는 `glotm-hermes/lib/task-config.sh`의 화이트리스트가 정본이다.
+VPS HostName: `srv1650501.hstgr.cloud` (Hostinger), service user `hermes`.
 
 ## 현재 task surface (V2)
 
@@ -71,17 +59,16 @@ host-side policy gate이며, task별 allow/deny와 semantic profile이 함께 �
   (scope: `ywkinfo/glotm` 단일, Contents:write + Pull requests:write).
 - **`/opt/hermes` 경고**: Hermes 설계에 `/opt/hermes`는 **없는 경로**다. GloTm 작업이 `/opt/hermes`에서
   돌고 있다면 GloTm 오케스트레이터가 아닌 **다른/일반 에이전트로 misroute**된 것이다 — 중단하고
-  `hermes-host`(→ `/srv/hermes`)로 라우팅을 바로잡는다.
-- **admin 작업 선결**: `bootstrap.sh`/`doctor.sh`는 `sudo` 필요인데 `hermes-host`는 forced-command라
-  실행 불가. 복구·점검은 별도 admin 경로(예: `hermes-admin` root/sudo alias)나 owner 직접 실행이 필요하다.
+  `/srv/hermes/glotm-hermes` 기준으로 라우팅을 바로잡는다.
+- **admin 작업 선결**: `bootstrap.sh`/`doctor.sh`는 `sudo`가 필요할 수 있으므로 별도 admin 경로나 owner 직접
+  실행이 필요하다.
 - **컨테이너 내부 sandbox**: Hostinger Docker에서는 Codex의 nested `bwrap`/user namespace sandbox가 막힐 수
   있다. 현재 오케스트레이터는 Docker container를 격리 경계로 삼고, 컨테이너 안의 Codex에는
-  `CODEX_SANDBOX_MODE=danger-full-access`를 명시한다. 컨테이너에는 GitHub token·SSH·host env를 넘기지 않고,
+  `CODEX_SANDBOX_MODE=danger-full-access`를 명시한다. 컨테이너에는 GitHub token·host env를 넘기지 않고,
   worktree와 Codex auth volume만 mount한다.
 
 ## Slack / CLI 경계
 
-- 현재 운영 트리거의 정본은 `ssh hermes-host <task-slug>`다.
 - Slack CLI는 일반 Slack 메시지/명령 발송 도구가 아니라 Slack app 개발·배포용 CLI이며, 로컬 non-TTY 환경에서는
   로그인 상태가 없으면 사용할 수 없다.
 - Slack 연동은 Hermes task를 호출하는 **trigger/notify/approve 표면**으로만 설계한다. merge/force-push나
