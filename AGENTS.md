@@ -21,6 +21,7 @@
 - 루트 셸이 workspace와 어떻게 연결되는지 봐야 한다 → `ARCHITECTURE.md`
 - 워크스페이스 안에서 무엇을 수정해야 하는지 봐야 한다 → 각 workspace `README.md`, `Harness/Architecture.md`, `Harness/Content-Spec.md`
 - supporting plan, QA checklist, buyer doc를 찾아야 한다 → `docs/README.md`
+- Hermes 운영/권한/콘텐츠 품질 큐 판단 → `Harness/Hermes-Operating-Charter.md`(정책), `docs/hermes-operations-runbook.md`(런타임)
 
 ## Root Decision Order
 
