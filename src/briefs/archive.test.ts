@@ -5,7 +5,7 @@ import { briefIssues, getBriefIssueBySlug, getLatestBriefIssue } from "./archive
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-07-short-brand-name-clearance");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-06-short-brand-name-clearance");
     expect(getBriefIssueBySlug("2026-06-china-trademark-amendment-squatting-readiness")?.title).toBe(
       "2026년 6월 Hot Global TM Brief | 중국 상표법 개정 전, 중국 선점 대응 파이프라인을 점검할 때입니다"
     );
@@ -47,6 +47,7 @@ describe("brief lane contract", () => {
   it("requires a valid publish date and an allowed cadence label", () => {
     for (const issue of briefIssues) {
       expect(Number.isNaN(new Date(issue.publishedAt).getTime())).toBe(false);
+      expect(new Date(issue.publishedAt).getTime()).toBeLessThanOrEqual(Date.now());
       expect(allowedCadenceLabels.has(issue.cadenceLabel)).toBe(true);
     }
   });
