@@ -19,6 +19,9 @@ runtime metadata source of truth, and the numbers in docs are derived snapshots 
 Before broad or expansion-shaped work, check scope against the `Do not start yet` list in
 `PROJECT-OVERVIEW.md` and `Do Not Touch` in `docs/current-ops-taskboard.md`.
 
+Hermes 에이전트의 역할·권한·제안 범위·제안 PR 검토 판단은 `Harness/Hermes-Operating-Charter.md`
+(정책 정본)를 먼저 보고, 트리거·task allowlist·Slack 운용은 `docs/hermes-operations-runbook.md`를 본다.
+
 ## Skill routing
 
 When the user's request matches an available skill, ALWAYS invoke it using the Skill

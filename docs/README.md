@@ -14,6 +14,8 @@
 
 ## Global Supporting Docs
 
+- Hermes operating charter (정책 정본): [`../Harness/Hermes-Operating-Charter.md`](../Harness/Hermes-Operating-Charter.md)
+- Hermes operations runbook (런타임 pointer): [`hermes-operations-runbook.md`](hermes-operations-runbook.md)
 - Hermes Stage 1 baseline: [`hermes-stage1-baseline.md`](hermes-stage1-baseline.md)
 - Hermes Stage 1 advisory memo: [`hermes-stage1-advisory-memo.md`](hermes-stage1-advisory-memo.md)
 - current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
