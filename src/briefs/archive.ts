@@ -6,13 +6,13 @@ import type { BriefIssue } from "./archiveLegacy";
 export type { BriefGuideLink, BriefIssue, BriefItem } from "./archiveLegacy";
 
 const latestBriefIssue: BriefIssue = {
-  slug: "2026-07-short-brand-name-clearance",
+  slug: "2026-06-short-brand-name-clearance",
   title:
-    "2026년 7월 Hot Global TM Brief | VB·Swift·Caviar: 짧은 브랜드명일수록, 출시 전에 먼저 점검해야 하는 이유",
+    "2026년 6월 Hot Global TM Brief | VB·Swift·Caviar: 짧은 브랜드명일수록, 출시 전에 먼저 점검해야 하는 이유",
   summary:
     "2026년 상반기, 짧은 표장을 둘러싼 분쟁이 잇따랐습니다. 빅토리아 베컴 측은 미국에서 Vera Bradley의 VB 표장에 대한 이의신청을 끝까지 진행하지 않았고, Taylor Swift 측 TAS Rights Management는 침구업체 Cathay Home의 Swift Home 표장에 이의를 제기했습니다. 주얼리 브랜드 Lagos는 CAVIAR 표장을 근거로 신생 브랜드 Coastal Caviar를 상대로 소송을 제기했고, 상대방은 결국 Club Coastal로 리브랜딩했습니다. 세 사건의 공통점은 짧고 흔한 단어·이니셜일수록 기억하기 쉽지만 이미 누군가 사용하거나 등록했을 가능성도 높다는 점입니다.",
   cadenceLabel: "주간 브리프",
-  publishedAt: "2026-07-01T09:00:00.000Z",
+  publishedAt: "2026-06-21T09:00:00.000Z",
   jurisdictions: ["United States", "Trademark Clearance", "Celebrity Brand", "Short Mark", "False Association"],
   bodyParagraphs: [
     "세 건 모두 연예·패션 가십처럼 보이지만, 실제 쟁점은 같은 IP 질문 하나로 모입니다. 짧고 흔한 단어나 이니셜, 즉 보호범위가 좁고 경쟁자가 많은 표장을 누가 어디까지 독점할 수 있느냐입니다. 짧은 이름은 기억하기 쉽고 확장성이 좋지만, 같은 이유로 이미 누군가 선점하고 있을 가능성도 높습니다.",
