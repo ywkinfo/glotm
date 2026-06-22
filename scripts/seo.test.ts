@@ -18,7 +18,12 @@ import { briefIssues } from "../src/briefs/archive";
 import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import type { DocumentData } from "../src/products/shared";
-import { legalPages } from "../src/trustLegal";
+import {
+  legalNavLinks,
+  legalNoticeBullets,
+  legalNoticeSummary,
+  legalPages
+} from "../src/trustLegal";
 import {
   buildPublicHref,
   buildRobotsTxt,
@@ -184,15 +189,13 @@ describe("SEO build helpers", () => {
     expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/legal/" />');
   });
 
-  it("keeps trust/legal links in prerendered report HTML for no-JS and crawlers", () => {
+  it("renders the shared trust/legal notice in Gateway, guide, brief, and report static HTML", () => {
     const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
       basePath: "/glotm/",
       distDir: "/tmp/glotm-dist",
       siteOrigin: "https://ywkinfo.github.io"
     });
-    const reportArchiveStatic = pages.find((page) => page.routePath === "/reports");
-    const reportDetailStatic = pages.find((page) => page.routePath === `/reports/${reports[0]?.slug}`);
-    const templateHtml = [
+    const shell = [
       "<!doctype html>",
       "<html>",
       "  <head>",
@@ -202,17 +205,27 @@ describe("SEO build helpers", () => {
       "</html>"
     ].join("\n");
 
-    expect(reportArchiveStatic).toBeDefined();
-    expect(reportDetailStatic).toBeDefined();
+    const representativeRoutes = [
+      "/",
+      "/briefs",
+      `/briefs/${briefIssues[0]?.slug}`,
+      "/reports",
+      `/reports/${reports[0]?.slug}`,
+      `/latam/chapter/${documentDataLatam.chapters[0]?.slug}`
+    ];
 
-    const reportArchiveHtml = renderStaticHtml(templateHtml, reportArchiveStatic!);
-    const reportDetailHtml = renderStaticHtml(templateHtml, reportDetailStatic!);
+    for (const routePath of representativeRoutes) {
+      const page = pages.find((entry) => entry.routePath === routePath);
+      expect(page, `missing static page for ${routePath}`).toBeDefined();
+      const html = renderStaticHtml(shell, page!);
 
-    for (const page of legalPages) {
-      const href = buildPublicHref(page.path, "/glotm");
-
-      expect(reportArchiveHtml).toContain(`href="${href}"`);
-      expect(reportDetailHtml).toContain(`href="${href}"`);
+      expect(html, `notice summary missing on ${routePath}`).toContain(legalNoticeSummary);
+      expect(html, `notice bullet missing on ${routePath}`).toContain(legalNoticeBullets[0]!);
+      for (const link of legalNavLinks) {
+        expect(html, `legal link ${link.path} missing on ${routePath}`).toContain(
+          `href="${buildPublicHref(link.path, "/glotm")}"`
+        );
+      }
     }
   });
 
