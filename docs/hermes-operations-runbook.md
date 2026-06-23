@@ -35,6 +35,12 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
 > **`/opt/hermes` 경고**: Hermes 설계에 `/opt/hermes`는 **없는 경로**다. GloTm 작업이 거기서 돌고
 > 있다면 다른/일반 에이전트로 **misroute**된 것이다 — 중단하고 `/srv/hermes/glotm-hermes` 기준으로
 > 라우팅을 바로잡는다.
+>
+> 구체적으로, 워크스페이스 `hermesespanol-kb`의 Slack 봇 **`@Hermes`(user `U0B4PDKTUDB`)는 이
+> `/opt/hermes`의 NousResearch Hermes-Agent**이며 GloTm bounded operator가 **아니다**. 따라서
+> `@Hermes`는 **GloTm 운영에 쓰지 않는다** — 운영 intent는 `ssh hermes-host <slug>` →
+> `/srv/hermes/glotm`(아래 트리거 모델)만 쓴다. 배경·증거는 [`hermes-incident-20260623.md`](hermes-incident-20260623.md)
+> (2026-06-23 misroute 사건).
 
 ## 현재 task surface (V2)
 
@@ -76,6 +82,9 @@ policy gate이며, task별 allow/deny와 semantic profile이 함께 적용된다
 
 - **자동 실행은 없다.** VPS에는 systemd·cron·**Slack poller가 전무**하다. 따라서 Slack 채널 글은
   **사람이 남기는 기록·감사 trail일 뿐 자동으로 task를 실행하지 않는다.**
+  - 주의: 워크스페이스의 `@Hermes` 봇이 멘션에 **자율 응답**하더라도, 그것은 `/opt/hermes`의
+    NousResearch 에이전트(GloTm 아님)이며 **sanctioned 경로가 아니다**(위 `/opt/hermes` 경고).
+    bounded operator의 유일한 정규 트리거는 아래 `ssh hermes-host <task-slug>`다.
 - 유일한 트리거는 owner/admin의 `ssh hermes-host <task-slug>`이며, VPS의 forced-command가 slug를
   `SSH_ORIGINAL_COMMAND`로 받아 task allowlist를 통과시킨다. run 로그는 `/srv/hermes/runs/<RUN_ID>`.
 - 즉 현재 운영은 **Slack-first manual ops**다: owner가 Slack에 intent·slug를 남기고 → owner/admin이
