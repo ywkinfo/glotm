@@ -106,8 +106,9 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
   채널명 확정(현재 `#glotm_hermes`).
 - **P1 능력 차단(최우선)**: `hermes-agent-zykj` run-user·마운트 점검 → GitHub write token 미존재,
   writable GloTm clone 미마운트, host env 미주입 확인(있으면 제거).
-- **P2 report-only 스킬**: §7 보고 spec대로 답하고 **SSH 실행 능력 없는** 스킬 추가. (선택) gateway
-  모델 Claude 전환. `~/.hermes` 백업.
+- **P2 report-only 스킬**: §7 보고 spec대로 답하고 **SSH 실행 능력 없는** 스킬 추가. 초안은
+  [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md). (선택) gateway 모델 Claude 전환.
+  `~/.hermes` 백업.
 - **P3 manual bridge**: `@Hermes`=제안만, owner=발화. relay key 없음.
 - **P4 auto relay**: owner 승인 + 토큰 전환 + §6 relay key 하드닝(양층) 후에만.
 
