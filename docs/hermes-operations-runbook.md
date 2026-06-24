@@ -124,9 +124,17 @@ Intake → Ready(slug/allowlist 확인) → Human Bridge(ssh 실행 대기) → 
 
 ## Hermes soul 스펙 (참조 사본)
 
-> **정본 위치**: soul/persona 정본은 `glotm-hermes` repo의 task prompt 정의(`lib/task-config.sh`·
-> `policy/tasks/*`)이며, 정확한 파일 경로는 owner가 확정한다. 이 절은 GloTm 쪽 **참조 사본**이다.
-> **마지막 sync: 2026-06-22.** (정본이 바뀌면 이 날짜와 본문을 함께 갱신한다.)
+soul/persona 정본은 GloTm repo가 아니라 아래 **2개 canon**으로 나뉜다. 이 절은 GloTm 쪽 **참조
+사본**이며, 각 canon이 바뀌면 해당 sync 줄과 본문을 함께 갱신한다.
+
+> **(i) bounded operator canon** — `glotm-hermes` repo: 공통 soul
+> `prompts/_bounded-operator-preamble.md`(4 task 프롬프트 앞에 주입) + per-task `prompts/<task>.md` +
+> `lib/task-config.sh`, 버전 핀 `prompts/PROMPT_VERSION`(현재 `@2`). **마지막 sync: 2026-06-24.**
+>
+> **(ii) Slack P2 report-only advisor canon** — 정본은 GloTm
+> [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(owner-approved 배포 spec,
+> canary-gated). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes` 컨테이너의
+> **능력 차단된** report-only 스킬이며 bounded operator와 별개 actor다(actor 지도는 `../AGENTS.md`).
 
 보고 규약(공통):
 

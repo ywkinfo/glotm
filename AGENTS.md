@@ -23,6 +23,33 @@
 - supporting plan, QA checklist, buyer doc를 찾아야 한다 → `docs/README.md`
 - Hermes 운영/권한/콘텐츠 품질 큐 판단 → `Harness/Hermes-Operating-Charter.md`(정책), `docs/hermes-operations-runbook.md`(런타임)
 
+## Actors & Responsibilities
+
+루트에서 "누가 무엇을 하는가"의 정본이다. 아래 Root Decision Order(문서 위계)와 별개로, 행위자별
+역할·권한·경계를 정의한다.
+
+```
+Owner (결정권자·라우터; 어느 actor로도 직접 라우팅한다)
+ ├─ Slack @Hermes (P2 report-only)  …… 대화형 read-only intake/triage (canary-gated)
+ ├─ 정형 4 task → ssh hermes-host <slug> → bounded operator → Draft PR / NO_CHANGES
+ ├─ 열린 분석/설계/구현 → Checkout coding agent → branch / PR
+ └─ merge / deploy / policy / pricing / 신규 국가 → Owner only
+```
+
+| Actor | 역할 | 권한·경계 |
+|---|---|---|
+| **Owner** | 결정권자·라우터 | merge·deploy·정책·신규국가/pricing·owner 전용 검증(SC/GA4/live QA). 2채널 커밋(PR / 직접 push **Lore**¹), main-protection ruleset bypass=always |
+| **Slack @Hermes** (P2 report-only) | 대화형 read-only intake/triage | report-only, 실행·write 없음 — **능력 차단**(token·relay key·writable clone·host env 없음) 기반이며 "정책상 금지"가 아니다. canary-gated. 정본 [`docs/hermes-report-only-skill-draft.md`](docs/hermes-report-only-skill-draft.md) |
+| **Checkout coding agent** (Claude Code 또는 owner-invoked Codex) | 열린 분석·설계·구현(정식 체크아웃) | 거버넌스 문서를 읽고 브랜치에 제안+구현 → **owner 머지**. 결정권 없음. Claude Code는 한 구현(상세 [`CLAUDE.md`](CLAUDE.md)) |
+| **Hermes bounded operator** (`glotm-hermes` Codex 런타임, ssh 트리거) | 정형 4 task | task tier(자율작업/draft PR), 능력 차단, **owner 머지**. soul = `glotm-hermes`의 `prompts/_bounded-operator-preamble.md` + task prompt. 정책 [`Harness/Hermes-Operating-Charter.md`](Harness/Hermes-Operating-Charter.md) |
+| **Codex native subagents** | Checkout coding agent가 쓰는 병렬 실행 도구 | 독립 권한 없음(아래 Parallel Execution Rule) |
+
+**"codex" 용어 3 구분**: ① bounded operator 내부 실행 런타임, ② checkout agent / native subagent 도구,
+③ git 이력의 `[codex]`·zykj 자율처리 표기 = **역사적 provenance이며 현재 권한이 아니다**.
+
+¹ **Lore** = owner의 직접 push 채널(PR 게이트 우회, ruleset bypass=always). 보안 허점이 아니라
+의도된 운영 모델이다(Charter 참조).
+
 ## Root Decision Order
 
 루트 문서끼리 판단이 겹칠 때는 아래 순서를 따른다.

@@ -15,6 +15,8 @@
   도메인 정책이다.
 - 루트 권위 판단이 겹칠 때의 순서는 `AGENTS.md`의 Root Decision Order를 따른다. 이 차터는 그
   번호열에 끼워 넣지 않는다(도메인 정책이라 root tier로 과대표현하지 않는다).
+- 행위자(actor)별 역할·권한 지도는 `AGENTS.md`의 "Actors & Responsibilities"가 정본이다. 이 차터는
+  그 지도에서 **Hermes(bounded operator + P2 advisor) 행위자의 정책 상세**를 담당한다.
 - 충돌 시: Constitution / PROJECT-OVERVIEW > 이 차터 > runbook > VPS 측 task 설정.
 
 ## 정체

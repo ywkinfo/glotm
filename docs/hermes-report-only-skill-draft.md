@@ -1,9 +1,11 @@
 # Hermes P2 Report-only Skill Draft
 
-> **Status: draft only / not installed / P2 report-only.**
-> This document is an owner-facing draft for a possible Hermes Agent skill under
-> `~/.hermes/skills/`. It does not change the active runbook, does not install a skill, and does
-> not grant SSH, GitHub, or writable GloTm access.
+> **Status (2026-06-24): owner-approved P2 deployment spec — canary-gated.**
+> This is the canonical spec for the P2 report-only `@Hermes` skill under `~/.hermes/skills/`,
+> installed under **capability denial** (no SSH relay, no GitHub write, no writable GloTm clone,
+> no host env). It grants no execution; activation is gated on the Slack canary
+> (시퀀싱은 [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md)). actor 지도는
+> [`../AGENTS.md`](../AGENTS.md).
 
 ## Purpose
 
