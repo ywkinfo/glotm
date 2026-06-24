@@ -132,8 +132,9 @@ soul/persona 정본은 GloTm repo가 아니라 아래 **2개 canon**으로 나�
 > `lib/task-config.sh`, 버전 핀 `prompts/PROMPT_VERSION`(현재 `@2`). **마지막 sync: 2026-06-24.**
 >
 > **(ii) Slack P2 report-only advisor canon** — 정본은 GloTm
-> [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(owner-approved 배포 spec,
-> canary-gated). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes` 컨테이너의
+> [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(active spec; legacy filename 유지,
+> 2026-06-24 canary 통과). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
+> 컨테이너의
 > **능력 차단된** report-only 스킬이며 bounded operator와 별개 actor다(actor 지도는 `../AGENTS.md`).
 
 보고 규약(공통):
