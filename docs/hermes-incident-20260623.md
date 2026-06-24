@@ -2,6 +2,12 @@
 
 > 상태: **진단 확정(Slack 증거 기반) / 원격 토폴로지·교정은 owner 확인 대기.**
 > 작성: GloTm 세션 조사(plan `hermes-7-36-frolicking-ripple.md` 실행). 민감정보(토큰) 미포함.
+>
+> **갱신(2026-06-24)**: 아래 "ssh-only"는 **2026-06-23 당시의 owner 결정**이다. 이후 owner가 같은
+> `/opt/hermes` 컨테이너를 **능력 차단된 P2 report-only advisor**로 재활용하기로 했다(canary-gated;
+> 정본 [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
+> [`../AGENTS.md`](../AGENTS.md)). 이는 그 결정의 후속 발전이며, misroute 사건이 P2 도입을 강제한 인과는
+> 아니다. canary 통과 시 이 문서의 ssh-only 절대문은 superseded로 표기한다.
 
 ## 0. 한 줄 결론
 

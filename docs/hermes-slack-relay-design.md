@@ -1,10 +1,10 @@
 # Hermes Slack B-relay 설계 (제안)
 
-> **Status: proposal only / not active / does not supersede runbook or incident doc.**
-> 이 문서는 **채택된 운영 변경이 아니다.** 현재 정본 목표 상태는
-> [`hermes-incident-20260623.md`](hermes-incident-20260623.md)(PR #93)의
-> **"`@Hermes` 자율 응답 제거, GloTm은 ssh-only"**다. 본 B-relay는 그 결정을 되돌리는 게 아니라
-> **owner가 추후 재결정할 때 적용할 후보 설계**다. 운영 정본은
+> **Status (2026-06-24): P2 채택(canary-gated) · P3 = owner manual SSH · P4 = 비범위.**
+> 본 B-relay 설계 중 **P2 report-only advisor만 owner 승인**되어 배포·canary 검증 단계다(정본:
+> [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
+> [`../AGENTS.md`](../AGENTS.md)). **P3**(manual bridge)는 owner가 직접 `ssh hermes-host <slug>`를
+> 발화하는 기존 경로이고, **P4**(auto relay)는 owner 승인 + 토큰 전환 전까지 **비범위**다. 운영 정본은
 > [`../Harness/Hermes-Operating-Charter.md`](../Harness/Hermes-Operating-Charter.md)(정책)와
 > [`hermes-operations-runbook.md`](hermes-operations-runbook.md)(런타임)이며, 충돌 시 그쪽이 우선한다.
 

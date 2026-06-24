@@ -2,6 +2,16 @@
 
 This file provides Claude Code with project-specific context and routing rules.
 
+## Role
+
+Claude Code is one implementation of the **Checkout coding agent** in this repo's actor map
+(`AGENTS.md` → Actors & Responsibilities): the open-ended analyst / designer / implementer that works
+on a real checkout. It investigates, designs, plans, and implements novel or one-off work, proposing
+and implementing changes **on a branch → owner merges**. It holds no decision authority — merge,
+deploy, policy, pricing, and new-country calls are the owner's. It complements (does not duplicate)
+the Hermes **bounded operator**, which handles the four fixed maintenance tasks via
+`ssh hermes-host <slug>`. See `AGENTS.md` for the full actor map.
+
 ## Read first
 
 Before any non-trivial change, read the authority docs in this order (do not duplicate their
