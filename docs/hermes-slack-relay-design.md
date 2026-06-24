@@ -1,7 +1,7 @@
-# Hermes Slack B-relay 설계 (제안)
+# Hermes Slack B-relay 설계와 운영 상태
 
-> **Status (2026-06-24): P2 채택(canary-gated) · P3 = owner manual SSH · P4 = 비범위.**
-> 본 B-relay 설계 중 **P2 report-only advisor만 owner 승인**되어 배포·canary 검증 단계다(정본:
+> **Status (2026-06-24): P2 active(canary 통과) · P3 = owner manual SSH · P4 = 비범위.**
+> 본 B-relay 설계 중 **P2 report-only advisor만 배포·검증 완료**됐다(정본:
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). **P3**(manual bridge)는 owner가 직접 `ssh hermes-host <slug>`를
 > 발화하는 기존 경로이고, **P4**(auto relay)는 owner 승인 + 토큰 전환 전까지 **비범위**다. 운영 정본은
@@ -37,7 +37,8 @@ GloTm 운영에 계속 쓰고 싶다"고 결정했고, 안전 경로로 **B-rela
 Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 검사가 skip될 수 있다(Hermes security 문서).
 따라서 **유일한 하드 경계는 능력(capability) 차단**이다:
 
-- Hermes 컨테이너에 **GitHub write token 미주입.**
+- Hermes 컨테이너에 **직접 GitHub write token 미주입.**
+- Codex Apps GitHub write 확인의 **자동승인 플래그 비활성화**(write elicitation은 기본 거부).
 - Hermes 컨테이너에 **host env 미주입.**
 - Hermes 컨테이너에 **writable GloTm clone 미마운트.**
 - (P4에서만) relay SSH key는 **제한된 발화 권한**으로만(§6).
@@ -104,11 +105,11 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 - **P0 결정/확인**: 봇 재가동(B-relay) vs ssh-only 유지. 재가동은 **격리 해제가 아니라 restricted
   profile로 재가동**(Slack gateway만 제한적 재활성화; `/opt/hermes` 권한 재개방 아님). Slack revoke 보류.
   채널명 확정(현재 `#glotm_hermes`).
-- **P1 능력 차단(최우선)**: `hermes-agent-zykj` run-user·마운트 점검 → GitHub write token 미존재,
+- **P1 능력 차단(최우선)**: `hermes-agent-zykj` run-user·마운트 점검 → 직접 GitHub write token 미존재,
   writable GloTm clone 미마운트, host env 미주입 확인(있으면 제거).
-- **P2 report-only 스킬**: §7 보고 spec대로 답하고 **SSH 실행 능력 없는** 스킬 추가. 초안은
-  [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md). (선택) gateway 모델 Claude 전환.
-  `~/.hermes` 백업.
+- **P2 report-only 스킬**: §7 보고 spec대로 답하고 **SSH 실행 능력 없는** 스킬을 배포했다. 정본은
+  [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(legacy filename 유지).
+  `#glotm_hermes` channel skill binding + 매 턴 channel prompt를 적용했고 `~/.hermes` 백업을 남겼다.
 - **P3 manual bridge**: `@Hermes`=제안만, owner=발화. relay key 없음.
 - **P4 auto relay**: owner 승인 + 토큰 전환 + §6 relay key 하드닝(양층) 후에만.
 
@@ -116,12 +117,12 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 
 - **P1**: 컨테이너 셸에서 GloTm write 시도가 실패 / GitHub token 부재 확인.
 - **P2**: `@Hermes`가 보고만 하고 `ssh hermes-host`를 실행하지 못함 확인. 보고에 context 종류·SHA·
-  snapshot 시각·미검증 표기 포함 확인.
+  snapshot 시각·미검증 표기 포함 확인. 2026-06-24 harmless/refusal canary 통과.
 - **P4**: forced-command가 non-allowlisted slug 거부 + 감사 로그 기록 + gateway allowlist 외 사용자
   차단 확인.
 
 ## 11. 경계 / 비범위
 
-- 이 문서는 **제안**이며 runbook/charter/incident 정본을 대체하지 않는다.
+- 이 문서는 P2의 설계·운영 상태 기록이며 runbook/charter 정본을 대체하지 않는다.
 - VPS/Slack 변경·토큰·relay key·자동화는 전부 **owner**(charter 승인 필수). 본 문서는 repo 설계 문서일 뿐.
 - **자동 발화(P4)는 owner 승인 + 토큰 전환 전까지 보류.** 채택 시 runbook/charter reconcile은 별도 doc-PR.

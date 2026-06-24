@@ -1,15 +1,15 @@
-# Hermes P2 Report-only Skill Draft
+# Hermes P2 Report-only Skill — Active Spec
 
-> **Status (2026-06-24): owner-approved P2 deployment spec — canary-gated.**
+> **Status (2026-06-24): active — harmless/refusal Slack canary 통과.**
 > This is the canonical spec for the P2 report-only `@Hermes` skill under `~/.hermes/skills/`,
-> installed under **capability denial** (no SSH relay, no GitHub write, no writable GloTm clone,
-> no host env). It grants no execution; activation is gated on the Slack canary
-> (시퀀싱은 [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md)). actor 지도는
+> installed under **capability denial** (no SSH relay, no GitHub write auto-approval, no writable
+> GloTm clone, no host env mount). It grants no execution. Runtime binding and canary evidence are
+> recorded below. 시퀀싱은 [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md), actor 지도는
 > [`../AGENTS.md`](../AGENTS.md).
 
 ## Purpose
 
-This draft supports the P2 posture described in [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md):
+This spec implements the active P2 posture described in [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md):
 `@Hermes` may answer GloTm questions in Slack using read-only context, but it must not execute
 `ssh hermes-host`, edit the repository, push branches, open PRs, call GitHub write APIs, or operate
 as the bounded operator.
@@ -25,10 +25,10 @@ owner/admin manual bridge.
 - The context source records `context_type`, `commit_sha`, and `snapshot_time`.
 - `~/.hermes` is backed up before adding or changing skills.
 
-## Suggested Skill File
+## Active Skill File
 
-Place this as a draft at `~/.hermes/skills/glotm-report-only/SKILL.md` only after the owner chooses
-P2 report-only operation.
+The deployed skill lives at `~/.hermes/skills/productivity/glotm-report-only/SKILL.md`. The skill
+body below remains the canonical content.
 
 ````markdown
 ---
@@ -43,8 +43,8 @@ You are the report-only Slack gateway for GloTm. You are not the GloTm bounded o
 The active GloTm governance sources are:
 - `Harness/Hermes-Operating-Charter.md` for policy, authority, and owner approval boundaries.
 - `docs/hermes-operations-runbook.md` for runtime paths, task slugs, Slack manual rhythm, and owner/admin SSH trigger rules.
-- `docs/hermes-incident-20260623.md` for the `/opt/hermes` misroute incident and current ssh-only target state.
-- `docs/hermes-slack-relay-design.md` for the non-active B-relay proposal and P2/P3/P4 separation.
+- `docs/hermes-incident-20260623.md` for the `/opt/hermes` misroute incident and the superseded ssh-only decision.
+- `docs/hermes-slack-relay-design.md` for the active P2 posture and P3/P4 separation.
 
 ## Hard Rules
 
@@ -134,17 +134,27 @@ Refuse briefly and redirect to owner/admin when asked to:
 
 ## P2 Verification
 
-After installing the skill, owner/admin should verify:
+2026-06-24 owner canary verified:
 
-- A Slack request gets a report with context type, commit SHA or `unknown`, snapshot time or
-  `unknown`, and `Mode: P2 report-only`.
-- The bot does not have a relay SSH key and cannot run `ssh hermes-host`.
-- The bot does not claim current `main` was measured from snapshot-only context.
-- The bot suggests known slugs only and leaves execution to owner/admin.
-- A request for auto relay, token access, merge, deploy, or direct editing is refused.
+- Harmless request: exact context/commit/snapshot/mode header, `task slug: none`, unverified
+  runtime claims, report-only result, and owner handoff were returned.
+- Refusal request: SSH execution, GitHub branch/PR/merge/deploy, and token/key inspection were
+  refused and handed to owner/admin.
+- Side-effect check: no new bounded-operator run, worktree, branch, or PR was created by either
+  Slack request.
+
+## Runtime Enforcement
+
+- Slack channel allowlist: `#glotm_hermes` (`C0B4W9B3CQ4`) only.
+- `slack.channel_skill_bindings` pins `glotm-report-only` to the channel at session start.
+- `slack.channel_prompts` injects the P2 boundary and required report shape on every turn.
+- `HERMES_CODEX_AUTO_ACCEPT_CODEX_APPS_GITHUB` is absent. Codex Apps GitHub write elicitations
+  therefore default to refusal.
+- The container has no relay SSH key, writable GloTm clone, or host environment mount.
 
 ## Notes
 
 Hermes skills are stored under `~/.hermes/skills/` by default. External skill directories are not a
 security boundary if writable by the Hermes process; use filesystem permissions and restricted
-profiles for protection.
+profiles for protection. The legacy `-draft.md` filename is retained to avoid breaking existing
+links; its status and content are authoritative.
