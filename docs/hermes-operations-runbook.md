@@ -29,6 +29,10 @@
 | per-run 로그/아티팩트 | `/srv/hermes/runs/<RUN_ID>` |
 | scoped PAT(host 전용, 600) | `/srv/hermes/secrets/gh-token` |
 | Codex auth(영속, 토큰 자동갱신) | `/srv/hermes/codex/auth.json` |
+| report-context read-only root mount *(pending)* | host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro` |
+| report-context checkout leaf *(pending)* | `/opt/glotm-context/repo` |
+| report-context metadata leaf *(pending)* | `/opt/glotm-context/metadata.json` |
+| report-context refresh timer *(pending)* | `glotm-report-context-refresh.timer` (15min ff-sync) |
 
 VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, service user `hermes`.
 
@@ -37,10 +41,14 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
 > 라우팅을 바로잡는다.
 >
 > 구체적으로, 워크스페이스 `hermesespanol-kb`의 Slack 봇 **`@Hermes`(user `U0B4PDKTUDB`)는 이
-> `/opt/hermes`의 NousResearch Hermes-Agent**이며 GloTm bounded operator가 **아니다**. 따라서
-> `@Hermes`는 **GloTm 운영에 쓰지 않는다** — 운영 intent는 `ssh hermes-host <slug>` →
-> `/srv/hermes/glotm`(아래 트리거 모델)만 쓴다. 배경·증거는 [`hermes-incident-20260623.md`](hermes-incident-20260623.md)
-> (2026-06-23 misroute 사건).
+> `/opt/hermes` 컨테이너의 NousResearch Hermes-Agent**이며 GloTm bounded operator가 **아니다**.
+> 2026-06-23 misroute(GloTm 아닌 `/opt/hermes/website` 분석) 이후, owner는 같은 컨테이너를
+> **능력 차단된 P2 report-only advisor**로 재활용했고 2026-06-24 canary를 통과시켰다(정본
+> [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
+> [`../AGENTS.md`](../AGENTS.md)). 따라서 현재 `@Hermes`는 **read-only 조언(intake/triage)에는
+> sanctioned이되 실행 능력이 없는 advisor**이며, **모든 실행(변경)은 ssh-only**다 — 운영 intent의
+> 집행은 `ssh hermes-host <slug>` → `/srv/hermes/glotm`(아래 트리거 모델)만 쓴다. 배경·증거는
+> [`hermes-incident-20260623.md`](hermes-incident-20260623.md)(2026-06-23 misroute 사건).
 
 ## 현재 task surface (V2)
 
@@ -82,9 +90,9 @@ policy gate이며, task별 allow/deny와 semantic profile이 함께 적용된다
 
 - **자동 실행은 없다.** VPS에는 systemd·cron·**Slack poller가 전무**하다. 따라서 Slack 채널 글은
   **사람이 남기는 기록·감사 trail일 뿐 자동으로 task를 실행하지 않는다.**
-  - 주의: 워크스페이스의 `@Hermes` 봇이 멘션에 **자율 응답**하더라도, 그것은 `/opt/hermes`의
-    NousResearch 에이전트(GloTm 아님)이며 **sanctioned 경로가 아니다**(위 `/opt/hermes` 경고).
-    bounded operator의 유일한 정규 트리거는 아래 `ssh hermes-host <task-slug>`다.
+  - 주의: 워크스페이스의 `@Hermes` 봇이 멘션에 응답하는 것은 **P2 report-only advisor**(능력 차단·
+    read-only)로서 sanctioned이지만 **task를 실행하지 못한다** — advisor는 실행 트리거가 아니다.
+    bounded operator의 유일한 정규 **실행** 트리거는 아래 `ssh hermes-host <task-slug>`다.
 - 유일한 트리거는 owner/admin의 `ssh hermes-host <task-slug>`이며, VPS의 forced-command가 slug를
   `SSH_ORIGINAL_COMMAND`로 받아 task allowlist를 통과시킨다. run 로그는 `/srv/hermes/runs/<RUN_ID>`.
 - 즉 현재 운영은 **Slack-first manual ops**다: owner가 Slack에 intent·slug를 남기고 → owner/admin이
