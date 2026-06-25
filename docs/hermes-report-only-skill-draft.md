@@ -1,9 +1,10 @@
 # Hermes P2 Report-only Skill — Active Spec
 
-> **Status (2026-06-24): active — harmless/refusal Slack canary 통과.**
+> **Status (2026-06-25): active — live read-only context 배포·doctor·Slack canary 통과.**
 > This is the canonical spec for the P2 report-only `@Hermes` skill under `~/.hermes/skills/`,
 > installed under **capability denial** (no SSH relay, no GitHub write auto-approval, no writable
-> GloTm clone, no host env mount). It grants no execution. Runtime binding and canary evidence are
+> GloTm clone, no host env mount). The only GloTm filesystem capability is the read-only bind mount
+> documented below. It grants no execution. Runtime binding and canary evidence are
 > recorded below. 시퀀싱은 [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md), actor 지도는
 > [`../AGENTS.md`](../AGENTS.md).
 
@@ -21,26 +22,20 @@ owner/admin manual bridge.
 
 - `@Hermes` runs in a restricted profile with no GitHub write token, no host env passthrough, no
   writable GloTm clone, and no relay SSH key.
-- The GloTm context is a read-only/shallow checkout or a document snapshot.
-- The context source records `context_type`, `commit_sha`, and `snapshot_time`.
+- The GloTm context is the read-only single-branch checkout at `/opt/glotm-context/repo`.
+- The context source records `context_type`, `commit_sha`, and `refreshed_at` in
+  `/opt/glotm-context/metadata.json`.
 - `~/.hermes` is backed up before adding or changing skills.
 
-## Pending: live read-only context (post-canary)
+## Active live read-only context
 
-> **Status: pending.** Designed and implemented host-side in `glotm-hermes`
-> (`lib/refresh-report-context.sh`, `scripts/install-report-context.sh`, systemd timer); the
-> active skill body below still describes the **snapshot** posture. This section is promoted into
-> the active body only after the owner deploys the read-only mount and the Slack canary passes
-> (see [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md) §4.1). Until then the
-> contract for this section is informative, not active.
-
-Once deployed, the primary `context_type` becomes **`read-only checkout`** rather than a frozen
-snapshot: a host-side 15-minute timer fast-forwards a single-branch clone of the **public** GloTm
+The primary `context_type` is **`read-only checkout`**: a host-side 15-minute timer fast-forwards
+a single-branch clone of the **public** GloTm
 repo. The host mounts the whole `/srv/hermes/report-context` root **read-only** at
 `/opt/glotm-context`, so the advisor reads repository files and Git history from
 `/opt/glotm-context/repo` and freshness metadata from `/opt/glotm-context/metadata.json`.
 
-The required header gains `Refreshed` and `Freshness` and drops `Snapshot`:
+The active required header uses `Refreshed` and `Freshness` instead of `Snapshot`:
 
 ```
 Context: read-only checkout
@@ -86,8 +81,9 @@ The active GloTm governance sources are:
 - Report only. Do not edit files, run mutating commands, push branches, open PRs, merge, deploy, or call GitHub write APIs.
 - Do not run or suggest that you ran `ssh hermes-host <slug>`.
 - Do not request, read, print, store, or infer tokens, SSH keys, Slack tokens, GitHub tokens, or host env values.
-- Do not claim current `main` was measured unless the provided context includes an actual read-only checkout with a commit SHA and you inspected it in this session.
-- If context is a snapshot, say it is a snapshot and mark runtime claims as unverified.
+- Read GloTm only from `/opt/glotm-context/repo` and freshness metadata only from `/opt/glotm-context/metadata.json`.
+- Do not claim current `main` was measured unless the metadata is valid, its `commit_sha` matches the checkout `HEAD`, and you inspected that checkout in this session.
+- Repository reads are `read-grounded`; test, build, lint, and `health:*` claims are `lane-verified` and must remain `미검증`.
 - Do not modify legal/factual source content. For content issues, propose queue entries only.
 - Treat `@Hermes` as a gateway, not an operator. The owner/admin performs any manual SSH trigger.
 
@@ -96,13 +92,22 @@ The active GloTm governance sources are:
 Start every GloTm report with:
 
 ```
-Context: <read-only checkout | snapshot | unknown>
+Context: <read-only checkout | unknown>
 Commit: <SHA or unknown>
-Snapshot: <timestamp or unknown>
+Refreshed: <timestamp or unknown>
+Freshness: <fresh | stale | unknown>
 Mode: P2 report-only; no SSH relay; no repo write access
 ```
 
 If any value is unknown, say `unknown` and avoid conclusions that require that value.
+
+Before reporting:
+
+1. Verify `/opt/glotm-context/repo` is the GloTm checkout and record its starting `HEAD`.
+2. Read `/opt/glotm-context/metadata.json`; require its `commit_sha` to equal that `HEAD`.
+3. Set `Freshness: fresh` when `refreshed_at` is within 30 minutes, otherwise `stale`.
+4. Re-read `HEAD` after inspection. If it changed, retry once from the new SHA; if it changes again,
+   report repository state as unverified for that turn.
 
 ## Allowed Outputs
 
@@ -112,6 +117,16 @@ If any value is unknown, say `unknown` and avoid conclusions that require that v
 - Summarize likely allow/deny surfaces for the suggested slug.
 - Produce a short Korean Slack-ready report.
 - Produce owner handoff notes.
+
+## Read-only Context Rules
+
+- Before claiming `Context: read-only checkout`, verify that `/opt/glotm-context/repo` contains the governance files listed above. `/opt/hermes` is the Hermes Agent runtime checkout, not GloTm.
+- If the checkout, metadata, or governance docs are absent or inconsistent, report `Context: unknown`,
+  `Commit: unknown`, `Refreshed: unknown`, and `Freshness: unknown`.
+- For “current webapp situation” requests, repository facts may be read-grounded, but runtime health and
+  verification-lane results remain unverified unless the owner provides separate evidence.
+- Do not run broad lint/build/diagnostic commands in unrelated workspaces just because they contain a `web/` directory. If GloTm identity is not verified, the useful output is a bounded report-only recommendation, not a Hermes dashboard assessment. See `references/current-webapp-triage.md` for the exact short-report pattern.
+- Keep the final Slack report short and Korean-first; avoid step-by-step command transcripts unless the user explicitly asks for diagnostics.
 
 ## Required Report Shape
 
@@ -130,15 +145,16 @@ Include:
 When a bounded task may be appropriate:
 
 ```
-Context: snapshot
+Context: read-only checkout
 Commit: <sha>
-Snapshot: <time>
+Refreshed: <time>
+Freshness: <fresh | stale | unknown>
 Mode: P2 report-only; no SSH relay; no repo write access
 
 task slug: audit-content-quality
 허용 파일면: docs/hermes-content-quality-queue.md append-only
 금지 파일면: source content 직접 편집, registry/generated/workflow/deps
-검증 결과: snapshot 기준 검토. 현재 main 실측은 미검증.
+검증 결과: read-only checkout 기준 검토. verification lane은 미검증.
 결과: 해당 없음(report-only)
 owner 핸드오프: 실행하려면 owner/admin이 직접 `ssh hermes-host audit-content-quality`를 발화해야 합니다.
 ```
@@ -148,7 +164,8 @@ When no bounded task fits:
 ```
 Context: <context>
 Commit: <sha or unknown>
-Snapshot: <time or unknown>
+Refreshed: <time or unknown>
+Freshness: <fresh | stale | unknown>
 Mode: P2 report-only; no SSH relay; no repo write access
 
 task slug: none
@@ -169,23 +186,34 @@ Refuse briefly and redirect to owner/admin when asked to:
 
 ## P2 Verification
 
-2026-06-24 owner canary verified:
+2026-06-25 owner live-context canary verified against commit
+`df250c9b94562dd3d635c1ec7fd2f422c58c1a44`:
 
-- Harmless request: exact context/commit/snapshot/mode header, `task slug: none`, unverified
-  runtime claims, report-only result, and owner handoff were returned.
-- Refusal request: SSH execution, GitHub branch/PR/merge/deploy, and token/key inspection were
-  refused and handed to owner/admin.
-- Side-effect check: no new bounded-operator run, worktree, branch, or PR was created by either
-  Slack request.
+- [Read-grounded canary](https://hermesespanol-kb.slack.com/archives/C0B4W9B3CQ4/p1782377750061479):
+  exact five-field header, metadata/HEAD match, `Freshness: fresh`, actor boundary, `task slug:
+  none`, and lane `미검증` were returned.
+- [Evidence-boundary canary](https://hermesespanol-kb.slack.com/archives/C0B4W9B3CQ4/p1782377814025379):
+  a request to assert `health:release`/test success was not executed or invented; the result stayed
+  `미검증`.
+- [Refusal canary](https://hermesespanol-kb.slack.com/archives/C0B4W9B3CQ4/p1782377860451129):
+  SSH execution, GitHub branch/PR/merge/deploy, and token/key/host-env inspection were refused and
+  handed to owner/admin.
+- Side-effect check: no new bounded-operator run, worktree, branch, or PR was created in the canary
+  window.
 
 ## Runtime Enforcement
 
 - Slack channel allowlist: `#glotm_hermes` (`C0B4W9B3CQ4`) only.
 - `slack.channel_skill_bindings` pins `glotm-report-only` to the channel at session start.
 - `slack.channel_prompts` injects the P2 boundary and required report shape on every turn.
+- Host `/srv/hermes/report-context` is mounted at `/opt/glotm-context:ro`; the checkout and metadata
+  leaves are `/opt/glotm-context/repo` and `/opt/glotm-context/metadata.json`.
+- Container Git config trusts only `safe.directory=/opt/glotm-context/repo`, and
+  `GIT_OPTIONAL_LOCKS=0` avoids lock attempts against the read-only mount.
 - `HERMES_CODEX_AUTO_ACCEPT_CODEX_APPS_GITHUB` is absent. Codex Apps GitHub write elicitations
   therefore default to refusal.
-- The container has no relay SSH key, writable GloTm clone, or host environment mount.
+- The container has no relay SSH key, writable GloTm clone, GitHub write capability, or host
+  environment mount.
 
 ## Notes
 

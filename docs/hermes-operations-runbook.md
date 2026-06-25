@@ -29,10 +29,10 @@
 | per-run 로그/아티팩트 | `/srv/hermes/runs/<RUN_ID>` |
 | scoped PAT(host 전용, 600) | `/srv/hermes/secrets/gh-token` |
 | Codex auth(영속, 토큰 자동갱신) | `/srv/hermes/codex/auth.json` |
-| report-context read-only root mount *(pending)* | host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro` |
-| report-context checkout leaf *(pending)* | `/opt/glotm-context/repo` |
-| report-context metadata leaf *(pending)* | `/opt/glotm-context/metadata.json` |
-| report-context refresh timer *(pending)* | `glotm-report-context-refresh.timer` (15min ff-sync) |
+| report-context read-only root mount | host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro` |
+| report-context checkout leaf | `/opt/glotm-context/repo` |
+| report-context metadata leaf | `/opt/glotm-context/metadata.json` |
+| report-context refresh timer | `glotm-report-context-refresh.timer` (15min ff-sync) |
 
 VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, service user `hermes`.
 
@@ -43,12 +43,25 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
 > 구체적으로, 워크스페이스 `hermesespanol-kb`의 Slack 봇 **`@Hermes`(user `U0B4PDKTUDB`)는 이
 > `/opt/hermes` 컨테이너의 NousResearch Hermes-Agent**이며 GloTm bounded operator가 **아니다**.
 > 2026-06-23 misroute(GloTm 아닌 `/opt/hermes/website` 분석) 이후, owner는 같은 컨테이너를
-> **능력 차단된 P2 report-only advisor**로 재활용했고 2026-06-24 canary를 통과시켰다(정본
+> **능력 차단된 P2 report-only advisor**로 재활용했고 2026-06-25 live-context canary를 통과시켰다(정본
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). 따라서 현재 `@Hermes`는 **read-only 조언(intake/triage)에는
 > sanctioned이되 실행 능력이 없는 advisor**이며, **모든 실행(변경)은 ssh-only**다 — 운영 intent의
 > 집행은 `ssh hermes-host <slug>` → `/srv/hermes/glotm`(아래 트리거 모델)만 쓴다. 배경·증거는
 > [`hermes-incident-20260623.md`](hermes-incident-20260623.md)(2026-06-23 misroute 사건).
+
+### report-context readiness
+
+- host installer: `/srv/hermes/glotm-hermes/scripts/install-report-context.sh` (root/admin 실행,
+  멱등).
+- host doctor: `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`;
+  `READY`가 기준이다. root로 직접 실행하면
+  `hermes` 소유 checkout에 대한 Git `safe.directory` 보호 때문에 오탐할 수 있으므로 service account로
+  실행한다.
+- 컨테이너는 exact path `safe.directory=/opt/glotm-context/repo`와
+  `GIT_OPTIONAL_LOCKS=0`만 사용하며 `safe.directory=*`는 금지한다.
+- 배포 검증은 metadata `commit_sha` = checkout `HEAD`, mount `rw=false`, mount 안 write 실패를 함께
+  확인한다.
 
 ## 현재 task surface (V2)
 
@@ -141,7 +154,7 @@ soul/persona 정본은 GloTm repo가 아니라 아래 **2개 canon**으로 나�
 >
 > **(ii) Slack P2 report-only advisor canon** — 정본은 GloTm
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(active spec; legacy filename 유지,
-> 2026-06-24 canary 통과). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
+> 2026-06-25 live-context canary 통과). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
 > 컨테이너의
 > **능력 차단된** report-only 스킬이며 bounded operator와 별개 actor다(actor 지도는 `../AGENTS.md`).
 

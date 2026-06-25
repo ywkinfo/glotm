@@ -1,6 +1,6 @@
 # Hermes Slack B-relay 설계와 운영 상태
 
-> **Status (2026-06-24): P2 active(canary 통과) · P3 = owner manual SSH · P4 = 비범위.**
+> **Status (2026-06-25): P2 live read-only context active(canary 통과) · P3 = owner manual SSH · P4 = 비범위.**
 > 본 B-relay 설계 중 **P2 report-only advisor만 배포·검증 완료**됐다(정본:
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). **P3**(manual bridge)는 owner가 직접 `ssh hermes-host <slug>`를
@@ -49,15 +49,16 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 ## 4. 컨텍스트 주입 (분석용)
 
 열린 "검토해줘" 대화를 위해 Hermes에 GloTm 맥락이 필요하면, **writable primary clone을 주지 않는다.**
-대신 공개 repo의 **read-only / shallow 체크아웃**, 또는 **문서 snapshot**만 제공한다.
+대신 공개 repo의 **read-only / shallow 체크아웃**을 제공한다. 문서 snapshot은 live checkout 장애 시
+사실을 최신 상태로 단정하지 않는 fallback일 뿐, 현재 primary context가 아니다.
 
-### 4.1 Pending: live read-only checkout (post-canary)
+### 4.1 Active: live read-only checkout
 
-> **Status: pending** — host-side 구현 완료(`glotm-hermes`: `lib/refresh-report-context.sh`,
-> `scripts/install-report-context.sh`, `scripts/doctor-report-context.sh`, systemd timer), owner의
-> VPS 배포·canary 전까지 P2는 **snapshot-backed**로 유지한다.
+> **Status: active (2026-06-25)** — host-side 구현(`glotm-hermes`:
+> `lib/refresh-report-context.sh`, `scripts/install-report-context.sh`,
+> `scripts/doctor-report-context.sh`, systemd timer)을 VPS에 배포했고 doctor 및 Slack canary를 통과했다.
 
-§4의 두 선택지 중 **read-only 체크아웃 분기를 live로** 격상하는 설계다. 동결 snapshot 대신 **갱신되는**
+기존 §4의 두 선택지 중 **read-only 체크아웃 분기를 live로** 격상했다. 동결 snapshot 대신 **갱신되는**
 context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **토큰이 필요 없고**, 마운트는 **read-only**다.
 
 - **Host-side**: `/srv/hermes/report-context/repo`를 15분 systemd timer로 `origin/main`과 ff-sync
@@ -74,7 +75,7 @@ context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **�
   `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`·`Freshness`를 보고 헤더에 채운다.
   30분 초과는 `stale`, metadata 손상·HEAD 불일치는 `unknown`. test/health lane 실행은 여전히
   `미검증`(lane-verified는 owner-work).
-- **승격**: 이 분기는 canary 통과 후에만 active skill 본문으로 올린다(헤더 `Snapshot`→`Refreshed`/`Freshness`).
+- **승격 완료**: active skill 헤더는 `Snapshot` 대신 `Refreshed`/`Freshness`를 사용한다.
 
 ## 5. 모델 레이어 분리
 
@@ -114,10 +115,11 @@ relay key는 GitHub write를 직접 못 해도 **bounded write 파이프라인�
 - 포함: `task slug` · 허용/금지 파일면 · 검증 결과 · `PR URL` 또는 `NO_CHANGES` · owner 핸드오프 항목.
 - 변경은 **직접 하지 않고** bounded operator 결과만 보고. 법률·사실 source는 수정이 아니라 **queue
   제안만**.
-- **report-only 보정**: `@Hermes`는 writable clone·SSH가 없어 **"현재 main 실측"을 할 수 없다.** 따라서:
-  - 보고에 **사용한 context 종류(read-only checkout / snapshot) · commit SHA · snapshot 시각**을
-    반드시 명시.
-  - 실측·재현하지 못한 항목은 **"미검증"**으로 표기(단정 금지).
+- **report-only 보정**: `@Hermes`는 live read-only checkout으로 repository state를
+  **`read-grounded`**하게 확인할 수 있지만, test/build/health lane을 실행한 것으로 간주하지 않는다.
+  - 보고는 `Context` · `Commit` · `Refreshed` · `Freshness` · `Mode` 5개 헤더로 시작한다.
+  - metadata/HEAD 불일치나 손상은 `unknown`, 30분 초과는 `stale`로 낮춘다.
+  - lane을 실제 실행하지 않은 항목은 **`미검증`**으로 표기한다.
 
 ## 8. `~/.hermes` 설정 영속성
 
@@ -131,10 +133,12 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
   profile로 재가동**(Slack gateway만 제한적 재활성화; `/opt/hermes` 권한 재개방 아님). Slack revoke 보류.
   채널명 확정(현재 `#glotm_hermes`).
 - **P1 능력 차단(최우선)**: `hermes-agent-zykj` run-user·마운트 점검 → 직접 GitHub write token 미존재,
-  writable GloTm clone 미마운트, host env 미주입 확인(있으면 제거).
+  writable GloTm clone 미마운트, host env 미주입 확인. GloTm 파일면은
+  `/srv/hermes/report-context` → `/opt/glotm-context:ro` bind mount만 허용한다.
 - **P2 report-only 스킬**: §7 보고 spec대로 답하고 **SSH 실행 능력 없는** 스킬을 배포했다. 정본은
   [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(legacy filename 유지).
   `#glotm_hermes` channel skill binding + 매 턴 channel prompt를 적용했고 `~/.hermes` 백업을 남겼다.
+  15분 refresh timer, exact-path `safe.directory`, `GIT_OPTIONAL_LOCKS=0`도 배포됐다.
 - **P3 manual bridge**: `@Hermes`=제안만, owner=발화. relay key 없음.
 - **P4 auto relay**: owner 승인 + 토큰 전환 + §6 relay key 하드닝(양층) 후에만.
 
@@ -142,7 +146,8 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 
 - **P1**: 컨테이너 셸에서 GloTm write 시도가 실패 / GitHub token 부재 확인.
 - **P2**: `@Hermes`가 보고만 하고 `ssh hermes-host`를 실행하지 못함 확인. 보고에 context 종류·SHA·
-  snapshot 시각·미검증 표기 포함 확인. 2026-06-24 harmless/refusal canary 통과.
+  refresh 시각·freshness·미검증 표기 포함 확인. 2026-06-25 read-grounded/evidence-boundary/refusal
+  canary 통과. canary 시간대에 새 bounded run/worktree/branch/PR 없음.
 - **P4**: forced-command가 non-allowlisted slug 거부 + 감사 로그 기록 + gateway allowlist 외 사용자
   차단 확인.
 
