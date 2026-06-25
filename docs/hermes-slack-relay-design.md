@@ -51,6 +51,25 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 열린 "검토해줘" 대화를 위해 Hermes에 GloTm 맥락이 필요하면, **writable primary clone을 주지 않는다.**
 대신 공개 repo의 **read-only / shallow 체크아웃**, 또는 **문서 snapshot**만 제공한다.
 
+### 4.1 Pending: live read-only checkout (post-canary)
+
+> **Status: pending** — host-side 구현 완료(`glotm-hermes`: `lib/refresh-report-context.sh`,
+> `scripts/install-report-context.sh`, `scripts/doctor-report-context.sh`, systemd timer), owner의
+> VPS 배포·canary 전까지 P2는 **snapshot-backed**로 유지한다.
+
+§4의 두 선택지 중 **read-only 체크아웃 분기를 live로** 격상하는 설계다. 동결 snapshot 대신 **갱신되는**
+context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **토큰이 필요 없고**, 마운트는 **read-only**다.
+
+- **Host-side**: `/srv/hermes/report-context/repo`를 15분 systemd timer로 `origin/main`과 ff-sync
+  (`git fetch` → `merge --ff-only`; dirty/divergence는 fail-closed로 stale 유지, 자동 reset 없음).
+  credential은 refresh 시점에 차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`).
+- **Container mount**: `/srv/hermes/report-context/repo` → `/opt/glotm-context:ro`
+  (**`/opt/data` 바깥** — 컨테이너-writable 볼륨 안에 두면 read-only가 무의미).
+- **Advisor**: `/opt/glotm-context`의 파일·`git` 이력을 `read-grounded`로 읽고, `metadata.json`에서
+  `Commit`·`Refreshed`·`Freshness`를 보고 헤더에 채운다. 30분 초과는 `stale`,
+  metadata 손상·HEAD 불일치는 `unknown`. test/health lane 실행은 여전히 `미검증`(lane-verified는 owner-work).
+- **승격**: 이 분기는 canary 통과 후에만 active skill 본문으로 올린다(헤더 `Snapshot`→`Refreshed`/`Freshness`).
+
 ## 5. 모델 레이어 분리
 
 두 모델은 별개다(하나를 바꿔도 다른 하나는 안 바뀐다):

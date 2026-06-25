@@ -25,6 +25,39 @@ owner/admin manual bridge.
 - The context source records `context_type`, `commit_sha`, and `snapshot_time`.
 - `~/.hermes` is backed up before adding or changing skills.
 
+## Pending: live read-only context (post-canary)
+
+> **Status: pending.** Designed and implemented host-side in `glotm-hermes`
+> (`lib/refresh-report-context.sh`, `scripts/install-report-context.sh`, systemd timer); the
+> active skill body below still describes the **snapshot** posture. This section is promoted into
+> the active body only after the owner deploys the read-only mount and the Slack canary passes
+> (see [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md) §4.1). Until then the
+> contract for this section is informative, not active.
+
+Once deployed, the primary `context_type` becomes **`read-only checkout`** rather than a frozen
+snapshot: a host-side 15-minute timer fast-forwards a single-branch clone of the **public** GloTm
+repo, bind-mounted **read-only** at `/opt/glotm-context`. The advisor reads `metadata.json`
+(`commit_sha`, `refreshed_at`) from that mount.
+
+The required header gains `Refreshed` and `Freshness` and drops `Snapshot`:
+
+```
+Context: read-only checkout
+Commit: <SHA or unknown>
+Refreshed: <timestamp or unknown>
+Freshness: <fresh | stale | unknown>
+Mode: P2 report-only; no SSH relay; no repo write access
+```
+
+- **Freshness**: `fresh` when `refreshed_at` is within 30 minutes, else `stale`. `unknown` when
+  `metadata.json` is missing/corrupt or its `commit_sha` ≠ the checkout `HEAD`.
+- **Read consistency**: if `HEAD` changes between the start and end of a report, retry once; if it
+  changes again, do not assert repository state for that turn.
+- **`read-grounded` vs `lane-verified`**: reading files, `git log`, and SHAs from the checkout is
+  **`read-grounded`** and may be asserted. Running `npm run test`/`build`/`health:*` is
+  **`lane-verified`** and remains out of scope — such claims stay **`미검증`**. This is a *policy
+  evidence boundary*, not a claim that command execution is technically blocked.
+
 ## Active Skill File
 
 The deployed skill lives at `~/.hermes/skills/productivity/glotm-report-only/SKILL.md`. The skill

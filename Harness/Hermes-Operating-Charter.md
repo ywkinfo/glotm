@@ -50,6 +50,11 @@
   파생 문서 동기화 작업은 `registry.ts`의 날짜/수치를 **그대로 반영**할 뿐, `verifiedOn`을
   `factsReviewedOn`으로 바꾸거나 1차 출처 대조 시점으로 오해하지 않는다.
 - `health:*` 레인을 실행하지 않은 항목은 "미검증"으로 표기한다.
+- **`read-grounded` vs `lane-verified` vs `미검증`을 혼동하지 않는다.** `read-grounded`는 체크아웃에서
+  파일·SHA·`git` 결과를 직접 읽어 확인한 것이고, `lane-verified`는 `npm run test`/`build`/`health:*`를
+  실제 실행한 것이며, `미검증`은 둘 다 아닌 것이다. `미검증`은 "아직 검증하지 않았음"의 증거 경계이지,
+  "실행이 기술적으로 차단됐기 때문"이라는 정당화로 바꾸지 않는다. (P2 advisor는 read-only 체크아웃에서
+  `read-grounded`까지만 가능하고 `lane-verified`는 owner-work다.)
 - 기존 Gateway·Brief·guide 고지를 "없다"고 단정해 중복 구현하지 않는다.
 
 ## 권한 matrix (작업 유형 기준)
