@@ -50,4 +50,21 @@ describe("hermes docs contract", () => {
     expect(read("docs/hermes-report-only-skill-draft.md")).toContain("Pending: live read-only context");
     expect(read("docs/hermes-slack-relay-design.md")).toContain("4.1 Pending: live read-only checkout");
   });
+
+  it("7. the whole context root is mounted read-only and both leaf paths stay explicit", () => {
+    const runbook = read("docs/hermes-operations-runbook.md");
+    const relay = read("docs/hermes-slack-relay-design.md");
+    const skill = read("docs/hermes-report-only-skill-draft.md");
+
+    expect(runbook).toContain("host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro`");
+    expect(relay).toContain("`/srv/hermes/report-context` 전체 → `/opt/glotm-context:ro`");
+    expect(relay).toContain("safe.directory=/opt/glotm-context/repo");
+    expect(relay).toContain("`GIT_OPTIONAL_LOCKS=0`");
+    expect(skill).toContain("`/opt/glotm-context/repo`");
+    expect(skill).toContain("`/opt/glotm-context/metadata.json`");
+
+    const repoOnlyMount = "`/srv/hermes/report-context/repo` → `/opt/glotm-context:ro`";
+    expect(runbook).not.toContain(repoOnlyMount);
+    expect(relay).not.toContain(repoOnlyMount);
+  });
 });

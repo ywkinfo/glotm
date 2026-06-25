@@ -63,11 +63,17 @@ context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **�
 - **Host-side**: `/srv/hermes/report-context/repo`를 15분 systemd timer로 `origin/main`과 ff-sync
   (`git fetch` → `merge --ff-only`; dirty/divergence는 fail-closed로 stale 유지, 자동 reset 없음).
   credential은 refresh 시점에 차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`).
-- **Container mount**: `/srv/hermes/report-context/repo` → `/opt/glotm-context:ro`
-  (**`/opt/data` 바깥** — 컨테이너-writable 볼륨 안에 두면 read-only가 무의미).
-- **Advisor**: `/opt/glotm-context`의 파일·`git` 이력을 `read-grounded`로 읽고, `metadata.json`에서
-  `Commit`·`Refreshed`·`Freshness`를 보고 헤더에 채운다. 30분 초과는 `stale`,
-  metadata 손상·HEAD 불일치는 `unknown`. test/health lane 실행은 여전히 `미검증`(lane-verified는 owner-work).
+- **Container mount**: `/srv/hermes/report-context` 전체 → `/opt/glotm-context:ro`
+  (**`/opt/data` 바깥** — 컨테이너-writable 볼륨 안에 두면 read-only가 무의미). 따라서 checkout은
+  `/opt/glotm-context/repo`, metadata는 `/opt/glotm-context/metadata.json`에서 함께 보인다.
+- **Container Git 설정**: owner는 gateway 컨테이너에서 exact path
+  `safe.directory=/opt/glotm-context/repo`만 신뢰하도록 설정하고(`safe.directory=*` 금지),
+  `GIT_OPTIONAL_LOCKS=0`을 환경에 둔다. read-only bind mount가 쓰기 하드 경계이며 이 Git 설정은
+  ownership 검사와 불필요한 lock 시도만 제어한다.
+- **Advisor**: `/opt/glotm-context/repo`의 파일·`git` 이력을 `read-grounded`로 읽고,
+  `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`·`Freshness`를 보고 헤더에 채운다.
+  30분 초과는 `stale`, metadata 손상·HEAD 불일치는 `unknown`. test/health lane 실행은 여전히
+  `미검증`(lane-verified는 owner-work).
 - **승격**: 이 분기는 canary 통과 후에만 active skill 본문으로 올린다(헤더 `Snapshot`→`Refreshed`/`Freshness`).
 
 ## 5. 모델 레이어 분리

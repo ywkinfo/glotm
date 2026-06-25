@@ -29,8 +29,9 @@
 | per-run 로그/아티팩트 | `/srv/hermes/runs/<RUN_ID>` |
 | scoped PAT(host 전용, 600) | `/srv/hermes/secrets/gh-token` |
 | Codex auth(영속, 토큰 자동갱신) | `/srv/hermes/codex/auth.json` |
-| report-context read-only checkout *(pending)* | `/srv/hermes/report-context/repo` → 컨테이너 `/opt/glotm-context:ro` |
-| report-context metadata *(pending)* | `/srv/hermes/report-context/metadata.json` |
+| report-context read-only root mount *(pending)* | host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro` |
+| report-context checkout leaf *(pending)* | `/opt/glotm-context/repo` |
+| report-context metadata leaf *(pending)* | `/opt/glotm-context/metadata.json` |
 | report-context refresh timer *(pending)* | `glotm-report-context-refresh.timer` (15min ff-sync) |
 
 VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, service user `hermes`.

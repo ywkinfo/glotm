@@ -36,8 +36,9 @@ owner/admin manual bridge.
 
 Once deployed, the primary `context_type` becomes **`read-only checkout`** rather than a frozen
 snapshot: a host-side 15-minute timer fast-forwards a single-branch clone of the **public** GloTm
-repo, bind-mounted **read-only** at `/opt/glotm-context`. The advisor reads `metadata.json`
-(`commit_sha`, `refreshed_at`) from that mount.
+repo. The host mounts the whole `/srv/hermes/report-context` root **read-only** at
+`/opt/glotm-context`, so the advisor reads repository files and Git history from
+`/opt/glotm-context/repo` and freshness metadata from `/opt/glotm-context/metadata.json`.
 
 The required header gains `Refreshed` and `Freshness` and drops `Snapshot`:
 
@@ -50,7 +51,8 @@ Mode: P2 report-only; no SSH relay; no repo write access
 ```
 
 - **Freshness**: `fresh` when `refreshed_at` is within 30 minutes, else `stale`. `unknown` when
-  `metadata.json` is missing/corrupt or its `commit_sha` ≠ the checkout `HEAD`.
+  `/opt/glotm-context/metadata.json` is missing/corrupt or its `commit_sha` ≠
+  `/opt/glotm-context/repo` `HEAD`.
 - **Read consistency**: if `HEAD` changes between the start and end of a report, retry once; if it
   changes again, do not assert repository state for that turn.
 - **`read-grounded` vs `lane-verified`**: reading files, `git log`, and SHAs from the checkout is
