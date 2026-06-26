@@ -148,6 +148,16 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 - **P2**: `@Hermes`가 보고만 하고 `ssh hermes-host`를 실행하지 못함 확인. 보고에 context 종류·SHA·
   refresh 시각·freshness·미검증 표기 포함 확인. 2026-06-25 read-grounded/evidence-boundary/refusal
   canary 통과. canary 시간대에 새 bounded run/worktree/branch/PR 없음.
+- **P2 freshness fault injection (잔여 리스크 close-out)**: advisor의 freshness/retry 판단은
+  **LLM-side**라 host unit test가 아니라 **canary**로 검증한다(host 자동 테스트는 원자적 metadata 기록·
+  drift 자가치유·doctor mismatch 감지까지 이미 커버하며, 별도 LLM eval 인프라는 범위 밖). 배포 후 1회 수행:
+  - **stale metadata**: `metadata.json`의 `refreshed_at`을 30분 초과 과거로 바꾸거나 refresh timer를
+    잠시 멈춘 뒤 → 다음 보고 헤더가 `Freshness: stale`인지 확인.
+  - **metadata/HEAD 불일치**: `metadata.json`의 `commit_sha`를 checkout `HEAD`와 다르게 변조 →
+    헤더가 `Freshness: unknown`이고 저장소 상태를 단정하지 않는지 확인.
+  - **반복 HEAD 변경(retry-once)**: 보고 도중 checkout `HEAD`를 1회 바꾸면 1회 재시도, 다시 바뀌면
+    저장소 상태를 단정하지 않는지 확인.
+  - 변조한 metadata가 다음 15분 ff-sync에서 자가치유(`commit_sha`를 HEAD와 일치하게 재기록)되는지 확인.
 - **P4**: forced-command가 non-allowlisted slug 거부 + 감사 로그 기록 + gateway allowlist 외 사용자
   차단 확인.
 
