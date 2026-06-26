@@ -32,7 +32,7 @@
 | report-context read-only root mount | host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro` |
 | report-context checkout leaf | `/opt/glotm-context/repo` |
 | report-context metadata leaf | `/opt/glotm-context/metadata.json` |
-| report-context refresh timer | `glotm-report-context-refresh.timer` (15min ff-sync) |
+| report-context manual sync service | `glotm-report-context-refresh.service` (owner/admin SSH one-shot) |
 
 VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, service user `hermes`.
 
@@ -43,17 +43,21 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
 > 구체적으로, 워크스페이스 `hermesespanol-kb`의 Slack 봇 **`@Hermes`(user `U0B4PDKTUDB`)는 이
 > `/opt/hermes` 컨테이너의 NousResearch Hermes-Agent**이며 GloTm bounded operator가 **아니다**.
 > 2026-06-23 misroute(GloTm 아닌 `/opt/hermes/website` 분석) 이후, owner는 같은 컨테이너를
-> **능력 차단된 P2 report-only advisor**로 재활용했고 2026-06-25 live-context canary를 통과시켰다(정본
+> **능력 차단된 P2 report-only advisor**로 재활용했고 2026-06-26 manual-sync canary를 통과시켰다(정본
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). 따라서 현재 `@Hermes`는 **read-only 조언(intake/triage)에는
-> sanctioned이되 실행 능력이 없는 advisor**이며, **모든 실행(변경)은 ssh-only**다 — 운영 intent의
-> 집행은 `ssh hermes-host <slug>` → `/srv/hermes/glotm`(아래 트리거 모델)만 쓴다. 배경·증거는
+> sanctioned이되 실행 능력이 없는 advisor**이다. bounded task 실행(변경)은 `ssh hermes-host <slug>` →
+> `/srv/hermes/glotm`(아래 트리거 모델)만 쓰고, report-context refresh trigger는 별도 일반 VPS admin
+> SSH에서 `systemctl start`로만 수행한다. 배경·증거는
 > [`hermes-incident-20260623.md`](hermes-incident-20260623.md)(2026-06-23 misroute 사건).
 
 ### report-context readiness
 
 - host installer: `/srv/hermes/glotm-hermes/scripts/install-report-context.sh` (root/admin 실행,
   멱등).
+- host manual sync: 일반 VPS admin SSH 세션에서
+  `sudo systemctl start glotm-report-context-refresh.service`. 이 명령은 bounded task가 아니며
+  `ssh hermes-host <slug>` forced-command 경로와 섞지 않는다.
 - host doctor: `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`;
   `READY`가 기준이다. root로 직접 실행하면
   `hermes` 소유 checkout에 대한 Git `safe.directory` 보호 때문에 오탐할 수 있으므로 service account로
@@ -62,6 +66,11 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
   `GIT_OPTIONAL_LOCKS=0`만 사용하며 `safe.directory=*`는 금지한다.
 - 배포 검증은 metadata `commit_sha` = checkout `HEAD`, mount `rw=false`, mount 안 write 실패를 함께
   확인한다.
+- legacy timer migration(1회성): manual-sync 배포 시
+  `sudo systemctl disable --now glotm-report-context-refresh.timer || true`,
+  `sudo rm -f /etc/systemd/system/glotm-report-context-refresh.timer`,
+  `sudo systemctl daemon-reload`로 정리한다. 되돌림은 timer만 다시 enable하지 말고 코드 revert →
+  재배포 → doctor → Slack canary 순서로만 한다.
 
 ## 현재 task surface (V2)
 
@@ -101,13 +110,16 @@ policy gate이며, task별 allow/deny와 semantic profile이 함께 적용된다
 
 ## 트리거 모델 (Slack = human bridge)
 
-- **자동 실행은 없다.** VPS에는 systemd·cron·**Slack poller가 전무**하다. 따라서 Slack 채널 글은
+- **자동 실행은 없다.** VPS에는 자동 timer·cron·**Slack poller가 전무**하다. 따라서 Slack 채널 글은
   **사람이 남기는 기록·감사 trail일 뿐 자동으로 task를 실행하지 않는다.**
   - 주의: 워크스페이스의 `@Hermes` 봇이 멘션에 응답하는 것은 **P2 report-only advisor**(능력 차단·
     read-only)로서 sanctioned이지만 **task를 실행하지 못한다** — advisor는 실행 트리거가 아니다.
     bounded operator의 유일한 정규 **실행** 트리거는 아래 `ssh hermes-host <task-slug>`다.
 - 유일한 트리거는 owner/admin의 `ssh hermes-host <task-slug>`이며, VPS의 forced-command가 slug를
   `SSH_ORIGINAL_COMMAND`로 받아 task allowlist를 통과시킨다. run 로그는 `/srv/hermes/runs/<RUN_ID>`.
+- report-context refresh trigger는 이 task trigger가 아니다. owner/admin이 일반 VPS admin SSH에서
+  `sudo systemctl start glotm-report-context-refresh.service`를 실행하고,
+  `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`로 검증한다.
 - 즉 현재 운영은 **Slack-first manual ops**다: owner가 Slack에 intent·slug를 남기고 → owner/admin이
   SSH로 직접 트리거하고 → 결과(PR URL·`NO_CHANGES`·실패 snippet)를 Slack에 보고한다.
 - Slack에는 merge/force-push, workflow 편집, 법률 source 편집, GitHub token 접근 권한을 주지 않는다.
@@ -154,7 +166,7 @@ soul/persona 정본은 GloTm repo가 아니라 아래 **2개 canon**으로 나�
 >
 > **(ii) Slack P2 report-only advisor canon** — 정본은 GloTm
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(active spec; legacy filename 유지,
-> 2026-06-25 live-context canary 통과). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
+> 2026-06-26 manual-sync canary 통과). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
 > 컨테이너의
 > **능력 차단된** report-only 스킬이며 bounded operator와 별개 actor다(actor 지도는 `../AGENTS.md`).
 
