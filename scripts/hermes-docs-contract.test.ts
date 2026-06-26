@@ -11,9 +11,11 @@ describe("hermes docs contract", () => {
   it("1. skill draft documents the live read-only header shape", () => {
     const s = read("docs/hermes-report-only-skill-draft.md");
     expect(s).toContain("Context: read-only checkout");
-    expect(s).toContain("Refreshed: <timestamp or unknown>");
-    expect(s).toContain("Freshness: <fresh | stale | unknown>");
+    expect(s).toContain("Refreshed: <last successful sync run timestamp or unknown>");
+    expect(s).toContain("Sync: <manual | unknown>");
+    expect(s).toContain("Sync: manual");
     expect(s).toContain("Mode: P2 report-only; no SSH relay; no repo write access");
+    expect(s).not.toContain("Freshness: <fresh | stale | unknown>");
     expect(s).not.toContain("Snapshot: <timestamp or unknown>");
   });
 
@@ -21,14 +23,15 @@ describe("hermes docs contract", () => {
     const s = read("docs/hermes-operations-runbook.md");
     expect(s).toContain("/opt/hermes");
     expect(s).toContain("실행 능력이 없는 advisor");
-    expect(s).toContain("ssh-only");
+    expect(s).toContain("owner/admin SSH one-shot");
   });
 
   it("3. AGENTS.md lists Slack @Hermes as an active live-context P2 report-only actor", () => {
     const s = read("AGENTS.md");
     expect(s).toContain("Slack @Hermes");
     expect(s).toContain("P2 report-only");
-    expect(s).toContain("2026-06-25 live-context canary");
+    expect(s).toContain("manual owner-sync read-only checkout");
+    expect(s).toContain("2026-06-26 manual-sync canary");
     expect(s).toContain("/opt/glotm-context:ro");
   });
 
@@ -75,11 +78,34 @@ describe("hermes docs contract", () => {
     expect(relay).not.toContain(repoOnlyMount);
   });
 
-  it("8. the active spec records all three 2026-06-25 canary boundaries", () => {
+  it("8. the active manual-sync contract has no automatic cadence or freshness header", () => {
     const skill = read("docs/hermes-report-only-skill-draft.md");
+    const relay = read("docs/hermes-slack-relay-design.md");
+    const runbook = read("docs/hermes-operations-runbook.md");
+    const activeSkill = skill.split("## P2 Verification")[0];
+
+    for (const text of [activeSkill, relay, runbook]) {
+      expect(text).not.toMatch(/\b15\s*-?\s*min(ute)?s?\b/i);
+      expect(text).not.toMatch(/\b30\s*-?\s*min(ute)?s?\b/i);
+      expect(text).not.toContain("Freshness: <fresh | stale | unknown>");
+    }
+
+    expect(relay).toContain("`Context` · `Commit` · `Refreshed` · `Sync` · `Mode`");
+    expect(runbook).toContain("`glotm-report-context-refresh.service` (owner/admin SSH one-shot)");
+    expect(runbook).toContain("sudo systemctl start glotm-report-context-refresh.service");
+    expect(runbook).toContain("sudo rm -f /etc/systemd/system/glotm-report-context-refresh.timer");
+  });
+
+  it("9. the active spec records the manual-sync canary and preserves the superseded canary", () => {
+    const skill = read("docs/hermes-report-only-skill-draft.md");
+    expect(skill).toContain("Superseded: 2026-06-25 periodic-sync header canary");
+    expect(skill).toContain("old `Freshness: fresh` field");
+    expect(skill).toContain("Active: 2026-06-26 manual-sync canary");
     expect(skill).toContain("Read-grounded canary");
     expect(skill).toContain("Evidence-boundary canary");
     expect(skill).toContain("Refusal canary");
-    expect(skill).toContain("no new bounded-operator run, worktree, branch, or PR");
+    expect(skill).toContain("`Sync: manual`");
+    expect(skill).toContain("no new bounded-operator run or worktree");
+    expect(skill).toContain("20분 이상 자동 service activation 없음");
   });
 });

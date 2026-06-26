@@ -1,6 +1,6 @@
 # Hermes Slack B-relay 설계와 운영 상태
 
-> **Status (2026-06-25): P2 live read-only context active(canary 통과) · P3 = owner manual SSH · P4 = 비범위.**
+> **Status (2026-06-26): P2 manual-sync read-only context active(canary 통과) · P3 = owner manual SSH · P4 = 비범위.**
 > 본 B-relay 설계 중 **P2 report-only advisor만 배포·검증 완료**됐다(정본:
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). **P3**(manual bridge)는 owner가 직접 `ssh hermes-host <slug>`를
@@ -54,16 +54,19 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 
 ### 4.1 Active: live read-only checkout
 
-> **Status: active (2026-06-25)** — host-side 구현(`glotm-hermes`:
+> **Status: active (2026-06-26)** — host-side 구현(`glotm-hermes`:
 > `lib/refresh-report-context.sh`, `scripts/install-report-context.sh`,
-> `scripts/doctor-report-context.sh`, systemd timer)을 VPS에 배포했고 doctor 및 Slack canary를 통과했다.
+> `scripts/doctor-report-context.sh`, manual one-shot service)을 VPS에 배포했고 doctor 및 Slack canary를 통과했다.
 
-기존 §4의 두 선택지 중 **read-only 체크아웃 분기를 live로** 격상했다. 동결 snapshot 대신 **갱신되는**
-context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **토큰이 필요 없고**, 마운트는 **read-only**다.
+기존 §4의 두 선택지 중 **read-only 체크아웃 분기를 live로** 격상했다. 동결 snapshot 대신 owner/admin이
+명시적으로 sync한 context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **토큰이 필요 없고**,
+마운트는 **read-only**다.
 
-- **Host-side**: `/srv/hermes/report-context/repo`를 15분 systemd timer로 `origin/main`과 ff-sync
-  (`git fetch` → `merge --ff-only`; dirty/divergence는 fail-closed로 stale 유지, 자동 reset 없음).
-  credential은 refresh 시점에 차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`).
+- **Host-side**: owner/admin이 일반 VPS SSH 세션에서 `glotm-report-context-refresh.service`를 수동
+  one-shot으로 실행해 `/srv/hermes/report-context/repo`를 `origin/main`과 ff-sync한다(`git fetch` →
+  `merge --ff-only`; dirty/divergence는 fail-closed로 기존 checkout/metadata 보존, 자동 reset 없음).
+  credential은 sync 시점에 차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`). legacy 자동
+  timer는 제거됐고 mask하지 않는다.
 - **Container mount**: `/srv/hermes/report-context` 전체 → `/opt/glotm-context:ro`
   (**`/opt/data` 바깥** — 컨테이너-writable 볼륨 안에 두면 read-only가 무의미). 따라서 checkout은
   `/opt/glotm-context/repo`, metadata는 `/opt/glotm-context/metadata.json`에서 함께 보인다.
@@ -72,10 +75,10 @@ context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **�
   `GIT_OPTIONAL_LOCKS=0`을 환경에 둔다. read-only bind mount가 쓰기 하드 경계이며 이 Git 설정은
   ownership 검사와 불필요한 lock 시도만 제어한다.
 - **Advisor**: `/opt/glotm-context/repo`의 파일·`git` 이력을 `read-grounded`로 읽고,
-  `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`·`Freshness`를 보고 헤더에 채운다.
-  30분 초과는 `stale`, metadata 손상·HEAD 불일치는 `unknown`. test/health lane 실행은 여전히
-  `미검증`(lane-verified는 owner-work).
-- **승격 완료**: active skill 헤더는 `Snapshot` 대신 `Refreshed`/`Freshness`를 사용한다.
+  `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`를 보고 헤더에 채운다. `Sync: manual`은
+  metadata 필드가 아니라 배포 모델 상수다. metadata 손상·HEAD 불일치는 `unknown`. test/health lane
+  실행은 여전히 `미검증`(lane-verified는 owner-work).
+- **승격 완료**: active skill 헤더는 `Snapshot`/시간 기반 freshness 대신 `Refreshed`/`Sync`를 사용한다.
 
 ## 5. 모델 레이어 분리
 
@@ -117,8 +120,9 @@ relay key는 GitHub write를 직접 못 해도 **bounded write 파이프라인�
   제안만**.
 - **report-only 보정**: `@Hermes`는 live read-only checkout으로 repository state를
   **`read-grounded`**하게 확인할 수 있지만, test/build/health lane을 실행한 것으로 간주하지 않는다.
-  - 보고는 `Context` · `Commit` · `Refreshed` · `Freshness` · `Mode` 5개 헤더로 시작한다.
-  - metadata/HEAD 불일치나 손상은 `unknown`, 30분 초과는 `stale`로 낮춘다.
+  - 보고는 `Context` · `Commit` · `Refreshed` · `Sync` · `Mode` 5개 헤더로 시작한다.
+  - metadata/HEAD 불일치나 손상은 `Commit: unknown`, `Refreshed: unknown`, `Sync: unknown`으로 낮춘다.
+  - `Refreshed`는 마지막 성공 sync 실행 시각이며, `UP_TO_DATE` no-op sync도 갱신된다.
   - lane을 실제 실행하지 않은 항목은 **`미검증`**으로 표기한다.
 
 ## 8. `~/.hermes` 설정 영속성
@@ -138,16 +142,17 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 - **P2 report-only 스킬**: §7 보고 spec대로 답하고 **SSH 실행 능력 없는** 스킬을 배포했다. 정본은
   [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(legacy filename 유지).
   `#glotm_hermes` channel skill binding + 매 턴 channel prompt를 적용했고 `~/.hermes` 백업을 남겼다.
-  15분 refresh timer, exact-path `safe.directory`, `GIT_OPTIONAL_LOCKS=0`도 배포됐다.
+  owner/admin manual-sync one-shot service, exact-path `safe.directory`, `GIT_OPTIONAL_LOCKS=0`도 배포됐다.
 - **P3 manual bridge**: `@Hermes`=제안만, owner=발화. relay key 없음.
 - **P4 auto relay**: owner 승인 + 토큰 전환 + §6 relay key 하드닝(양층) 후에만.
 
 ## 10. 검증 (단계별)
 
 - **P1**: 컨테이너 셸에서 GloTm write 시도가 실패 / GitHub token 부재 확인.
-- **P2**: `@Hermes`가 보고만 하고 `ssh hermes-host`를 실행하지 못함 확인. 보고에 context 종류·SHA·
-  refresh 시각·freshness·미검증 표기 포함 확인. 2026-06-25 read-grounded/evidence-boundary/refusal
-  canary 통과. canary 시간대에 새 bounded run/worktree/branch/PR 없음.
+- **P2**: `@Hermes`가 보고만 하고 `ssh hermes-host`나 context refresh를 실행하지 못함 확인. 보고에
+  context 종류·SHA·마지막 sync 시각·`Sync: manual`·미검증 표기 포함 확인. 2026-06-26
+  read-grounded/evidence-boundary/refusal canary 통과. canary 시간대에 새 bounded run/worktree/branch/PR
+  없음, legacy timer `not-found`/`inactive`, 20분 이상 자동 service activation 없음.
 - **P4**: forced-command가 non-allowlisted slug 거부 + 감사 로그 기록 + gateway allowlist 외 사용자
   차단 확인.
 
@@ -156,3 +161,5 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 - 이 문서는 P2의 설계·운영 상태 기록이며 runbook/charter 정본을 대체하지 않는다.
 - VPS/Slack 변경·토큰·relay key·자동화는 전부 **owner**(charter 승인 필수). 본 문서는 repo 설계 문서일 뿐.
 - **자동 발화(P4)는 owner 승인 + 토큰 전환 전까지 보류.** 채택 시 runbook/charter reconcile은 별도 doc-PR.
+- report-context 자동 timer로 되돌릴 때는 timer만 수동 enable하지 않는다. 코드 revert → 재배포 → doctor →
+  Slack canary 순서로만 active 계약을 바꾼다.
