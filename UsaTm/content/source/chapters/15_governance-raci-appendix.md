@@ -61,7 +61,8 @@
 - 이 버전에서 수정된 항목: 없음 (structure hold 재확인)
 - 다음 권장 검증 시점: 60일 이내 (USPTO 시스템 또는 TEAS 운영 변경 발생 시 즉시)
 - 고위험 검증 갭: 0건
-- 운영 상태: incubate beta · standard QA · structure hold · 2026-04-04 local/root verification refreshed
+- 당시 운영 상태: incubate beta · standard QA · structure hold · 2026-04-04 local/root verification refreshed
+- 현재 운영 상태: 2026-06-28 mature closeout 이후 `growth / mature / full QA`는 루트 `src/products/registry.ts`를 따른다.
 
 ## 2026-06-02 보강 메모
 
