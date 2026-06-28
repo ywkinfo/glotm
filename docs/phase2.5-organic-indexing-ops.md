@@ -22,7 +22,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 | 항목 | 상태 | 재확인 명령 (read-only) |
 |------|------|-------------------------|
 | sitemap | live, **139 URL** | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 139 |
-| robots | `Allow: /` + `Sitemap:` 디렉티브 | `curl -s https://ywkinfo.github.io/glotm/robots.txt` |
+| robots | `/glotm/robots.txt`는 존재하지만 host-root `https://ywkinfo.github.io/robots.txt`는 404 | `curl -I https://ywkinfo.github.io/robots.txt`; `curl -s https://ywkinfo.github.io/glotm/robots.txt` |
 | GA4 배선 | 배포 번들에 `G-0XF5JG96CC` + gtag 인라인 | 홈 HTML의 `assets/index-*.js`를 받아 `G-0XF5JG96CC` grep |
 | 이벤트 코드 | manual page_view + 6 KPI 이벤트 emit·테스트 통과 | `npm run test`(unit), `e2e:smoke`(흐름) |
 
@@ -50,11 +50,24 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
    최신 brief 3건(`2026-06-*`), 대표 report 2건(monthly-review `Primary reports`).
 5. 결과(색인 개수·요청 URL)를 월간 리뷰 Organic 섹션에 기록.
 
+### Search Console troubleshooting
+
+- **Sitemap server health와 SC 처리 상태를 분리한다.** `https://ywkinfo.github.io/glotm/sitemap.xml`가
+  `HTTP 200`, `content-type: application/xml`, 139 `<loc>`를 반환하면 배포 산출물은 정상이다. SC의
+  `가져올 수 없음`·`discovered 0`는 수동 제출 직후 1~3일 지연될 수 있다.
+- **Googlebot은 robots.txt를 host root에서만 읽는다.** 현재 GitHub Pages path deploy에서는
+  `https://ywkinfo.github.io/robots.txt`가 404이고, `https://ywkinfo.github.io/glotm/robots.txt`는
+  존재해도 crawler의 robots discovery에는 쓰이지 않는다. 404 robots는 crawl block이 아니지만,
+  `/glotm/robots.txt`의 `Sitemap:` 디렉티브는 자동 발견 신호가 아니다.
+- 그래서 이 phase의 정답 경로는 **Search Console URL-prefix 속성에서 sitemap을 수동 제출**하는 것이다.
+  1~3일 후에도 실패가 유지되면 속성이 `https://ywkinfo.github.io/glotm/` URL-prefix인지 먼저 확인한다.
+
 ## §2. GA4 DebugView (owner)
 
 property id **`G-0XF5JG96CC`** 기준. **라이브 배포본**에서만 검증된다.
 
-1. GA4 → **DebugView** 활성화(GA Debugger 확장 또는 `?_dbg`), 라이브 `/glotm/` 접속.
+1. GA4 → **DebugView** 활성화(Google Analytics Debugger Chrome extension을 해당 GitHub Pages 탭에서 ON),
+   라이브 `/glotm/` 접속 후 새로고침.
 2. **page_view**: 라우트 이동(홈→guide→챕터)마다 `page_view`가 `page_path`와 함께 1건씩 도착하는지 확인
    (SPA manual 발사 — `send_page_view:false`).
 3. **6 KPI 이벤트**를 각 트리거 동작으로 1건씩 실발사 확인:
@@ -70,6 +83,18 @@ property id **`G-0XF5JG96CC`** 기준. **라이브 배포본**에서만 검증�
 
 4. (`priority_cta_click`은 런타임 유지·KPI sheet 제외 — 검증 선택.)
 5. 도착/누락을 월간 리뷰 KPI sheet check에 기록.
+
+### GA4 DebugView troubleshooting
+
+- **GA 수신과 DebugView 수신은 다르다.** live `POST https://www.google-analytics.com/g/collect?...&en=page_view`
+  가 `204`를 반환하면 GA가 hit를 받은 것이다. Realtime·홈 카드에 sessions/events가 보이면 계측은 동작 중이다.
+- **DebugView는 debug hit만 보여준다.** production runtime은 `src/analytics/ga.ts`에서
+  `gtag("config", id, { send_page_view: false })`만 설정한다. production 코드에 `debug_mode:true`를 넣지
+  않는다. 전 트래픽이 debug stream으로 오염되기 때문이다.
+- DebugView가 `디버그 기기 0`이면 우선 collect URL에 `_dbg=1` 또는 debug parameter가 붙는지 본다.
+  붙지 않으면 Google Analytics Debugger extension이 그 탭에서 켜져 있지 않은 것이다.
+- extension 없이 검증해야 할 때는 **Realtime → Event name별 이벤트 수**로 6 KPI 이벤트를 확인한다.
+  이 경우 DebugView가 0이어도 GA 계측 실패를 의미하지 않는다.
 
 ## §3. Live interactive QA (owner 육안 + agent 사전 스모크)
 
@@ -89,7 +114,7 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 ## Monthly quick checklist
 
 - [ ] §0 readiness 재확인(sitemap 139 / robots / GA id)
-- [ ] §1 SC: sitemap status + 색인 분포 + 우선 URL 색인 요청
-- [ ] §2 GA4 DebugView: page_view + 6 KPI 이벤트 도착
+- [ ] §1 SC: sitemap status + 색인 분포 + 우선 URL 색인 요청(host-root robots 404는 block 아님)
+- [ ] §2 GA4 DebugView: debugger extension ON 상태에서 page_view + 6 KPI 이벤트 도착, 또는 Realtime 대체 확인
 - [ ] §3 라이브 QA(agent 스모크 → owner 육안)
 - [ ] §4 organic sessions 집계 → 월 100 트리거 대비 기록
