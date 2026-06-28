@@ -556,7 +556,7 @@ Madrid는 “여러 나라를 이렇게 운영하겠다”는 선택이다.
 | D+5 | goods/services와 launch row | 브랜드팀 + PM |
 | D+7 | 제9장 specimen packet과 제12장 monitoring row 연결 | PM + IP |
 
-이 정도만 있어도 UsaTm은 lighter track 안에서 “어떤 basis를 왜 골랐는지”를 빠르게 다시 보여 주는 route memo 역할을 한다.
+이 정도만 있어도 UsaTm은 “어떤 basis를 왜 골랐는지”를 빠르게 다시 보여 주는 route memo 역할을 충분히 한다.
 
 ## 출원서 작성 실무와 ID 설계
 
