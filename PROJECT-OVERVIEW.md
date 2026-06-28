@@ -13,10 +13,10 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-06-14 |
-| Verified on | 2026-06-14 |
+| Last updated | 2026-06-28 |
+| Verified on | 2026-06-28 |
 | Current phase | Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지) |
-| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` growth expansion 반영 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> incubate 유지보수 |
+| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` growth expansion 반영 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> `UsaTm` growth/mature closeout 반영 -> incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### Priority 4 owner lane
@@ -34,7 +34,7 @@
 
 ### 현재 운영 스냅샷
 
-- 루트 `GloTm`: 2026-06-14 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
+- 루트 `GloTm`: 2026-06-28 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
 - `health:report`는 fresh proof가 아니라 최근 lane 상태와 provenance를 묶어 읽는 operational snapshot으로 해석한다.
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 브리프 배너를 먼저 보여주고 이어서 리포트 2개를 포함하는 trust layer / report handoff를 운영한다.
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. live verification 표현은 workflow artifact 검증과 구분해서 보며, mobile drawer close 등 live-only 회귀는 `e2e/guide-smoke.spec.ts`의 mobile drawer close controls smoke로 보호한다.
@@ -92,7 +92,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
 | `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료 · verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10 |
-| `UsaTm` | 단일국가 | incubate | beta | 14 | 197 | lighter track · 운영 표/체크리스트 보강 |
+| `UsaTm` | 단일국가 | growth | mature | 15 | 203 | 집행 포럼 플레이북 · claim-map 12건 · full QA 승급 완료 |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
 | `UKTm` | 단일국가 | incubate | beta | 14 | 128 | standard QA evidence 4-file 정합 · 2026-05-12 verdict 적용 · early-track verified 공개본 |
 
@@ -108,7 +108,8 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, Gateway/registry/root-doc sync도 정합 완료 — 현재는 sync 정합 유지(maintenance)만 남음
 - `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 10건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
-- `JapTm`·`UKTm`·`UsaTm`: JapTm beta 유지, UKTm 2026-05-12 standard QA verdict로 beta 승급, UsaTm standard QA 유지
+- `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 12건, full-QA 파이프라인을 유지하되 Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 흔들지 않는다
+- `JapTm`·`UKTm`: JapTm beta 유지, UKTm 2026-05-12 standard QA verdict로 beta 승급
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -117,9 +118,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 2. `MexTm`
 3. `EuTm`
 4. `Report` / `Gateway`
-5. `JapTm`
-6. `UKTm`
-7. `UsaTm`
+5. `UsaTm`
+6. `JapTm`
+7. `UKTm`
 
 이 순서는 `buyer impact + 현재 포트폴리오 전략 + 실제 콘텐츠 밀도 부족`을 함께 반영한 운영 우선순위다. 가장 얇은 가이드부터 무조건 채우는 방식이 아니라, growth/validate 레인의 체감 가치와 buyer entry 효과를 먼저 끌어올리는 데 목적이 있다.
 
@@ -150,9 +151,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 `MexTm`은 전략적으로 중요한 멕시코 심화 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 제공한다. 리더 측면에서는 continue reading, outline, reading progress, 이전/다음 이동, 섹션 추적, action bar까지 루트 셸 기준 core reader parity를 맞췄다. 워크스페이스 자체에는 `manifest.json`, `build-master.ts`, `qa-content.ts`가 갖춰져 있으며, 루트 `content:prepare`에서도 `build-master -> qa-content -> build-content` 전체 흐름을 사용한다. 이번 라운드에서는 제5장·제7장·제10장에 filing packet handoff scorecard, rights-maintenance triage board, border evidence pack control board를 보강했고, workspace-local gate는 `npm --prefix MexTm run content:prepare` 기준으로 잠근 뒤, shared root `health:runtime`/`health:content`/`health:release` lane에서 통합 검증한다.
 
-### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
+### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 growth mature 단일국가 가이드
 
-`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/usa` 경로에 연결한 상태다. 이번 verification refresh의 운영 메타데이터는 `beta`를 유지한다. 2026-06-02 기준 root shortcut refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 재현했고, 이번 유지보수에서는 filing/specimen/monitoring reader utility를 더 또렷하게 다듬었다. 다음 우선순위는 대형 확장보다 standard QA를 반복 재현하면서 운영 문구와 reader utility를 다듬는 일이다.
+`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 growth guide다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/usa` 경로에 연결한 상태다. 2026-06-28 scorecard review에서 15장 체계(집행 포럼 통합 플레이북), claim-map 12건, stale/pending 사실의 1차출처 재대조, root/workspace full-QA 편입을 근거로 `mature / full QA` 상태로 승급했다. Gateway 첫 화면의 buyer-entry 약속은 여전히 `ChaTm`·`MexTm`·`EuTm`과 Report trust layer를 우선하므로, `UsaTm`은 supporting growth lane으로 유지한다.
 
 ### JapTm (일본 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
@@ -205,7 +206,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | 가이드별 생성 산출물 수치 | 챕터 수·검색 엔트리는 `src/products/registry.ts`가 정본이고, 위 "현재 개발된 포트폴리오" 표가 derived snapshot이다. 여기서 다시 나열하지 않는다 |
 | GloTm build status | pass |
 | MexTm build status | pass |
-| 루트 `content:prepare` 특징 | 7개 가이드 generated content + Reports generated content를 재생성하며, 가이드별로 full pipeline과 `build-content.ts` shortcut이 혼재 |
+| 루트 `content:prepare` 특징 | 7개 가이드 generated content + Reports generated content를 재생성하며, `LatTm`·`MexTm`·`UsaTm`·`ChaTm`·`EuTm`·`UKTm`은 full pipeline, `JapTm`은 `build-content.ts` shortcut을 사용 |
 | Gateway 랜딩 | intro 문서 전체 복제가 아니라 복수의 핵심 섹션과 CTA 중심의 선별 랜딩 |
 | Report / Gateway handoff | Gateway 첫 화면에 최신 리포트 2개를 노출하고, Report archive와 최신순 handoff를 공유 |
 | favicon / workflow path | favicon asset은 GitHub Pages 공개본에서 확인됐고, local release verification은 `build:pages:glotm`, workflow deploy는 env 주입 기반 `build:pages`를 사용 |

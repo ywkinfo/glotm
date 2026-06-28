@@ -2,9 +2,9 @@
 
 specimen은 미국 연방 상표에서 “우리가 진짜로 쓰고 있다”를 보여주는 핵심 증거다. intent-to-use로 가면 출원보다 더 중요한 구간이 뒤에 온다. 실제 사용, 증거 수집, 버전 통제, 제출 판단이 한 덩어리로 움직여야 한다.
 
-## lighter-track specimen owner board
+## specimen owner board
 
-UsaTm의 specimen 장은 full handbook보다 “누가 어떤 증거를 언제 잠글까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 standard QA 유지 라운드에서도 실익이 크다.
+UsaTm의 specimen 장은 “누가 어떤 증거를 언제 잠글까”를 빠르게 다시 보는 운영 보드로 시작한다. 아래 네 줄을 먼저 적어 두면 full-QA 유지 라운드에서도 filing route와 SOU handoff를 같은 기준으로 점검할 수 있다.
 
 | 먼저 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
 | --- | --- | --- | --- |

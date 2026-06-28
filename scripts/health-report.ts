@@ -30,7 +30,8 @@ const rootDir = path.resolve(__dirname, "..");
 const advisoryClaimMapWorkspaceBySlug: Partial<Record<string, string>> = {
   china: "ChaTm",
   mexico: "MexTm",
-  europe: "EuTm"
+  europe: "EuTm",
+  usa: "UsaTm"
 };
 
 function loadResearchBySlug() {

@@ -5,13 +5,13 @@
 
 ## Snapshot
 
-- Last updated: 2026-06-14
+- Last updated: 2026-06-28
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
-- Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> JapTm -> UKTm -> UsaTm`
+- Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
-- `2026-06-14` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
+- `2026-06-28` shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과
 - Brief archive provenance: 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본 인벤토리로 본다. lane cadence·provenance·publish 게이트 계약은 `briefs-lane.md`, 구조 강제(최신호 락 포함)는 `src/briefs/archive.test.ts`를 기준으로 본다.
-- 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61), EuTm growth/mature 승급(15장·부록·claim-map 10건·2026-06-10 법률 사실정정, #69/#70). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. 과거 registry drift 정합 기록은 아래 `Resolved Drift Archive` 섹션에 보존한다.
+- 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61), EuTm growth/mature 승급(15장·부록·claim-map 10건·2026-06-10 법률 사실정정, #69/#70), UsaTm growth/mature 승급(15장·claim-map 12건·2026-06-28 fact-review/full-QA). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. 과거 registry drift 정합 기록은 아래 `Resolved Drift Archive` 섹션에 보존한다.
 
 ## Today
 
@@ -133,8 +133,8 @@ closeout 요약:
   - 명칭 drift 해소 (2026-06-03, A안): 소스 챕터 헤딩·home copy·e2e bookmark를 모두 `beta-lane maintenance owner board`로 통일하고 `content:uk` 재생성(0 error). `e2e:smoke` UKTm reader smoke 통과로 reader가 home 문구로 같은 섹션을 찾는 흐름을 검증했다.
   - 그다음 액션은 `early-track filing decision board`, 위 maintenance owner board, `online incident quick board` utility가 home / continue reading / search에서 충분히 빨리 읽히는지 확인하고 `uktm-root-sync-input.md`에 evidence를 기록하는 것이다.
 - `UsaTm` operating-copy maintenance
-  - registry 정본 baseline: `14 chapters / 197 search entries / incubate / beta / standard QA` (verifiedOn 2026-06-02).
-  - 직전 라운드(#61, 2026-06-02)에서 저밀도 장에 operating table·checklist를 보강했다. 유지 액션은 filing basis / specimen / monitoring lighter-track utility를 문구와 reader flow에서 계속 유지하는 것이다.
+  - registry 정본 baseline: `15 chapters / 203 search entries / growth / mature / full QA` (verifiedOn/factsReviewedOn 2026-06-28). mature closeout: 집행 포럼 통합 플레이북(15장) 신설 + claim-map 12건 + full-QA 파이프라인 편입 + stale/pending 사실 1차출처 재대조 완료.
+  - 유지 액션은 filing basis / specimen / maintenance / TTAB·법원·플랫폼·CBP 집행 오케스트레이션이 home / continue reading / search에서 잘 이어지는지 확인하는 것이다. Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 유지한다.
 
 ## Do Not Touch
 
@@ -149,7 +149,7 @@ closeout 요약:
 ## Committee Warnings
 
 - 브리핑은 방향 신호일 뿐, 현재 우선순위를 덮어쓰는 실행 명령이 아니다.
-- 지금 GloTm의 다음 액션은 신규 확장이 아니라, owner-doc 정합 유지와 프로모션 없는 유기 색인·계측(Phase 2.5) + `JapTm`→`UKTm`→`UsaTm` reader-utility 유지보수다.
+- 지금 GloTm의 다음 액션은 신규 확장이 아니라, owner-doc 정합 유지와 프로모션 없는 유기 색인·계측(Phase 2.5) + `UsaTm` growth/mature 유지 + `JapTm`→`UKTm` reader-utility 유지보수다.
 - source 대신 generated 산출물부터 만지면 운영 truth가 먼저 깨진다.
 
 ## Working Notes

@@ -42,7 +42,8 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `LatTm`: flagship. cross-border 우선순위와 운영 구조의 기준 프레임
 - `MexTm`, `ChaTm`: growth. buyer entry 질문을 filing·maintenance·border-control handoff까지 이어 잠그는 국가 가이드
 - `EuTm`: growth. EU+UK scope와 rights/route/evidence handoff를 두껍게 다루는 가이드
-- `UsaTm`, `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 filing/route/maintenance reader utility를 다듬는 가이드
+- `UsaTm`: growth mature. USPTO filing, maintenance, TTAB/court/platform/CBP enforcement orchestration을 full QA로 다루는 supporting growth 가이드
+- `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 route/maintenance reader utility를 다듬는 가이드
 - `UKTm`: incubate beta. early-track verified 공개본과 standard QA를 유지하며 filing/maintenance/online-incident reader utility를 다듬는 가이드
 
 ## Current locked funnel
@@ -50,6 +51,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `ChaTm`: canonical CTA는 `ChaTm 보기`. 중국어 표기와 launch sequencing을 먼저 잠그는 첫 진입 가이드다.
 - `MexTm`: canonical CTA는 `MexTm 먼저 보기`. filing packet, maintenance triage, border-control handoff를 buyer-entry 기준으로 잇는 두 번째 가이드다.
 - `EuTm`: canonical CTA는 `EuTm 보기`. growth lane에서 EU+UK scope와 evidence triage 기준을 정리하는 세 번째 가이드다.
+- `UsaTm`: canonical CTA는 `UsaTm 보기`. Gateway first CTA가 아니라, 미국 단일 시장의 full-QA supporting growth lane으로 이어 읽는다.
 - Gateway hero CTA row는 `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`로 고정한다.
 
 ## Current gateway promise
@@ -68,13 +70,14 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `ChaTm`: 중국어 표기, 서브클래스, 출원 실무, 집행 경로를 먼저 정리해야 할 때 현재 가장 우선순위가 높은 growth 가이드
 - `MexTm`: 멕시코 진입 직전 판단표를 filing packet, 유지관리 triage, border-control escalation까지 이어 볼 때 다음으로 볼 가이드
 - `EuTm`: 유럽 권역을 EU-wide, core-state, UK split 기준선과 evidence triage까지 함께 정리할 때 growth 가이드로 활용
+- `UsaTm`: 미국 단일 시장에서 USPTO 출원·등록 후 관리·분쟁/플랫폼/CBP 집행 포럼을 한 번에 연결해야 할 때 full-QA growth guide로 활용
 - `LatTm`: 여러 국가를 동시에 검토할 때 기준 프레임을 잡는 flagship 가이드
 
 ## Current execution order
 
-- `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> JapTm -> UKTm -> UsaTm`
+- `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> UsaTm -> JapTm -> UKTm`
 - `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
-- 최신 Report / Gateway trust layer는 `ChaTm`, `MexTm`, `EuTm`에서 먼저 잠근 공통 질문을 다시 묶고, `LatTm`을 기준 프레임으로 이어 읽게 설계한다
+- 최신 Report / Gateway trust layer는 `ChaTm`, `MexTm`, `EuTm`에서 먼저 잠근 공통 질문을 다시 묶고, `LatTm` 기준 프레임과 `UsaTm` supporting growth lane으로 이어 읽게 설계한다
 - Gateway 첫 화면은 최신 report 2개를 먼저 보여 주고, report detail에서는 source guide context와 deep-link return CTA를 유지한다
 
 ## Three practical outcomes

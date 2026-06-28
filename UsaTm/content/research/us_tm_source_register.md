@@ -3,7 +3,7 @@
 이 문서는 `UsaTm` v1에서 우선적으로 참조할 1차 출처를 정리한 레지스터다.
 최종 공개본에 들어가는 민감한 사실은 아래 출처 중 해당 페이지를 출판 직전에 다시 확인한다.
 
-기준일: 2026-03-28
+기준일: 2026-06-28
 
 | 구분 | 출처 | 용도 | URL |
 |---|---|---|---|
@@ -18,12 +18,44 @@
 | USPTO | About TTAB | TTAB의 권한 범위와 한계 | https://www.uspto.gov/trademarks/trademark-trial-and-appeal-board/about-ttab |
 | USPTO | Initiating a new proceeding | opposition/cancellation 개시, opposition 제기 시점 | https://www.uspto.gov/trademarks/ttab/initiating-new-proceeding |
 | USPTO | Filing with TTAB | TTAB Center/ESTTA 전자제출 흐름 | https://www.uspto.gov/trademarks/trademark-trial-and-appeal-board/filing-ttab |
-| USPTO | Assignment Center overview material | assignment/change of title 관련 시스템 확인용 | https://www.uspto.gov/sites/default/files/documents/Assignment-Center-CCC-USPTO-hour-Feb-2026.pdf |
-| USPTO | Letter of Protest form information | Letter of Protest 제도와 제출 맥락 확인용 | https://www.uspto.gov/sites/default/files/LOP.pdf |
+| USPTO | Assignment Center | assignment/change of title 관련 시스템명 확인용 | https://assignmentcenter.uspto.gov/ |
+| USPTO | Assignment Center overview material | assignment/change of title 관련 시스템 설명 확인용 | https://www.uspto.gov/sites/default/files/documents/Assignment-Center-CCC-USPTO-hour-Feb-2026.pdf |
+| USPTO | Intent to use forms | Notice of Allowance, Statement of Use, extension request 구조 확인용 | https://www.uspto.gov/trademarks/apply/intent-use-itu-forms |
+| USPTO | Letter of Protest practice tip | Letter of Protest 제도와 제출 맥락 확인용 | https://www.uspto.gov/trademarks/trademark-updates-and-announcements/letter-protest-practice-tip |
+| USPTO | TMEP 1715 Letters of Protest | Letter of Protest evidence/ground 전달 구조 확인용 | https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1700d1e853.html |
 | CBP | Help CBP Protect Intellectual Property Rights | CBP e-Recordation, Principal Register 요구, class별 수수료 확인용 | https://www.cbp.gov/trade/priority-issues/ipr/protection |
 | WIPO | Outbound Madrid Protocol applicants | 미국 기초출원/기초등록 기반 Madrid outbound 흐름 | https://www.uspto.gov/ip-policy/international-protection/madrid-protocol/outbound-applicants |
 | WIPO | Madrid System overview and tools | 국제분류/지정국 전략 보조 확인용 | https://www.wipo.int/madrid/en/ |
 | ICANN/WIPO | UDRP resources | 도메인 분쟁 연결 맥락 확인용 | https://www.icann.org/resources/pages/help/dndr/udrp-en |
+
+## Claim-map sourceId 매핑
+
+`claim-map.json`의 `sourceIds`는 아래 키로 1차 출처에 연결된다. (2026-06-28 추가)
+
+| sourceId | 1차 출처 | URL |
+|---|---|---|
+| usc-15-1063 | 15 U.S.C. §1063 (opposition 30일·연장) | https://www.law.cornell.edu/uscode/text/15/1063 |
+| cfr-37-2-101 | 37 C.F.R. §2.101–2.102 (opposition 제출·연장) | https://www.law.cornell.edu/cfr/text/37/2.101 |
+| usc-15-1064 | 15 U.S.C. §1064 (cancellation 5년·Section 14 사유) | https://www.law.cornell.edu/uscode/text/15/1064 |
+| usc-15-1065 | 15 U.S.C. §1065 (incontestability) | https://www.law.cornell.edu/uscode/text/15/1065 |
+| usc-15-1116 | 15 U.S.C. §1116 (injunctive relief·ex parte seizure) | https://www.law.cornell.edu/uscode/text/15/1116 |
+| usc-15-1117 | 15 U.S.C. §1117 (손해배상·이익환수·statutory damages) | https://www.law.cornell.edu/uscode/text/15/1117 |
+| usc-15-1118 | 15 U.S.C. §1118 (destruction) | https://www.law.cornell.edu/uscode/text/15/1118 |
+| uspto-about-ttab | USPTO About TTAB | https://www.uspto.gov/trademarks/trademark-trial-and-appeal-board/about-ttab |
+| uspto-ttab-initiating | USPTO Initiating a new proceeding | https://www.uspto.gov/trademarks/ttab/initiating-new-proceeding |
+| uspto-maintaining | USPTO Maintaining your registration | https://www.uspto.gov/trademarks/basics/maintaining-registration |
+| uspto-keeping-alive | USPTO Keeping your registration alive | https://www.uspto.gov/trademarks/maintain/keeping-your-registration-alive |
+| uspto-need-attorney | USPTO Do I need an attorney? | https://www.uspto.gov/trademarks/basics/do-i-need-attorney |
+| uspto-fees | USPTO How much does it cost? | https://www.uspto.gov/trademarks/basics/how-much-does-it-cost |
+| uspto-assignment-center | USPTO Assignment Center | https://assignmentcenter.uspto.gov/ |
+| uspto-assignment-center-2026-pdf | USPTO Assignment Center overview material | https://www.uspto.gov/sites/default/files/documents/Assignment-Center-CCC-USPTO-hour-Feb-2026.pdf |
+| uspto-itu-forms | USPTO Intent to use forms | https://www.uspto.gov/trademarks/apply/intent-use-itu-forms |
+| uspto-lop-practice-tip | USPTO Letter of Protest practice tip | https://www.uspto.gov/trademarks/trademark-updates-and-announcements/letter-protest-practice-tip |
+| tmep-1715-lop | TMEP §1715 Letters of Protest | https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1700d1e853.html |
+| uspto-madrid-outbound | USPTO Madrid outbound applicants | https://www.uspto.gov/ip-policy/international-protection/madrid-protocol/outbound-applicants |
+| cbp-ipr-protection | CBP Help Protect IPR (e-Recordation) | https://www.cbp.gov/trade/priority-issues/ipr/protection |
+
+USC/CFR·USPTO·CBP 항목은 2026-06-28 owner scorecard review에서 한 번 더 1차출처로 확인하고 claim-map의 `lastVerified`를 재스탬프했다.
 
 ## Working Rule
 

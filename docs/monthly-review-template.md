@@ -82,6 +82,7 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 | 1 | `ChaTm` | `ChaTm 보기` |  |  |
 | 2 | `MexTm` | `MexTm 먼저 보기` |  |  |
 | 3 | `EuTm` | `EuTm 보기` |  |  |
+| 5 | `UsaTm` | `UsaTm 보기` |  | supporting growth lane, Gateway first CTA 아님 |
 
 ## Report handoff check
 
@@ -90,11 +91,11 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 | 1 | `hangul-mark-global-protection-framework` |  |  |
 | 2 | `global-filing-priority-framework` |  |  |
 
-## Incubate Hygiene Check
+## Growth / Incubate Hygiene Check
 
 | Guide | Locked Promise | Status | Evidence |
 |------|------|------|------|
-| `UsaTm` | beta lighter-track, no draft notice, filing/specimen/monitoring utility 유지 |  |  |
+| `UsaTm` | growth mature full-QA, no draft notice, filing/maintenance/enforcement orchestration utility 유지 |  |  |
 | `JapTm` | beta lighter-track, no draft notice, route/maintenance/evidence utility 유지 |  |  |
 | `UKTm` | beta early-track verified 공개본 유지, standard QA evidence 4-file 정합, continue reading/search 안정성 유지 |  |  |
 

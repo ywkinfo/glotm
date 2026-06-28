@@ -36,7 +36,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 |------|----|-----------|
 | Gateway 홈 `/` | 1 | ★ |
 | guide 홈 (`/china /mexico /europe /latam /japan /uk /usa`) | 7 | ★ china·mexico·europe |
-| 챕터 (latam 20 · china/europe/japan/mexico 15 · uk/usa 14) | 108 | 대표 챕터 위주 |
+| 챕터 (latam 20 · china/europe/japan/mexico/usa 15 · uk 14) | 109 | 대표 챕터 위주 |
 | briefs (index 1 + 최신 issue 13) | 14 | ★ 최신 `2026-06-*` 3건 |
 | reports (index 1 + detail 5) | 6 | ★ 대표 report 2건 |
 | trust/legal (`/legal /privacy /contact`) | 3 | — |

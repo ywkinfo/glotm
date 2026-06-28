@@ -46,8 +46,8 @@ describe("portfolio health helpers", () => {
         id: "content",
         status: "fail",
         verification: expect.objectContaining({
-          fullPipelineProductSlugs: ["latam", "mexico", "china", "europe", "uk"],
-          shortcutProductSlugs: ["usa", "japan"]
+          fullPipelineProductSlugs: ["latam", "mexico", "usa", "china", "europe", "uk"],
+          shortcutProductSlugs: ["japan"]
         })
       },
       {
@@ -57,11 +57,11 @@ describe("portfolio health helpers", () => {
     ]);
   });
 
-  it("makes root shortcut verification scope explicit for UsaTm and JapTm", () => {
+  it("makes root verification depth explicit for UsaTm and JapTm", () => {
     expect(buildProductVerificationRecord({ slug: "usa" })).toEqual({
-      mode: "root-shortcut-refresh",
-      scopeLabel: "root shortcut refresh",
-      reportSummary: "root content shortcut refresh only"
+      mode: "root-full-pipeline",
+      scopeLabel: "root full pipeline",
+      reportSummary: "root content full pipeline"
     });
     expect(buildProductVerificationRecord({ slug: "japan" })).toEqual({
       mode: "root-shortcut-refresh",
@@ -236,7 +236,7 @@ describe("portfolio health helpers", () => {
     expect(getLifecycleCriteriaGaps(japan!, japan!.lifecycleStatus)).toEqual([]);
   });
 
-  it("treats the refreshed UsaTm beta state as hold after the verification refresh", () => {
+  it("treats the refreshed UsaTm mature state as hold after the verification refresh", () => {
     const usa = products.find((product) => product.slug === "usa");
 
     expect(usa).toBeDefined();
