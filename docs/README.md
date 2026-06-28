@@ -27,6 +27,7 @@
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)
 - monthly review template: [`monthly-review-template.md`](monthly-review-template.md)
+- Phase 2.5 organic indexing & measurement ops (owner runbook): [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md)
 - factual QA rollout: [`factual-qa-rollout.md`](factual-qa-rollout.md)
 - content gap review (콘텐츠 보충·추가 진단): [`content-gap-review.md`](content-gap-review.md)
 - Report / Gateway trust layer와 workflow path wording truth는 `../README.md`, `../PROJECT-OVERVIEW.md`, `phase1-runtime-qa.md`, `portfolio-scorecard.md`를 함께 본다.

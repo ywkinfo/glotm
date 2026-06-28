@@ -119,6 +119,20 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 | `operator_link_click` | yes |  |
 | `priority_cta_click` | no | keep runtime event, exclude from sheet while the sheet stays simple |
 
+## Organic indexing & measurement check
+
+owner 전용 실행 절차는 [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md)를 따른다.
+이 표에는 그 달의 결과만 기록한다.
+
+| 항목 | 이번 달 값 | 비고 |
+|------|------------|------|
+| sitemap 색인 제출 status |  | SC Sitemaps (기대 discovered 139) |
+| 색인된 URL 수 / 미색인 |  | SC Pages 리포트 |
+| 색인 요청한 우선 URL |  | Gateway·china/mexico/europe home·최신 brief/report |
+| GA4 page_view 도착 |  | DebugView, manual SPA 발사 |
+| GA4 6 KPI 이벤트 도착 |  | 누락 이벤트만 적기 |
+| organic sessions (이번 달) |  | 월 100 유기방문 트리거 대비 |
+
 ## Decision log
 
 - What changed:
