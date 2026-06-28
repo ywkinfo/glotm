@@ -282,6 +282,9 @@ Phase 1 런타임 QA 체크포인트는 `docs/phase1-runtime-qa.md`에 정리한
 | 가드레일 | 능동 프로모션·수익화는 하지 않는다. 색인·계측·정합성 유지까지만 현재 범위로 본다 |
 | 트리거 | 월 100 유기 방문 달성 또는 은퇴 6개월 전 — 둘 중 먼저 도래하는 시점에 Phase 3로 넘어간다 |
 
+> 이 phase의 owner 전용 실행 절차(Search Console 색인, GA4 DebugView 계측, 라이브 QA, 월 100 유기방문
+> 측정)는 [`docs/phase2.5-organic-indexing-ops.md`](docs/phase2.5-organic-indexing-ops.md) 런북을 따른다.
+
 ### Phase 3: 이메일 게이트 + 구독자 확보 (은퇴 트리거형)
 
 파일럿 배포 자체는 Phase 2/2.5에서 이미 완료됐다. 이 phase에 남은 것은 이메일 게이트와 구독자 리스트 축적이며, 능동 구독 유도가 들어가므로 재직 중에는 시작하지 않고 아래 트리거 이후 착수한다.
