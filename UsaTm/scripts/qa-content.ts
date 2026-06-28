@@ -19,7 +19,7 @@ type Issue = {
 };
 
 const WORKSPACE_LABEL = "UsaTm";
-const EXPECTED_CHAPTER_COUNT = 14;
+const EXPECTED_CHAPTER_COUNT = 15;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");

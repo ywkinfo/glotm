@@ -54,8 +54,12 @@
       "path": "content/source/chapters/13_disputes-ttab-court.md"
     },
     {
+      "title": "집행 포럼 통합 플레이북: TTAB·연방법원·플랫폼·CBP 병행 운영",
+      "path": "content/source/chapters/14_enforcement-playbook.md"
+    },
+    {
       "title": "포트폴리오 관리 및 내부 통제(RACI) + 부록",
-      "path": "content/source/chapters/14_governance-raci-appendix.md"
+      "path": "content/source/chapters/15_governance-raci-appendix.md"
     }
   ]
 }

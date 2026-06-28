@@ -25,6 +25,30 @@
 | WIPO | Madrid System overview and tools | 국제분류/지정국 전략 보조 확인용 | https://www.wipo.int/madrid/en/ |
 | ICANN/WIPO | UDRP resources | 도메인 분쟁 연결 맥락 확인용 | https://www.icann.org/resources/pages/help/dndr/udrp-en |
 
+## Claim-map sourceId 매핑
+
+`claim-map.json`의 `sourceIds`는 아래 키로 1차 출처에 연결된다. (2026-06-28 추가)
+
+| sourceId | 1차 출처 | URL |
+|---|---|---|
+| usc-15-1063 | 15 U.S.C. §1063 (opposition 30일·연장) | https://www.law.cornell.edu/uscode/text/15/1063 |
+| cfr-37-2-101 | 37 C.F.R. §2.101–2.102 (opposition 제출·연장) | https://www.law.cornell.edu/cfr/text/37/2.101 |
+| usc-15-1064 | 15 U.S.C. §1064 (cancellation 5년·Section 14 사유) | https://www.law.cornell.edu/uscode/text/15/1064 |
+| usc-15-1065 | 15 U.S.C. §1065 (incontestability) | https://www.law.cornell.edu/uscode/text/15/1065 |
+| usc-15-1116 | 15 U.S.C. §1116 (injunctive relief·ex parte seizure) | https://www.law.cornell.edu/uscode/text/15/1116 |
+| usc-15-1117 | 15 U.S.C. §1117 (손해배상·이익환수·statutory damages) | https://www.law.cornell.edu/uscode/text/15/1117 |
+| usc-15-1118 | 15 U.S.C. §1118 (destruction) | https://www.law.cornell.edu/uscode/text/15/1118 |
+| uspto-about-ttab | USPTO About TTAB | https://www.uspto.gov/trademarks/trademark-trial-and-appeal-board/about-ttab |
+| uspto-ttab-initiating | USPTO Initiating a new proceeding | https://www.uspto.gov/trademarks/ttab/initiating-new-proceeding |
+| uspto-maintaining | USPTO Maintaining your registration | https://www.uspto.gov/trademarks/basics/maintaining-registration |
+| uspto-keeping-alive | USPTO Keeping your registration alive | https://www.uspto.gov/trademarks/maintain/keeping-your-registration-alive |
+| uspto-need-attorney | USPTO Do I need an attorney? | https://www.uspto.gov/trademarks/basics/do-i-need-attorney |
+| uspto-fees | USPTO How much does it cost? | https://www.uspto.gov/trademarks/basics/how-much-does-it-cost |
+| uspto-madrid-outbound | USPTO Madrid outbound applicants | https://www.uspto.gov/ip-policy/international-protection/madrid-protocol/outbound-applicants |
+| cbp-ipr-protection | CBP Help Protect IPR (e-Recordation) | https://www.cbp.gov/trade/priority-issues/ipr/protection |
+
+USC/CFR 항목은 owner가 출판 직전 한 번 더 1차출처로 확인하고 claim-map의 `lastVerified`를 재스탬프한다.
+
 ## Working Rule
 
 - 본문에 단정적 수치를 넣기 전에 source register의 해당 링크를 다시 확인한다.
