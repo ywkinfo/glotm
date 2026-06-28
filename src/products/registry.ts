@@ -69,7 +69,7 @@ export const products: ProductMeta[] = [
     title: "미국 상표 실무 운영 가이드북",
     summary: "USPTO filing basis, specimen, monitoring utility를 lighter track으로 유지하는 incubate country guide입니다.",
     chapterCount: 14,
-    searchEntryCount: 185,
+    searchEntryCount: 197,
     portfolioTier: "incubate",
     lifecycleStatus: "beta",
     lifecycleTone: "beta",

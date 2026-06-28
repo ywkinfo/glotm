@@ -133,7 +133,7 @@ closeout 요약:
   - 명칭 drift 해소 (2026-06-03, A안): 소스 챕터 헤딩·home copy·e2e bookmark를 모두 `beta-lane maintenance owner board`로 통일하고 `content:uk` 재생성(0 error). `e2e:smoke` UKTm reader smoke 통과로 reader가 home 문구로 같은 섹션을 찾는 흐름을 검증했다.
   - 그다음 액션은 `early-track filing decision board`, 위 maintenance owner board, `online incident quick board` utility가 home / continue reading / search에서 충분히 빨리 읽히는지 확인하고 `uktm-root-sync-input.md`에 evidence를 기록하는 것이다.
 - `UsaTm` operating-copy maintenance
-  - registry 정본 baseline: `14 chapters / 185 search entries / incubate / beta / standard QA` (verifiedOn 2026-06-02).
+  - registry 정본 baseline: `14 chapters / 197 search entries / incubate / beta / standard QA` (verifiedOn 2026-06-02).
   - 직전 라운드(#61, 2026-06-02)에서 저밀도 장에 operating table·checklist를 보강했다. 유지 액션은 filing basis / specimen / monitoring lighter-track utility를 문구와 reader flow에서 계속 유지하는 것이다.
 
 ## Do Not Touch
