@@ -42,7 +42,7 @@ search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계�
 | `ChaTm` | growth | mature | Sprint 2 저밀도 장 보강 + monthly review 반영 완료 |
 | `MexTm` | growth | mature | Sprint 2 운영 handoff 3장 잠금 반영, shared root gate follow-through 정리 |
 | `EuTm` | growth | mature | Ch3/6/10/14 및 부록 보강 · mature 승급 완료 |
-| `UsaTm` | incubate | beta | verification refresh 완료, standard QA 유지 |
+| `UsaTm` | growth | mature | 15장 체계, claim-map 12건, full-QA 파이프라인 편입 완료 |
 | `JapTm` | incubate | beta | beta 유지, standard QA 유지 |
 | `UKTm` | incubate | beta | standard QA evidence 4-file 정합, 2026-05-12 verdict 적용, early-track verified 공개본 |
 
@@ -52,15 +52,15 @@ search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계�
 2. `MexTm`
 3. `EuTm`
 4. `Report / Gateway trust layer`
-5. `JapTm`
-6. `UKTm`
-7. `UsaTm`
+5. `UsaTm`
+6. `JapTm`
+7. `UKTm`
 
 정렬 기준은 `buyer impact + 포트폴리오 전략 + 실제 콘텐츠 밀도 부족`이다. 따라서 단순히 가장 얇은 가이드를 먼저 메우지 않고, growth와 validate 레인의 체감 가치와 buyer entry 효과를 우선 반영한다.
 
 운영 메모:
 
-- `ChaTm`, `MexTm`, `EuTm` 같은 priority lane은 workspace evidence를 먼저 잠그고, shared root gate는 리더 통합 단계에서 1회만 실행한다.
+- `ChaTm`, `MexTm`, `EuTm` 같은 Gateway priority lane과 `UsaTm` growth supporting lane은 workspace evidence를 먼저 잠그고, shared root gate는 리더 통합 단계에서 1회만 실행한다.
 - 이 저장소에서 병렬 실행이 필요할 때는 native parallel subagents를 기본으로 사용한다.
 
 ## Priority 4 owner lane
@@ -82,7 +82,7 @@ Core responsibilities:
 2. Trust formation
    report는 단순 정보 모음이 아니라 판단 프레임으로 읽혀야 하며, 읽은 뒤 다음 guide action이 명확해야 한다.
 3. Deterministic routing
-   각 대표 report는 반드시 특정 priority guide 흐름과 연결돼야 한다. current phase에서는 `ChaTm`, `MexTm`, `EuTm` 우선순위를 흐리지 않는 방향으로 유지한다.
+   각 대표 report는 반드시 특정 priority guide 흐름과 연결돼야 한다. current phase에서는 `ChaTm`, `MexTm`, `EuTm`의 Gateway 우선순위를 흐리지 않고, `UsaTm`은 growth/mature supporting lane으로 유지한다.
 4. Root sync responsibility
    `Report / Gateway` owner lane은 trust-layer wording이 `PROJECT-OVERVIEW.md`, `README.md`, `src/reports/registry.ts`, Gateway-facing copy와 어긋나지 않도록 보는 책임을 가진다.
 
@@ -110,7 +110,7 @@ Gateway와 Report 아카이브의 report 노출 순서는 `publishedAt` 최신�
 
 - 새 report를 추가할 때는 `publishedAt`과 `whyNow`가 최신 정렬과 대표 CTA 기준에 맞는지 먼저 확인한다.
 - 최신 report 2개는 Gateway 첫 화면에 그대로 노출되므로, buyer-facing 첫 진입에서 바로 보여도 되는 제목과 summary를 유지한다.
-- 대표 priority report의 focus point는 현재 priority guide `ChaTm`, `MexTm`, `EuTm`을 먼저 커버하고, 그다음 `LatTm` 기준 프레임으로 이어지게 유지한다.
+- 대표 priority report의 focus point는 현재 Gateway priority guide `ChaTm`, `MexTm`, `EuTm`을 먼저 커버하고, 그다음 `LatTm` 기준 프레임과 `UsaTm` supporting growth lane으로 이어지게 유지한다.
 - 특정 report를 첫 화면에서 숨기기 위한 별도 우선순위 필드는 두지 않는다. 노출을 바꾸려면 발행일 또는 공개 여부를 조정한다.
 - guide 홈의 `관련 Report / Trust Layer` handoff는 source guide context를 함께 넘겨야 하며, report detail에서는 해당 guide deep link로 바로 돌아가는 CTA를 유지한다.
 - workflow path 메모는 local `build:pages:glotm` 검증과 workflow `build:pages` deploy path를 구분해서 적는다. trust-layer wording이 바뀌면 runtime QA와 root README wording도 함께 맞춘다.
@@ -149,7 +149,7 @@ KPI binding:
 ## Root health lanes
 
 - `health:runtime`: typecheck, runtime-safe unit tests, runtime smoke
-- `health:content`: generated content refresh + generated-content regression tests + ChaTm/MexTm/EuTm local full pipeline 재현
+- `health:content`: generated content refresh + generated-content regression tests + ChaTm/MexTm/EuTm/UsaTm local full pipeline 재현
 - `health:release`: build + Pages subpath 출하 전 검증
 - `health:report`: 최근 lane 결과와 advisory research status를 같은 report shape로 정리
 

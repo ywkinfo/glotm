@@ -30,6 +30,7 @@ export type ProductHealthLaneId =
   | "cha-priority"
   | "mex-priority"
   | "eu-priority"
+  | "usa-growth"
   | "brief-gateway"
   | "incubate-pack";
 
@@ -118,7 +119,7 @@ const lifecycleRank: Record<LifecycleStatus, number> = {
   mature: 2
 };
 
-const rootShortcutVerificationSlugs = new Set(["usa", "japan"]);
+const rootShortcutVerificationSlugs = new Set(["japan"]);
 
 export const healthReportMeta: HealthReportMeta = {
   summaryKind: "recent-lane-state-provenance-summary",
@@ -139,7 +140,7 @@ export const rootHealthLanes: RootHealthLaneRecord[] = [
     id: "content",
     label: "health:content",
     command: "npm run health:content",
-    proves: "root content refresh plus full-pipeline reproducibility for ChaTm, MexTm, and EuTm",
+    proves: "root content refresh plus full-pipeline reproducibility for ChaTm, MexTm, EuTm, and UsaTm",
     includesGeneratedContent: true
   },
   {
@@ -177,22 +178,22 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
     notes: "Growth lane. Hold the EU+UK scope and keep docs, tests, and registry aligned after the mature promotion."
   },
   usa: {
-    id: "incubate-pack",
-    label: "Priority 5 · Incubate health pack",
+    id: "usa-growth",
+    label: "Priority 5 · UsaTm growth mature lane",
     order: 5,
-    notes: "Lighter-track verification refresh pack shared with JapTm and UKTm."
+    notes: "Growth mature supporting lane. Keep full-QA, claim-map, and enforcement orchestration evidence aligned without changing the Gateway first-screen promise."
   },
   japan: {
     id: "incubate-pack",
     label: "Priority 5 · Incubate health pack",
     order: 5,
-    notes: "Lighter-track verification refresh pack shared with UsaTm and UKTm."
+    notes: "Lighter-track verification refresh pack shared with UKTm."
   },
   uk: {
     id: "incubate-pack",
     label: "Priority 5 · Incubate health pack",
     order: 5,
-    notes: "Lighter-track verification refresh pack shared with UsaTm and JapTm."
+    notes: "Lighter-track verification refresh pack shared with JapTm."
   }
 };
 

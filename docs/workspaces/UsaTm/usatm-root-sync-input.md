@@ -1,15 +1,15 @@
 # UsaTm Root Sync Input
 
-> **OPEN — mature 승급 선행작업(Stage 1) staged.** 15장 신설·claim-map 채택·full-QA 파이프라인 편입은
-> 완료됐으나 registry의 lifecycle/tier/qa flip은 월 scorecard 리뷰(Stage 2)에서 owner가 반영한다. 현재
-> 정본은 `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 203개 / incubate tier · beta lifecycle · standard QA`,
-> verifiedOn 2026-06-02)다.
+> **CLOSED — UsaTm growth/mature promotion shipped.** 15장 신설·claim-map 채택·full-QA 파이프라인 편입과
+> owner Stage 2 fact-review / registry flip을 2026-06-28 scorecard review에서 닫았다. 현재 정본은
+> `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 203개 / growth tier · mature lifecycle · full QA`,
+> verifiedOn/factsReviewedOn 2026-06-28)다.
 
 ## Baseline One-Liner
 
 `UsaTm`은 루트 `/usa`에 연결된 live country guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 203개 /
-incubate · beta · standard QA`다(정본: `src/products/registry.ts`). 2026-06-28 mature 선행작업으로 14→15장
-확장 + claim-map 채택 + full-QA 파이프라인 편입을 마쳤고, growth/mature/full flip은 Stage 2 대상이다.
+growth · mature · full QA`다(정본: `src/products/registry.ts`). 2026-06-28 mature closeout으로 14→15장
+확장 + claim-map 12건 + full-QA 파이프라인 편입 + owner fact-review를 마쳤다.
 
 ## Authority Order
 
@@ -23,16 +23,16 @@ incubate · beta · standard QA`다(정본: `src/products/registry.ts`). 2026-06
 8. `UsaTm/content/research/us_tm_source_register.md`
 9. `UsaTm/content/research/us_tm_fact_verification_log.md`
 
-## Authoritative Metadata Snapshot (현재 / Stage 2 목표)
+## Authoritative Metadata Snapshot
 
-| Field | 현재 (Stage 1 후) | Stage 2 목표 | Source |
-| --- | --- | --- | --- |
-| Chapter count | `15` | `15` | `registry.ts`, `manifest.json` |
-| Search entry count | `203` | `203` | `registry.ts`, `search-index.json` |
-| Tier / lifecycle / QA | `incubate` / `beta` / `standard` | `growth` / `mature` / `full` | `registry.ts` |
-| High-risk gap count | `0` | `0` | `registry.ts` |
-| verifiedOn / factsReviewedOn | `2026-06-02` / (미설정) | re-stamp / owner 사실감사일 | `registry.ts` |
-| Research baseline | claim-map 9건, 전 항목 BODY_READY(HIGH 7·MEDIUM 2), source-register 매핑 | stale 4건 + legacy pending 재확인 완료 | `claim-map.json` |
+| Field | 현재 | Source |
+| --- | --- | --- |
+| Chapter count | `15` | `registry.ts`, `manifest.json` |
+| Search entry count | `203` | `registry.ts`, `search-index.json` |
+| Tier / lifecycle / QA | `growth` / `mature` / `full` | `registry.ts` |
+| High-risk gap count | `0` | `registry.ts` |
+| verifiedOn / factsReviewedOn | `2026-06-28` / `2026-06-28` | `registry.ts` |
+| Research baseline | claim-map 12건, 전 항목 BODY_READY(HIGH 7·MEDIUM 5), source-register 매핑 | `claim-map.json` |
 
 ## Chapter Drift Map (신규/변경분)
 
@@ -46,8 +46,9 @@ incubate · beta · standard QA`다(정본: `src/products/registry.ts`). 2026-06
 ## Research Alignment Packet
 
 - Scope guardrail: 본문은 A등급 검증 조문(§1063/§1064/§1116–1118)만 단정 반영. 휘발성 수수료·B등급 판례는 제외.
-- BODY_READY claims 9건: `USA-OPP-001`, `USA-CANC-001`, `USA-REM-001`, `USA-TTAB-001`, `USA-MAINT-001`,
-  `USA-CBP-001`, `USA-ATY-001`, `USA-FEE-001`(구조적), `USA-MADRID-001`.
+- BODY_READY claims 12건: `USA-OPP-001`, `USA-CANC-001`, `USA-REM-001`, `USA-TTAB-001`, `USA-MAINT-001`,
+  `USA-CBP-001`, `USA-ATY-001`, `USA-FEE-001`(구조적), `USA-ASSIGN-001`, `USA-SOU-001`, `USA-LOP-001`,
+  `USA-MADRID-001`.
 - Research rule: fee 금액·기관 시스템 명칭·제출 기한은 claim-map/legacy log 기준선 밖으로 새로 단정 확장하지 않는다.
 
 ## Local Gate Evidence
@@ -56,17 +57,17 @@ incubate · beta · standard QA`다(정본: `src/products/registry.ts`). 2026-06
   - `Generated UsaTm master manuscript from 15 sources.`
   - `QA complete: 0 error(s), 0 warning(s), 15 source file(s) checked.`
   - `Generated 15 chapters and 203 search entries.`
-- `2026-06-28` `audit:facts`(UsaTm): `gate=warn`(staleness 6건 advisory), `factIntegrity=100`, `consistency=100`, `effectiveGap=0`
+- `2026-06-28` `audit:facts`(UsaTm): `gate=pass`, `factIntegrity=100`, `consistency=100`, `effectiveGap=0`
 
 ## Stage 2 Flip Checklist (owner, 월 scorecard 리뷰)
 
-- [ ] stale 4건(TTAB·MAINT·CBP·ATY) + legacy pending 4종(fee·Assignment Center·SOU·LOP) 1차출처 재확인 → `lastVerified` 재스탬프
-- [ ] `registry.ts` usa: `lifecycleStatus` mature · `qaLevel` full · `portfolioTier` growth · `verifiedOn` re-stamp · `factsReviewedOn` 설정 · `maturityNote`
-- [ ] `scorecard.test.ts` usa `beta`→`mature`
-- [ ] `PROJECT-OVERVIEW.md` / `docs/portfolio-scorecard.md` / `docs/current-ops-taskboard.md` 동기화
-- [ ] (선택) gateway 재정렬, usaManuscript 테스트 추가
+- [x] stale 4건(TTAB·MAINT·CBP·ATY) + legacy pending 4종(fee·Assignment Center·SOU·LOP) 1차출처 재확인 → `lastVerified` 재스탬프
+- [x] `registry.ts` usa: `lifecycleStatus` mature · `qaLevel` full · `portfolioTier` growth · `verifiedOn` re-stamp · `factsReviewedOn` 설정 · `maturityNote`
+- [x] `scorecard.test.ts` usa `beta`→`mature`
+- [x] `PROJECT-OVERVIEW.md` / `docs/portfolio-scorecard.md` / `docs/current-ops-taskboard.md` 동기화
+- [x] gateway first-screen priority는 유지하고, UsaTm은 supporting growth lane으로 기록
 
 ## Non-Scope Reminder
 
-- 이 단계에서 lifecycle/tier/qa 메타데이터는 바꾸지 않는다(flip은 Stage 2).
+- lifecycle/tier/qa 메타데이터 flip은 Stage 2에서 반영 완료했다.
 - generated JSON, master.md는 파이프라인 재생성만 하고 수기 편집하지 않는다.

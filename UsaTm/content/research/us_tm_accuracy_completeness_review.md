@@ -1,6 +1,6 @@
 # UsaTm Accuracy & Completeness Review
 
-검수 기준일: 2026-04-03
+검수 기준일: 2026-06-28
 
 ## 전체 총평
 
@@ -24,7 +24,7 @@
 ## 이번 refresh에서 다시 잠근 점
 
 - `UsaTm/content:prepare` local full pipeline 재실행 후 `QA 0 errors / 0 warnings` 확인
-- generated 산출물 재생성 후 14개 챕터 / 검색 엔트리 178개 재확인
+- generated 산출물 재생성 후 15개 챕터 / 검색 엔트리 203개 재확인
 - foreign-domiciled applicant attorney requirement, Trademark Center, registration maintenance, CBP e-Recordation, TTAB 권한 범위를 source register 기준으로 다시 점검
 - 본문에서 변동성이 큰 fee/세부 기한은 여전히 fact log 우선 원칙을 유지하는지 확인
 
@@ -32,7 +32,7 @@
 
 - 본문은 고위험 수치보다 운영 구조와 판단 기준 중심으로 유지되어 있어, 변동성이 큰 사실을 과도하게 하드코딩하지 않는다.
 - `foreign-domiciled applicant`의 U.S.-licensed attorney requirement, 유지관리 구조, TTAB의 권한 한계 같은 핵심 운영 사실은 source register와 fact log 기준으로 다시 확인 가능한 상태다.
-- `Assignment Center`, `Letter of Protest`, 일부 fee/기한 세부는 여전히 공식 페이지 최신 화면 재확인 대상이지만, 현재 본문은 이 값을 독자 행동을 좌우하는 확정 수치로 밀어 넣지 않는다.
+- `Assignment Center`, `Letter of Protest`, Statement of Use, 일부 fee/기한 세부는 2026-06-28 공식 출처로 재확인했고, 현재 본문은 이 값을 독자 행동을 좌우하는 확정 수치로 과도하게 밀어 넣지 않는다.
 
 ## 충실도 판정 메모
 
@@ -42,11 +42,11 @@
 
 ## 공개 전 재확인 항목
 
-- USPTO fee page의 최신 수수료 금액
-- Assignment Center 실제 제출 경로와 현재 명칭
+- USPTO fee page의 최신 수수료 금액(본문 하드코딩 금지 유지)
+- Assignment Center 실제 제출 화면과 요구자료
 - Letter of Protest 제출 화면과 제한 증거 규칙
 - Statement of Use, Official Gazette 관련 세부 기한 문구
 
 ## 현재 운영 결론
 
-`UsaTm`은 더 이상 grandfathered beta를 억지로 유지하는 상태는 아니다. local full pipeline과 최신 verification log 기준으로 refresh는 완료됐고, 이후에는 freshness를 유지하면서 standard QA 근거를 반복 재현하는 쪽이 맞다. 대형 확장보다 filing basis, specimen, monitoring 중심 reader utility와 운영 문구 정교화가 다음 우선순위다.
+`UsaTm`은 2026-06-28 기준 growth / mature / full-QA 상태로 승급했다. local full pipeline, claim-map 12건, 최신 verification log 기준으로 refresh는 완료됐고, 이후에는 freshness를 유지하면서 filing basis, specimen, maintenance, TTAB·법원·플랫폼·CBP 집행 오케스트레이션이 reader flow에서 흔들리지 않는지 반복 재현하는 쪽이 맞다.

@@ -39,6 +39,8 @@
 > density·chapters·search는 registry 정본. 깊이 avg·min~max와 "구조 산출물" 분모는 `chapters/*.md` 본문 측정값(부록 제외). chapters 열은 registry `chapterCount`(manifest 기준, 일부 부록 포함)라 측정 본문 파일 수와 다를 수 있다. 깊이는 incubate ~3,000자 vs growth/flagship ~7,000~12,000자로, 의도된 lighter-track 차이다.
 >
 > **Update (2026-06-09 · 2026-06-10):** EuTm는 이후 growth/mature로 승급(15장 / 260 entries / density 17.3, registry 정본, verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10). 위 표는 2026-06-08 스냅샷이라 EuTm 행의 tier/lifecycle(validate/beta)·본문 깊이 컬럼은 승급·재측정 전 값이다.
+>
+> **Update (2026-06-28):** UsaTm도 이후 growth/mature로 승급(15장 / 203 entries / density 13.5, claim-map 12건, verifiedOn/factsReviewedOn 2026-06-28). 위 표의 UsaTm 행은 승급·재측정 전 dated snapshot으로만 읽는다.
 
 ## 4. 콘텐츠 갭 — 3축 (갭 심각도 · 계약 위반 · 정본 실행순서)
 
@@ -50,7 +52,7 @@
 | **2 — 실재 · 가드** | UKTm / JapTm **search-entry 플로어** | beta는 density ≥9.0 → search-entry floor = chapters×9: **UKTm ≥126**(현재 128, 여유 2) · **JapTm ≥135**(현재 145, 여유 10). 그 아래로 떨어지면 월간 scorecard에서 beta 기준 미달(자동 강등은 없음) | 아님(회귀 가드) | UKTm · JapTm |
 | **3 — 조건부 · 근거 필요** | length 아웃라이어(UsaTm Ch10/11/12·Ch03, JapTm Ch12, EuTm Ch14 등 최단 챕터) | UTF-8 최단(예: UsaTm Ch11 1,667자) | **아님** — 구조화 산출물 선택 계약 + #61 anti-padding(이미 표 완비) | UsaTm · JapTm |
 
-- **갭1 처리 경로(진단↔후속 연계).** 먼저 워크스페이스 fact-log의 날짜가 `factsReviewedOn` 계약(핵심 claim 1차 출처 재대조)에 부합하는지 **provenance/적격성 검토**가 필요하다(날짜 형식이 검증 기준일·per-claim Verified 등 제각각). 적격하면 registry에 표면화한다. 이와 별개로, [`factual-qa-rollout.md`](factual-qa-rollout.md) **Phase 4(lighter-track adoption)** — UKTm·UsaTm·JapTm advisory `claim-map.json` 도입(ChaTm·MexTm·EuTm은 이미 채택) — 이 **factual-QA 로드맵의 다음 작업**이다. 진단만 하고 방치하지 않는다.
+- **갭1 처리 경로(진단↔후속 연계).** 먼저 워크스페이스 fact-log의 날짜가 `factsReviewedOn` 계약(핵심 claim 1차 출처 재대조)에 부합하는지 **provenance/적격성 검토**가 필요하다(날짜 형식이 검증 기준일·per-claim Verified 등 제각각). 적격하면 registry에 표면화한다. 이후 2026-06-28 UsaTm은 claim-map adoption과 `factsReviewedOn` 표면화까지 완료했다. 남은 Phase 4 lighter-track adoption은 UKTm·JapTm 중심으로 읽는다.
 - **갭2 search-entry 회귀 가드.** UKTm·JapTm은 **현재 beta 충족**(UKTm 128≥126, JapTm 145≥135)이다. lifecycle은 **자동 강등되지 않으며** 월 1회 scorecard 리뷰에서만 조정되고 grandfathered status도 허용된다([`../PROJECT-OVERVIEW.md`](../PROJECT-OVERVIEW.md)). 따라서 이 갭은 "추가"가 아니라 **search-entry 회귀 가드**다 — 편집으로 검색 엔트리를 floor(UKTm 126 / JapTm 135) 아래로 떨구지 않는다. 거꾸로 밀도를 올리려 본문을 늘리는 패딩은 **#61의 anti-padding 취지와 상충**하므로 하지 않는다.
 - **갭3 처리 규칙.** 분량만으로 보강하지 않는다. **구체적 reader-action 누락이 입증될 때만** 좁게 보강한다. #61(`2707b31`)은 보강 세트를 ch02·08·13·14로 두고 "**ch10·11: 이미 표 2개씩 완비 → 보강 제외(패딩 방지)**"라고 명시했다. **EuTm 후반 운영장은 계약상 전면 확장 불가**(controlled EU+UK scope 내 좁은 operational note만).
 - **제외(보충 불필요).** UKTm(분량은 최소지만 표 3~7개 + 템플릿 부록 5종으로 의무 계약 충족), ChaTm·MexTm·LatTm(mature·깊음·표 풍부).
@@ -73,7 +75,7 @@
 
 ## 6. Scope / 가드레일 + 재현
 
-**Scope.** 이 메모는 진단까지다. 콘텐츠 증량은 하지 않는다. **factual-QA 로드맵의 다음 작업**은 [`factual-qa-rollout.md`](factual-qa-rollout.md) **Phase 4**(UKTm·UsaTm·JapTm advisory `claim-map.json` 도입)이며 별도 작업으로 시작한다. 갭1 적격성 검토·갭2 search-entry 회귀 가드·갭3 조건부 보강은 별도 승인 후 진행한다. lifecycle은 월 1회 scorecard 리뷰에서만 조정되며 자동 강등/승급하지 않는다. [`current-ops-taskboard.md`](current-ops-taskboard.md)의 Do Not Touch(신규 국가·pricing·새 파이프라인·의존성·generated JSON 수동수정)는 그대로 적용된다.
+**Scope.** 이 메모는 진단까지다. 콘텐츠 증량은 하지 않는다. 2026-06-28 현재 UsaTm 관련 factual-QA follow-through는 완료됐으므로, 남은 factual-QA roadmap Phase 4는 UKTm·JapTm adoption 중심으로 읽는다. 갭2 search-entry 회귀 가드·갭3 조건부 보강은 별도 승인 후 진행한다. lifecycle은 월 1회 scorecard 리뷰에서만 조정되며 자동 강등/승급하지 않는다. [`current-ops-taskboard.md`](current-ops-taskboard.md)의 Do Not Touch(신규 국가·pricing·새 파이프라인·의존성·generated JSON 수동수정)는 그대로 적용된다.
 
 **재현 명령.**
 

@@ -345,9 +345,9 @@ clearance는 이름 찾기 작업이 아니다. 브랜드를 지금 밀어도 �
 
 같은 표장이라도 어떤 경로를 고르느냐에 따라 출원서 문구, 내부 승인 순서, 증거 수집 방식, 후속 관리 비용이 달라진다. 그래서 이 선택은 “무엇이 더 그럴듯한가”보다 “우리 조직이 끝까지 감당할 수 있는가”로 봐야 한다.
 
-### lighter-track filing basis board
+### filing basis decision board
 
-UsaTm은 incubate lane이기 때문에, 이 장의 목적은 Section 1(a) / 1(b) / 66(a)의 모든 디테일을 길게 늘어놓는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 미국 출원을 실제 운영 기준으로 빠르게 다시 판단할 수 있다.
+UsaTm은 mature lane으로 승급했지만, filing basis 판단은 여전히 모든 조문 디테일보다 운영 책임을 먼저 잠그는 편이 실무적이다. 아래 네 줄을 먼저 고정하면 미국 출원을 실제 운영 기준으로 빠르게 다시 판단할 수 있다.
 
 | 먼저 적을 질문 | use-based 쪽 신호 | intent-to-use 쪽 신호 | Madrid 쪽 신호 |
 | --- | --- | --- | --- |
@@ -1022,9 +1022,9 @@ opposition은 법정 기간 내 대응 여부를 확정해야 하므로, 내부 
 
 specimen은 미국 연방 상표에서 “우리가 진짜로 쓰고 있다”를 보여주는 핵심 증거다. intent-to-use로 가면 출원보다 더 중요한 구간이 뒤에 온다. 실제 사용, 증거 수집, 버전 통제, 제출 판단이 한 덩어리로 움직여야 한다.
 
-### lighter-track specimen owner board
+### specimen owner board
 
-UsaTm의 specimen 장은 full handbook보다 “누가 어떤 증거를 언제 잠글까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 standard QA 유지 라운드에서도 실익이 크다.
+UsaTm의 specimen 장은 “누가 어떤 증거를 언제 잠글까”를 빠르게 다시 보는 운영 보드로 시작한다. 아래 네 줄을 먼저 적어 두면 full-QA 유지 라운드에서도 filing route와 SOU handoff를 같은 기준으로 점검할 수 있다.
 
 | 먼저 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
 | --- | --- | --- | --- |

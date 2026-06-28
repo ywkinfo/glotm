@@ -14,8 +14,8 @@ The plan is intentionally narrow. Factual QA enters first as helper audits under
 - Health report shape stays in `src/products/health.ts` and `scripts/health-report.ts`.
 - No new npm dependency should be required for v1. Use Node, `tsx`, and the existing test stack.
 - The current root content lane already mixes full-pipeline and shortcut refresh behavior by workspace.
-- `ChaTm`, `MexTm`, and `EuTm` currently align best with full-pipeline content verification at the root.
-- `UsaTm` and `JapTm` currently remain root shortcut-refresh exceptions.
+- `ChaTm`, `MexTm`, `EuTm`, and `UsaTm` currently align with full-pipeline content verification at the root.
+- `JapTm` currently remains the root shortcut-refresh exception.
 - Workspace content facts already live in workspace-local `content/research/` directories, mostly as markdown fact verification logs and, in some workspaces, source registers.
 
 ## Goals
@@ -53,8 +53,8 @@ The plan is intentionally narrow. Factual QA enters first as helper audits under
 
 The repo is not fully uniform:
 
-- `ChaTm`, `MexTm`, `EuTm`, `UKTm`, and `LatTm` currently participate in root full-pipeline content refresh.
-- `UsaTm` and `JapTm` remain root shortcut-refresh workspaces.
+- `ChaTm`, `MexTm`, `UsaTm`, `EuTm`, `UKTm`, and `LatTm` currently participate in root full-pipeline content refresh.
+- `JapTm` remains the root shortcut-refresh workspace.
 - Some workspaces already have source register files, others do not.
 - Fact verification logs exist today, but structured claim coverage does not yet appear to be standardized.
 
@@ -361,8 +361,8 @@ Why third:
 
 Why fourth:
 
-- these are incubate or lighter-track products
-- `UsaTm` and `JapTm` still rely on root shortcut refresh, so hard coupling would be premature
+- these started as incubate or lighter-track products
+- `UsaTm` has since adopted claim-map + full-pipeline review for its 2026-06-28 growth/mature closeout; `JapTm` still relies on root shortcut refresh, so hard coupling remains premature there
 - `UKTm` participates in full-pipeline refresh, but its portfolio role is still early-track and should not drag the broader rollout into edge-case cleanup too early
 
 This phase should focus on schema adoption and advisory reporting, not aggressive gate tightening.

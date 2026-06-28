@@ -35,7 +35,7 @@ describe("health report CLI", () => {
       id: "runtime",
       status: "pass"
     });
-    expect(researchProducts).toEqual(["china", "mexico", "europe"]);
+    expect(researchProducts).toEqual(["china", "mexico", "europe", "usa"]);
     expect(report.products.find((product: { slug: string }) => product.slug === "china")).toMatchObject({
       slug: "china",
       currentLifecycleStatus: "mature",
@@ -84,10 +84,26 @@ describe("health report CLI", () => {
         gate: "pass"
       }
     });
+    expect(report.products.find((product: { slug: string }) => product.slug === "usa")).toMatchObject({
+      slug: "usa",
+      currentLifecycleStatus: "mature",
+      verification: {
+        mode: "root-full-pipeline",
+        scopeLabel: "root full pipeline",
+        reportSummary: "root content full pipeline"
+      },
+      research: {
+        auditMode: "advisory",
+        factIntegrityScore: 100,
+        consistencyScore: 100,
+        staleHighRiskClaimCount: 0,
+        gate: "pass"
+      }
+    });
     expect(report.root.find((lane: { id: string }) => lane.id === "content")).toMatchObject({
       verification: {
-        fullPipelineProductSlugs: ["latam", "mexico", "china", "europe", "uk"],
-        shortcutProductSlugs: ["usa", "japan"]
+        fullPipelineProductSlugs: ["latam", "mexico", "usa", "china", "europe", "uk"],
+        shortcutProductSlugs: ["japan"]
       }
     });
   });
@@ -123,12 +139,12 @@ describe("health report CLI", () => {
     expect(output).toContain("| health:runtime | pass |");
     expect(output).toContain("| health:content | fail |");
     expect(output).toContain("| health:release | fail |");
-    expect(output).toContain("verification scope: full pipeline: latam, mexico, china, europe, uk; shortcut refresh: usa, japan");
-    expect(output).toContain("| usa | incubate | beta | beta | hold | root content shortcut refresh only |");
+    expect(output).toContain("verification scope: full pipeline: latam, mexico, usa, china, europe, uk; shortcut refresh: japan");
+    expect(output).toContain("| usa | growth | mature | mature | hold | root content full pipeline |");
     expect(output).toContain("## Research Coverage");
+    expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
     expect(output).toContain("| china | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
     expect(output).toContain("| mexico | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
     expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 0 | 0 | pass |");
-    expect(output).not.toContain("| usa | advisory |");
   });
 });

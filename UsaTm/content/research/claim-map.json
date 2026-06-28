@@ -58,9 +58,9 @@
       "chapterRefs": ["Ch8", "Ch13", "Ch14"],
       "riskLevel": "HIGH",
       "sourceIds": ["uspto-about-ttab"],
-      "lastVerified": "2026-03-28",
+      "lastVerified": "2026-06-28",
       "status": "BODY_READY",
-      "notes": "2026-03-28 확인(USPTO About TTAB)."
+      "notes": "2026-06-28 재확인(USPTO About TTAB): TTAB는 federal registration 권리만 판단하고 사용권, injunction, infringement, damages, attorney fee는 다루지 않음."
     },
     {
       "id": "USA-MAINT-001",
@@ -69,7 +69,7 @@
       "chapterRefs": ["Ch10"],
       "riskLevel": "HIGH",
       "sourceIds": ["uspto-maintaining", "uspto-keeping-alive"],
-      "lastVerified": "2026-03-28",
+      "lastVerified": "2026-06-28",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -78,7 +78,7 @@
         "unit": "years",
         "expression": "Section 8 at 5-6yr, Section 8+9 at 9-10yr and every 10yr"
       },
-      "notes": "2026-03-28 확인(USPTO maintaining/keeping registration alive). 정확 fee·grace period는 제출 직전 재확인."
+      "notes": "2026-06-28 재확인(USPTO Maintaining / Keeping your registration alive): 5-6년 Section 8, 9-10년 및 이후 10년마다 Section 8+9, Section 15는 Principal Register·5년 연속 사용 등 요건 충족 시 선택."
     },
     {
       "id": "USA-CBP-001",
@@ -87,9 +87,9 @@
       "chapterRefs": ["Ch12", "Ch14"],
       "riskLevel": "HIGH",
       "sourceIds": ["cbp-ipr-protection"],
-      "lastVerified": "2026-03-28",
+      "lastVerified": "2026-06-28",
       "status": "BODY_READY",
-      "notes": "2026-03-28 확인(CBP IPR protection). 정확 class별 수수료 금액은 본문에 하드코딩하지 않고 공식 portal 재확인."
+      "notes": "2026-06-28 재확인(CBP IPR protection): USPTO Principal Register 등록이 recordation 전제이고 e-Recordation fee는 International Class별 부과. 금액은 본문 하드코딩 금지."
     },
     {
       "id": "USA-ATY-001",
@@ -98,9 +98,9 @@
       "chapterRefs": ["Ch2", "Ch5"],
       "riskLevel": "HIGH",
       "sourceIds": ["uspto-need-attorney"],
-      "lastVerified": "2026-03-28",
+      "lastVerified": "2026-06-28",
       "status": "BODY_READY",
-      "notes": "2026-03-28 확인(USPTO Do I need an attorney). 예외 여부는 단정 확장 금지."
+      "notes": "2026-06-28 재확인(USPTO Do I need an attorney): foreign-domiciled applicant/registrant는 U.S.-licensed attorney 필요. 예외 여부는 단정 확장 금지."
     },
     {
       "id": "USA-FEE-001",
@@ -109,9 +109,42 @@
       "chapterRefs": ["Ch5", "Ch10"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["uspto-fees"],
-      "lastVerified": "2026-03-28",
+      "lastVerified": "2026-06-28",
       "status": "BODY_READY",
-      "notes": "수수료 금액 자체는 휘발성이라 본문 하드코딩 금지. claim은 구조적 사실만 잠근다."
+      "notes": "2026-06-28 재확인(USPTO How much does it cost): filing/maintenance cost는 classes 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지."
+    },
+    {
+      "id": "USA-ASSIGN-001",
+      "jurisdiction": "US",
+      "claim": "Trademark ownership transfer나 owner name change 관련 recordation은 USPTO Assignment Center를 현재 시스템명으로 사용하며, 실제 제출 화면과 요구자료는 제출 직전 재확인한다.",
+      "chapterRefs": ["Ch11"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["uspto-assignment-center", "uspto-assignment-center-2026-pdf"],
+      "lastVerified": "2026-06-28",
+      "status": "BODY_READY",
+      "notes": "2026-06-28 재확인(assignmentcenter.uspto.gov + USPTO Feb 2026 overview material): Assignment Center 명칭 확인. 세부 화면/자료 요건은 제출 직전 재확인."
+    },
+    {
+      "id": "USA-SOU-001",
+      "jurisdiction": "US",
+      "claim": "Intent-to-use 출원은 Notice of Allowance 이후 실제 사용 증거를 포함한 Statement of Use 또는 허용된 extension request 흐름을 통해 등록 단계로 넘어간다.",
+      "chapterRefs": ["Ch5", "Ch9"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["uspto-itu-forms"],
+      "lastVerified": "2026-06-28",
+      "status": "BODY_READY",
+      "notes": "2026-06-28 재확인(USPTO ITU forms): NOA 이후 acceptable allegation of use와 commerce use evidence가 필요한 SOU 흐름. 세부 fee/extension 수치는 본문 하드코딩 금지."
+    },
+    {
+      "id": "USA-LOP-001",
+      "jurisdiction": "US",
+      "claim": "Letter of Protest는 pending application의 registrability에 관한 objective evidence를 USPTO에 제출해 심사 과정에서 고려되도록 하는 보조 절차이며, adversarial argument나 opposition 대체 수단으로 운영하지 않는다.",
+      "chapterRefs": ["Ch8"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["uspto-lop-practice-tip", "tmep-1715-lop"],
+      "lastVerified": "2026-06-28",
+      "status": "BODY_READY",
+      "notes": "2026-06-28 재확인(USPTO LOP practice tip + TMEP 1715): relevant objective evidence 중심, letter/arguments가 아니라 관련 evidence와 ground가 심사관에게 전달되는 구조."
     },
     {
       "id": "USA-MADRID-001",
@@ -120,9 +153,9 @@
       "chapterRefs": ["Ch5"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["uspto-madrid-outbound"],
-      "lastVerified": "2026-03-28",
+      "lastVerified": "2026-06-28",
       "status": "BODY_READY",
-      "notes": "2026-03-28 확인(USPTO Madrid outbound)."
+      "notes": "2026-06-28 재확인(USPTO Madrid outbound applicants)."
     }
   ]
 }
