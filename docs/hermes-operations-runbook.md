@@ -66,6 +66,9 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
   `glotm-report-context-refresh-broker.path`가 request inbox의 `*.json` 생성을 감지해 broker service를
   깨운다. broker는 schema, `#glotm_hermes` channel allowlist, request age, rate limit, unknown-key 금지를
   검증하고, 통과한 요청이 있을 때만 기존 refresh script를 호출한다. 실패 시 기존 checkout/metadata는 보존한다.
+  channel allowlist는 request payload sanity check 및 오작동 필터일 뿐 security boundary가 아니다. 실제
+  boundary는 Hermes 컨테이너에 좁은 inbox leaf만 writable로 노출하고 host broker가 command-free 고정
+  refresh만 실행하는 구조다.
 - host doctor: `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`;
   `READY`가 기준이다. root로 직접 실행하면
   `hermes` 소유 checkout에 대한 Git `safe.directory` 보호 때문에 오탐할 수 있으므로 service account로
