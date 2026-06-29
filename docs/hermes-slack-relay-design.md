@@ -91,7 +91,11 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 - **Advisor**: `/opt/glotm-context/repo`의 파일·`git` 이력을 `read-grounded`로 읽고,
   `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`를 보고 헤더에 채운다. `Sync: manual` /
   `Sync: request-only`는 metadata 필드가 아니라 배포 모델 추론이다. metadata 손상·HEAD 불일치는
-  `unknown`. test/health lane 실행은 여전히 `미검증`(lane-verified는 owner-work).
+  `unknown`. 헤더 source는 `/opt/glotm-context/repo`, `/opt/glotm-context/metadata.json`,
+  `/opt/glotm-refresh-requests/inbox` writability check뿐이다. `/opt/hermes`,
+  `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`는 Hermes Agent runtime 정보라 GloTm context
+  source가 아니며, 그 경로에서 읽은 SHA·build marker는 헤더에 쓰지 않는다. test/health lane 실행은
+  여전히 `미검증`(lane-verified는 owner-work).
 - **승격 완료**: active skill 헤더는 `Snapshot`/시간 기반 freshness 대신 `Refreshed`/`Sync`를 사용한다.
   P2.5에서는 request inbox가 writable일 때 `Sync: request-only`를 쓴다.
 
@@ -142,6 +146,11 @@ relay key는 GitHub write를 직접 못 해도 **bounded write 파이프라인�
   - metadata/HEAD 불일치나 손상은 `Commit: unknown`, `Refreshed: unknown`, `Sync: unknown`으로 낮춘다.
   - `Refreshed`는 마지막 성공 sync 실행 시각이며, `UP_TO_DATE` no-op sync도 갱신된다.
   - P2.5 broker가 설치된 경우 `Sync: request-only`, manual fallback만 있는 경우 `Sync: manual`로 표기한다.
+    `Sync` 값은 `manual` / `request-only` / `unknown`만 허용하며 HEAD 비교, branch 이름, request 생성
+    상태, freshness 설명을 넣지 않는다.
+  - `Mode`는 `P2.5 request-only refresh; no SSH relay; no repo write access` 그대로 쓴다.
+  - `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`가 헤더 근거로 등장하면
+    report-context가 아니라 runtime checkout을 본 것이므로 해당 헤더는 무효다.
   - lane을 실제 실행하지 않은 항목은 **`미검증`**으로 표기한다.
 
 ## 8. `~/.hermes` 설정 영속성

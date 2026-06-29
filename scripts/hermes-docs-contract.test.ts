@@ -16,6 +16,9 @@ describe("hermes docs contract", () => {
     expect(s).toContain("Sync: manual");
     expect(s).toContain("Sync: request-only");
     expect(s).toContain("Mode: P2.5 request-only refresh; no SSH relay; no repo write access");
+    expect(s).toContain("Header source guard");
+    expect(s).toContain("Never use `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`");
+    expect(s).toContain("`Sync` is exactly one of `manual`, `request-only`, or `unknown`");
     expect(s).not.toContain("Freshness: <fresh | stale | unknown>");
     expect(s).not.toContain("Snapshot: <timestamp or unknown>");
   });
@@ -31,6 +34,8 @@ describe("hermes docs contract", () => {
     expect(s).toContain("`.tmp` 파일에 완성 JSON을 쓴 뒤 마지막에 `.json`으로 atomic rename");
     expect(s).toContain("[sandbox_workspace_write] writable_roots");
     expect(s).toContain("REPORT_CONTEXT_REFRESH_USER");
+    expect(s).toContain("`/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`는 Hermes Agent runtime 정보");
+    expect(s).toContain("`Sync` 값은 `manual` / `request-only` / `unknown`만");
   });
 
   it("3. AGENTS.md lists Slack @Hermes as a P2.5 request-only refresh actor", () => {
@@ -99,6 +104,8 @@ describe("hermes docs contract", () => {
     }
 
     expect(relay).toContain("`Context` · `Commit` · `Refreshed` · `Sync` · `Mode`");
+    expect(relay).toContain("`/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`는 Hermes Agent runtime 정보");
+    expect(relay).toContain("`Mode`는 `P2.5 request-only refresh; no SSH relay; no repo write access` 그대로");
     expect(runbook).toContain("`glotm-report-context-refresh.service` (owner/admin fallback one-shot)");
     expect(runbook).toContain("`glotm-report-context-refresh-broker.path`");
     expect(runbook).toContain("`glotm-report-context-refresh-broker.service`");

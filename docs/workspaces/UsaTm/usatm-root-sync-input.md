@@ -1,15 +1,15 @@
 # UsaTm Root Sync Input
 
 > **CLOSED — UsaTm growth/mature promotion shipped.** 15장 신설·claim-map 채택·full-QA 파이프라인 편입과
-> owner Stage 2 fact-review / registry flip을 2026-06-28 scorecard review에서 닫았다. 현재 정본은
-> `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 203개 / growth tier · mature lifecycle · full QA`,
-> verifiedOn/factsReviewedOn 2026-06-28)다.
+> owner Stage 2 fact-review / registry flip을 2026-06-29 scorecard follow-up에서 닫았다. 현재 정본은
+> `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 206개 / growth tier · mature lifecycle · full QA`,
+> verifiedOn/factsReviewedOn 2026-06-29)다.
 
 ## Baseline One-Liner
 
-`UsaTm`은 루트 `/usa`에 연결된 live country guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 203개 /
-growth · mature · full QA`다(정본: `src/products/registry.ts`). 2026-06-28 mature closeout으로 14→15장
-확장 + claim-map 12건 + full-QA 파이프라인 편입 + owner fact-review를 마쳤다.
+`UsaTm`은 루트 `/usa`에 연결된 live country guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 206개 /
+growth · mature · full QA`다(정본: `src/products/registry.ts`). 2026-06-29 mature closeout follow-up으로
+14→15장 확장 + claim-map 15건 + full-QA 파이프라인 편입 + owner fact-review를 마쳤다.
 
 ## Authority Order
 
@@ -28,11 +28,11 @@ growth · mature · full QA`다(정본: `src/products/registry.ts`). 2026-06-28 
 | Field | 현재 | Source |
 | --- | --- | --- |
 | Chapter count | `15` | `registry.ts`, `manifest.json` |
-| Search entry count | `203` | `registry.ts`, `search-index.json` |
+| Search entry count | `206` | `registry.ts`, `search-index.json` |
 | Tier / lifecycle / QA | `growth` / `mature` / `full` | `registry.ts` |
 | High-risk gap count | `0` | `registry.ts` |
-| verifiedOn / factsReviewedOn | `2026-06-28` / `2026-06-28` | `registry.ts` |
-| Research baseline | claim-map 12건, 전 항목 BODY_READY(HIGH 7·MEDIUM 5), source-register 매핑 | `claim-map.json` |
+| verifiedOn / factsReviewedOn | `2026-06-29` / `2026-06-29` | `registry.ts` |
+| Research baseline | claim-map 15건, 전 항목 BODY_READY(HIGH 10·MEDIUM 5), source-register 매핑 | `claim-map.json` |
 
 ## Chapter Drift Map (신규/변경분)
 
@@ -46,18 +46,18 @@ growth · mature · full QA`다(정본: `src/products/registry.ts`). 2026-06-28 
 ## Research Alignment Packet
 
 - Scope guardrail: 본문은 A등급 검증 조문(§1063/§1064/§1116–1118)만 단정 반영. 휘발성 수수료·B등급 판례는 제외.
-- BODY_READY claims 12건: `USA-OPP-001`, `USA-CANC-001`, `USA-REM-001`, `USA-TTAB-001`, `USA-MAINT-001`,
+- BODY_READY claims 15건: `USA-OPP-001`, `USA-CANC-001`, `USA-REM-001`, `USA-TTAB-001`, `USA-MAINT-001`,
   `USA-CBP-001`, `USA-ATY-001`, `USA-FEE-001`(구조적), `USA-ASSIGN-001`, `USA-SOU-001`, `USA-LOP-001`,
-  `USA-MADRID-001`.
+  `USA-MADRID-001`, `USA-PARODY-001`, `USA-DILUTION-001`, `USA-CBP-002`.
 - Research rule: fee 금액·기관 시스템 명칭·제출 기한은 claim-map/legacy log 기준선 밖으로 새로 단정 확장하지 않는다.
 
 ## Local Gate Evidence
 
-- `2026-06-28` `npm --prefix UsaTm run content:prepare`
+- `2026-06-29` `npm --prefix UsaTm run content:prepare`
   - `Generated UsaTm master manuscript from 15 sources.`
   - `QA complete: 0 error(s), 0 warning(s), 15 source file(s) checked.`
-  - `Generated 15 chapters and 203 search entries.`
-- `2026-06-28` `audit:facts`(UsaTm): `gate=pass`, `factIntegrity=100`, `consistency=100`, `effectiveGap=0`
+  - `Generated 15 chapters and 206 search entries.`
+- `2026-06-29` `audit:facts`(UsaTm): `gate=pass`, `factIntegrity=100`, `consistency=100`, `effectiveGap=0`
 
 ## Stage 2 Flip Checklist (owner, 월 scorecard 리뷰)
 
