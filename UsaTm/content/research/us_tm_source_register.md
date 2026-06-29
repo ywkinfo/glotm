@@ -54,9 +54,9 @@
 | tmep-1715-lop | TMEP §1715 Letters of Protest | https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1700d1e853.html |
 | uspto-madrid-outbound | USPTO Madrid outbound applicants | https://www.uspto.gov/ip-policy/international-protection/madrid-protocol/outbound-applicants |
 | cbp-ipr-protection | CBP Help Protect IPR (e-Recordation) | https://www.cbp.gov/trade/priority-issues/ipr/protection |
-| scotus-jack-daniels | Jack Daniel's Properties, Inc. v. VIP Products LLC, 599 U.S. 140 (2023) | https://www.supremecourt.gov/opinions/22pdf/22-148_3e04.pdf |
-| azd-jack-daniels-2025-remand | Jack Daniel's 환송심 order (D. Ariz., 2:14-cv-02057) | https://www.govinfo.gov/content/pkg/USCOURTS-azd-2_14-cv-02057/pdf/USCOURTS-azd-2_14-cv-02057-3.pdf |
-| usc-15-1125c | 15 U.S.C. §1125(c) (dilution; (c)(3) fair use 제외 단서) | https://www.law.cornell.edu/uscode/text/15/1125 |
+| scotus-jack-daniels-v-vip-2023 | Jack Daniel's Properties, Inc. v. VIP Products LLC, 599 U.S. 140 (2023) | https://www.supremecourt.gov/opinions/22pdf/22-148_3e04.pdf |
+| azd-jack-daniels-v-vip-2025-remand | Jack Daniel's 환송심 order (D. Ariz., 2:14-cv-02057) | https://www.govinfo.gov/content/pkg/USCOURTS-azd-2_14-cv-02057/pdf/USCOURTS-azd-2_14-cv-02057-3.pdf |
+| usc-15-1125 | 15 U.S.C. §1125(c) (dilution; (c)(3) fair use 제외 단서) | https://www.law.cornell.edu/uscode/text/15/1125 |
 | cfr-19-133-21 | 19 C.F.R. §133.21 (counterfeit 표장 억류·압수·몰수) | https://www.law.cornell.edu/cfr/text/19/133.21 |
 | cfr-19-133-22 | 19 C.F.R. §133.22 (copying or simulating 통관 거절·억류) | https://www.law.cornell.edu/cfr/text/19/133.22 |
 

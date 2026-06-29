@@ -52,7 +52,7 @@
 ## 2026-06-29 note (Jack Daniel's 집행 보강)
 
 - 첨부 deep-research 보고서를 리드로 삼되, 본문 단정은 1차 출처(SCOTUS slip opinion·USC·CFR)로만 확인했다(보고서 citeturn 토큰은 근거로 쓰지 않음).
-- 신규 claim 3건: USA-PARODY-001(Rogers 미적용 → §scotus-jack-daniels), USA-DILUTION-001(§1125(c)·환송심 → §1125(c)+scotus+azd-remand), USA-CBP-002(133.21/133.22).
+- 신규 claim 3건: USA-PARODY-001(Rogers 미적용 → scotus-jack-daniels-v-vip-2023), USA-DILUTION-001(§1125(c)·환송심 → usc-15-1125 + scotus-jack-daniels-v-vip-2023 + azd-jack-daniels-v-vip-2025-remand), USA-CBP-002(cfr-19-133-21/22).
 - 13장에 "출처표지적 사용 판별과 혼동·희석 이중 트랙"(Bad Spaniels 미니 케이스 포함), 12장에 신고 프레이밍·오버리치 경계·CBP 분류표, 14장에 라우팅 한 줄·오버리치 가드 추가.
 - Google/eBay는 보조 출처로만 등록(claim-map 단정 대상 아님). claim-map 총 12→15건.
 - 1차 출처 직접 확인 완료이므로 registry `factsReviewedOn` 2026-06-29 후보로 적격(owner 최종 attestation 전제).

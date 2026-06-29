@@ -42,7 +42,7 @@ search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계�
 | `ChaTm` | growth | mature | Sprint 2 저밀도 장 보강 + monthly review 반영 완료 |
 | `MexTm` | growth | mature | Sprint 2 운영 handoff 3장 잠금 반영, shared root gate follow-through 정리 |
 | `EuTm` | growth | mature | Ch3/6/10/14 및 부록 보강 · mature 승급 완료 |
-| `UsaTm` | growth | mature | 15장 체계, claim-map 12건, full-QA 파이프라인 편입 완료 |
+| `UsaTm` | growth | mature | 15장 체계, claim-map 15건, full-QA 파이프라인 편입 완료 |
 | `JapTm` | incubate | beta | beta 유지, standard QA 유지 |
 | `UKTm` | incubate | beta | standard QA evidence 4-file 정합, 2026-05-12 verdict 적용, early-track verified 공개본 |
 
