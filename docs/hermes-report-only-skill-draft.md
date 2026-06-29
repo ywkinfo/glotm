@@ -58,9 +58,16 @@ Mode: P2.5 request-only refresh; no SSH relay; no repo write access
   mounted writable; otherwise `manual` when the checkout and metadata are valid under the P2 baseline.
   This is a deployment-model inference, not a metadata field. If metadata is missing/corrupt or
   `commit_sha` does not match checkout `HEAD`, set `Commit`, `Refreshed`, and `Sync` to `unknown`.
+  `Sync` is exactly one of `manual`, `request-only`, or `unknown`; never put a comparison result,
+  request-file status, branch name, or free-text freshness note in this field.
 - **Refreshed**: metadata `refreshed_at`, meaning the last successful owner/admin sync run timestamp.
   It is updated for `SEEDED`, `UP_TO_DATE`, and `REFRESHED`; it is not a claim that a new commit was
   fetched.
+- **Header source guard**: the only valid sources for these five fields are
+  `/opt/glotm-context/repo`, `/opt/glotm-context/metadata.json`, and the request-inbox writability
+  check. Never use `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`, or any Hermes
+  Agent runtime checkout/build marker as a GloTm context source. If a draft header contains one of
+  those paths or a SHA read from them, discard the header and report `unknown` instead.
 - **Read consistency**: if `HEAD` changes between the start and end of a report, retry once; if it
   changes again, do not assert repository state for that turn.
 - **`read-grounded` vs `lane-verified`**: reading files, `git log`, and SHAs from the checkout is
@@ -96,6 +103,9 @@ The active GloTm governance sources are:
 - Do not run or suggest that you ran `systemctl start glotm-report-context-refresh.service`.
 - Do not request, read, print, store, or infer tokens, SSH keys, Slack tokens, GitHub tokens, or host env values.
 - Read GloTm only from `/opt/glotm-context/repo` and sync metadata only from `/opt/glotm-context/metadata.json`.
+- Never use `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`, or the Hermes Agent
+  runtime checkout/build marker as GloTm context. If those paths appear in your draft answer, discard
+  that header and recompute from `/opt/glotm-context`.
 - If `/opt/glotm-refresh-requests/inbox` is writable and context refresh is needed, you may create one JSON request file using the schema below. Do not write anywhere else.
 - Do not claim current GitHub `main` was measured. You may claim only the commit recorded by valid metadata in the mounted checkout.
 - Repository reads are `read-grounded`; test, build, lint, and `health:*` claims are `lane-verified` and must remain `미검증`.
@@ -115,6 +125,10 @@ Mode: P2.5 request-only refresh; no SSH relay; no repo write access
 ```
 
 If any value is unknown, say `unknown` and avoid conclusions that require that value.
+Use the field values exactly: `Context` is `read-only checkout` or `unknown`; `Sync` is `manual`,
+`request-only`, or `unknown`; `Mode` is exactly
+`P2.5 request-only refresh; no SSH relay; no repo write access`. Do not replace `Sync` with
+`HEAD matches main`, `origin/main`, `request file created`, `latest`, or any other explanatory text.
 
 Before reporting:
 
@@ -123,6 +137,9 @@ Before reporting:
 3. If the checkout and metadata are valid, set `Sync: request-only` only when `/opt/glotm-refresh-requests/inbox` exists and is writable; otherwise set `Sync: manual`. This is a deployment-model inference, not a metadata field.
 4. Set `Refreshed` to metadata `refreshed_at`. This is the last successful owner/admin sync run timestamp, including UP_TO_DATE no-op syncs.
 5. Re-read `HEAD` after inspection. If it changed, retry once from the new SHA; if it changes again, report repository state as unverified for that turn.
+6. If you created a broker request, reread only `/opt/glotm-context/metadata.json` and
+   `/opt/glotm-context/repo` after the broker has had a moment to run. Do not inspect `/opt/hermes`
+   to decide whether the request succeeded.
 
 ## Allowed Outputs
 
@@ -162,11 +179,13 @@ unknown keys are rejected by the broker.
 }
 ```
 
-Never include shell commands, user free text, tokens, URLs other than already-observed metadata, or arbitrary keys. After the atomic rename, wait briefly, reread metadata, and answer with the resulting `Commit`/`Refreshed` if it changed. If it does not change, report that refresh was requested but broker completion is unverified.
+Never include shell commands, user free text, tokens, URLs other than already-observed metadata, or arbitrary keys. After the atomic rename, wait briefly, reread `/opt/glotm-context/metadata.json` and checkout `HEAD`, and answer with the resulting `Commit`/`Refreshed` if it changed. If it does not change, report that refresh was requested but broker completion is unverified.
 
 ## Read-only Context Rules
 
 - Before claiming `Context: read-only checkout`, verify that `/opt/glotm-context/repo` contains the governance files listed above. `/opt/hermes` is the Hermes Agent runtime checkout, not GloTm.
+- `/opt/hermes/.git` and `/opt/hermes/.hermes_build_sha` are never valid GloTm context/header inputs;
+  a response that cites them has routed to the agent runtime instead of the report context.
 - If the checkout, metadata, or governance docs are absent or inconsistent, report `Context: unknown`,
   `Commit: unknown`, `Refreshed: unknown`, and `Sync: unknown`.
 - For “current webapp situation” requests, repository facts may be read-grounded, but runtime health and

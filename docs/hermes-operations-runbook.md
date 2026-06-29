@@ -75,6 +75,11 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
   `[sandbox_workspace_write] writable_roots`에 `/opt/glotm-refresh-requests/inbox` leaf만 추가해야 한다.
   broker service는 container UID가 만든 request 파일을 읽기 위한 root wrapper일 수 있지만, 실제 checkout
   refresh는 `REPORT_CONTEXT_REFRESH_USER`(기본 `hermes`)로 drop해서 실행한다.
+- Slack report header는 `/opt/glotm-context/repo`, `/opt/glotm-context/metadata.json`,
+  `/opt/glotm-refresh-requests/inbox` writability check만 근거로 채운다. `/opt/hermes`,
+  `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`는 Hermes Agent runtime 정보이므로 GloTm
+  `Commit`/`Refreshed`/`Sync` source가 아니다. `Sync` 값은 `manual` / `request-only` / `unknown`만
+  허용하고, HEAD 비교·branch 이름·request 생성 상태·freshness 설명을 넣지 않는다.
 - host doctor: `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`;
   `READY`가 기준이다. root로 직접 실행하면
   `hermes` 소유 checkout에 대한 Git `safe.directory` 보호 때문에 오탐할 수 있으므로 service account로

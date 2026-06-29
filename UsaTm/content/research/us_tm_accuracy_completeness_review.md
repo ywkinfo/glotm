@@ -1,6 +1,6 @@
 # UsaTm Accuracy & Completeness Review
 
-검수 기준일: 2026-06-28
+검수 기준일: 2026-06-29
 
 ## 전체 총평
 
@@ -24,8 +24,9 @@
 ## 이번 refresh에서 다시 잠근 점
 
 - `UsaTm/content:prepare` local full pipeline 재실행 후 `QA 0 errors / 0 warnings` 확인
-- generated 산출물 재생성 후 15개 챕터 / 검색 엔트리 203개 재확인
+- generated 산출물 재생성 후 15개 챕터 / 검색 엔트리 206개 재확인
 - foreign-domiciled applicant attorney requirement, Trademark Center, registration maintenance, CBP e-Recordation, TTAB 권한 범위를 source register 기준으로 다시 점검
+- Jack Daniel's 이후 출처표지적 사용/희석화 이중 트랙과 CBP counterfeit/copying-or-simulating 구분을 claim-map 후속 3건으로 다시 점검
 - 본문에서 변동성이 큰 fee/세부 기한은 여전히 fact log 우선 원칙을 유지하는지 확인
 
 ## 정확도 판정 메모
@@ -49,4 +50,4 @@
 
 ## 현재 운영 결론
 
-`UsaTm`은 2026-06-28 기준 growth / mature / full-QA 상태로 승급했다. local full pipeline, claim-map 12건, 최신 verification log 기준으로 refresh는 완료됐고, 이후에는 freshness를 유지하면서 filing basis, specimen, maintenance, TTAB·법원·플랫폼·CBP 집행 오케스트레이션이 reader flow에서 흔들리지 않는지 반복 재현하는 쪽이 맞다.
+`UsaTm`은 2026-06-29 기준 growth / mature / full-QA 상태를 유지한다. local full pipeline, claim-map 15건, 최신 verification log 기준으로 refresh는 완료됐고, 이후에는 freshness를 유지하면서 filing basis, specimen, maintenance, TTAB·법원·플랫폼·CBP 집행 오케스트레이션이 reader flow에서 흔들리지 않는지 반복 재현하는 쪽이 맞다.

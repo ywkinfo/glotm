@@ -108,7 +108,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, Gateway/registry/root-doc sync도 정합 완료 — 현재는 sync 정합 유지(maintenance)만 남음
 - `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 10건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
-- `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 12건, full-QA 파이프라인을 유지하되 Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 흔들지 않는다
+- `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 15건, full-QA 파이프라인을 유지하되 Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 흔들지 않는다
 - `JapTm`·`UKTm`: JapTm beta 유지, UKTm 2026-05-12 standard QA verdict로 beta 승급
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
@@ -153,7 +153,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### UsaTm (미국 상표 실무 가이드) — live shell에 연결된 growth mature 단일국가 가이드
 
-`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 growth guide다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/usa` 경로에 연결한 상태다. 2026-06-28 scorecard review에서 15장 체계(집행 포럼 통합 플레이북), claim-map 12건, stale/pending 사실의 1차출처 재대조, root/workspace full-QA 편입을 근거로 `mature / full QA` 상태로 승급했다. Gateway 첫 화면의 buyer-entry 약속은 여전히 `ChaTm`·`MexTm`·`EuTm`과 Report trust layer를 우선하므로, `UsaTm`은 supporting growth lane으로 유지한다.
+`UsaTm`은 USPTO 중심의 미국 연방 상표 실무를 다루는 단일국가 growth guide다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/usa` 경로에 연결한 상태다. 2026-06-29 scorecard follow-up에서 15장 체계(집행 포럼 통합 플레이북), 검색 엔트리 206개, claim-map 15건, stale/pending 사실과 Jack Daniel's/CBP 후속 claim의 1차출처 재대조, root/workspace full-QA 편입을 근거로 `mature / full QA` 상태를 잠갔다. Gateway 첫 화면의 buyer-entry 약속은 여전히 `ChaTm`·`MexTm`·`EuTm`과 Report trust layer를 우선하므로, `UsaTm`은 supporting growth lane으로 유지한다.
 
 ### JapTm (일본 상표 실무 가이드) — live shell에 연결된 단일국가 가이드
 
