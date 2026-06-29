@@ -29,6 +29,8 @@ describe("hermes docs contract", () => {
     expect(s).toContain("channel allowlist는 request payload sanity check");
     expect(s).toContain("security boundary가 아니다");
     expect(s).toContain("`.tmp` 파일에 완성 JSON을 쓴 뒤 마지막에 `.json`으로 atomic rename");
+    expect(s).toContain("[sandbox_workspace_write] writable_roots");
+    expect(s).toContain("REPORT_CONTEXT_REFRESH_USER");
   });
 
   it("3. AGENTS.md lists Slack @Hermes as a P2.5 request-only refresh actor", () => {

@@ -76,6 +76,8 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
   schema·channel allowlist·request age·rate limit·unknown key를 검증한 뒤 같은 refresh script를 호출한다.
   request 파일은 `.tmp`에 완성본을 쓴 뒤 `.json`으로 atomic rename한다. path unit은 `*.json` 등장에
   반응하므로 최종 경로를 먼저 만들지 않는다.
+  Codex `workspace-write` sandbox에는 `/opt/glotm-refresh-requests/inbox`만 추가 writable root로 둔다.
+  broker가 root wrapper로 request를 읽을 수는 있지만 checkout refresh는 `hermes`로 drop한다.
   refresh는 `/srv/hermes/report-context/repo`를 `origin/main`과 ff-sync한다(`git fetch` → `merge --ff-only`;
   dirty/divergence는 fail-closed로 기존 checkout/metadata 보존, 자동 reset 없음). credential은 sync 시점에
   차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`). legacy 자동 timer는 제거됐고 mask하지 않는다.

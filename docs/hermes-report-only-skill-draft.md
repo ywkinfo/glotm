@@ -144,6 +144,9 @@ JSON with mode `0644`, close it, then rename it to `<timestamp>-<nonce>.json`. N
 `*.json` path before the full payload is written, because the systemd path unit wakes on `*.json`
 appearance.
 
+Use exactly this JSON object shape. Do not wrap it in keys such as `request`, `mode`, or `constraints`;
+unknown keys are rejected by the broker.
+
 ```json
 {
   "schema_version": 1,
