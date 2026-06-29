@@ -8,31 +8,34 @@ import { describe, expect, it } from "vitest";
 const read = (p: string) => readFileSync(path.resolve(p), "utf8");
 
 describe("hermes docs contract", () => {
-  it("1. skill draft documents the live read-only header shape", () => {
+  it("1. skill draft documents the live read-only/request-only header shape", () => {
     const s = read("docs/hermes-report-only-skill-draft.md");
     expect(s).toContain("Context: read-only checkout");
     expect(s).toContain("Refreshed: <last successful sync run timestamp or unknown>");
-    expect(s).toContain("Sync: <manual | unknown>");
+    expect(s).toContain("Sync: <manual | request-only | unknown>");
     expect(s).toContain("Sync: manual");
-    expect(s).toContain("Mode: P2 report-only; no SSH relay; no repo write access");
+    expect(s).toContain("Sync: request-only");
+    expect(s).toContain("Mode: P2.5 request-only refresh; no SSH relay; no repo write access");
     expect(s).not.toContain("Freshness: <fresh | stale | unknown>");
     expect(s).not.toContain("Snapshot: <timestamp or unknown>");
   });
 
-  it("2. runbook keeps the /opt/hermes warning AND marks P2 as an execution-incapable advisor", () => {
+  it("2. runbook keeps the /opt/hermes warning AND marks P2.5 as task-execution-incapable", () => {
     const s = read("docs/hermes-operations-runbook.md");
     expect(s).toContain("/opt/hermes");
     expect(s).toContain("실행 능력이 없는 advisor");
-    expect(s).toContain("owner/admin SSH one-shot");
+    expect(s).toContain("request-only broker");
+    expect(s).toContain("bounded task 실행 트리거가 아니다");
   });
 
-  it("3. AGENTS.md lists Slack @Hermes as an active live-context P2 report-only actor", () => {
+  it("3. AGENTS.md lists Slack @Hermes as a P2.5 request-only refresh actor", () => {
     const s = read("AGENTS.md");
     expect(s).toContain("Slack @Hermes");
-    expect(s).toContain("P2 report-only");
-    expect(s).toContain("manual owner-sync read-only checkout");
-    expect(s).toContain("2026-06-26 manual-sync canary");
+    expect(s).toContain("P2.5 request-only refresh");
+    expect(s).toContain("brokered read-only checkout");
+    expect(s).toContain("2026-06-29 P2.5 request-broker 계약");
     expect(s).toContain("/opt/glotm-context:ro");
+    expect(s).toContain("/opt/glotm-refresh-requests/inbox");
   });
 
   it("4. charter distinguishes read-grounded / lane-verified / 미검증", () => {
@@ -78,7 +81,7 @@ describe("hermes docs contract", () => {
     expect(relay).not.toContain(repoOnlyMount);
   });
 
-  it("8. the active manual-sync contract has no automatic cadence or freshness header", () => {
+  it("8. the active request-only contract has no timer cadence or freshness header", () => {
     const skill = read("docs/hermes-report-only-skill-draft.md");
     const relay = read("docs/hermes-slack-relay-design.md");
     const runbook = read("docs/hermes-operations-runbook.md");
@@ -91,20 +94,24 @@ describe("hermes docs contract", () => {
     }
 
     expect(relay).toContain("`Context` · `Commit` · `Refreshed` · `Sync` · `Mode`");
-    expect(runbook).toContain("`glotm-report-context-refresh.service` (owner/admin SSH one-shot)");
+    expect(runbook).toContain("`glotm-report-context-refresh.service` (owner/admin fallback one-shot)");
+    expect(runbook).toContain("`glotm-report-context-refresh-broker.path`");
+    expect(runbook).toContain("`glotm-report-context-refresh-broker.service`");
     expect(runbook).toContain("sudo systemctl start glotm-report-context-refresh.service");
     expect(runbook).toContain("sudo rm -f /etc/systemd/system/glotm-report-context-refresh.timer");
   });
 
-  it("9. the active spec records the manual-sync canary and preserves the superseded canary", () => {
+  it("9. the active spec records the manual baseline, P2.5 pending canary, and superseded canary", () => {
     const skill = read("docs/hermes-report-only-skill-draft.md");
     expect(skill).toContain("Superseded: 2026-06-25 periodic-sync header canary");
     expect(skill).toContain("old `Freshness: fresh` field");
     expect(skill).toContain("Active: 2026-06-26 manual-sync canary");
+    expect(skill).toContain("Pending runtime canary: P2.5 request-only broker");
     expect(skill).toContain("Read-grounded canary");
     expect(skill).toContain("Evidence-boundary canary");
     expect(skill).toContain("Refusal canary");
     expect(skill).toContain("`Sync: manual`");
+    expect(skill).toContain("`Sync: request-only`");
     expect(skill).toContain("no new bounded-operator run or worktree");
     expect(skill).toContain("20분 이상 자동 service activation 없음");
   });

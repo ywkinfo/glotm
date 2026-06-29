@@ -85,6 +85,12 @@ Hermes가 닫지 못하고 넘겨야 하는 검증 항목도 같은 절에 둔�
 - 대규모 dependency upgrade, `npm audit fix --force`, main 직접 push
 - token, forced-command, Slack automation, GitHub identity 변경
 
+예외 설명: P2.5 report-context request broker는 bounded task 자동화가 아니라 공개 GloTm read-only checkout
+refresh를 위한 request-only host broker다. @Hermes에는 sudo·SSH relay·GitHub write·writable GloTm clone을
+주지 않고, JSON request inbox만 열며 host broker가 검증·rate-limit 후 refresh를 수행한다. 이 예외 자체의
+도입·변경·VPS 활성화는 owner/admin 결정이지만, 활성화 뒤 개별 refresh request는 bounded task 실행으로
+보지 않는다.
+
 **owner 전용 검증(Hermes가 종결 불가 → 핸드오프)**
 
 - Search Console 색인 상태 확인
