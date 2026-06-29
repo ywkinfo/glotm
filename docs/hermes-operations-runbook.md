@@ -69,6 +69,8 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
   channel allowlist는 request payload sanity check 및 오작동 필터일 뿐 security boundary가 아니다. 실제
   boundary는 Hermes 컨테이너에 좁은 inbox leaf만 writable로 노출하고 host broker가 command-free 고정
   refresh만 실행하는 구조다.
+  request writer는 같은 inbox 안의 `.tmp` 파일에 완성 JSON을 쓴 뒤 마지막에 `.json`으로 atomic rename해야
+  한다. path unit은 `*.json` 등장에 반응하므로 최종 경로를 먼저 만들면 incomplete payload가 reject될 수 있다.
 - host doctor: `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`;
   `READY`가 기준이다. root로 직접 실행하면
   `hermes` 소유 checkout에 대한 Git `safe.directory` 보호 때문에 오탐할 수 있으므로 service account로

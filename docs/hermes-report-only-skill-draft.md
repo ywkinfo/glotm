@@ -139,7 +139,10 @@ Before reporting:
 Only use this when `/opt/glotm-refresh-requests/inbox` is writable and one of these reasons applies:
 metadata mismatch, explicit latest/current-main request, TTL exceeded, stale context, or user-requested refresh.
 
-Write one file named like `<timestamp>-<nonce>.json` with mode `0644`:
+Write the request atomically: create `<timestamp>-<nonce>.tmp` in the same inbox, write the complete
+JSON with mode `0644`, close it, then rename it to `<timestamp>-<nonce>.json`. Never create the final
+`*.json` path before the full payload is written, because the systemd path unit wakes on `*.json`
+appearance.
 
 ```json
 {
@@ -156,7 +159,7 @@ Write one file named like `<timestamp>-<nonce>.json` with mode `0644`:
 }
 ```
 
-Never include shell commands, user free text, tokens, URLs other than already-observed metadata, or arbitrary keys. After writing the request, wait briefly, reread metadata, and answer with the resulting `Commit`/`Refreshed` if it changed. If it does not change, report that refresh was requested but broker completion is unverified.
+Never include shell commands, user free text, tokens, URLs other than already-observed metadata, or arbitrary keys. After the atomic rename, wait briefly, reread metadata, and answer with the resulting `Commit`/`Refreshed` if it changed. If it does not change, report that refresh was requested but broker completion is unverified.
 
 ## Read-only Context Rules
 

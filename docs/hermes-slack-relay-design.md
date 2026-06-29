@@ -74,6 +74,8 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 - **Host-side**: owner/admin fallback은 일반 VPS SSH 세션에서 `glotm-report-context-refresh.service`를
   수동 one-shot으로 실행한다. P2.5에서는 `@Hermes`가 request inbox에 JSON 파일을 만들고, host broker가
   schema·channel allowlist·request age·rate limit·unknown key를 검증한 뒤 같은 refresh script를 호출한다.
+  request 파일은 `.tmp`에 완성본을 쓴 뒤 `.json`으로 atomic rename한다. path unit은 `*.json` 등장에
+  반응하므로 최종 경로를 먼저 만들지 않는다.
   refresh는 `/srv/hermes/report-context/repo`를 `origin/main`과 ff-sync한다(`git fetch` → `merge --ff-only`;
   dirty/divergence는 fail-closed로 기존 checkout/metadata 보존, 자동 reset 없음). credential은 sync 시점에
   차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`). legacy 자동 timer는 제거됐고 mask하지 않는다.
