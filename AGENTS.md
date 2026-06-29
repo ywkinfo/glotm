@@ -30,7 +30,7 @@
 
 ```
 Owner (결정권자·라우터; 어느 actor로도 직접 라우팅한다)
- ├─ Slack @Hermes (P2 report-only)  …… 대화형 read-only intake/triage (active)
+ ├─ Slack @Hermes (P2.5 request-only refresh)  …… 대화형 read-only intake/triage + brokered context refresh
  ├─ 정형 4 task → ssh hermes-host <slug> → bounded operator → Draft PR / NO_CHANGES
  ├─ 열린 분석/설계/구현 → Checkout coding agent → branch / PR
  └─ merge / deploy / policy / pricing / 신규 국가 → Owner only
@@ -39,7 +39,7 @@ Owner (결정권자·라우터; 어느 actor로도 직접 라우팅한다)
 | Actor | 역할 | 권한·경계 |
 |---|---|---|
 | **Owner** | 결정권자·라우터 | merge·deploy·정책·신규국가/pricing·owner 전용 검증(SC/GA4/live QA). 2채널 커밋(PR / 직접 push **Lore**¹), main-protection ruleset bypass=always |
-| **Slack @Hermes** (P2 report-only) | manual owner-sync read-only checkout 기반 intake/triage | report-only, 실행·write 없음 — **능력 차단**(GitHub write 자동승인 없음·relay key 없음·writable clone/host env 미마운트) 기반이며 "정책상 금지"가 아니다. host의 공개 GloTm checkout은 `/opt/glotm-context:ro`로만 보이며 `read-grounded`까지만 가능하다. context refresh trigger는 owner/admin 일반 VPS SSH-only이고 Slack 실행이 아니다. 2026-06-26 manual-sync canary 통과 후 active. 정본 [`docs/hermes-report-only-skill-draft.md`](docs/hermes-report-only-skill-draft.md) |
+| **Slack @Hermes** (P2.5 request-only refresh) | brokered read-only checkout 기반 intake/triage | repo/task 실행·write 없음 — **능력 차단**(GitHub write 자동승인 없음·relay key 없음·writable clone/host env 미마운트) 기반이다. host의 공개 GloTm checkout은 `/opt/glotm-context:ro`로만 보이며 `read-grounded`까지만 가능하다. refresh가 필요하면 @Hermes는 좁은 writable mailbox(`/opt/glotm-refresh-requests/inbox`)에 JSON request만 만들 수 있고, root-owned host broker가 schema·allowlist·rate limit 검증 뒤 `glotm-report-context-refresh.service` 경로를 호출한다. 이는 Slack task 실행이 아니다. 2026-06-26 manual-sync canary가 P2 baseline이고, 2026-06-29 P2.5 request-broker 계약으로 갱신. 정본 [`docs/hermes-report-only-skill-draft.md`](docs/hermes-report-only-skill-draft.md) |
 | **Checkout coding agent** (Claude Code 또는 owner-invoked Codex) | 열린 분석·설계·구현(정식 체크아웃) | 거버넌스 문서를 읽고 브랜치에 제안+구현 → **owner 머지**. 결정권 없음. Claude Code는 한 구현(상세 [`CLAUDE.md`](CLAUDE.md)) |
 | **Hermes bounded operator** (`glotm-hermes` Codex 런타임, ssh 트리거) | 정형 4 task | task tier(자율작업/draft PR), 능력 차단, **owner 머지**. soul = `glotm-hermes`의 `prompts/_bounded-operator-preamble.md` + task prompt. 정책 [`Harness/Hermes-Operating-Charter.md`](Harness/Hermes-Operating-Charter.md) |
 | **Codex native subagents** | Checkout coding agent가 쓰는 병렬 실행 도구 | 독립 권한 없음(아래 Parallel Execution Rule) |
