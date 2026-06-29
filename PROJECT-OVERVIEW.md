@@ -92,7 +92,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
 | `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료 · verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10 |
-| `UsaTm` | 단일국가 | growth | mature | 15 | 203 | 집행 포럼 플레이북 · claim-map 12건 · full QA 승급 완료 |
+| `UsaTm` | 단일국가 | growth | mature | 15 | 206 | 집행 포럼 플레이북 · 패러디·출처표지적 사용 이중 트랙 보강(Ch12–14) · claim-map 15건 · full QA |
 | `JapTm` | 단일국가 | incubate | beta | 15 | 145 | lighter track |
 | `UKTm` | 단일국가 | incubate | beta | 14 | 128 | standard QA evidence 4-file 정합 · 2026-05-12 verdict 적용 · early-track verified 공개본 |
 

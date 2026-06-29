@@ -24,6 +24,10 @@
 | Assignment Center 명칭 | assignment/recordation 관련 온라인 센터 명칭은 Assignment Center | 2026-06-28 확인 | 현재 시스템명은 반영 가능. 화면별 제출 경로·요구자료는 제출 직전 재확인 | https://assignmentcenter.uspto.gov/ · https://www.uspto.gov/sites/default/files/documents/Assignment-Center-CCC-USPTO-hour-Feb-2026.pdf |
 | Letter of Protest 제출 방식 | pending application의 registrability 관련 objective evidence를 제출하는 보조 절차 | 2026-06-28 확인 | 본문에는 "심사개입형 보조 절차"로 설명하고 상세 제출 규칙은 별도 보강 | https://www.uspto.gov/trademarks/trademark-updates-and-announcements/letter-protest-practice-tip · https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1700d1e853.html |
 | Madrid outbound 경로 | 미국 기초출원/등록을 바탕으로 outbound 신청 가능 | 2026-06-28 확인 | 미국 단독 전략과 구분해 본문에 반영 가능 | https://www.uspto.gov/ip-policy/international-protection/madrid-protocol/outbound-applicants |
+| 출처표지적 사용 vs Rogers | 침해자가 표장을 자기 상품 출처표지로 쓰면 Rogers 문턱 심사 미적용, 혼동 본안으로 직행 | 2026-06-29 확인 | 13·14장에 반영. Rogers 일반적 타당성은 미판단이므로 단정 확장 금지 | Jack Daniel's v. VIP Products, 599 U.S. 140 (2023) · https://www.supremecourt.gov/opinions/22pdf/22-148_3e04.pdf |
+| 희석 fair use 제외 단서 | §1125(c)(3)(A) 패러디·비판·논평 fair use는 "자기 상품의 출처표지로 쓰는 경우" 제외; 출처표지적 사용 시 tarnishment 청구 가능 | 2026-06-29 확인 | 13장에 반영. 환송심 결론(혼동 부정·tarnishment 인정·영구금지명령)은 Arizona D.C. order 문구 기준 | 15 U.S.C. §1125(c) · https://www.law.cornell.edu/uscode/text/15/1125 · D. Ariz. 2:14-cv-02057 |
+| CBP counterfeit vs copying-or-simulating | counterfeit(동일·실질 구별불가)는 압수·몰수, copying-or-simulating(연관 유사)은 통관 거절·억류+표장 제거 등 | 2026-06-29 확인 | 12장에 분류표로 반영. 애매 사건을 counterfeit로 과장 금지. 금액·세부 절차는 하드코딩 금지 | 19 C.F.R. §133.21 / §133.22 · https://www.law.cornell.edu/cfr/text/19/133.21 |
+| 플랫폼 신고 정책(Google/eBay) | 적법 재판매·비교광고·nominative 사용과 침해를 구분; 플랫폼별 자격·양식 상이 | 2026-06-29 확인(보조) | 12장에 방향 신호로만 반영, 본문 단정 금지. 자격·양식·예외는 제출 직전 각 플랫폼 정책 재확인 | https://support.google.com/adspolicy/answer/6118?hl=en · https://www.ebay.com/help/policies/listing-policies/selling-policies/intellectual-property-vero-program?id=4349 |
 
 ## Editorial Rule
 
@@ -44,3 +48,11 @@
 - owner Stage 2로 stale 4건(TTAB·MAINT·CBP·ATY), legacy pending 4건(fee·Assignment Center·SOU·LOP), Madrid outbound 보조 claim을 1차 출처로 재확인했다.
 - 본문(8·13장)과 claim-map은 2026-06-28 기준 재스탬프했고, registry `factsReviewedOn` 후보로 적격하다.
 - 휘발성 수수료(CBP $190/class, 연방 filing $405 등)는 구조적 표기 유지(반영 제외).
+
+## 2026-06-29 note (Jack Daniel's 집행 보강)
+
+- 첨부 deep-research 보고서를 리드로 삼되, 본문 단정은 1차 출처(SCOTUS slip opinion·USC·CFR)로만 확인했다(보고서 citeturn 토큰은 근거로 쓰지 않음).
+- 신규 claim 3건: USA-PARODY-001(Rogers 미적용 → §scotus-jack-daniels), USA-DILUTION-001(§1125(c)·환송심 → §1125(c)+scotus+azd-remand), USA-CBP-002(133.21/133.22).
+- 13장에 "출처표지적 사용 판별과 혼동·희석 이중 트랙"(Bad Spaniels 미니 케이스 포함), 12장에 신고 프레이밍·오버리치 경계·CBP 분류표, 14장에 라우팅 한 줄·오버리치 가드 추가.
+- Google/eBay는 보조 출처로만 등록(claim-map 단정 대상 아님). claim-map 총 12→15건.
+- 1차 출처 직접 확인 완료이므로 registry `factsReviewedOn` 2026-06-29 후보로 적격(owner 최종 attestation 전제).

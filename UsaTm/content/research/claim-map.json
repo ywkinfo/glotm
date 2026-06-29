@@ -156,6 +156,42 @@
       "lastVerified": "2026-06-28",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO Madrid outbound applicants)."
+    },
+    {
+      "id": "USA-PARODY-001",
+      "jurisdiction": "US",
+      "claim": "침해자가 타인의 표장을 자기 상품의 출처표지(designation of source)로 사용하면 표현물용 문턱 심사(Rogers)는 적용되지 않고 통상의 혼동가능성 분석으로 들어간다. 다만 대법원은 Rogers의 일반적 타당성까지는 판단하지 않았다.",
+      "chapterRefs": ["Ch13", "Ch14"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["scotus-jack-daniels"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "conceptKey": "source_identifying_use",
+      "notes": "2026-06-29 1차출처 확인(SCOTUS Jack Daniel's Properties v. VIP Products, 599 U.S. 140 (2023)): 'When an alleged infringer uses a trademark as a designation of source for the infringer's own goods, the Rogers test does not apply.' 'We do not decide whether the Rogers test is ever appropriate.'"
+    },
+    {
+      "id": "USA-DILUTION-001",
+      "jurisdiction": "US",
+      "claim": "TDRA dilution(blurring·tarnishment)은 유명상표를 위한 별도 청구원인이며, 패러디·비판·논평 fair use 예외는 그 표장을 '자기 상품의 출처표지로 사용하는 경우'에는 적용되지 않는다. 따라서 패러디 상품이라도 출처표지로 쓰이면 혼동이 약해도 tarnishment가 인정될 수 있다(Jack Daniel's 환송심에서 혼동은 부정, tarnishment는 인정, 영구금지명령이 적절하다고 판단).",
+      "chapterRefs": ["Ch13"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["usc-15-1125c", "scotus-jack-daniels", "azd-jack-daniels-2025-remand"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "conceptKey": "dilution_tarnishment",
+      "notes": "2026-06-29 1차출처 확인: 15 U.S.C. §1125(c)(1) blurring·tarnishment, §1125(c)(3)(A) fair use 예외는 'other than as a designation of source for the person's own goods or services'. SCOTUS: parody는 'exempt only if not used to designate source'. 환송심 결론 문구는 Arizona D.C. order 기준."
+    },
+    {
+      "id": "USA-CBP-002",
+      "jurisdiction": "US",
+      "claim": "CBP는 기록상표에 대해 counterfeit(등록표장과 동일하거나 실질적으로 구별 불가)와 copying-or-simulating(공중이 기록표장과 연관 지을 만큼 유사)을 구분한다. counterfeit는 억류 후 압수·몰수 대상이고 표장 제거가 허용되지 않으며, copying-or-simulating은 통관 거절·억류 대상으로 기간 내 표장 제거·권리자 동의·반송 등 구제 경로가 있다.",
+      "chapterRefs": ["Ch12"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["cfr-19-133-21", "cfr-19-133-22"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "conceptKey": "border_classification",
+      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지."
     }
   ]
 }
