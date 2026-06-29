@@ -45,6 +45,8 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 - Hermes 컨테이너에 **writable GloTm clone 미마운트.**
 - (P2.5에서만) refresh request inbox는 **JSON 요청 파일 생성 권한**으로만. broker가 host-side에서
   schema·allowlist·rate limit을 검증한다.
+  여기서 channel allowlist는 payload sanity check이며 security boundary가 아니다. 실제 boundary는
+  dedicated inbox mount와 host-side command-free broker다.
 - (P4에서만) relay SSH key는 **제한된 발화 권한**으로만(§6).
 
 이는 새 패턴이 아니다 — 기존 bounded operator도 동일 원리로 컨테이너에 "GitHub token·host env를 넘기지
@@ -107,6 +109,7 @@ relay는 (b)를 그대로 호출하므로 (a)를 Claude로 바꿔도 operator는
 - **P2 report-only**: `@Hermes`는 read-only context로 **분석·보고만**. SSH 실행 능력 없음.
 - **P2.5 request-only refresh**: `@Hermes`는 stale/unknown/latest 요청 시 JSON request 파일만 생성한다.
   host broker가 검증 후 read-only context refresh를 수행한다. SSH 실행·GitHub write·PR 생성 능력 없음.
+  channel allowlist는 컨테이너가 쓴 request payload 값이므로 보안 경계로 취급하지 않는다.
 - **P3 manual bridge**: `@Hermes`는 **권장 slug + 근거만 제시**, **owner가 직접** `ssh hermes-host
   <slug>` 발화(runbook "Slack-first manual task rhythm" 그대로). **`@Hermes`에 relay key 없음.**
 - **P4 auto relay**: `@Hermes`가 직접 `ssh hermes-host <slug>`를 발화. **owner 승인 필수**

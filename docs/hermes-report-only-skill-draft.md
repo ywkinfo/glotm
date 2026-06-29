@@ -286,6 +286,8 @@ after owner/admin runs installer + doctor on the VPS and a Slack canary proves:
 ## Runtime Enforcement
 
 - Slack channel allowlist: `#glotm_hermes` (`C0B4W9B3CQ4`) only.
+  This is a request payload sanity check, not a security boundary; the security boundary is the
+  dedicated writable inbox leaf plus the host-side command-free broker.
 - `slack.channel_skill_bindings` pins `glotm-report-only` to the channel at session start.
 - `slack.channel_prompts` injects the P2 boundary and required report shape on every turn.
 - Host `/srv/hermes/report-context` is mounted at `/opt/glotm-context:ro`; the checkout and metadata

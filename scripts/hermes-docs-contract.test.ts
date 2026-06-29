@@ -26,6 +26,8 @@ describe("hermes docs contract", () => {
     expect(s).toContain("실행 능력이 없는 advisor");
     expect(s).toContain("request-only broker");
     expect(s).toContain("bounded task 실행 트리거가 아니다");
+    expect(s).toContain("channel allowlist는 request payload sanity check");
+    expect(s).toContain("security boundary가 아니다");
   });
 
   it("3. AGENTS.md lists Slack @Hermes as a P2.5 request-only refresh actor", () => {
