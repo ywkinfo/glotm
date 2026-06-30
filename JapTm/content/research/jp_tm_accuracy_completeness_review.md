@@ -1,14 +1,14 @@
 # JapTm Accuracy & Completeness Review
 
-검수 기준일: 2026-03-31
+검수 기준일: 2026-06-29 (mature 승격 review)
 
 ## 전체 총평
 
 - 대상 문서: `JapTm/content/source/master.md`
-- 검수 수준: verification refresh + density push 이후 beta 유지 검토
-- 검수 초점: 정확도(공식 1차 출처 기준), 충실도(실무 실행 가능성), lighter-track 공개본 유지 적합성
+- 검수 수준: mature 승격을 위한 full-QA verification refresh + density 보강 + claim-map 신설
+- 검수 초점: 정확도(공식 1차 출처 기준), 충실도(실무 실행 가능성), growth/mature/full-QA 공개본 적합성
 
-현재 `JapTm` 본문은 beta lighter-track 공개 기준에서 계속 공개 가능한 상태다. 이번 라운드에서 고위험 사실 항목을 일본 공식 1차 출처로 다시 대조했고, 보강 필요로 지적됐던 핵심 장과 부록 FAQ도 실무 선택지 중심으로 보완했다. 결과적으로 치명적 사실 오류, 출처 공백, 재작성 필요 장은 남지 않았다.
+현재 `JapTm` 본문은 growth / mature / full-QA 공개 기준에서 공개 가능한 상태다. 이번 라운드에서 고위험 사실 항목을 일본 공식 1차 출처로 다시 대조했고(`claim-map.json` 12건 신설), 병존동의제도(2024-04-01 시행)를 본격 항목으로 보강했으며, 저밀도 장에 운영형 섹션을 추가해 검색 밀도를 mature 게이트(≥12.0) 위로 끌어올렸다. 결과적으로 치명적 사실 오류, 출처 공백, 재작성 필요 장은 남지 않았다.
 
 다만 법률·행정 정보는 본질적으로 변동 가능성이 있으므로, 아래 항목은 실제 공개 직전 마지막 확인을 권고한다. 이 권고는 현재 상태가 미완이라는 뜻이 아니라, beta lighter-track 운영에서도 verification hygiene를 유지하라는 의미다.
 

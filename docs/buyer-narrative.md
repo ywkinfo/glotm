@@ -43,7 +43,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `MexTm`, `ChaTm`: growth. buyer entry 질문을 filing·maintenance·border-control handoff까지 이어 잠그는 국가 가이드
 - `EuTm`: growth. EU+UK scope와 rights/route/evidence handoff를 두껍게 다루는 가이드
 - `UsaTm`: growth mature. USPTO filing, maintenance, TTAB/court/platform/CBP enforcement orchestration을 full QA로 다루는 supporting growth 가이드
-- `JapTm`: incubate beta. lighter track과 standard QA를 유지하며 route/maintenance reader utility를 다듬는 가이드
+- `JapTm`: growth mature. JPO filing, examination·병존동의제도, maintenance, enforcement·customs orchestration을 full QA로 묶은 supporting growth 가이드
 - `UKTm`: incubate beta. early-track verified 공개본과 standard QA를 유지하며 filing/maintenance/online-incident reader utility를 다듬는 가이드
 
 ## Current locked funnel

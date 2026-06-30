@@ -3,11 +3,12 @@
 이 문서는 `JapTm` v1에서 우선 참조할 1차 출처를 정리한 레지스터다.
 최종 공개본에 들어가는 민감한 사실은 아래 출처 중 해당 페이지를 출판 직전에 다시 확인한다.
 
-기준일: 2026-03-31
+기준일: 2026-06-29 (mature 승격 refresh)
 
 | 구분 | 출처 | 용도 | URL |
 |---|---|---|---|
 | JPO | Outline of the Trademark System | 일본 상표 제도 개요, 존속기간, 비전통상표 개관 | https://www.jpo.go.jp/e/system/trademark/gaiyo/chizai08.html |
+| JPO | 병존동의제도(consent system) 안내 | 2023 개정 상표법·2024-04-01 시행, 제4조 제1항 제11호 거절 극복(동의 + 비혼동 요건) 확인. 정확 guidance URL은 공개 직전 재확인 | https://www.jpo.go.jp/e/system/trademark/gaiyo/chizai08.html |
 | JPO | Trademarks FAQ | 선출원주의, 갱신, opposition, 해외 거주자 실무 제약 확인 | https://www.jpo.go.jp/e/faq/yokuaru/trademark.html |
 | JPO | Step-by-step Guide for Trademark | 출원 흐름, 대리인, 수수료, 검색/갱신 실무 체크포인트 | https://www.jpo.go.jp/e/system/professionals/step-by-step-trademark.html |
 | JPO | Trademark Search | J-PlatPat 검색 항목과 검색 포인트 확인 | https://www.jpo.go.jp/e/support/j_platpat/trademark_search.html |
