@@ -9,6 +9,14 @@
 - report ordering: `../src/reports/registry.ts`
 - KPI sheet: `portfolio-scorecard.md`
 
+## Owner override log
+
+lifecycle 상향은 원칙적으로 월 1회 scorecard 리뷰에서만 반영하며, Phase 2.5의 "확장 금지" 기조에 대한 예외(owner override)는 여기에 기록해 이후 리뷰에서 맥락이 손실되지 않게 한다.
+
+| 일자 | 대상 | 결정 | 근거 |
+|---|---|---|---|
+| 2026-06-29 | `JapTm` | beta/standard/incubate → mature/full/growth 승급 (owner override) | Phase 2.5 hold 해제. claim-map 12건·1차출처 재대조, 병존동의제도(2024-04-01) 집행 보강, 저밀도 장 운영 섹션 보강(density 12.33), root full-QA 편입으로 mature 게이트 충족. Gateway 첫 화면 우선순위는 불변(supporting growth lane). |
+
 ## health:report 해석 규칙
 
 `npm run health:report`는 **recent lane-state provenance summary**다. end-to-end verified proof가 아니다.
@@ -96,7 +104,7 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 | Guide | Locked Promise | Status | Evidence |
 |------|------|------|------|
 | `UsaTm` | growth mature full-QA, no draft notice, filing/maintenance/enforcement orchestration utility 유지 |  |  |
-| `JapTm` | beta lighter-track, no draft notice, route/maintenance/evidence utility 유지 |  |  |
+| `JapTm` | growth mature full-QA, no draft notice, route/examination·consent/maintenance/enforcement orchestration utility 유지 |  |  |
 | `UKTm` | beta early-track verified 공개본 유지, standard QA evidence 4-file 정합, continue reading/search 안정성 유지 |  |  |
 
 ## Gateway hero check

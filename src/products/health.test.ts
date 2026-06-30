@@ -46,8 +46,8 @@ describe("portfolio health helpers", () => {
         id: "content",
         status: "fail",
         verification: expect.objectContaining({
-          fullPipelineProductSlugs: ["latam", "mexico", "usa", "china", "europe", "uk"],
-          shortcutProductSlugs: ["japan"]
+          fullPipelineProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
+          shortcutProductSlugs: []
         })
       },
       {
@@ -64,9 +64,9 @@ describe("portfolio health helpers", () => {
       reportSummary: "root content full pipeline"
     });
     expect(buildProductVerificationRecord({ slug: "japan" })).toEqual({
-      mode: "root-shortcut-refresh",
-      scopeLabel: "root shortcut refresh",
-      reportSummary: "root content shortcut refresh only"
+      mode: "root-full-pipeline",
+      scopeLabel: "root full pipeline",
+      reportSummary: "root content full pipeline"
     });
     expect(buildProductVerificationRecord({ slug: "uk" })).toEqual({
       mode: "root-full-pipeline",
@@ -77,10 +77,8 @@ describe("portfolio health helpers", () => {
 
   it("marks grandfathered beta snapshots as verification refresh candidates", () => {
     const usa = products.find((product) => product.slug === "usa");
-    const japan = products.find((product) => product.slug === "japan");
 
     expect(usa).toBeDefined();
-    expect(japan).toBeDefined();
     expect(
       getProductHealthVerdict({
         ...usa!,
@@ -90,7 +88,6 @@ describe("portfolio health helpers", () => {
         qaLevel: "smoke"
       })
     ).toBe("verification-refresh-needed");
-    expect(getProductHealthVerdict(japan!)).toBe("hold");
   });
 
   it("surfaces upgrade-ready products without auto-promoting them", () => {
@@ -133,9 +130,9 @@ describe("portfolio health helpers", () => {
       "china",
       "mexico",
       "europe",
+      "usa",
       "japan",
-      "uk",
-      "usa"
+      "uk"
     ]);
   });
 
@@ -228,7 +225,7 @@ describe("portfolio health helpers", () => {
     expect(getProductHealthVerdict(china!)).toBe("hold");
   });
 
-  it("treats the refreshed JapTm beta state as hold with no current lifecycle gaps", () => {
+  it("treats the promoted JapTm mature state as hold with no current lifecycle gaps", () => {
     const japan = products.find((product) => product.slug === "japan");
 
     expect(japan).toBeDefined();

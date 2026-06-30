@@ -1,11 +1,16 @@
 # JapTm Root Sync Input
 
-이 문서는 `JapTm` lighter-track 유지 레인을 root sync 전에 정리해 두는 handoff 메모다.
+> [!NOTE]
+> 2026-06-29 `JapTm`은 owner override로 `growth / mature / full-QA`로 승급했다. 아래 "Lighter-Track Focus" 등
+> lighter-track·incubate·beta 전제로 쓰인 서술은 그 시점의 유지-레인 기록이며 현재 상태가 아니다. 현재 정본은
+> `src/products/registry.ts`(growth/mature/full, 15장/185엔트리)와 `PROJECT-OVERVIEW.md`·`docs/portfolio-scorecard.md`다.
+
+이 문서는 `JapTm` 유지 레인을 root sync 전에 정리해 두던 handoff 메모다.
 루트 authoritative metadata는 `src/products/registry.ts`, workspace 계약은 `JapTm/README.md`, `JapTm/Harness/Architecture.md`, `JapTm/Harness/Content-Spec.md`를 기준으로 읽는다.
 
 ## Baseline One-Liner
 
-`JapTm`은 루트 `/japan`에 연결된 live incubate country guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 145개 / incubate tier · beta lifecycle / standard QA`다.
+`JapTm`은 루트 `/japan`에 연결된 live growth country guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 185개 / growth tier · mature lifecycle / full QA`다.
 
 ## Authority Order
 
@@ -26,10 +31,10 @@
 | Field | Value | Source |
 | --- | --- | --- |
 | Product | `JapTm` / `/japan` / `coverageType: country` / `availability: live_shell` | `src/products/registry.ts` |
-| Summary | `JPO route, maintenance, evidence utility`를 lighter track으로 유지하는 incubate country guide | `src/products/registry.ts` |
+| Summary | `JPO route, examination·consent, maintenance, enforcement·customs orchestration`을 full QA로 묶은 growth country guide | `src/products/registry.ts` |
 | Chapter count | `15` | `src/products/registry.ts`, `JapTm/content/source/manifest.json` |
-| Search entry count | `145` | `src/products/registry.ts`, `JapTm/content/generated/search-index.json` |
-| Tier / lifecycle / QA | `incubate` / `beta` / `standard` | `src/products/registry.ts` |
+| Search entry count | `185` | `src/products/registry.ts`, `JapTm/content/generated/search-index.json` |
+| Tier / lifecycle / QA | `growth` / `mature` / `full` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
 | Root metadata verifiedOn | `2026-06-02` | `src/products/registry.ts` |
 | Workspace gate rerun | `2026-04-21` `npm --prefix JapTm run content:prepare` pass (이 레인 마지막 로컬 재현; root verifiedOn은 이후 shared root gate로 2026-06-02 re-stamp) | local rerun + shared root gate |
