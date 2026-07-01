@@ -40,7 +40,7 @@
 >
 > **Update (2026-06-09 · 2026-06-10):** EuTm는 이후 growth/mature로 승급(15장 / 260 entries / density 17.3, registry 정본, verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10). 위 표는 2026-06-08 스냅샷이라 EuTm 행의 tier/lifecycle(validate/beta)·본문 깊이 컬럼은 승급·재측정 전 값이다.
 >
-> **Update (2026-06-28):** UsaTm도 이후 growth/mature로 승급(15장 / 203 entries / density 13.5, claim-map 12건, verifiedOn/factsReviewedOn 2026-06-28). 위 표의 UsaTm 행은 승급·재측정 전 dated snapshot으로만 읽는다.
+> **Update (2026-06-29):** UsaTm도 이후 growth/mature로 승급·유지(15장 / 206 entries / density 13.7, claim-map 15건, verifiedOn/factsReviewedOn 2026-06-29). 위 표의 UsaTm 행은 승급·재측정 전 dated snapshot으로만 읽는다.
 
 ## 4. 콘텐츠 갭 — 3축 (갭 심각도 · 계약 위반 · 정본 실행순서)
 

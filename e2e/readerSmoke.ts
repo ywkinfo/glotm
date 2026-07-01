@@ -80,7 +80,7 @@ export const readerSmokeCases = [
     bookmarkSectionId: "evidence-hygiene-quick-check",
     bookmarkSectionTitle: "evidence hygiene quick check",
     searchQuery: "route memo board",
-    searchResultText: "lighter-track route memo board"
+    searchResultText: "route memo board"
   },
   {
     name: "UKTm",

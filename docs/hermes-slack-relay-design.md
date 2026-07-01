@@ -1,7 +1,9 @@
 # Hermes Slack B-relay 설계와 운영 상태
 
-> **Status (2026-06-26): P2 manual-sync read-only context active(canary 통과) · P3 = owner manual SSH · P4 = 비범위.**
-> 본 B-relay 설계 중 **P2 report-only advisor만 배포·검증 완료**됐다(정본:
+> **Status (2026-06-29): P2 manual-sync baseline active(canary 통과) · P2.5 request-only refresh broker
+> contract implemented · P3 = owner manual SSH · P4 = 비범위.**
+> 본 B-relay 설계 중 **P2 baseline은 배포·검증 완료**됐고, **P2.5 request-only refresh broker는 repo
+> 계약/구현 반영 후 VPS install·doctor·Slack canary 대기** 상태다(정본:
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). **P3**(manual bridge)는 owner가 직접 `ssh hermes-host <slug>`를
 > 발화하는 기존 경로이고, **P4**(auto relay)는 owner 승인 + 토큰 전환 전까지 **비범위**다. 운영 정본은
@@ -41,6 +43,10 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 - Codex Apps GitHub write 확인의 **자동승인 플래그 비활성화**(write elicitation은 기본 거부).
 - Hermes 컨테이너에 **host env 미주입.**
 - Hermes 컨테이너에 **writable GloTm clone 미마운트.**
+- (P2.5에서만) refresh request inbox는 **JSON 요청 파일 생성 권한**으로만. broker가 host-side에서
+  schema·allowlist·rate limit을 검증한다.
+  여기서 channel allowlist는 payload sanity check이며 security boundary가 아니다. 실제 boundary는
+  dedicated inbox mount와 host-side command-free broker다.
 - (P4에서만) relay SSH key는 **제한된 발화 권한**으로만(§6).
 
 이는 새 패턴이 아니다 — 기존 bounded operator도 동일 원리로 컨테이너에 "GitHub token·host env를 넘기지
@@ -54,19 +60,27 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
 
 ### 4.1 Active: live read-only checkout
 
-> **Status: active (2026-06-26)** — host-side 구현(`glotm-hermes`:
+> **Status: P2 active / P2.5 repo contract ready (2026-06-29)** — host-side P2 구현(`glotm-hermes`:
 > `lib/refresh-report-context.sh`, `scripts/install-report-context.sh`,
-> `scripts/doctor-report-context.sh`, manual one-shot service)을 VPS에 배포했고 doctor 및 Slack canary를 통과했다.
+> `scripts/doctor-report-context.sh`, manual one-shot service)은 VPS에 배포했고 doctor 및 Slack canary를 통과했다.
+> P2.5 구현(`lib/report-context-refresh-broker.sh`,
+> `systemd/glotm-report-context-refresh-broker.{path,service}`)은 repo에 반영됐고 VPS install·doctor·canary가
+> 남아 있다.
 
 기존 §4의 두 선택지 중 **read-only 체크아웃 분기를 live로** 격상했다. 동결 snapshot 대신 owner/admin이
 명시적으로 sync한 context를 쓰되 능력 경계(§3)는 그대로 둔다 — 공개 repo라 **토큰이 필요 없고**,
 마운트는 **read-only**다.
 
-- **Host-side**: owner/admin이 일반 VPS SSH 세션에서 `glotm-report-context-refresh.service`를 수동
-  one-shot으로 실행해 `/srv/hermes/report-context/repo`를 `origin/main`과 ff-sync한다(`git fetch` →
-  `merge --ff-only`; dirty/divergence는 fail-closed로 기존 checkout/metadata 보존, 자동 reset 없음).
-  credential은 sync 시점에 차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`). legacy 자동
-  timer는 제거됐고 mask하지 않는다.
+- **Host-side**: owner/admin fallback은 일반 VPS SSH 세션에서 `glotm-report-context-refresh.service`를
+  수동 one-shot으로 실행한다. P2.5에서는 `@Hermes`가 request inbox에 JSON 파일을 만들고, host broker가
+  schema·channel allowlist·request age·rate limit·unknown key를 검증한 뒤 같은 refresh script를 호출한다.
+  request 파일은 `.tmp`에 완성본을 쓴 뒤 `.json`으로 atomic rename한다. path unit은 `*.json` 등장에
+  반응하므로 최종 경로를 먼저 만들지 않는다.
+  Codex `workspace-write` sandbox에는 `/opt/glotm-refresh-requests/inbox`만 추가 writable root로 둔다.
+  broker가 root wrapper로 request를 읽을 수는 있지만 checkout refresh는 `hermes`로 drop한다.
+  refresh는 `/srv/hermes/report-context/repo`를 `origin/main`과 ff-sync한다(`git fetch` → `merge --ff-only`;
+  dirty/divergence는 fail-closed로 기존 checkout/metadata 보존, 자동 reset 없음). credential은 sync 시점에
+  차단(HOME 격리 + `GIT_CONFIG_*` + `GIT_ASKPASS=/bin/false`). legacy 자동 timer는 제거됐고 mask하지 않는다.
 - **Container mount**: `/srv/hermes/report-context` 전체 → `/opt/glotm-context:ro`
   (**`/opt/data` 바깥** — 컨테이너-writable 볼륨 안에 두면 read-only가 무의미). 따라서 checkout은
   `/opt/glotm-context/repo`, metadata는 `/opt/glotm-context/metadata.json`에서 함께 보인다.
@@ -75,10 +89,15 @@ Docker backend에서는 "컨테이너가 경계"라는 이유로 위험 명령 �
   `GIT_OPTIONAL_LOCKS=0`을 환경에 둔다. read-only bind mount가 쓰기 하드 경계이며 이 Git 설정은
   ownership 검사와 불필요한 lock 시도만 제어한다.
 - **Advisor**: `/opt/glotm-context/repo`의 파일·`git` 이력을 `read-grounded`로 읽고,
-  `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`를 보고 헤더에 채운다. `Sync: manual`은
-  metadata 필드가 아니라 배포 모델 상수다. metadata 손상·HEAD 불일치는 `unknown`. test/health lane
-  실행은 여전히 `미검증`(lane-verified는 owner-work).
+  `/opt/glotm-context/metadata.json`에서 `Commit`·`Refreshed`를 보고 헤더에 채운다. `Sync: manual` /
+  `Sync: request-only`는 metadata 필드가 아니라 배포 모델 추론이다. metadata 손상·HEAD 불일치는
+  `unknown`. 헤더 source는 `/opt/glotm-context/repo`, `/opt/glotm-context/metadata.json`,
+  `/opt/glotm-refresh-requests/inbox` writability check뿐이다. `/opt/hermes`,
+  `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`는 Hermes Agent runtime 정보라 GloTm context
+  source가 아니며, 그 경로에서 읽은 SHA·build marker는 헤더에 쓰지 않는다. test/health lane 실행은
+  여전히 `미검증`(lane-verified는 owner-work).
 - **승격 완료**: active skill 헤더는 `Snapshot`/시간 기반 freshness 대신 `Refreshed`/`Sync`를 사용한다.
+  P2.5에서는 request inbox가 writable일 때 `Sync: request-only`를 쓴다.
 
 ## 5. 모델 레이어 분리
 
@@ -96,6 +115,9 @@ relay는 (b)를 그대로 호출하므로 (a)를 Claude로 바꿔도 operator는
 > trail, 유일 트리거는 owner/admin SSH). 아래는 그 위에 얹는 단계.
 
 - **P2 report-only**: `@Hermes`는 read-only context로 **분석·보고만**. SSH 실행 능력 없음.
+- **P2.5 request-only refresh**: `@Hermes`는 stale/unknown/latest 요청 시 JSON request 파일만 생성한다.
+  host broker가 검증 후 read-only context refresh를 수행한다. SSH 실행·GitHub write·PR 생성 능력 없음.
+  channel allowlist는 컨테이너가 쓴 request payload 값이므로 보안 경계로 취급하지 않는다.
 - **P3 manual bridge**: `@Hermes`는 **권장 slug + 근거만 제시**, **owner가 직접** `ssh hermes-host
   <slug>` 발화(runbook "Slack-first manual task rhythm" 그대로). **`@Hermes`에 relay key 없음.**
 - **P4 auto relay**: `@Hermes`가 직접 `ssh hermes-host <slug>`를 발화. **owner 승인 필수**
@@ -123,6 +145,12 @@ relay key는 GitHub write를 직접 못 해도 **bounded write 파이프라인�
   - 보고는 `Context` · `Commit` · `Refreshed` · `Sync` · `Mode` 5개 헤더로 시작한다.
   - metadata/HEAD 불일치나 손상은 `Commit: unknown`, `Refreshed: unknown`, `Sync: unknown`으로 낮춘다.
   - `Refreshed`는 마지막 성공 sync 실행 시각이며, `UP_TO_DATE` no-op sync도 갱신된다.
+  - P2.5 broker가 설치된 경우 `Sync: request-only`, manual fallback만 있는 경우 `Sync: manual`로 표기한다.
+    `Sync` 값은 `manual` / `request-only` / `unknown`만 허용하며 HEAD 비교, branch 이름, request 생성
+    상태, freshness 설명을 넣지 않는다.
+  - `Mode`는 `P2.5 request-only refresh; no SSH relay; no repo write access` 그대로 쓴다.
+  - `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`가 헤더 근거로 등장하면
+    report-context가 아니라 runtime checkout을 본 것이므로 해당 헤더는 무효다.
   - lane을 실제 실행하지 않은 항목은 **`미검증`**으로 표기한다.
 
 ## 8. `~/.hermes` 설정 영속성
@@ -143,6 +171,9 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
   [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(legacy filename 유지).
   `#glotm_hermes` channel skill binding + 매 턴 channel prompt를 적용했고 `~/.hermes` 백업을 남겼다.
   owner/admin manual-sync one-shot service, exact-path `safe.directory`, `GIT_OPTIONAL_LOCKS=0`도 배포됐다.
+- **P2.5 request-only refresh**: `glotm-hermes`의 request broker script + systemd path/service를 배포하고
+  `/opt/glotm-refresh-requests/inbox` writable leaf만 gateway에 추가 mount한다. canary 전에는 active로
+  단정하지 않는다.
 - **P3 manual bridge**: `@Hermes`=제안만, owner=발화. relay key 없음.
 - **P4 auto relay**: owner 승인 + 토큰 전환 + §6 relay key 하드닝(양층) 후에만.
 
@@ -153,6 +184,9 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
   context 종류·SHA·마지막 sync 시각·`Sync: manual`·미검증 표기 포함 확인. 2026-06-26
   read-grounded/evidence-boundary/refusal canary 통과. canary 시간대에 새 bounded run/worktree/branch/PR
   없음, legacy timer `not-found`/`inactive`, 20분 이상 자동 service activation 없음.
+- **P2.5**: valid JSON request가 brokered refresh 또는 rate-limited archive를 만들고, invalid JSON
+  command payload가 rejected archive로 이동하며, 새 bounded run/worktree/branch/PR 및 credential exposure가
+  없음을 확인.
 - **P4**: forced-command가 non-allowlisted slug 거부 + 감사 로그 기록 + gateway allowlist 외 사용자
   차단 확인.
 
@@ -162,4 +196,4 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 - VPS/Slack 변경·토큰·relay key·자동화는 전부 **owner**(charter 승인 필수). 본 문서는 repo 설계 문서일 뿐.
 - **자동 발화(P4)는 owner 승인 + 토큰 전환 전까지 보류.** 채택 시 runbook/charter reconcile은 별도 doc-PR.
 - report-context 자동 timer로 되돌릴 때는 timer만 수동 enable하지 않는다. 코드 revert → 재배포 → doctor →
-  Slack canary 순서로만 active 계약을 바꾼다.
+  Slack canary 순서로만 active 계약을 바꾼다. P2.5 broker는 timer가 아니라 request path unit이다.

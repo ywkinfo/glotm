@@ -4,9 +4,9 @@
 
 이 장은 일본 상표 운영을 “권리 보유”가 아니라 “권리 유지 시스템”으로 보는 장이다. 등록된 권리를 실제 사업 포트폴리오와 계속 맞추고, 조직 개편과 거래 구조 변화를 반영하며, 갱신과 분쟁 대응에 필요한 자료를 잃지 않게 만드는 것이 핵심이다.
 
-### lighter-track maintenance owner board
+### maintenance owner board
 
-JapTm의 유지관리 장은 full expansion보다 “누가 무엇을 놓치지 않을까”를 빠르게 다시 보는 용도에 가깝다. 그래서 등록 직후 아래 네 줄을 먼저 적어 두면, lighter track에서도 유지관리 공백을 크게 줄일 수 있다.
+JapTm의 유지관리 장은 full expansion보다 “누가 무엇을 놓치지 않을까”를 빠르게 다시 보는 용도에 가깝다. 그래서 등록 직후 아래 네 줄을 먼저 적어 두면, 어떤 운영 규모에서도 유지관리 공백을 크게 줄일 수 있다.
 
 | 등록 직후 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
 |---|---|---|---|
@@ -97,7 +97,7 @@ JapTm의 유지관리 장은 full expansion보다 “누가 무엇을 놓치지 
 
 ## 분기 운영 quick triage
 
-lighter track에서는 완벽한 포트폴리오 리뷰보다 “정상 / 보완 / 공백”을 빠르게 나누는 편이 더 유효하다.
+운영 현장에서는 완벽한 포트폴리오 리뷰보다 “정상 / 보완 / 공백”을 빠르게 나누는 편이 더 유효하다.
 
 | 상태 | 의미 | 기본 액션 |
 |---|---|---|
@@ -105,4 +105,4 @@ lighter track에서는 완벽한 포트폴리오 리뷰보다 “정상 / 보완
 | 보완 | 자료는 있으나 표기 drift 또는 거래 문맥이 약함 | 다음 분기 전 linkage 보강 |
 | 공백 | 최근 사용 자료나 owner memo가 비어 있음 | 즉시 evidence packet 재구성 |
 
-이 triage 표가 있으면 JapTm은 standard QA 유지와 reader utility 점검이라는 현재 lane 목적에 더 잘 맞게 작동한다.
+이 triage 표가 있으면 JapTm은 full QA 유지와 reader utility 점검이라는 현재 lane 목적에 더 잘 맞게 작동한다.

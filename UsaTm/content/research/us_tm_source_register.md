@@ -54,8 +54,23 @@
 | tmep-1715-lop | TMEP §1715 Letters of Protest | https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1700d1e853.html |
 | uspto-madrid-outbound | USPTO Madrid outbound applicants | https://www.uspto.gov/ip-policy/international-protection/madrid-protocol/outbound-applicants |
 | cbp-ipr-protection | CBP Help Protect IPR (e-Recordation) | https://www.cbp.gov/trade/priority-issues/ipr/protection |
+| scotus-jack-daniels-v-vip-2023 | Jack Daniel's Properties, Inc. v. VIP Products LLC, 599 U.S. 140 (2023) | https://www.supremecourt.gov/opinions/22pdf/22-148_3e04.pdf |
+| azd-jack-daniels-v-vip-2025-remand | Jack Daniel's 환송심 order (D. Ariz., 2:14-cv-02057) | https://www.govinfo.gov/content/pkg/USCOURTS-azd-2_14-cv-02057/pdf/USCOURTS-azd-2_14-cv-02057-3.pdf |
+| usc-15-1125 | 15 U.S.C. §1125(c) (dilution; (c)(3) fair use 제외 단서) | https://www.law.cornell.edu/uscode/text/15/1125 |
+| cfr-19-133-21 | 19 C.F.R. §133.21 (counterfeit 표장 억류·압수·몰수) | https://www.law.cornell.edu/cfr/text/19/133.21 |
+| cfr-19-133-22 | 19 C.F.R. §133.22 (copying or simulating 통관 거절·억류) | https://www.law.cornell.edu/cfr/text/19/133.22 |
 
 USC/CFR·USPTO·CBP 항목은 2026-06-28 owner scorecard review에서 한 번 더 1차출처로 확인하고 claim-map의 `lastVerified`를 재스탬프했다.
+SCOTUS Jack Daniel's·환송심·§1125(c)·19 C.F.R. §133.21/§133.22 항목은 2026-06-29 Jack Daniel's 집행 보강 시 1차출처로 확인했다(USA-PARODY-001·USA-DILUTION-001·USA-CBP-002).
+
+## 보조 출처 (12장 플랫폼 신고 맥락)
+
+플랫폼 정책은 claim-map 단정 대상이 아니라 방향 잡기용 보조 출처로만 인용한다. 본문에 단정을 두지 않고, 정확한 신고 자격·양식·예외는 제출 직전 각 플랫폼 최신 정책으로 확인한다.
+
+| 구분 | 출처 | 용도 | URL |
+|---|---|---|---|
+| Google | Google Ads trademark policy | 적법 브랜드명 사용과 침해 구분, 신고 구조 | https://support.google.com/adspolicy/answer/6118?hl=en |
+| eBay | eBay Intellectual Property / VeRO | 정품 재판매 허용 범위와 권리자 신고 경로 | https://www.ebay.com/help/policies/listing-policies/selling-policies/intellectual-property-vero-program?id=4349 |
 
 ## Working Rule
 

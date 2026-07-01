@@ -102,8 +102,8 @@ describe("health report CLI", () => {
     });
     expect(report.root.find((lane: { id: string }) => lane.id === "content")).toMatchObject({
       verification: {
-        fullPipelineProductSlugs: ["latam", "mexico", "usa", "china", "europe", "uk"],
-        shortcutProductSlugs: ["japan"]
+        fullPipelineProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
+        shortcutProductSlugs: []
       }
     });
   });
@@ -139,7 +139,7 @@ describe("health report CLI", () => {
     expect(output).toContain("| health:runtime | pass |");
     expect(output).toContain("| health:content | fail |");
     expect(output).toContain("| health:release | fail |");
-    expect(output).toContain("verification scope: full pipeline: latam, mexico, usa, china, europe, uk; shortcut refresh: japan");
+    expect(output).toContain("verification scope: full pipeline: latam, mexico, usa, japan, china, europe, uk");
     expect(output).toContain("| usa | growth | mature | mature | hold | root content full pipeline |");
     expect(output).toContain("## Research Coverage");
     expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 0 | 0 | pass |");

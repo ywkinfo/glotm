@@ -1,39 +1,47 @@
-# Hermes P2 Report-only Skill — Active Spec
+# Hermes P2.5 Request-only Refresh Skill — Active Spec
 
-> **Status (2026-06-26): active — owner SSH-only manual-sync context 배포·doctor·Slack canary 통과.**
-> This is the canonical spec for the P2 report-only `@Hermes` skill under `~/.hermes/skills/`,
+> **Status (2026-06-29): P2 manual-sync baseline active; P2.5 request-only refresh broker contract
+> implemented in repo and requires owner/admin VPS install·doctor·Slack canary before runtime activation.**
+> This is the canonical spec for the P2/P2.5 `@Hermes` skill under `~/.hermes/skills/`,
 > installed under **capability denial** (no SSH relay, no GitHub write auto-approval, no writable
-> GloTm clone, no host env mount). The only GloTm filesystem capability is the read-only bind mount
-> documented below. It grants no execution. Runtime binding and canary evidence are
+> GloTm clone, no host env mount). The default GloTm filesystem capability is the read-only bind mount
+> documented below; P2.5 adds only a narrow writable refresh-request inbox. It grants no task execution.
+> Runtime binding and canary evidence are
 > recorded below. 시퀀싱은 [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md), actor 지도는
 > [`../AGENTS.md`](../AGENTS.md).
 
 ## Purpose
 
-This spec implements the active P2 posture described in [`hermes-slack-relay-design.md`](hermes-slack-relay-design.md):
-`@Hermes` may answer GloTm questions in Slack using read-only context, but it must not execute
-`ssh hermes-host`, run the context refresh service, edit the repository, push branches, open PRs,
-call GitHub write APIs, or operate as the bounded operator.
+This spec implements the active P2/P2.5 posture described in
+[`hermes-slack-relay-design.md`](hermes-slack-relay-design.md): `@Hermes` may answer GloTm
+questions in Slack using read-only context. When the P2.5 broker is installed and the narrow inbox is
+mounted writable, it may create a refresh-request JSON file. It must not execute `ssh hermes-host`,
+run the context refresh service directly, edit the repository, push branches, open PRs, call GitHub
+write APIs, or operate as the bounded operator.
 
 The bounded operator remains `/srv/hermes/glotm-hermes`; any real change still goes through the
-owner/admin manual bridge.
+owner/admin manual bridge. The request broker refreshes only the public read-only context checkout.
 
 ## Owner Preconditions
 
 - `@Hermes` runs in a restricted profile with no GitHub write token, no host env passthrough, no
   writable GloTm clone, and no relay SSH key.
 - The GloTm context is the read-only single-branch checkout at `/opt/glotm-context/repo`.
+- If P2.5 is deployed, the only writable GloTm-adjacent path is
+  `/opt/glotm-refresh-requests/inbox`, mounted to the host broker inbox. No other host path is
+  writable.
 - The context source records `context_type`, `commit_sha`, and `refreshed_at` in
   `/opt/glotm-context/metadata.json`; there is no separate `sync_mode` field.
 - `~/.hermes` is backed up before adding or changing skills.
 
 ## Active live read-only context
 
-The primary `context_type` is **`read-only checkout`**: owner/admin manually syncs a single-branch
-clone of the **public** GloTm repo through the host one-shot service
-`glotm-report-context-refresh.service`. The legacy automatic timer is removed. The host mounts the
-whole `/srv/hermes/report-context` root **read-only** at `/opt/glotm-context`, so the advisor reads
-repository files and Git history from `/opt/glotm-context/repo` and sync metadata from
+The primary `context_type` is **`read-only checkout`**: a single-branch clone of the **public** GloTm
+repo is synced through the host one-shot service `glotm-report-context-refresh.service`. In P2 it is
+owner/admin manual-sync only. In P2.5, `@Hermes` can create a request JSON file and the host-side
+broker decides whether to call the same refresh path. The legacy automatic timer is removed. The
+host mounts the whole `/srv/hermes/report-context` root **read-only** at `/opt/glotm-context`, so the
+advisor reads repository files and Git history from `/opt/glotm-context/repo` and sync metadata from
 `/opt/glotm-context/metadata.json`.
 
 The active required header uses `Refreshed` and `Sync` instead of `Snapshot` or time-based freshness:
@@ -42,16 +50,24 @@ The active required header uses `Refreshed` and `Sync` instead of `Snapshot` or 
 Context: read-only checkout
 Commit: <SHA or unknown>
 Refreshed: <last successful sync run timestamp or unknown>
-Sync: <manual | unknown>
-Mode: P2 report-only; no SSH relay; no repo write access
+Sync: <manual | request-only | unknown>
+Mode: P2.5 request-only refresh; no SSH relay; no repo write access
 ```
 
-- **Sync**: `manual` when the checkout and metadata are valid. This is a deployment-model constant,
-  not a metadata field. If metadata is missing/corrupt or `commit_sha` does not match checkout
-  `HEAD`, set `Commit`, `Refreshed`, and `Sync` to `unknown`.
+- **Sync**: `request-only` when the checkout and metadata are valid and the P2.5 request inbox is
+  mounted writable; otherwise `manual` when the checkout and metadata are valid under the P2 baseline.
+  This is a deployment-model inference, not a metadata field. If metadata is missing/corrupt or
+  `commit_sha` does not match checkout `HEAD`, set `Commit`, `Refreshed`, and `Sync` to `unknown`.
+  `Sync` is exactly one of `manual`, `request-only`, or `unknown`; never put a comparison result,
+  request-file status, branch name, or free-text freshness note in this field.
 - **Refreshed**: metadata `refreshed_at`, meaning the last successful owner/admin sync run timestamp.
   It is updated for `SEEDED`, `UP_TO_DATE`, and `REFRESHED`; it is not a claim that a new commit was
   fetched.
+- **Header source guard**: the only valid sources for these five fields are
+  `/opt/glotm-context/repo`, `/opt/glotm-context/metadata.json`, and the request-inbox writability
+  check. Never use `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`, or any Hermes
+  Agent runtime checkout/build marker as a GloTm context source. If a draft header contains one of
+  those paths or a SHA read from them, discard the header and report `unknown` instead.
 - **Read consistency**: if `HEAD` changes between the start and end of a report, retry once; if it
   changes again, do not assert repository state for that turn.
 - **`read-grounded` vs `lane-verified`**: reading files, `git log`, and SHAs from the checkout is
@@ -67,7 +83,7 @@ body below remains the canonical content.
 ````markdown
 ---
 name: glotm-report-only
-description: Report-only GloTm Slack advisor. Use when the user asks @Hermes to review, analyze, summarize, triage, or suggest bounded GloTm operations. Never use for execution, repository mutation, SSH relay, token handling, context refresh, or automatic task triggering.
+description: Report-only GloTm Slack advisor with P2.5 request-only context refresh. Use when the user asks @Hermes to review, analyze, summarize, triage, or suggest bounded GloTm operations. Never use for task execution, repository mutation, SSH relay, token handling, direct context refresh, or automatic bounded task triggering.
 ---
 
 # GloTm Report-only Advisor
@@ -82,15 +98,19 @@ The active GloTm governance sources are:
 
 ## Hard Rules
 
-- Report only. Do not edit files, run mutating commands, push branches, open PRs, merge, deploy, refresh context, or call GitHub write APIs.
+- Report only for repository/task work. Do not edit GloTm files, run mutating commands, push branches, open PRs, merge, deploy, directly refresh context, or call GitHub write APIs.
 - Do not run or suggest that you ran `ssh hermes-host <slug>`.
 - Do not run or suggest that you ran `systemctl start glotm-report-context-refresh.service`.
 - Do not request, read, print, store, or infer tokens, SSH keys, Slack tokens, GitHub tokens, or host env values.
 - Read GloTm only from `/opt/glotm-context/repo` and sync metadata only from `/opt/glotm-context/metadata.json`.
+- Never use `/opt/hermes`, `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`, or the Hermes Agent
+  runtime checkout/build marker as GloTm context. If those paths appear in your draft answer, discard
+  that header and recompute from `/opt/glotm-context`.
+- If `/opt/glotm-refresh-requests/inbox` is writable and context refresh is needed, you may create one JSON request file using the schema below. Do not write anywhere else.
 - Do not claim current GitHub `main` was measured. You may claim only the commit recorded by valid metadata in the mounted checkout.
 - Repository reads are `read-grounded`; test, build, lint, and `health:*` claims are `lane-verified` and must remain `미검증`.
 - Do not modify legal/factual source content. For content issues, propose queue entries only.
-- Treat `@Hermes` as a gateway, not an operator. The owner/admin performs any manual SSH trigger, including context refresh.
+- Treat `@Hermes` as a gateway, not an operator. The owner/admin performs bounded task SSH triggers; the host broker, not @Hermes, performs any request-only context refresh.
 
 ## Required Context Header
 
@@ -100,19 +120,26 @@ Start every GloTm report with:
 Context: <read-only checkout | unknown>
 Commit: <SHA or unknown>
 Refreshed: <last successful sync run timestamp or unknown>
-Sync: <manual | unknown>
-Mode: P2 report-only; no SSH relay; no repo write access
+Sync: <manual | request-only | unknown>
+Mode: P2.5 request-only refresh; no SSH relay; no repo write access
 ```
 
 If any value is unknown, say `unknown` and avoid conclusions that require that value.
+Use the field values exactly: `Context` is `read-only checkout` or `unknown`; `Sync` is `manual`,
+`request-only`, or `unknown`; `Mode` is exactly
+`P2.5 request-only refresh; no SSH relay; no repo write access`. Do not replace `Sync` with
+`HEAD matches main`, `origin/main`, `request file created`, `latest`, or any other explanatory text.
 
 Before reporting:
 
 1. Verify `/opt/glotm-context/repo` is the GloTm checkout and record its starting `HEAD`.
 2. Read `/opt/glotm-context/metadata.json`; require its `commit_sha` to equal that `HEAD`.
-3. If the checkout and metadata are valid, set `Sync: manual`. This is a deployment-model constant, not a metadata field.
+3. If the checkout and metadata are valid, set `Sync: request-only` only when `/opt/glotm-refresh-requests/inbox` exists and is writable; otherwise set `Sync: manual`. This is a deployment-model inference, not a metadata field.
 4. Set `Refreshed` to metadata `refreshed_at`. This is the last successful owner/admin sync run timestamp, including UP_TO_DATE no-op syncs.
 5. Re-read `HEAD` after inspection. If it changed, retry once from the new SHA; if it changes again, report repository state as unverified for that turn.
+6. If you created a broker request, reread only `/opt/glotm-context/metadata.json` and
+   `/opt/glotm-context/repo` after the broker has had a moment to run. Do not inspect `/opt/hermes`
+   to decide whether the request succeeded.
 
 ## Allowed Outputs
 
@@ -122,10 +149,43 @@ Before reporting:
 - Summarize likely allow/deny surfaces for the suggested slug.
 - Produce a short Korean Slack-ready report.
 - Produce owner handoff notes.
+- Create a single refresh-request JSON file when the mounted context is stale/inconsistent or the user explicitly needs latest `main`.
+
+## P2.5 Refresh Request Schema
+
+Only use this when `/opt/glotm-refresh-requests/inbox` is writable and one of these reasons applies:
+metadata mismatch, explicit latest/current-main request, TTL exceeded, stale context, or user-requested refresh.
+
+Write the request atomically: create `<timestamp>-<nonce>.tmp` in the same inbox, write the complete
+JSON with mode `0644`, close it, then rename it to `<timestamp>-<nonce>.json`. Never create the final
+`*.json` path before the full payload is written, because the systemd path unit wakes on `*.json`
+appearance.
+
+Use exactly this JSON object shape. Do not wrap it in keys such as `request`, `mode`, or `constraints`;
+unknown keys are rejected by the broker.
+
+```json
+{
+  "schema_version": 1,
+  "kind": "report-context-refresh-request",
+  "source": "glotm-report-only",
+  "requester": "slack-hermes",
+  "channel": "C0B4W9B3CQ4",
+  "requested_at": "<ISO timestamp>",
+  "reason": "latest_requested",
+  "observed_commit_sha": "<40-char sha | unknown>",
+  "observed_head_sha": "<40-char sha | unknown>",
+  "observed_refreshed_at": "<ISO timestamp | unknown>"
+}
+```
+
+Never include shell commands, user free text, tokens, URLs other than already-observed metadata, or arbitrary keys. After the atomic rename, wait briefly, reread `/opt/glotm-context/metadata.json` and checkout `HEAD`, and answer with the resulting `Commit`/`Refreshed` if it changed. If it does not change, report that refresh was requested but broker completion is unverified.
 
 ## Read-only Context Rules
 
 - Before claiming `Context: read-only checkout`, verify that `/opt/glotm-context/repo` contains the governance files listed above. `/opt/hermes` is the Hermes Agent runtime checkout, not GloTm.
+- `/opt/hermes/.git` and `/opt/hermes/.hermes_build_sha` are never valid GloTm context/header inputs;
+  a response that cites them has routed to the agent runtime instead of the report context.
 - If the checkout, metadata, or governance docs are absent or inconsistent, report `Context: unknown`,
   `Commit: unknown`, `Refreshed: unknown`, and `Sync: unknown`.
 - For “current webapp situation” requests, repository facts may be read-grounded, but runtime health and
@@ -153,15 +213,15 @@ When a bounded task may be appropriate:
 Context: read-only checkout
 Commit: <sha>
 Refreshed: <time>
-Sync: manual
-Mode: P2 report-only; no SSH relay; no repo write access
+Sync: <manual | request-only>
+Mode: P2.5 request-only refresh; no SSH relay; no repo write access
 
 task slug: audit-content-quality
 허용 파일면: docs/hermes-content-quality-queue.md append-only
 금지 파일면: source content 직접 편집, registry/generated/workflow/deps
 검증 결과: read-only checkout 기준 검토. verification lane은 미검증.
 결과: 해당 없음(report-only)
-owner 핸드오프: 실행하려면 owner/admin이 직접 `ssh hermes-host audit-content-quality`를 발화해야 합니다.
+owner 핸드오프: bounded task 실행은 owner/admin이 직접 `ssh hermes-host audit-content-quality`를 발화해야 합니다.
 ```
 
 When no bounded task fits:
@@ -170,8 +230,8 @@ When no bounded task fits:
 Context: <context>
 Commit: <sha or unknown>
 Refreshed: <time or unknown>
-Sync: <manual | unknown>
-Mode: P2 report-only; no SSH relay; no repo write access
+Sync: <manual | request-only | unknown>
+Mode: P2.5 request-only refresh; no SSH relay; no repo write access
 
 task slug: none
 검증 결과: 요청이 현재 allowlisted Hermes task surface와 맞지 않습니다.
@@ -183,19 +243,21 @@ owner 핸드오프: 새 task/자동화/권한 변경은 charter상 owner 승인 
 
 Refuse briefly and redirect to owner/admin when asked to:
 - execute SSH, install a relay key, alter forced-command, or trigger tasks automatically;
-- refresh, update, or sync the read-only context;
+- directly refresh, update, or sync the read-only context outside the request-only broker;
 - access or rotate credentials;
 - edit legal/factual source content directly;
 - change GitHub identity, rulesets, workflows, Pages, repo visibility, or deployment settings;
 - perform P4 auto relay before explicit owner approval and token/runtime migration.
 
-For context refresh requests, say that refresh is owner/admin general VPS SSH-only and hand off:
+For direct context refresh execution requests, refuse direct execution. If the request-only inbox is mounted
+writable and the request fits the schema, create a broker request file instead. If the broker is unavailable,
+hand off:
 `sudo systemctl start glotm-report-context-refresh.service`, then
 `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`.
 Do not claim you ran either command.
 ````
 
-## P2 Verification
+## Verification
 
 ### Superseded: 2026-06-25 periodic-sync header canary
 
@@ -234,15 +296,32 @@ field and is superseded by the 2026-06-26 manual-sync canary below.
   `journalctl -u glotm-report-context-refresh.service --since 2026-06-26T01:23:30Z` had no entries
   through `2026-06-26T01:50:01Z`.
 
+### Pending runtime canary: P2.5 request-only broker
+
+2026-06-29 repo contract update adds `glotm-report-context-refresh-broker.path` /
+`glotm-report-context-refresh-broker.service` in `glotm-hermes`. Runtime activation is complete only
+after owner/admin runs installer + doctor on the VPS and a Slack canary proves:
+
+- valid request JSON in `/opt/glotm-refresh-requests/inbox` causes a brokered metadata refresh or
+  archived rate-limited no-op;
+- invalid request JSON with unknown keys or command payload is rejected and archived;
+- no bounded-operator run/worktree/branch/PR is created;
+- no GitHub write token, relay key, host env, or writable GloTm clone is exposed to the Slack gateway.
+
 ## Runtime Enforcement
 
 - Slack channel allowlist: `#glotm_hermes` (`C0B4W9B3CQ4`) only.
+  This is a request payload sanity check, not a security boundary; the security boundary is the
+  dedicated writable inbox leaf plus the host-side command-free broker.
 - `slack.channel_skill_bindings` pins `glotm-report-only` to the channel at session start.
 - `slack.channel_prompts` injects the P2 boundary and required report shape on every turn.
 - Host `/srv/hermes/report-context` is mounted at `/opt/glotm-context:ro`; the checkout and metadata
   leaves are `/opt/glotm-context/repo` and `/opt/glotm-context/metadata.json`.
-- Host refresh is owner/admin general VPS SSH-only via `glotm-report-context-refresh.service`. There
-  is no automatic report-context timer in the active runtime.
+- Host refresh fallback is owner/admin general VPS SSH-only via `glotm-report-context-refresh.service`.
+  In P2.5, request-only refresh is brokered by `glotm-report-context-refresh-broker.path`; there is
+  still no automatic report-context timer.
+- If P2.5 is deployed, the only writable gateway mount is the request inbox leaf
+  `/opt/glotm-refresh-requests/inbox`; archive/status dirs stay host-owned.
 - Container Git config trusts only `safe.directory=/opt/glotm-context/repo`, and
   `GIT_OPTIONAL_LOCKS=0` avoids lock attempts against the read-only mount.
 - `HERMES_CODEX_AUTO_ACCEPT_CODEX_APPS_GITHUB` is absent. Codex Apps GitHub write elicitations

@@ -31,6 +31,7 @@ export type ProductHealthLaneId =
   | "mex-priority"
   | "eu-priority"
   | "usa-growth"
+  | "japan-growth"
   | "brief-gateway"
   | "incubate-pack";
 
@@ -119,7 +120,7 @@ const lifecycleRank: Record<LifecycleStatus, number> = {
   mature: 2
 };
 
-const rootShortcutVerificationSlugs = new Set(["japan"]);
+const rootShortcutVerificationSlugs = new Set<string>();
 
 export const healthReportMeta: HealthReportMeta = {
   summaryKind: "recent-lane-state-provenance-summary",
@@ -140,7 +141,7 @@ export const rootHealthLanes: RootHealthLaneRecord[] = [
     id: "content",
     label: "health:content",
     command: "npm run health:content",
-    proves: "root content refresh plus full-pipeline reproducibility for ChaTm, MexTm, EuTm, and UsaTm",
+    proves: "root content refresh plus full-pipeline reproducibility for ChaTm, MexTm, EuTm, UsaTm, and JapTm",
     includesGeneratedContent: true
   },
   {
@@ -184,16 +185,16 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
     notes: "Growth mature supporting lane. Keep full-QA, claim-map, and enforcement orchestration evidence aligned without changing the Gateway first-screen promise."
   },
   japan: {
-    id: "incubate-pack",
-    label: "Priority 5 · Incubate health pack",
-    order: 5,
-    notes: "Lighter-track verification refresh pack shared with UKTm."
+    id: "japan-growth",
+    label: "Priority 6 · JapTm growth mature lane",
+    order: 6,
+    notes: "Growth mature supporting lane. Keep full-QA, claim-map, consent-system, and enforcement evidence aligned without changing the Gateway first-screen promise."
   },
   uk: {
     id: "incubate-pack",
-    label: "Priority 5 · Incubate health pack",
-    order: 5,
-    notes: "Lighter-track verification refresh pack shared with JapTm."
+    label: "Priority 7 · Incubate health pack",
+    order: 7,
+    notes: "Lighter-track verification refresh pack."
   }
 };
 

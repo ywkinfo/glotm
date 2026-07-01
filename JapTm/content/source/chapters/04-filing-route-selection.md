@@ -4,9 +4,9 @@
 
 이 장은 양식의 차이를 설명하는 데서 멈추면 안 된다. 일본 시장에서 실제로 누가 자료를 준비하고, 어느 시점에 현지 대리인 대응이 필요해지고, 일본 지정 후 어떤 후속 운영이 남는지까지 보여줘야 한다. 즉 경로 선택은 서류 선택이 아니라 운영 모델 선택이다.
 
-### lighter-track route memo board
+### route memo board
 
-JapTm은 incubate lane이기 때문에, 이 장의 목적은 direct filing과 Madrid의 모든 예외를 길게 푸는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 일본을 단독 핵심국으로 볼지 다국가 포트폴리오의 한 축으로 볼지 빠르게 다시 판단할 수 있다.
+JapTm은 mature lane이지만, 이 장의 목적은 direct filing과 Madrid의 모든 예외를 길게 푸는 데 있지 않다. 대신 아래 네 줄을 먼저 잠가 두면, 일본을 단독 핵심국으로 볼지 다국가 포트폴리오의 한 축으로 볼지 빠르게 다시 판단할 수 있다.
 
 | 먼저 적을 질문 | direct filing 쪽 신호 | Madrid 쪽 신호 | 다음 handoff |
 |---|---|---|---|
@@ -81,4 +81,4 @@ Madrid를 선택해도 일본용 대응 메모는 별도로 두는 편이 좋다
 | D+5 | 현지 대리인 또는 일본 대응 창구 | 법무 |
 | D+7 | 제5장 packet과 제7장 maintenance row 연결 | PM + IP |
 
-이 정도만 있어도 JapTm은 lighter track 안에서 “다시 찾기 쉬운 route memo” 역할을 충분히 한다.
+이 정도만 있어도 JapTm은 “다시 찾기 쉬운 route memo” 역할을 충분히 한다.

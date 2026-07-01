@@ -32,7 +32,9 @@
 | report-context read-only root mount | host `/srv/hermes/report-context` → 컨테이너 `/opt/glotm-context:ro` |
 | report-context checkout leaf | `/opt/glotm-context/repo` |
 | report-context metadata leaf | `/opt/glotm-context/metadata.json` |
-| report-context manual sync service | `glotm-report-context-refresh.service` (owner/admin SSH one-shot) |
+| report-context manual sync service | `glotm-report-context-refresh.service` (owner/admin fallback one-shot) |
+| report-context request inbox | host `/srv/hermes/report-context-refresh-requests/inbox` → 컨테이너 `/opt/glotm-refresh-requests/inbox` writable leaf |
+| report-context request broker | `glotm-report-context-refresh-broker.path` → `glotm-report-context-refresh-broker.service` |
 
 VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, service user `hermes`.
 
@@ -43,21 +45,41 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
 > 구체적으로, 워크스페이스 `hermesespanol-kb`의 Slack 봇 **`@Hermes`(user `U0B4PDKTUDB`)는 이
 > `/opt/hermes` 컨테이너의 NousResearch Hermes-Agent**이며 GloTm bounded operator가 **아니다**.
 > 2026-06-23 misroute(GloTm 아닌 `/opt/hermes/website` 분석) 이후, owner는 같은 컨테이너를
-> **능력 차단된 P2 report-only advisor**로 재활용했고 2026-06-26 manual-sync canary를 통과시켰다(정본
+> **능력 차단된 P2/P2.5 advisor**로 재활용했고 2026-06-26 manual-sync canary를 통과시켰다(정본
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md), actor 지도
 > [`../AGENTS.md`](../AGENTS.md)). 따라서 현재 `@Hermes`는 **read-only 조언(intake/triage)에는
 > sanctioned이되 실행 능력이 없는 advisor**이다. bounded task 실행(변경)은 `ssh hermes-host <slug>` →
-> `/srv/hermes/glotm`(아래 트리거 모델)만 쓰고, report-context refresh trigger는 별도 일반 VPS admin
-> SSH에서 `systemctl start`로만 수행한다. 배경·증거는
+> `/srv/hermes/glotm`(아래 트리거 모델)만 쓴다. report-context refresh는 P2.5부터 request-only broker를
+> 통할 수 있다: @Hermes는 JSON request 파일만 만들고, host broker가 검증 뒤 refresh service 경로를
+> 호출한다. 배경·증거는
 > [`hermes-incident-20260623.md`](hermes-incident-20260623.md)(2026-06-23 misroute 사건).
 
 ### report-context readiness
 
 - host installer: `/srv/hermes/glotm-hermes/scripts/install-report-context.sh` (root/admin 실행,
-  멱등).
-- host manual sync: 일반 VPS admin SSH 세션에서
+  멱등). 이 installer는 read-only checkout, manual fallback service, request-only broker service/path,
+  request inbox/archive dirs를 함께 준비한다.
+- host manual fallback sync: 일반 VPS admin SSH 세션에서
   `sudo systemctl start glotm-report-context-refresh.service`. 이 명령은 bounded task가 아니며
   `ssh hermes-host <slug>` forced-command 경로와 섞지 않는다.
+- host request-only broker: owner/admin이 installer를 1회 실행하면
+  `glotm-report-context-refresh-broker.path`가 request inbox의 `*.json` 생성을 감지해 broker service를
+  깨운다. broker는 schema, `#glotm_hermes` channel allowlist, request age, rate limit, unknown-key 금지를
+  검증하고, 통과한 요청이 있을 때만 기존 refresh script를 호출한다. 실패 시 기존 checkout/metadata는 보존한다.
+  channel allowlist는 request payload sanity check 및 오작동 필터일 뿐 security boundary가 아니다. 실제
+  boundary는 Hermes 컨테이너에 좁은 inbox leaf만 writable로 노출하고 host broker가 command-free 고정
+  refresh만 실행하는 구조다.
+  request writer는 같은 inbox 안의 `.tmp` 파일에 완성 JSON을 쓴 뒤 마지막에 `.json`으로 atomic rename해야
+  한다. path unit은 `*.json` 등장에 반응하므로 최종 경로를 먼저 만들면 incomplete payload가 reject될 수 있다.
+  Slack Codex runtime은 `workspace-write` sandbox를 쓰므로 `/opt/data/.codex/config.toml`의
+  `[sandbox_workspace_write] writable_roots`에 `/opt/glotm-refresh-requests/inbox` leaf만 추가해야 한다.
+  broker service는 container UID가 만든 request 파일을 읽기 위한 root wrapper일 수 있지만, 실제 checkout
+  refresh는 `REPORT_CONTEXT_REFRESH_USER`(기본 `hermes`)로 drop해서 실행한다.
+- Slack report header는 `/opt/glotm-context/repo`, `/opt/glotm-context/metadata.json`,
+  `/opt/glotm-refresh-requests/inbox` writability check만 근거로 채운다. `/opt/hermes`,
+  `/opt/hermes/.git`, `/opt/hermes/.hermes_build_sha`는 Hermes Agent runtime 정보이므로 GloTm
+  `Commit`/`Refreshed`/`Sync` source가 아니다. `Sync` 값은 `manual` / `request-only` / `unknown`만
+  허용하고, HEAD 비교·branch 이름·request 생성 상태·freshness 설명을 넣지 않는다.
 - host doctor: `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`;
   `READY`가 기준이다. root로 직접 실행하면
   `hermes` 소유 checkout에 대한 Git `safe.directory` 보호 때문에 오탐할 수 있으므로 service account로
@@ -66,11 +88,11 @@ VPS HostName: `srv1650501.hstgr.cloud`, runtime container `hermes-agent-zykj`, s
   `GIT_OPTIONAL_LOCKS=0`만 사용하며 `safe.directory=*`는 금지한다.
 - 배포 검증은 metadata `commit_sha` = checkout `HEAD`, mount `rw=false`, mount 안 write 실패를 함께
   확인한다.
-- legacy timer migration(1회성): manual-sync 배포 시
+- legacy timer migration(1회성): manual-sync/P2.5 배포 시
   `sudo systemctl disable --now glotm-report-context-refresh.timer || true`,
   `sudo rm -f /etc/systemd/system/glotm-report-context-refresh.timer`,
   `sudo systemctl daemon-reload`로 정리한다. 되돌림은 timer만 다시 enable하지 말고 코드 revert →
-  재배포 → doctor → Slack canary 순서로만 한다.
+  재배포 → doctor → Slack canary 순서로만 한다. P2.5 broker는 timer가 아니라 path unit이다.
 
 ## 현재 task surface (V2)
 
@@ -110,16 +132,19 @@ policy gate이며, task별 allow/deny와 semantic profile이 함께 적용된다
 
 ## 트리거 모델 (Slack = human bridge)
 
-- **자동 실행은 없다.** VPS에는 자동 timer·cron·**Slack poller가 전무**하다. 따라서 Slack 채널 글은
-  **사람이 남기는 기록·감사 trail일 뿐 자동으로 task를 실행하지 않는다.**
-  - 주의: 워크스페이스의 `@Hermes` 봇이 멘션에 응답하는 것은 **P2 report-only advisor**(능력 차단·
-    read-only)로서 sanctioned이지만 **task를 실행하지 못한다** — advisor는 실행 트리거가 아니다.
+- **자동 task 실행은 없다.** VPS에는 자동 timer·cron·**Slack poller가 전무**하다. 따라서 Slack 채널 글은
+  **사람이 남기는 기록·감사 trail일 뿐 자동으로 bounded task를 실행하지 않는다.**
+  - 주의: 워크스페이스의 `@Hermes` 봇이 멘션에 응답하는 것은 **P2/P2.5 advisor**(능력 차단·
+    read-only)로서 sanctioned이지만 **task를 실행하지 못한다** — advisor는 bounded task 실행 트리거가 아니다.
+    P2.5에서 허용되는 것은 report-context refresh request 파일 생성뿐이며, 실행 판단은 host broker가 한다.
     bounded operator의 유일한 정규 **실행** 트리거는 아래 `ssh hermes-host <task-slug>`다.
 - 유일한 트리거는 owner/admin의 `ssh hermes-host <task-slug>`이며, VPS의 forced-command가 slug를
   `SSH_ORIGINAL_COMMAND`로 받아 task allowlist를 통과시킨다. run 로그는 `/srv/hermes/runs/<RUN_ID>`.
-- report-context refresh trigger는 이 task trigger가 아니다. owner/admin이 일반 VPS admin SSH에서
-  `sudo systemctl start glotm-report-context-refresh.service`를 실행하고,
-  `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`로 검증한다.
+- report-context refresh trigger는 이 task trigger가 아니다. 일반 fallback은 owner/admin이 일반 VPS admin
+  SSH에서 `sudo systemctl start glotm-report-context-refresh.service`를 실행하고,
+  `sudo -u hermes -H /srv/hermes/glotm-hermes/scripts/doctor-report-context.sh`로 검증한다. P2.5 request
+  path가 설치된 뒤에는 @Hermes가 필요 시 JSON request를 만들 수 있고, host broker가 검증 후 같은 refresh
+  경로를 호출한다.
 - 즉 현재 운영은 **Slack-first manual ops**다: owner가 Slack에 intent·slug를 남기고 → owner/admin이
   SSH로 직접 트리거하고 → 결과(PR URL·`NO_CHANGES`·실패 snippet)를 Slack에 보고한다.
 - Slack에는 merge/force-push, workflow 편집, 법률 source 편집, GitHub token 접근 권한을 주지 않는다.
@@ -164,11 +189,11 @@ soul/persona 정본은 GloTm repo가 아니라 아래 **2개 canon**으로 나�
 > `prompts/_bounded-operator-preamble.md`(4 task 프롬프트 앞에 주입) + per-task `prompts/<task>.md` +
 > `lib/task-config.sh`, 버전 핀 `prompts/PROMPT_VERSION`(현재 `@2`). **마지막 sync: 2026-06-24.**
 >
-> **(ii) Slack P2 report-only advisor canon** — 정본은 GloTm
+> **(ii) Slack P2/P2.5 advisor canon** — 정본은 GloTm
 > [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)(active spec; legacy filename 유지,
-> 2026-06-26 manual-sync canary 통과). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
+> 2026-06-26 manual-sync canary 통과, 2026-06-29 request-only broker 계약 반영). 여기서는 pointer만 두고 내용을 중복하지 않는다. 이 advisor는 `/opt/hermes`
 > 컨테이너의
-> **능력 차단된** report-only 스킬이며 bounded operator와 별개 actor다(actor 지도는 `../AGENTS.md`).
+> **능력 차단된** advisor이며 bounded operator와 별개 actor다(actor 지도는 `../AGENTS.md`).
 
 보고 규약(공통):
 
@@ -217,8 +242,9 @@ cd /srv/hermes/glotm-hermes && sudo scripts/bootstrap.sh        # 권한·deps·
 
 ## 로드맵
 
-- **Slack slash-command 자동 실행/스케줄/외부 입력**을 붙이기 전에 ChatGPT 구독 런타임 → **API 키 또는
+- **Slack slash-command 자동 실행/스케줄/외부 입력**으로 bounded task를 붙이기 전에 ChatGPT 구독 런타임 → **API 키 또는
   Business/Enterprise 토큰**으로 전환(공개 저장소 자동화 OpenAI 권고). 그 전까지 Slack은 위 human-bridge
-  방식으로만 운용한다.
+  방식으로만 운용한다. P2.5 report-context broker는 예외적으로 공개 repo read-only checkout refresh만
+  처리하며, PR/task 실행·GitHub write·SSH relay 권한을 열지 않는다.
 - 서버측 PR-전용 하드 강제는 **non-bypass GitHub App 신원** 전환으로 확보(차터의 머지 자율화 전제).
 - 법률·사실 source content 편집은 owner 승인(V2.1/V3) 전까지 audit/queue로만 다룬다.

@@ -1,0 +1,154 @@
+{
+  "workspace": "JapTm",
+  "productSlug": "japan",
+  "version": 1,
+  "auditMode": "advisory",
+  "claims": [
+    {
+      "id": "JP-FIRST-001",
+      "jurisdiction": "JP",
+      "claim": "일본 상표 제도는 선출원주의가 핵심이므로, 같은 표장이 충돌할 때 실제 사용 여부보다 출원 순서가 우선하고 출원 전 검색이 운영상 결정적이다.",
+      "chapterRefs": ["Ch1", "Ch3"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["jpo-faq-trademark"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "JPO Trademarks FAQ: first-to-file 원칙. 사용주의가 아니라 출원일 기준으로 권리 선후가 갈린다는 구조만 본문에 반영."
+    },
+    {
+      "id": "JP-TERM-001",
+      "jurisdiction": "JP",
+      "claim": "상표권 존속기간은 설정등록일부터 10년이며 갱신으로 연장할 수 있고, 모든 유지 기간 산정은 출원일이 아니라 설정등록일 기준이다.",
+      "chapterRefs": ["Ch7"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["jpo-outline"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "conceptKey": "renewal_term",
+      "normalized": {
+        "trigger": "registration",
+        "value": "10",
+        "unit": "years",
+        "expression": "10 years from registration date, renewable"
+      },
+      "notes": "JPO Outline of the Trademark System: 존속기간 10년·갱신 가능. 갱신 캘린더는 등록일 기준으로 설계."
+    },
+    {
+      "id": "JP-OPP-001",
+      "jurisdiction": "JP",
+      "claim": "등록 후 이의신청(opposition)은 상표공보(등록공보) 게재일부터 2개월 이내에 제기해야 한다.",
+      "chapterRefs": ["Ch6", "Ch12"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["jpo-faq-trademark"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "conceptKey": "opposition_period",
+      "normalized": {
+        "trigger": "publication",
+        "value": "2",
+        "unit": "months",
+        "expression": "within 2 months from publication of registration"
+      },
+      "notes": "JPO Trademarks FAQ: 일본의 이의신청은 등록 후 공보게재일부터 2개월. 미국식 공고-후-등록전 opposition과 시점 구조가 다르다는 점을 본문에서 구분."
+    },
+    {
+      "id": "JP-REP-001",
+      "jurisdiction": "JP",
+      "claim": "일본 비거주자(외국 주소 출원인)는 일본 내 대표자 또는 대리인 구조를 먼저 정해야 하며, 수수료를 JPO에 직접 납부할 수 없어 일본 내 대표자·대리인을 통한 납부 구조가 필요하다.",
+      "chapterRefs": ["Ch5"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["jpo-step-by-step"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "JPO Step-by-step Guide: 비거주자 대표자/대리인 구조 + 직접 납부 제약. 세부 자격 범위는 확장 단정 금지."
+    },
+    {
+      "id": "JP-MADRID-REFUSAL-001",
+      "jurisdiction": "JP",
+      "claim": "일본을 지정한 국제출원(마드리드)이라도 일본 심사를 그대로 받으며, provisional refusal 대응에는 정해진 응답 기간 내 일본 내 절차 대응이 필요하고 비거주자는 일본 내 대표자를 세워야 한다.",
+      "chapterRefs": ["Ch4"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["jpo-madrid-faq"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "JPO Madrid FAQ: 일본 지정 국제출원의 provisional refusal 대응 구조. 정확한 응답 기간 일수는 본문 하드코딩 금지(사안·통지 기준 재확인)."
+    },
+    {
+      "id": "JP-CONSENT-001",
+      "jurisdiction": "JP",
+      "claim": "2023년 개정 상표법으로 도입된 병존동의제도(consent system, 2024-04-01 시행)에 따라, 선등록상표와의 충돌(제4조 제1항 제11호)을 선등록권자의 동의와 출처혼동을 일으키지 않는다는 요건을 함께 충족하면 병존등록으로 극복할 수 있다.",
+      "chapterRefs": ["Ch3", "Ch6"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["jpo-consent-system", "jpn-trademark-act"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "2023 改正 상표법, 2024-04-01 시행. 제4조 제1항 제11호 거절을 선등록권자 동의 + 비혼동 요건으로 극복하는 letter-of-consent 구조. 본문에는 '동의만으로 자동 등록'이 아니라 '동의 + 비혼동 요건'임을 명확히 한다. JPO consent system guidance 정확 URL은 공개 직전 재확인."
+    },
+    {
+      "id": "JP-CUSTOMS-001",
+      "jurisdiction": "JP",
+      "claim": "상표권자는 일본 세관의 수입·수출중지 신청(Application for Suspension)으로 국경 단계 검증 절차를 유도할 수 있으며, 이는 등록 상표권과 제품 식별 자료를 전제로 한다.",
+      "chapterRefs": ["Ch10"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["japan-customs-rightholders"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "Japan Customs For Right Holders: Application for Suspension + verification procedure. 금액·세부 절차 기한은 본문 하드코딩 금지."
+    },
+    {
+      "id": "JP-IPHC-001",
+      "jurisdiction": "JP",
+      "claim": "JPO의 심판(trial) 심결에 대한 취소소송은 지식재산고등재판소(IP High Court)가 관할하며, 상표 관련 일부 민사 항소도 연결된다.",
+      "chapterRefs": ["Ch9"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ip-high-court-jurisdiction"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "IP High Court Jurisdiction: JPO 심결 취소소송 관할. 1심 법원 분기는 도식화 전 사안별 재확인."
+    },
+    {
+      "id": "JP-DRP-001",
+      "jurisdiction": "JP",
+      "claim": "JP 도메인에는 전용 분쟁처리정책(JP-DRP)이 존재하며 3요소 심사 구조를 가진다.",
+      "chapterRefs": ["Ch11"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["jprs-drp"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "JPRS JP-DRP: 3요소 구조. 세부 입증요건·절차 기간은 source register와 함께 관리."
+    },
+    {
+      "id": "JP-FEE-001",
+      "jurisdiction": "JP",
+      "claim": "일본 상표의 출원·등록·갱신 정부수수료는 구분(class)별 구조이며 금액은 변동하므로, 본문은 'class별 정부수수료' 구조로 표기하고 정확 금액은 공식 수수료표에서 확인한다.",
+      "chapterRefs": ["Ch5", "Ch7"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["jpo-fees"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "JPO Schedule of fees: class 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지."
+    },
+    {
+      "id": "JP-ACCEL-001",
+      "jurisdiction": "JP",
+      "claim": "일정 요건 충족 시 가속심사가 가능하지만 모든 출원이 대상은 아니며, 일부 비전통상표·consent system 청구 상표·일본 지정 국제출원은 현재 가속심사 대상에서 제외된다.",
+      "chapterRefs": ["Ch6"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["jpo-accelerated-exam"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "JPO Accelerated Examination: 제외 대상 포함. 세부 범위는 검증 로그를 우선 기준으로 본다."
+    },
+    {
+      "id": "JP-UCPA-001",
+      "jurisdiction": "JP",
+      "claim": "부정경쟁방지법은 상표권과 별개로 주지·저명표지 혼동야기행위와 상품형태 모방 등을 보완축으로 다루며, 상표권만으로 막기 어려운 사안의 추가 경로가 된다.",
+      "chapterRefs": ["Ch11"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["jpn-ucpa"],
+      "lastVerified": "2026-06-29",
+      "status": "BODY_READY",
+      "notes": "Unfair Competition Prevention Act: 보완축. 영문 번역 최신성은 별도 확인이므로 조문 세부 인용은 원문 확인 전까지 구조 수준으로만."
+    }
+  ]
+}
