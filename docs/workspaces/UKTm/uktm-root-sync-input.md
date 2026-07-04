@@ -6,7 +6,7 @@ UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급됐으므로,
 
 ## Baseline One-Liner
 
-`UKTm`은 루트 `/uk`에 연결된 live incubate country guide이며, 현재 baseline은 `14개 챕터 / 검색 엔트리 128개 / incubate tier · beta lifecycle / standard QA`다(2026-05-12 #53 승급, registry verifiedOn 2026-06-02).
+`UKTm`은 루트 `/uk`에 연결된 live incubate country guide이며, 현재 baseline은 `14개 챕터 / 검색 엔트리 128개 / incubate tier · beta lifecycle / standard QA`다(2026-05-12 #53 승급, registry verifiedOn re-stamp 2026-07-04).
 
 ## Authority Order
 
@@ -34,8 +34,8 @@ UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급됐으므로,
 | Search entry count | `128` | `src/products/registry.ts`, `UKTm/content/generated/search-index.json` |
 | Tier / lifecycle / QA | `incubate` / `beta` / `standard` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
-| Root metadata verifiedOn | `2026-06-02` | `src/products/registry.ts` |
-| Workspace gate rerun | `2026-04-21` `npm --prefix UKTm run content:prepare` pass (이 레인 마지막 로컬 재현; root verifiedOn은 이후 shared root gate로 2026-06-02 re-stamp) | local rerun in this lane |
+| Root metadata verifiedOn | `2026-07-04` | `src/products/registry.ts` |
+| Workspace gate rerun | `2026-04-21` `npm --prefix UKTm run content:prepare` pass (이 레인 마지막 로컬 재현; root verifiedOn은 이후 shared root gate로 2026-07-04 re-stamp) | local rerun in this lane |
 | Current lane focus | reader-utility 정합 around `filing`, `maintenance`, `platform/domain incident` reader utility (beta 유지) | `docs/current-ops-taskboard.md`, `UKTm/README.md` |
 
 ## Reader-Utility 정합 Focus

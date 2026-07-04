@@ -3,7 +3,7 @@
 > **CLOSED — UsaTm growth/mature promotion shipped.** 15장 신설·claim-map 채택·full-QA 파이프라인 편입과
 > owner Stage 2 fact-review / registry flip을 2026-06-29 scorecard follow-up에서 닫았다. 현재 정본은
 > `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 206개 / growth tier · mature lifecycle · full QA`,
-> verifiedOn/factsReviewedOn 2026-06-29)다.
+> factsReviewedOn 2026-06-29 · verifiedOn re-stamp 2026-07-04)다.
 
 ## Baseline One-Liner
 
@@ -31,7 +31,7 @@ growth · mature · full QA`다(정본: `src/products/registry.ts`). 2026-06-29 
 | Search entry count | `206` | `registry.ts`, `search-index.json` |
 | Tier / lifecycle / QA | `growth` / `mature` / `full` | `registry.ts` |
 | High-risk gap count | `0` | `registry.ts` |
-| verifiedOn / factsReviewedOn | `2026-06-29` / `2026-06-29` | `registry.ts` |
+| verifiedOn / factsReviewedOn | `2026-07-04` / `2026-06-29` | `registry.ts` |
 | Research baseline | claim-map 15건, 전 항목 BODY_READY(HIGH 10·MEDIUM 5), source-register 매핑 | `claim-map.json` |
 
 ## Chapter Drift Map (신규/변경분)

@@ -36,8 +36,8 @@
 | Search entry count | `185` | `src/products/registry.ts`, `JapTm/content/generated/search-index.json` |
 | Tier / lifecycle / QA | `growth` / `mature` / `full` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
-| Root metadata verifiedOn | `2026-06-02` | `src/products/registry.ts` |
-| Workspace gate rerun | `2026-04-21` `npm --prefix JapTm run content:prepare` pass (이 레인 마지막 로컬 재현; root verifiedOn은 이후 shared root gate로 2026-06-02 re-stamp) | local rerun + shared root gate |
+| Root metadata verifiedOn | `2026-07-04` | `src/products/registry.ts` |
+| Workspace gate rerun | `2026-04-21` `npm --prefix JapTm run content:prepare` pass (이 레인 마지막 로컬 재현; root verifiedOn은 이후 shared root gate로 2026-07-04 re-stamp) | local rerun + shared root gate |
 | Lighter-track intent | `route`, `maintenance`, `evidence hygiene` reader utility 유지 | `JapTm/README.md`, `JapTm/Harness/Architecture.md` |
 
 ## Lighter-Track Focus

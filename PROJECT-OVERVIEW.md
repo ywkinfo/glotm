@@ -13,8 +13,8 @@
 
 | 항목 | 현재 상태 |
 |------|-----------|
-| Last updated | 2026-06-28 |
-| Verified on | 2026-06-28 |
+| Last updated | 2026-07-04 |
+| Verified on | 2026-07-04 |
 | Current phase | Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지) |
 | Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` growth expansion 반영 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> `UsaTm` growth/mature closeout 반영 -> `JapTm` growth/mature 승급 반영 -> `UKTm` incubate 유지보수 |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
@@ -34,7 +34,7 @@
 
 ### 현재 운영 스냅샷
 
-- 루트 `GloTm`: 2026-06-28 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
+- 루트 `GloTm`: 2026-07-04 기준 shared root gate(`content:prepare`, `health:runtime`, `health:content`, `health:release`, `health:report`) 재현 통과. `BrowserRouter` 기반 셸에서 Gateway, `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`, Reports generated content를 함께 연결한다.
 - `health:report`는 fresh proof가 아니라 최근 lane 상태와 provenance를 묶어 읽는 operational snapshot으로 해석한다.
 - Gateway `/`: portfolio tier와 buyer narrative를 드러내는 루트 랜딩으로 운영하며, 최신 브리프 배너를 먼저 보여주고 이어서 리포트 2개를 포함하는 trust layer / report handoff를 운영한다.
 - GitHub Pages 공개본에서는 trust layer / report handoff와 favicon asset 반영이 확인됐다. live verification 표현은 workflow artifact 검증과 구분해서 보며, mobile drawer close 등 live-only 회귀는 `e2e/guide-smoke.spec.ts`의 mobile drawer close controls smoke로 보호한다.
@@ -91,7 +91,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
-| `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료 · verifiedOn 2026-06-09 · factsReviewedOn 2026-06-10 |
+| `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료(#69/#70) · factsReviewedOn 2026-06-10 |
 | `UsaTm` | 단일국가 | growth | mature | 15 | 206 | 집행 포럼 플레이북 · 패러디·출처표지적 사용 이중 트랙 보강(Ch12–14) · claim-map 15건 · full QA |
 | `JapTm` | 단일국가 | growth | mature | 15 | 185 | 병존동의제도(2024-04-01) 집행 보강 · claim-map 12건 · full QA |
 | `UKTm` | 단일국가 | incubate | beta | 14 | 128 | standard QA evidence 4-file 정합 · 2026-05-12 verdict 적용 · early-track verified 공개본 |
@@ -127,7 +127,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### LatTm (중남미 상표 보호 운영 가이드) — 글로벌 확장을 위한 1차 기준 파일럿, 콘텐츠/앱 고도화 진행 중
 
-`LatTm`은 현재 GloTm의 기준 제품이다. 중남미 19개국 상표 출원·유지·집행 실무 가이드를 제공하며, 현재 우선순위는 배포보다 로컬 웹앱 완성도와 읽기 경험 안정화에 있다. 2026-06-02 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 flagship baseline을 한 번 더 잠갔다.
+`LatTm`은 현재 GloTm의 기준 제품이다. 중남미 19개국 상표 출원·유지·집행 실무 가이드를 제공하며, 현재 우선순위는 배포보다 로컬 웹앱 완성도와 읽기 경험 안정화에 있다. 2026-07-04 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과해 flagship baseline을 한 번 더 잠갔다.
 
 | 영역 | 챕터 |
 |------|------|
@@ -162,15 +162,15 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### ChaTm (중국 상표 실무 가이드) — live shell에 연결된 단일국가 growth mature lane
 
-`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/china` 경로에 연결한 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, Sprint 2에서 제4장·제8장·제9장·제11장·제12장·제13장·제14장 보강을 통해 low-density gap과 reader/search handoff를 함께 끌어올린 상태다. 2026-06-02 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과했고, 월간 scorecard review 반영으로 growth lane의 `mature` 상태를 잠갔다.
+`ChaTm`은 중국 단일 시장 상표 실무를 다루는 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/china` 경로에 연결한 상태다. 현재 루트 `content:prepare`에서도 `build-master.ts -> qa-content.ts -> build-content.ts` 전체 흐름을 타며, Sprint 2에서 제4장·제8장·제9장·제11장·제12장·제13장·제14장 보강을 통해 low-density gap과 reader/search handoff를 함께 끌어올린 상태다. 2026-07-04 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과했고, 월간 scorecard review 반영으로 growth lane의 `mature` 상태를 잠갔다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 10건 + 공식 URL 인덱스). 2026-06-09 mature 승급과 2026-06-10 factsReviewedOn 기록이 `src/products/registry.ts` 정본에 반영돼 있으며, 현재는 growth lane baseline으로 운영한다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 10건 + 공식 URL 인덱스). mature 승급(#69/#70)과 2026-06-10 factsReviewedOn 기록이 `src/products/registry.ts` 정본에 반영돼 있으며(verifiedOn은 월간 lane re-stamp로 관리), 현재는 growth lane baseline으로 운영한다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 verified track
 
-`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/uk` 경로에 연결한 상태다. 직전 라운드에서 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 beta 기준 위로 끌어올렸고, 2026-05-12 standard QA verdict로 4개 evidence 파일(Coverage Scope · Source Reliability Tier · Verification Method Summary · Known Limitations 기준)이 정합화되면서 `lifecycle: pilot → beta`, `qaLevel: smoke → standard`로 승급했다. 2026-06-02 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과한 결과를 그대로 유지하며, `portfolioTier`는 `incubate` 유지(growth/validate로 끌어올리지 않음). Gateway 노출 톤은 early-track verified 공개본으로 격상하되, supporting role과 `gatewayOrder: 6`은 변경하지 않는다.
+`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/uk` 경로에 연결한 상태다. 직전 라운드에서 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 beta 기준 위로 끌어올렸고, 2026-05-12 standard QA verdict로 4개 evidence 파일(Coverage Scope · Source Reliability Tier · Verification Method Summary · Known Limitations 기준)이 정합화되면서 `lifecycle: pilot → beta`, `qaLevel: smoke → standard`로 승급했다. 2026-07-04 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과한 결과를 그대로 유지하며, `portfolioTier`는 `incubate` 유지(growth/validate로 끌어올리지 않음). Gateway 노출 톤은 early-track verified 공개본으로 격상하되, supporting role과 `gatewayOrder: 6`은 변경하지 않는다.
 
 ### 향후 확장 방향
 
