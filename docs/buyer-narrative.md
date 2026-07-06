@@ -61,8 +61,8 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 ## Current report handoff
 
-- 현재 primary report 1순위는 `한글 표장 글로벌 보호 운영 프레임워크`(`hangul-mark-global-protection-framework`)다.
-- 현재 primary report 2순위는 `글로벌 상표 출원 우선순위 결정 프레임워크`(`global-filing-priority-framework`)다.
+- 현재 primary report 1순위는 `글로벌 지정상품·지정서비스 설계 프레임워크`(`global-goods-services-class-framework`)다.
+- 현재 primary report 2순위는 `한글 표장 글로벌 보호 운영 프레임워크`(`hangul-mark-global-protection-framework`)다.
 - Gateway 첫 화면의 최신 report 2개는 별도 주연 카드가 아니라, priority guides 아래에서 launch sequencing, filing packet, evidence triage 같은 공통 질문을 다시 묶는 first trust layer로 유지한다.
 
 ## 지금 보면 좋은 가이드
