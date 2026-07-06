@@ -55,8 +55,8 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 - One-line wedge: `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕는다.`
 - Funnel CTA: `ChaTm 보기 -> MexTm 먼저 보기 -> EuTm 보기`
 - Primary reports:
+  `글로벌 지정상품·지정서비스 설계 프레임워크` (`global-goods-services-class-framework`, 2026-07-06)
   `한글 표장 글로벌 보호 운영 프레임워크` (`hangul-mark-global-protection-framework`, 2026-04-15)
-  `글로벌 상표 출원 우선순위 결정 프레임워크` (`global-filing-priority-framework`, 2026-04-09)
 - Gateway hero copy:
   `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.`
   `중국 가이드(ChaTm)에서는 중국어 브랜드명, 시장별 출시 순서, 상표 출원 방식을 먼저 정리합니다. 이어 멕시코 가이드(MexTm)에서는 출원 준비와 등록 후 관리, 세관에서 위조품을 막기 위한 준비를 살펴봅니다. 유럽 가이드(EuTm)에서는 EU와 영국에서 상표를 어디까지 보호할지, 권리를 지키기 위해 어떤 증거가 필요한지 살펴봅니다.`
@@ -96,8 +96,8 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 
 | Slot | Report | Status | Evidence |
 |------|------|------|------|
-| 1 | `hangul-mark-global-protection-framework` |  |  |
-| 2 | `global-filing-priority-framework` |  |  |
+| 1 | `global-goods-services-class-framework` |  |  |
+| 2 | `hangul-mark-global-protection-framework` |  |  |
 
 ## Growth / Incubate Hygiene Check
 

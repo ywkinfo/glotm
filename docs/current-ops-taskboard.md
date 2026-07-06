@@ -13,6 +13,7 @@
 - Brief archive provenance: 개별 브리프는 운영 문서에 인벤토리하지 않고 런타임 `src/briefs/archive.ts`를 정본 인벤토리로 본다. lane cadence·provenance·publish 게이트 계약은 `briefs-lane.md`, 구조 강제(최신호 락 포함)는 `src/briefs/archive.test.ts`를 기준으로 본다.
 - 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61), EuTm growth/mature 승급(15장·부록·claim-map 10건·2026-06-10 법률 사실정정, #69/#70), UsaTm growth/mature 승급(15장·검색 엔트리 206개·claim-map 15건·2026-06-29 fact-review/full-QA). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. 과거 registry drift 정합 기록은 아래 `Resolved Drift Archive` 섹션에 보존한다.
 - 2026-07 라운드 반영: `JapTm` growth/mature/full 승급(결정 2026-06-29 owner override · 머지 2026-06-30 #114 — 로그는 `monthly-review-template.md`)과 검증날짜·claim-map sourceId 정합 후속(2026-07-01 #115)을 정본으로 반영. 2026-07-04 월간 리뷰에서 shared root gate 재현 후 전 가이드 `verifiedOn`을 2026-07-04로 re-stamp(lane freshness, fact-review 아님). Next Lane의 이전 `JapTm` `145 / incubate / beta / standard` 표기는 승급 이전 잔재라 registry 정본에 맞춰 동기화했다.
+- 2026-07-06 신규 리포트: 교차 관할 `global-goods-services-class-framework`(지정상품·류 설계) 추가 후 머지·Pages 배포(#118). publishedAt 2026-07-06으로 Gateway featured lead 진입 → featured 2 = 지정상품 설계 + 한글 표장, `gatewaySectionSummary` 예시 문구도 이에 맞춰 변경. 시의성 사실(2025 USPTO 수수료·2027 중국 개정 상표법·판례) 다수라 owner 사실 attestation은 후속 과제로 남긴다. buyer-narrative/monthly-review-template의 primary report 스냅샷은 새 featured 쌍으로 동기화(이 커밋).
 
 ## Today
 
