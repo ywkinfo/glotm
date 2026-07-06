@@ -34,12 +34,12 @@ const trustLayerRoundtripCases = [
   {
     guideName: "EuTm",
     guidePath: "/europe",
-    reportTitle: "출원 경로 결정 프레임워크: 직접출원 vs 마드리드",
-    reportPath: "/reports/global-filing-route-framework?fromGuide=europe",
+    reportTitle: "글로벌 지정상품·지정서비스 설계 프레임워크: 니스분류를 넘어 관할별 심사언어에 맞추기",
+    reportPath: "/reports/global-goods-services-class-framework?fromGuide=europe",
     returnLinkName: "EuTm로 돌아가기",
     returnHref:
-      "/europe/chapter/제5장-출원-경로와-서류-설계#route-pack-lock-board",
-    focusPointLinkName: "EuTm lock board 보기"
+      "/europe/chapter/제5장-출원-경로와-서류-설계#goodsservices-설계-원칙",
+    focusPointLinkName: "EuTm 설계 원칙 보기"
   }
 ] as const;
 
