@@ -46,26 +46,26 @@ const priorityGuideSlugs = new Set(
 );
 const priorityGuideHandoffExpectations = {
   china: {
-    expectedSummary: "한글 원표장을 원점으로 두고, 중국어 표기 후보를 어떤 순서로 search와 filing에 넘길지 먼저 정리합니다.",
+    expectedSummary: "같은 니스류라도 서브클래스가 어긋나면 충돌·비충돌이 달라지므로, 类似群과 실제 판매 구조를 같은 표에서 먼저 매핑합니다.",
     expectedReportSlugs: [
+      "global-goods-services-class-framework",
+      "hangul-mark-global-protection-framework"
+    ]
+  },
+  mexico: {
+    expectedSummary: "멕시코는 클래스·지정상품 스코프를 별도 보드로 관리하지 않으면 니스 분류와 실제 판매가 어긋나기 쉬우므로, 스코프 리스크부터 분류합니다.",
+    expectedReportSlugs: [
+      "global-goods-services-class-framework",
       "hangul-mark-global-protection-framework",
       "global-filing-priority-framework"
     ]
   },
-  mexico: {
-    expectedSummary: "멕시코처럼 제출 직전 정렬이 중요한 시장에서는, 한글·영문·로고 사용본이 서로 충돌하지 않게 먼저 정리하는 편이 안전합니다.",
+  europe: {
+    expectedSummary: "유럽은 '명확·정확' 원칙과 HDB 선승인 용어가 등록·집행을 좌우하므로, goods/services 설계 원칙을 먼저 확인합니다.",
     expectedReportSlugs: [
-      "hangul-mark-global-protection-framework",
+      "global-goods-services-class-framework",
       "global-filing-priority-framework",
       "global-filing-route-framework"
-    ]
-  },
-  europe: {
-    expectedSummary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 growth lane이 다음 handoff까지 흔들리지 않습니다.",
-    expectedReportSlugs: [
-      "global-filing-priority-framework",
-      "global-filing-route-framework",
-      "global-use-evidence-system"
     ]
   }
 } as const;

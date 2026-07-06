@@ -83,7 +83,7 @@ export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
   gatewaySectionTitle: "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다",
   gatewaySectionSummary:
-    "중국·멕시코·유럽 가이드를 보다 보면 브랜드 표기를 어떻게 통일할지, 어느 시장에 먼저 출원할지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
+    "중국·멕시코·유럽 가이드를 보다 보면 브랜드 표기를 어떻게 통일할지, 지정상품·서비스를 어떻게 설계할지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
   gatewayRoadmapTitle: "세 가이드의 공통 질문을 모은 리포트",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
@@ -103,6 +103,150 @@ export const reportExperienceMeta: ReportExperienceMeta = {
 // - whyNow should explain why this report deserves Gateway real estate now
 // - focusPoints should deep-link into the next guide actions the reader should take
 const reportSource: ReportMeta[] = [
+  {
+    id: "global-goods-services-class-framework",
+    slug: "global-goods-services-class-framework",
+    title:
+      "글로벌 지정상품·지정서비스 설계 프레임워크: 니스분류를 넘어 관할별 심사언어에 맞추기",
+    summary:
+      "니스 45류는 공통 언어일 뿐, 실제 보호범위는 관할별 심사언어(한국 유사군코드·미국 ID Manual·중국 서브클래스·일본 SGC·EU 명확성·브라질 Auxiliary Lists)에서 갈립니다. 하나의 마스터 명세를 만들고 시장별로 매핑하되, 과잉 청구는 불사용취소·악의 공격의 표적이 되므로 핵심·인접·보류로 나눠 설계하는 법을 정리한 리포트입니다.",
+    trustLayerSummaryObject: "지정상품·서비스 명세 설계 판단을",
+    publishedAt: "2026-07-06T09:00:00.000Z",
+    jurisdictions: ["Global", "China", "USA", "Japan", "Mexico", "Europe"],
+    tags: ["지정상품 설계", "니스분류", "서브클래스", "ID Manual", "Specification Design"],
+    audience:
+      "여러 나라에 같은 브랜드로 출원하며 상품·서비스 명세를 먼저 표준화해야 하는 브랜드 관리자, 인하우스 IP 팀, 글로벌 사업 리드",
+    gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
+    whyNow:
+      "표기 전략과 출원 우선순위·경로를 먼저 잠갔다면, 그다음에 반복적으로 빠지는 판단이 지정상품·서비스 명세입니다. ChaTm 서브클래스, UsaTm ID 설계, JapTm 지정 범위 스코프에서 같은 질문이 흩어져 나오므로, 검색·출원서 작성·사용증거로 넘어가기 전에 마스터 명세 기준을 한 장으로 묶어 두는 편이 좋습니다.",
+    trustLayerChecklist: [
+      "실제 판매·계획 상품/서비스를 하나의 master 명세로 적고, 표준명칭과 마케팅 표현을 분리한다.",
+      "각 시장 심사언어(중국 类似群, 미국 actual-use 특정성, 니스 표준)에 맞춰 master 명세를 매핑한다.",
+      "과잉 지정은 불사용취소·악의 공격의 표적이므로 핵심·인접·보류(공격·방어·비용최적화)로 나눈다."
+    ],
+    focusPoints: [
+      {
+        id: "china-subclass-mapping",
+        title: "ChaTm: 서브클래스(类似群) 매핑부터 잠근다",
+        summary:
+          "같은 니스류라도 서브클래스가 어긋나면 충돌·비충돌이 달라지므로, 类似群과 실제 판매 구조를 같은 표에서 먼저 매핑합니다.",
+        href: buildGuideSectionPath(
+          "china",
+          "제3장-검색-분류-서브클래스-리스크-분석",
+          "类似群-x-business-model-매핑표"
+        ),
+        guideSlug: "china",
+        ctaLabel: "ChaTm 서브클래스 매핑 보기"
+      },
+      {
+        id: "usa-id-specificity",
+        title: "UsaTm: ID 설계 원칙을 먼저 본다",
+        summary:
+          "미국은 문구 특정성이 등록·유지 가치를 좌우하므로, ID Manual 기준으로 좋은 ID의 원칙부터 정리합니다.",
+        href: buildGuideSectionPath(
+          "usa",
+          "출원서-작성-실무와-id-설계",
+          "id-설계-원칙"
+        ),
+        guideSlug: "usa",
+        ctaLabel: "UsaTm ID 설계 보기"
+      },
+      {
+        id: "japan-scope-design",
+        title: "JapTm: 지정 범위 설계 결정 보드",
+        summary:
+          "지정 범위를 사업 구조에 맞춰 넓힐지 좁힐지, 결정 보드에서 기준을 잠급니다.",
+        href: buildGuideSectionPath(
+          "japan",
+          "제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계",
+          "지정-범위-설계-결정-보드"
+        ),
+        guideSlug: "japan",
+        ctaLabel: "JapTm 범위 설계 보기"
+      },
+      {
+        id: "mexico-class-scope",
+        title: "MexTm: 스코프 리스크 분류 보드",
+        summary:
+          "멕시코는 클래스·지정상품 스코프를 별도 보드로 관리하지 않으면 니스 분류와 실제 판매가 어긋나기 쉬우므로, 스코프 리스크부터 분류합니다.",
+        href: buildGuideSectionPath(
+          "mexico",
+          "제2장-상표-전략-수립-표장클래스상품서비스-스코프-설계",
+          "스코프-리스크-분류-보드"
+        ),
+        guideSlug: "mexico",
+        ctaLabel: "MexTm 스코프 보드 보기"
+      },
+      {
+        id: "europe-goods-services",
+        title: "EuTm: goods/services 설계 원칙",
+        summary:
+          "유럽은 '명확·정확' 원칙과 HDB 선승인 용어가 등록·집행을 좌우하므로, goods/services 설계 원칙을 먼저 확인합니다.",
+        href: buildGuideSectionPath(
+          "europe",
+          "제5장-출원-경로와-서류-설계",
+          "goodsservices-설계-원칙"
+        ),
+        guideSlug: "europe",
+        ctaLabel: "EuTm 설계 원칙 보기"
+      }
+    ],
+    relatedGuideLinks: [
+      {
+        label: "ChaTm: 지정상품 설계표",
+        href: buildGuideSectionPath(
+          "china",
+          "제5장-출원서-작성-실무와-지정상품-설계",
+          "지정상품-설계표"
+        )
+      },
+      {
+        label: "MexTm: 스코프 리스크 분류 보드",
+        href: buildGuideSectionPath(
+          "mexico",
+          "제2장-상표-전략-수립-표장클래스상품서비스-스코프-설계",
+          "스코프-리스크-분류-보드"
+        )
+      },
+      {
+        label: "EuTm: goods/services 설계 원칙",
+        href: buildGuideSectionPath(
+          "europe",
+          "제5장-출원-경로와-서류-설계",
+          "goodsservices-설계-원칙"
+        )
+      },
+      {
+        label: "UsaTm: ID 설계 원칙",
+        href: buildGuideSectionPath(
+          "usa",
+          "출원서-작성-실무와-id-설계",
+          "id-설계-원칙"
+        )
+      },
+      {
+        label: "JapTm: 지정 범위 설계 결정 보드",
+        href: buildGuideSectionPath(
+          "japan",
+          "제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계",
+          "지정-범위-설계-결정-보드"
+        )
+      },
+      {
+        label: "LatTm: 상품·서비스 범위 설계 리스크",
+        href: buildGuideSectionPath(
+          "latam",
+          "제02장-pre-filing-상표-포트폴리오-설계",
+          "3-2-상품서비스-범위-설계-리스크"
+        )
+      },
+      {
+        label: "브랜드 표장 현지화 vs. 표준화 프레임워크",
+        href: buildReportPath("brand-localization-vs-standardization-framework")
+      }
+    ]
+  },
   {
     id: "global-filing-priority-framework",
     slug: "global-filing-priority-framework",

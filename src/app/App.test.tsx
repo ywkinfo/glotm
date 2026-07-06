@@ -480,30 +480,30 @@ describe("App portfolio shell", () => {
     {
       path: "/china",
       title: "중국 상표 실무 운영 가이드",
-      summary: "중국이 첫 출시국인지, 중국어 표기를 언제 잠글지, direct/Madrid 판단이 언제 갈리는지 readiness 보드에서 먼저 정리합니다.",
+      summary: "같은 니스류라도 서브클래스가 어긋나면 충돌·비충돌이 달라지므로, 类似群과 실제 판매 구조를 같은 표에서 먼저 매핑합니다.",
       expectedReportSlugs: [
-        "hangul-mark-global-protection-framework",
-        "global-filing-priority-framework"
+        "global-goods-services-class-framework",
+        "hangul-mark-global-protection-framework"
       ]
     },
     {
       path: "/mexico",
       title: "멕시코 상표 실무 운영 가이드북",
-      summary: "멕시코는 launch 직전에 도메인, 계정, goods/services, owner 메모를 같은 control board에 적어 두어야 buyer-entry 우선순위가 흔들리지 않습니다.",
+      summary: "멕시코는 클래스·지정상품 스코프를 별도 보드로 관리하지 않으면 니스 분류와 실제 판매가 어긋나기 쉬우므로, 스코프 리스크부터 분류합니다.",
       expectedReportSlugs: [
+        "global-goods-services-class-framework",
         "hangul-mark-global-protection-framework",
-        "global-filing-priority-framework",
-        "global-filing-route-framework"
+        "global-filing-priority-framework"
       ]
     },
     {
       path: "/europe",
       title: "EuTm 유럽 상표 운영 가이드북",
-      summary: "유럽은 EU-wide, core-state, UK split을 같은 포트폴리오 표에서 나눠 봐야 현재 growth lane이 다음 handoff까지 흔들리지 않습니다.",
+      summary: "유럽은 '명확·정확' 원칙과 HDB 선승인 용어가 등록·집행을 좌우하므로, goods/services 설계 원칙을 먼저 확인합니다.",
       expectedReportSlugs: [
+        "global-goods-services-class-framework",
         "global-filing-priority-framework",
-        "global-filing-route-framework",
-        "global-use-evidence-system"
+        "global-filing-route-framework"
       ]
     }
   ])(
@@ -766,31 +766,31 @@ describe("App portfolio shell", () => {
       within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 표기 결정과 handoff 논리" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 서브클래스(类似群) 매핑부터 잠근다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 표기 결정 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 서브클래스 매핑 보기" })
     ).toHaveAttribute(
       "href",
-      "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략"
+      "/china/chapter/제3장-검색-분류-서브클래스-리스크-분석#类似群-x-business-model-매핑표"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "JapTm: 일본어 발음 설계" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "UsaTm: ID 설계 원칙을 먼저 본다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "JapTm 발음 설계 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "UsaTm ID 설계 보기" })
     ).toHaveAttribute(
       "href",
-      "/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계"
+      "/usa/chapter/출원서-작성-실무와-id-설계#id-설계-원칙"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "MexTm: 출원서 작성 및 제출" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "JapTm: 지정 범위 설계 결정 보드" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "MexTm 출원 실무 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "JapTm 범위 설계 보기" })
     ).toHaveAttribute(
       "href",
-      "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase"
+      "/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#지정-범위-설계-결정-보드"
     );
     expect(
       within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
@@ -1168,7 +1168,7 @@ describe("App portfolio shell", () => {
       screen.queryByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).not.toBeInTheDocument();
     expect(
-      screen.getByText(/ChaTm · MexTm에서 이미 다룬 한글 표장 보호 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 지정상품·서비스 명세 설계 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -1178,7 +1178,7 @@ describe("App portfolio shell", () => {
     expect(
       screen.getByText(
         new RegExp(
-          `ChaTm · MexTm에서 이미 다룬 한글 표장 보호 판단을 이 리포트에서 한 번에 다시 정리했습니다\\. JapTm은 필요할 때 이어서 보면 됩니다\\.`
+          `ChaTm · MexTm · EuTm에서 이미 다룬 지정상품·서비스 명세 설계 판단을 이 리포트에서 한 번에 다시 정리했습니다\\..*JapTm · UsaTm은 필요할 때 이어서 보면 됩니다\\.`
         )
       )
     ).toBeInTheDocument();
@@ -1291,7 +1291,7 @@ describe("App portfolio shell", () => {
 
     const gatewayRender = renderAppRouteTree("/");
 
-    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 표기 결정 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 서브클래스 매핑 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -1300,7 +1300,7 @@ describe("App portfolio shell", () => {
         report_slug: latestReport?.slug,
         guide_slug: "china",
         surface: "gateway_section",
-        target_path: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략"
+        target_path: "/china/chapter/제3장-검색-분류-서브클래스-리스크-분석#类似群-x-business-model-매핑표"
       })
     );
 
