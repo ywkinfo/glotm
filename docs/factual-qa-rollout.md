@@ -363,7 +363,7 @@ Why fourth:
 
 - these started as incubate or lighter-track products
 - `UsaTm` has since adopted claim-map + full-pipeline review for its 2026-06-28 growth/mature closeout; `JapTm` still relies on root shortcut refresh, so hard coupling remains premature there
-- `UKTm` participates in full-pipeline refresh, but its portfolio role is still early-track and should not drag the broader rollout into edge-case cleanup too early
+- `UKTm` adopted claim-map + full-QA pipeline (audit:facts + health:content) for its 2026-07-07 growth/mature closeout (owner override); it now participates on the same footing as UsaTm/JapTm
 
 This phase should focus on schema adoption and advisory reporting, not aggressive gate tightening.
 

@@ -44,7 +44,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `EuTm`: growth. EU+UK scope와 rights/route/evidence handoff를 두껍게 다루는 가이드
 - `UsaTm`: growth mature. USPTO filing, maintenance, TTAB/court/platform/CBP enforcement orchestration을 full QA로 다루는 supporting growth 가이드
 - `JapTm`: growth mature. JPO filing, examination·병존동의제도, maintenance, enforcement·customs orchestration을 full QA로 묶은 supporting growth 가이드
-- `UKTm`: incubate beta. early-track verified 공개본과 standard QA를 유지하며 filing/maintenance/online-incident reader utility를 다듬는 가이드
+- `UKTm`: growth mature. UKIPO filing, maintenance, 다중 포럼 집행 오케스트레이션(IPEC/High Court/플랫폼/세관/Nominet)을 full QA로 묶은 supporting growth 가이드
 
 ## Current locked funnel
 
