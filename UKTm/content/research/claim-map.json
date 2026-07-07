@@ -1,0 +1,150 @@
+{
+  "workspace": "UKTm",
+  "productSlug": "uk",
+  "version": 1,
+  "auditMode": "advisory",
+  "claims": [
+    {
+      "id": "UK-OPP-001",
+      "jurisdiction": "UK",
+      "claim": "Opposition은 Trade Marks Journal 공고일 기준 2개월 이내에 TM7로 제기하며, 공고 후 TM7A(notice of threatened opposition)를 제출하면 opposition 제출 기간이 1개월 연장된다.",
+      "chapterRefs": ["Ch6"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-objecting", "ukipo-notice-to-oppose"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "conceptKey": "opposition_period",
+      "normalized": {
+        "trigger": "publication",
+        "value": "2",
+        "unit": "months",
+        "expression": "within 2 months from Trade Marks Journal publication, +1 month via TM7A"
+      },
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/objecting-to-other-peoples-trade-marks(TM7 2개월), gov.uk/notice-to-oppose-trademark(TM7A 예고 1개월 연장). mature flip 전 1차출처 재대조 권장."
+    },
+    {
+      "id": "UK-COOL-001",
+      "jurisdiction": "UK",
+      "claim": "Opposition 개시 후 cooling-off는 초기 9개월이며 TM9E로 최대 18개월까지 연장해 협상 기간을 확보할 수 있다.",
+      "chapterRefs": ["Ch6"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-fast-track-opposition"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk fast-track opposition. TM8 제출 시점과 협상 시점을 본문 표로 구분."
+    },
+    {
+      "id": "UK-RENEW-001",
+      "jurisdiction": "UK",
+      "claim": "등록 상표는 등록일 기준 10년마다 갱신한다.",
+      "chapterRefs": ["Ch7"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-renew"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "conceptKey": "renewal_term",
+      "normalized": {
+        "trigger": "registration",
+        "value": "10",
+        "unit": "years",
+        "expression": "renewal every 10 years from registration"
+      },
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/renew-your-trade-mark. 갱신 수수료 금액은 UK-FEE-001에서 구조적 표기로 분리."
+    },
+    {
+      "id": "UK-NONUSE-001",
+      "jurisdiction": "UK",
+      "claim": "Non-use revocation은 등록 후 5년 경과 시점부터 문제될 수 있으며, 연속 5년 불사용이 가장 위험한 신호다. 일부 goods/services만 사용한 경우 실제 사용 범위 기준으로 방어한다.",
+      "chapterRefs": ["Ch8"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-revocation-nonuse"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "conceptKey": "use_requirement",
+      "normalized": {
+        "trigger": "registration",
+        "value": "5",
+        "unit": "years",
+        "expression": "revocation risk after 5 years; continuous 5-year non-use"
+      },
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk revocation (non-use) proceedings. 절차 서식(TM26(N))·수수료 금액은 본문 하드코딩 금지."
+    },
+    {
+      "id": "UK-IPEC-001",
+      "jurisdiction": "UK",
+      "claim": "IPEC small claims track은 통상 £10,000 이하 분쟁에 적합하고, IPEC multi-track은 damages up to £500,000, recoverable costs cap £60,000을 기준으로 High Court와의 포럼 선택에 반영한다.",
+      "chapterRefs": ["Ch10", "Ch13"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-ipec-small-claims", "gov-ip-crime-enforcement"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk IPEC small claims guide, gov.uk IP crime and enforcement. cost cap은 cost rule 개정 시점에만 변동(저휘발성)이나 변경 보도 시 재대조."
+    },
+    {
+      "id": "UK-BREXIT-001",
+      "jurisdiction": "UK",
+      "claim": "EUTM은 2021-01-01 이후 자동으로 영국을 커버하지 않으므로, 신규 영국 보호는 UK national filing 또는 UK designation이 있는 국제등록으로 별도 설계해야 한다.",
+      "chapterRefs": ["Ch1", "Ch3"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-eutm-comparable"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk EU trade mark protection and comparable UK trade marks. 분리 시점 2021-01-01(전환 종료)로 EuTm 정정본과 정합."
+    },
+    {
+      "id": "UK-COMPARABLE-001",
+      "jurisdiction": "UK",
+      "claim": "comparable UK trade mark는 2021-01-01 전환 시 기존 EUTM에서 생성되며 원 EUTM의 갱신일을 유지한다. 따라서 신규 UK filing과 별도 관리 이벤트가 생긴다.",
+      "chapterRefs": ["Ch3", "Ch7"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["ukipo-eutm-comparable"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk comparable UK trade marks. 신규 EUTM은 UK 권리를 자동 생성하지 않음(EuTm 정정본과 정합)."
+    },
+    {
+      "id": "UK-IR-001",
+      "jurisdiction": "UK",
+      "claim": "2021-01-01 이후 UK 지정 국제출원(IR)은 영국에서 별도 보호를 받으며 Gibraltar에도 자동 효력이 미친다. EU 지정만으로는 영국을 커버하지 못한다.",
+      "chapterRefs": ["Ch3"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["gov-protect-abroad", "gov-ir-changes"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk protecting your trade mark abroad, changes to international trade mark registrations."
+    },
+    {
+      "id": "UK-AFA-001",
+      "jurisdiction": "UK",
+      "claim": "HMRC UK Application for Action(AFA)은 무료 신청이지만 detention 이후 보관·폐기·후속 대응 비용이 생길 수 있으며, 최소 30 working days 전 제출이 권장된다.",
+      "chapterRefs": ["Ch12"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["gov-afa"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk apply for action to protect your IP rights. '무료'만 강조하지 않고 후속 비용 리스크를 함께 표기."
+    },
+    {
+      "id": "UK-DRS-001",
+      "jurisdiction": "UK",
+      "claim": "`.uk` 도메인 분쟁은 Nominet Domain Disputes Resolution Service(DRS)를 registry 수준 분쟁 경로로 검토할 수 있으며, 경고장·협상과의 선택은 긴급도와 confusion strength로 판단한다.",
+      "chapterRefs": ["Ch11", "Ch13"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["nominet-drs"],
+      "lastVerified": "2026-05-12",
+      "status": "BODY_READY",
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: Nominet Domain Disputes. 절차·수수료는 Nominet 정책 변경 가능(분기 재확인)."
+    },
+    {
+      "id": "UK-FEE-001",
+      "jurisdiction": "UK",
+      "claim": "UKIPO 정부수수료는 첫 클래스 기준 금액에 추가 클래스당 £50 가산이 붙는 구조이며, 2026-04-01 개정 기준 출원 첫 클래스 £205 / 갱신 첫 클래스 £245이다. 금액은 개정 시 변동하므로 공식 UKIPO 고지를 정본으로 유지한다.",
+      "chapterRefs": ["Ch4", "Ch7"],
+      "riskLevel": "MEDIUM",
+      "sourceIds": ["ukipo-renew"],
+      "lastVerified": "2026-07-07",
+      "status": "BODY_READY",
+      "notes": "2026-07-07 owner 결정으로 EuTm 정본(출원 £205 / 갱신 £245, UKIPO 2026-04-01 개정)에 통일. 이전 £200 기록과의 상충 해소. 향후 개정 시 EuTm·UKTm 양 워크스페이스 동시 갱신."
+    }
+  ]
+}

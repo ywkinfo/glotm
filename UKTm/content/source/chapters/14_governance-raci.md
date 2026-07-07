@@ -63,7 +63,7 @@ RACI가 살아 있으려면 일정 리듬이 함께 있어야 한다. 영국 포
 
 ## quarterly governance outputs
 
-beta lane에서도 분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
+분기 산출물이 없으면 RACI 표는 금방 장식이 된다. 영국 운영에서는 완벽한 dashboard보다 반복 가능한 output 세 개를 같은 형식으로 남기는 쪽이 훨씬 유용하다.
 
 ### quarterly portfolio memo 4-line format
 
@@ -95,6 +95,28 @@ weak-use mark는 evidence 장에서만 다루면 늦다. governance row에서 es
 | evidence 업데이트가 회의 직전에만 이뤄짐 | owner와 cadence 분리 |
 | renewal / dispute가 서로 다른 시트에 흩어짐 | same board 재통합 |
 | UK-only issue가 계속 EuTm 메모에 묻힘 | UK escalation line 별도 생성 |
+
+## 검증 cadence를 거버넌스에 건다
+
+사실 검증(수수료·기한·기관명)은 별도 트랙이지만, 거버넌스가 cadence를 걸어 두지 않으면 재검증이 밀린다. 검증 회기를 RACI 캘린더에 명시적으로 얹는다.
+
+| 검증 대상 | 주기 | owner |
+| --- | --- | --- |
+| 변동성 높은 사실(수수료·기한) | content refresh 시 + 분기 | 법무/IP |
+| 출처 레지스터 최신성 | 반기 | 법무/IP |
+| comparable right 정책 변화 | 분기 | 법무/IP |
+| lane 재검증(shared root gate) | 월간 | IP |
+
+## 외부 대리인 인터페이스를 관리한다
+
+외부 대리인이 사실상 승인권까지 가져가면 RACI가 무너진다. 인터페이스 경계를 미리 정해 내부 `A`를 지킨다.
+
+| 항목 | 대리인 역할 | 내부 유지 역할 |
+| --- | --- | --- |
+| 출원·서면 실행 | R | A(내부 승인) |
+| 전략·범위 결정 | C | A/R(내부) |
+| 사실 검증 대조 | C | A(내부 최종) |
+| 비용 승인 | I | A(내부) |
 
 ## RACI 도입 체크리스트
 

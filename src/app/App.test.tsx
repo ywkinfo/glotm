@@ -412,7 +412,7 @@ describe("App portfolio shell", () => {
     ["/europe", "Growth tier · Mature lifecycle · Full QA · 권역 가이드"],
     ["/usa", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"],
     ["/japan", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"],
-    ["/uk", "Incubate tier · Beta lifecycle · Standard QA · 국가 가이드"]
+    ["/uk", "Growth tier · Mature lifecycle · Full QA · 국가 가이드"]
   ])("derives reader home status copy from registry truth for %s", async (pathname, statusLabel) => {
     installFetchMock();
 
@@ -862,7 +862,7 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Flagship" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).queryByRole("heading", { name: "Validate" })).toBeNull();
-    expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Incubate" })).toBeInTheDocument();
+    expect(within(currentPilotScope as HTMLElement).queryByRole("heading", { name: "Incubate" })).toBeNull();
     expect(
       within(currentPilotScope as HTMLElement).getByText("mature 승격 반영 · Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 완료")
     ).toBeInTheDocument();

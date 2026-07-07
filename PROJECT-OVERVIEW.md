@@ -16,7 +16,7 @@
 | Last updated | 2026-07-04 |
 | Verified on | 2026-07-04 |
 | Current phase | Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지) |
-| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` growth expansion 반영 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> `UsaTm` growth/mature closeout 반영 -> `JapTm` growth/mature 승급 반영 -> `UKTm` incubate 유지보수 |
+| Current focus | `ChaTm` mature 단계 반영 + growth baseline 유지 -> `MexTm` mature baseline 유지 -> `EuTm` growth expansion 반영 + stabilization closeout reflected -> `Report / Gateway` trust layer·report handoff·workflow path 정합화 유지 -> `UsaTm` growth/mature closeout 반영 -> `JapTm` growth/mature 승급 반영 -> `UKTm` growth/mature/full 승급 반영(2026-07-07 owner override) |
 | Do not start yet | 신규 국가 추가, pricing/paywall, 이메일 게이트 3단계, 새 파이프라인 도입, 의존성 추가 |
 
 ### Priority 4 owner lane
@@ -94,7 +94,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료(#69/#70) · factsReviewedOn 2026-06-10 |
 | `UsaTm` | 단일국가 | growth | mature | 15 | 206 | 집행 포럼 플레이북 · 패러디·출처표지적 사용 이중 트랙 보강(Ch12–14) · claim-map 15건 · full QA |
 | `JapTm` | 단일국가 | growth | mature | 15 | 185 | 병존동의제도(2024-04-01) 집행 보강 · claim-map 12건 · full QA |
-| `UKTm` | 단일국가 | incubate | beta | 14 | 128 | standard QA evidence 4-file 정합 · 2026-05-12 verdict 적용 · early-track verified 공개본 |
+| `UKTm` | 단일국가 | growth | mature | 15 | 183 | 다중 포럼 집행 오케스트레이션 15장 신설 + 저밀도 장 보강(density 12.2) · claim-map 11건 · full QA · 2026-07-07 growth/mature 승급(owner override) |
 
 ### 확대 기준
 
@@ -110,7 +110,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
 - `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 15건, full-QA 파이프라인을 유지하되 Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 흔들지 않는다
 - `JapTm`: 2026-06-29 growth/mature/full-QA 승급(owner override). 병존동의제도(2024-04-01) 집행 보강, claim-map 12건, 저밀도 장 운영 섹션 보강(density 12.33), root full pipeline 편입. Gateway 첫 화면 `ChaTm`·`MexTm`·`EuTm` 우선은 유지하고 supporting lane으로 운영
-- `UKTm`: 2026-05-12 standard QA verdict로 beta 승급(incubate 유지)
+- `UKTm`: 2026-07-07 growth/mature/full-QA 승급(owner override). 다중 포럼 집행 오케스트레이션 15장 신설, 저밀도 장 보강(density 12.2), claim-map 11건, UK 수수료 £205/£245 EuTm 정합, root full pipeline 편입. Gateway 첫 화면 `ChaTm`·`MexTm`·`EuTm` 우선은 유지하고 supporting lane으로 운영
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -168,9 +168,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 `EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 10건 + 공식 URL 인덱스). mature 승급(#69/#70)과 2026-06-10 factsReviewedOn 기록이 `src/products/registry.ts` 정본에 반영돼 있으며(verifiedOn은 월간 lane re-stamp로 관리), 현재는 growth lane baseline으로 운영한다.
 
-### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 verified track
+### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 growth mature lane
 
-`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 빠르게 점검하는 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/uk` 경로에 연결한 상태다. 직전 라운드에서 low-density 장들에 UK-only handoff row, search memo, examination response, licence control, dispute escalation, border incident, governance output 보강을 넣어 density를 beta 기준 위로 끌어올렸고, 2026-05-12 standard QA verdict로 4개 evidence 파일(Coverage Scope · Source Reliability Tier · Verification Method Summary · Known Limitations 기준)이 정합화되면서 `lifecycle: pilot → beta`, `qaLevel: smoke → standard`로 승급했다. 2026-07-04 기준 root full-pipeline refresh와 shared root `health:runtime`/`health:content`/`health:release` lane을 다시 통과한 결과를 그대로 유지하며, `portfolioTier`는 `incubate` 유지(growth/validate로 끌어올리지 않음). Gateway 노출 톤은 early-track verified 공개본으로 격상하되, supporting role과 `gatewayOrder: 6`은 변경하지 않는다.
+`UKTm`은 UKIPO 중심의 영국 단일 시장 실무를 다루는 단일국가 growth guide다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/uk` 경로에 연결한 상태다. 2026-07-07 scorecard 승격에서 다중 포럼 집행 오케스트레이션(제13장) 신설로 15장 체계로 전환했고, 저밀도 장 보강으로 검색 엔트리 183개(density 12.2)를 확보했다. 구조화 claim-map 11건을 신설해 UKIPO 1차 출처 기준 사실(opposition 2개월·cooling-off 9→18개월·10년 갱신·5년 non-use·IPEC 한도·comparable UK mark·AFA 30 working days 등)을 잠갔고, EuTm과 상충하던 UK 수수료를 owner 결정으로 £205 출원 / £245 갱신 정본에 통일했다. root/workspace full-QA 편입(`content:uk` 풀 파이프라인 + `health:content`·`audit:facts`)을 근거로 `growth / mature / full QA` 상태를 잠갔다(owner override — Phase 2.5 "확장 금지" 기조에 대한 의도적 예외, `docs/monthly-review-template.md`에 기록). Gateway 첫 화면의 buyer-entry 약속은 여전히 `ChaTm`·`MexTm`·`EuTm`과 Report trust layer를 우선하므로, `UKTm`은 supporting growth lane으로 유지하고 `gatewayOrder: 6`은 변경하지 않는다.
 
 ### 향후 확장 방향
 

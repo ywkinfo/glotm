@@ -44,7 +44,7 @@ search density는 저장하지 않고 `searchEntryCount / chapterCount`로 계�
 | `EuTm` | growth | mature | Ch3/6/10/14 및 부록 보강 · mature 승급 완료 |
 | `UsaTm` | growth | mature | 15장 체계, claim-map 15건, full-QA 파이프라인 편입 완료 |
 | `JapTm` | growth | mature | 병존동의제도(2024-04-01) 집행 보강, claim-map 12건, density 12.33, full-QA 편입 완료 |
-| `UKTm` | incubate | beta | standard QA evidence 4-file 정합, 2026-05-12 verdict 적용, early-track verified 공개본 |
+| `UKTm` | growth | mature | 다중 포럼 집행 오케스트레이션 15장 신설, claim-map 11건, density 12.2, full-QA 편입 완료(2026-07-07 owner override) |
 
 ## Current execution order
 
