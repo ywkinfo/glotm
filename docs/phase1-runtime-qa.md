@@ -98,10 +98,10 @@ Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` �
 14. 검색 결과 0건이 반환될 때 "결과 없음" 상태가 명확히 표시되며 빈 드롭다운이 열리지 않는다.
 15. 모바일에서 콘텐츠가 짧은 챕터의 prev-next 버튼과 footer가 viewport 하단에서 겹치지 않는다.
 
-### Growth / incubate addendum (UsaTm·JapTm·UKTm)
-1. `/japan` 홈은 beta lighter-track 상태와 맞지 않는 `콘텐츠 준비 중` draft notice를 노출하지 않는다.
-2. `/uk` 홈은 beta early-track verified 공개본을 유지하되, continue reading과 search 흐름은 일반 홈 계약과 같은 안정성으로 동작한다.
-3. `/usa`, `/japan`, `/uk` 홈 copy가 USPTO filing / maintenance / enforcement orchestration, route memo / maintenance owner / evidence hygiene, early-track filing decision / maintenance owner / online incident quick board reader utility 초점과 각각 어긋나지 않는다.
+### Growth addendum (UsaTm·JapTm·UKTm)
+1. `/japan` 홈은 growth mature 상태와 맞지 않는 `콘텐츠 준비 중` draft notice를 노출하지 않는다.
+2. `/uk` 홈은 growth mature full-QA 상태를 유지하되, continue reading과 search 흐름은 일반 홈 계약과 같은 안정성으로 동작한다.
+3. `/usa`, `/japan`, `/uk` 홈 copy가 USPTO filing / maintenance / enforcement orchestration, route memo / maintenance owner / evidence hygiene, filing 전략 / maintenance owner / 다중 포럼 집행 오케스트레이션 reader utility 초점과 각각 어긋나지 않는다.
 4. Gateway/root portfolio surface에서 `UsaTm`·`JapTm`·`UKTm`의 lifecycle, QA, summary, CTA가 `src/products/registry.ts` truth와 어긋나지 않는다.
 
 ### Report / trust-layer handoff addendum

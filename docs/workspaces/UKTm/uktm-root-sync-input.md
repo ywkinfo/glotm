@@ -1,5 +1,7 @@
 # UKTm Root Sync Input
 
+> **SUPERSEDED (2026-07-07):** UKTm은 2026-07-07 `growth / mature / full QA`로 승급됐다(owner override, PR #121). 아래 서술의 `incubate / beta / standard / 14장 / 128 entries / early-track`는 승급 이전 dated 기록이다. 현재 정본은 `src/products/registry.ts`(15장 / 183 entries / growth·mature·full)이며, 현재 상태 서술은 `PROJECT-OVERVIEW.md`·`docs/portfolio-scorecard.md`를 본다.
+
 이 문서는 `UKTm` beta 레인의 reader-utility 정합 작업을 root sync 전에 정리해 두는 handoff 메모다.
 UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급됐으므로, 이 레인은 standard-QA "prep"이 아니라 이미 beta/standard인 상태에서 reader utility를 정합·유지하는 단계를 다룬다.
 루트 authoritative metadata는 `src/products/registry.ts`, workspace 계약은 `UKTm/README.md`, `UKTm/Harness/Architecture.md`, `UKTm/Harness/Content-Spec.md`를 기준으로 읽는다.
