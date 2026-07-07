@@ -35,6 +35,58 @@ cooling-off는 단순한 지연이 아니라 협상 기간이다. 이 기간에 
 
 효율적인 팀은 cooling-off 시작 시점에 `권리 범위`, `허용 가능한 사용 조건`, `출시 일정`, `대체 표장 존재 여부`를 한 페이지로 만든다. 협상 메모가 없으면 대리인과 내부 팀이 같은 말을 반복하게 된다.
 
+## third party observation과 정식 opposition을 구분한다
+
+공고 전후에 제3자가 개입하는 방식은 하나가 아니다. 정식 opposition만 대응 대상으로 보면, 심사 단계의 비공식 관찰이나 등록 후 challenge를 놓친다. 개입 유형을 먼저 분류해야 어느 팀이 언제 움직일지 정해진다.
+
+| 개입 유형 | 언제 들어오나 | 성격 | 우선 대응 |
+| --- | --- | --- | --- |
+| third party observations | 심사·공고 단계 | 심사관에게 의견 제출(비당사자) | 심사 대응(제05장)과 함께 처리 |
+| TM7A 예고 | 공고 후 | opposition 의사 통지 | 협상 브리프·fallback 준비 |
+| TM7 opposition | 공고 후 2개월 내 | 정식 이의 절차 | 방어 범위·cooling-off 전략 |
+| 등록 후 challenge | 등록 이후 언제든 | invalidation·revocation 신청 | tribunal 방어 트랙 개설 |
+
+## opposition 근거 유형별 대응
+
+같은 opposition이라도 상대가 절대적 거절이유(absolute grounds)를 드는지, 선행권리(relative grounds)를 드는지에 따라 방어 자료가 다르다. 근거 유형을 먼저 나눠야 증거 수집이 헛돌지 않는다.
+
+| 근거 유형 | 대표 주장 | 방어 자료 |
+| --- | --- | --- |
+| relative grounds | 선행 등록·미등록 권리와 혼동 | 사용 범위·시장 구분·coexistence 실적 |
+| absolute grounds | 식별력 결여·기술적 표장·관용표장 | 사용을 통한 식별력 취득(acquired distinctiveness) 증거 |
+| bad faith 주장 | 부정한 출원 의도 | 출원 경위·사업 계획 기록 |
+
+## invalidation·revocation 방어를 같은 보드에서 본다
+
+등록으로 끝이 아니다. 제3자는 등록 후에도 무효 신청이나 non-use revocation으로 권리를 흔들 수 있고, 이는 UKIPO Tribunal 절차로 이어진다. opposition 보드와 등록 후 challenge 보드를 따로 굴리면 같은 증거를 두 번 만들게 된다.
+
+| 등록 후 challenge | 핵심 방어 축 | 연결 장 |
+| --- | --- | --- |
+| 무효(invalidation) 신청 | 등록 유효성·선행권리 부존재 | 제05장 심사 근거 |
+| non-use revocation | 연속 사용 증거 | 제08장 사용증거 |
+| tribunal 절차 진행 | 서식·기한 준수 | 제13장 다중 포럼 오케스트레이션 |
+
+## opposition 비용·costs 리스크를 미리 잡는다
+
+영국 tribunal 절차는 결과에 따라 costs가 상대방에게 배분될 수 있다. 협상 종료 시점을 정할 때 이 비용 리스크를 판단에 넣지 않으면, 이기고도 비용에서 손해를 보거나 불리한 합의를 놓친다.
+
+| 판단 포인트 | 비용 관점 메모 |
+| --- | --- |
+| 조기 합의 vs 본안 진행 | 진행 비용과 costs 리스크를 함께 비교 |
+| 부분 양보 범위 | 지킬 클래스의 사업 가치와 방어 비용 대비 |
+| 외부 대리인 투입 시점 | cooling-off 내 협상과 서면 준비 비용 분리 |
+
+## opposition 증거·서면 준비 타임라인
+
+opposition은 기한이 고정돼 있어, 증거·서면 준비를 기한 역산으로 관리하지 않으면 cooling-off를 협상에 쓰지 못하고 방어에 소진한다.
+
+| 시점 | 준비할 것 |
+| --- | --- |
+| opposition 수령 직후 | 근거 유형 분류·핵심 방어 범위 |
+| 초기 대응 기한 | TM8 등 대응 서식·증거 목록 |
+| cooling-off 구간 | 협상안·coexistence 초안 |
+| 협상 결렬 시 | 본안 증거 번들·비용 판단 |
+
 ## opposition 운영 체크리스트
 
 | 점검 항목 | owner | 상태 |

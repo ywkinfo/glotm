@@ -1,6 +1,6 @@
 # 사례, 체크리스트, 실행 부록
 
-이 마지막 장의 목적은 법리를 더 추가하는 것이 아니라, 앞선 13개 장을 실제 업무 흐름으로 바꾸는 것이다. 영국 상표 운영은 사건이 생길 때마다 처음부터 다시 생각하면 느려지므로, 반복 가능한 시나리오와 즉시 복사 가능한 부록 링크가 필요하다.
+이 마지막 장의 목적은 법리를 더 추가하는 것이 아니라, 앞선 14개 장을 실제 업무 흐름으로 바꾸는 것이다. 영국 상표 운영은 사건이 생길 때마다 처음부터 다시 생각하면 느려지므로, 반복 가능한 시나리오와 즉시 복사 가능한 부록 링크가 필요하다.
 
 ## 대표 시나리오 1: 런치 직전 충돌 발견
 
@@ -17,6 +17,14 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 ## 대표 시나리오 4: 4년 차 weak-use mark 발견
 
 갱신은 아직 멀었지만 영국 사용 증거가 약한 mark가 보이면 즉시 evidence vault card를 열어 실사용 구조를 점검한다. 5년 시점 직전에 급히 자료를 모으는 것보다, 4년 차에 drop / narrow / reinforce 판단을 하는 편이 훨씬 싸다.
+
+## 대표 시나리오 5: 다중 포럼 동시 발생
+
+같은 침해자가 marketplace listing, `.uk` 도메인, 국경 물량에 동시에 걸리면 개별 신고만으로는 확산을 못 막는다. Ch13 통합 사건 보드를 열어 플랫폼·Nominet DRS·HMRC AFA·법원 트랙을 하나의 증거 팩으로 정렬하고, 리드타임이 긴 AFA와 고정 기한 트랙을 먼저 캘린더에 박는다.
+
+## 대표 시나리오 6: 유통 파트너 계약 위반과 잔존 사용
+
+공동브랜딩·유통 종료 후에도 잔존 사용이 남으면 계약 집행 트랙과 상표권 트랙을 분리해서 본다. Ch09 co-brand exit clean-up board로 회수·archive 기준을 잡고, Ch10 cease and desist packet과 같은 사건 번호로 묶어 진술 충돌을 막는다.
 
 ## 실사용 체크리스트
 
@@ -73,4 +81,4 @@ seller 삭제만으로 끝나지 않는 사건이라면 플랫폼 패킷과 Nomi
 - 이 버전에서 수정된 항목: 없음 (draft 공개본 stability 재확인)
 - 다음 권장 검증 시점: 60일 이내 (Brexit 이후 UKIPO 운영 변경 발생 시 즉시)
 - 고위험 검증 갭: 0건
-- 운영 상태: 2026-04-04 시점 `incubate pilot · smoke QA · structure hold` 스냅샷 (이후 2026-05-12 #53로 `incubate beta · standard QA` 승급 — 현재 정본은 `src/products/registry.ts`)
+- 운영 상태: 2026-04-04 시점 `incubate pilot · smoke QA · structure hold` 스냅샷 (이후 2026-05-12 #53로 `incubate beta · standard QA` 승급, 2026-07-07 `growth mature · full QA` 승급[owner override, 다중 포럼 오케스트레이션 15장·claim-map 11건·density 12.2] — 현재 정본은 `src/products/registry.ts`)

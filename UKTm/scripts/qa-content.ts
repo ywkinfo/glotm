@@ -33,11 +33,11 @@ async function main() {
   const manifest = await readManifest();
   const issues: Issue[] = [];
 
-  if (manifest.chapters.length !== 14) {
+  if (manifest.chapters.length !== 15) {
     issues.push({
       level: "warning",
       file: relative(manifestPath),
-      message: `장 개수가 14개가 아닙니다. 현재 ${manifest.chapters.length}개입니다.`
+      message: `장 개수가 15개가 아닙니다. 현재 ${manifest.chapters.length}개입니다.`
     });
   }
 

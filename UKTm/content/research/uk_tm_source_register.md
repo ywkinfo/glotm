@@ -34,6 +34,25 @@
 | WIPO 검색 도구 | Madrid Monitor | https://www.wipo.int/madrid/en/monitor/ | 2026-04-01 | Ch02, Ch03 | 확정 |
 | TMview | TMview | https://www.tmdn.org/tmview/ | 2026-04-01 | Ch02 | 확정 |
 
+## Claim-map sourceId 매핑
+
+`content/research/claim-map.json`의 `sourceIds`는 위 레지스터 출처를 slug로 참조한다.
+
+| sourceId | 공식 문서 | 직접 URL |
+| --- | --- | --- |
+| ukipo-objecting | Objecting to other peoples trade marks | https://www.gov.uk/objecting-to-other-peoples-trade-marks |
+| ukipo-notice-to-oppose | Give notice of intention to oppose | https://www.gov.uk/notice-to-oppose-trademark |
+| ukipo-fast-track-opposition | Fast track opposition | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition |
+| ukipo-renew | Renew your trade mark | https://www.gov.uk/renew-your-trade-mark |
+| ukipo-revocation-nonuse | Revocation (non-use) proceedings | https://www.gov.uk/government/publications/trade-marks-revocation/revocation-non-use-proceedings |
+| ukipo-ipec-small-claims | IPEC — guide to small claims | https://www.gov.uk/government/publications/intellectual-property-enterprise-court-a-guide-to-small-claims |
+| gov-ip-crime-enforcement | IP crime and enforcement for businesses | https://www.gov.uk/government/publications/ip-crime-and-enforcement-for-businesses/ip-crime-and-enforcement-for-businesses |
+| ukipo-eutm-comparable | EU trade mark protection and comparable UK trade marks | https://www.gov.uk/guidance/eu-trade-mark-protection-and-comparable-uk-trade-marks |
+| gov-ir-changes | Changes to international trade mark registrations | https://www.gov.uk/guidance/changes-to-international-trade-mark-registrations |
+| gov-protect-abroad | Protecting your trade mark abroad | https://www.gov.uk/guidance/protecting-your-trade-mark-abroad |
+| gov-afa | Apply for action to protect your IP rights | https://www.gov.uk/guidance/apply-for-action-to-protect-your-intellectual-property-rights |
+| nominet-drs | Domain Disputes - Nominet | https://nominet.uk/uk-registry/domain-disputes/ |
+
 ## 운영 규칙
 
 - 본문에 수수료, 기한, 기관명, 공식 시스템명, 구제수단 범위를 넣기 전 이 레지스터에 출처를 추가한다.

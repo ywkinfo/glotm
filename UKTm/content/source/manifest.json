@@ -50,12 +50,16 @@
       "path": "content/source/chapters/12_customs-border.md"
     },
     {
+      "title": "다중 포럼 집행 오케스트레이션과 병행 트랙 운영",
+      "path": "content/source/chapters/13_multi-forum-orchestration.md"
+    },
+    {
       "title": "포트폴리오 운영, 내부 통제, RACI",
-      "path": "content/source/chapters/13_governance-raci.md"
+      "path": "content/source/chapters/14_governance-raci.md"
     },
     {
       "title": "사례, 체크리스트, 실행 부록",
-      "path": "content/source/chapters/14_cases-appendix.md"
+      "path": "content/source/chapters/15_cases-appendix.md"
     }
   ]
 }

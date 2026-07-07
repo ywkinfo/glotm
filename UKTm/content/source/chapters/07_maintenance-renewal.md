@@ -2,25 +2,25 @@
 
 등록 이후의 영국 상표 운영은 `갱신`, `register maintenance`, `실사용 점검` 세 축으로 돌아간다. 등록증을 받은 뒤 아무 조치를 하지 않아도 되는 기간처럼 느껴지지만, 실제로는 owner 구조와 사용 구조가 계속 변하기 때문에 관리 품질이 크게 갈린다.
 
-영국 등록은 10년마다 갱신되며, 갱신 수수료는 첫 클래스 £200, 추가 클래스당 £50이다. 이 사실 자체보다 중요한 것은 갱신 이벤트를 포트폴리오 정비 이벤트로 쓰는 습관이다.
+영국 등록은 10년마다 갱신되며, 갱신 수수료는 첫 클래스 £245, 추가 클래스당 £50이다(2026-04-01 UKIPO 개정 기준). 금액 자체보다 중요한 것은 갱신 이벤트를 포트폴리오 정비 이벤트로 쓰는 습관이다.
 
-## beta-lane maintenance owner board
+## maintenance owner board
 
-UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 verified 공개본의 신뢰가 흔들릴까”를 빠르게 다시 보는 용도에 가깝다. 그래서 아래 네 줄을 먼저 적어 두면 beta lane에서도 유지관리 공백을 크게 줄일 수 있다.
+유지관리 장은 무엇을 놓치면 등록 권리의 신뢰가 흔들리는지를 먼저 잡는 데 초점이 있다. 아래 네 줄을 owner board로 고정해 두면 유지관리 공백을 크게 줄일 수 있다.
 
 | 등록 후 잠글 것 | 왜 필요한가 | owner | 다음 handoff |
 | --- | --- | --- | --- |
 | renewal horizon | 10년 주기를 실제 calendar row로 바꿈 | IP + 재무 | 갱신 준비표 |
 | comparable right 여부 | Brexit 이후 이중 관리 포인트 식별 | IP | renewal card |
 | owner / actual user | licence, distributor, group use 설명 | 법무 + 사업팀 | evidence vault |
-| 다음 점검일 | standard QA 수준에서도 최소 점검 루틴 유지 | IP | 분기 triage |
+| 다음 점검일 | 최소 점검 루틴을 분기로 유지 | IP | 분기 triage |
 
 ## 10년 갱신 주기를 달력으로 바꾼다
 
 | 항목 | 공식 기준 | 운영 메모 |
 | --- | --- | --- |
 | 갱신 주기 | 등록일 기준 10년마다 | 권리별 리마인더를 12개월 전부터 시작 |
-| 기본 수수료 | 첫 클래스 £200 | 재무팀과 예산 슬롯을 미리 잡음 |
+| 기본 수수료 | 첫 클래스 £245 | 재무팀과 예산 슬롯을 미리 잡음 |
 | 추가 클래스 | 클래스당 £50 | 불필요한 범위 유지 여부를 함께 검토 |
 | comparable UK right | 원래 EU 권리와 다른 관리 이벤트가 생길 수 있음 | UK 별도 달력 필드 유지 |
 
@@ -53,6 +53,27 @@ UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 ver
 | 분쟁 활용도 | 플랫폼·도메인·세관 대응에 쓰이는가 | High / Medium / Low |
 | 비용 합리성 | 클래스 수를 그대로 유지할 필요가 있는가 | Keep / Narrow |
 
+## comparable UK right는 갱신을 별도 관리한다
+
+comparable UK right는 원 EUTM의 갱신일을 유지하기 때문에, 신규 UK 등록과 갱신 이벤트가 어긋난다. 이를 같은 달력 필드로 묶으면 갱신 누락이 생기기 쉽다.
+
+| 관리 포인트 | comparable UK right | 신규 UK national |
+| --- | --- | --- |
+| 갱신 기준일 | 원 EUTM 갱신일 유지 | UK 등록일 기준 10년 |
+| 리마인더 | 별도 필드로 분리 | 표준 갱신 카드 |
+| 사용증거 | 전환 전후 구간 분리 | UK 사용 기준 |
+
+## 유지관리 KPI 최소 세트
+
+유지관리가 굴러가는지는 몇 개의 반복 지표로 본다. 완벽한 dashboard보다 매 분기 같은 지표를 보는 것이 중요하다.
+
+| KPI | 무엇을 보나 |
+| --- | --- |
+| 갱신 리드타임 | 12개월 전 리마인더가 실제로 떴는가 |
+| evidence 신선도 | 4년 차 mark의 최근 증거 검토일 |
+| 변경 반영 지연 | owner·address 변경이 register에 반영됐는가 |
+| drop/narrow 결정률 | 불필요 범위가 실제로 정리됐는가 |
+
 ## 실무 체크리스트
 
 - 갱신 달력을 사업 launch 캘린더와 같은 보드에서 보고 있는가
@@ -79,7 +100,7 @@ UKTm의 유지관리 장은 full-depth handbook보다 “무엇을 놓치면 ver
 
 ## 분기 운영 quick triage
 
-beta lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` 세 줄로 빠르게 나누는 편이 더 실용적이다.
+완전한 portfolio review에 앞서 `정상 / 보완 / 공백` 세 줄로 빠르게 나누면 분기 점검이 더 실용적이다.
 
 | 상태 | 의미 | 기본 액션 |
 | --- | --- | --- |
@@ -87,4 +108,4 @@ beta lane에서는 완전한 portfolio review보다 `정상 / 보완 / 공백` �
 | 보완 | evidence는 있으나 owner-user 또는 comparable memo가 약함 | 다음 점검 전 linkage 보강 |
 | 공백 | renewal row 또는 recent proof가 비어 있음 | 즉시 maintenance card 재구성 |
 
-이 triage 표가 있으면 UKTm은 standard QA와 verified 공개본 유지라는 현재 lane 목적에 더 잘 맞게 작동한다.
+이 triage 표가 있으면 유지관리 공백을 조기에 잡아 갱신·사용증거 트랙으로 빠르게 넘길 수 있다.
