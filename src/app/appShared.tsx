@@ -29,8 +29,11 @@ import {
   type PortfolioTier,
   type ProductMeta,
 } from "../products/shared";
+import { siteAuthor } from "../trustLegal";
 
-export const operatorProfileUrl = "https://ywkinfo.github.io";
+// 운영자 프로필 URL은 siteAuthor(trustLegal.ts) 정본에서 파생한다.
+// structured data·byline·기존 gateway/reader 링크가 같은 값을 쓰도록 단일화한다.
+export const operatorProfileUrl = siteAuthor.url;
 
 export function trackEngagement(eventName: string, params: Record<string, string>) {
   const measurementId = getGaMeasurementId();

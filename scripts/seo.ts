@@ -29,11 +29,14 @@ import {
   type ProductMeta
 } from "../src/products/shared";
 import {
+  formatFactsReviewedNote,
   legalNavLinks,
   legalNoticeBullets,
   legalNoticeSummary,
   legalNoticeTitle,
   legalPages,
+  siteAuthor,
+  sitePublisher,
   type LegalPageDefinition
 } from "../src/trustLegal";
 
@@ -61,7 +64,111 @@ export type StaticPageDefinition = {
   ogType: "website" | "article";
   lastModified: string;
   bodyHtml: string;
+  // 아래는 선택 SEO/구조화 신호. 없으면 렌더에서 안전하게 생략된다.
+  structuredData?: Record<string, unknown>[];
+  sitemapPriority?: number;
+  changeFrequency?: string;
+  prevUrl?: string;
+  nextUrl?: string;
+  // article OG published_time용. 미설정이면 lastModified로 대체한다.
+  publishedTime?: string;
 };
+
+type JsonLdNode = Record<string, unknown>;
+
+type BreadcrumbEntry = {
+  name: string;
+  url: string;
+};
+
+// Person(저자) 노드. D-a=A: siteAuthor 정본(현재 공개 수준)만 담는다.
+function buildAuthorNode(): JsonLdNode {
+  return {
+    "@type": "Person",
+    name: siteAuthor.name,
+    alternateName: siteAuthor.alternateName,
+    url: siteAuthor.url,
+    description: siteAuthor.description
+  };
+}
+
+// Organization(발행 주체) 노드. 페이지마다 self-contained하도록 @id 참조 대신 인라인한다.
+function buildPublisherNode(siteUrl: string, logoUrl: string): JsonLdNode {
+  return {
+    "@type": "Organization",
+    name: sitePublisher.name,
+    url: siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: logoUrl
+    }
+  };
+}
+
+function buildWebSiteGraph(siteUrl: string, logoUrl: string): JsonLdNode {
+  return {
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}#organization`,
+        name: sitePublisher.name,
+        url: siteUrl,
+        logo: {
+          "@type": "ImageObject",
+          url: logoUrl
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}#website`,
+        name: DEFAULT_SITE_NAME,
+        url: siteUrl,
+        inLanguage: "ko",
+        publisher: { "@id": `${siteUrl}#organization` }
+      }
+    ]
+  };
+}
+
+function buildBreadcrumbNode(items: BreadcrumbEntry[]): JsonLdNode {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url
+    }))
+  };
+}
+
+// Article 노드. 날짜는 호출부가 넘긴 실제 값에서만 파생한다(날조 금지).
+// datePublished는 진짜 게시일이 있는 글(브리프·리포트)에만 넣는다. 가이드 챕터의 builtAt은
+// '재생성 시각'이라 게시일로 오인될 수 있어 생략하고 dateModified만 둔다(안정적 최초 게시일 필드 도입 전까지).
+function buildArticleNode(input: {
+  headline: string;
+  description: string;
+  url: string;
+  imageUrl: string;
+  datePublished?: string;
+  dateModified: string;
+  siteUrl: string;
+  logoUrl: string;
+}): JsonLdNode {
+  return {
+    "@type": "Article",
+    headline: input.headline,
+    description: input.description,
+    inLanguage: "ko",
+    url: input.url,
+    mainEntityOfPage: input.url,
+    image: input.imageUrl,
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    dateModified: input.dateModified,
+    author: buildAuthorNode(),
+    publisher: buildPublisherNode(input.siteUrl, input.logoUrl)
+  };
+}
 
 type SeoRuntimeOptions = {
   basePath?: string;
@@ -203,6 +310,14 @@ function renderTrustLegalNotice(basePath: string) {
   `;
 }
 
+// 가이드/챕터 본문에 1차 출처 대조 기준일을 사람이 읽는 문구로 노출한다(crawler·no-JS 대상).
+// factsReviewedOn 미기록이면 빈 문자열을 돌려 아무것도 렌더하지 않는다.
+function renderFactsReviewedNote(product: ProductMeta) {
+  const note = formatFactsReviewedNote(product.factsReviewedOn);
+
+  return note ? `<p data-provenance="facts-reviewed">${escapeHtml(note)}</p>` : "";
+}
+
 function renderGatewayBody(basePath: string) {
   const productLinks = liveShellProducts.map((product) => ({
     href: buildPublicHref(buildProductPath(product), basePath),
@@ -255,6 +370,7 @@ function renderProductBody(product: ProductMeta, documentData: DocumentData, bas
         <h1>${escapeHtml(product.title)}</h1>
         <p>${escapeHtml(product.summary)}</p>
         <p>${documentData.chapters.length}개 챕터로 구성된 ${escapeHtml(product.title)} 전체 목차입니다.</p>
+        ${renderFactsReviewedNote(product)}
       </header>
       ${renderLinkList("챕터 목록", chapterLinks, true)}
       ${renderTrustLegalNotice(basePath)}
@@ -302,6 +418,7 @@ function renderChapterBody(
           <p>${escapeHtml(product.shortLabel)} 챕터</p>
           <h1>${escapeHtml(chapter.title)}</h1>
           ${chapter.summary ? `<p>${escapeHtml(chapter.summary)}</p>` : ""}
+          ${renderFactsReviewedNote(product)}
         </header>
         ${chapter.html}
       </article>
@@ -373,7 +490,7 @@ function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
       </nav>
       <article>
         <header>
-          <p>${escapeHtml(formatBriefDate(issue.publishedAt))}</p>
+          <p><time datetime="${escapeHtml(ensureIsoDate(issue.publishedAt))}">${escapeHtml(formatBriefDate(issue.publishedAt))}</time></p>
           <h1>${escapeHtml(issue.title)}</h1>
           <p>${escapeHtml(issue.summary)}</p>
           <p>관할: ${escapeHtml(issue.jurisdictions.join(" · "))}</p>
@@ -424,7 +541,7 @@ function renderReportBody(report: ReportMeta, documentData: DocumentData, basePa
       </nav>
       <article>
         <header>
-          <p>${escapeHtml(formatReportDate(report.publishedAt))}</p>
+          <p><time datetime="${escapeHtml(ensureIsoDate(report.publishedAt))}">${escapeHtml(formatReportDate(report.publishedAt))}</time></p>
           <h1>${escapeHtml(report.title)}</h1>
           <p>${escapeHtml(report.summary)}</p>
           <p>관할: ${escapeHtml(report.jurisdictions.join(" · "))}</p>
@@ -448,16 +565,22 @@ function buildGatewayPage(
   siteOrigin: string,
   lastModified: string
 ): StaticPageDefinition {
+  const siteUrl = buildCanonicalUrl("/", siteOrigin, basePath);
+  const logoUrl = buildCanonicalUrl(DEFAULT_SOCIAL_IMAGE_PATH, siteOrigin, basePath);
+
   return {
     routePath: "/",
     outputPath: buildOutputPath("/", path.resolve("dist")),
     title: buildRuntimeDocumentTitle(),
     description: DEFAULT_SITE_DESCRIPTION,
-    canonicalUrl: buildCanonicalUrl("/", siteOrigin, basePath),
+    canonicalUrl: siteUrl,
     ...buildDefaultSocialImage(siteOrigin, basePath),
     ogType: "website",
     lastModified: ensureIsoDate(lastModified),
-    bodyHtml: renderGatewayBody(basePath)
+    bodyHtml: renderGatewayBody(basePath),
+    structuredData: [buildWebSiteGraph(siteUrl, logoUrl)],
+    sitemapPriority: 1,
+    changeFrequency: "weekly"
   };
 }
 
@@ -548,6 +671,9 @@ export function buildStaticPageDefinitions(
     ? maybeOptions
     : reportDocumentDataBySlugOrOptions;
   const { basePath, siteOrigin, distDir } = getSeoRuntimeOptions(options);
+  const siteUrl = buildCanonicalUrl("/", siteOrigin, basePath);
+  const logoUrl = buildCanonicalUrl(DEFAULT_SOCIAL_IMAGE_PATH, siteOrigin, basePath);
+  const gatewayCrumb: BreadcrumbEntry = { name: `${DEFAULT_SITE_NAME} Gateway`, url: siteUrl };
   const gatewayLastModified = [
     ...Array.from(documentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
     ...Array.from(reportDocumentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
@@ -568,57 +694,98 @@ export function buildStaticPageDefinitions(
   const reportArchivePath = buildReportArchivePath();
   const latestReportPublishedAt = reports[0]?.updatedAt ?? reports[0]?.publishedAt ?? gatewayLastModified;
 
+  const briefArchiveUrl = buildCanonicalUrl(briefArchivePath, siteOrigin, basePath);
   pages.push({
     routePath: briefArchivePath,
     outputPath: buildOutputPath(briefArchivePath, distDir),
     title: buildBriefDocumentTitle(),
     description: buildBriefArchiveDescription(),
-    canonicalUrl: buildCanonicalUrl(briefArchivePath, siteOrigin, basePath),
+    canonicalUrl: briefArchiveUrl,
     ...buildDefaultSocialImage(siteOrigin, basePath),
     ogType: "website",
     lastModified: ensureIsoDate(latestBriefPublishedAt),
-    bodyHtml: renderBriefArchiveBody(basePath)
+    bodyHtml: renderBriefArchiveBody(basePath),
+    structuredData: [
+      buildBreadcrumbNode([gatewayCrumb, { name: "Hot Global TM Brief", url: briefArchiveUrl }])
+    ],
+    sitemapPriority: 0.9,
+    changeFrequency: "weekly"
   });
 
+  const reportArchiveUrl = buildCanonicalUrl(reportArchivePath, siteOrigin, basePath);
   pages.push({
     routePath: reportArchivePath,
     outputPath: buildOutputPath(reportArchivePath, distDir),
     title: buildReportDocumentTitle(),
     description: buildReportArchiveDescription(),
-    canonicalUrl: buildCanonicalUrl(reportArchivePath, siteOrigin, basePath),
+    canonicalUrl: reportArchiveUrl,
     ...buildDefaultSocialImage(siteOrigin, basePath),
     ogType: "website",
     lastModified: ensureIsoDate(latestReportPublishedAt),
-    bodyHtml: renderReportArchiveBody(basePath)
+    bodyHtml: renderReportArchiveBody(basePath),
+    structuredData: [
+      buildBreadcrumbNode([gatewayCrumb, { name: "Report", url: reportArchiveUrl }])
+    ],
+    sitemapPriority: 0.9,
+    changeFrequency: "weekly"
   });
 
   for (const legalPage of legalPages) {
+    const legalUrl = buildCanonicalUrl(legalPage.path, siteOrigin, basePath);
     pages.push({
       routePath: legalPage.path,
       outputPath: buildOutputPath(legalPage.path, distDir),
       title: buildRuntimeDocumentTitle(legalPage.title),
       description: buildLegalPageDescription(legalPage),
-      canonicalUrl: buildCanonicalUrl(legalPage.path, siteOrigin, basePath),
+      canonicalUrl: legalUrl,
       ...buildDefaultSocialImage(siteOrigin, basePath),
       ogType: "website",
       lastModified: ensureIsoDate(gatewayLastModified),
-      bodyHtml: renderLegalBody(legalPage, basePath)
+      bodyHtml: renderLegalBody(legalPage, basePath),
+      structuredData: [
+        buildBreadcrumbNode([gatewayCrumb, { name: legalPage.navLabel, url: legalUrl }])
+      ],
+      sitemapPriority: 0.3,
+      changeFrequency: "yearly"
     });
   }
 
   for (const issue of briefIssues) {
     const issueRoutePath = buildBriefIssuePath(issue.slug);
+    const issueUrl = buildCanonicalUrl(issueRoutePath, siteOrigin, basePath);
+    const issuePublishedIso = ensureIsoDate(issue.publishedAt);
+    const socialImage = buildDefaultSocialImage(siteOrigin, basePath);
 
     pages.push({
       routePath: issueRoutePath,
       outputPath: buildOutputPath(issueRoutePath, distDir),
       title: buildBriefDocumentTitle(issue),
       description: buildBriefIssueDescription(issue),
-      canonicalUrl: buildCanonicalUrl(issueRoutePath, siteOrigin, basePath),
-      ...buildDefaultSocialImage(siteOrigin, basePath),
+      canonicalUrl: issueUrl,
+      ...socialImage,
       ogType: "article",
-      lastModified: ensureIsoDate(issue.publishedAt),
-      bodyHtml: renderBriefIssueBody(issue, basePath)
+      lastModified: issuePublishedIso,
+      publishedTime: issuePublishedIso,
+      bodyHtml: renderBriefIssueBody(issue, basePath),
+      structuredData: [
+        buildArticleNode({
+          headline: issue.title,
+          description: buildBriefIssueDescription(issue),
+          url: issueUrl,
+          imageUrl: socialImage.ogImageUrl,
+          datePublished: issuePublishedIso,
+          dateModified: issuePublishedIso,
+          siteUrl,
+          logoUrl
+        }),
+        buildBreadcrumbNode([
+          gatewayCrumb,
+          { name: "Hot Global TM Brief", url: briefArchiveUrl },
+          { name: issue.title, url: issueUrl }
+        ])
+      ],
+      sitemapPriority: 0.7,
+      changeFrequency: "monthly"
     });
   }
 
@@ -630,17 +797,41 @@ export function buildStaticPageDefinitions(
     }
 
     const reportRoutePath = buildReportPath(report.slug);
+    const reportUrl = buildCanonicalUrl(reportRoutePath, siteOrigin, basePath);
+    const reportPublishedIso = ensureIsoDate(report.publishedAt);
+    const reportModifiedIso = ensureIsoDate(report.updatedAt ?? reportDocumentData.meta.builtAt);
+    const reportSocialImage = buildDefaultSocialImage(siteOrigin, basePath);
 
     pages.push({
       routePath: reportRoutePath,
       outputPath: buildOutputPath(reportRoutePath, distDir),
       title: buildReportDocumentTitle(report),
       description: buildReportDescription(report),
-      canonicalUrl: buildCanonicalUrl(reportRoutePath, siteOrigin, basePath),
-      ...buildDefaultSocialImage(siteOrigin, basePath),
+      canonicalUrl: reportUrl,
+      ...reportSocialImage,
       ogType: "article",
-      lastModified: ensureIsoDate(report.updatedAt ?? reportDocumentData.meta.builtAt),
-      bodyHtml: renderReportBody(report, reportDocumentData, basePath)
+      lastModified: reportModifiedIso,
+      publishedTime: reportPublishedIso,
+      bodyHtml: renderReportBody(report, reportDocumentData, basePath),
+      structuredData: [
+        buildArticleNode({
+          headline: report.title,
+          description: buildReportDescription(report),
+          url: reportUrl,
+          imageUrl: reportSocialImage.ogImageUrl,
+          datePublished: reportPublishedIso,
+          dateModified: reportModifiedIso,
+          siteUrl,
+          logoUrl
+        }),
+        buildBreadcrumbNode([
+          gatewayCrumb,
+          { name: "Report", url: reportArchiveUrl },
+          { name: report.title, url: reportUrl }
+        ])
+      ],
+      sitemapPriority: 0.7,
+      changeFrequency: "monthly"
     });
   }
 
@@ -652,32 +843,69 @@ export function buildStaticPageDefinitions(
     }
 
     const productRoutePath = buildProductPath(product);
+    const productUrl = buildCanonicalUrl(productRoutePath, siteOrigin, basePath);
+    const productCrumb: BreadcrumbEntry = { name: product.title, url: productUrl };
+    const productBuiltIso = ensureIsoDate(documentData.meta.builtAt);
 
     pages.push({
       routePath: productRoutePath,
       outputPath: buildOutputPath(productRoutePath, distDir),
       title: buildRuntimeDocumentTitle(product.title),
       description: buildProductDescription(product, documentData),
-      canonicalUrl: buildCanonicalUrl(productRoutePath, siteOrigin, basePath),
+      canonicalUrl: productUrl,
       ...buildDefaultSocialImage(siteOrigin, basePath),
       ogType: "website",
-      lastModified: ensureIsoDate(documentData.meta.builtAt),
-      bodyHtml: renderProductBody(product, documentData, basePath)
+      lastModified: productBuiltIso,
+      bodyHtml: renderProductBody(product, documentData, basePath),
+      structuredData: [buildBreadcrumbNode([gatewayCrumb, productCrumb])],
+      sitemapPriority: 0.8,
+      changeFrequency: "monthly"
     });
 
-    for (const chapter of documentData.chapters) {
+    for (let index = 0; index < documentData.chapters.length; index += 1) {
+      const chapter = documentData.chapters[index]!;
       const chapterRoutePath = buildChapterPath(product.path, chapter.slug);
+      const chapterUrl = buildCanonicalUrl(chapterRoutePath, siteOrigin, basePath);
+      const chapterSocialImage = buildDefaultSocialImage(siteOrigin, basePath);
+      const previousChapter = index > 0 ? documentData.chapters[index - 1] : undefined;
+      const nextChapter =
+        index < documentData.chapters.length - 1 ? documentData.chapters[index + 1] : undefined;
 
       pages.push({
         routePath: chapterRoutePath,
         outputPath: buildOutputPath(chapterRoutePath, distDir),
         title: buildRuntimeDocumentTitle(chapter.title),
         description: buildChapterDescription(product, chapter),
-        canonicalUrl: buildCanonicalUrl(chapterRoutePath, siteOrigin, basePath),
-        ...buildDefaultSocialImage(siteOrigin, basePath),
+        canonicalUrl: chapterUrl,
+        ...chapterSocialImage,
         ogType: "article",
-        lastModified: ensureIsoDate(documentData.meta.builtAt),
-        bodyHtml: renderChapterBody(product, documentData, chapter, basePath)
+        lastModified: productBuiltIso,
+        // 가이드 챕터는 안정적 최초 게시일 필드가 없으므로 publishedTime을 두지 않는다(dateModified만).
+        bodyHtml: renderChapterBody(product, documentData, chapter, basePath),
+        prevUrl: previousChapter
+          ? buildCanonicalUrl(buildChapterPath(product.path, previousChapter.slug), siteOrigin, basePath)
+          : undefined,
+        nextUrl: nextChapter
+          ? buildCanonicalUrl(buildChapterPath(product.path, nextChapter.slug), siteOrigin, basePath)
+          : undefined,
+        structuredData: [
+          buildArticleNode({
+            headline: chapter.title,
+            description: buildChapterDescription(product, chapter),
+            url: chapterUrl,
+            imageUrl: chapterSocialImage.ogImageUrl,
+            dateModified: productBuiltIso,
+            siteUrl,
+            logoUrl
+          }),
+          buildBreadcrumbNode([
+            gatewayCrumb,
+            productCrumb,
+            { name: chapter.title, url: chapterUrl }
+          ])
+        ],
+        sitemapPriority: 0.6,
+        changeFrequency: "monthly"
       });
     }
   }
@@ -694,12 +922,27 @@ function stripManagedHeadTags(templateHtml: string) {
     .replace(/\s*<link\s+rel="canonical"[^>]*>\s*/gi, "\n");
 }
 
+// JSON-LD를 <script>에 안전하게 넣기 위해 '<'를 유니코드 이스케이프한다(</script> 조기 종료 방지).
+function serializeJsonLd(node: Record<string, unknown>) {
+  return JSON.stringify({ "@context": "https://schema.org", ...node }).replace(/</g, "\\u003c");
+}
+
+function renderStructuredDataScripts(page: StaticPageDefinition) {
+  if (!page.structuredData?.length) {
+    return "";
+  }
+
+  return page.structuredData
+    .map((node) => `<script type="application/ld+json">${serializeJsonLd(node)}</script>`)
+    .join("\n    ");
+}
+
 export function renderStaticHtml(templateHtml: string, page: StaticPageDefinition) {
   const cleanedTemplate = stripManagedHeadTags(templateHtml).replace(
     /<title>[\s\S]*?<\/title>/i,
     `<title>${escapeHtml(page.title)}</title>`
   );
-  const seoHead = [
+  const headEntries = [
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
     `<meta name="robots" content="index, follow" />`,
     `<link rel="canonical" href="${escapeHtml(page.canonicalUrl)}" />`,
@@ -717,7 +960,37 @@ export function renderStaticHtml(templateHtml: string, page: StaticPageDefinitio
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
     `<meta name="twitter:image" content="${escapeHtml(page.ogImageUrl)}" />`,
     `<meta name="twitter:image:alt" content="${escapeHtml(page.ogImageAlt)}" />`
-  ].join("\n    ");
+  ];
+
+  if (page.ogType === "article") {
+    // published_time은 진짜 게시일(publishedTime)이 있을 때만 노출한다.
+    // 가이드 챕터처럼 게시일이 없으면 modified_time만 둔다(재생성 시각을 게시일로 오인시키지 않기 위함).
+    if (page.publishedTime) {
+      headEntries.push(
+        `<meta property="article:published_time" content="${escapeHtml(page.publishedTime)}" />`
+      );
+    }
+
+    headEntries.push(
+      `<meta property="article:modified_time" content="${escapeHtml(page.lastModified)}" />`
+    );
+  }
+
+  if (page.prevUrl) {
+    headEntries.push(`<link rel="prev" href="${escapeHtml(page.prevUrl)}" />`);
+  }
+
+  if (page.nextUrl) {
+    headEntries.push(`<link rel="next" href="${escapeHtml(page.nextUrl)}" />`);
+  }
+
+  const structuredDataScripts = renderStructuredDataScripts(page);
+
+  if (structuredDataScripts) {
+    headEntries.push(structuredDataScripts);
+  }
+
+  const seoHead = headEntries.join("\n    ");
 
   return cleanedTemplate
     .replace("<div id=\"root\"></div>", `<div id="root">${page.bodyHtml}</div>`)
@@ -776,14 +1049,25 @@ export async function loadReportDocumentDataBySlug(options: SeoRuntimeOptions = 
 
 export function buildSitemapXml(pages: StaticPageDefinition[]) {
   const urlEntries = pages
-    .map(
-      (page) => [
+    .map((page) => {
+      const lines = [
         "  <url>",
         `    <loc>${escapeHtml(page.canonicalUrl)}</loc>`,
-        `    <lastmod>${escapeHtml(page.lastModified)}</lastmod>`,
-        "  </url>"
-      ].join("\n")
-    )
+        `    <lastmod>${escapeHtml(page.lastModified)}</lastmod>`
+      ];
+
+      if (page.changeFrequency) {
+        lines.push(`    <changefreq>${escapeHtml(page.changeFrequency)}</changefreq>`);
+      }
+
+      if (typeof page.sitemapPriority === "number") {
+        lines.push(`    <priority>${page.sitemapPriority.toFixed(1)}</priority>`);
+      }
+
+      lines.push("  </url>");
+
+      return lines.join("\n");
+    })
     .join("\n");
 
   return [
