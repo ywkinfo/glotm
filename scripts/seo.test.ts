@@ -347,4 +347,119 @@ describe("SEO build helpers", () => {
       buildPublicHref("/china/chapter/제4장-출원-경로#section-id", "/glotm")
     ).toBe("/glotm/china/chapter/제4장-출원-경로/#section-id");
   });
+
+  it("emits JSON-LD structured data for the gateway, chapters, and reports", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+
+    const gateway = pages.find((page) => page.routePath === "/")!;
+    const gatewayGraph = gateway.structuredData?.[0] as { "@graph": Array<Record<string, unknown>> };
+    expect(gatewayGraph["@graph"].map((node) => node["@type"])).toEqual(
+      expect.arrayContaining(["Organization", "WebSite"])
+    );
+
+    const usaChapterRoute = `/usa/chapter/${documentDataUsa.chapters[0]?.slug}`;
+    const usaChapter = pages.find((page) => page.routePath === usaChapterRoute)!;
+    const article = usaChapter.structuredData?.find((node) => node["@type"] === "Article") as
+      | Record<string, unknown>
+      | undefined;
+    const breadcrumb = usaChapter.structuredData?.find(
+      (node) => node["@type"] === "BreadcrumbList"
+    );
+
+    expect(article).toBeDefined();
+    expect(breadcrumb).toBeDefined();
+    // 가이드 챕터의 builtAt은 '재생성 시각'이라 게시일로 오인될 수 있어 datePublished를 넣지 않고
+    // dateModified만 둔다(안정적 최초 게시일 필드 도입 전까지). dateModified는 lastModified에서만 파생.
+    expect(article!.datePublished).toBeUndefined();
+    expect(article!.dateModified).toBe(usaChapter.lastModified);
+    expect((article!.author as Record<string, unknown>)["@type"]).toBe("Person");
+    expect((article!.author as Record<string, unknown>).name).toBe("GloTm 운영자");
+    expect((breadcrumb as { itemListElement: unknown[] }).itemListElement).toHaveLength(3);
+
+    // 브리프는 진짜 게시일(publishedAt)이 있으므로 Article.datePublished를 유지한다.
+    const briefRoute = `/briefs/${briefIssues[0]?.slug}`;
+    const brief = pages.find((page) => page.routePath === briefRoute)!;
+    const briefArticle = brief.structuredData?.find((node) => node["@type"] === "Article") as
+      | Record<string, unknown>
+      | undefined;
+    expect(briefArticle?.datePublished).toBe(brief.lastModified);
+  });
+
+  it("renders JSON-LD scripts, article time metadata, and rel next/prev into chapter HTML", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const shell = [
+      "<!doctype html>",
+      "<html>",
+      "  <head>",
+      "    <title>Placeholder</title>",
+      "  </head>",
+      '  <body><div id="root"></div></body>',
+      "</html>"
+    ].join("\n");
+    const firstChapter = pages.find(
+      (page) => page.routePath === `/usa/chapter/${documentDataUsa.chapters[0]?.slug}`
+    )!;
+    const html = renderStaticHtml(shell, firstChapter);
+
+    expect(html).toContain('<script type="application/ld+json">');
+    expect(html).toContain('"@type":"Article"');
+    expect(html).toContain('"@context":"https://schema.org"');
+    // 가이드 챕터는 게시일이 없으므로 modified_time만 있고 published_time은 없어야 한다.
+    expect(html).toContain('<meta property="article:modified_time"');
+    expect(html).not.toContain('<meta property="article:published_time"');
+    // 첫 챕터에는 다음(next)만 있고 이전(prev)은 없어야 한다.
+    expect(html).toContain('<link rel="next"');
+    expect(html).not.toContain('<link rel="prev"');
+
+    // 브리프 이슈는 진짜 게시일이 있으므로 published_time을 노출한다.
+    const briefPage = pages.find((page) => page.routePath === `/briefs/${briefIssues[0]?.slug}`)!;
+    const briefHtml = renderStaticHtml(shell, briefPage);
+    expect(briefHtml).toContain('<meta property="article:published_time"');
+  });
+
+  it("surfaces the facts-reviewed provenance note only when factsReviewedOn is recorded", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const shell = [
+      "<!doctype html>",
+      "<html>",
+      "  <head>",
+      "    <title>Placeholder</title>",
+      "  </head>",
+      '  <body><div id="root"></div></body>',
+      "</html>"
+    ].join("\n");
+
+    // UsaTm은 factsReviewedOn이 기록돼 있어 provenance 라인을 노출한다.
+    const usaHome = pages.find((page) => page.routePath === "/usa")!;
+    expect(renderStaticHtml(shell, usaHome)).toContain('data-provenance="facts-reviewed"');
+
+    // LatTm은 factsReviewedOn 미기록 → 아무 provenance 라인도 렌더하지 않는다.
+    const latamHome = pages.find((page) => page.routePath === "/latam")!;
+    expect(renderStaticHtml(shell, latamHome)).not.toContain('data-provenance="facts-reviewed"');
+  });
+
+  it("adds priority and changefreq signals to the sitemap", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const sitemapXml = buildSitemapXml(pages);
+
+    expect(sitemapXml).toContain("<priority>1.0</priority>");
+    expect(sitemapXml).toContain("<changefreq>weekly</changefreq>");
+    expect(sitemapXml).toContain("<changefreq>monthly</changefreq>");
+  });
 });

@@ -511,7 +511,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
                   jumpToSection
                 }}
               />
-              <ReaderShellFooter />
+              <ReaderShellFooter factsReviewedOn={productMeta.factsReviewedOn} />
             </main>
           </div>
 

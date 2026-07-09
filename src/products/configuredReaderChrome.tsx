@@ -2,8 +2,10 @@ import { NavLink } from "react-router-dom";
 
 import type { Chapter, SearchEntry } from "./shared";
 import { SearchPanel, SidebarNav } from "./components";
+import { formatFactsReviewedNote, siteAuthor } from "../trustLegal";
 
-const operatorProfileUrl = "https://ywkinfo.github.io";
+// operatorProfileUrl은 siteAuthor(trustLegal.ts) 정본에서 파생한다(단일 소스).
+const operatorProfileUrl = siteAuthor.url;
 
 type ReaderTopbarProps = {
   currentChapterSlug?: string;
@@ -125,7 +127,11 @@ export function ReaderShellSidebar({
   );
 }
 
-export function ReaderShellFooter() {
+export function ReaderShellFooter({ factsReviewedOn }: { factsReviewedOn?: string }) {
+  // factsReviewedOn(1차 출처 대조 기준일)이 기록된 가이드에만 정직한 provenance 라인을 노출한다.
+  // 정확성 '보증'이 아니라 '대조 기준일' 표기이며, 위 법적 고지와 의미가 충돌하지 않는다.
+  const factsReviewedNote = formatFactsReviewedNote(factsReviewedOn);
+
   return (
     <footer className="reader-layout" style={{ paddingTop: 0 }}>
       <div />
@@ -136,6 +142,11 @@ export function ReaderShellFooter() {
             ywkinfo.github.io
           </a>
         </p>
+        {factsReviewedNote ? (
+          <p className="reader-product-note reader-footer-note" data-provenance="facts-reviewed">
+            {factsReviewedNote}
+          </p>
+        ) : null}
         <div className="disclaimer">
           <strong>법적 고지:</strong> 이 가이드는 일반적인 정보 제공 목적이며 법률 자문이 아닙니다.
           수록된 정보는 작성 시점 기준이며, 법령·판례 변경에 따라 내용이 달라질 수 있습니다.

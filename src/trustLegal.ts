@@ -33,6 +33,47 @@ export const legalNavLinks = [
   { path: "/contact", label: "Contact" }
 ] as const;
 
+// 저자·발행 주체 정체성 — structured data(JSON-LD)와 reader byline의 공용 정본.
+// D-a(2026-07-07 owner 결정): 현재 사이트가 이미 공개한 수준까지만 노출한다.
+// 즉 운영자 라벨·프로필 URL·"20년+ 상표 실무 경험"까지만 담고, 변리사 자격·소속·실명은
+// 김앤장 재직 이해상충 판단이 필요하므로 여기에 넣지 않는다(필요 시 owner가 별도로 상향).
+export const siteAuthor = {
+  name: "GloTm 운영자",
+  alternateName: "ywkinfo",
+  url: "https://ywkinfo.github.io",
+  description:
+    "20년 이상 축적된 상표 실무 경험을 바탕으로 cross-border trademark operating guide를 정리합니다."
+} as const;
+
+export const sitePublisher = {
+  name: "GloTm"
+} as const;
+
+// 핵심 사실을 1차 출처로 마지막 재대조한 기준일을 사람이 읽는 문구로 만든다.
+// factsReviewedOn(구조화 필드)에서만 파생하며, 정확성 '보증'이 아니라 '대조 기준일' 표기다.
+// 미기록/파싱 불가이면 null을 돌려주고, 호출부는 아무것도 렌더하지 않는다.
+// timeZone을 UTC로 고정해 build/test/런타임 환경 간 표기가 흔들리지 않게 한다.
+export function formatFactsReviewedNote(factsReviewedOn?: string): string | null {
+  if (!factsReviewedOn) {
+    return null;
+  }
+
+  const reviewedAt = new Date(factsReviewedOn);
+
+  if (Number.isNaN(reviewedAt.getTime())) {
+    return null;
+  }
+
+  const formatted = new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC"
+  }).format(reviewedAt);
+
+  return `이 가이드 핵심 사실은 ${formatted} 기준으로 1차 출처와 마지막으로 대조했습니다.`;
+}
+
 export const legalPages: LegalPageDefinition[] = [
   {
     slug: "legal",
