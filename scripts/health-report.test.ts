@@ -35,7 +35,7 @@ describe("health report CLI", () => {
       id: "runtime",
       status: "pass"
     });
-    expect(researchProducts).toEqual(["china", "mexico", "europe", "usa"]);
+    expect(researchProducts).toEqual(["china", "mexico", "europe", "usa", "japan", "uk"]);
     expect(report.products.find((product: { slug: string }) => product.slug === "china")).toMatchObject({
       slug: "china",
       currentLifecycleStatus: "mature",

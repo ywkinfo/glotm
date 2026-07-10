@@ -31,7 +31,9 @@ const advisoryClaimMapWorkspaceBySlug: Partial<Record<string, string>> = {
   china: "ChaTm",
   mexico: "MexTm",
   europe: "EuTm",
-  usa: "UsaTm"
+  usa: "UsaTm",
+  japan: "JapTm",
+  uk: "UKTm"
 };
 
 function loadResearchBySlug() {

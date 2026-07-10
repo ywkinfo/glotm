@@ -33,7 +33,7 @@ export type ProductHealthLaneId =
   | "usa-growth"
   | "japan-growth"
   | "brief-gateway"
-  | "incubate-pack";
+  | "uk-growth";
 
 export type ProductHealthLane = {
   id: ProductHealthLaneId;
@@ -141,7 +141,7 @@ export const rootHealthLanes: RootHealthLaneRecord[] = [
     id: "content",
     label: "health:content",
     command: "npm run health:content",
-    proves: "root content refresh plus full-pipeline reproducibility for ChaTm, MexTm, EuTm, UsaTm, and JapTm",
+    proves: "root content refresh plus full-pipeline reproducibility for ChaTm, MexTm, EuTm, UsaTm, JapTm, and UKTm",
     includesGeneratedContent: true
   },
   {
@@ -191,10 +191,10 @@ export const productHealthLaneBySlug: Record<string, ProductHealthLane> = {
     notes: "Growth mature supporting lane. Keep full-QA, claim-map, consent-system, and enforcement evidence aligned without changing the Gateway first-screen promise."
   },
   uk: {
-    id: "incubate-pack",
-    label: "Priority 7 · Incubate health pack",
+    id: "uk-growth",
+    label: "Priority 7 · UKTm growth mature lane",
     order: 7,
-    notes: "Lighter-track verification refresh pack."
+    notes: "Growth mature supporting lane. Keep full-QA, claim-map, and multi-forum enforcement orchestration evidence aligned without changing the Gateway first-screen promise."
   }
 };
 

@@ -6,7 +6,8 @@ import {
   buildProductFactReviewRecord,
   buildProductVerificationRecord,
   getLifecycleCriteriaGaps,
-  getProductHealthVerdict
+  getProductHealthVerdict,
+  productHealthLaneBySlug
 } from "./health";
 
 function daysAgoIso(dayCount: number) {
@@ -247,5 +248,36 @@ describe("portfolio health helpers", () => {
     expect(uk).toBeDefined();
     expect(getProductHealthVerdict(uk!)).toBe("hold");
     expect(getLifecycleCriteriaGaps(uk!, uk!.lifecycleStatus)).toEqual([]);
+  });
+});
+
+describe("post-promotion lane consistency", () => {
+  it("never labels a non-incubate product's health lane as incubate", () => {
+    for (const product of products) {
+      const lane = productHealthLaneBySlug[product.slug];
+
+      expect(lane, `missing health lane for ${product.slug}`).toBeDefined();
+      if (!lane) continue;
+
+      if (product.portfolioTier !== "incubate") {
+        expect(
+          lane.id,
+          `${product.shortLabel} is ${product.portfolioTier} but its health lane id is "${lane.id}"`
+        ).not.toContain("incubate");
+        expect(
+          lane.label,
+          `${product.shortLabel} is ${product.portfolioTier} but its health lane label is "${lane.label}"`
+        ).not.toMatch(/incubate/i);
+      }
+    }
+  });
+
+  it("treats every live product as a root full pipeline after the shortcut lanes were retired", () => {
+    for (const product of products) {
+      expect(
+        buildProductVerificationRecord({ slug: product.slug }).mode,
+        `${product.shortLabel} should refresh via the root full pipeline`
+      ).toBe("root-full-pipeline");
+    }
   });
 });
