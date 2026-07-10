@@ -21,7 +21,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 
 | 항목 | 상태 | 재확인 명령 (read-only) |
 |------|------|-------------------------|
-| sitemap | live, **139 URL** | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 139 |
+| sitemap | live, **143 URL** | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 143 |
 | robots | `/glotm/robots.txt`는 존재하지만 host-root `https://ywkinfo.github.io/robots.txt`는 404 | `curl -I https://ywkinfo.github.io/robots.txt`; `curl -s https://ywkinfo.github.io/glotm/robots.txt` |
 | GA4 배선 | 배포 번들에 `G-0XF5JG96CC` + gtag 인라인 | 홈 HTML의 `assets/index-*.js`를 받아 `G-0XF5JG96CC` grep |
 | 이벤트 코드 | manual page_view + 6 KPI 이벤트 emit·테스트 통과 | `npm run test`(unit), `e2e:smoke`(흐름) |
@@ -30,21 +30,21 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 > 배포본에서** 한다. GA id를 바꾸려면 owner가 GitHub repo variable `VITE_GA_MEASUREMENT_ID`를 갱신하고
 > 재배포해야 한다(코드 변경 아님).
 
-### sitemap URL 인벤토리 (139 = SC 색인 대상)
+### sitemap URL 인벤토리 (143 = SC 색인 대상)
 
 | 그룹 | 수 | 우선 색인 |
 |------|----|-----------|
 | Gateway 홈 `/` | 1 | ★ |
 | guide 홈 (`/china /mexico /europe /latam /japan /uk /usa`) | 7 | ★ china·mexico·europe |
-| 챕터 (latam 20 · china/europe/japan/mexico/usa 15 · uk 14) | 109 | 대표 챕터 위주 |
-| briefs (index 1 + 최신 issue 13) | 14 | ★ 최신 `2026-06-*` 3건 |
-| reports (index 1 + detail 5) | 6 | ★ 대표 report 2건 |
+| 챕터 (latam 20 · china/europe/japan/mexico/usa/uk 15) | 110 | 대표 챕터 위주 |
+| briefs (index 1 + 최신 issue 14) | 15 | ★ 최신호(`2026-07-*` 등) 위주 |
+| reports (index 1 + detail 6) | 7 | ★ 대표 report 2건 |
 | trust/legal (`/legal /privacy /contact`) | 3 | — |
 
 ## §1. Search Console (owner)
 
 1. 속성 확인: `https://ywkinfo.github.io/glotm/` (GitHub Pages 도메인 prefix 속성).
-2. **Sitemaps**에서 `https://ywkinfo.github.io/glotm/sitemap.xml` 제출/갱신 → status `Success`·discovered 139 확인.
+2. **Sitemaps**에서 `https://ywkinfo.github.io/glotm/sitemap.xml` 제출/갱신 → status `Success`·discovered 143 확인.
 3. **Pages(Indexing)** 리포트에서 색인/미색인 분포 확인. 미색인 사유(crawled-not-indexed, discovered 등) 분류.
 4. 우선 URL을 **URL 검사 → 색인 요청**: Gateway 홈, `/china`·`/mexico`·`/europe` 홈, 각 대표 챕터,
    최신 brief 3건(`2026-06-*`), 대표 report 2건(monthly-review `Primary reports`).
@@ -53,7 +53,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 ### Search Console troubleshooting
 
 - **Sitemap server health와 SC 처리 상태를 분리한다.** `https://ywkinfo.github.io/glotm/sitemap.xml`가
-  `HTTP 200`, `content-type: application/xml`, 139 `<loc>`를 반환하면 배포 산출물은 정상이다. SC의
+  `HTTP 200`, `content-type: application/xml`, 143 `<loc>`를 반환하면 배포 산출물은 정상이다. SC의
   `가져올 수 없음`·`discovered 0`는 수동 제출 직후 1~3일 지연될 수 있다.
 - **Googlebot은 robots.txt를 host root에서만 읽는다.** 현재 GitHub Pages path deploy에서는
   `https://ywkinfo.github.io/robots.txt`가 404이고, `https://ywkinfo.github.io/glotm/robots.txt`는
@@ -113,7 +113,7 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 
 ## Monthly quick checklist
 
-- [ ] §0 readiness 재확인(sitemap 139 / robots / GA id)
+- [ ] §0 readiness 재확인(sitemap 143 / robots / GA id)
 - [ ] §1 SC: sitemap status + 색인 분포 + 우선 URL 색인 요청(host-root robots 404는 block 아님)
 - [ ] §2 GA4 DebugView: debugger extension ON 상태에서 page_view + 6 KPI 이벤트 도착, 또는 Realtime 대체 확인
 - [ ] §3 라이브 QA(agent 스모크 → owner 육안)

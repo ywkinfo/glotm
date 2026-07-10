@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-07-04
+- Last updated: 2026-07-11
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -14,6 +14,7 @@
 - 2026-06 라운드 반영: ChaTm·MexTm claim freshness 갱신(#57), 월간 리뷰 verifiedOn 2026-06-02 re-stamp(#58), UsaTm 저밀도 장 operating table·checklist 보강(#61), EuTm growth/mature 승급(15장·부록·claim-map 10건·2026-06-10 법률 사실정정, #69/#70), UsaTm growth/mature 승급(15장·검색 엔트리 206개·claim-map 15건·2026-06-29 fact-review/full-QA). UKTm은 2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급된 registry 정본이며, 이 보드 Next Lane의 이전 `pilot / smoke QA` 표기를 그 정본에 맞춰 동기화했다. 과거 registry drift 정합 기록은 아래 `Resolved Drift Archive` 섹션에 보존한다.
 - 2026-07 라운드 반영: `JapTm` growth/mature/full 승급(결정 2026-06-29 owner override · 머지 2026-06-30 #114 — 로그는 `monthly-review-template.md`)과 검증날짜·claim-map sourceId 정합 후속(2026-07-01 #115)을 정본으로 반영. 2026-07-04 월간 리뷰에서 shared root gate 재현 후 전 가이드 `verifiedOn`을 2026-07-04로 re-stamp(lane freshness, fact-review 아님). Next Lane의 이전 `JapTm` `145 / incubate / beta / standard` 표기는 승급 이전 잔재라 registry 정본에 맞춰 동기화했다.
 - 2026-07-06 신규 리포트: 교차 관할 `global-goods-services-class-framework`(지정상품·류 설계) 추가 후 머지·Pages 배포(#118). publishedAt 2026-07-06으로 Gateway featured lead 진입 → featured 2 = 지정상품 설계 + 한글 표장, `gatewaySectionSummary` 예시 문구도 이에 맞춰 변경. 시의성 사실(2025 USPTO 수수료·2027 중국 개정 상표법·판례) 다수라 owner 사실 attestation은 후속 과제로 남긴다. buyer-narrative/monthly-review-template의 primary report 스냅샷은 새 featured 쌍으로 동기화(이 커밋).
+- 2026-07-07~11 라운드 반영: 리포트 본문 nice-class 범위 렌더 정정·미커버 관할 제거(#120), `UKTm` growth/mature/full 승급(#121 — 다중 포럼 집행 오케스트레이션 15장·claim-map 11건·density 183·UK 수수료 £205/£245 EuTm 정합, owner override) + 잔여 beta/incubate 참조 docsync(#122), E-E-A-T JSON-LD 구조화데이터·reader provenance 표면화(#123, 챗봇 부결 대안). 후속 승급 정합(2026-07-11): `china.tsx` draft notice 제거, Gateway 빈 Incubate 카드 가드, `health.ts` UKTm lane incubate-pack→uk-growth, `health-report.ts` research coverage에 JapTm·UKTm 편입, README/ARCHITECTURE/phase1-runtime-qa의 JapTm shortcut·UKTm incubate 표기를 package.json `health:content`(Cha·Mex·Eu·Usa·Jap·UK workspace-local 포함, LatTm 루트-only) 진실로 정합.
 
 ## Today
 
@@ -130,10 +131,9 @@ closeout 요약:
 - `JapTm` operating-copy maintenance
   - registry 정본 baseline: `15 chapters / 185 search entries / growth / mature / full QA` (2026-06-30 #114로 `incubate→growth`·`beta→mature`·`standard→full` 승급, factsReviewedOn 2026-06-29 · verifiedOn re-stamp 2026-07-04). 이전 `145 / incubate / beta / standard` 표기는 승급 이전 잔재였다.
   - 유지 액션은 route / examination·consent / maintenance / enforcement·customs orchestration이 home / continue reading / search에서 잘 이어지는지 확인하는 것이다. Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 유지한다.
-- `UKTm` reader-utility 정합 (lifecycle은 이미 `beta`)
-  - registry 정본 baseline: `14 chapters / 128 search entries / incubate / beta / standard QA` (2026-05-12 #53로 `pilot→beta`·`smoke→standard` 승급, verifiedOn re-stamp 2026-07-04). 이전 `pilot / smoke QA` 표기는 승급 이전 잔재였다.
-  - 명칭 drift 해소 (2026-06-03, A안): 소스 챕터 헤딩·home copy·e2e bookmark를 모두 `beta-lane maintenance owner board`로 통일하고 `content:uk` 재생성(0 error). `e2e:smoke` UKTm reader smoke 통과로 reader가 home 문구로 같은 섹션을 찾는 흐름을 검증했다.
-  - 그다음 액션은 `early-track filing decision board`, 위 maintenance owner board, `online incident quick board` utility가 home / continue reading / search에서 충분히 빨리 읽히는지 확인하고 `uktm-root-sync-input.md`에 evidence를 기록하는 것이다.
+- `UKTm` operating-copy maintenance
+  - registry 정본 baseline: `15 chapters / 183 search entries / growth / mature / full QA` (2026-07-07 #121로 `incubate→growth`·`beta→mature`·`standard→full` 승급, factsReviewedOn 2026-07-07 · verifiedOn 2026-07-07). 이전 `14 / 128 / incubate / beta / standard` 표기는 승급 이전 잔재였다(2026-06-03 명칭 drift 기록은 아래 `Resolved Drift Archive`에 보존).
+  - 유지 액션은 filing decision / examination·opposition / maintenance / 다중 포럼 집행 오케스트레이션이 home / continue reading / search에서 잘 이어지는지 확인하는 것이다. Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 유지한다.
 - `UsaTm` operating-copy maintenance
   - registry 정본 baseline: `15 chapters / 206 search entries / growth / mature / full QA` (factsReviewedOn 2026-06-29 · verifiedOn re-stamp 2026-07-04). mature closeout: 집행 포럼 통합 플레이북(15장) 신설 + claim-map 15건 + full-QA 파이프라인 편입 + stale/pending 사실과 Jack Daniel's/CBP 후속 claim 1차출처 재대조 완료.
   - 유지 액션은 filing basis / specimen / maintenance / TTAB·법원·플랫폼·CBP 집행 오케스트레이션이 home / continue reading / search에서 잘 이어지는지 확인하는 것이다. Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 유지한다.
