@@ -29,7 +29,7 @@ src/app/App.tsx BrowserRouter shell
 Gateway / Brief / Report / guide readers
 ```
 
-shortcut lane는 `JapTm`처럼 루트에서는 `build-content` 위주로 refresh하고, deeper content QA가 필요할 때 workspace local `content:prepare`를 다시 재현하는 구조다.
+현재 7개 가이드 모두 루트 `content:prepare`에서 `build-master → qa-content → build-content` full pipeline으로 refresh하고, deeper content QA가 필요할 때 각 workspace local `content:prepare`를 다시 재현하는 구조다.
 
 ## Root Runtime
 
@@ -50,8 +50,7 @@ shortcut lane는 `JapTm`처럼 루트에서는 `build-content` 위주로 refresh
 루트는 각 workspace를 독립 앱처럼 배포하지 않는다.
 실제 런타임은 루트 `GloTm` 하나이고, workspace는 콘텐츠 생산 파이프라인이자 계약 문서 묶음으로 동작한다.
 
-- `LatTm`, `MexTm`, `UsaTm`, `ChaTm`, `EuTm`, `UKTm`: 루트에서도 full pipeline refresh를 탄다.
-- `JapTm`: 루트에서는 shortcut refresh를 사용하지만, 로컬 deeper QA 경로를 따로 유지한다.
+- `LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`: 루트에서도 `build-master → qa-content → build-content` full pipeline refresh를 타고, 필요 시 각 workspace local deeper QA 경로를 따로 유지한다.
 - `Reports/`: guide와 별도로 report JSON을 생성해 Gateway / Report archive에 연결한다.
 
 병렬 lane 운영 규칙:

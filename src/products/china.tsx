@@ -40,8 +40,7 @@ const {
     </>
   ),
   chapterBadge: "China",
-  chapterEyebrow: "중국 심화 읽기",
-  contentStatus: "draft"
+  chapterEyebrow: "중국 심화 읽기"
 });
 
 export {

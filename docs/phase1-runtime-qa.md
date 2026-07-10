@@ -38,15 +38,15 @@ Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` �
 ### 자동 검증 책임
 
 - `npm run health:runtime`: `typecheck:runtime`, `test:runtime`, `npm run e2e:smoke`를 묶어 셸 계약, 리더 계약, 콘텐츠 링크 계약, 실제 브라우저 스모크를 검증한다. generated-content 의존 회귀 테스트와 generated artifact가 필요한 node-side 검사는 이 lane에서 제외해 pure runtime check로 유지한다.
-- `npm run health:content`: 루트 `content:prepare`와 `test:content`를 실행한 뒤 `ChaTm`·`MexTm`·`EuTm`·`UsaTm` workspace local `content:prepare`까지 재현한다. 여기에는 generated article HTML의 external-link safe attribute와 raw internal app anchor 금지 회귀도 포함된다. `JapTm`은 lighter-track(shortcut) 기준으로 루트 refresh 계약을 따른다. `UKTm`은 루트 `content:prepare`에서 full pipeline(`build-master → qa-content → build-content`)을 사용하지만, `health:content`에서 workspace-local run은 포함하지 않는다.
+- `npm run health:content`: 루트 `content:prepare`와 `test:content`를 실행한 뒤 `ChaTm`·`MexTm`·`EuTm`·`UsaTm`·`JapTm`·`UKTm` workspace local `content:prepare`까지 재현한다. 여기에는 generated article HTML의 external-link safe attribute와 raw internal app anchor 금지 회귀도 포함된다. `LatTm`은 루트 `content:prepare`에서 full pipeline(`build-master → qa-content → build-content`)을 사용하지만, `health:content`의 workspace-local run에는 포함하지 않는다.
 - `npm run health:release`: `npm run build`, `npm run build:pages:glotm`를 묶어 루트 셸 빌드와 GitHub Pages subpath 배포 경로를 검증한다. 여기에는 representative prerendered HTML, `dist/sitemap.xml`, `dist/robots.txt`, `dist/404.html`, `dist/.nojekyll` 확인이 포함된다. Gateway-facing copy나 hierarchy 조정이 `scripts/seo.ts` mirrored output, prerendered HTML, canonical/OG/Twitter metadata, sitemap/robots, `/glotm/` Pages-path behavior에 닿으면 runtime-only가 아니라 release lane change로 본다. 로컬 release verification은 `build:pages:glotm`, GitHub Actions workflow deploy path는 `deploy-pages.yml`에서 env를 주입한 뒤 실행하는 `build:pages`로 구분해서 적는다.
 - `npm run health:report`: 최근 실행한 루트 lane 결과와 product scorecard 메타데이터를 같은 포맷으로 정리한다. 필요하면 lane 플래그로 일시 덮어쓸 수 있다.
 
 ## 루트 계약과 워크스페이스 로컬 계약
 
 - 루트 검증 계약은 어디까지나 `GloTm` 셸 회귀를 빠르게 확인하기 위한 공통 기준이다.
-- 워크스페이스 로컬 `content:prepare`는 루트 shortcut보다 더 깊은 조립/QA 흐름을 가질 수 있다.
-- 현재 `JapTm`은 루트 검증 계약에서 shortcut 예외 그룹으로 취급한다. 즉 루트 `content:prepare`에서는 generated JSON을 빠르게 갱신하는 경로를 사용하고, deeper content QA가 필요할 때는 워크스페이스 로컬 `content:prepare`를 기준 경로로 본다. `UsaTm`은 growth/mature 승급 이후 root full pipeline과 `health:content` workspace-local 재현을 모두 사용한다.
+- 워크스페이스 로컬 `content:prepare`는 루트 refresh와 동일한 full pipeline이며, deeper 편집·QA 시 기준 경로로 본다.
+- 현재 7개 가이드 모두 루트 `content:prepare`에서 full pipeline(`build-master → qa-content → build-content`)을 사용한다. `health:content`의 workspace-local 재현은 `ChaTm`·`MexTm`·`EuTm`·`UsaTm`·`JapTm`·`UKTm` 여섯 개를 포함하며, `LatTm`만 루트 full pipeline으로 검증하고 workspace-local 추가 실행은 포함하지 않는다.
 - 문서, 구조, 리서치 편집을 할 때는 루트 명령만 보지 말고 각 워크스페이스의 `package.json`과 `README.md`를 함께 확인한다.
 
 ### 가이드별 검증 깊이 표
@@ -58,15 +58,14 @@ Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` �
 | `ChaTm` | full (`build-master → qa-content → build-content`) | ✓ `npm --prefix ChaTm run content:prepare` | 동일 |
 | `EuTm` | full (`build-master → qa-content → build-content`) | ✓ `npm --prefix EuTm run content:prepare` | 동일 |
 | `UsaTm` | full (`build-master → qa-content → build-content`) | ✓ `npm --prefix UsaTm run content:prepare` | 동일 |
-| `UKTm` | full (`build-master → qa-content → build-content`) | — (root full만 포함) | `npm --prefix UKTm run content:prepare` |
-| `JapTm` | shortcut (`build-content` only) | — | `npm --prefix JapTm run content:prepare` |
+| `JapTm` | full (`build-master → qa-content → build-content`) | ✓ `npm --prefix JapTm run content:prepare` | 동일 |
+| `UKTm` | full (`build-master → qa-content → build-content`) | ✓ `npm --prefix UKTm run content:prepare` | 동일 |
 
 **그룹 요약:**
-- **Priority/growth group** (MexTm, ChaTm, EuTm, UsaTm): root full pipeline + health:content workspace-local 재현 — 가장 깊은 검증
-- **UKTm** (incubate tier / beta lifecycle, full-pipeline): root full pipeline, health:content workspace-local 미포함 — 중간 깊이
-- **Lighter-track** (JapTm): root shortcut만 사용, health:content workspace-local 미포함 — 가장 얕은 루트 검증
+- **Growth group** (MexTm, ChaTm, EuTm, UsaTm, JapTm, UKTm): root full pipeline + health:content workspace-local 재현 — 가장 깊은 검증
+- **Flagship baseline** (LatTm): root full pipeline은 타지만 health:content workspace-local 추가 실행에는 포함하지 않는다 — 루트 검증만 재현
 
-`UKTm`은 incubate tier(beta lifecycle)이지만 root 파이프라인은 full이다. "lighter-track"이라는 표현은 `JapTm`에만 적용하고, `UKTm`은 구분해서 읽는다.
+`JapTm`(2026-06-30 #114)과 `UKTm`(2026-07-07 #121) growth/mature 승급 이후 두 가이드 모두 root full pipeline과 `health:content` workspace-local 재현을 함께 사용한다. 과거 `JapTm` shortcut·`UKTm` incubate/beta 표기는 승급 이전 잔재다.
 
 ## 수동 스모크 환경
 
@@ -178,9 +177,8 @@ npm run content:china
 npm run content:europe
 npm run content:uk
 ```
-- `JapTm` (lighter-track): 루트 검증 계약에서는 shortcut generated-content 갱신 경로(`build-content` only)를 사용한다. 콘텐츠를 직접 수정하거나 deeper content QA가 필요할 때는 워크스페이스 로컬 `content:prepare`를 직접 실행한다.
-- `UsaTm`, `ChaTm`, `EuTm`, `UKTm`: 루트 검증 계약에서도 `build-master → qa-content → build-content` 전체 흐름을 사용한다. 단, `health:content`에서 workspace-local 추가 실행은 `UsaTm`, `ChaTm`, `EuTm`만 포함하며 `UKTm`은 미포함이다.
-- 즉, 루트 `content:prepare` 성공은 `JapTm`에 대해 full local content QA 완료를 의미하지 않으며, `UKTm`의 경우 root full pipeline은 통과하지만 workspace-local deeper QA는 별도로 실행해야 한다.
+- `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`: 루트 검증 계약에서도 `build-master → qa-content → build-content` 전체 흐름을 사용하고, `health:content`의 workspace-local 추가 실행에도 모두 포함된다(`MexTm`도 동일). 콘텐츠를 직접 수정하거나 deeper content QA가 필요할 때는 워크스페이스 로컬 `content:prepare`를 직접 실행한다.
+- `LatTm`: 루트 `content:prepare`에서 full pipeline을 타지만 `health:content`의 workspace-local 추가 실행에는 포함하지 않으므로, deeper content QA는 `npm --prefix LatTm run content:prepare`로 별도 실행한다.
 
 ## 실행 명령
 

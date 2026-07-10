@@ -95,18 +95,22 @@ export function GatewayLandingPage() {
           }
         ]
       : []),
-    {
-      id: "incubate",
-      title: `${joinProductLabels(incubateProducts, " · ")} · Incubate`,
-      copy: `${joinProductLabels(incubateProducts, " · ")}은 lighter track으로 유지하며 verification refresh, reader utility, 문서 정합성을 우선합니다.`,
-      note: incubateProducts
-        .map(
-          (product) =>
-            `${product.shortLabel} ${getLifecycleStatusLabel(product.lifecycleStatus)} · QA ${getQaLevelLabel(product.qaLevel)}`
-        )
-        .join(" / "),
-      href: incubateProducts[0] ? buildProductPath(incubateProducts[0]) : buildProductPath("/")
-    }
+    ...(incubateProducts.length > 0
+      ? [
+          {
+            id: "incubate",
+            title: `${joinProductLabels(incubateProducts, " · ")} · Incubate`,
+            copy: `${joinProductLabels(incubateProducts, " · ")}은 lighter track으로 유지하며 verification refresh, reader utility, 문서 정합성을 우선합니다.`,
+            note: incubateProducts
+              .map(
+                (product) =>
+                  `${product.shortLabel} ${getLifecycleStatusLabel(product.lifecycleStatus)} · QA ${getQaLevelLabel(product.qaLevel)}`
+              )
+              .join(" / "),
+            href: incubateProducts[0] ? buildProductPath(incubateProducts[0]) : buildProductPath("/")
+          }
+        ]
+      : [])
   ];
   const whyLateParagraphs = whyLate?.paragraphs ?? [];
   const heroTitle = "인하우스 팀을 위한 cross-border trademark operating guide";

@@ -649,6 +649,19 @@ describe("App portfolio shell", () => {
     );
   });
 
+  it("does not render an empty Incubate roadmap card when no incubate-tier guides exist", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    const roadmapTitles = Array.from(
+      document.querySelectorAll(".gateway-card-grid .gateway-card-title")
+    ).map((el) => el.textContent?.trim() ?? "");
+
+    expect(roadmapTitles.length).toBeGreaterThan(0);
+    expect(roadmapTitles.some((title) => /Incubate/i.test(title))).toBe(false);
+    expect(roadmapTitles.some((title) => /^·\s*Incubate$/.test(title))).toBe(false);
+  });
+
   it("surfaces the latest brief banner ahead of the reading flow with primary and archive CTAs", () => {
     installFetchMock();
     renderAppRouteTree("/");
