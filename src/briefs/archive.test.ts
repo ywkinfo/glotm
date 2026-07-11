@@ -5,7 +5,7 @@ import { briefIssues, getBriefIssueBySlug, getLatestBriefIssue } from "./archive
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-07-kbrand-government-certification-mark");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-07-china-trademark-overhaul-2027-countdown");
     expect(getBriefIssueBySlug("2026-06-short-brand-name-clearance")?.title).toBe(
       "2026년 6월 Hot Global TM Brief | VB·Swift·Caviar: 짧은 브랜드명일수록, 출시 전에 먼저 점검해야 하는 이유"
     );
