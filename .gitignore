@@ -16,3 +16,4 @@ public/generated
 *.tsbuildinfo
 **/*.tsbuildinfo
 .tmp-reader-*.png
+tmp/
