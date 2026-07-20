@@ -42,4 +42,25 @@ describe("generated content link smoke", () => {
     }
     expect(internalAppAnchors).toHaveLength(0);
   });
+
+  // Markdown placeholder가 링크로 오파싱되면 상대 href 앵커가 생긴다(2026-06-21 LatTm `[본사명](이하 "허락자")` 사례).
+  // rehype가 비-ASCII href를 퍼센트 인코딩하므로 실제 산출물은 `href="%EC%9D%B4%ED%95%98"` 형태다.
+  // 문자열 grep으로는 잡히지 않아 href를 파싱해 형태로 판별한다.
+  // 현재 전 워크스페이스 앵커는 모두 절대 http(s)이므로 예외 없이 막는다.
+  it.each(generatedProducts)("keeps every anchor href absolute for %s", (productName) => {
+    const documentData = readGeneratedDocument(productName);
+    const offendingAnchors = documentData.chapters.flatMap((chapter) => {
+      const anchors = chapter.html.match(/<a [^>]*href="([^"]*)"[^>]*>/g) ?? [];
+
+      return anchors
+        .filter((anchor) => {
+          const href = anchor.match(/href="([^"]*)"/)?.[1] ?? "";
+
+          return !/^(?:https?:\/\/|mailto:|tel:|#)/.test(href);
+        })
+        .map((anchor) => `${chapter.slug}: ${anchor}`);
+    });
+
+    expect(offendingAnchors).toEqual([]);
+  });
 });
