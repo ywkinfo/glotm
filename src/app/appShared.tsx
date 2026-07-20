@@ -320,14 +320,15 @@ export function ProductGroup({ title, description, products, surface }: ProductG
 
 type BriefIssueCardProps = {
   issue: BriefIssue;
+  isLatest: boolean;
   surface: "gateway" | "archive";
 };
 
-export function BriefIssueCard({ issue, surface }: BriefIssueCardProps) {
+export function BriefIssueCard({ issue, isLatest, surface }: BriefIssueCardProps) {
   return (
     <article className="brief-card">
       <div className="brief-card-topline">
-        <p className="gateway-kicker">Latest Brief</p>
+        <p className="gateway-kicker">{isLatest ? "Latest Brief" : "Brief"}</p>
         <span className="status-pill status-pill--neutral">{issue.cadenceLabel}</span>
       </div>
       <p className="brief-card-date">{formatBriefDate(issue.publishedAt)}</p>
