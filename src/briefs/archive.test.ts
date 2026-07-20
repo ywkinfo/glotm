@@ -5,7 +5,10 @@ import { briefIssues, getBriefIssueBySlug, getLatestBriefIssue } from "./archive
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-07-china-trademark-overhaul-2027-countdown");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-07-uk-influencer-counterfeit-damages-formula");
+    expect(getBriefIssueBySlug("2026-07-china-trademark-overhaul-2027-countdown")?.title).toBe(
+      "2026년 7월 Hot Global TM Brief | 중국 상표법 전면 개정 통과, 2027년 1월 시행 전에 '보유한 등록의 질'을 재고조사할 때입니다"
+    );
     expect(getBriefIssueBySlug("2026-06-short-brand-name-clearance")?.title).toBe(
       "2026년 6월 Hot Global TM Brief | VB·Swift·Caviar: 짧은 브랜드명일수록, 출시 전에 먼저 점검해야 하는 이유"
     );
