@@ -384,7 +384,12 @@ export function GatewayLandingPage() {
         </div>
         <div className="brief-card-grid">
           {featuredBriefs.map((issue) => (
-            <BriefIssueCard key={issue.slug} issue={issue} surface="gateway" />
+            <BriefIssueCard
+              key={issue.slug}
+              issue={issue}
+              isLatest={issue.slug === latestBrief?.slug}
+              surface="gateway"
+            />
           ))}
         </div>
       </section>

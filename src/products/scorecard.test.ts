@@ -10,7 +10,7 @@ import {
 } from "./scorecard";
 
 function daysAgoIso(dayCount: number) {
-  const base = new Date("2026-04-04T00:00:00.000Z");
+  const base = new Date("2026-07-20T00:00:00.000Z");
   base.setUTCDate(base.getUTCDate() - dayCount);
   return base.toISOString();
 }
@@ -18,7 +18,7 @@ function daysAgoIso(dayCount: number) {
 describe("portfolio scorecard helpers", () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-04-04T12:00:00.000Z"));
+    vi.setSystemTime(new Date("2026-07-20T12:00:00.000Z"));
   });
 
   afterEach(() => {
@@ -84,38 +84,26 @@ describe("portfolio scorecard helpers", () => {
     ).toBe("mature");
   });
 
-  it("assesses the current 7-product portfolio against the scorecard", () => {
-    const assessments = new Map(
-      products.map((product) => [product.slug, assessProductLifecycle(product)])
-    );
+  it("requires every registry lifecycle claim to satisfy its scorecard criteria", () => {
+    for (const product of products) {
+      const assessment = assessProductLifecycle(product);
 
-    expect(assessments.get("latam")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
-    });
-    expect(assessments.get("mexico")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
-    });
-    expect(assessments.get("china")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
-    });
-    expect(assessments.get("europe")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
-    });
-    expect(assessments.get("usa")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
-    });
-    expect(assessments.get("japan")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
-    });
-    expect(assessments.get("uk")).toMatchObject({
-      recommendedLifecycleStatus: "mature",
-      meetsCurrentLifecycleStatus: true
+      expect(
+        assessment.meetsCurrentLifecycleStatus,
+        `${product.shortLabel} declares ${product.lifecycleStatus}; density=${assessment.searchDensity.toFixed(2)}`
+      ).toBe(true);
+    }
+  });
+
+  it("rejects a mature claim immediately below the density floor", () => {
+    const uk = products.find((product) => product.slug === "uk");
+
+    expect(uk).toBeDefined();
+    expect(meetsLifecycleCriteria({ ...uk!, searchEntryCount: 180 }, "mature")).toBe(true);
+    expect(assessProductLifecycle({ ...uk!, searchEntryCount: 179 })).toMatchObject({
+      searchDensity: 179 / 15,
+      recommendedLifecycleStatus: "beta",
+      meetsCurrentLifecycleStatus: false
     });
   });
 

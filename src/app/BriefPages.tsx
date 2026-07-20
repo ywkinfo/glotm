@@ -70,7 +70,12 @@ export function BriefArchivePage() {
         </div>
         <div className="brief-card-grid">
           {briefIssues.map((issue) => (
-            <BriefIssueCard key={issue.slug} issue={issue} surface="archive" />
+            <BriefIssueCard
+              key={issue.slug}
+              issue={issue}
+              isLatest={issue.slug === latestIssue?.slug}
+              surface="archive"
+            />
           ))}
         </div>
       </section>

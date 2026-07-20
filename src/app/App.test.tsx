@@ -1020,6 +1020,18 @@ describe("App portfolio shell", () => {
       within(briefSection as HTMLElement).getByRole("link", { name: "이번 주 브리프 보기" })
     ).toHaveAttribute("href", `/briefs/${briefIssues[0]?.slug}`);
     expect(within(briefSection as HTMLElement).getByText(briefIssues[0]?.title ?? "")).toBeInTheDocument();
+    const latestBriefCard = within(briefSection as HTMLElement)
+      .getByRole("heading", { name: briefIssues[0]?.title ?? "" })
+      .closest("article");
+    const previousBriefCard = within(briefSection as HTMLElement)
+      .getByRole("heading", { name: briefIssues[1]?.title ?? "" })
+      .closest("article");
+
+    expect(latestBriefCard).not.toBeNull();
+    expect(previousBriefCard).not.toBeNull();
+    expect(within(latestBriefCard as HTMLElement).getByText("Latest Brief")).toBeInTheDocument();
+    expect(within(previousBriefCard as HTMLElement).queryByText("Latest Brief")).toBeNull();
+    expect(within(previousBriefCard as HTMLElement).getByText("Brief")).toBeInTheDocument();
     expect(
       within(briefSection as HTMLElement).getByText(
         "Hot Global TM Brief는 해외 상표 뉴스를 길게 모아두는 피드가 아니라, 한국 기업이 이번 주 먼저 확인해야 할 브랜드 이슈 하나를 골라 짧고 밀도 있게 해설하는 운영 브리프입니다."
@@ -1109,9 +1121,16 @@ describe("App portfolio shell", () => {
       .getByRole("heading", { name: "최신순으로 브리프 이슈를 모아 둡니다" })
       .closest("section");
     const issueHeadings = within(archiveSection as HTMLElement).getAllByRole("heading", { level: 3 });
+    const latestBriefCard = issueHeadings[0]?.closest("article");
+    const previousBriefCard = issueHeadings[1]?.closest("article");
 
     expect(issueHeadings[0]).toHaveTextContent(briefIssues[0]?.title ?? "");
     expect(issueHeadings[1]).toHaveTextContent(briefIssues[1]?.title ?? "");
+    expect(latestBriefCard).not.toBeNull();
+    expect(previousBriefCard).not.toBeNull();
+    expect(within(latestBriefCard as HTMLElement).getByText("Latest Brief")).toBeInTheDocument();
+    expect(within(previousBriefCard as HTMLElement).queryByText("Latest Brief")).toBeNull();
+    expect(within(previousBriefCard as HTMLElement).getByText("Brief")).toBeInTheDocument();
   });
 
   it("renders brief issue pages with related guide links and tracks guide CTA clicks", async () => {
