@@ -72,7 +72,7 @@
 
 이 카드가 있으면 현지법인, 본사 IP팀, 외부 대리인이 같은 사실관계를 보고 움직일 수 있다. 멕시코에서는 “증거가 있는가”보다 “누가 어떤 goods/services에 대해 무엇을 설명할 수 있는가”가 더 중요할 때가 많다.
 
-공식 운영 구조도 함께 기억해 둘 필요가 있다. 2026-04-01 기준 사실 검증 로그에서 잠근 내용에 따르면, 갱신은 `IMPI3170` 절차를 기준으로 열리고 declaration of use는 `IMPI-00-002` 및 관련 payment 구조로 별도 점검된다. 그래서 실무 캘린더에는 "만료일"만이 아니라 "갱신 패킷 점검일, declaration 범위 확정일, 결제 처리일"을 따로 적는 편이 더 안전하다.
+공식 운영 구조도 함께 기억해 둘 필요가 있다. 2026-07-21 기준 사실 검증 로그에서 잠근 내용에 따르면, 갱신은 `IMPI3170` 절차(갱신 서식 `IMPI-00-002`)를 기준으로 열리고, 등록 후 3년차 declaration of use는 `IMPI-00-014` 서식 및 관련 payment 구조로 별도 점검된다. 그래서 실무 캘린더에는 "만료일"만이 아니라 "갱신 패킷 점검일, declaration 범위 확정일, 결제 처리일"을 따로 적는 편이 더 안전하다.
 
 #### declaration/renewal handoff memo
 
@@ -81,7 +81,7 @@
 | 절차 | 공식 문법 | 이 장에서 잠글 것 | 늦어질 때 바로 보이는 리스크 |
 |---|---|---|---|
 | filing | `IMPI88` | 누가 원출원 데이터를 보유하는가 | declaration 시 goods/services 근거가 비어 있음 |
-| declaration of use | `IMPI-00-002` 및 관련 payment | 실제 사용 goods/services, actual user, 최근 증거 위치 | 3년차 window 누락, 과장 declaration |
+| declaration of use(3년차 실사용 선언) | `IMPI-00-014` 및 관련 payment | 실제 사용 goods/services, actual user, 최근 증거 위치 | 3년차 window 누락, 과장 declaration |
 | renewal | `IMPI3170` + declaration packet 점검 | 만료일, 내부 결재일, 정보변경 반영 여부 | 만료 후 유예 의존, 명의·주소 오류 |
 
 실무적으로는 declaration과 renewal을 같은 캘린더에 두되, owner는 분리해서 적는 편이 더 안전하다. 예를 들어 IP팀이 기한 owner이고, 현지법인이 증거 owner이며, 외부 대리인이 제출 owner인 구조를 먼저 써 두면 "누가 마지막에 챙기겠지" 상태를 줄일 수 있다.
@@ -249,4 +249,5 @@
 - [IMPI, 사용 선언 안내 보도자료](https://www.gob.mx/impi/prensa/el-impi-facilita-la-presentacion-de-la-declaracion-de-uso-de-marcas-avisos-y-nombres-comerciales-por-medio-de-sus-servicios-electronicos-279218?idiom=es)
 - [IMPI, 상표 FAQ](https://www.gob.mx/impi/acciones-y-programas/temas-de-interes-preguntas-frecuentes-marcas)
 - [IMPI 공식 양식 IMPI-00-002: 갱신 및 사용 선언](https://www.gob.mx/cms/uploads/attachment/file/490258/IMPI-00-002_E.pdf)
+- [IMPI 공식 양식 목록: IMPI-00-014 실사용 선언(등록 후 3년차) 서식 포함](https://www.gob.mx/impi/acciones-y-programas/servicios-que-ofrece-el-impi-formatos)
 - [IMPI 공식 양식 목록](https://www.gob.mx/impi/acciones-y-programas/servicios-que-ofrece-el-impi-formatos)

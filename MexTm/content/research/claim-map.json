@@ -7,13 +7,13 @@
     {
       "id": "MX-FEE-001",
       "jurisdiction": "MX",
-      "claim": "IMPI 공식 fee 체계는 출원, 갱신, 사용 선언을 서로 다른 절차로 나누고, 직접출원은 IMPI88, 갱신은 IMPI3170, 사용 선언은 IMPI-00-002 흐름으로 관리한다.",
+      "claim": "IMPI 공식 fee 체계는 출원, 갱신, 사용 선언을 서로 다른 절차로 나눈다. gob.mx 트라미테(ficha) 기준으로 직접출원은 IMPI88, 갱신은 IMPI3170으로 관리하고, 서식(formato) 기준으로 갱신+실사용 선언은 IMPI-00-002, 등록 후 3년차 별도 실사용 선언은 IMPI-00-014를 사용한다. IMPI88·IMPI3170(ficha)와 IMPI-00-002·IMPI-00-014(formato)는 서로 다른 코드 체계다.",
       "chapterRefs": ["Ch4", "Ch5", "Ch7", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
-      "sourceIds": ["gobmx-impi88", "gobmx-impi3170", "impi-pase-faq-2026"],
-      "lastVerified": "2026-06-01",
+      "sourceIds": ["gobmx-impi88", "gobmx-impi3170", "impi-formatos-list", "impi-pase-faq-2026"],
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료. 2026-06-01 재확인: IMPI-00-002(사용 선언), gob.mx 트라미테 ficha IMPI88(출원)·IMPI3170(갱신, 10년 주기) 모두 현행 확인. IMPI88/IMPI3170은 formato IMPI-00-XXX와 별개의 gob.mx ficha ID 체계"
+      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료. 2026-07-21 재대조·skeptic 확정으로 정정: IMPI-00-002는 '갱신 및 실사용 선언 신청서(Solicitud de Renovación y Declaración de Uso Real y Efectivo de Signos Distintivos)' 즉 갱신 서식이고, 등록 후 3년차 별도 실사용 선언(허여 3주년 이후 3개월, 유예 없는 확정 기한)은 IMPI-00-014 서식이다. 기존 '사용 선언=IMPI-00-002' 서술은 오류로, 그대로 따르면 필수 3년차 선언을 놓쳐 등록이 소멸할 수 있어 본문(Ch04·Ch05·Ch07·Ch13·부록) 정정. IMPI88·IMPI3170은 gob.mx ficha ID, IMPI-00-002·IMPI-00-014는 IMPI formato 코드로 별개 체계이며 ficha URL slug가 변경되어 출처 링크 갱신 필요."
     },
     {
       "id": "MX-DL-001",
@@ -22,9 +22,9 @@
       "chapterRefs": ["Ch4", "Ch6", "Ch7", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
       "sourceIds": ["impi-opposition-triptico", "impi-pase-faq-2026", "gobmx-impi3170", "wipo-madrid-2024-32"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금"
+      "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금. 2026-07-21 재대조: 변경 없음(LFPPI 2020 제221조 공고 후 1개월 opposition, 제233조 grant 3주년 후 3개월 실사용 선언(2018-08-10 이후 등록), 제178조 존속 10년). 존속 10년은 부여(grant)일 기산(제178조)이며 2026-04-03 LFPPI 개정도 이 3개 기한은 미변경."
     },
     {
       "id": "MX-NORM-001",
@@ -33,9 +33,9 @@
       "chapterRefs": ["Ch1", "Ch3", "Ch4", "Ch5", "Appendix"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["gobmx-pase-faq", "gobmx-pase-guide-pdf", "impi-transparencia-focalizada"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료"
+      "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료. 2026-07-21 재대조: 변경 없음(Tu cuenta PASE·Marca en Línea·MARCia·ClasNiza·MARCANET·SIGA/Gaceta 6개 시스템 모두 현행 명칭으로 라이브 확인)."
     },
     {
       "id": "MX-ENF-001",
@@ -44,9 +44,9 @@
       "chapterRefs": ["Ch9", "Ch10", "Ch11", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
       "sourceIds": ["wipolex-lfppi-2020", "anam-pedimento-copies", "anam-dpa-fees"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료"
+      "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료. 2026-07-21 재대조: 변경 없음(IMPI declaraciones administrativas·medidas provisionales, ANAM pedimento/anexo 축 현행; ANAM 명칭 유지). Ley Aduanera 2026 개정(2026-01-01 시행)은 pedimento/expediente를 전자화하나 구조는 유지."
     }
   ]
 }

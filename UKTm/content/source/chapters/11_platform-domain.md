@@ -2,7 +2,7 @@
 
 온라인 침해는 한 채널에서만 끝나지 않는다. 영국에서는 marketplace listing, SNS 광고, reseller 사이트, .uk 도메인이 동시에 연결되는 경우가 많기 때문에 `채널별 따로 대응`보다 `사건 단위 묶음 대응`이 중요하다.
 
-특히 .uk 도메인 문제는 Nominet의 Domain Disputes Resolution Service를 활용할 수 있으므로, 플랫폼 신고와 도메인 분쟁을 한 사건으로 볼지 분리할지 초기에 정해야 한다.
+특히 .uk 도메인 문제는 Nominet의 Dispute Resolution Service(DRS)를 활용할 수 있으므로, 플랫폼 신고와 도메인 분쟁을 한 사건으로 볼지 분리할지 초기에 정해야 한다. 다만 2026-07-07부터 신규 DRS 신청은 Nominet을 대신해 WIPO가 접수·관리하므로, 실제 제기는 WIPO를 통해 진행한다(정책·총괄은 Nominet이 유지, 조정은 Nominet이 무료 제공, 그 전 접수 건은 Nominet Online Services에서 그대로 진행).
 
 ## online incident quick board
 
@@ -32,7 +32,7 @@
 
 ## Nominet DRS를 어디에 넣을지 정한다
 
-`.uk` 도메인 문제는 단순 host takedown과 달리 registry 수준의 분쟁 경로를 검토할 수 있다. Nominet DRS를 바로 쓸지, 먼저 경고장과 협상을 할지는 사건의 긴급도와 confusion strength에 따라 달라진다.
+`.uk` 도메인 문제는 단순 host takedown과 달리 registry 수준의 분쟁 경로를 검토할 수 있다. Nominet DRS를 바로 쓸지, 먼저 경고장과 협상을 할지는 사건의 긴급도와 confusion strength에 따라 달라진다. 신규 DRS 신청은 2026-07-07부터 WIPO 접수 창구를 통하되, 정책·조정은 여전히 Nominet 체계이므로 제출 경로만 WIPO로 바뀐 점을 실무 메모에 남긴다.
 
 | 질문 | DRS 쪽이 더 맞는 경우 | 다른 채널이 더 빠른 경우 |
 | --- | --- | --- |

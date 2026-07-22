@@ -143,8 +143,8 @@ describe("health report CLI", () => {
     expect(output).toContain("| usa | growth | mature | mature | hold | root content full pipeline |");
     expect(output).toContain("## Research Coverage");
     expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| china | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
-    expect(output).toContain("| mexico | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
+    expect(output).toContain("| china | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
+    expect(output).toContain("| mexico | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
     expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 0 | 0 | pass |");
   });
 });

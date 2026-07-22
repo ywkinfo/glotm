@@ -11,9 +11,9 @@
       "chapterRefs": ["Ch5", "Ch14"],
       "riskLevel": "HIGH",
       "sourceIds": ["cnipa-fee-guide-2019", "cnipa-fee-answer-2024"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제5장 예산·제출 메모와 체크리스트에 반영 완료"
+      "notes": "제5장 예산·제출 메모와 체크리스트에 반영 완료. 2026-07-21 1차출처 재대조: 변경 없음(CNIPA 공식 종이 300위안/류·온라인 270위안/류, 2019-07-01 기준 현행). 2026-06-26 채택·2027-01-01 시행 개정 상표법 제86조는 수수료 금액을 별도 규정에 위임하며 금액·구조 변경 없음."
     },
     {
       "id": "CN-DL-001",
@@ -22,7 +22,7 @@
       "chapterRefs": ["Ch6", "Ch14"],
       "riskLevel": "HIGH",
       "sourceIds": ["cnipa-trademark-law-article-33"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -31,7 +31,7 @@
         "unit": "months",
         "expression": "within 3 months from preliminary approval publication"
       },
-      "notes": "한국어 본문은 예비승인 공고일부터 3개월로 통일"
+      "notes": "한국어 본문은 예비승인 공고일부터 3개월로 통일. 2026-07-21 재대조: 현행 유효(2019년 상표법 제33조, 3개월). [2027 개정] 2027-01-01 시행 개정 상표법에서 이의신청 기간이 3개월→2개월로 단축되고 조문 제33조→제36조, 접수기관 商标局→国务院商标管理部门으로 변경(2026-12-31까지는 3개월 유효). 시행 전 본문 forward-dated note 추가·2027-01-01 rule flip은 owner 후속 판단."
     },
     {
       "id": "CN-DL-002",
@@ -40,9 +40,9 @@
       "chapterRefs": ["Ch6", "Ch14"],
       "riskLevel": "HIGH",
       "sourceIds": ["cnipa-trademark-law-article-34"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제6장 공식 기한 잠금표와 15일 triage에 반영 완료"
+      "notes": "제6장 공식 기한 잠금표와 15일 triage에 반영 완료. 2026-07-21 재대조: 변경 없음(현행 15일 유지). [2027 개정] 2027-01-01 시행 개정법에서 15일 복심 window는 유지되나 조문 제34조→제37조, 심판기관 商标评审委员会→国务院商标管理部门으로 변경 → 2027부터 조문·기관명 갱신 필요."
     },
     {
       "id": "CN-EVD-001",
@@ -51,7 +51,7 @@
       "chapterRefs": ["Ch7", "Ch8", "Ch14"],
       "riskLevel": "HIGH",
       "sourceIds": ["cnipa-nonuse-cancellation-guide-2023"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -60,7 +60,7 @@
         "unit": "months",
         "expression": "submit use evidence or excuse within 2 months from notice"
       },
-      "notes": "제7장 2개월 triage와 부분 유지 판단표에 반영 완료"
+      "notes": "제7장 2개월 triage와 부분 유지 판단표에 반영 완료. 2026-07-21 재대조: 변경 없음. 2개월 사용증거 window는 商标法实施条例 제66조(법률 본문이 아닌 시행조례) 근거로, 2027-01-01 시행 개정 상표법이 이 window를 바꾸지 않음(amendment risk 없음). 다만 실시조례는 개정법 시행 전 개정 예상 → 개정본 공표 시 재확인. 근거 CNIPA 안내 페이지 실제 일자는 2022-12-07."
     },
     {
       "id": "CN-ENF-001",
@@ -69,9 +69,9 @@
       "chapterRefs": ["Ch10", "Ch12"],
       "riskLevel": "HIGH",
       "sourceIds": ["cnipa-infringement-standard-2020", "china-customs-ipr-guide", "spc-ip-report-2024"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제10장 출구 선택 매트릭스와 채널별 증거 패키지에 반영 완료"
+      "notes": "제10장 출구 선택 매트릭스와 채널별 증거 패키지에 반영 완료. 2026-07-21 재대조: 변경 없음(행정집행·전자상거래 플랫폼·세관·사법 4채널 병행 구조 유지; 개정 상표법은 행정집행을 강화하며 채널을 제거하지 않음). 세관·플랫폼 채널은 각각 별도 법령(세관보호조례·전자상거래법 제42조)에 근거해 상표법 개정과 무관."
     },
     {
       "id": "CN-FIL-001",
@@ -80,7 +80,7 @@
       "chapterRefs": ["Ch5"],
       "riskLevel": "HIGH",
       "sourceIds": ["cnipa-accepted-naming-guide-2020", "cnipa-nice-classification-2026"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "conceptKey": "filing_route",
       "normalized": {
@@ -89,7 +89,7 @@
         "unit": "rule",
         "expression": "use accepted naming and classification principles"
       },
-      "notes": "제3장 표준명칭 분리 기준과 제5장 handoff 표에 반영 완료. 2026-06-01 재확인: 区分表가 尼斯분류 제13판(2026문본, 2026-01-01 시행)으로 갱신됨 — 표준명칭 기반 분류 설계 방법론은 동일하여 본문(판본 무관 서술)은 변경 불필요, 출처 판본 라벨만 2026문본으로 갱신"
+      "notes": "제3장 표준명칭 분리 기준과 제5장 handoff 표에 반영 완료. 2026-06-01 재확인: 区分表가 尼斯분류 제13판(2026문본, 2026-01-01 시행)으로 갱신됨 — 표준명칭 기반 분류 설계 방법론은 동일하여 본문(판본 무관 서술)은 변경 불필요, 출처 판본 라벨만 2026문본으로 갱신. 2026-07-21 재대조: 변경 없음(标准名称·可接受名称 원칙 현행). 분류출원 규정은 개정 상표법에서 제22조→제26조로 renumber되나 실질 동일. 참고: '수리가능'은 受理可能/可接受(acceptable)의 뜻으로, '수리(repair)'로 오독되지 않도록 본문 표현 점검 권고."
     },
     {
       "id": "CN-MAD-001",
@@ -98,7 +98,7 @@
       "chapterRefs": ["Ch4", "Ch14"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["wipo-china-office", "wipo-madrid-members"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "conceptKey": "filing_route",
       "normalized": {
@@ -107,7 +107,7 @@
         "unit": "rule",
         "expression": "scope determined by designated state domestic law"
       },
-      "notes": "직접출원 vs 마드리드의 우열은 실무 판단이므로 본문에서는 분기표로 다룸"
+      "notes": "직접출원 vs 마드리드의 우열은 실무 판단이므로 본문에서는 분기표로 다룸. 2026-07-21 재대조: 변경 없음(중국 Madrid 회원 유지, 지정국 국내법이 보호범위 결정; 개정 상표법과 무관). 참고: 중국 지정 보호는 홍콩·마카오를 포함하지 않음(독자 오해 주의)."
     },
     {
       "id": "CN-NORM-001",
@@ -116,9 +116,9 @@
       "chapterRefs": ["Ch10", "Ch12", "Ch14"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["cnipa-trademark-law", "wipo-china-office", "china-customs-ipr-guide", "spc-ip-report-2024"],
-      "lastVerified": "2026-06-01",
+      "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제10장 공식 용어 표준안과 관련 장 전반의 용어 통일에 반영 완료"
+      "notes": "제10장 공식 용어 표준안과 관련 장 전반의 용어 통일에 반영 완료. 2026-07-21 재대조: 변경 없음(CNIPA=国家知识产权局, SAMR=国家市场监督管理总局, 해관총서=海关总署/GACC, 인민법원, Madrid 모두 현행 명칭). [2027 개정] 2027-01-01 시행 개정법은 商标评审委员会(TRAB)를 폐지하고 법문상 CNIPA를 '国务院商标管理部门'으로 지칭 → 절차명 표준안에 평심위원회 참조가 있으면 2027부터 obsolete."
     }
   ]
 }

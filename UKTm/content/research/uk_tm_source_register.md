@@ -24,7 +24,8 @@
 | 라이선스 / 기록 | Using somebody else's intellectual property: Trade marks | https://www.gov.uk/using-somebody-elses-intellectual-property/trade-marks | 2026-04-01 | Ch09 | 확정 |
 | IPEC 절차 | Take a case to the Intellectual Property Enterprise Court | https://www.gov.uk/guidance/take-a-case-to-the-intellectual-property-enterprise-court | 2026-04-01 | Ch01, Ch10 | 확정 |
 | 집행 포럼 비교 | IP crime and enforcement for businesses | https://www.gov.uk/government/publications/ip-crime-and-enforcement-for-businesses/ip-crime-and-enforcement-for-businesses | 2026-04-01 | Ch10 | 확정 |
-| .uk 도메인 분쟁 | Domain Disputes - Nominet | https://nominet.uk/uk-registry/domain-disputes/ | 2026-04-01 | Ch11 | 확정 |
+| .uk 도메인 분쟁 (DRS) | Dispute Resolution Service - Nominet (2026-07-07부터 WIPO 접수·관리) | https://nominet.uk/uk-registry/domain-disputes/ | 2026-07-21 | Ch11 | 확정 |
+| .uk DRS WIPO 접수 | WIPO .uk DRS (2026-07-07 이관) | https://www.wipo.int/amc/en/domains/cctld/uk/ | 2026-07-21 | Ch11 | 확정 |
 | HMRC border action | Apply to protect your intellectual property rights | https://www.gov.uk/guidance/apply-for-action-to-protect-your-intellectual-property-rights | 2026-04-01 | Ch12 | 확정 |
 | EU 종료 후 comparable marks | EU trade mark protection and comparable UK trade marks | https://www.gov.uk/guidance/eu-trade-mark-protection-and-comparable-uk-trade-marks | 2026-04-01 | Ch01, Ch03, Ch07 | 확정 |
 | IR comparable marks | Changes to international trade mark registrations | https://www.gov.uk/guidance/changes-to-international-trade-mark-registrations | 2026-04-01 | Ch03, Ch07, Appendix E | 확정 |
@@ -51,7 +52,8 @@
 | gov-ir-changes | Changes to international trade mark registrations | https://www.gov.uk/guidance/changes-to-international-trade-mark-registrations |
 | gov-protect-abroad | Protecting your trade mark abroad | https://www.gov.uk/guidance/protecting-your-trade-mark-abroad |
 | gov-afa | Apply for action to protect your IP rights | https://www.gov.uk/guidance/apply-for-action-to-protect-your-intellectual-property-rights |
-| nominet-drs | Domain Disputes - Nominet | https://nominet.uk/uk-registry/domain-disputes/ |
+| nominet-drs | Nominet Dispute Resolution Service (DRS) | https://nominet.uk/uk-registry/domain-disputes/ |
+| wipo-uk-drs | WIPO .uk DRS 접수(2026-07-07 이관) | https://www.wipo.int/amc/en/domains/cctld/uk/ |
 
 ## 운영 규칙
 

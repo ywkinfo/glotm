@@ -35,6 +35,20 @@ mature 승격 중 워크스페이스 간 UK 수수료 값 상충을 발견했고
 - 결정: **EuTm 정본(£205 출원 / £245 갱신)으로 통일**. UKTm 본문(Ch04·Ch07)·fact log·`claim-map.json` UK-FEE-001을 이 값으로 정합화하고 status를 `확정`/`BODY_READY`로 되돌렸다.
 - 후속: 향후 UKIPO 수수료 개정 발표 시 EuTm·UKTm 양 워크스페이스를 같은 값으로 동시 갱신한다(단일 정본 유지).
 
+## 2026-07-21 재검증 (claim-freshness)
+
+2026-07-21에 claim-map 11개(2026-05-12 기록 파생 10개 + 2026-07-07 fee 1개)를 1차출처(gov.uk·legislation.gov.uk·WIPO)에 재대조하고, 변경 claim은 adversarial skeptic로 재확인했다. `audit:facts` gate=warn→pass, staleHighRisk 7→0. claim-map의 lastVerified를 2026-07-21로 갱신했다.
+
+- **UK-DRS-001 (변경 반영):** (1) 공식명은 Nominet **Dispute Resolution Service(DRS)**이며 기존 'Domain Disputes Resolution Service'는 URL slug에서 온 오기 → 정정; (2) 2026-07-07부터 신규 `.uk` DRS 신청은 Nominet을 대신해 **WIPO(wipo.int/amc)**가 접수·관리(정책·총괄은 Nominet, 조정은 Nominet 무료 제공, 그 전 접수 건은 Nominet Online Services 유지). 본문 Ch11 정정, source register에 `wipo-uk-drs` 추가.
+- **UK-RENEW-001 (본문 명확화):** 갱신 10년 기산은 실제 등록완료일이 아니라 출원일 기준이다(TMA 1994 §40(3): 출원일을 등록일로 간주). 한국 독자 오해 방지를 위해 Ch07에 주석 추가.
+- **UK-COMPARABLE-001 (본문 명확화):** 2026-01-01부터 comparable UK mark의 non-use 방어에 전환 전 EU 사용도 원용 불가(초기 5년 경과 규정 만료) → UK 실사용만 인정. Ch08에 리스크 note 추가.
+- **나머지 8건(OPP·COOL·NONUSE·IPEC·BREXIT·IR·AFA + FEE):** 현행 유효(변경 없음). 세부는 각 claim의 `claim-map.json` notes 참조.
+
+**owner 후속 확인 권고:**
+
+1. 갱신 추가 클래스 수수료 — 현재 본문·UK-FEE-001은 £50이나 2026-07-21 gov.uk 재대조에서 갱신 추가 클래스 £60 신호가 관측됐다(출원 추가 클래스 £50과 구분 필요). 수수료 금액은 owner 결정 영역이라 본 세션에서 변경하지 않았으니 공식 UKIPO 고지로 재확인 요망.
+2. registry `factsReviewedOn`(owner attestation)은 uk `2026-07-07` 유지 — 필요 시 `2026-07-21`로 상향은 owner 판단.
+
 ## 편집 규칙
 
 - 숫자, 기간, 수수료, 제도 명칭은 이 로그에서 `확정` 되기 전 본문에 단정적으로 쓰지 않는다.
@@ -43,4 +57,4 @@ mature 승격 중 워크스페이스 간 UK 수수료 값 상충을 발견했고
 
 ---
 
-> Standard QA verified on 2026-05-12. P1·P2 16개 항목 status `확정` 유지, 변동성 높은 entry는 `uk_tm_research_report.md` Known Limitations 표의 다음 검증 시점 기준으로 추적한다.
+> Standard QA verified on 2026-05-12. P1·P2 16개 항목 status `확정` 유지, 변동성 높은 entry는 `uk_tm_research_report.md` Known Limitations 표의 다음 검증 시점 기준으로 추적한다. 2026-07-21 claim-freshness 재검증으로 claim-map 11개 lastVerified 갱신 및 UK-DRS 변경 반영(위 "2026-07-21 재검증" 섹션 참조).

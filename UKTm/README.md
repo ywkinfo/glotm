@@ -1,7 +1,7 @@
 # UKTm
 
 영국 상표 실무 운영 가이드북의 콘텐츠 원고, 리서치 문서, 빌드 스크립트를 관리하는 워크스페이스입니다.
-현재 활성 런타임은 루트 `GloTm` 셸이며, `UKTm`은 `/uk` 경로로 연결된 영국 단일국가 early-track 가이드입니다. 현재 포트폴리오 메타데이터 기준 lifecycle은 `beta`, QA level은 `standard`, buyer-facing 포지션은 `early-track verified 공개본` 유지입니다(2026-05-12 #53 승급, 정본은 `src/products/registry.ts`).
+현재 활성 런타임은 루트 `GloTm` 셸이며, `UKTm`은 `/uk` 경로로 연결된 영국 단일국가 가이드입니다. 현재 포트폴리오 메타데이터 기준 tier는 `growth`, lifecycle은 `mature`, QA level은 `full`입니다(2026-07-07 #121 growth/mature/full 승급, 정본은 `src/products/registry.ts`).
 
 ## Structure
 

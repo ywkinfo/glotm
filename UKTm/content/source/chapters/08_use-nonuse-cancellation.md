@@ -75,6 +75,8 @@ Brexit 이후 EU 사용이 곧 UK 사용을 설명하지 않는다. 특히 compa
 | EU 사용(2021-01-01 전) | comparable right 기간 계산에 일부 반영 | 전환 전 실적만 해당 |
 | EU 사용(2021-01-01 후) | UK 권리에 자동 반영 안 됨 | UK 사용을 별도 확보 |
 
+2026-01-01부터는 comparable UK right의 non-use 방어에서 전환 전(2021-01-01 이전) EU 사용조차 더 이상 원용할 수 없다. comparable mark 생성(2021-01-01) 후 5년의 경과 규정이 만료돼, 이제 관련 5년 look-back 구간에서는 UK 실사용만 genuine use로 인정된다. 따라서 cloned mark를 영국에서 실제로 쓰지 않으면 non-use revocation 리스크가 커지므로, UK 사용 증거 확보를 우선한다.
+
 ## weak-use mark를 미리 triage한다
 
 모든 등록을 같은 강도로 방어할 수는 없다. 사용이 약한 mark를 미리 선별해 유지·축소·집중을 정하면, cancellation 위협이 왔을 때 대응이 흔들리지 않는다.

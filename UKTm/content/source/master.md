@@ -713,6 +713,8 @@ opposition은 기한이 고정돼 있어, 증거·서면 준비를 기한 역산
 | 추가 클래스 | 클래스당 £50 | 불필요한 범위 유지 여부를 함께 검토 |
 | comparable UK right | 원래 EU 권리와 다른 관리 이벤트가 생길 수 있음 | UK 별도 달력 필드 유지 |
 
+영국에서는 상표법상 '등록일'이 출원일로 간주되므로(Trade Marks Act 1994 제40조 제3항), 갱신 10년 기한은 실제 등록완료일이 아니라 출원일을 기준으로 도래한다. 한국식으로 실제 등록완료일을 기준 삼으면 갱신 기한이 수개월 어긋날 수 있어, 달력 리마인더는 출원일 기산으로 건다.
+
 ### 유지관리 카드에 들어갈 최소 필드
 
 유지관리 카드는 단순 renew date 목록이 아니라 권리 상태 설명서에 가까워야 한다. owner, 사용 채널, 핵심 상품군, 라이선스 여부, comparable mark 여부를 같이 적어야 다음 담당자도 바로 이해할 수 있다.
@@ -875,6 +877,8 @@ Brexit 이후 EU 사용이 곧 UK 사용을 설명하지 않는다. 특히 compa
 | UK 사용 | 영국 판매·배송·마케팅 | comparable right 이후 구간의 핵심 |
 | EU 사용(2021-01-01 전) | comparable right 기간 계산에 일부 반영 | 전환 전 실적만 해당 |
 | EU 사용(2021-01-01 후) | UK 권리에 자동 반영 안 됨 | UK 사용을 별도 확보 |
+
+2026-01-01부터는 comparable UK right의 non-use 방어에서 전환 전(2021-01-01 이전) EU 사용조차 더 이상 원용할 수 없다. comparable mark 생성(2021-01-01) 후 5년의 경과 규정이 만료돼, 이제 관련 5년 look-back 구간에서는 UK 실사용만 genuine use로 인정된다. 따라서 cloned mark를 영국에서 실제로 쓰지 않으면 non-use revocation 리스크가 커지므로, UK 사용 증거 확보를 우선한다.
 
 ### weak-use mark를 미리 triage한다
 
@@ -1144,7 +1148,7 @@ revocation 신청이 실제로 들어오면 증거 수집부터 시작하기엔 
 
 온라인 침해는 한 채널에서만 끝나지 않는다. 영국에서는 marketplace listing, SNS 광고, reseller 사이트, .uk 도메인이 동시에 연결되는 경우가 많기 때문에 `채널별 따로 대응`보다 `사건 단위 묶음 대응`이 중요하다.
 
-특히 .uk 도메인 문제는 Nominet의 Domain Disputes Resolution Service를 활용할 수 있으므로, 플랫폼 신고와 도메인 분쟁을 한 사건으로 볼지 분리할지 초기에 정해야 한다.
+특히 .uk 도메인 문제는 Nominet의 Dispute Resolution Service(DRS)를 활용할 수 있으므로, 플랫폼 신고와 도메인 분쟁을 한 사건으로 볼지 분리할지 초기에 정해야 한다. 다만 2026-07-07부터 신규 DRS 신청은 Nominet을 대신해 WIPO가 접수·관리하므로, 실제 제기는 WIPO를 통해 진행한다(정책·총괄은 Nominet이 유지, 조정은 Nominet이 무료 제공, 그 전 접수 건은 Nominet Online Services에서 그대로 진행).
 
 ### online incident quick board
 
@@ -1174,7 +1178,7 @@ revocation 신청이 실제로 들어오면 증거 수집부터 시작하기엔 
 
 ### Nominet DRS를 어디에 넣을지 정한다
 
-`.uk` 도메인 문제는 단순 host takedown과 달리 registry 수준의 분쟁 경로를 검토할 수 있다. Nominet DRS를 바로 쓸지, 먼저 경고장과 협상을 할지는 사건의 긴급도와 confusion strength에 따라 달라진다.
+`.uk` 도메인 문제는 단순 host takedown과 달리 registry 수준의 분쟁 경로를 검토할 수 있다. Nominet DRS를 바로 쓸지, 먼저 경고장과 협상을 할지는 사건의 긴급도와 confusion strength에 따라 달라진다. 신규 DRS 신청은 2026-07-07부터 WIPO 접수 창구를 통하되, 정책·조정은 여전히 Nominet 체계이므로 제출 경로만 WIPO로 바뀐 점을 실무 메모에 남긴다.
 
 | 질문 | DRS 쪽이 더 맞는 경우 | 다른 채널이 더 빠른 경우 |
 | --- | --- | --- |

@@ -89,7 +89,7 @@
 | opposition | 공고 후 1개월 | 경로와 무관하게 멕시코 단계에서 놓치면 늦음 |
 | declaration of use | 2018-08-10 이후 등록은 grant 후 3년+3개월 | 로컬 등록 후 운영 캘린더 핵심 |
 | renewal | 10년 구조 | 갱신 달력과 사용관리 연결 |
-| filing / renewal / declaration 절차 분리 | `IMPI88`, `IMPI3170`, `IMPI-00-002` 메모 | 비용 승인과 owner 구분에 필요 |
+| filing / renewal / declaration 절차 분리 | `IMPI88`(출원), `IMPI3170`(갱신), `IMPI-00-014`(3년차 실사용 선언) 메모 | 비용 승인과 owner 구분에 필요 |
 
 이 handoff 표를 남기면 제7장과 부록의 캘린더/체크리스트가 경로 선택 직후부터 바로 채워진다.
 
@@ -100,7 +100,7 @@
 | 시점 | 바로 잠글 것 | 이유 |
 | --- | --- | --- |
 | D+1 | direct / Madrid / mixed 결론 한 줄 | 제5장 packet 재오픈 방지 |
-| D+3 | `IMPI88`, `IMPI3170`, `IMPI-00-002` owner 메모 | filing / renewal / declaration 절차 분리 |
+| D+3 | `IMPI88`, `IMPI3170`, `IMPI-00-014` owner 메모 | filing / renewal / declaration 절차 분리 |
 | D+5 | `SIGA/Gaceta`와 등록 후 캘린더 owner 지정 | opposition, declaration, renewal 누락 방지 |
 | D+7 | 외부대리인 handoff 문장 확정 | local-fit과 central-management 충돌 정리 |
 
@@ -130,7 +130,7 @@ mixed route를 택한 팀이 자주 흔들리는 이유는 경로를 둘로 나�
 
 #### route memo minimum fields
 
-경로 선택 메모에는 최소한 `IMPI88`/`IMPI3170`/`IMPI-00-002` 중 어떤 절차가 당장 열리는지, 그리고 누가 그 owner인지 한 줄씩 남기는 편이 좋다. 그래야 경로 선택이 끝난 뒤 제5장과 제7장에서 같은 질문을 다시 하지 않는다.
+경로 선택 메모에는 최소한 `IMPI88`(출원)/`IMPI3170`(갱신)/`IMPI-00-014`(3년차 실사용 선언) 중 어떤 절차가 당장 열리는지, 그리고 누가 그 owner인지 한 줄씩 남기는 편이 좋다. 그래야 경로 선택이 끝난 뒤 제5장과 제7장에서 같은 질문을 다시 하지 않는다.
 
 #### next-action 한 줄 요약
 
