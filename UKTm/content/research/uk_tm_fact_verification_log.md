@@ -13,8 +13,8 @@ status는 `확정`, `조건부`, `추가검증 필요` 세 가지를 사용한�
 | opposition은 공고일 기준 2개월 안에 TM7로 제기 | P1 | 확정 | https://www.gov.uk/objecting-to-other-peoples-trade-marks | Ch06 | 본문에는 예고 기간과 본 opposition 기간을 구분해 적는다. |
 | cooling-off는 초기 9개월, TM9E로 최대 18개월까지 연장 가능 | P1 | 확정 | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition | Ch06 | TM8 제출 시점과 협상 시점을 혼동하지 않도록 표로 분리한다. |
 | 등록 상표는 10년마다 갱신 | P1 | 확정 | https://www.gov.uk/renew-your-trade-mark | Ch07 | 본문과 부록 달력에서 모두 동일 표현 사용. |
-| 갱신 수수료는 첫 클래스 £245, 추가 클래스당 £50 | P2 | 확정 | https://www.gov.uk/renew-your-trade-mark | Ch07 | 2026-07-07 owner 결정으로 EuTm 정본(£245)에 통일(2026-04-01 UKIPO 개정 기준). 아래 "수수료 정합 메모" 참조. |
-| 출원 수수료는 첫 클래스 £205(온라인 기준) | P2 | 확정 | https://www.gov.uk/how-to-register-a-trade-mark | Ch04 | 2026-07-07 owner 결정으로 EuTm 정본(£205)에 통일. 추가 클래스 가산 구조는 갱신과 동일 패턴. |
+| 갱신 수수료는 첫 클래스 £245, 추가 클래스당 £60 | P2 | 확정 | https://www.gov.uk/renew-your-trade-mark | Ch07 | 2026-07-22 GOV.UK 공식 안내로 재확인. 2026-04-01 UKIPO 개정 금액. |
+| 온라인 출원 수수료는 첫 클래스 £205, 추가 클래스당 £60 | P2 | 확정 | https://www.gov.uk/how-to-register-a-trade-mark/start-your-application | Ch04 | 2026-07-22 GOV.UK 공식 안내로 재확인. 출원·갱신의 추가 클래스 금액은 모두 £60. |
 | non-use revocation은 등록 후 5년 경과 시점부터 문제될 수 있음 | P1 | 확정 | https://www.gov.uk/government/publications/trade-marks-revocation/revocation-non-use-proceedings | Ch08 | "등록 후 5년"과 "연속 5년 불사용"을 함께 설명한다. |
 | revocation 신청은 TM26(N) 서식으로 시작 | P2 | 확정 | https://www.gov.uk/government/publications/trade-marks-revocation/revocation-non-use-proceedings | Ch08 | 서식명(TM26(N)) 확정. 절차 수수료 금액은 본문에 하드코딩하지 않고 공식 고지를 참조. |
 | IPEC small claims track은 통상 £10,000 이하 분쟁에 적합 | P1 | 확정 | https://www.gov.uk/government/publications/intellectual-property-enterprise-court-a-guide-to-small-claims | Ch10 | 소액·간이 트랙 기준으로 소개한다. |
@@ -44,10 +44,7 @@ mature 승격 중 워크스페이스 간 UK 수수료 값 상충을 발견했고
 - **UK-COMPARABLE-001 (본문 명확화):** 2026-01-01부터 comparable UK mark의 non-use 방어에 전환 전 EU 사용도 원용 불가(초기 5년 경과 규정 만료) → UK 실사용만 인정. Ch08에 리스크 note 추가.
 - **나머지 8건(OPP·COOL·NONUSE·IPEC·BREXIT·IR·AFA + FEE):** 현행 유효(변경 없음). 세부는 각 claim의 `claim-map.json` notes 참조.
 
-**owner 후속 확인 권고:**
-
-1. 갱신 추가 클래스 수수료 — 현재 본문·UK-FEE-001은 £50이나 2026-07-21 gov.uk 재대조에서 갱신 추가 클래스 £60 신호가 관측됐다(출원 추가 클래스 £50과 구분 필요). 수수료 금액은 owner 결정 영역이라 본 세션에서 변경하지 않았으니 공식 UKIPO 고지로 재확인 요망.
-2. registry `factsReviewedOn`(owner attestation)은 uk `2026-07-07` 유지 — 필요 시 `2026-07-21`로 상향은 owner 판단.
+**2026-07-22 owner 후속 종결:** GOV.UK 공식 출원·갱신 안내를 재대조해 첫 클래스 출원 £205, 갱신 £245, 추가 클래스당 £60으로 확정했다. 본문·claim-map·source register를 같은 값으로 정합화했고, registry `factsReviewedOn`을 2026-07-22로 갱신했다.
 
 ## 편집 규칙
 
@@ -57,4 +54,4 @@ mature 승격 중 워크스페이스 간 UK 수수료 값 상충을 발견했고
 
 ---
 
-> Standard QA verified on 2026-05-12. P1·P2 16개 항목 status `확정` 유지, 변동성 높은 entry는 `uk_tm_research_report.md` Known Limitations 표의 다음 검증 시점 기준으로 추적한다. 2026-07-21 claim-freshness 재검증으로 claim-map 11개 lastVerified 갱신 및 UK-DRS 변경 반영(위 "2026-07-21 재검증" 섹션 참조).
+> Standard QA verified on 2026-05-12. P1·P2 16개 항목 status `확정` 유지, 변동성 높은 entry는 `uk_tm_research_report.md` Known Limitations 표의 다음 검증 시점 기준으로 추적한다. 2026-07-21 claim-freshness 재검증으로 claim-map 11개 lastVerified 갱신 및 UK-DRS 변경 반영, 2026-07-22 owner 후속으로 UK-FEE-001과 `factsReviewedOn` 갱신(위 재검증·종결 섹션 참조).

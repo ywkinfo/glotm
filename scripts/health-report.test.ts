@@ -112,7 +112,9 @@ describe("health report CLI", () => {
     const markdown = buildCliOutput([], {});
 
     expect(markdown).toContain("## Fact-Review (advisory, non-gating)");
-    expect(markdown).toContain("| china | unrecorded | — | unrecorded | non-gating |");
+    expect(markdown).toContain("| china | recorded | 2026-07-21 | 0d | non-gating |");
+    expect(markdown).toContain("| mexico | recorded | 2026-07-21 | 0d | non-gating |");
+    expect(markdown).toContain("| uk | recorded | 2026-07-22 | 0d | non-gating |");
 
     const json = JSON.parse(buildCliOutput(["--format", "json"], {}));
     const china = json.products.find((product: { slug: string }) => product.slug === "china");
@@ -120,7 +122,9 @@ describe("health report CLI", () => {
     expect(china.factReview).toMatchObject({
       track: "fact-review",
       gating: false,
-      status: "unrecorded"
+      status: "recorded",
+      reviewedOn: "2026-07-21T00:00:00.000Z",
+      freshnessDays: 0
     });
   });
 

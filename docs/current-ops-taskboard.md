@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-07-21
+- Last updated: 2026-07-22
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -15,7 +15,7 @@
 - 2026-07 라운드 반영: `JapTm` growth/mature/full 승급(결정 2026-06-29 owner override · 머지 2026-06-30 #114 — 로그는 `monthly-review-template.md`)과 검증날짜·claim-map sourceId 정합 후속(2026-07-01 #115)을 정본으로 반영. 2026-07-04 월간 리뷰에서 shared root gate 재현 후 전 가이드 `verifiedOn`을 2026-07-04로 re-stamp(lane freshness, fact-review 아님). Next Lane의 이전 `JapTm` `145 / incubate / beta / standard` 표기는 승급 이전 잔재라 registry 정본에 맞춰 동기화했다.
 - 2026-07-06 신규 리포트: 교차 관할 `global-goods-services-class-framework`(지정상품·류 설계) 추가 후 머지·Pages 배포(#118). publishedAt 2026-07-06으로 Gateway featured lead 진입 → featured 2 = 지정상품 설계 + 한글 표장, `gatewaySectionSummary` 예시 문구도 이에 맞춰 변경. 시의성 사실(2025 USPTO 수수료·2027 중국 개정 상표법·판례) 다수라 owner 사실 attestation은 후속 과제로 남긴다. buyer-narrative/monthly-review-template의 primary report 스냅샷은 새 featured 쌍으로 동기화(이 커밋).
 - 2026-07-07~11 라운드 반영: 리포트 본문 nice-class 범위 렌더 정정·미커버 관할 제거(#120), `UKTm` growth/mature/full 승급(#121 — 다중 포럼 집행 오케스트레이션 15장·claim-map 11건·density 183·UK 수수료 £205/£245 EuTm 정합, owner override) + 잔여 beta/incubate 참조 docsync(#122), E-E-A-T JSON-LD 구조화데이터·reader provenance 표면화(#123, 챗봇 부결 대안). 후속 승급 정합(2026-07-11): `china.tsx` draft notice 제거, Gateway 빈 Incubate 카드 가드, `health.ts` UKTm lane incubate-pack→uk-growth, `health-report.ts` research coverage에 JapTm·UKTm 편입, README/ARCHITECTURE/phase1-runtime-qa의 JapTm shortcut·UKTm incubate 표기를 package.json `health:content`(Cha·Mex·Eu·Usa·Jap·UK workspace-local 포함, LatTm 루트-only) 진실로 정합.
-- 2026-07-21 라운드 반영: UK/CN/MX claim-freshness 재검증(1차출처 재대조 + adversarial skeptic). UKTm claim-map 10건이 mature 60일 window를 초과(gate=warn·staleHighRisk 7)했던 상태를 해소 → 전 워크스페이스 `audit:facts` gate=pass·staleHighRisk 0. 실제 정정 2건: **UK-DRS-001**(2026-07-07 `.uk` DRS 신규 신청 WIPO 이관·공식명 'Dispute Resolution Service' — 본문 Ch11·claim-map·source register)과 **MX-FEE-001**(등록 후 3년차 실사용 선언 서식은 `IMPI-00-002`가 아니라 `IMPI-00-014` — HIGH 리스크 정정, 본문 Ch04/05/07/13/부록·claim-map·fact log). 본문 명확화 2건: UK 갱신 출원일 기산(TMA §40(3)) Ch07, comparable UK mark 2026-01-01 EU사용 불인정 Ch08. ChaTm/MexTm는 전건 현행 유효로 재스탬프하되 중국 개정 상표법 2027-01-01 시행(이의 3→2개월·조문/기관명 변경 등)은 claim-map/fact log에 forward-dated로 기록. owner 후속: UK 갱신 추가클래스 수수료 £50 vs £60 재확인, registry `factsReviewedOn` 상향 여부, 중국 2027 forward-dated 본문 note·rule flip 판단.
+- 2026-07-21~22 라운드 반영: UK/CN/MX claim-freshness 재검증(1차출처 재대조 + adversarial skeptic). UKTm claim-map 10건이 mature 60일 window를 초과(gate=warn·staleHighRisk 7)했던 상태를 해소 → 전 워크스페이스 `audit:facts` gate=pass·staleHighRisk 0. 실제 정정 2건: **UK-DRS-001**(2026-07-07 `.uk` DRS 신규 신청 WIPO 이관·공식명 'Dispute Resolution Service' — 본문 Ch11·claim-map·source register)과 **MX-FEE-001**(등록 후 3년차 실사용 선언 서식은 `IMPI-00-002`가 아니라 `IMPI-00-014` — HIGH 리스크 정정, 본문 Ch04/05/07/13/부록·claim-map·fact log). 본문 명확화 2건: UK 갱신 출원일 기산(TMA §40(3)) Ch07, comparable UK mark 2026-01-01 EU사용 불인정 Ch08. 2026-07-22 owner 종결: UKIPO 수수료를 온라인 출원 £205 / 갱신 £245 / 추가 클래스당 £60으로 확정, UK/CN/MX `factsReviewedOn`을 실제 재대조일로 표면화, 중국 개정 상표법 2027-01-01 시행(이의 3→2개월·조문/기관명 변경)을 ChaTm 본문에 forward-dated note로 반영. 실제 rule flip은 2027-01-01 시 후속 시행지침·경과규정과 함께 재검증한다.
 
 ## Today
 

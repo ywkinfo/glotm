@@ -21,7 +21,7 @@
       "claim": "이의신청은 예비승인 공고일부터 3개월 내 제기 가능하다.",
       "chapterRefs": ["Ch6", "Ch14"],
       "riskLevel": "HIGH",
-      "sourceIds": ["cnipa-trademark-law-article-33"],
+      "sourceIds": ["cnipa-trademark-law-article-33", "cnipa-trademark-law-2026"],
       "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
@@ -31,7 +31,7 @@
         "unit": "months",
         "expression": "within 3 months from preliminary approval publication"
       },
-      "notes": "한국어 본문은 예비승인 공고일부터 3개월로 통일. 2026-07-21 재대조: 현행 유효(2019년 상표법 제33조, 3개월). [2027 개정] 2027-01-01 시행 개정 상표법에서 이의신청 기간이 3개월→2개월로 단축되고 조문 제33조→제36조, 접수기관 商标局→国务院商标管理部门으로 변경(2026-12-31까지는 3개월 유효). 시행 전 본문 forward-dated note 추가·2027-01-01 rule flip은 owner 후속 판단."
+      "notes": "한국어 본문은 예비승인 공고일부터 3개월로 통일. 2026-07-21 재대조: 현행 유효(2019년 상표법 제33조, 3개월). [2027 개정] 2027-01-01 시행 개정 상표법에서 이의신청 기간이 3개월→2개월로 단축되고 조문 제33조→제36조, 접수기관 商标局→国务院商标管理部门으로 변경(2026-12-31까지는 3개월 유효). 2026-07-22 본문에 시행일·개정 기한 forward-dated note 반영. 실제 rule flip은 2027-01-01 시행 시 후속 시행지침과 함께 재검증한다."
     },
     {
       "id": "CN-DL-002",
@@ -39,10 +39,10 @@
       "claim": "거절결정 불복은 통지 수령일부터 15일 내 복심 신청이 가능하다.",
       "chapterRefs": ["Ch6", "Ch14"],
       "riskLevel": "HIGH",
-      "sourceIds": ["cnipa-trademark-law-article-34"],
+      "sourceIds": ["cnipa-trademark-law-article-34", "cnipa-trademark-law-2026"],
       "lastVerified": "2026-07-21",
       "status": "BODY_READY",
-      "notes": "제6장 공식 기한 잠금표와 15일 triage에 반영 완료. 2026-07-21 재대조: 변경 없음(현행 15일 유지). [2027 개정] 2027-01-01 시행 개정법에서 15일 복심 window는 유지되나 조문 제34조→제37조, 심판기관 商标评审委员会→国务院商标管理部门으로 변경 → 2027부터 조문·기관명 갱신 필요."
+      "notes": "제6장 공식 기한 잠금표와 15일 triage에 반영 완료. 2026-07-21 재대조: 변경 없음(현행 15일 유지). [2027 개정] 2027-01-01 시행 개정법에서 15일 복심 window는 유지되나 조문 제34조→제37조, 법문상 담당 기관 호칭은 商标评审委员会→国务院商标管理部门으로 변경. 2026-07-22 본문 forward-dated note 반영, 2027-01-01 시 조문·기관명 재검증 필요."
     },
     {
       "id": "CN-EVD-001",
@@ -79,7 +79,7 @@
       "claim": "중국 출원에서는 类似商品和服务区分表 표준명칭과 수리가능 상품·서비스 명칭 원칙을 기준으로 분류를 설계한다.",
       "chapterRefs": ["Ch5"],
       "riskLevel": "HIGH",
-      "sourceIds": ["cnipa-accepted-naming-guide-2020", "cnipa-nice-classification-2026"],
+      "sourceIds": ["cnipa-accepted-naming-guide-2020", "cnipa-nice-classification-2026", "cnipa-trademark-law-2026"],
       "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "conceptKey": "filing_route",
@@ -115,7 +115,7 @@
       "claim": "기관명과 절차명 표준안은 CNIPA, SAMR, 해관총서/해관, 인민법원, Madrid System 기준으로 통일한다.",
       "chapterRefs": ["Ch10", "Ch12", "Ch14"],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["cnipa-trademark-law", "wipo-china-office", "china-customs-ipr-guide", "spc-ip-report-2024"],
+      "sourceIds": ["cnipa-trademark-law", "cnipa-trademark-law-2026", "wipo-china-office", "china-customs-ipr-guide", "spc-ip-report-2024"],
       "lastVerified": "2026-07-21",
       "status": "BODY_READY",
       "notes": "제10장 공식 용어 표준안과 관련 장 전반의 용어 통일에 반영 완료. 2026-07-21 재대조: 변경 없음(CNIPA=国家知识产权局, SAMR=国家市场监督管理总局, 해관총서=海关总署/GACC, 인민법원, Madrid 모두 현행 명칭). [2027 개정] 2027-01-01 시행 개정법은 商标评审委员会(TRAB)를 폐지하고 법문상 CNIPA를 '国务院商标管理部门'으로 지칭 → 절차명 표준안에 평심위원회 참조가 있으면 2027부터 obsolete."

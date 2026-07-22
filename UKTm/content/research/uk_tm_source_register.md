@@ -12,13 +12,14 @@
 | UK 검색 시스템 | Search for a trade mark | https://www.gov.uk/search-for-trademark | 2026-04-01 | Ch02, Ch11 | 확정 |
 | UK 분류 검색 | Search UK trade mark classes | https://www.gov.uk/guidance/search-uk-trade-mark-classes | 2026-04-01 | Ch04, Ch05 | 확정 |
 | 출원 전 준비 | Register a trade mark: Before you apply | https://www.gov.uk/how-to-register-a-trade-mark/before-you-apply | 2026-04-01 | Ch02, Ch03, Ch04 | 확정 |
+| 출원 수수료 | Register a trade mark: Apply to register a trade mark | https://www.gov.uk/how-to-register-a-trade-mark/start-your-application | 2026-07-22 | Ch04 | 확정 |
 | 출원 후 절차 | Register a trade mark: After you apply | https://www.gov.uk/how-to-register-a-trade-mark/after-you-apply | 2026-04-01 | Ch05, Ch06 | 확정 |
 | 등록 후 효력 | Register a trade mark: When your trade mark is registered | https://www.gov.uk/how-to-register-a-trade-mark/when-registered | 2026-04-01 | Ch05, Ch07 | 확정 |
 | opposition 예고 | Give notice of your intention to oppose a trade mark | https://www.gov.uk/notice-to-oppose-trademark | 2026-04-01 | Ch06 | 확정 |
 | opposition / 비용 / 타임라인 | Objecting to other peoples trade marks and the legal costs | https://www.gov.uk/objecting-to-other-peoples-trade-marks | 2026-04-01 | Ch06 | 확정 |
 | cooling-off / fast track | Fast track opposition | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition | 2026-04-01 | Ch06 | 확정 |
 | 트리뷴얼 절차 | Manual of trade marks practice - Tribunal section | https://www.gov.uk/guidance/trade-marks-manual/tribunal-section | 2026-04-01 | Ch06, Ch08 | 확정 |
-| 갱신 | Renew your trade mark | https://www.gov.uk/renew-your-trade-mark | 2026-04-01 | Ch07 | 확정 |
+| 갱신 | Renew your trade mark | https://www.gov.uk/renew-your-trade-mark | 2026-07-22 | Ch07 | 확정 |
 | register maintenance | Manual of trade marks practice - Register maintenance | https://www.gov.uk/guidance/trade-marks-manual/register-maintenance | 2026-04-01 | Ch07 | 확정 |
 | non-use revocation | Revocation (non-use) proceedings | https://www.gov.uk/government/publications/trade-marks-revocation/revocation-non-use-proceedings | 2026-04-01 | Ch08 | 확정 |
 | 라이선스 / 기록 | Using somebody else's intellectual property: Trade marks | https://www.gov.uk/using-somebody-elses-intellectual-property/trade-marks | 2026-04-01 | Ch09 | 확정 |
@@ -44,6 +45,7 @@
 | ukipo-objecting | Objecting to other peoples trade marks | https://www.gov.uk/objecting-to-other-peoples-trade-marks |
 | ukipo-notice-to-oppose | Give notice of intention to oppose | https://www.gov.uk/notice-to-oppose-trademark |
 | ukipo-fast-track-opposition | Fast track opposition | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition |
+| ukipo-apply | Apply to register a trade mark | https://www.gov.uk/how-to-register-a-trade-mark/start-your-application |
 | ukipo-renew | Renew your trade mark | https://www.gov.uk/renew-your-trade-mark |
 | ukipo-revocation-nonuse | Revocation (non-use) proceedings | https://www.gov.uk/government/publications/trade-marks-revocation/revocation-non-use-proceedings |
 | ukipo-ipec-small-claims | IPEC — guide to small claims | https://www.gov.uk/government/publications/intellectual-property-enterprise-court-a-guide-to-small-claims |
@@ -63,4 +65,4 @@
 
 ---
 
-> Standard QA verified on 2026-05-12. 24개 entry 모두 T1(영국 1차) 또는 T2(국제 1차) 충족, `uk_tm_research_report.md` Source Reliability Tier 구분을 따른다.
+> Standard QA verified on 2026-05-12. 2026-07-22 UKIPO fee refresh에서 출원 수수료 entry를 추가하고 갱신 entry를 재확인했다. 모든 entry는 T1(영국 1차) 또는 T2(국제 1차) 기준을 충족하며, `uk_tm_research_report.md` Source Reliability Tier 구분을 따른다.
