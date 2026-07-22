@@ -185,13 +185,13 @@ describe("portfolio health helpers", () => {
     const china = report.products.find((product) => product.slug === "china");
 
     expect(china).toBeDefined();
-    // registry에 factsReviewedOn이 없으므로 unrecorded이고, verdict는 영향받지 않는다.
+    // registry의 재대조 기준일을 기록하되, future-dated test clock에서는 freshness를 0일로 clamp하고 verdict는 영향받지 않는다.
     expect(china?.factReview).toMatchObject({
       track: "fact-review",
       gating: false,
-      status: "unrecorded",
-      reviewedOn: null,
-      freshnessDays: null
+      status: "recorded",
+      reviewedOn: "2026-07-21T00:00:00.000Z",
+      freshnessDays: 0
     });
     expect(china?.verdict).toBe("hold");
 

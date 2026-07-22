@@ -2,6 +2,8 @@
 
 검수 기준일: 2026-05-12
 
+> 이 문서는 2026-05-12 승급 라운드의 dated verdict다. 수수료 현행값은 2026-07-22 GOV.UK 재대조 후 출원 £205, 갱신 £245, 추가 클래스당 £60으로 갱신되었으며 `uk_tm_fact_verification_log.md`와 `claim-map.json`을 현행 정본으로 본다.
+
 ## 전체 총평
 
 - 대상 문서: `UKTm/content/source/master.md`

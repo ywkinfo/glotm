@@ -1033,7 +1033,7 @@ MARCia 결과만으로 "문제없다"고 결론 내리지 않는다. MARCia 검�
 | opposition | 공고 후 1개월 | 경로와 무관하게 멕시코 단계에서 놓치면 늦음 |
 | declaration of use | 2018-08-10 이후 등록은 grant 후 3년+3개월 | 로컬 등록 후 운영 캘린더 핵심 |
 | renewal | 10년 구조 | 갱신 달력과 사용관리 연결 |
-| filing / renewal / declaration 절차 분리 | `IMPI88`, `IMPI3170`, `IMPI-00-002` 메모 | 비용 승인과 owner 구분에 필요 |
+| filing / renewal / declaration 절차 분리 | `IMPI88`(출원), `IMPI3170`(갱신), `IMPI-00-014`(3년차 실사용 선언) 메모 | 비용 승인과 owner 구분에 필요 |
 
 이 handoff 표를 남기면 제7장과 부록의 캘린더/체크리스트가 경로 선택 직후부터 바로 채워진다.
 
@@ -1044,7 +1044,7 @@ MARCia 결과만으로 "문제없다"고 결론 내리지 않는다. MARCia 검�
 | 시점 | 바로 잠글 것 | 이유 |
 | --- | --- | --- |
 | D+1 | direct / Madrid / mixed 결론 한 줄 | 제5장 packet 재오픈 방지 |
-| D+3 | `IMPI88`, `IMPI3170`, `IMPI-00-002` owner 메모 | filing / renewal / declaration 절차 분리 |
+| D+3 | `IMPI88`, `IMPI3170`, `IMPI-00-014` owner 메모 | filing / renewal / declaration 절차 분리 |
 | D+5 | `SIGA/Gaceta`와 등록 후 캘린더 owner 지정 | opposition, declaration, renewal 누락 방지 |
 | D+7 | 외부대리인 handoff 문장 확정 | local-fit과 central-management 충돌 정리 |
 
@@ -1074,7 +1074,7 @@ mixed route를 택한 팀이 자주 흔들리는 이유는 경로를 둘로 나�
 
 ##### route memo minimum fields
 
-경로 선택 메모에는 최소한 `IMPI88`/`IMPI3170`/`IMPI-00-002` 중 어떤 절차가 당장 열리는지, 그리고 누가 그 owner인지 한 줄씩 남기는 편이 좋다. 그래야 경로 선택이 끝난 뒤 제5장과 제7장에서 같은 질문을 다시 하지 않는다.
+경로 선택 메모에는 최소한 `IMPI88`(출원)/`IMPI3170`(갱신)/`IMPI-00-014`(3년차 실사용 선언) 중 어떤 절차가 당장 열리는지, 그리고 누가 그 owner인지 한 줄씩 남기는 편이 좋다. 그래야 경로 선택이 끝난 뒤 제5장과 제7장에서 같은 질문을 다시 하지 않는다.
 
 ##### next-action 한 줄 요약
 
@@ -1517,7 +1517,7 @@ PASE는 IMPI의 전자서비스 포털이고, 실제 상표 전자출원은 그 
 | `MARCia` / `MARCANET` | 제출 전후 표장 확인 메모 | search snapshot, 유사표장 note | 제3장·제6장 |
 | `SIGA/Gaceta` | 공보·통지 모니터링 owner | 첫 확인일, 보고 루틴 | 제7장 유지관리 |
 
-비용도 이 단계에서 같이 잠가야 한다. `MX-FEE-001`에서 고정한 범위대로 보면, filing은 `IMPI88`, renewal은 `IMPI3170`, declaration of use는 `IMPI-00-002`와 관련 payment 구조로 분리된다. 따라서 제출 직전 승인표에는 "이번 filing 비용"과 "등록 후 일정에서 다시 열릴 비용"을 분리해서 적는 편이 안전하다.
+비용도 이 단계에서 같이 잠가야 한다. `MX-FEE-001`에서 고정한 범위대로 보면, filing은 `IMPI88`, renewal은 `IMPI3170`(갱신 서식 `IMPI-00-002`), 등록 후 3년차 declaration of use는 `IMPI-00-014`와 관련 payment 구조로 분리된다. 따라서 제출 직전 승인표에는 "이번 filing 비용"과 "등록 후 일정에서 다시 열릴 비용"을 분리해서 적는 편이 안전하다.
 
 ##### filing packet handoff scorecard
 
@@ -1849,7 +1849,7 @@ PASE는 IMPI의 전자서비스 포털이고, 실제 상표 전자출원은 그 
 
 이 카드가 있으면 현지법인, 본사 IP팀, 외부 대리인이 같은 사실관계를 보고 움직일 수 있다. 멕시코에서는 “증거가 있는가”보다 “누가 어떤 goods/services에 대해 무엇을 설명할 수 있는가”가 더 중요할 때가 많다.
 
-공식 운영 구조도 함께 기억해 둘 필요가 있다. 2026-04-01 기준 사실 검증 로그에서 잠근 내용에 따르면, 갱신은 `IMPI3170` 절차를 기준으로 열리고 declaration of use는 `IMPI-00-002` 및 관련 payment 구조로 별도 점검된다. 그래서 실무 캘린더에는 "만료일"만이 아니라 "갱신 패킷 점검일, declaration 범위 확정일, 결제 처리일"을 따로 적는 편이 더 안전하다.
+공식 운영 구조도 함께 기억해 둘 필요가 있다. 2026-07-21 기준 사실 검증 로그에서 잠근 내용에 따르면, 갱신은 `IMPI3170` 절차(갱신 서식 `IMPI-00-002`)를 기준으로 열리고, 등록 후 3년차 declaration of use는 `IMPI-00-014` 서식 및 관련 payment 구조로 별도 점검된다. 그래서 실무 캘린더에는 "만료일"만이 아니라 "갱신 패킷 점검일, declaration 범위 확정일, 결제 처리일"을 따로 적는 편이 더 안전하다.
 
 ##### declaration/renewal handoff memo
 
@@ -1858,7 +1858,7 @@ PASE는 IMPI의 전자서비스 포털이고, 실제 상표 전자출원은 그 
 | 절차 | 공식 문법 | 이 장에서 잠글 것 | 늦어질 때 바로 보이는 리스크 |
 |---|---|---|---|
 | filing | `IMPI88` | 누가 원출원 데이터를 보유하는가 | declaration 시 goods/services 근거가 비어 있음 |
-| declaration of use | `IMPI-00-002` 및 관련 payment | 실제 사용 goods/services, actual user, 최근 증거 위치 | 3년차 window 누락, 과장 declaration |
+| declaration of use(3년차 실사용 선언) | `IMPI-00-014` 및 관련 payment | 실제 사용 goods/services, actual user, 최근 증거 위치 | 3년차 window 누락, 과장 declaration |
 | renewal | `IMPI3170` + declaration packet 점검 | 만료일, 내부 결재일, 정보변경 반영 여부 | 만료 후 유예 의존, 명의·주소 오류 |
 
 실무적으로는 declaration과 renewal을 같은 캘린더에 두되, owner는 분리해서 적는 편이 더 안전하다. 예를 들어 IP팀이 기한 owner이고, 현지법인이 증거 owner이며, 외부 대리인이 제출 owner인 구조를 먼저 써 두면 "누가 마지막에 챙기겠지" 상태를 줄일 수 있다.
@@ -2026,6 +2026,7 @@ PASE는 IMPI의 전자서비스 포털이고, 실제 상표 전자출원은 그 
 - [IMPI, 사용 선언 안내 보도자료](https://www.gob.mx/impi/prensa/el-impi-facilita-la-presentacion-de-la-declaracion-de-uso-de-marcas-avisos-y-nombres-comerciales-por-medio-de-sus-servicios-electronicos-279218?idiom=es)
 - [IMPI, 상표 FAQ](https://www.gob.mx/impi/acciones-y-programas/temas-de-interes-preguntas-frecuentes-marcas)
 - [IMPI 공식 양식 IMPI-00-002: 갱신 및 사용 선언](https://www.gob.mx/cms/uploads/attachment/file/490258/IMPI-00-002_E.pdf)
+- [IMPI 공식 양식 목록: IMPI-00-014 실사용 선언(등록 후 3년차) 서식 포함](https://www.gob.mx/impi/acciones-y-programas/servicios-que-ofrece-el-impi-formatos)
 - [IMPI 공식 양식 목록](https://www.gob.mx/impi/acciones-y-programas/servicios-que-ofrece-el-impi-formatos)
 
 ## 제8장 변경·양도·라이선스·프랜차이즈: 거래 구조별 체크포인트
@@ -3642,7 +3643,7 @@ RACI의 목적은 회의자료를 예쁘게 만드는 것이 아니라, 누락 �
 
 #### filing / declaration / renewal 절차 분리 메모
 
-`MX-FEE-001`이 이 장에서 중요하게 남기는 메시지는 비용 숫자보다 절차가 분리되어 있다는 사실이다. 사례 회수 문서에도 direct filing은 `IMPI88`, renewal은 `IMPI3170`, declaration of use는 `IMPI-00-002` 메모를 따로 두는 편이 좋다. 그래야 분쟁 대응 와중에도 어떤 owner가 어떤 제출과 비용 승인을 맡는지 흐려지지 않는다.
+`MX-FEE-001`이 이 장에서 중요하게 남기는 메시지는 비용 숫자보다 절차가 분리되어 있다는 사실이다. 사례 회수 문서에도 direct filing은 `IMPI88`, renewal은 `IMPI3170`, 등록 후 3년차 declaration of use는 `IMPI-00-014` 메모를 따로 두는 편이 좋다. 그래야 분쟁 대응 와중에도 어떤 owner가 어떤 제출과 비용 승인을 맡는지 흐려지지 않는다.
 
 | 절차 | 사례 회수 문서에 남길 것 |
 | --- | --- |
@@ -3798,7 +3799,7 @@ buyer가 사례 장에서 바로 다음 액션을 정하려면, 집행 owner가 
 |---|---|---|---|---|
 | [ ] 3년 사용선언 캘린더 | 2018년 8월 10일 이후 등록 건은 등록부여일 기준 3년 경과 후 3개월 내 관리 | IP담당 | 등록 즉시 일정등록 | 사용 중인 상품·서비스만 특정 |
 | [ ] 증빙팩 준비 | 인보이스, 수입통관, 라벨, 카탈로그, 웹캡처, 광고비 집행자료 수집 | 영업, 마케팅, 물류 | 평시 누적 | 사후 급조 금지 |
-| [ ] 갱신 일정 관리 | 10년 만료일, 사전 준비, `IMPI3170` 기준 갱신 packet 점검, 필요한 경우 `IMPI-00-002` 사용선언 packet 병행 여부 확인 | IP담당, 현지 대리인 | 만료 12개월 전 | 구제도 등록은 갱신과 함께 사용선언 확인 필요 |
+| [ ] 갱신 일정 관리 | 10년 만료일, 사전 준비, `IMPI3170` 기준 갱신 packet 점검, 필요한 경우 `IMPI-00-002`(갱신+실사용 선언 서식) packet 병행 여부 확인 | IP담당, 현지 대리인 | 만료 12개월 전 | 구제도 등록은 갱신과 함께 사용선언 확인 필요 |
 | [ ] owner-user linkage 검토 | 권리자와 실제 사용주체가 다르면 라이선스·유통 문서와 evidence index card를 같이 보관 | 법무, 현지법인, IP담당 | 등록 직후, 이후 연 1회 | Ch7 declaration/renewal memo와 연결 |
 
 ##### 1-7. 양도·라이선스·프랜차이즈 기록 체크리스트

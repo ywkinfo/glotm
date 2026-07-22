@@ -72,7 +72,7 @@ uk_tm_accuracy_completeness_review.md  →  refresh 회기별 verdict (검수 �
 
 | 항목 | 변동성 | 다음 검증 시점 | 위험 완화 방식 |
 | --- | --- | --- | --- |
-| UKIPO 수수료(갱신 £200 + class £50, revocation TM26(N) £200) | 중 — 정부 조정 발표 시 변경 가능 | content refresh 시마다 fact log P2 항목 재대조 | 본문에 정확한 금액과 함께 "공개일 기준" 표기, source URL 재확인 후 status: 확정 유지 |
+| UKIPO 수수료(2026-04-01 기준 온라인 출원 £205, 갱신 £245, 추가 클래스당 £60) | 중 — 정부 조정 발표 시 변경 가능 | content refresh 시마다 fact log P2 항목 재대조 | 본문에 정확한 금액과 함께 기준일 표기, GOV.UK 출원·갱신 URL 재확인 후 status: 확정 유지 |
 | post-Brexit comparable mark / IR 분기 | 저 — 2021-01-01 이후 안정화됐으나 향후 정책 변경 가능 | 분기별 fact log 재대조 | Ch01·Ch03·Ch07·Appendix E에 일관 서술, EU 외 사용 증거 자동 인정 여부 갱신 시 즉시 반영 |
 | HMRC AFA 운영(working day 기준, detention 후 비용) | 중 — HMRC guidance 업데이트 빈도 있음 | content refresh 시 source register Ch12 entry 재확인 | "무료 신청 vs 후속 비용 리스크" 분리 서술 유지, AFA 신청 양식 변경 모니터링 |
 | Tribunal / IPEC 비용 cap(multi-track £500k damages, £60k recoverable costs) | 저 — 법령 개정 시점에만 변동 | 연 1회 또는 cost rule 변경 보도 시 | 변경 보도 입수 시 fact log에 추가검증 필요로 표시, source register 갱신 후 본문 반영 |

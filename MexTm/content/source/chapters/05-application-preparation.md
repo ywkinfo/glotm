@@ -258,7 +258,7 @@ PASE는 IMPI의 전자서비스 포털이고, 실제 상표 전자출원은 그 
 | `MARCia` / `MARCANET` | 제출 전후 표장 확인 메모 | search snapshot, 유사표장 note | 제3장·제6장 |
 | `SIGA/Gaceta` | 공보·통지 모니터링 owner | 첫 확인일, 보고 루틴 | 제7장 유지관리 |
 
-비용도 이 단계에서 같이 잠가야 한다. `MX-FEE-001`에서 고정한 범위대로 보면, filing은 `IMPI88`, renewal은 `IMPI3170`, declaration of use는 `IMPI-00-002`와 관련 payment 구조로 분리된다. 따라서 제출 직전 승인표에는 "이번 filing 비용"과 "등록 후 일정에서 다시 열릴 비용"을 분리해서 적는 편이 안전하다.
+비용도 이 단계에서 같이 잠가야 한다. `MX-FEE-001`에서 고정한 범위대로 보면, filing은 `IMPI88`, renewal은 `IMPI3170`(갱신 서식 `IMPI-00-002`), 등록 후 3년차 declaration of use는 `IMPI-00-014`와 관련 payment 구조로 분리된다. 따라서 제출 직전 승인표에는 "이번 filing 비용"과 "등록 후 일정에서 다시 열릴 비용"을 분리해서 적는 편이 안전하다.
 
 #### filing packet handoff scorecard
 

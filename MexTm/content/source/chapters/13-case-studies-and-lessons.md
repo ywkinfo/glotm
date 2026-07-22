@@ -218,7 +218,7 @@
 
 ### filing / declaration / renewal 절차 분리 메모
 
-`MX-FEE-001`이 이 장에서 중요하게 남기는 메시지는 비용 숫자보다 절차가 분리되어 있다는 사실이다. 사례 회수 문서에도 direct filing은 `IMPI88`, renewal은 `IMPI3170`, declaration of use는 `IMPI-00-002` 메모를 따로 두는 편이 좋다. 그래야 분쟁 대응 와중에도 어떤 owner가 어떤 제출과 비용 승인을 맡는지 흐려지지 않는다.
+`MX-FEE-001`이 이 장에서 중요하게 남기는 메시지는 비용 숫자보다 절차가 분리되어 있다는 사실이다. 사례 회수 문서에도 direct filing은 `IMPI88`, renewal은 `IMPI3170`, 등록 후 3년차 declaration of use는 `IMPI-00-014` 메모를 따로 두는 편이 좋다. 그래야 분쟁 대응 와중에도 어떤 owner가 어떤 제출과 비용 승인을 맡는지 흐려지지 않는다.
 
 | 절차 | 사례 회수 문서에 남길 것 |
 | --- | --- |

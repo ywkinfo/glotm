@@ -112,7 +112,9 @@ describe("health report CLI", () => {
     const markdown = buildCliOutput([], {});
 
     expect(markdown).toContain("## Fact-Review (advisory, non-gating)");
-    expect(markdown).toContain("| china | unrecorded | — | unrecorded | non-gating |");
+    expect(markdown).toContain("| china | recorded | 2026-07-21 | 0d | non-gating |");
+    expect(markdown).toContain("| mexico | recorded | 2026-07-21 | 0d | non-gating |");
+    expect(markdown).toContain("| uk | recorded | 2026-07-22 | 0d | non-gating |");
 
     const json = JSON.parse(buildCliOutput(["--format", "json"], {}));
     const china = json.products.find((product: { slug: string }) => product.slug === "china");
@@ -120,7 +122,9 @@ describe("health report CLI", () => {
     expect(china.factReview).toMatchObject({
       track: "fact-review",
       gating: false,
-      status: "unrecorded"
+      status: "recorded",
+      reviewedOn: "2026-07-21T00:00:00.000Z",
+      freshnessDays: 0
     });
   });
 
@@ -143,8 +147,8 @@ describe("health report CLI", () => {
     expect(output).toContain("| usa | growth | mature | mature | hold | root content full pipeline |");
     expect(output).toContain("## Research Coverage");
     expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| china | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
-    expect(output).toContain("| mexico | advisory | 100 | 100 | 9d | 0 | 0 | pass |");
+    expect(output).toContain("| china | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
+    expect(output).toContain("| mexico | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
     expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 0 | 0 | pass |");
   });
 });
