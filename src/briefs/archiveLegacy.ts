@@ -20,6 +20,18 @@ export type BriefItem = {
   relatedGuideLinks: BriefGuideLink[];
 };
 
+// 브리프는 발행일 시점의 사실을 적는 surface라 본문을 소급 수정하지 않는다. 대신 이후 이슈가
+// 그 사실을 정정하면 supersededBy로 앞 이슈에서 뒤 이슈로 가는 포인터를 남긴다. 검색으로 옛 이슈에
+// 도착한 독자가 정정된 사실에 닿을 수 있어야 하기 때문이다. 가이드 본문의 forward-dated note와 같은 역할이다.
+export type BriefCorrection = {
+  // 정정된 사실을 담고 있는 이후 이슈의 slug
+  slug: string;
+  // 이 포인터를 기록한 날짜
+  updatedAt: string;
+  // 무엇이 바뀌었는지 한 문단으로. 옛 이슈 상단에 그대로 노출된다
+  note: string;
+};
+
 export type BriefIssue = {
   slug: string;
   title: string;
@@ -29,6 +41,7 @@ export type BriefIssue = {
   jurisdictions: string[];
   bodyParagraphs?: string[];
   items: BriefItem[];
+  supersededBy?: BriefCorrection;
 };
 
 function buildGuideSectionPath(
@@ -199,6 +212,11 @@ const briefIssueSource: BriefIssue[] = [
       "중국 상표법 개정안은 2025년 12월 22일 전국인대 상무위에서 1차 심의되었고, 2026년 6월 9일 현재 아직 공포·시행 전입니다. 다만 초안에는 이의기간 단축, 저명상표 보호 확대, 악의적 출원 규제 강화, 불사용 상표 정리 강화 방향이 담겨 있습니다. 중국에서 K-브랜드 무단선점이 계속 늘어나는 상황에서, 한국 기업은 개정 시행 전에 모니터링, 이의신청 판단, 저명성 자료, 사용증거, 불사용 취소 후보를 미리 정리해 둘 필요가 있습니다.",
     cadenceLabel: "주간 브리프",
     publishedAt: "2026-06-09T09:00:00.000Z",
+    supersededBy: {
+      slug: "2026-07-china-trademark-overhaul-2027-countdown",
+      updatedAt: "2026-07-27T00:00:00.000Z",
+      note: "이 이슈는 개정 상표법의 공포일·시행일이 확인되지 않았던 2026년 6월 9일 시점을 기준으로 작성됐습니다. 이후 개정 상표법은 2026년 6월 26일 국가주석령 제77호로 공포되고 2027년 1월 1일 시행이 확정됐습니다. 확정된 내용과 시행 전 점검 항목은 2026년 7월 11일 이슈에서 다룹니다."
+    },
     jurisdictions: ["China", "Trademark Law", "Bad-Faith Filing", "Opposition", "Well-Known Mark"],
     bodyParagraphs: [
       "이번 이슈의 핵심은 중국이 상표법을 바꾼다는 소식 자체가 아닙니다. 더 중요한 점은 한국 브랜드가 중국에서 상표 선점에 대응할 때 쓰는 실무 도구가 달라질 수 있다는 점입니다. 이의신청 기간, 저명상표 입증, 사용증거, 불사용 취소 전략이 모두 영향을 받을 수 있습니다.",

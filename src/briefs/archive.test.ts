@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 
-import { briefIssues, getBriefIssueBySlug, getLatestBriefIssue } from "./archive";
+import { liveShellProducts } from "../products/registry";
+import { buildProductPath } from "../products/shared";
+import {
+  briefIssues,
+  getBriefIssueBySlug,
+  getBriefLastModified,
+  getLatestBriefIssue,
+  resolveBriefCorrection
+} from "./archive";
 
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
@@ -36,6 +44,7 @@ describe("brief archive", () => {
 
 describe("brief lane contract", () => {
   const allowedCadenceLabels = new Set(["주간 브리프", "월간 브리프"]);
+  const liveGuidePaths = liveShellProducts.map((product) => buildProductPath(product));
 
   it("keeps slugs unique and date-prefixed to the publish month", () => {
     const seenSlugs = new Set<string>();
@@ -77,9 +86,66 @@ describe("brief lane contract", () => {
         for (const link of item.relatedGuideLinks) {
           expect(link.label.trim().length).toBeGreaterThan(0);
           expect(link.href.startsWith("/")).toBe(true);
+
+          // briefs-lane.md가 "live guide 경로로만 연결한다"고 잠근 규칙을 실제로 강제한다.
+          // 가이드 홈과 챕터·섹션 deep link를 모두 허용하되, 등록되지 않은 경로는 막는다.
+          const matchesLiveGuide = liveGuidePaths.some(
+            (guidePath) => link.href === guidePath || link.href.startsWith(`${guidePath}/`)
+          );
+          expect(matchesLiveGuide, `${issue.slug} → ${link.href}`).toBe(true);
         }
       }
     }
+  });
+
+  it("points every superseded issue forward to a later issue that carries the correction", () => {
+    for (const issue of briefIssues) {
+      if (!issue.supersededBy) {
+        continue;
+      }
+
+      const { slug, updatedAt, note } = issue.supersededBy;
+
+      expect(slug, `${issue.slug} cannot supersede itself`).not.toBe(issue.slug);
+      expect(note.trim().length).toBeGreaterThan(0);
+
+      expect(Number.isNaN(new Date(updatedAt).getTime())).toBe(false);
+      expect(new Date(updatedAt).getTime()).toBeLessThanOrEqual(Date.now());
+
+      // 정정본은 아카이브에 실재해야 하고, 정정하는 쪽이 정정당하는 쪽보다 나중에 나와야 한다.
+      const replacement = getBriefIssueBySlug(slug);
+      expect(replacement, `${issue.slug} → missing ${slug}`).toBeDefined();
+      expect(new Date(replacement!.publishedAt).getTime()).toBeGreaterThan(
+        new Date(issue.publishedAt).getTime()
+      );
+
+      // 렌더 경로가 실제로 정정본을 풀어내는지까지 확인한다(UI/prerender가 같은 헬퍼를 쓴다).
+      expect(resolveBriefCorrection(issue)?.replacement.slug).toBe(slug);
+      expect(getBriefLastModified(issue)).toBe(updatedAt);
+    }
+  });
+
+  it("reports publishedAt as the last-modified date for issues with no correction", () => {
+    for (const issue of briefIssues) {
+      if (issue.supersededBy) {
+        continue;
+      }
+
+      expect(resolveBriefCorrection(issue)).toBeUndefined();
+      expect(getBriefLastModified(issue)).toBe(issue.publishedAt);
+    }
+  });
+
+  it("keeps the 2026-06 China issue pointing at its 2026-07 correction", () => {
+    const supersededIssue = getBriefIssueBySlug(
+      "2026-06-china-trademark-amendment-squatting-readiness"
+    );
+
+    expect(supersededIssue?.supersededBy?.slug).toBe(
+      "2026-07-china-trademark-overhaul-2027-countdown"
+    );
+    // 개정 상표법 공포·시행 확정 사실이 정정 문구에 남아 있어야 한다.
+    expect(supersededIssue?.supersededBy?.note).toContain("2027년 1월 1일");
   });
 
   it("keeps the archive sorted newest-first with unique publish dates", () => {

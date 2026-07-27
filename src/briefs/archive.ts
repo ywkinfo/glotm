@@ -3,7 +3,7 @@ import { buildRuntimeDocumentTitle } from "../products/shared";
 import { briefIssues as legacyBriefIssues } from "./archiveLegacy";
 import type { BriefIssue } from "./archiveLegacy";
 
-export type { BriefGuideLink, BriefIssue, BriefItem } from "./archiveLegacy";
+export type { BriefCorrection, BriefGuideLink, BriefIssue, BriefItem } from "./archiveLegacy";
 
 const latestBriefIssue: BriefIssue = {
   slug: "2026-07-uk-influencer-counterfeit-damages-formula",
@@ -70,6 +70,27 @@ export function getBriefIssueBySlug(issueSlug: string) {
 
 export function getLatestBriefIssue() {
   return briefIssues[0];
+}
+
+// supersededBy를 렌더 가능한 형태로 푼다. 가리키는 이슈가 아카이브에 없으면 깨진 링크를 그리는 대신
+// undefined를 돌려주고, 구조 위반 자체는 archive.test.ts의 lane contract가 잡는다.
+export function resolveBriefCorrection(issue: BriefIssue) {
+  if (!issue.supersededBy) {
+    return undefined;
+  }
+
+  const replacement = getBriefIssueBySlug(issue.supersededBy.slug);
+
+  if (!replacement) {
+    return undefined;
+  }
+
+  return { ...issue.supersededBy, replacement };
+}
+
+// 브리프의 마지막 갱신 시점. 정정 포인터가 붙은 이슈는 그 기록일이 곧 마지막 갱신일이다.
+export function getBriefLastModified(issue: BriefIssue) {
+  return issue.supersededBy?.updatedAt ?? issue.publishedAt;
 }
 
 export function formatBriefDate(publishedAt: string) {

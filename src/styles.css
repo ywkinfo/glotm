@@ -399,6 +399,39 @@ body.reader-mobile-nav-open {
   line-height: 1.58;
 }
 
+/* 이후 이슈에서 정정된 브리프의 상단 고지. 본문을 소급 수정하지 않는 대신 정정본으로 넘긴다. */
+.brief-correction {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(180, 95, 47, 0.28);
+  border-radius: 12px;
+  background: rgba(180, 95, 47, 0.07);
+}
+
+.brief-correction-label {
+  margin: 0;
+  color: var(--warm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brief-correction-copy {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.62;
+}
+
+/* 좁은 화면에서 한글 CTA가 어절 중간에서 끊기지 않게 한다. */
+.brief-correction .product-card-link {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 .brief-card-list {
   margin: 0;
   padding-left: 1.15rem;
