@@ -7,7 +7,8 @@ import {
   buildBriefIssuePath,
   formatBriefDate,
   getBriefIssueBySlug,
-  getLatestBriefIssue
+  getLatestBriefIssue,
+  resolveBriefCorrection
 } from "../briefs/archive";
 import { buildProductPath, setRuntimeDocumentTitle } from "../products/shared";
 import {
@@ -86,6 +87,7 @@ export function BriefArchivePage() {
 export function BriefIssuePage() {
   const params = useParams<{ issueSlug: string }>();
   const issue = params.issueSlug ? getBriefIssueBySlug(params.issueSlug) : undefined;
+  const correction = issue ? resolveBriefCorrection(issue) : undefined;
 
   useEffect(() => {
     if (!issue) {
@@ -107,6 +109,24 @@ export function BriefIssuePage() {
           <span>/</span>
           <FullDocumentLink to={buildBriefArchivePath()}>Hot Global TM Brief</FullDocumentLink>
         </div>
+        {correction ? (
+          <aside className="brief-correction" aria-label="이후 이슈에서 정정된 내용">
+            <p className="brief-correction-label">이후 이슈에서 정정됨</p>
+            <p className="brief-correction-copy">{correction.note}</p>
+            <FullDocumentLink
+              className="product-card-link"
+              to={buildBriefIssuePath(correction.replacement.slug)}
+              onClick={() => {
+                trackEngagement("brief_issue_open", {
+                  issue_slug: correction.replacement.slug,
+                  surface: "correction_notice"
+                });
+              }}
+            >
+              {formatBriefDate(correction.replacement.publishedAt)} 이슈에서 확인하기
+            </FullDocumentLink>
+          </aside>
+        ) : null}
         <div className="brief-issue-header">
           <p className="gateway-kicker">Issue</p>
           <p className="brief-card-date">{formatBriefDate(issue.publishedAt)}</p>

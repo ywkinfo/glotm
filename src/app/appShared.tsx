@@ -330,6 +330,9 @@ export function BriefIssueCard({ issue, isLatest, surface }: BriefIssueCardProps
       <div className="brief-card-topline">
         <p className="gateway-kicker">{isLatest ? "Latest Brief" : "Brief"}</p>
         <span className="status-pill status-pill--neutral">{issue.cadenceLabel}</span>
+        {issue.supersededBy ? (
+          <span className="status-pill status-pill--beta">이후 이슈에서 정정됨</span>
+        ) : null}
       </div>
       <p className="brief-card-date">{formatBriefDate(issue.publishedAt)}</p>
       <h3 className="brief-card-title">{issue.title}</h3>

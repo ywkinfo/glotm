@@ -7,6 +7,8 @@ import {
   buildBriefDocumentTitle,
   buildBriefIssuePath,
   formatBriefDate,
+  getBriefLastModified,
+  resolveBriefCorrection,
   type BriefIssue
 } from "../src/briefs/archive";
 import {
@@ -451,6 +453,17 @@ function renderBriefArchiveBody(basePath: string) {
 }
 
 function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
+  const correction = resolveBriefCorrection(issue);
+  // 정정 고지는 본문보다 먼저 나와야 한다. prerender HTML만 읽는 크롤러와 첫 페인트 독자가
+  // 정정 사실을 지난 이슈 본문보다 먼저 만나야 하기 때문이다.
+  const correctionNotice = correction
+    ? `
+        <section>
+          <p><strong>이후 이슈에서 정정됨:</strong> ${escapeHtml(correction.note)}</p>
+          <p><a href="${escapeHtml(buildPublicHref(buildBriefIssuePath(correction.replacement.slug), basePath))}">${escapeHtml(formatBriefDate(correction.replacement.publishedAt))} 이슈에서 확인하기</a></p>
+        </section>
+      `
+    : "";
   const bodyParagraphs = issue.bodyParagraphs?.length
     ? `
         <section>
@@ -495,6 +508,7 @@ function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
           <p>${escapeHtml(issue.summary)}</p>
           <p>관할: ${escapeHtml(issue.jurisdictions.join(" · "))}</p>
         </header>
+        ${correctionNotice}
         ${bodyParagraphs}
         ${issueSections}
       </article>
@@ -678,7 +692,7 @@ export function buildStaticPageDefinitions(
     ...Array.from(documentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
     ...Array.from(reportDocumentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
     ...reports.map((report) => ensureIsoDate(report.updatedAt ?? report.publishedAt)),
-    ...briefIssues.map((issue) => ensureIsoDate(issue.publishedAt))
+    ...briefIssues.map((issue) => ensureIsoDate(getBriefLastModified(issue)))
   ]
     .sort()
     .at(-1) ?? new Date().toISOString();
@@ -754,6 +768,8 @@ export function buildStaticPageDefinitions(
     const issueRoutePath = buildBriefIssuePath(issue.slug);
     const issueUrl = buildCanonicalUrl(issueRoutePath, siteOrigin, basePath);
     const issuePublishedIso = ensureIsoDate(issue.publishedAt);
+    // 정정 포인터가 붙으면 페이지 내용이 실제로 바뀐다. 재크롤 신호가 남도록 lastModified/dateModified를 분리한다.
+    const issueModifiedIso = ensureIsoDate(getBriefLastModified(issue));
     const socialImage = buildDefaultSocialImage(siteOrigin, basePath);
 
     pages.push({
@@ -764,7 +780,7 @@ export function buildStaticPageDefinitions(
       canonicalUrl: issueUrl,
       ...socialImage,
       ogType: "article",
-      lastModified: issuePublishedIso,
+      lastModified: issueModifiedIso,
       publishedTime: issuePublishedIso,
       bodyHtml: renderBriefIssueBody(issue, basePath),
       structuredData: [
@@ -774,7 +790,7 @@ export function buildStaticPageDefinitions(
           url: issueUrl,
           imageUrl: socialImage.ogImageUrl,
           datePublished: issuePublishedIso,
-          dateModified: issuePublishedIso,
+          dateModified: issueModifiedIso,
           siteUrl,
           logoUrl
         }),
