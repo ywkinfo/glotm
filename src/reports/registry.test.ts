@@ -52,7 +52,7 @@ describe("report registry", () => {
     });
     expect(report?.focusPoints.find((focusPoint) => focusPoint.id === "europe-launch-priority")).toMatchObject({
       title: "EuTm: launch wave 기준으로 우선순위를 나눈다",
-      href: "/europe/chapter/제3장-포트폴리오-설계와-우선순위#launch-wave-기준으로-우선순위를-나눈다",
+      href: "/europe/chapter/제3장-포트폴리오-설계와-우선순위#launch-wave--권리단위-우선순위-매트릭스",
       guideSlug: "europe",
       ctaLabel: "EuTm 우선순위 보기"
     });
