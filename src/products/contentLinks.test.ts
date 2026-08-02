@@ -15,7 +15,7 @@ const generatedProducts = liveShellProducts
   );
 
 // Reports는 liveShellProducts에 없고 생성물 경로도 `Reports/generated/<slug>/`로 달라서,
-// 위 가이드 목록만 도는 검사에서 구조적으로 빠져 있었다(2026-07-27 라이브 404 17건의 원인).
+// 위 가이드 목록만 도는 검사에서 구조적으로 빠져 있었다(2026-08-02 라이브 404 17건의 원인).
 // 같은 앵커 규칙을 받도록 별도 목록으로 편입한다.
 const generatedReportSlugs = reports
   .map((report) => report.slug)
@@ -88,7 +88,7 @@ describe("generated content link smoke", () => {
   });
 
   // 리포트 본문의 root-relative 링크는 Pages subpath 배포(`/glotm/`)에서 그대로 404가 된다.
-  // 2026-07-27에 라이브 리포트 4개에서 17건이 확인됐고, 위 가이드 전용 목록이 Reports를 보지 않아
+  // 2026-08-02에 라이브 리포트 4개에서 17건이 확인됐고, 위 가이드 전용 목록이 Reports를 보지 않아
   // 게이트가 전부 green이었다. 같은 규칙을 리포트 생성물에도 적용한다.
   it.each(generatedReportSlugs)("keeps every anchor href absolute for report %s", (reportSlug) => {
     expect(collectNonAbsoluteAnchors(readGeneratedReport(reportSlug))).toEqual([]);
@@ -98,7 +98,7 @@ describe("generated content link smoke", () => {
 // 리포트·브리프가 가이드 챕터로 넘기는 deep link는 registry에 손으로 적힌 문자열이라,
 // 챕터 slug나 heading id가 재생성되며 바뀌어도 아무 게이트가 붉어지지 않았다.
 // 실제로 `#launch-wave-기준으로-우선순위를-나눈다`가 존재하지 않는 앵커를 가리킨 채
-// registry.test.ts가 그 값을 정답으로 고정하고 있었다(2026-07-27 확인).
+// registry.test.ts가 그 값을 정답으로 고정하고 있었다(2026-08-02 확인).
 describe("cross-surface guide deep links resolve", () => {
   const headingIdsByProductAndChapter = new Map<string, Set<string>>();
 

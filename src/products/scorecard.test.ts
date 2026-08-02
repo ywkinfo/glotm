@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { products } from "./registry";
+import { getVerificationFreshnessDays } from "./shared";
 import {
   assessProductLifecycle,
   getLifecycleCriteria,
@@ -84,17 +85,6 @@ describe("portfolio scorecard helpers", () => {
     ).toBe("mature");
   });
 
-  it("requires every registry lifecycle claim to satisfy its scorecard criteria", () => {
-    for (const product of products) {
-      const assessment = assessProductLifecycle(product);
-
-      expect(
-        assessment.meetsCurrentLifecycleStatus,
-        `${product.shortLabel} declares ${product.lifecycleStatus}; density=${assessment.searchDensity.toFixed(2)}`
-      ).toBe(true);
-    }
-  });
-
   it("rejects a mature claim immediately below the density floor", () => {
     const uk = products.find((product) => product.slug === "uk");
 
@@ -120,5 +110,26 @@ describe("portfolio scorecard helpers", () => {
         "mature"
       )
     ).toBe(false);
+  });
+});
+
+// 이 블록은 의도적으로 fake timer 밖에 둔다. 위 describe는 daysAgoIso 픽스처를 위해 시계를 2026-07-20에
+// 고정하는데, registry 전수 가드가 그 안에 있으면 `maximumVerificationFreshnessDays`(mature 120일)가
+// 영원히 고정 경과일로 평가돼 lane freshness 차원만 사실상 검사되지 않는다. 실시계로 돌려야
+// verifiedOn이 실제로 창을 넘어갈 때 test:runtime이 붉어진다.
+describe("registry lifecycle claims against the real clock", () => {
+  it("requires every registry lifecycle claim to satisfy its scorecard criteria", () => {
+    for (const product of products) {
+      const assessment = assessProductLifecycle(product);
+      const criteria = getLifecycleCriteria(product.lifecycleStatus);
+
+      expect(
+        assessment.meetsCurrentLifecycleStatus,
+        `${product.shortLabel} declares ${product.lifecycleStatus}; `
+          + `density=${assessment.searchDensity.toFixed(2)} (min ${criteria.minimumSearchDensity}); `
+          + `verifiedOn=${product.verifiedOn.slice(0, 10)} is `
+          + `${getVerificationFreshnessDays(product)}d old (max ${criteria.maximumVerificationFreshnessDays}d)`
+      ).toBe(true);
+    }
   });
 });

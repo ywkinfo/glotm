@@ -36,70 +36,29 @@ describe("health report CLI", () => {
       status: "pass"
     });
     expect(researchProducts).toEqual(["china", "mexico", "europe", "usa", "japan", "uk"]);
-    expect(report.products.find((product: { slug: string }) => product.slug === "china")).toMatchObject({
-      slug: "china",
-      currentLifecycleStatus: "mature",
-      verification: {
-        mode: "root-full-pipeline",
-        scopeLabel: "root full pipeline",
-        reportSummary: "root content full pipeline"
-      },
-      research: {
-        auditMode: "advisory",
-        factIntegrityScore: 100,
-        consistencyScore: 100,
-        staleHighRiskClaimCount: 0,
-        gate: "pass"
-      }
-    });
-    expect(report.products.find((product: { slug: string }) => product.slug === "mexico")).toMatchObject({
-      slug: "mexico",
-      currentLifecycleStatus: "mature",
-      verification: {
-        mode: "root-full-pipeline",
-        scopeLabel: "root full pipeline",
-        reportSummary: "root content full pipeline"
-      },
-      research: {
-        auditMode: "advisory",
-        factIntegrityScore: 100,
-        consistencyScore: 100,
-        staleHighRiskClaimCount: 0,
-        gate: "pass"
-      }
-    });
-    expect(report.products.find((product: { slug: string }) => product.slug === "europe")).toMatchObject({
-      slug: "europe",
-      currentLifecycleStatus: "mature",
-      verification: {
-        mode: "root-full-pipeline",
-        scopeLabel: "root full pipeline",
-        reportSummary: "root content full pipeline"
-      },
-      research: {
-        auditMode: "advisory",
-        factIntegrityScore: 100,
-        consistencyScore: 100,
-        staleHighRiskClaimCount: 0,
-        gate: "pass"
-      }
-    });
-    expect(report.products.find((product: { slug: string }) => product.slug === "usa")).toMatchObject({
-      slug: "usa",
-      currentLifecycleStatus: "mature",
-      verification: {
-        mode: "root-full-pipeline",
-        scopeLabel: "root full pipeline",
-        reportSummary: "root content full pipeline"
-      },
-      research: {
-        auditMode: "advisory",
-        factIntegrityScore: 100,
-        consistencyScore: 100,
-        staleHighRiskClaimCount: 0,
-        gate: "pass"
-      }
-    });
+    // 워크스페이스별로 손으로 블록을 쓰면 새로 승격된 가이드가 조용히 빠진다.
+    // 실제로 japan·uk는 존재 목록에만 있고 research gate가 한 번도 단정된 적이 없었다.
+    for (const slug of researchProducts) {
+      expect(
+        report.products.find((product: { slug: string }) => product.slug === slug),
+        `${slug} research summary`
+      ).toMatchObject({
+        slug,
+        currentLifecycleStatus: "mature",
+        verification: {
+          mode: "root-full-pipeline",
+          scopeLabel: "root full pipeline",
+          reportSummary: "root content full pipeline"
+        },
+        research: {
+          auditMode: "advisory",
+          factIntegrityScore: 100,
+          consistencyScore: 100,
+          staleHighRiskClaimCount: 0,
+          gate: "pass"
+        }
+      });
+    }
     expect(report.root.find((lane: { id: string }) => lane.id === "content")).toMatchObject({
       verification: {
         fullPipelineProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
@@ -146,9 +105,45 @@ describe("health report CLI", () => {
     expect(output).toContain("verification scope: full pipeline: latam, mexico, usa, japan, china, europe, uk");
     expect(output).toContain("| usa | growth | mature | mature | hold | root content full pipeline |");
     expect(output).toContain("## Research Coverage");
-    expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| china | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| mexico | advisory | 100 | 100 | 0d | 0 | 0 | pass |");
-    expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 0 | 0 | pass |");
+    expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
+    expect(output).toContain("| china | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
+    expect(output).toContain("| mexico | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
+    expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 59d left | 0 | 0 | pass |");
+  });
+});
+
+// 위 describe는 markdown 문자열(`0d`, `1d`)을 단정해야 해서 시계를 2026-06-10에 고정한다.
+// 그 결과 claim freshness가 늘 "방금 검증됨"으로 계산돼, 리포트가 실제 경과일을 반영하는지는
+// 어느 테스트도 확인하지 않았다. 이 블록은 실시계로 돌려 그 계산 경로를 살려 둔다.
+// 게이팅은 하지 않는다 — fact-review는 monthly-review-template.md에서 advisory·non-gating으로 잠긴 트랙이다.
+describe("health report against the real clock", () => {
+  const claimMapSlugs = ["china", "mexico", "europe", "usa", "japan", "uk"];
+
+  it("computes claim freshness from the real date, not a frozen one", () => {
+    const report = JSON.parse(buildCliOutput(["--format", "json"], {}));
+
+    for (const slug of claimMapSlugs) {
+      const product = report.products.find((entry: { slug: string }) => entry.slug === slug);
+
+      expect(product?.research, `${slug} research summary`).toBeDefined();
+      expect(
+        typeof product.research.criticalClaimFreshnessDays,
+        `${slug} criticalClaimFreshnessDays`
+      ).toBe("number");
+      expect(product.research.criticalClaimFreshnessDays).toBeGreaterThanOrEqual(0);
+    }
+
+    // EuTm은 현재 포트폴리오에서 가장 오래된 HIGH claim을 들고 있다. 고정 시계였다면 1d로 보고된다.
+    const europe = report.products.find((entry: { slug: string }) => entry.slug === "europe");
+    expect(europe.research.criticalClaimFreshnessDays).toBeGreaterThan(1);
+  });
+
+  it("reports every claim-map workspace without a schema drop", () => {
+    const report = JSON.parse(buildCliOutput(["--format", "json"], {}));
+    const reported = report.products
+      .filter((entry: { research?: unknown }) => entry.research)
+      .map((entry: { slug: string }) => entry.slug);
+
+    expect(reported).toEqual(claimMapSlugs);
   });
 });
