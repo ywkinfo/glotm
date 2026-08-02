@@ -156,6 +156,6 @@ In re Vetements Group AG (미국)
 
 *관련 GloTm 가이드*
 
-- [ChaTm: 브랜드 구조와 중국어 표기 전략](/china/chapter/제2장-브랜드-구조와-중국어-표기-전략)
-- [JapTm: 일본어 표기와 발음 변형 설계](/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#일본어-표기와-발음-변형-설계)
-- [LatTm: 중남미 상표 보호 운영 가이드](/latam)
+- [ChaTm: 브랜드 구조와 중국어 표기 전략](https://ywkinfo.github.io/glotm/china/chapter/제2장-브랜드-구조와-중국어-표기-전략)
+- [JapTm: 일본어 표기와 발음 변형 설계](https://ywkinfo.github.io/glotm/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#일본어-표기와-발음-변형-설계)
+- [LatTm: 중남미 상표 보호 운영 가이드](https://ywkinfo.github.io/glotm/latam)

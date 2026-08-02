@@ -132,9 +132,9 @@
 
 *관련 GloTm 가이드*
 
-- [ChaTm: 검색·분류·서브클래스 리스크 분석](/china/chapter/제3장-검색-분류-서브클래스-리스크-분석#类似群-x-business-model-매핑표)
-- [ChaTm: 지정상품 설계표](/china/chapter/제5장-출원서-작성-실무와-지정상품-설계#지정상품-설계표)
-- [UsaTm: 출원서 작성 실무와 ID 설계](/usa/chapter/출원서-작성-실무와-id-설계#id-설계-원칙)
-- [JapTm: 지정 범위 설계 결정 보드](/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#지정-범위-설계-결정-보드)
-- [LatTm: 상품·서비스 범위 설계 리스크](/latam/chapter/제02장-pre-filing-상표-포트폴리오-설계#3-2-상품서비스-범위-설계-리스크)
-- [브랜드 표장 현지화 vs. 표준화 프레임워크](/reports/brand-localization-vs-standardization-framework)
+- [ChaTm: 검색·분류·서브클래스 리스크 분석](https://ywkinfo.github.io/glotm/china/chapter/제3장-검색-분류-서브클래스-리스크-분석#类似群-x-business-model-매핑표)
+- [ChaTm: 지정상품 설계표](https://ywkinfo.github.io/glotm/china/chapter/제5장-출원서-작성-실무와-지정상품-설계#지정상품-설계표)
+- [UsaTm: 출원서 작성 실무와 ID 설계](https://ywkinfo.github.io/glotm/usa/chapter/출원서-작성-실무와-id-설계#id-설계-원칙)
+- [JapTm: 지정 범위 설계 결정 보드](https://ywkinfo.github.io/glotm/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#지정-범위-설계-결정-보드)
+- [LatTm: 상품·서비스 범위 설계 리스크](https://ywkinfo.github.io/glotm/latam/chapter/제02장-pre-filing-상표-포트폴리오-설계#3-2-상품서비스-범위-설계-리스크)
+- [브랜드 표장 현지화 vs. 표준화 프레임워크](https://ywkinfo.github.io/glotm/reports/brand-localization-vs-standardization-framework/)

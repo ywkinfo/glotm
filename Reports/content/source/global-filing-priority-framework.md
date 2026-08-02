@@ -44,7 +44,7 @@
 
 #### 4. 경로 선택 여지가 큰가
 
-우선순위 판단의 목적은 곧바로 direct filing과 Madrid 중 하나를 고르는 데 있지 않다. 먼저 "지금 포트폴리오에 넣을 국가와 표장"을 잠근 뒤, 그다음에 [출원 경로 리포트](/reports/global-filing-route-framework)처럼 경로를 비교하는 편이 실수가 적다.
+우선순위 판단의 목적은 곧바로 direct filing과 Madrid 중 하나를 고르는 데 있지 않다. 먼저 "지금 포트폴리오에 넣을 국가와 표장"을 잠근 뒤, 그다음에 [출원 경로 리포트](https://ywkinfo.github.io/glotm/reports/global-filing-route-framework/)처럼 경로를 비교하는 편이 실수가 적다.
 
 #### 5. 유지관리 부담을 감당할 수 있는가
 
@@ -54,7 +54,7 @@
 
 현지 문자 표기는 별도 리포트로 길게 다루는 편이 맞지만, 우선순위 판단 단계에서도 빠질 수 없다. 중국어, 일본어, Arabic 표기는 브랜딩 옵션이 아니라 launch control 문제로 바뀌는 경우가 많기 때문이다.
 
-자세한 설계는 [브랜드 표장 현지화 vs. 표준화 리포트](/reports/brand-localization-vs-standardization-framework)로 넘기되, 우선순위 단계에서는 아래 세 칸만 먼저 정리하면 된다.
+자세한 설계는 [브랜드 표장 현지화 vs. 표준화 리포트](https://ywkinfo.github.io/glotm/reports/brand-localization-vs-standardization-framework/)로 넘기되, 우선순위 단계에서는 아래 세 칸만 먼저 정리하면 된다.
 
 | 상태 | 의미 | 지금 할 일 |
 | --- | --- | --- |
@@ -132,8 +132,8 @@ K-Beauty를 예시로 들면 기본값은 대체로 아래와 비슷하다.
 
 *관련 GloTm 가이드*
 
-- [ChaTm: launch sequencing과 route implication](/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다)
-- [ChaTm: 중국어 표기 우선순위 잠금](/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준)
-- [UsaTm: filing priority와 launch wave](/usa/chapter/브랜드포트폴리오-전략과-권리-범위-설계#launch-wave-체크리스트)
-- [LatTm: 국가 우선순위 매트릭스](/latam/chapter/제01장-중남미-상표-보호-전략-프레임-전체-구조#국가-우선순위-결정-매트릭스)
-- [JapTm: 일본 진출 전형 시나리오](/japan/chapter/서문#일본-진출-전형-시나리오)
+- [ChaTm: launch sequencing과 route implication](https://ywkinfo.github.io/glotm/china/chapter/제4장-출원-경로-선택-직접출원-vs-마드리드#launch-market-우선순위를-먼저-적는다)
+- [ChaTm: 중국어 표기 우선순위 잠금](https://ywkinfo.github.io/glotm/china/chapter/제2장-브랜드-구조와-중국어-표기-전략#표기-후보를-gorevisehold로-자르는-기준)
+- [UsaTm: filing priority와 launch wave](https://ywkinfo.github.io/glotm/usa/chapter/브랜드포트폴리오-전략과-권리-범위-설계#launch-wave-체크리스트)
+- [LatTm: 국가 우선순위 매트릭스](https://ywkinfo.github.io/glotm/latam/chapter/제01장-중남미-상표-보호-전략-프레임-전체-구조#국가-우선순위-결정-매트릭스)
+- [JapTm: 일본 진출 전형 시나리오](https://ywkinfo.github.io/glotm/japan/chapter/서문#일본-진출-전형-시나리오)

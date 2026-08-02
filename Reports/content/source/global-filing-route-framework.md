@@ -127,4 +127,4 @@
 
 *관련 GloTm 가이드*
 
-- [글로벌 사용 증거 수집 운영 시스템 구축](/reports/global-use-evidence-system)
+- [글로벌 사용 증거 수집 운영 시스템 구축](https://ywkinfo.github.io/glotm/reports/global-use-evidence-system/)
