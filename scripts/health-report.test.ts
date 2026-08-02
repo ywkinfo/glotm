@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { buildCliOutput, parseArgs } from "./health-report";
@@ -108,7 +111,7 @@ describe("health report CLI", () => {
     expect(output).toContain("| usa | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
     expect(output).toContain("| china | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
     expect(output).toContain("| mexico | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
-    expect(output).toContain("| europe | advisory | 100 | 100 | 1d | 59d left | 0 | 0 | pass |");
+    expect(output).toContain("| europe | advisory | 100 | 100 | 0d | 60d left | 0 | 0 | pass |");
   });
 });
 
@@ -118,6 +121,14 @@ describe("health report CLI", () => {
 // 게이팅은 하지 않는다 — fact-review는 monthly-review-template.md에서 advisory·non-gating으로 잠긴 트랙이다.
 describe("health report against the real clock", () => {
   const claimMapSlugs = ["china", "mexico", "europe", "usa", "japan", "uk"];
+  const workspaceBySlug: Record<string, string> = {
+    china: "ChaTm",
+    mexico: "MexTm",
+    europe: "EuTm",
+    usa: "UsaTm",
+    japan: "JapTm",
+    uk: "UKTm"
+  };
 
   it("computes claim freshness from the real date, not a frozen one", () => {
     const report = JSON.parse(buildCliOutput(["--format", "json"], {}));
@@ -133,9 +144,32 @@ describe("health report against the real clock", () => {
       expect(product.research.criticalClaimFreshnessDays).toBeGreaterThanOrEqual(0);
     }
 
-    // EuTm은 현재 포트폴리오에서 가장 오래된 HIGH claim을 들고 있다. 고정 시계였다면 1d로 보고된다.
-    const europe = report.products.find((entry: { slug: string }) => entry.slug === "europe");
-    expect(europe.research.criticalClaimFreshnessDays).toBeGreaterThan(1);
+    // 특정 워크스페이스가 가장 오래됐다는 전제는 재검증 라운드마다 깨진다.
+    // 대신 claim-map 원본에서 기대값을 직접 계산해 리포트와 대조한다 — 시계가 고정되면 반드시 어긋난다.
+    for (const slug of claimMapSlugs) {
+      const workspace = workspaceBySlug[slug];
+      const claimMap = JSON.parse(
+        readFileSync(
+          path.resolve(process.cwd(), workspace, "content/research/claim-map.json"),
+          "utf-8"
+        )
+      ) as { claims: { riskLevel: string; lastVerified: string }[] };
+
+      const expectedDays = claimMap.claims
+        .filter((claim) => claim.riskLevel === "HIGH")
+        .reduce((maxDays, claim) => {
+          const elapsed = Math.floor(
+            (Date.now() - new Date(claim.lastVerified).getTime()) / (1000 * 60 * 60 * 24)
+          );
+          return Math.max(maxDays, Math.max(0, elapsed));
+        }, 0);
+
+      const product = report.products.find((entry: { slug: string }) => entry.slug === slug);
+
+      expect(product.research.criticalClaimFreshnessDays, `${slug} freshness vs claim-map`).toBe(
+        expectedDays
+      );
+    }
   });
 
   it("reports every claim-map workspace without a schema drop", () => {

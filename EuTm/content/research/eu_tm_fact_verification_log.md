@@ -9,6 +9,40 @@
 현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
+## 2026-08-02 재검증 라운드 (claim 11건)
+
+claim-map 10건 전부가 mature 60일 창 만료(2026-08-08/09)를 앞두고 있어 1차 출처로 재대조했다. **10건 모두 변경 없음**이며, 본문 정정은 발생하지 않았다. `lastVerified`는 전 항목 `2026-08-02`로 갱신했다.
+
+| claim | 결과 | 결정 근거 |
+|---|---|---|
+| EU-SEL-001 | 유지 | EUTMR 제1조 제2항 unitary character |
+| EU-DL-001 | 유지 | EUTMR 제46조 제1항 — 공고 후 3개월 |
+| EU-EVD-001 | 유지 | EUTMR 제58조 제1항(a) 5년 · 제58조 제2항 부분취소 |
+| EU-RNW-001 | 유지 | EUTMR 제52조·제53조 제3항 · Annex I item 19 (25%, 상한 EUR 1 500) |
+| EU-UK-001 | 유지 | GOV.UK — comparable mark는 "fully independent", 수수료도 IPO/EUIPO 별도 |
+| EU-ENF-001 | 유지 | Reg (EU) 608/2013 · EC Defend your rights (national/Union AFA, IPEP·COPIS) |
+| EU-FEE-001 | 유지 | EUTMR Annex I item 2·12 (각 EUR 850) · GOV.UK TM3 £205 / TM11 £245 / 추가류 £60 (April 2026) |
+| EU-PRIO-001 | 유지 | EUTMR 제34조 제1항 — 첫 출원일부터 6개월, 동일 표장·동일(또는 일부) 상품/서비스 |
+| EU-UKCOMP-001 | 유지 | GOV.UK — 2021-01-01 일회성 자동 생성, 신규 EUTM은 UK 권리 미발생 |
+| EU-AG-001 | 유지 | EUTMR 제7조 제1항(b)(c)(d) · 제7조 제2항 일부 지역 적용 |
+
+### 신설 — EU-UKUSE-001 (교차 가이드 정합)
+
+재검증 중 **본문 공백**을 확인했다. GOV.UK는 comparable UK mark의 5년 look-back 구간 중 2021-01-01 이전 부분에만 EU 사용을 산입하고 그 이후 구간에는 산입하지 않는다고 안내한다. 따라서 **2026-01-01부터는 5년 구간 전체가 2021-01-01 이후에 놓여 EU 사용을 전혀 원용할 수 없다.** `UKTm` 제8장은 2026-07-21 라운드에서 이미 이 사실을 반영했으나, controlled EU+UK scope를 운영하는 `EuTm`에는 빠져 있었다.
+
+- 반영 위치: 제8장 `EU / UK 분기 캘린더` 하위 절 + 부록 Evidence Card
+- 근거: GOV.UK "Where the period includes any time after 1 January 2021, use of the comparable trade mark in the EU (and outside of the UK) within that period will not be taken into account."
+- 성격: 새 규칙이 아니라 **이미 7개월 전 발효된 경과 규정 종료**를 독자에게 알리는 보강이다.
+
+### 감시 항목 (시행 예정 · 본문 미반영)
+
+- **EU Customs Reform**: 2026-03-26 유럽의회·이사회 정치적 합의. EU Customs Authority와 EU Customs Data Hub가 회원국 세관 IT를 단계적으로 대체(전자상거래 2028 → 자율 2031 → 의무 2034). 현재 AFA·IPEP·COPIS 구조에는 변경이 없어 본문에 반영하지 않고, COPIS 계층의 장기 승계 리스크로 2028년경 재확인한다.
+- EUTMR 개정 제안 4건(COM(2022)134·174, COM(2023)222·232) 확인 결과 갱신 기간·수수료 조문과 무관하다.
+
+### 다음 재검증
+
+`lastVerified 2026-08-02` 기준 mature 60일 창은 **2026-10-01** 만료다.
+
 ## Baseline evidence snapshot
 
 - 챕터 기준선: `content/source/manifest.json`에 15개 챕터가 정의돼 있다 (pre-expansion: 14개, historical).
