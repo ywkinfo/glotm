@@ -37,3 +37,15 @@ jobs:
 
       - name: Run health:release
         run: npm run health:release
+
+      # 아래 두 감사는 지금까지 어느 워크플로에도 없어 owner가 손으로 돌릴 때만 결과가 보였다.
+      # check:consistency 는 registry↔문서 drift를 hard/advisory 로 가르고,
+      # audit:facts 는 워크스페이스별 claim 상태(gate=pass/warn/fail)와 staleHighRisk 를 출력한다.
+      # audit:facts 는 스키마·사실무결성 오류에서는 exit 1 로 실패하고, claim staleness 는
+      # warning 이라 exit 0 을 유지한다(문서상 fact-review 는 advisory·non-gating 트랙).
+      # 즉 이 스텝은 staleness 를 붉히지 않고 로그로만 남긴다. 그 정책을 바꾸려면 owner 판단이 필요하다.
+      - name: Run check:consistency
+        run: npm run check:consistency
+
+      - name: Run audit:facts (advisory)
+        run: npm run audit:facts

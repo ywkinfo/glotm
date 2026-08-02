@@ -214,7 +214,7 @@ const briefIssueSource: BriefIssue[] = [
     publishedAt: "2026-06-09T09:00:00.000Z",
     supersededBy: {
       slug: "2026-07-china-trademark-overhaul-2027-countdown",
-      updatedAt: "2026-07-27T00:00:00.000Z",
+      updatedAt: "2026-08-02T00:00:00.000Z",
       note: "이 이슈는 개정 상표법의 공포일·시행일이 확인되지 않았던 2026년 6월 9일 시점을 기준으로 작성됐습니다. 이후 개정 상표법은 2026년 6월 26일 국가주석령 제77호로 공포되고 2027년 1월 1일 시행이 확정됐습니다. 확정된 내용과 시행 전 점검 항목은 2026년 7월 11일 이슈에서 다룹니다."
     },
     jurisdictions: ["China", "Trademark Law", "Bad-Faith Filing", "Opposition", "Well-Known Mark"],

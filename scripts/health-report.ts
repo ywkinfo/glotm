@@ -172,12 +172,18 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
   if (researchProducts.length === 0) {
     lines.push("- none");
   } else {
-    lines.push("| Guide | Audit Mode | Fact Integrity | Consistency | Critical Freshness | Stale High-Risk | Effective Gap | Gate |");
-    lines.push("| --- | --- | --- | --- | --- | --- | --- | --- |");
+    lines.push("| Guide | Audit Mode | Fact Integrity | Consistency | Critical Freshness | Window Margin | Stale High-Risk | Effective Gap | Gate |");
+    lines.push("| --- | --- | --- | --- | --- | --- | --- | --- | --- |");
 
     for (const product of researchProducts) {
+      // "48d"만 보면 남은 여유를 알 수 없다. lifecycle별 staleness 창에서 뺀 잔여일을 함께 적어
+      // 월간 리뷰가 다음 재검증 시점을 바로 읽을 수 있게 한다(advisory — 게이팅하지 않는다).
+      const stalenessWindowDays = getCriticalClaimStalenessDays(product.currentLifecycleStatus);
+      const marginDays = stalenessWindowDays - (product.research?.criticalClaimFreshnessDays ?? 0);
+      const margin = marginDays >= 0 ? `${marginDays}d left` : `${Math.abs(marginDays)}d over`;
+
       lines.push(
-        `| ${product.slug} | ${product.research?.auditMode} | ${product.research?.factIntegrityScore} | ${product.research?.consistencyScore} | ${product.research?.criticalClaimFreshnessDays}d | ${product.research?.staleHighRiskClaimCount} | ${product.research?.effectiveHighRiskGapCount} | ${product.research?.gate} |`
+        `| ${product.slug} | ${product.research?.auditMode} | ${product.research?.factIntegrityScore} | ${product.research?.consistencyScore} | ${product.research?.criticalClaimFreshnessDays}d | ${margin} | ${product.research?.staleHighRiskClaimCount} | ${product.research?.effectiveHighRiskGapCount} | ${product.research?.gate} |`
       );
     }
   }
