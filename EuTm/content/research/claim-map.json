@@ -8,10 +8,17 @@
       "id": "EU-SEL-001",
       "jurisdiction": "EU+UK",
       "claim": "EUTM는 EU 전체 단위로 등록·양도·취소되는 regional right이고, UK는 자동 커버 범위가 아니므로 권리 선택은 EUTM와 national filing, 그리고 필요 시 UK 병행 트랙을 분리해 설계한다.",
-      "chapterRefs": ["Ch2"],
+      "chapterRefs": [
+        "Ch2"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["euipo-trade-mark-guidance", "govuk-ip-in-eu-and-eea", "govuk-eu-trade-mark-protection", "euipo-brexit-qa"],
-      "lastVerified": "2026-06-09",
+      "sourceIds": [
+        "euipo-trade-mark-guidance",
+        "govuk-ip-in-eu-and-eea",
+        "govuk-eu-trade-mark-protection",
+        "euipo-brexit-qa"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "filing_route",
       "normalized": {
@@ -20,16 +27,20 @@
         "unit": "rule",
         "expression": "EUTM covers the EU, UK requires separate handling"
       },
-      "notes": "2026-06-09 재검증(2026-06-10 날짜 정정): 2021-01-01(Brexit 전환 종료) 기점으로 UK 마크의 EUTM 의존성(genuine use 연결 등) 완전 분리 확인. UK/EU 병행 트랙 유지 필수."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTMR(통합본 2025-12-01) 제1조 제2항 \"An EU trade mark shall have a unitary character. It shall have equal effect throughout the Union: it shall not be registered, transferred or surrendered or be the subject of a decision revoking the rights of the proprietor or declaring it invalid... save in respect of the whole Union.\" UK 비커버는 GOV.UK \"Since 1 January 2021, EU trade marks (EUTMs) are no longer protected trade marks in the UK.\" 로 확인."
     },
     {
       "id": "EU-DL-001",
       "jurisdiction": "EU",
       "claim": "EUTM opposition period는 공고 후 3개월이다.",
-      "chapterRefs": ["Ch7"],
+      "chapterRefs": [
+        "Ch7"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["euipo-after-applying-guidance"],
-      "lastVerified": "2026-06-09",
+      "sourceIds": [
+        "euipo-after-applying-guidance"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -38,16 +49,21 @@
         "unit": "months",
         "expression": "within 3 months from publication"
       },
-      "notes": "2026-06-09 재검증: 3개월 opposition period 엄격 유지 확인."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTMR(통합본 2025-12-01) 제46조 제1항 \"Within a period of three months following the publication of an EU trade mark application, notice of opposition to registration of the trade mark may be given on the grounds that it may not be registered under Article 8\". 시행 예정 단축 개정 없음(ChaTm 중국 3→2개월과 달리 EU는 예고된 변경 없음). 참고: 이의신청 수수료는 Annex I item 10 기준 EUR 320."
     },
     {
       "id": "EU-EVD-001",
       "jurisdiction": "EU",
       "claim": "EUTM는 등록 후 연속 5년간 genuine use가 없으면 non-use revocation risk가 생기고, 부분 사용만 입증되면 보호 범위가 sub-category 수준으로 제한될 수 있다.",
-      "chapterRefs": ["Ch8"],
+      "chapterRefs": [
+        "Ch8"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["euipo-cancellation-guidance", "euipo-genuine-use-materials"],
-      "lastVerified": "2026-06-09",
+      "sourceIds": [
+        "euipo-cancellation-guidance",
+        "euipo-genuine-use-materials"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -56,16 +72,21 @@
         "unit": "years",
         "expression": "continuous 5-year non-use creates revocation risk"
       },
-      "notes": "2026-06-09 재검증: 5년 genuine use 요건 유지 확인."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTMR(통합본 2025-12-01) 제58조 제1항 (a) \"if, within a continuous period of five years, the trade mark has not been put to genuine use in the Union in connection with the goods or services in respect of which it is registered, and there are no proper reasons for non-use\". 부분사용 축소는 제58조 제2항 \"Where the grounds for revocation of rights exist in respect of only some of the goods or services... the rights of the proprietor shall be declared to be revoked in respect of those goods or services only\" 로 확인."
     },
     {
       "id": "EU-RNW-001",
       "jurisdiction": "EU",
       "claim": "EUTM는 10년 단위로 갱신되며, 만료 전 6개월 basic renewal period와 추가 수수료가 붙는 6개월 grace period를 운영 기준으로 둔다.",
-      "chapterRefs": ["Ch8"],
+      "chapterRefs": [
+        "Ch8"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["euipo-fees-payments-guidance", "euipo-renewal-guidance"],
-      "lastVerified": "2026-06-09",
+      "sourceIds": [
+        "euipo-fees-payments-guidance",
+        "euipo-renewal-guidance"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -74,77 +95,129 @@
         "unit": "years",
         "expression": "renew every 10 years with a 6-month standard window and 6-month grace window"
       },
-      "notes": "2026-06-09 재검증: 10년 갱신 및 6개월 grace period 유지 확인."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTMR(통합본 2025-12-01) 제52조(10년, 출원일 기산)·제53조 제3항(만료 전 6개월 기본기간 + 만료 후 6개월 유예기간, 유예 시 가산금). 가산금은 Annex I item 19 기준 지연 갱신수수료의 25%, 상한 EUR 1 500. 원본(32017R1001)과 통합본을 조문 단위로 대조해 제52·53조·Annex I 무변경 확인. 유일한 개정법 Reg (EU) 2023/2411(공예·산업 GI, 2025-12-01 적용)은 해당 조문 미접촉."
     },
     {
       "id": "EU-UK-001",
       "jurisdiction": "EU+UK",
       "claim": "EU와 UK를 병행하더라도 launch timing, actual user, goods/services가 어긋나면 renewal과 evidence는 separate rights calendar row로 관리해야 한다.",
-      "chapterRefs": ["Ch8"],
+      "chapterRefs": [
+        "Ch8"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["govuk-eu-trade-mark-protection", "euipo-brexit-qa"],
-      "lastVerified": "2026-06-09",
+      "sourceIds": [
+        "govuk-eu-trade-mark-protection",
+        "euipo-brexit-qa"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
-      "notes": "2026-06-09 재검증(2026-06-10 날짜 정정): 2021-01-01(Brexit 전환 종료) 이후 UK/EU genuine use 독립성에 따라 관리 격리 필수 확인."
+      "notes": "2026-08-02 재대조: 변경 없음. GOV.UK comparable UK trade marks 안내 \"are fully independent UK trade marks that can be challenged, assigned, licensed or renewed separately from the original EUTM\", \"The fees will need to be paid separately to IPO and the EUIPO\". 이번 라운드에서 EU-UKUSE-001(2026-01-01 경과규정 종료)을 신설해 사용증거 분리 근거를 본문 Ch8에 보강했다."
     },
     {
       "id": "EU-ENF-001",
       "jurisdiction": "EU",
       "claim": "EU customs enforcement에서는 AFA를 전제로 national AFA와 Union AFA를 구분하고, IPEP/COPIS 운영 구조를 함께 본다.",
-      "chapterRefs": ["Ch12"],
+      "chapterRefs": [
+        "Ch12"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["ec-customs-defend-your-rights"],
-      "lastVerified": "2026-06-09",
+      "sourceIds": [
+        "ec-customs-defend-your-rights"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
-      "notes": "2026-06-09 재검증: IPEP/COPIS 기반 AFA 전자 신청 필수 확인."
+      "notes": "2026-08-02 재대조: 변경 없음. Regulation (EU) No 608/2013 여전히 유효 기준이며 European Commission \"Defend your rights\" 페이지에서 national AFA / Union AFA 구분과 IPEP·COPIS 운영 구조 확인. 감시 항목: EU Customs Reform이 2026-03-26 유럽의회·이사회 정치적 합의 단계이며(미발효), EU Customs Data Hub가 기존 회원국 세관 IT를 단계적으로 대체(전자상거래 2028 → 자율 2031 → 의무 2034). IPR/AFA 조항 변경은 현재 없으나 COPIS 계층의 장기 승계 리스크로 2028년경 재확인."
     },
     {
       "id": "EU-FEE-001",
       "jurisdiction": "EU+UK",
       "claim": "UK 상표 수수료는 2026-04-01 개정으로 온라인·1개류 출원 £205, 갱신 £245다. EUTM은 온라인·1개류 출원·갱신 각 €850다.",
-      "chapterRefs": ["부록", "Ch5"],
+      "chapterRefs": [
+        "부록",
+        "Ch5"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["ukipo-fees-2026", "euipo-fees"],
-      "lastVerified": "2026-06-10",
+      "sourceIds": [
+        "ukipo-fees-2026",
+        "euipo-fees"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "official_fees",
-      "notes": "2026-06-10 1차 출처 대조: UK 출원 £205·갱신 £245(2026-04-01 개정), EUTM 1개류 €850. 류 추가 시 가산. 출처: gov.uk trade-mark-forms-and-fees, euipo.europa.eu fees."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTM은 EUTMR Annex I item 2(전자출원 기본수수료 EUR 850)·item 12(전자 갱신 기본수수료 EUR 850) — 2류 EUR 50, 3류 이상 각 EUR 150. UK는 GOV.UK Trade mark forms and fees 기준 TM3 온라인 출원 £205, TM11 온라인 갱신 £245, 갱신 추가 클래스당 £60이며 모두 개정일 표기 April 2026. UKTm과 통일된 owner 정본(£205/£245/£60)과 일치."
     },
     {
       "id": "EU-PRIO-001",
       "jurisdiction": "EU+UK",
       "claim": "Paris 우선권은 first filing date로부터 6개월 이내에 주장할 수 있고, 동일 표장·동일 권리자·동일(또는 일부) 상품/서비스 요건을 충족해야 한다. 기준은 등록일이 아니라 첫 출원일이다.",
-      "chapterRefs": ["Ch3", "Ch5"],
+      "chapterRefs": [
+        "Ch3",
+        "Ch5"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["euipo-priority-guidelines"],
-      "lastVerified": "2026-06-10",
+      "sourceIds": [
+        "euipo-priority-guidelines"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "priority_window",
-      "notes": "2026-06-10 1차 출처 대조: EUIPO Guidelines 11.2 substantive requirements for priority claims. 첫 출원일 기준 6개월, 동일 표장·권리자·상품/서비스."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTMR(통합본 2025-12-01) 제34조 제1항 \"...shall enjoy, for the purpose of filing an EU trade mark application for the same trade mark in respect of goods or services which are identical with or contained within those for which the application has been filed, a right of priority during a period of six months from the date of filing of the first application.\" 동일 표장·동일(또는 일부) 상품/서비스·첫 출원일 기산 모두 확인. 권리자 요건은 \"A person who has duly filed... or his successors in title\"로 승계인 포함."
     },
     {
       "id": "EU-UKCOMP-001",
       "jurisdiction": "UK",
       "claim": "Comparable UK trade mark은 2021-01-01(전환 종료) 시점에 등록돼 있던 기존 EUTM에 한해 일회성으로 자동 생성됐다. 이후 출원·등록되는 새 EUTM은 UK 권리를 만들지 않으므로 UK 보호는 별도 출원이 필요하다.",
-      "chapterRefs": ["Ch3"],
+      "chapterRefs": [
+        "Ch3"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["govuk-comparable-uk-marks"],
-      "lastVerified": "2026-06-10",
+      "sourceIds": [
+        "govuk-comparable-uk-marks"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "comparable_uk_mark",
-      "notes": "2026-06-10 1차 출처 대조: gov.uk EU trade mark protection and comparable UK trade marks. 신규 EUTM은 comparable mark를 생성하지 않음(2021 전환 일회성)."
+      "notes": "2026-08-02 재대조: 변경 없음. GOV.UK \"On 1 January 2021, the IPO created a comparable UK trademark for every registered EUTM.\", \"We only created comparable UK trade marks for every EUTM registered before 1 January 2021.\" 신규 EUTM의 UK 무효력도 \"Since 1 January 2021, EU trade marks (EUTMs) are no longer protected trade marks in the UK.\" 로 확인. pending 출원의 9개월 재출원 창(2021-09-30 마감)은 이미 종료."
     },
     {
       "id": "EU-AG-001",
       "jurisdiction": "EU",
       "claim": "절대적 거절(식별력 부족: descriptive/generic/laudatory/geographic)은 표장과 상품/서비스 조합으로 판단되며, 영어 의미도 EU relevant public(아일랜드·몰타 등) 기준으로 거절 사유가 될 수 있다. 개별 표장 예시는 일반 패턴이며 특정 결정례가 아니다.",
-      "chapterRefs": ["Ch6"],
+      "chapterRefs": [
+        "Ch6"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["euipo-absolute-grounds-guidelines", "euipo-brexit-qa"],
-      "lastVerified": "2026-06-10",
+      "sourceIds": [
+        "euipo-absolute-grounds-guidelines",
+        "euipo-brexit-qa"
+      ],
+      "lastVerified": "2026-08-02",
       "status": "BODY_READY",
       "conceptKey": "absolute_grounds",
-      "notes": "2026-06-10 대조: EUIPO 심사 가이드라인 absolute grounds 및 Brexit Q&A(영어 relevant public). Ch6의 개별 예시는 일반화된 리스크 패턴으로 수정."
+      "notes": "2026-08-02 재대조: 변경 없음. EUTMR(통합본 2025-12-01) 제7조 제1항 (b) 식별력 결여, (c) 기술적 표시(kind, quality, quantity, intended purpose, value, geographical origin, time of production 등), (d) 관용표장. 일부 지역 기준 적용은 제7조 제2항 \"Paragraph 1 shall apply notwithstanding that the grounds of non-registrability obtain in only part of the Union\" 로 확인. 사용에 의한 식별력 취득 예외는 제7조 제3항."
+    },
+    {
+      "id": "EU-UKUSE-001",
+      "jurisdiction": "EU+UK",
+      "claim": "comparable UK trade mark의 5년 look-back 구간 중 2021-01-01 이전 부분에는 EU 내 사용이 산입되지만 그 이후 구간에는 산입되지 않으므로, 2026-01-01부터는 EU 사용을 comparable UK mark의 non-use 방어에 원용할 수 없다.",
+      "chapterRefs": [
+        "Ch8",
+        "부록"
+      ],
+      "riskLevel": "HIGH",
+      "sourceIds": [
+        "govuk-comparable-uk-marks"
+      ],
+      "lastVerified": "2026-08-02",
+      "status": "BODY_READY",
+      "conceptKey": "comparable_uk_use",
+      "normalized": {
+        "trigger": "comparable_uk_mark_nonuse_defence",
+        "value": "2026-01-01",
+        "unit": "date",
+        "expression": "EU use no longer counts once the 5-year look-back window falls wholly after 2021-01-01"
+      },
+      "notes": "GOV.UK EU trade mark protection and comparable UK trade marks: \"any use of the mark in the EU made before 1 January 2021, whether inside or outside the UK, counts as use of the comparable UK right. Where the 5-year period includes time before 1 January 2021, use in the EU will be considered. Where the period includes any time after 1 January 2021, use of the comparable trade mark in the EU (and outside of the UK) within that period will not be taken into account.\" 5년 구간이 2026-01-01부터 전부 2021-01-01 이후가 되므로 경과 규정의 보호가 소멸한다. UKTm 제8장이 2026-07-21 라운드에서 같은 사실을 이미 반영했으나 EU+UK scope를 운영하는 EuTm에는 누락돼 있어 2026-08-02 재검증 라운드에서 보강했다(교차 가이드 정합)."
     }
   ]
 }

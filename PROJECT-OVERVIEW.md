@@ -91,7 +91,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
-| `EuTm` | 권역형 | growth | mature | 15 | 260 | growth expansion 반영 · mature 승급 완료(#69/#70) · factsReviewedOn 2026-06-10 |
+| `EuTm` | 권역형 | growth | mature | 15 | 261 | growth expansion 반영 · mature 승급 완료(#69/#70) · claim-map 11건 · factsReviewedOn 2026-08-02 |
 | `UsaTm` | 단일국가 | growth | mature | 15 | 206 | 집행 포럼 플레이북 · 패러디·출처표지적 사용 이중 트랙 보강(Ch12–14) · claim-map 15건 · full QA |
 | `JapTm` | 단일국가 | growth | mature | 15 | 185 | 병존동의제도(2024-04-01) 집행 보강 · claim-map 12건 · full QA |
 | `UKTm` | 단일국가 | growth | mature | 15 | 183 | 다중 포럼 집행 오케스트레이션 15장 신설 + 저밀도 장 보강(density 12.2) · claim-map 11건 · full QA · 2026-07-07 growth/mature 승급(owner override) |

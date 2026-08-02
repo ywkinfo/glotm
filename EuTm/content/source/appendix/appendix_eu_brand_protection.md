@@ -34,6 +34,7 @@
 - **핵심 원칙**: 5년 내 실제 사용 증거 (인보이스, 마케팅 자료, 매출 자료)
 - **필수 요소**: 시점(Time), 장소(Place), 범위(Extent), 성격(Nature)
 - **UK 분리 적용**: 2021-01-01(Brexit 전환 종료) 이후 UK 사용 증거 별도 관리 필수
+- **comparable UK mark 경과 규정 종료**: 2026-01-01부터 5년 look-back 구간 전체가 2021-01-01 이후에 놓여, EU 사용을 comparable UK mark의 non-use 방어에 원용할 수 없음 (제8장 참조)
 
 ## 5. EU/UK Delta Card
 

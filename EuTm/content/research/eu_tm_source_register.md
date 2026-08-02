@@ -34,3 +34,22 @@
 | euipo-absolute-grounds-guidelines | EUIPO Guidelines — Examination, Absolute Grounds | https://guidelines.euipo.europa.eu/ |
 
 > 위 URL은 claim-map 신규 claim(EU-FEE-001·EU-PRIO-001·EU-UKCOMP-001·EU-AG-001)의 sourceId가 가리키는 1차 출처다. 기존 EUIPO/GOV.UK/WIPO source family는 위 Core Source Groups를 따른다.
+
+### 2026-08-02 재검증에서 실제로 대조한 출처 (resolvable)
+
+2026-08-02 라운드에서는 claim 11건 전부를 아래 URL로 직접 대조했다. 이전에는 `sourceId`가 source family만 가리켜 추적이 끊기는 항목이 있었으므로, 실제로 읽은 URL을 여기에 고정한다.
+
+| sourceId | 공식 출처 | URL |
+|---|---|---|
+| eutmr-consolidated | Regulation (EU) 2017/1001 통합본 (2025-12-01 발효) — 제1·7·34·46·52·53·58조 및 Annex I | https://publications.europa.eu/resource/celex/02017R1001-20251201 |
+| eutmr-original | Regulation (EU) 2017/1001 원본 (조문 대조용) | https://publications.europa.eu/resource/celex/32017R1001 |
+| euipo-faq-renewals | EUIPO Help centre — FAQ: Renewals | https://www.euipo.europa.eu/en/help-centre/forms/faq-renewals |
+| ec-customs-defend-your-rights | European Commission — Defend your rights (customs IPR enforcement) | https://taxation-customs.ec.europa.eu/customs/prohibitions-restrictions/counterfeit-piracy-other-ipr-violations/defend-your-rights_en |
+| ec-customs-reform | European Commission — EU Customs Reform (감시 항목: 2026-03-26 정치적 합의, 미발효) | https://taxation-customs.ec.europa.eu/customs/eu-customs-reform_en |
+| govuk-ip-in-eu-and-eea | GOV.UK — IP in the EU and EEA | https://www.gov.uk/guidance/ip-in-the-eu-and-eea |
+| govuk-retaining-protection | GOV.UK — Retaining protection in the UK for EU Intellectual Property rights | https://www.gov.uk/government/publications/retaining-protection-in-the-uk-for-eu-intellectual-property-rights/retaining-protection-in-the-uk-for-eu-intellectual-property-rights |
+
+> **접근 메모**: `eur-lex.europa.eu`와 `www.euipo.europa.eu`는 일반 fetch에 빈 본문/403을 반환하고,
+> `guidelines.euipo.europa.eu`는 JS 앱이라 텍스트가 나오지 않는다. 다음 재검증에서는
+> `https://publications.europa.eu/resource/celex/<CELEX>`에 `Accept: application/xhtml+xml`을 붙이는 경로를 쓴다.
+> 규정 본문과 Annex I은 Guidelines보다 상위 근거이므로 이 경로만으로 수수료·기한 claim이 모두 결론난다.
