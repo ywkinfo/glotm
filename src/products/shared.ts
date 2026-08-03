@@ -349,7 +349,7 @@ export function buildProductPath(basePath: string | ProductMeta) {
   return normalizeBasePath(path) || "/";
 }
 
-function startOfUtcDay(timestamp: number) {
+export function startOfUtcDay(timestamp: number) {
   const date = new Date(timestamp);
 
   return Date.UTC(

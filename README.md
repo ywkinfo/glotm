@@ -82,6 +82,7 @@ npm run health:all
 - 런타임 제품 메타데이터: `src/products/registry.ts`
 - Report / Gateway trust layer 메타데이터: `src/reports/registry.ts`
 - 브리프 lane: 계약 `docs/briefs-lane.md`, 정본 콘텐츠·인벤토리 `src/briefs/archive.ts`
+- 브리프 소재 발굴(발행 앞단): 계약 `docs/briefs-discovery.md`, 정본 `src/briefs/discovery.ts`, advisory 리포트 `npm run briefs:radar`
 - 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
 - buyer-facing 포지셔닝: `docs/buyer-narrative.md`
 - 루트 런타임 QA 체크리스트: `docs/phase1-runtime-qa.md`

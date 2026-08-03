@@ -281,6 +281,7 @@ Phase 1 런타임 QA 체크포인트는 `docs/phase1-runtime-qa.md`에 정리한
 | 색인 운영 | Search Console에 `sitemap.xml` 제출·갱신을 유지하고, 챕터·브리프·리포트 URL의 색인 상태를 주기적으로 확인 |
 | 유입 계측 | GA4 KPI 이벤트(`guide_cta_click`, `report_open`, `brief_issue_open` 등)로 유기 유입과 핵심 동선을 추적. 월 100 유기 방문 트리거를 이 구간에서 측정 |
 | 신선도 surface | 주간 브리프를 시의성 있는 유기 진입면으로 유지. 정본 콘텐츠·인벤토리는 `src/briefs/archive.ts`, lane cadence·provenance·publish 게이트 계약은 `docs/briefs-lane.md`, 구조 강제는 `src/briefs/archive.test.ts` |
+| 소재 발굴 | 브리프 lane에 소재를 대는 발행 앞단. 소스 등록부·후보 백로그·sweep 로그 정본은 `src/briefs/discovery.ts`, 계약은 `docs/briefs-discovery.md`, 구조 강제는 `src/briefs/discovery.test.ts`, advisory 리포트는 `npm run briefs:radar`. 자동 크롤링·스케줄러는 두지 않는다 |
 | 가드레일 | 능동 프로모션·수익화는 하지 않는다. 색인·계측·정합성 유지까지만 현재 범위로 본다 |
 | 트리거 | 월 100 유기 방문 달성 또는 은퇴 6개월 전 — 둘 중 먼저 도래하는 시점에 Phase 3로 넘어간다 |
 

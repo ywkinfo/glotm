@@ -2,6 +2,7 @@
 
 이 문서는 주간 브리프(Hot Global TM Brief) lane의 운영 계약이다.
 lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/archive.ts`](../src/briefs/archive.ts)이며, 이 문서는 그 위에서 cadence·provenance·publish 게이트 규칙만 잠근다.
+발행 **앞단**(소스 등록부·후보 백로그·sweep)은 [`briefs-discovery.md`](briefs-discovery.md)가 정본이다. 두 계약은 중복하지 않는다.
 현재 phase·우선순위 authority는 계속 [`../PROJECT-OVERVIEW.md`](../PROJECT-OVERVIEW.md), 실행 명령은 [`../README.md`](../README.md)를 기준으로 본다.
 
 ## Lane 정의
@@ -54,6 +55,7 @@ lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/arc
 - [ ] `jurisdictions` ≥ 1, 각 item core copy(`headline` / `whatChanged` / `whoShouldCare` / `whyItMatters` / `nextAction`) 채움
 - [ ] `relatedGuideLinks`가 live guide로 연결 (registry 경로 대조까지 테스트가 강제)
 - [ ] 이번 이슈가 앞 이슈의 사실을 정정한다면 앞 이슈에 `supersededBy` 추가 (위 `정정 규칙`)
+- [ ] 이 이슈의 후보를 `../src/briefs/discovery.ts`에서 `published` + `publishedAs`로 전이 ([`briefs-discovery.md`](briefs-discovery.md))
 
 위 구조 규칙은 [`../src/briefs/archive.test.ts`](../src/briefs/archive.test.ts)의 `brief lane contract`에서 자동 강제된다. **문서는 설명, 테스트는 게이트다.**
 
@@ -68,5 +70,6 @@ lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/arc
 
 - lane 콘텐츠·인벤토리 정본: `../src/briefs/archive.ts`
 - lane 구조 게이트: `../src/briefs/archive.test.ts`
+- 발굴(upstream) 계약: [`briefs-discovery.md`](briefs-discovery.md), 정본 `../src/briefs/discovery.ts`
 - 현재 phase 위치: `../PROJECT-OVERVIEW.md` (`Phase 2.5`)
 - 운영 taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)

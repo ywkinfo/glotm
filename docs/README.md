@@ -23,6 +23,7 @@
 - Hermes Stage 1 advisory memo: [`hermes-stage1-advisory-memo.md`](hermes-stage1-advisory-memo.md)
 - current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
 - briefs lane contract: [`briefs-lane.md`](briefs-lane.md) (정본 콘텐츠·인벤토리는 `../src/briefs/archive.ts`)
+- brief discovery harness (발행 앞단 — 소스 등록부·후보 백로그·sweep): [`briefs-discovery.md`](briefs-discovery.md) (정본은 `../src/briefs/discovery.ts`)
 - runtime QA checklist: [`phase1-runtime-qa.md`](phase1-runtime-qa.md)
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)

@@ -129,6 +129,20 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 | `operator_link_click` | yes |  |
 | `priority_cta_click` | no | keep runtime event, exclude from sheet while the sheet stays simple |
 
+## Brief discovery check
+
+발굴 lane의 이번 달 상태를 기록한다. 실행 절차와 상태 전이 규칙은 [`briefs-discovery.md`](briefs-discovery.md), 값은 `npm run briefs:radar` 출력에서 읽는다. **cadence 경과일은 판단 재료이고 게이팅 지표가 아니다**(`briefs-lane.md`가 hard SLA 없음을 잠갔다).
+
+| 항목 | 이번 달 값 | 비고 |
+|------|------------|------|
+| sweep 회차 수 |  | `briefSweepLog` append 건수 |
+| 신규 후보 |  | 이번 달 `discoveredOn` 기준 |
+| published / dropped |  | dropped는 `droppedReason` 확인 |
+| `ready` 잔량 |  | 0이면 다음 발행을 맨땅에서 시작한다는 뜻 |
+| 정체 후보(30일+ watching) |  | 살릴지 버릴지 판단 대상 |
+| 커버리지 공백 guide |  | 마지막 브리프 등장이 오래됐고 열린 후보가 0인 guide |
+| 마지막 발행 후 경과일 |  | advisory — 목표 7일 대비 |
+
 ## Organic indexing & measurement check
 
 owner 전용 실행 절차는 [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md)를 따른다.

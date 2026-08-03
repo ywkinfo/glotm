@@ -9,6 +9,7 @@ import {
   getLatestBriefIssue,
   resolveBriefCorrection
 } from "./archive";
+import { briefDiscoveryStartOn, getCanonicalJurisdictions } from "./discovery";
 
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
@@ -95,6 +96,24 @@ describe("brief lane contract", () => {
           expect(matchesLiveGuide, `${issue.slug} → ${link.href}`).toBe(true);
         }
       }
+    }
+  });
+
+  // 기존 이슈들은 `UK`와 `United Kingdom`을 섞어 썼다. 발행 시점 태그는 그대로 두고(본문 소급
+  // 수정 금지와 같은 이유), 발굴 하네스 도입 이후 이슈부터 관할 축 하나를 정규 어휘로 요구한다.
+  // 나머지 주제 태그는 계속 자유다. 어휘 정본은 `discovery.ts`.
+  it("requires a canonical jurisdiction tag on issues published after the discovery harness", () => {
+    const discoveryStartAt = Date.parse(briefDiscoveryStartOn);
+
+    for (const issue of briefIssues) {
+      if (Date.parse(issue.publishedAt) < discoveryStartAt) {
+        continue;
+      }
+
+      expect(
+        getCanonicalJurisdictions(issue.jurisdictions),
+        `${issue.slug} has no canonical jurisdiction tag`
+      ).not.toEqual([]);
     }
   });
 

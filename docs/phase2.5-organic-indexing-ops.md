@@ -11,7 +11,7 @@
 - KPI sheet 정본: [`portfolio-scorecard.md`](portfolio-scorecard.md), 월간 잠금: [`monthly-review-template.md`](monthly-review-template.md)
 - GA 런타임 배선: [`../src/analytics/ga.ts`](../src/analytics/ga.ts), deploy 주입: `../.github/workflows/deploy-pages.yml`(`vars.VITE_GA_MEASUREMENT_ID`)
 
-**Ownership boundary**: 이 런북의 §1~§4는 **owner 전용**이다. Hermes(P2 advisor·bounded slug)는
+**Ownership boundary**: 이 런북의 §1~§4는 **owner 전용**이다(§5 brief material sweep은 예외 — 콘솔 접근이 필요 없다). Hermes(P2 advisor·bounded slug)는
 계정·콘솔 접근이 없어 실행 불가, Checkout coding agent(Claude Code)도 SC/GA4 콘솔은 직접 못 만진다.
 agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이브 자동 스모크까지다.
 
@@ -114,6 +114,19 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
   (`../PROJECT-OVERVIEW.md` Phase 2.5/3).
 - 기록 위치: [`monthly-review-template.md`](monthly-review-template.md) → `Organic indexing & measurement check`.
 
+## §5. Brief material sweep (owner 또는 checkout agent)
+
+브리프 lane은 이 phase의 신선도 surface다. 그 lane에 소재를 대는 발굴 절차는
+[`briefs-discovery.md`](briefs-discovery.md)가 계약이고, 여기서는 월 1회 실행 훅만 건다.
+
+1. `npm run briefs:radar` 실행. `Source Sweep`의 `주기 초과` 소스가 이번 회차 대상이다.
+2. 그 소스들을 실제로 열고, 소재가 나오면 `src/briefs/discovery.ts`의 `briefCandidates`에 후보를 추가한다.
+3. 산출이 없어도 `briefSweepLog`에 회차를 append한다.
+4. 결과를 [`monthly-review-template.md`](monthly-review-template.md)의 `Brief discovery check`에 기록한다.
+
+> 이 절은 §1~§4와 달리 콘솔 계정 접근이 필요 없어 checkout agent도 수행할 수 있다.
+> 다만 발행 여부와 법률 사실 판단은 계속 owner 몫이다.
+
 ## Monthly quick checklist
 
 - [ ] §0 readiness 재확인(sitemap 145 / robots / GA id)
@@ -121,3 +134,4 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 - [ ] §2 GA4 DebugView: debugger extension ON 상태에서 page_view + 6 KPI 이벤트 도착, 또는 Realtime 대체 확인
 - [ ] §3 라이브 QA(agent 스모크 → owner 육안)
 - [ ] §4 organic sessions 집계 → 월 100 트리거 대비 기록
+- [ ] §5 `npm run briefs:radar` → 주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록
