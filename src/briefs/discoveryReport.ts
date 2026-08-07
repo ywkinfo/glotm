@@ -32,7 +32,8 @@ export const candidateStatuses: BriefCandidateStatus[] = [
   "dropped"
 ];
 
-// sweepCadence별 "이 정도 지나면 다시 볼 때"의 기준선. event-driven은 정해진 주기가 없다.
+// sweepCadence별 "이 정도 지나면 다시 볼 때"의 기준선. event-driven은 정해진 주기가 없고,
+// 대신 소스가 reviewTrigger로 "무엇이 오면 다시 보는가"를 선언한다.
 const sweepIntervalDays: Record<BriefSweepCadence, number | null> = {
   weekly: 7,
   monthly: 30,
@@ -210,13 +211,19 @@ export function summarizeCoverage(
   return { guides, jurisdictions };
 }
 
+// `never-verified`는 cadence와 무관하게 항상 표시된다. event-driven 소스를 "주기가 없으니 밀린 것도
+// 아니다"로 처리하면, 한 번도 열어 본 적 없는 소스가 리포트에서 영영 사라진다.
+export type SourceSweepStatus = "never-verified" | "overdue" | "ok";
+
 export type SourceSweepRow = {
   source: BriefSource;
-  lastSweptOn: string | null;
-  daysSinceSweep: number | null;
+  // verified sweep만 인정한다. repository-backfill은 후보의 계보 기록이지 "봤다"는 증거가 아니다.
+  lastVerifiedOn: string | null;
+  daysSinceVerified: number | null;
+  // backfill로만 등장한 소스를 구분해 보여주기 위한 값. freshness 계산에는 쓰지 않는다.
+  lastBackfilledOn: string | null;
   intervalDays: number | null;
-  // 주기가 있는 소스가 그 주기를 넘겼거나 한 번도 sweep되지 않은 경우.
-  overdue: boolean;
+  status: SourceSweepStatus;
 };
 
 export function summarizeSourceSweep(
@@ -225,20 +232,32 @@ export function summarizeSourceSweep(
   now = new Date()
 ): SourceSweepRow[] {
   return sources.map((source) => {
-    // sweeps는 최신순 계약이므로 첫 매치가 마지막 sweep이다.
-    const lastSweep = sweeps.find((sweep) => sweep.sourceIds.includes(source.id));
-    const lastSweptOn = lastSweep?.sweptOn ?? null;
-    const daysSinceSweep = lastSweptOn ? elapsedUtcDays(lastSweptOn, now) : null;
+    const covers = (sweep: BriefSweep) => sweep.sourceIds.includes(source.id);
+
+    // sweeps는 최신순 계약이므로 첫 매치가 마지막 회차다.
+    const lastVerified = sweeps.find((sweep) => sweep.kind === "verified" && covers(sweep));
+    const lastBackfill = sweeps.find(
+      (sweep) => sweep.kind === "repository-backfill" && covers(sweep)
+    );
+
+    const lastVerifiedOn = lastVerified?.sweptOn ?? null;
+    const daysSinceVerified = lastVerifiedOn ? elapsedUtcDays(lastVerifiedOn, now) : null;
     const intervalDays = sweepIntervalDays[source.sweepCadence];
+
+    const status: SourceSweepStatus =
+      daysSinceVerified === null
+        ? "never-verified"
+        : intervalDays !== null && daysSinceVerified > intervalDays
+          ? "overdue"
+          : "ok";
 
     return {
       source,
-      lastSweptOn,
-      daysSinceSweep,
+      lastVerifiedOn,
+      daysSinceVerified,
+      lastBackfilledOn: lastBackfill?.sweptOn ?? null,
       intervalDays,
-      overdue:
-        intervalDays !== null &&
-        (daysSinceSweep === null || daysSinceSweep > intervalDays)
+      status
     };
   });
 }

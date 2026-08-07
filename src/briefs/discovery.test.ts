@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 import { liveShellProducts } from "../products/registry";
@@ -17,6 +18,8 @@ import {
   getBriefCandidatesByStatus,
   getBriefSourceById,
   getCanonicalJurisdictions,
+  hasCanonicalJurisdiction,
+  isCanonicalJurisdiction,
   jurisdictionByProductSlug,
   normalizeJurisdictionTag
 } from "./discovery";
@@ -34,6 +37,8 @@ import {
 const liveSlugs = new Set(liveShellProducts.map((product) => product.slug));
 const canonicalJurisdictionSet = new Set(canonicalJurisdictions);
 const discoveryStartAt = Date.parse(briefDiscoveryStartOn);
+// `2026-08-02` 또는 `2026년 6월` 형태. 어느 쪽이든 날짜가 실제로 있어야 datable trigger다.
+const datePattern = /\d{4}-\d{2}-\d{2}|\d{4}년\s*\d{1,2}월/;
 
 describe("brief discovery contract", () => {
   it("keeps every registered source resolvable, https, and pointed at live guides", () => {
@@ -58,6 +63,20 @@ describe("brief discovery contract", () => {
           canonicalJurisdictionSet.has(jurisdiction),
           `${source.id} → unknown jurisdiction ${jurisdiction}`
         ).toBe(true);
+      }
+
+      // 넓은 루트 URL은 "무엇을 봐야 sweep이 끝나는가"를 말해 주지 않는다. sweepTarget이 그 정의다.
+      expect(
+        source.sweepTarget.trim().length,
+        `${source.id} does not say what a completed sweep looks like`
+      ).toBeGreaterThan(0);
+
+      // event-driven은 주기가 없으므로 무엇이 오면 다시 보는지를 선언해야 한다.
+      if (source.sweepCadence === "event-driven") {
+        expect(
+          source.reviewTrigger?.trim().length,
+          `${source.id} is event-driven without a reviewTrigger`
+        ).toBeGreaterThan(0);
       }
 
       expect(source.relatedProductSlugs.length).toBeGreaterThan(0);
@@ -100,7 +119,13 @@ describe("brief discovery contract", () => {
       seenIds.add(candidate.id);
 
       expect(candidate.headline.trim().length).toBeGreaterThan(0);
-      expect(candidate.trigger.trim().length, `${candidate.id} has no trigger`).toBeGreaterThan(0);
+
+      // "datable public trigger"는 발행 계약과 같은 기준이다. 산문이 비어있지 않은 것만으로는
+      // 날짜 있는 트리거가 되지 않으므로 날짜 토큰(ISO 또는 한국어 표기)을 실제로 요구한다.
+      expect(
+        datePattern.test(candidate.trigger),
+        `${candidate.id} trigger carries no date`
+      ).toBe(true);
 
       const discoveredAt = Date.parse(candidate.discoveredOn);
       expect(Number.isNaN(discoveredAt), `${candidate.id} discoveredOn`).toBe(false);
@@ -115,15 +140,22 @@ describe("brief discovery contract", () => {
         ).toBeDefined();
       }
 
+      // 어떤 가이드에도 닿지 않는 후보는 커버리지에 잡히지 않아 백로그에서 조용히 늙는다.
+      expect(
+        candidate.relatedProductSlugs.length,
+        `${candidate.id} routes to no guide`
+      ).toBeGreaterThan(0);
+
       for (const slug of candidate.relatedProductSlugs) {
         expect(liveSlugs.has(slug), `${candidate.id} → ${slug} is not a live guide`).toBe(true);
       }
 
-      // 주제 태그는 자유지만 관할 축은 최소 하나가 정규 어휘여야 커버리지 집계에 잡힌다.
+      // 주제 태그는 자유지만 관할 축 하나는 **literal** 정규 어휘여야 한다. 별칭 정규화를 게이트로
+      // 쓰면 애초에 문제였던 `UK`·`EU`가 신규 데이터에서도 통과해 드리프트가 계속된다.
       expect(
-        getCanonicalJurisdictions(candidate.jurisdictions).length,
-        `${candidate.id} has no canonical jurisdiction`
-      ).toBeGreaterThan(0);
+        hasCanonicalJurisdiction(candidate.jurisdictions),
+        `${candidate.id} has no literal canonical jurisdiction (aliases like UK/EU do not count)`
+      ).toBe(true);
 
       expect(getBriefCandidateById(candidate.id)).toBe(candidate);
     }
@@ -152,8 +184,24 @@ describe("brief discovery contract", () => {
           candidate.droppedReason?.trim().length,
           `${candidate.id} was dropped without a reason`
         ).toBeGreaterThan(0);
+        continue;
       }
+
+      // 되살린 후보에 옛 폐기 사유가 남아 있으면 백로그를 읽는 사람이 상태를 오독한다.
+      expect(
+        candidate.droppedReason,
+        `${candidate.id} is ${candidate.status} but still carries a droppedReason`
+      ).toBeUndefined();
     }
+  });
+
+  // 도입일을 앞으로 밀면 "발행 이슈는 백로그를 거쳐야 한다"는 게이트가 조용히 사라진다.
+  // 값 자체를 고정해, 옮기려면 이 테스트를 의도적으로 고치게 만든다.
+  it("pins the harness start date so the backlog gate cannot be retired quietly", () => {
+    expect(
+      briefDiscoveryStartOn,
+      "moving briefDiscoveryStartOn forward retires the backlog-bypass gate — change this test on purpose or not at all"
+    ).toBe("2026-08-03");
   });
 
   // 역방향 폐합: 하네스 도입 이후 발행된 이슈는 백로그를 우회할 수 없다.
@@ -192,10 +240,20 @@ describe("brief discovery contract", () => {
       }
 
       for (const candidateId of sweep.foundCandidateIds) {
+        const candidate = getBriefCandidateById(candidateId);
+        expect(candidate, `${sweep.sweptOn} → unknown candidate ${candidateId}`).toBeDefined();
+
+        // 계보: 이 회차에서 나왔다면 그 회차에서 실제로 본 소스 중 하나에서 나왔어야 한다.
         expect(
-          getBriefCandidateById(candidateId),
-          `${sweep.sweptOn} → unknown candidate ${candidateId}`
-        ).toBeDefined();
+          candidate!.sourceIds.some((sourceId) => sweep.sourceIds.includes(sourceId)),
+          `${sweep.sweptOn} → ${candidateId} cites no source that this sweep covered`
+        ).toBe(true);
+
+        // 그리고 그 회차보다 나중에 "발굴"됐을 수는 없다.
+        expect(
+          Date.parse(candidate!.discoveredOn),
+          `${candidateId} was discovered after the sweep that found it`
+        ).toBeLessThanOrEqual(Date.parse(sweep.sweptOn));
       }
     }
 
@@ -204,8 +262,41 @@ describe("brief discovery contract", () => {
 
   // discovery 데이터는 ops 전용이다. 리더 UI·prerender가 이걸 import하기 시작하면 배포 번들에
   // 운영 백로그가 실린다.
+  //
+  // 정규식으로 `from "..."`를 찾던 앞선 판은 작은따옴표·`export ... from`·동적 `import()`를 놓쳤고,
+  // 경로 prefix로 스킵해서 `discoveryWidget.tsx` 같은 파일이 통째로 검사 밖이었다. 여기서는
+  // TypeScript의 preProcessFile로 **모든 형태의 모듈 참조**를 뽑고, 파일 기준으로 resolve해
+  // 절대경로로 대조한다(`typescript`는 이미 devDependency다).
   it("keeps discovery data out of the app runtime", () => {
     const srcDir = path.resolve(__dirname, "..");
+    const discoveryModules = new Set(
+      ["discovery.ts", "discoveryReport.ts"].map((name) =>
+        path.resolve(srcDir, "briefs", name)
+      )
+    );
+    // 면제는 두 가지뿐이다: discovery 모듈 자신(정확한 경로)과 테스트 파일(번들에 들어가지 않는다).
+    // 경로 prefix로 스킵하면 `discoveryWidget.tsx` 같은 새 파일이 통째로 검사망을 빠져나간다.
+    const isExempt = (filePath: string) =>
+      discoveryModules.has(filePath) || /\.test\.tsx?$/.test(path.basename(filePath));
+
+    const resolveSpecifier = (fromFile: string, specifier: string) => {
+      if (!specifier.startsWith(".")) {
+        return null;
+      }
+
+      const base = path.resolve(path.dirname(fromFile), specifier);
+
+      for (const suffix of ["", ".ts", ".tsx", "/index.ts", "/index.tsx"]) {
+        const candidatePath = `${base}${suffix}`;
+
+        if (discoveryModules.has(candidatePath)) {
+          return candidatePath;
+        }
+      }
+
+      return null;
+    };
+
     const offenders: string[] = [];
 
     const walk = (dir: string) => {
@@ -217,16 +308,18 @@ describe("brief discovery contract", () => {
           continue;
         }
 
-        if (!/\.tsx?$/.test(entry.name) || /\.test\.tsx?$/.test(entry.name)) {
+        if (!/\.tsx?$/.test(entry.name) || isExempt(entryPath)) {
           continue;
         }
 
-        if (entryPath.startsWith(path.join(srcDir, "briefs", "discovery"))) {
-          continue;
-        }
+        const source = readFileSync(entryPath, "utf8");
+        // readImportFiles=true, detectJavaScriptImports=true → import / export-from / import() 전부 수집
+        const { importedFiles } = ts.preProcessFile(source, true, true);
 
-        if (/from "[^"]*\/discovery(Report)?"/.test(readFileSync(entryPath, "utf8"))) {
-          offenders.push(path.relative(srcDir, entryPath));
+        for (const reference of importedFiles) {
+          if (resolveSpecifier(entryPath, reference.fileName)) {
+            offenders.push(`${path.relative(srcDir, entryPath)} → ${reference.fileName}`);
+          }
         }
       }
     };
@@ -249,6 +342,20 @@ describe("brief discovery jurisdiction vocabulary", () => {
   it("treats unknown tags as topic tags rather than jurisdictions", () => {
     expect(normalizeJurisdictionTag("Counterfeit Damages")).toBeUndefined();
     expect(getCanonicalJurisdictions(["UK", "IPEC", "United Kingdom"])).toEqual(["United Kingdom"]);
+  });
+
+  // 이중 경로가 의도다: 별칭 접기는 legacy 집계에만, literal 일치는 신규 데이터 게이트에만 쓴다.
+  // 둘을 섞으면 `UK`·`EU`가 신규 데이터에서도 통과해 애초의 드리프트가 계속된다.
+  it("separates alias folding (reporting) from literal matching (gating)", () => {
+    expect(isCanonicalJurisdiction("United Kingdom")).toBe(true);
+    expect(isCanonicalJurisdiction("UK")).toBe(false);
+    expect(isCanonicalJurisdiction("EU")).toBe(false);
+    expect(isCanonicalJurisdiction("Counterfeit Damages")).toBe(false);
+
+    // 같은 태그가 집계에서는 접히고 게이트에서는 막힌다.
+    expect(getCanonicalJurisdictions(["UK"])).toEqual(["United Kingdom"]);
+    expect(hasCanonicalJurisdiction(["UK", "IPEC"])).toBe(false);
+    expect(hasCanonicalJurisdiction(["United Kingdom", "IPEC"])).toBe(true);
   });
 
   it("covers every live guide with a canonical jurisdiction label", () => {
@@ -410,61 +517,75 @@ describe("brief discovery report", () => {
     expect(getIssueProductSlugs(issues[0]!)).toEqual(["europe"]);
   });
 
-  it("flags sources past their sweep interval and leaves event-driven ones alone", () => {
-    const sources: BriefSource[] = [
-      {
-        id: "weekly-late",
-        label: "weekly",
-        url: "https://example.test/weekly",
-        tier: "primary",
-        jurisdictions: ["Global"],
-        relatedProductSlugs: ["china"],
-        sweepCadence: "weekly"
-      },
-      {
-        id: "monthly-ok",
-        label: "monthly",
-        url: "https://example.test/monthly",
-        tier: "primary",
-        jurisdictions: ["Global"],
-        relatedProductSlugs: ["china"],
-        sweepCadence: "monthly"
-      },
-      {
-        id: "event-never",
-        label: "event",
-        url: "https://example.test/event",
-        tier: "primary",
-        jurisdictions: ["Global"],
-        relatedProductSlugs: ["china"],
-        sweepCadence: "event-driven"
-      },
-      {
-        id: "weekly-never",
-        label: "never swept",
-        url: "https://example.test/never",
-        tier: "primary",
-        jurisdictions: ["Global"],
-        relatedProductSlugs: ["china"],
-        sweepCadence: "weekly"
-      }
+  it("flags overdue sources and keeps never-verified ones visible at any cadence", () => {
+    const buildSource = (
+      id: string,
+      sweepCadence: BriefSource["sweepCadence"]
+    ): BriefSource => ({
+      id,
+      label: id,
+      url: `https://example.test/${id}`,
+      sweepTarget: "fixture",
+      tier: "primary",
+      jurisdictions: ["Global"],
+      relatedProductSlugs: ["china"],
+      sweepCadence,
+      ...(sweepCadence === "event-driven" ? { reviewTrigger: "fixture" } : {})
+    });
+
+    const sources = [
+      buildSource("weekly-late", "weekly"),
+      buildSource("monthly-ok", "monthly"),
+      buildSource("event-never", "event-driven"),
+      buildSource("weekly-never", "weekly"),
+      buildSource("backfill-only", "weekly")
     ];
 
     const sweeps: BriefSweep[] = [
-      { sweptOn: "2026-07-25", sourceIds: ["weekly-late", "monthly-ok"], foundCandidateIds: [] },
-      { sweptOn: "2026-07-01", sourceIds: ["weekly-late"], foundCandidateIds: [] }
+      {
+        sweptOn: "2026-07-25",
+        kind: "verified",
+        sourceIds: ["weekly-late", "monthly-ok"],
+        foundCandidateIds: []
+      },
+      {
+        sweptOn: "2026-07-20",
+        kind: "repository-backfill",
+        sourceIds: ["backfill-only"],
+        foundCandidateIds: []
+      },
+      {
+        sweptOn: "2026-07-01",
+        kind: "verified",
+        sourceIds: ["weekly-late"],
+        foundCandidateIds: []
+      }
     ];
 
     const rows = summarizeSourceSweep(sources, sweeps, now);
     const byId = Object.fromEntries(rows.map((row) => [row.source.id, row]));
 
-    // 최신 sweep이 먼저 잡힌다(로그 최신순 계약).
-    expect(byId["weekly-late"]?.lastSweptOn).toBe("2026-07-25");
-    expect(byId["weekly-late"]?.daysSinceSweep).toBe(9);
-    expect(byId["weekly-late"]?.overdue).toBe(true);
-    expect(byId["monthly-ok"]?.overdue).toBe(false);
-    expect(byId["event-never"]?.overdue).toBe(false);
-    expect(byId["weekly-never"]?.lastSweptOn).toBeNull();
-    expect(byId["weekly-never"]?.overdue).toBe(true);
+    // 최신 verified 회차가 먼저 잡힌다(로그 최신순 계약).
+    expect(byId["weekly-late"]?.lastVerifiedOn).toBe("2026-07-25");
+    expect(byId["weekly-late"]?.daysSinceVerified).toBe(9);
+    expect(byId["weekly-late"]?.status).toBe("overdue");
+    expect(byId["monthly-ok"]?.status).toBe("ok");
+
+    // event-driven이어도 한 번도 실사되지 않았다면 리포트에서 사라지지 않는다.
+    expect(byId["event-never"]?.status).toBe("never-verified");
+    expect(byId["weekly-never"]?.status).toBe("never-verified");
+
+    // backfill은 계보로 남지만 freshness를 리셋하지 않는다.
+    expect(byId["backfill-only"]?.lastBackfilledOn).toBe("2026-07-20");
+    expect(byId["backfill-only"]?.lastVerifiedOn).toBeNull();
+    expect(byId["backfill-only"]?.status).toBe("never-verified");
+  });
+
+  // 시드 백로그는 backfill 회차에서만 나왔다. 그러므로 지금은 어떤 소스도 실사된 적이 없다 —
+  // radar가 이걸 "방금 봤다"로 보여주면 리포트의 주 신호가 거짓이 된다.
+  it("reports every seeded source as never-verified while only a backfill exists", () => {
+    const statuses = new Set(summarizeSourceSweep(undefined, undefined, now).map((row) => row.status));
+
+    expect(statuses).toEqual(new Set(["never-verified"]));
   });
 });

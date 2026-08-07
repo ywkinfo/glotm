@@ -1,7 +1,10 @@
 // 브리프 소재 발굴 lane의 advisory 리포트다. `health:report`와 같은 성격으로 읽는다:
-// **reporting surface이지 게이트가 아니다.** 항상 exit 0이며, 구조 위반은 `npm test`의
-// `brief discovery contract`가 잡는다. cadence 경과일도 목표선 대비 표시일 뿐 SLA가 아니다
-// (`docs/briefs-lane.md`가 hard SLA 없음을 잠갔다).
+// **reporting surface이지 게이트가 아니다.** 구조 위반은 `npm test`의 `brief discovery contract`가
+// 잡고, cadence 경과일도 목표선 대비 표시일 뿐 SLA가 아니다(`docs/briefs-lane.md`가 hard SLA 없음을 잠갔다).
+//
+// 정확히 말하면: **지표는 종료 코드를 바꾸지 않는다.** 어떤 수치가 나빠도 exit 0이다. 다만 이 스크립트
+// 자체가 실패하면(데이터 로드 불가, 타입 위반 등) 예외가 그대로 올라가 CI 스텝은 실패한다. 그 둘은
+// 다른 사건이다 — 하나는 운영 신호이고 하나는 하네스 고장이다.
 
 import { pathToFileURL } from "node:url";
 
@@ -12,6 +15,7 @@ import {
   summarizeCoverage,
   summarizeSourceSweep
 } from "../src/briefs/discoveryReport";
+import type { SourceSweepStatus } from "../src/briefs/discoveryReport";
 
 export type CliFormat = "markdown" | "json";
 
@@ -61,6 +65,14 @@ function toGuideList(slugs: string[]) {
   return slugs.length > 0 ? slugs.join(", ") : "—";
 }
 
+function sweepStatusLabel(status: SourceSweepStatus) {
+  if (status === "never-verified") {
+    return "실사 이력 없음";
+  }
+
+  return status === "overdue" ? "주기 초과" : "—";
+}
+
 export function buildRadar(now = new Date()) {
   return {
     generatedOn: now.toISOString().slice(0, 10),
@@ -79,6 +91,7 @@ export function formatMarkdown(now = new Date()) {
   lines.push("");
   lines.push("> advisory 스냅샷이다. 게이트가 아니다 — 구조 위반은 `npm test`의 `brief discovery contract`가 잡는다.");
   lines.push("> cadence는 목표선 대비 경과일일 뿐 SLA가 아니다(`docs/briefs-lane.md`: hard SLA 없음).");
+  lines.push("> 지표는 CI를 붉히지 않는다. 다만 이 리포트가 **실행에 실패하면** 그건 하네스 고장이므로 스텝이 실패한다.");
   lines.push("");
   lines.push(`- Generated on: ${radar.generatedOn}`);
   lines.push("- 발행 정본: `src/briefs/archive.ts` · 발굴 정본: `src/briefs/discovery.ts`");
@@ -169,16 +182,18 @@ export function formatMarkdown(now = new Date()) {
   lines.push("");
   lines.push("## Source Sweep");
   lines.push("");
-  lines.push("| Source | Tier | Cadence | 마지막 sweep | 경과 | 상태 |");
-  lines.push("| --- | --- | --- | --- | --- | --- |");
+  lines.push("| Source | Tier | Cadence | 마지막 verified | 경과 | backfill | 상태 |");
+  lines.push("| --- | --- | --- | --- | --- | --- | --- |");
 
   for (const row of radar.sources) {
     lines.push(
-      `| ${row.source.id} | ${row.source.tier} | ${row.source.sweepCadence} | ${toDay(row.lastSweptOn)} | ${toDays(row.daysSinceSweep)} | ${row.overdue ? "주기 초과" : "—"} |`
+      `| ${row.source.id} | ${row.source.tier} | ${row.source.sweepCadence} | ${toDay(row.lastVerifiedOn)} | ${toDays(row.daysSinceVerified)} | ${toDay(row.lastBackfilledOn)} | ${sweepStatusLabel(row.status)} |`
     );
   }
 
   lines.push("");
+  lines.push("> `verified`는 소스를 실제로 연 회차만 센다. `repository-backfill`은 후보의 계보 기록이라 freshness를 리셋하지 않는다.");
+  lines.push("> `never-verified`는 cadence와 무관하게 표시된다 — event-driven 소스도 한 번은 실사해야 한다.");
   lines.push("> sweep을 돌면 `src/briefs/discovery.ts`의 `briefSweepLog`에 회차를 append한다. 산출이 없어도 기록한다.");
 
   return lines.join("\n");

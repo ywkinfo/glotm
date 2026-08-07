@@ -28,13 +28,20 @@ export type BriefSource = {
   id: string;
   label: string;
   // 절대 https URL. 저장소에 이미 기록된 URL 또는 그 origin만 쓴다(추정 URL 금지).
+  // 다수가 origin이라 "이 URL을 열었다"만으로는 sweep이 끝나지 않는다 — 완료 조건은 sweepTarget이 정의한다.
   url: string;
+  // 무엇을 보면 이 소스의 sweep이 끝난 것인가. 넓은 루트 URL이 "무엇을 봐야 하는지"를 말해 주지
+  // 못하는 문제를 메우는 필드다. 비워 둘 수 없다(테스트 강제).
+  sweepTarget: string;
   // primary = 기관 공식면, secondary = 업계 매체. 매체는 실제 인용 URL이 저장소에 남은 뒤 등록한다.
   tier: BriefSourceTier;
   jurisdictions: string[];
   // 이 소스가 소재를 대는 live guide. registry.ts의 slug와 대조된다.
   relatedProductSlugs: string[];
   sweepCadence: BriefSweepCadence;
+  // event-driven 소스에는 필수. 정해진 주기가 없으므로 "무엇이 오면 다시 보는가"를 적지 않으면
+  // 그 소스는 아무도 다시 열지 않는다(테스트 강제).
+  reviewTrigger?: string;
   notes?: string;
 };
 
@@ -58,8 +65,14 @@ export type BriefCandidate = {
   notes?: string;
 };
 
+// sweep의 성격. `verified`는 소스를 실제로 열어 확인한 회차이고, `repository-backfill`은 저장소에
+// 이미 기록돼 있던 감시 항목을 후보로 옮긴 회차다. 둘을 섞으면 freshness가 거짓말을 한다 —
+// backfill은 후보의 출처 계보를 남기지만 "그 소스를 봤다"는 증거가 아니므로 freshness에서 제외된다.
+export type BriefSweepKind = "verified" | "repository-backfill";
+
 export type BriefSweep = {
   sweptOn: string;
+  kind: BriefSweepKind;
   sourceIds: string[];
   // 산출이 없어도 빈 배열로 기록한다. "봤는데 없었다"도 운영 사실이다.
   foundCandidateIds: string[];
@@ -88,6 +101,9 @@ export const canonicalJurisdictions = [
 // 기존 16개 이슈는 `UK`와 `United Kingdom`, `Europe`과 `EU`를 섞어 썼다. 본문·태그를 소급 수정하는
 // 대신 집계할 때만 정규화한다. 매핑에 없는 값은 주제 태그(예: `Counterfeit Damages`)로 보고
 // undefined를 돌려준다.
+//
+// **이 별칭 표는 집계 전용이다.** 게이트로 쓰면 애초에 문제였던 `UK`·`EU`가 신규 데이터에서도
+// 통과해 드리프트가 계속된다. 신규 데이터 검사는 아래 `isCanonicalJurisdiction`(literal 일치)을 쓴다.
 const jurisdictionAliases: Record<string, string> = {
   "latin america": "Latin America",
   latam: "Latin America",
@@ -118,6 +134,17 @@ export function normalizeJurisdictionTag(tag: string) {
   return jurisdictionAliases[tag.trim().toLowerCase()];
 }
 
+// 신규 데이터용 게이트. 별칭을 접지 않고 정규 라벨과 그대로 일치해야 한다.
+// 즉 `United Kingdom`은 통과하고 `UK`는 통과하지 못한다.
+export function isCanonicalJurisdiction(tag: string) {
+  return canonicalJurisdictions.includes(tag);
+}
+
+export function hasCanonicalJurisdiction(tags: string[]) {
+  return tags.some((tag) => isCanonicalJurisdiction(tag));
+}
+
+// 집계 전용. legacy 이슈의 `UK`·`EU`를 접어 커버리지를 계산할 때만 쓴다.
 export function getCanonicalJurisdictions(tags: string[]) {
   const normalized = tags
     .map((tag) => normalizeJurisdictionTag(tag))
@@ -137,6 +164,8 @@ export const briefSources: BriefSource[] = [
     id: "cnipa-official",
     label: "국가지식산권국(CNIPA) 공식 사이트",
     url: "https://www.cnipa.gov.cn/",
+    sweepTarget:
+      "메인 뉴스·정책 게시 목록 상단에서 마지막 verified sweep 이후 게시물. 상표법·시행규정 관련 항목만 후보로 본다.",
     tier: "primary",
     jurisdictions: ["China"],
     relatedProductSlugs: ["china"],
@@ -148,6 +177,8 @@ export const briefSources: BriefSource[] = [
     id: "cnipa-trademark-office",
     label: "CNIPA 상표국(商标局) 통지공고면",
     url: "https://sbj.cnipa.gov.cn/",
+    sweepTarget:
+      "통지공고(通知公告) 목록 상단에서 마지막 verified sweep 이후 게시물. 수수료·서식·절차 변경 고지를 우선한다.",
     tier: "primary",
     jurisdictions: ["China"],
     relatedProductSlugs: ["china"],
@@ -158,6 +189,8 @@ export const briefSources: BriefSource[] = [
     id: "samr",
     label: "국가시장감독관리총국(SAMR)",
     url: "https://www.samr.gov.cn/",
+    sweepTarget:
+      "행정 집행·시장감독 공고 목록에서 상표 오인 유발형 사용·부정경쟁 관련 항목.",
     tier: "primary",
     jurisdictions: ["China"],
     relatedProductSlugs: ["china"],
@@ -168,6 +201,8 @@ export const briefSources: BriefSource[] = [
     id: "kipo",
     label: "지식재산처(KIPO)",
     url: "https://www.kipo.go.kr/",
+    sweepTarget:
+      "보도자료·공지 목록 상단에서 마지막 verified sweep 이후 게시물. 해외 출원 지원·집행 프로그램·제도 시행 고지를 본다.",
     tier: "primary",
     jurisdictions: ["Korea"],
     relatedProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
@@ -179,6 +214,8 @@ export const briefSources: BriefSource[] = [
     id: "euipo",
     label: "EUIPO",
     url: "https://www.euipo.europa.eu/",
+    sweepTarget:
+      "뉴스·공지 목록 상단에서 마지막 verified sweep 이후 게시물. 수수료·심사기준·Guidelines 개정 고지를 우선한다.",
     tier: "primary",
     jurisdictions: ["Europe"],
     relatedProductSlugs: ["europe"],
@@ -188,16 +225,22 @@ export const briefSources: BriefSource[] = [
     id: "eu-customs-reform",
     label: "European Commission Taxation and Customs — EU Customs Reform",
     url: "https://taxation-customs.ec.europa.eu/customs/eu-customs-reform_en",
+    sweepTarget:
+      "EU Customs Reform 페이지의 입법 진행 상태(합의·채택·발효 일정) 변경 여부. 페이지 자체가 갱신되지 않으면 후보 없음으로 기록한다.",
     tier: "primary",
     jurisdictions: ["Europe"],
     relatedProductSlugs: ["europe"],
     sweepCadence: "event-driven",
+    reviewTrigger:
+      "EU Customs Reform 입법이 다음 단계로 넘어갈 때(이사회·의회 채택, 관보 게재, 발효일 확정) 또는 EuTm fact log가 적어 둔 2028년경 재확인 시점.",
     notes: "EuTm fact log 2026-08-02 감시 항목(AFA·IPEP·COPIS 장기 승계)의 근거면."
   },
   {
     id: "govuk-ipo",
     label: "GOV.UK — UKIPO 상표 가이던스·수수료",
     url: "https://www.gov.uk/",
+    sweepTarget:
+      "UKIPO 관련 publications·guidance의 'Last updated' 날짜가 마지막 verified sweep 이후로 바뀐 항목. 수수료표·comparable UK mark 안내를 우선한다.",
     tier: "primary",
     jurisdictions: ["United Kingdom"],
     relatedProductSlugs: ["uk", "europe"],
@@ -208,6 +251,8 @@ export const briefSources: BriefSource[] = [
     id: "uspto",
     label: "USPTO",
     url: "https://www.uspto.gov/",
+    sweepTarget:
+      "뉴스·공지와 수수료/규칙 변경 고지 중 마지막 verified sweep 이후 항목.",
     tier: "primary",
     jurisdictions: ["United States"],
     relatedProductSlugs: ["usa"],
@@ -217,6 +262,8 @@ export const briefSources: BriefSource[] = [
     id: "cbp-ipr",
     label: "U.S. Customs and Border Protection — IPR 보호",
     url: "https://www.cbp.gov/trade/priority-issues/ipr/protection",
+    sweepTarget:
+      "IPR 보호 페이지의 집행 통계·절차 안내 갱신 여부와 신규 고지.",
     tier: "primary",
     jurisdictions: ["United States"],
     relatedProductSlugs: ["usa"],
@@ -226,6 +273,8 @@ export const briefSources: BriefSource[] = [
     id: "jpo",
     label: "일본 특허청(JPO)",
     url: "https://www.jpo.go.jp/",
+    sweepTarget:
+      "공지·제도 개정 안내 목록 상단에서 마지막 verified sweep 이후 게시물.",
     tier: "primary",
     jurisdictions: ["Japan"],
     relatedProductSlugs: ["japan"],
@@ -235,6 +284,8 @@ export const briefSources: BriefSource[] = [
     id: "impi",
     label: "IMPI(멕시코 산업재산청)",
     url: "https://www.impi.gob.mx/",
+    sweepTarget:
+      "보도자료(prensa)·서식·수수료 안내 중 마지막 verified sweep 이후 갱신 항목.",
     tier: "primary",
     jurisdictions: ["Mexico"],
     relatedProductSlugs: ["mexico", "latam"],
@@ -245,6 +296,8 @@ export const briefSources: BriefSource[] = [
     id: "inapi-chile",
     label: "INAPI(칠레)",
     url: "https://www.inapi.cl/",
+    sweepTarget:
+      "뉴스(noticias) 목록 상단에서 마지막 verified sweep 이후 게시물.",
     tier: "primary",
     jurisdictions: ["Latin America"],
     relatedProductSlugs: ["latam"],
@@ -254,6 +307,8 @@ export const briefSources: BriefSource[] = [
     id: "sic-colombia",
     label: "SIC(콜롬비아 산업통상감독청)",
     url: "https://www.sic.gov.co/",
+    sweepTarget:
+      "산업재산 관련 공지·결의 목록에서 마지막 verified sweep 이후 항목.",
     tier: "primary",
     jurisdictions: ["Latin America"],
     relatedProductSlugs: ["latam"],
@@ -263,6 +318,8 @@ export const briefSources: BriefSource[] = [
     id: "inpi-argentina",
     label: "INPI(아르헨티나) 온라인 절차 포털",
     url: "https://portaltramites.inpi.gob.ar/",
+    sweepTarget:
+      "절차·수수료 안내 페이지의 갱신 여부. 뉴스 피드가 아니므로 변경 감지 위주로 본다.",
     tier: "primary",
     jurisdictions: ["Latin America"],
     relatedProductSlugs: ["latam"],
@@ -272,6 +329,8 @@ export const briefSources: BriefSource[] = [
     id: "wipo-madrid",
     label: "WIPO 마드리드 시스템",
     url: "https://www.wipo.int/madrid/",
+    sweepTarget:
+      "마드리드 시스템 공지(information notice)·개별수수료·가입국 변경 중 마지막 verified sweep 이후 항목.",
     tier: "primary",
     jurisdictions: ["Global"],
     relatedProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
@@ -351,6 +410,7 @@ export const briefCandidates: BriefCandidate[] = [
 export const briefSweepLog: BriefSweep[] = [
   {
     sweptOn: "2026-08-03",
+    kind: "repository-backfill",
     sourceIds: [
       "cnipa-official",
       "cnipa-trademark-office",
@@ -367,7 +427,7 @@ export const briefSweepLog: BriefSweep[] = [
       "2026-01-comparable-uk-mark-eu-use-cutoff"
     ],
     note:
-      "부트스트랩 sweep — 저장소에 이미 기록돼 있던 감시 항목(브리프 본문·EuTm fact log·claim-map)을 후보로 옮긴 것이고, 1차 출처를 새로 실사한 회차가 아니다. 실사 sweep은 다음 회차부터."
+      "부트스트랩 backfill — 저장소에 이미 기록돼 있던 감시 항목(브리프 본문·EuTm fact log·claim-map)을 후보로 옮긴 회차다. 1차 출처를 연 적이 없으므로 freshness에 산입되지 않고, radar에서 이 소스들은 계속 never-verified로 남는다. 여기 적힌 sourceIds는 각 후보의 근거가 어느 소스 계열에서 왔는지를 남기는 계보 기록이다."
   }
 ];
 

@@ -50,10 +50,13 @@ jobs:
       - name: Run audit:facts (advisory)
         run: npm run audit:facts
 
-      # 브리프 소재 발굴 lane의 advisory 스냅샷(cadence 경과일·백로그·커버리지 공백·주기 초과 소스).
-      # audit:facts staleness 와 같이 붉히지 않고 로그로만 남긴다 — 이 스텝은 항상 exit 0 이다.
+      # 브리프 소재 발굴 lane의 advisory 스냅샷(cadence 경과일·백로그·커버리지 공백·미실사 소스).
+      # audit:facts staleness 와 같이 지표로는 붉히지 않고 로그로만 남긴다.
+      # 정확히: **지표는 종료 코드를 바꾸지 않지만, 스크립트 실행 실패(데이터 로드 불가 등)는
+      # 여전히 이 스텝을 실패시킨다.** 하나는 운영 신호이고 하나는 하네스 고장이다.
       # 구조 위반(존재하지 않는 소스 id, 발행 이슈와 안 맞는 후보 등)은 위 health:runtime 안의
       # `brief discovery contract` 가 이미 게이트한다. cadence 를 하드 게이트로 올리려면
       # docs/briefs-lane.md 의 "hard SLA 없음" 계약부터 owner 가 고쳐야 한다.
+      # 이 스텝은 주기 트리거가 아니다 — 실제 주기는 월간 리뷰와 phase2.5 런북 §5 가 담당한다.
       - name: Run briefs:radar (advisory)
         run: npm run briefs:radar

@@ -24,12 +24,23 @@
 | `briefCandidates` | 발굴했지만 아직 발행하지 않은 소재 | 새 후보는 배열 끝에 추가, 상태는 제자리에서 전이 |
 | `briefSweepLog` | 언제 무엇을 봤는가 | **최신순** 유지 — 새 회차를 배열 맨 앞에 추가 |
 
+## sweep 종류 — `verified` vs `repository-backfill`
+
+`BriefSweep.kind`는 두 값만 갖는다. 섞으면 freshness가 거짓말을 한다.
+
+| kind | 의미 | freshness |
+|---|---|---|
+| `verified` | 소스를 **실제로 열어** 확인한 회차 | 인정 — 이 날짜가 마지막 실사일이 된다 |
+| `repository-backfill` | 저장소에 이미 기록돼 있던 감시 항목을 후보로 옮긴 회차 | **산입 안 함** — 후보의 계보만 남긴다 |
+
+하네스 도입 시 넣은 회차는 `repository-backfill`이다. 그래서 지금 radar는 **15개 소스 전부를 `실사 이력 없음`으로 표시하며, 그것이 사실이다.** 첫 `verified` sweep을 돌기 전까지 이 상태가 유지된다.
+
 ## sweep 절차
 
-1. `npm run briefs:radar`로 지금 상태를 본다. `Source Sweep` 블록의 `주기 초과` 소스가 이번 회차의 우선 대상이다.
-2. 그 소스들을 실제로 연다. 등록부 순회가 이 lane의 "체계적"의 정의다 — 기억나는 곳만 보는 것이 아니다.
-3. 소재가 있으면 `briefCandidates`에 후보를 추가한다. `trigger`에는 **기관·매체와 날짜**를 적는다(발행 계약의 provenance 규칙과 같은 기준). 추정으로 채우지 않는다.
-4. `briefSweepLog`에 회차를 append한다. **산출이 없어도 기록한다** — "봤는데 없었다"도 운영 사실이고, 기록하지 않으면 그 소스는 영원히 `주기 초과`로 남는다.
+1. `npm run briefs:radar`로 지금 상태를 본다. `Source Sweep` 블록의 `실사 이력 없음`·`주기 초과` 소스가 이번 회차의 우선 대상이다.
+2. 그 소스들을 실제로 연다. 각 소스의 `sweepTarget`이 **무엇을 봐야 그 소스의 sweep이 끝나는지**를 정의한다 — 등록된 URL을 여는 것만으로는 끝나지 않는다. 등록부 순회가 이 lane의 "체계적"의 정의다.
+3. 소재가 있으면 `briefCandidates`에 후보를 추가한다. `trigger`에는 **기관·매체와 날짜**를 적는다(발행 계약의 provenance 규칙과 같은 기준. 날짜 토큰은 테스트가 강제한다). 추정으로 채우지 않는다.
+4. `briefSweepLog`에 `kind: "verified"` 회차를 append한다. **산출이 없어도 기록한다** — "봤는데 없었다"도 운영 사실이고, 기록하지 않으면 그 소스는 영원히 `실사 이력 없음`으로 남는다.
 5. `npm test`로 `brief discovery contract`를 통과시킨다.
 
 sweep은 사람 또는 세션 중인 checkout agent가 수행한다. 자동 fetch는 이 lane의 범위가 아니다.
@@ -49,40 +60,57 @@ watching ──(트리거 도달·1차 출처 확인 가능)──▶ ready ─�
 | `published` | 이슈로 나감 | `publishedAs` = archive의 이슈 slug |
 | `dropped` | 쓰지 않기로 함 | `droppedReason` |
 
+모든 후보는 `relatedProductSlugs`를 최소 1개 갖는다(어떤 가이드에도 닿지 않는 후보는 커버리지에 잡히지 않아 백로그에서 조용히 늙는다). `dropped`가 아닌 상태에는 `droppedReason`이 남아 있으면 안 된다 — 되살린 후보의 옛 폐기 사유는 상태를 오독하게 만든다.
+
+sweep 회차의 `foundCandidateIds`에 오른 후보는 **그 회차가 실제로 본 소스 중 하나를 인용**해야 하고, `discoveredOn`이 그 회차 날짜보다 늦을 수 없다. 계보가 맞지 않으면 테스트가 막는다.
+
 - `dropped`에 이유를 요구하는 이유는 같은 소재를 몇 달 뒤 다시 주워 오는 루프를 끊기 위해서다.
 - `watching`으로 30일을 넘기면 radar가 `Stalled watching`으로 표시한다. **버리라는 신호가 아니라 살릴지 버릴지 한 번 판단하라는 신호다.**
 
 ## 소스 등록 규칙
 
 - `url`은 저장소에 이미 기록된 URL 또는 그 origin만 쓴다. 워크스페이스 `content/research/*_source_register.md`·`claim-map.json`과 기존 브리프 본문이 근거다. **추정 URL을 만들지 않는다.**
+- `sweepTarget`은 필수다. 넓은 루트 URL(`https://www.gov.uk/` 등)은 "무엇을 봐야 하는지"를 말해 주지 못하므로, **무엇을 보면 이 소스의 sweep이 끝나는가**를 한 문장으로 적는다. 정확한 뉴스·공고 페이지 URL이 확정되면 `url`을 그 페이지로 좁힌다.
 - `tier: "primary"`는 기관 공식면이다. 업계 매체(`secondary`)는 실제 인용 URL이 저장소에 남은 뒤 등록한다. 현재 시드는 전부 primary이며, 매체는 primary 공고에서 파생 확인한다.
 - `relatedProductSlugs`는 `src/products/registry.ts`의 live guide slug만 쓴다. 어떤 가이드에도 닿지 않는 소스는 이 lane의 소스가 아니다.
-- **커버리지 바닥**: live guide 7개는 각각 primary 소스를 최소 1개 갖는다. 테스트가 강제한다.
+- `sweepCadence: "event-driven"`인 소스는 `reviewTrigger`가 필수다. 주기가 없는데 "무엇이 오면 다시 보는가"까지 없으면 그 소스는 아무도 다시 열지 않는다.
+- **커버리지 바닥**: live guide 7개는 각각 **자기 관할을 다루는** primary 소스를 최소 1개 갖는다(KIPO·WIPO처럼 전 가이드를 대는 cross-cutting 소스만으로는 충족되지 않는다). 테스트가 강제한다.
 
 ## 관할 태그 어휘
 
-기존 이슈들은 `UK`와 `United Kingdom`, `EU`와 `Europe`을 섞어 썼다. 발행 시점 태그는 **소급 수정하지 않고**(본문 소급 수정 금지와 같은 이유) 집계할 때만 `normalizeJurisdictionTag`로 접는다.
+기존 이슈들은 `UK`와 `United Kingdom`, `EU`와 `Europe`을 섞어 썼다. 발행 시점 태그는 **소급 수정하지 않는다**(본문 소급 수정 금지와 같은 이유).
 
-하네스 도입일(`briefDiscoveryStartOn` = 2026-08-03) 이후 발행 이슈부터는 관할 축 하나가 정규 어휘여야 한다. 나머지 주제 태그(`Counterfeit Damages`, `IPEC` 등)는 계속 자유다.
+경로가 둘로 갈린다. 이 분리가 요점이다.
+
+| 용도 | 함수 | 동작 |
+|---|---|---|
+| **집계**(legacy 포함 커버리지 계산) | `normalizeJurisdictionTag` / `getCanonicalJurisdictions` | 별칭을 접는다 — `UK` → `United Kingdom` |
+| **게이트**(신규 데이터 검사) | `isCanonicalJurisdiction` / `hasCanonicalJurisdiction` | literal 일치만 — `UK`는 통과하지 못한다 |
+
+별칭 정규화를 게이트로 쓰면 애초에 문제였던 드리프트가 신규 데이터에서도 계속된다. 그래서 하네스 도입일(`briefDiscoveryStartOn` = 2026-08-03) 이후 발행 이슈와 **모든 후보**는 관할 축 하나가 **literal** 정규 어휘여야 한다. 나머지 주제 태그(`Counterfeit Damages`, `IPEC` 등)는 계속 자유다.
+
+`briefDiscoveryStartOn`은 테스트로 고정돼 있다. 이 날짜를 앞으로 밀면 "발행 이슈는 백로그를 거쳐야 한다"는 게이트가 조용히 사라지므로, 바꾸려면 그 pin 테스트를 의도적으로 고쳐야 한다.
 
 ## radar 읽는 법
 
-`npm run briefs:radar`(JSON은 `npm run briefs:radar:json`)는 **reporting surface이지 게이트가 아니다.** `health:report`와 같은 성격으로 읽는다. 항상 exit 0이고, 구조 위반은 `npm test`가 잡는다.
+`npm run briefs:radar`(JSON은 `npm run briefs:radar:json`)는 **reporting surface이지 게이트가 아니다.** `health:report`와 같은 성격으로 읽는다. 구조 위반은 `npm test`가 잡는다.
+
+**지표와 실행 실패는 다른 사건이다.** 어떤 수치가 나빠도 종료 코드는 0이다(cadence 초과, 커버리지 공백, 실사 이력 없음 전부). 다만 스크립트 자체가 실패하면 — 데이터 로드 불가, 타입 위반 등 — 예외가 그대로 올라가 CI 스텝이 실패한다. 하나는 운영 신호이고 하나는 하네스 고장이다.
 
 | 블록 | 무엇을 보여주는가 | 어떻게 읽는가 |
 |---|---|---|
 | `Lane Cadence` | 마지막 발행 후 경과일 vs 목표 7일 | **SLA가 아니다.** `briefs-lane.md`가 hard SLA를 두지 않기로 잠갔다(freshness 트레드밀 방지). 목표선 초과는 판단 재료일 뿐 실패가 아니다 |
 | `Backlog` | status별 건수 · `ready` 목록 · 정체 후보 | `ready`가 0이면 다음 발행 때 맨땅에서 시작해야 한다는 뜻이다 |
 | `Guide Coverage` | guide별 마지막 브리프 등장일과 열린 후보 수 | 오래 굶은 가이드 + 후보 0 조합이 다음 sweep의 우선순위다 |
-| `Source Sweep` | 소스별 마지막 sweep 경과일 | `주기 초과`가 이번 회차에 열 목록이다 |
+| `Source Sweep` | 소스별 마지막 **verified** 실사 경과일 | `실사 이력 없음`·`주기 초과`가 이번 회차에 열 목록이다. `backfill` 열은 계보 표시일 뿐 실사 증거가 아니다 |
 
 ## 주기성
 
-자동 스케줄러는 없다. 주기성은 세 곳에 걸려 있다.
+**자동 스케줄러는 없다.** CI 스텝은 주기 트리거가 아니라 push·PR마다의 로그 가시성일 뿐이며, 실제 주기는 아래 두 체크리스트가 담당한다.
 
-- `.github/workflows/ci.yml`의 advisory 스텝 — push마다 로그에 남는다. **붉히지 않는다.**
+- `.github/workflows/ci.yml`의 advisory 스텝 — push마다 로그에 남는다. 지표로는 **붉히지 않는다**(실행 실패는 별개).
 - [`monthly-review-template.md`](monthly-review-template.md)의 `Brief discovery check` — 월 1회 결과 기록.
-- [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md)의 monthly quick checklist — 월 1회 실행.
+- [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md)의 monthly quick checklist §5 — 월 1회 실행.
 
 ## 경계 (하지 않는 것)
 
@@ -90,4 +118,10 @@ watching ──(트리거 도달·1차 출처 확인 가능)──▶ ready ─�
 - cadence를 하드 게이트로 올리지 않는다. 올리려면 `briefs-lane.md`의 hard SLA 없음 계약부터 owner가 고쳐야 한다.
 - 후보 하나를 근거로 포트폴리오 우선순위를 바꾸지 않는다(taskboard committee-warning 규칙과 동일).
 - 발굴 데이터를 운영 문서에 손으로 복제하지 않는다. 정본은 `discovery.ts`이고 사람이 읽는 뷰는 radar 출력이다.
-- 이 데이터는 앱 런타임이 import하지 않는다(테스트가 가드한다). 리더 UI에 백로그를 노출하지 않는다.
+- 이 데이터는 앱 런타임이 import하지 않는다. 테스트가 TypeScript import 그래프(`ts.preProcessFile`)로 정적 import·재export·동적 `import()`를 전부 훑어 가드하므로, 파일명을 바꾸거나 따옴표를 바꿔서 우회할 수 없다. 리더 UI에 백로그를 노출하지 않는다.
+
+## 미결 (owner 핸드오프)
+
+- **소스별 정확한 뉴스·공고 페이지 URL.** 현재 `url` 다수가 origin이고, 완료 조건은 `sweepTarget` 산문이 지고 있다. 이 저장소의 에이전트 세션은 외부 egress가 차단돼 페이지 실재를 확인할 수 없으므로(**미검증**), 페이지 URL 확정은 owner가 한다.
+- **소스 커버리지 승인**: 15건이 실제로 봐야 할 곳을 다 덮는지.
+- **secondary(업계 매체) 등록 기준**: 현재는 인용 URL이 저장소에 남은 뒤에만 등록한다.

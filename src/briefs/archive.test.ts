@@ -9,7 +9,7 @@ import {
   getLatestBriefIssue,
   resolveBriefCorrection
 } from "./archive";
-import { briefDiscoveryStartOn, getCanonicalJurisdictions } from "./discovery";
+import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
@@ -102,7 +102,10 @@ describe("brief lane contract", () => {
   // 기존 이슈들은 `UK`와 `United Kingdom`을 섞어 썼다. 발행 시점 태그는 그대로 두고(본문 소급
   // 수정 금지와 같은 이유), 발굴 하네스 도입 이후 이슈부터 관할 축 하나를 정규 어휘로 요구한다.
   // 나머지 주제 태그는 계속 자유다. 어휘 정본은 `discovery.ts`.
-  it("requires a canonical jurisdiction tag on issues published after the discovery harness", () => {
+  //
+  // 별칭 정규화(`getCanonicalJurisdictions`)가 아니라 literal 일치를 쓴다. 정규화를 게이트로 쓰면
+  // 애초에 문제였던 `UK`·`EU`가 신규 이슈에서도 통과해 드리프트가 그대로 이어진다.
+  it("requires a literal canonical jurisdiction tag on issues published after the discovery harness", () => {
     const discoveryStartAt = Date.parse(briefDiscoveryStartOn);
 
     for (const issue of briefIssues) {
@@ -111,9 +114,9 @@ describe("brief lane contract", () => {
       }
 
       expect(
-        getCanonicalJurisdictions(issue.jurisdictions),
-        `${issue.slug} has no canonical jurisdiction tag`
-      ).not.toEqual([]);
+        hasCanonicalJurisdiction(issue.jurisdictions),
+        `${issue.slug} has no literal canonical jurisdiction tag (aliases like UK/EU do not count)`
+      ).toBe(true);
     }
   });
 
