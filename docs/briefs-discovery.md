@@ -118,7 +118,40 @@ sweep 회차의 `foundCandidateIds`에 오른 후보는 **그 회차가 실제�
 - cadence를 하드 게이트로 올리지 않는다. 올리려면 `briefs-lane.md`의 hard SLA 없음 계약부터 owner가 고쳐야 한다.
 - 후보 하나를 근거로 포트폴리오 우선순위를 바꾸지 않는다(taskboard committee-warning 규칙과 동일).
 - 발굴 데이터를 운영 문서에 손으로 복제하지 않는다. 정본은 `discovery.ts`이고 사람이 읽는 뷰는 radar 출력이다.
-- 이 데이터는 앱 런타임이 import하지 않는다. 테스트가 TypeScript import 그래프(`ts.preProcessFile`)로 정적 import·재export·동적 `import()`를 전부 훑어 가드하므로, 파일명을 바꾸거나 따옴표를 바꿔서 우회할 수 없다. 리더 UI에 백로그를 노출하지 않는다.
+- 이 데이터는 앱 런타임이 import하지 않는다. 리더 UI에 백로그를 노출하지 않는다(아래 `런타임 격리 가드`).
+
+## 런타임 격리 가드
+
+가드는 3중이다.
+
+| 가드 | 무엇을 보는가 | 어디서 도는가 |
+|---|---|---|
+| `src/briefs/discovery.test.ts` | `src/**`의 **직접** import (빠른 로컬 그물) | runtime lane |
+| `scripts/module-boundary.test.ts` | 진입점(`index.html`·`build:pages`)에서 **재귀**로 도달 가능한 모듈 그래프 | runtime lane |
+| `npm run check:dist-boundary` | 실제 출하 산출물(`dist/**`)의 문자열 | **release lane**(빌드 직후) |
+
+경계 가드가 보장하는 것:
+
+- 진입점 목록을 하드코딩하지 않고 `index.html`의 module script와 `build:pages`의 스크립트에서 **도출**한다. 새 진입점이 생기면 실패한다.
+- `src` 밖 bridge를 경유해도 잡는다 — 이 저장소에는 `scripts/prerender.ts → scripts/seo.ts → src/*` 경로가 실재하며, 이 경로로 들어온 데이터는 prerender HTML에 실린다.
+- specifier 해석은 `ts.resolveModuleName`에 맡긴다. `./discovery.js`처럼 확장자를 바꿔 쓴 import도 `discovery.ts`로 해석돼 잡힌다.
+- 수집은 AST로 한다. 주석·문자열 안의 `import.meta.glob` 같은 표현에 오탐하지 않는다.
+- 실패 시 `scripts/prerender.ts → scripts/seo.ts → src/briefs/discovery.ts`처럼 **경로 전체**를 출력한다.
+
+보장하지 **않는** 것 — 발견되면 통과시키는 대신 **실패**한다:
+
+- `import.meta.glob()` / `globEager()`
+- 값이 실행 시점에 정해지는 동적 `import()`
+
+두 형태는 정적으로 따라갈 수 없다. 도입하려면 `scripts/module-graph.ts`를 함께 확장해야 한다. Vite query import(`?raw`, `?url`)는 예외적으로 정확히 다룬다 — 쿼리를 떼고 해석해 TS 모듈이면 진짜 간선으로 잡고(모듈 텍스트가 번들에 인라인되므로), 마크다운 같은 에셋이면 무시한다.
+
+## dist 경계 검사
+
+`npm run check:dist-boundary`는 `health:release`의 `build:pages:glotm` **직후**에 돈다. 정적 가드를 빠져나간 데이터가 실제 산출물에 남았는지 보는 마지막 그물이다.
+
+- **`dist/` 부재는 skip이 아니라 실패다.** release lane에서 산출물이 없다는 것 자체가 사고다.
+- vitest 파일이 아닌 CLI인 이유: `test:runtime`은 `--exclude` 방식이라 새 테스트를 자동 포함하고 bare `npm test`도 전체를 돌린다. dist를 요구하는 테스트를 두면 빌드 전에 실행돼 `Harness/QA-Gate.md`의 "Always: `npm run test` 통과" 계약이 clean tree에서 깨진다.
+- 토큰은 후보 id 전수 + **따옴표를 씌운** 소스 id + 구조 마커(`sweepTarget`·`reviewTrigger`·`repository-backfill`·`briefSweepLog`)다. 소스 id를 맨몸으로 찾으면 가이드 본문의 정당한 기관명과 충돌한다(실측: `uspto` 7파일, `impi` 27파일). 스캔 대상은 `.html .js .css .json .map .xml .txt`.
 
 ## 미결 (owner 핸드오프)
 

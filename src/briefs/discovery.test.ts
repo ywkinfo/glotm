@@ -263,10 +263,11 @@ describe("brief discovery contract", () => {
   // discovery 데이터는 ops 전용이다. 리더 UI·prerender가 이걸 import하기 시작하면 배포 번들에
   // 운영 백로그가 실린다.
   //
-  // 정규식으로 `from "..."`를 찾던 앞선 판은 작은따옴표·`export ... from`·동적 `import()`를 놓쳤고,
-  // 경로 prefix로 스킵해서 `discoveryWidget.tsx` 같은 파일이 통째로 검사 밖이었다. 여기서는
-  // TypeScript의 preProcessFile로 **모든 형태의 모듈 참조**를 뽑고, 파일 기준으로 resolve해
-  // 절대경로로 대조한다(`typescript`는 이미 devDependency다).
+  // **역할 분담**: 이건 `src/**`의 직접 import만 보는 빠른 로컬 가드다. 진짜 경계 판정 —
+  // 진입점(`index.html`, `build:pages`)에서 시작하는 **재귀** 그래프, `src` 밖 bridge 경유,
+  // `.js` extension substitution, 출하 산출물 스캔 — 은 `scripts/module-boundary.test.ts`와
+  // `scripts/check-dist-boundary.ts`가 맡는다. 여기서는 아직 아무도 import하지 않는 src 파일이
+  // discovery를 끌어 쓰는 것도 실수이므로 그 경우까지 일찍 잡는다.
   it("keeps discovery data out of the app runtime", () => {
     const srcDir = path.resolve(__dirname, "..");
     const discoveryModules = new Set(

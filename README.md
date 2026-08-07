@@ -38,7 +38,7 @@ npm run health:report
 
 - `npm run health:runtime`: `typecheck:runtime + test:runtime + npm run e2e:smoke`를 묶어 루트 안내 흐름, 링크 계약, 공통 리더 동작, 실제 브라우저 스모크를 함께 검증한다. generated-content 의존 회귀 테스트와 generated artifact가 필요한 node-side 검사는 여기서 제외해 pure runtime lane으로 유지한다.
 - `npm run health:content`: 루트 `content:prepare` 뒤에 `test:content`와 `ChaTm`·`MexTm`·`EuTm`·`UsaTm`·`JapTm`·`UKTm`의 workspace local full pipeline을 다시 재현한다. `LatTm`은 루트 `content:prepare`에서 full pipeline을 타지만 `health:content`의 workspace-local 추가 실행에는 포함하지 않는다.
-- `npm run health:release`: `build + build:pages:glotm`를 묶어 로컬에서 GitHub Pages subpath 출하 전 상태를 검증한다. 이 lane에서는 prerendered HTML, `dist/sitemap.xml`, `dist/robots.txt`, `dist/404.html`, `dist/.nojekyll`와 favicon asset 출하 상태까지 함께 확인한다. Gateway-facing copy나 hierarchy 조정이 `scripts/seo.ts` mirrored output, prerendered HTML, canonical/OG/Twitter metadata, sitemap/robots, `/glotm/` Pages-path behavior에 닿으면 runtime-only가 아니라 release lane change로 취급한다. 이 검증은 local release artifact 기준이며, live Pages 상의 개별 상호작용 이슈까지 자동으로 보증하는 표현으로 읽지 않는다.
+- `npm run health:release`: `build:pages:glotm -> check:dist-boundary -> test:seo`를 묶어 로컬에서 GitHub Pages subpath 출하 전 상태를 검증한다. `check:dist-boundary`는 빌드 직후 산출물에 발굴 lane ops 데이터가 실렸는지 확인하며, `dist/` 부재는 skip이 아니라 실패로 본다. 이 lane에서는 prerendered HTML, `dist/sitemap.xml`, `dist/robots.txt`, `dist/404.html`, `dist/.nojekyll`와 favicon asset 출하 상태까지 함께 확인한다. Gateway-facing copy나 hierarchy 조정이 `scripts/seo.ts` mirrored output, prerendered HTML, canonical/OG/Twitter metadata, sitemap/robots, `/glotm/` Pages-path behavior에 닿으면 runtime-only가 아니라 release lane change로 취급한다. 이 검증은 local release artifact 기준이며, live Pages 상의 개별 상호작용 이슈까지 자동으로 보증하는 표현으로 읽지 않는다.
 - `npm run health:report`: 최근 실행한 루트 lane 상태와 product scorecard 메타데이터를 같은 리포트 포맷으로 출력한다. 이것은 end-to-end verification proof가 아니라 recent lane-state provenance summary다. 기본적으로 저장된 lane 결과를 읽고, 필요하면 `--format json`, `--runtime=pass` 같은 플래그로 덮어쓸 수 있다.
 - `npm run content:prepare`: 7개 가이드의 generated content와 Reports generated content를 재생성한 뒤 `scripts/sync-generated-content.mjs`로 루트 셸 소비 경로를 동기화한다. 현재 루트 기준으로 `LatTm`·`MexTm`·`UsaTm`·`JapTm`·`ChaTm`·`EuTm`·`UKTm` 전부 `build-master -> qa-content -> build-content` 전체 흐름을 타고, Reports는 `Reports/scripts/build-content.ts`를 실행한다.
 
@@ -82,7 +82,7 @@ npm run health:all
 - 런타임 제품 메타데이터: `src/products/registry.ts`
 - Report / Gateway trust layer 메타데이터: `src/reports/registry.ts`
 - 브리프 lane: 계약 `docs/briefs-lane.md`, 정본 콘텐츠·인벤토리 `src/briefs/archive.ts`
-- 브리프 소재 발굴(발행 앞단): 계약 `docs/briefs-discovery.md`, 정본 `src/briefs/discovery.ts`, advisory 리포트 `npm run briefs:radar`
+- 브리프 소재 발굴(발행 앞단): 계약 `docs/briefs-discovery.md`, 정본 `src/briefs/discovery.ts`, advisory 리포트 `npm run briefs:radar`, 런타임 격리 가드 `scripts/module-boundary.test.ts` + `npm run check:dist-boundary`
 - 포트폴리오 scorecard 규칙: `src/products/scorecard.ts`, `docs/portfolio-scorecard.md`
 - buyer-facing 포지셔닝: `docs/buyer-narrative.md`
 - 루트 런타임 QA 체크리스트: `docs/phase1-runtime-qa.md`
