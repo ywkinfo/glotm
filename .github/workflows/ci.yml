@@ -14,8 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # fetch-depth: 0 은 선택 사항이 아니다. 생성 콘텐츠의 meta.builtAt(= sitemap lastmod)은
+      # 콘텐츠 소스의 git 커밋일을 1차 근거로 쓰는데, 기본값인 shallow clone에서는 모든 경로의
+      # 마지막 커밋이 체크아웃 커밋 하나로 붕괴된다. 그 경우 build-content 는 조용히 틀린 날짜를
+      # 쓰는 대신 fallback 으로 내려가고, 결과적으로 배포 시각이 다시 lastmod 가 된다.
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v5
