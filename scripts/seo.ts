@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { gitLastModifiedIso } from "./git-last-modified";
+
 import {
   briefIssues,
   buildBriefArchivePath,
@@ -48,6 +50,9 @@ const DEFAULT_SITE_DESCRIPTION =
   "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.";
 const DEFAULT_GATEWAY_HEADING = "인하우스 팀을 위한 cross-border trademark operating guide";
 const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.svg";
+// legalPages 정본. 이 경로가 옮겨가면 legal 3면의 lastmod는 조용히 fallback으로 내려가므로,
+// seo.test.ts가 실재를 단정할 수 있도록 내보낸다.
+export const LEGAL_SOURCE_PATH = "src/trustLegal.ts";
 const DEFAULT_SOCIAL_IMAGE_ALT =
   "GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지";
 const DEFAULT_SOCIAL_IMAGE_WIDTH = 1200;
@@ -176,6 +181,8 @@ type SeoRuntimeOptions = {
   basePath?: string;
   distDir?: string;
   siteOrigin?: string;
+  // 테스트가 git 조회를 우회하도록 주입하는 값. 미지정이면 src/trustLegal.ts의 커밋일을 쓴다.
+  legalLastModified?: string;
 };
 
 type PageLink = {
@@ -744,6 +751,13 @@ export function buildStaticPageDefinitions(
     changeFrequency: "weekly"
   });
 
+  // 법적고지·개인정보·문의 3면의 내용은 src/trustLegal.ts가 정본이고, 브리프나 리포트가
+  // 나간다고 바뀌지 않는다. gatewayLastModified를 물려받으면 발행 때마다 이 3면도 갱신됐다고
+  // 신고하게 되므로(가이드 코퍼스에서 방금 고친 것과 같은 거짓 신선도), 자기 소스의 커밋일을 쓴다.
+  // git을 쓸 수 없으면 종전 동작인 gatewayLastModified로 내려간다.
+  const legalLastModified =
+    options.legalLastModified ?? gitLastModifiedIso(LEGAL_SOURCE_PATH) ?? gatewayLastModified;
+
   for (const legalPage of legalPages) {
     const legalUrl = buildCanonicalUrl(legalPage.path, siteOrigin, basePath);
     pages.push({
@@ -754,7 +768,7 @@ export function buildStaticPageDefinitions(
       canonicalUrl: legalUrl,
       ...buildDefaultSocialImage(siteOrigin, basePath),
       ogType: "website",
-      lastModified: ensureIsoDate(gatewayLastModified),
+      lastModified: ensureIsoDate(legalLastModified),
       bodyHtml: renderLegalBody(legalPage, basePath),
       structuredData: [
         buildBreadcrumbNode([gatewayCrumb, { name: legalPage.navLabel, url: legalUrl }])

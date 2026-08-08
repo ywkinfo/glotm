@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -26,12 +27,14 @@ import {
   legalPages
 } from "../src/trustLegal";
 import {
+  LEGAL_SOURCE_PATH,
   buildPublicHref,
   buildRobotsTxt,
   buildSitemapXml,
   buildStaticPageDefinitions,
   renderStaticHtml
 } from "./seo";
+import { gitLastModifiedIso } from "./git-last-modified";
 import { preparePagesArtifacts } from "./prepare-pages";
 
 const documentDataBySlug = new Map<string, DocumentData>([
@@ -158,6 +161,55 @@ describe("SEO build helpers", () => {
         ])
       );
       expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm${legalPage.path}/`);
+    }
+  });
+
+  it("dates legal pages from their own source, not from the site's latest content", () => {
+    // 이 3면의 내용은 src/trustLegal.ts가 정본이라 브리프·리포트 발행으로 바뀌지 않는다.
+    // gatewayLastModified를 물려받으면 발행 때마다 갱신됐다고 신고하는 거짓 신선도가 된다.
+    expect(
+      existsSync(path.resolve(__dirname, "..", LEGAL_SOURCE_PATH)),
+      `${LEGAL_SOURCE_PATH} must exist — a moved path makes the legal lastmod silently fall back`
+    ).toBe(true);
+
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const committedAt = gitLastModifiedIso(LEGAL_SOURCE_PATH);
+    const gatewayPage = pages.find((page) => page.routePath === "/");
+
+    expect(gatewayPage).toBeDefined();
+    expect(committedAt, "the legal source must have a usable commit date in this repo").toBeTruthy();
+
+    for (const legalPage of legalPages) {
+      const staticPage = pages.find((page) => page.routePath === legalPage.path);
+
+      expect(staticPage?.lastModified, `${legalPage.path} must date from its own source`).toBe(
+        committedAt
+      );
+    }
+
+    // 게이트웨이는 최신 브리프·리포트를 실제로 드러내므로 종전대로 사이트 전체 최신일을 쓴다.
+    // 두 값이 갈라져 있다는 것이 이 회귀 가드의 요지다.
+    expect(
+      gatewayPage?.lastModified,
+      "the gateway aggregates latest content and must keep its own date"
+    ).not.toBe(committedAt);
+  });
+
+  it("lets the caller override the legal date when git cannot answer", () => {
+    const injected = "2026-01-02T03:04:05.000Z";
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io",
+      legalLastModified: injected
+    });
+
+    for (const legalPage of legalPages) {
+      expect(pages.find((page) => page.routePath === legalPage.path)?.lastModified).toBe(injected);
     }
   });
 
