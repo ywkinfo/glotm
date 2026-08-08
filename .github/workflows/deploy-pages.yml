@@ -23,8 +23,13 @@ jobs:
     env:
       VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
     steps:
+      # fetch-depth: 0 은 선택 사항이 아니다 — 근거는 ci.yml 의 같은 스텝 주석을 본다.
+      # 실제로 공개 sitemap.xml 을 만드는 워크플로가 여기이므로, 이 설정이 빠지면
+      # lastmod 145건이 다시 전부 배포 시각이 된다.
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v6
