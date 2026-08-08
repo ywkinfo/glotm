@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -73,6 +74,7 @@ const sourcePath = path.join(rootDir, "content", "source", "master.md");
 const generatedDir = path.join(rootDir, "content", "generated");
 const documentDataPath = path.join(generatedDir, "document-data.json");
 const searchIndexPath = path.join(generatedDir, "search-index.json");
+const contentSourceDir = path.join(rootDir, "content", "source");
 
 const officialDomains = new Set([
   "wipo.int",
@@ -100,6 +102,72 @@ const markdownProcessor = unified()
   .use(rehypeEnhance)
   .use(rehypeStringify);
 
+// meta.builtAt은 이 가이드 인덱스와 전 챕터의 sitemap lastmod가 된다(scripts/seo.ts).
+// 빌드 시각을 찍으면 콘텐츠가 그대로여도 배포마다 전 코퍼스가 갱신됐다고 신고하므로,
+// 1차 근거는 콘텐츠 소스의 git 커밋일로 잡는다 — CI든 로컬이든 같은 값이 나오고 배포 횟수에 흔들리지 않는다.
+// git을 쓸 수 없거나(비-git 아카이브) 믿을 수 없을 때만 2차 방어인 withStableBuiltAt으로 내려간다.
+function gitLastModifiedIso(targetPath: string) {
+  const runGit = (args: string[]) =>
+    execFileSync("git", args, {
+      cwd: rootDir,
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"]
+    }).trim();
+
+  try {
+    if (runGit(["rev-parse", "--is-inside-work-tree"]) !== "true") {
+      return undefined;
+    }
+
+    // shallow clone에서는 모든 경로의 마지막 커밋이 체크아웃 커밋 하나로 붕괴돼 배포 시각과 다를 바 없다.
+    // 워크플로는 fetch-depth: 0을 쓰지만, 그 설정이 사라지면 조용히 틀리는 대신 fallback으로 내려간다.
+    if (runGit(["rev-parse", "--is-shallow-repository"]) !== "false") {
+      return undefined;
+    }
+
+    // 커밋되지 않은 편집이 있으면 커밋일은 지금 빌드하는 내용을 설명하지 못한다. 거짓 날짜 대신 fallback.
+    if (runGit(["status", "--porcelain", "--", targetPath]) !== "") {
+      return undefined;
+    }
+
+    const committedAt = runGit(["log", "-1", "--format=%cI", "--", targetPath]);
+
+    return committedAt ? new Date(committedAt).toISOString() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+// git 경로를 못 쓸 때의 2차 방어. 재생성 결과가 직전 산출물과 같으면 이전 스탬프를 유지해
+// no-op 재빌드가 lastmod를 흔들지 않게 한다. 단, 산출물이 없는 신규 클론에서는 걸릴 것이 없으므로
+// 이 경로에만 기대면 CI에서는 아무 효과가 없다 — 그래서 git 커밋일이 1차다.
+async function withStableBuiltAt(next: DocumentData): Promise<DocumentData> {
+  let existing: DocumentData;
+
+  try {
+    existing = JSON.parse(await fs.readFile(documentDataPath, "utf-8")) as DocumentData;
+  } catch {
+    return next;
+  }
+
+  if (typeof existing?.meta?.builtAt !== "string" || existing.meta.builtAt === "") {
+    return next;
+  }
+
+  const comparable = (data: DocumentData) =>
+    JSON.stringify({ ...data, meta: { ...data.meta, builtAt: "" } });
+
+  return comparable(existing) === comparable(next)
+    ? { ...next, meta: { ...next.meta, builtAt: existing.meta.builtAt } }
+    : next;
+}
+
+async function resolveBuiltAt(next: DocumentData): Promise<DocumentData> {
+  const committedAt = gitLastModifiedIso(contentSourceDir);
+
+  return committedAt ? { ...next, meta: { ...next.meta, builtAt: committedAt } } : withStableBuiltAt(next);
+}
+
 async function main() {
   const source = await fs.readFile(sourcePath, "utf-8");
   const { documentTitle, chapters } = parseDocument(source);
@@ -123,7 +191,11 @@ async function main() {
   };
 
   await fs.mkdir(generatedDir, { recursive: true });
-  await fs.writeFile(documentDataPath, JSON.stringify(documentData, null, 2) + "\n", "utf-8");
+  await fs.writeFile(
+    documentDataPath,
+    JSON.stringify(await resolveBuiltAt(documentData), null, 2) + "\n",
+    "utf-8"
+  );
   await fs.writeFile(searchIndexPath, JSON.stringify(searchEntries, null, 2) + "\n", "utf-8");
 
   console.log(

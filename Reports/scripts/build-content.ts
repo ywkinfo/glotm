@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -98,6 +99,42 @@ const markdownProcessor = unified()
   .use(rehypeEnhance)
   .use(rehypeStringify);
 
+// meta.builtAt은 이 리포트의 sitemap lastmod가 된다(scripts/seo.ts).
+// 빌드 시각을 찍으면 콘텐츠가 그대로여도 배포마다 갱신됐다고 신고하므로,
+// 1차 근거는 리포트 원고의 git 커밋일로 잡는다 — CI든 로컬이든 같은 값이 나온다.
+// git을 쓸 수 없거나 믿을 수 없을 때만 직전 산출물 비교(buildStableDocumentData)로 내려간다.
+function gitLastModifiedIso(targetPath: string) {
+  const runGit = (args: string[]) =>
+    execFileSync("git", args, {
+      cwd: rootDir,
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"]
+    }).trim();
+
+  try {
+    if (runGit(["rev-parse", "--is-inside-work-tree"]) !== "true") {
+      return undefined;
+    }
+
+    // shallow clone에서는 모든 경로의 마지막 커밋이 체크아웃 커밋 하나로 붕괴돼 배포 시각과 다를 바 없다.
+    // 워크플로는 fetch-depth: 0을 쓰지만, 그 설정이 사라지면 조용히 틀리는 대신 fallback으로 내려간다.
+    if (runGit(["rev-parse", "--is-shallow-repository"]) !== "false") {
+      return undefined;
+    }
+
+    // 커밋되지 않은 편집이 있으면 커밋일은 지금 빌드하는 내용을 설명하지 못한다. 거짓 날짜 대신 fallback.
+    if (runGit(["status", "--porcelain", "--", targetPath]) !== "") {
+      return undefined;
+    }
+
+    const committedAt = runGit(["log", "-1", "--format=%cI", "--", targetPath]);
+
+    return committedAt ? new Date(committedAt).toISOString() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 async function main() {
   const existingDocumentDataBySlug = await loadExistingDocumentDataBySlug();
   await fs.rm(generatedRootDir, { force: true, recursive: true });
@@ -122,7 +159,8 @@ async function main() {
 
   for (const fileEntry of markdownFiles) {
     const slug = fileEntry.name.replace(/\.md$/, "");
-    const source = await fs.readFile(path.join(sourceDir, fileEntry.name), "utf-8");
+    const sourceFilePath = path.join(sourceDir, fileEntry.name);
+    const source = await fs.readFile(sourceFilePath, "utf-8");
     const reportSource = parseDocument(source, slug);
     const { chapter, entries } = await buildReport(reportSource);
     const targetDir = path.join(generatedRootDir, slug);
@@ -132,7 +170,8 @@ async function main() {
     const documentData = buildStableDocumentData(
       reportSource.title,
       chapter,
-      existingDocumentDataBySlug.get(slug)
+      existingDocumentDataBySlug.get(slug),
+      gitLastModifiedIso(sourceFilePath)
     );
 
     await fs.mkdir(targetDir, { recursive: true });
@@ -180,18 +219,21 @@ async function loadExistingDocumentDataBySlug() {
 function buildStableDocumentData(
   title: string,
   chapter: Chapter,
-  existingDocumentData?: DocumentData
+  existingDocumentData?: DocumentData,
+  committedAt?: string
 ): DocumentData {
   const nextDocumentData: DocumentData = {
     meta: {
       title,
-      builtAt: new Date().toISOString(),
+      builtAt: committedAt ?? new Date().toISOString(),
       chapterCount: 1
     },
     chapters: [chapter]
   };
 
-  if (!existingDocumentData) {
+  // git 커밋일을 쓸 수 있으면 그것이 1차 근거다. 직전 산출물 비교는 git을 못 쓸 때의 2차 방어이고,
+  // 산출물이 없는 신규 클론에서는 걸릴 것이 없어 이 경로만으로는 CI에서 효과가 없다.
+  if (committedAt || !existingDocumentData) {
     return nextDocumentData;
   }
 
