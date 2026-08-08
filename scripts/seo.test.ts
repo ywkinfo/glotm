@@ -34,7 +34,7 @@ import {
   buildStaticPageDefinitions,
   renderStaticHtml
 } from "./seo";
-import { gitLastModifiedIso } from "./git-last-modified";
+import { resolveGitLastModified } from "./git-last-modified";
 import { preparePagesArtifacts } from "./prepare-pages";
 
 const documentDataBySlug = new Map<string, DocumentData>([
@@ -177,11 +177,15 @@ describe("SEO build helpers", () => {
       distDir: "/tmp/glotm-dist",
       siteOrigin: "https://ywkinfo.github.io"
     });
-    const committedAt = gitLastModifiedIso(LEGAL_SOURCE_PATH);
+    const resolved = resolveGitLastModified(LEGAL_SOURCE_PATH);
+    const committedAt = resolved.iso;
     const gatewayPage = pages.find((page) => page.routePath === "/");
 
     expect(gatewayPage).toBeDefined();
-    expect(committedAt, "the legal source must have a usable commit date in this repo").toBeTruthy();
+    expect(
+      resolved.reason,
+      `the legal source must have a usable commit date here — got ${resolved.reason} (${resolved.detail ?? "no detail"})`
+    ).toBe("committed");
 
     for (const legalPage of legalPages) {
       const staticPage = pages.find((page) => page.routePath === legalPage.path);
