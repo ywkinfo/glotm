@@ -178,32 +178,50 @@ describe("SEO build helpers", () => {
       siteOrigin: "https://ywkinfo.github.io"
     });
     const resolved = resolveGitLastModified(LEGAL_SOURCE_PATH);
-    const committedAt = resolved.iso;
     const gatewayPage = pages.find((page) => page.routePath === "/");
 
     expect(gatewayPage).toBeDefined();
-    expect(
-      resolved.reason,
-      `the legal source must have a usable commit date here — got ${resolved.reason} (${resolved.detail ?? "no detail"})`
-    ).toBe("committed");
 
-    for (const legalPage of legalPages) {
-      const staticPage = pages.find((page) => page.routePath === legalPage.path);
+    if (resolved.reason === "committed") {
+      for (const legalPage of legalPages) {
+        expect(
+          pages.find((page) => page.routePath === legalPage.path)?.lastModified,
+          `${legalPage.path} must date from its own source`
+        ).toBe(resolved.iso);
+      }
 
-      expect(staticPage?.lastModified, `${legalPage.path} must date from its own source`).toBe(
-        committedAt
-      );
+      // 게이트웨이는 최신 브리프·리포트를 실제로 드러내므로 종전대로 사이트 전체 최신일을 쓴다.
+      expect(
+        gatewayPage?.lastModified,
+        "the gateway aggregates latest content and must keep its own date"
+      ).not.toBe(resolved.iso);
+
+      return;
     }
 
-    // 게이트웨이는 최신 브리프·리포트를 실제로 드러내므로 종전대로 사이트 전체 최신일을 쓴다.
-    // 두 값이 갈라져 있다는 것이 이 회귀 가드의 요지다.
+    // git이 답할 수 없는 체크아웃에서는 종전 동작(gatewayLastModified)으로 내려간다.
+    // 이 분기는 CI에서 실제로 탄다: pull_request 이벤트의 actions/checkout은 merge ref SHA를
+    // 추가로 fetch하고 그 과정에서 .git/shallow가 생겨 저장소가 shallow로 판정된다
+    // (fetch-depth: 0을 줘도 그렇다). push 이벤트인 deploy-pages는 브랜치 ref만 받아 온전하므로,
+    // **실제로 발행되는 산출물은 커밋일을 쓴다.** PR 빌드는 아무것도 발행하지 않는다.
+    // 여기서 단정할 수 있는 것은 fallback이 정의된 값이어야 한다는 것이고,
+    // legal이 gateway와 분리됐다는 회귀 가드는 아래 주입 테스트가 진다.
     expect(
-      gatewayPage?.lastModified,
-      "the gateway aggregates latest content and must keep its own date"
-    ).not.toBe(committedAt);
+      ["not-a-repository", "shallow-clone", "uncommitted-changes", "no-commit-for-path", "git-unavailable"],
+      `unexpected resolution reason: ${resolved.reason} (${resolved.detail ?? "no detail"})`
+    ).toContain(resolved.reason);
+
+    for (const legalPage of legalPages) {
+      expect(
+        pages.find((page) => page.routePath === legalPage.path)?.lastModified,
+        `${legalPage.path} must fall back to the gateway date, not to nothing`
+      ).toBe(gatewayPage?.lastModified);
+    }
   });
 
-  it("lets the caller override the legal date when git cannot answer", () => {
+  it("keeps the legal date independent of the gateway's aggregate date", () => {
+    // git 가용성과 무관하게 항상 도는 회귀 가드다. legal 3면이 다시 gatewayLastModified를
+    // 물려받으면 주입값이 무시되므로 여기서 걸린다.
     const injected = "2026-01-02T03:04:05.000Z";
     const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
       basePath: "/glotm/",
@@ -211,10 +229,16 @@ describe("SEO build helpers", () => {
       siteOrigin: "https://ywkinfo.github.io",
       legalLastModified: injected
     });
+    const gatewayPage = pages.find((page) => page.routePath === "/");
 
     for (const legalPage of legalPages) {
       expect(pages.find((page) => page.routePath === legalPage.path)?.lastModified).toBe(injected);
     }
+
+    expect(
+      gatewayPage?.lastModified,
+      "the gateway must not follow the legal override"
+    ).not.toBe(injected);
   });
 
   it("keeps the trust/legal notice in the prerendered legal HTML for no-JS and crawlers", () => {
