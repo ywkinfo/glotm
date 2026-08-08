@@ -400,6 +400,21 @@ export const briefCandidates: BriefCandidate[] = [
     status: "ready",
     notes:
       "가이드 본문 반영(UKTm 제8장 2026-07-21, EuTm 제8장·부록 2026-08-02)과 1차 출처 재대조가 모두 끝났는데 브리프 lane에는 나가지 않았다. 별도 취재 없이 바로 쓸 수 있는 후보다."
+  },
+  {
+    id: "2026-08-kbrand-overseas-licensing-support",
+    headline:
+      "K-브랜드 해외 라이선싱 지원을 신청하기 전에 표장·권한·승인·정산·종료 구조를 한 장의 통제표로 정리해야 한다",
+    trigger:
+      "지식재산처 2026-08-03 보도자료 — 「2026년 K-브랜드 해외 상표권 보호·라이선싱 전략 지원 시범사업」 공고. 해외 권리 사용 허가 또는 가맹점 계약을 추진 중이거나 추진 예정인 중소·중견기업을 대상으로 계약 전반의 전문 자문을 지원하며 신청기간은 2026-08-03부터 2026-08-21까지다.",
+    discoveredOn: "2026-08-08",
+    sourceIds: ["kipo"],
+    jurisdictions: ["Korea", "Trademark Licensing", "Franchising"],
+    relatedProductSlugs: ["usa", "china", "europe"],
+    status: "published",
+    publishedAs: "2026-08-kbrand-overseas-licensing-control",
+    notes:
+      "1차 출처를 2026-08-08에 직접 대조했다: https://www.moip.go.kr/ko/kpoBultnDetail.do?aprchId=BUT0000029&menuCd=SCD0200618&ntatcSeq=20996&sysCd=SCD02. 기존 정부인증 후보는 정부 소유 인증표장의 보호 레이어이고, 이 후보는 기업 소유 상표의 사용허락·가맹·사용료·종료 통제를 다루는 수익화 레이어라 별개다."
   }
 ];
 
@@ -408,6 +423,14 @@ export const briefCandidates: BriefCandidate[] = [
 // 최신순으로 유지한다(archive 정렬 계약과 동일). 산출이 없어도 기록한다.
 
 export const briefSweepLog: BriefSweep[] = [
+  {
+    sweptOn: "2026-08-08",
+    kind: "verified",
+    sourceIds: ["kipo"],
+    foundCandidateIds: ["2026-08-kbrand-overseas-licensing-support"],
+    note:
+      "지식재산처 공식 보도자료(게시물 20996)를 직접 열어 기관명·사업명·발표일·지원 대상·지원 내용과 2026-08-21 신청 마감을 대조했다. 이번 회차는 해당 발표를 확인한 KIPO 단일 소스 sweep이며, 다른 등록 소스의 freshness는 갱신하지 않는다."
+  },
   {
     sweptOn: "2026-08-03",
     kind: "repository-backfill",

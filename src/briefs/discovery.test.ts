@@ -582,11 +582,15 @@ describe("brief discovery report", () => {
     expect(byId["backfill-only"]?.status).toBe("never-verified");
   });
 
-  // 시드 백로그는 backfill 회차에서만 나왔다. 그러므로 지금은 어떤 소스도 실사된 적이 없다 —
-  // radar가 이걸 "방금 봤다"로 보여주면 리포트의 주 신호가 거짓이 된다.
-  it("reports every seeded source as never-verified while only a backfill exists", () => {
-    const statuses = new Set(summarizeSourceSweep(undefined, undefined, now).map((row) => row.status));
+  // KIPO는 2026-08-08 공식 발표를 직접 대조했지만 다른 시드 소스는 여전히 backfill뿐이다.
+  // 한 소스의 실사가 나머지 소스 freshness까지 갱신한 것처럼 보이면 안 된다.
+  it("reports the verified KIPO sweep while keeping untouched sources never-verified", () => {
+    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-08-08T00:00:00.000Z"));
+    const kipo = rows.find((row) => row.source.id === "kipo");
+    const untouched = rows.filter((row) => row.source.id !== "kipo");
 
-    expect(statuses).toEqual(new Set(["never-verified"]));
+    expect(kipo?.lastVerifiedOn).toBe("2026-08-08");
+    expect(kipo?.status).toBe("ok");
+    expect(untouched.every((row) => row.status === "never-verified")).toBe(true);
   });
 });

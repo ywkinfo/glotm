@@ -14,7 +14,10 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-07-uk-influencer-counterfeit-damages-formula");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-08-kbrand-overseas-licensing-control");
+    expect(getBriefIssueBySlug("2026-08-kbrand-overseas-licensing-control")?.title).toBe(
+      "2026년 8월 Hot Global TM Brief | K-브랜드 해외 라이선싱 지원, 신청 전에 계약보다 통제표를 먼저 만들 때입니다"
+    );
     expect(getBriefIssueBySlug("2026-07-china-trademark-overhaul-2027-countdown")?.title).toBe(
       "2026년 7월 Hot Global TM Brief | 중국 상표법 전면 개정 통과, 2027년 1월 시행 전에 '보유한 등록의 질'을 재고조사할 때입니다"
     );
@@ -95,6 +98,16 @@ describe("brief lane contract", () => {
           );
           expect(matchesLiveGuide, `${issue.slug} → ${link.href}`).toBe(true);
         }
+      }
+    }
+  });
+
+  it("keeps body paragraphs as plain text because the brief renderer does not parse Markdown", () => {
+    for (const issue of briefIssues) {
+      for (const paragraph of issue.bodyParagraphs ?? []) {
+        expect(paragraph, `${issue.slug} contains a Markdown link`).not.toMatch(
+          /\[[^\]]+\]\(https?:\/\/[^)]+\)/
+        );
       }
     }
   });

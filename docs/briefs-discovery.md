@@ -33,7 +33,7 @@
 | `verified` | 소스를 **실제로 열어** 확인한 회차 | 인정 — 이 날짜가 마지막 실사일이 된다 |
 | `repository-backfill` | 저장소에 이미 기록돼 있던 감시 항목을 후보로 옮긴 회차 | **산입 안 함** — 후보의 계보만 남긴다 |
 
-하네스 도입 시 넣은 회차는 `repository-backfill`이다. 그래서 지금 radar는 **15개 소스 전부를 `실사 이력 없음`으로 표시하며, 그것이 사실이다.** 첫 `verified` sweep을 돌기 전까지 이 상태가 유지된다.
+하네스 도입 시 넣은 회차는 `repository-backfill`이다. 따라서 그 회차만으로는 어떤 소스도 실사된 것으로 계산하지 않는다. 이후 소스를 직접 연 회차만 `verified`로 기록해 해당 소스의 freshness를 갱신하며, 현재 상태는 `npm run briefs:radar`에서 읽는다.
 
 ## sweep 절차
 
