@@ -187,6 +187,10 @@ Hermes 설정 정본은 host `~/.hermes/`이며 컨테이너 `/opt/data`로 마�
 - **P2.5**: valid JSON request가 brokered refresh 또는 rate-limited archive를 만들고, invalid JSON
   command payload가 rejected archive로 이동하며, 새 bounded run/worktree/branch/PR 및 credential exposure가
   없음을 확인.
+- **freshness 저하 (미실행)**: 지금까지의 canary는 metadata/HEAD가 일치하는 정상 경로만 확인했다.
+  metadata/HEAD 불일치·과거 `refreshed_at`·보고 중 `HEAD` 변경을 주입해 헤더가 `unknown`으로 낮아지는지,
+  retry-once 뒤 저장소 상태를 미검증으로 보고하는지 확인한다. 절차는
+  [`hermes-report-only-skill-draft.md`](hermes-report-only-skill-draft.md)의 Verification 절.
 - **P4**: forced-command가 non-allowlisted slug 거부 + 감사 로그 기록 + gateway allowlist 외 사용자
   차단 확인.
 

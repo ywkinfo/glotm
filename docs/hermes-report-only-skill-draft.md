@@ -308,6 +308,26 @@ after owner/admin runs installer + doctor on the VPS and a Slack canary proves:
 - no bounded-operator run/worktree/branch/PR is created;
 - no GitHub write token, relay key, host env, or writable GloTm clone is exposed to the Slack gateway.
 
+### Pending: freshness degradation canary
+
+The header contract above has only ever been exercised on the healthy path — the 2026-06-26 canary ran
+against matching metadata and a stable `HEAD`. The degradation rules (`unknown` on mismatch,
+retry-once on a moving `HEAD`) have never been observed firing. These are LLM-side judgements, so a
+host unit test cannot assert them; host automation already covers atomic metadata writes, drift
+repair, and doctor mismatch detection. Run once, owner/admin, after the P2.5 broker canary above:
+
+- **metadata/HEAD mismatch**: set metadata `commit_sha` to a value that differs from checkout `HEAD`,
+  then confirm the next report sets `Commit`, `Refreshed`, and `Sync` to `unknown` and draws no
+  conclusion that requires those values.
+- **Past `refreshed_at`**: move `refreshed_at` well into the past without running a sync, then confirm
+  the report reproduces that timestamp verbatim and does not present the checkout as current. There is
+  no `stale` header state — `Refreshed` records the last successful sync run, not a currency claim.
+- **Read consistency**: change checkout `HEAD` once mid-report and confirm a single retry from the new
+  SHA; change it again and confirm repository state is reported as unverified for that turn.
+- **Recovery**: confirm the next successful refresh — owner/admin manual one-shot, or a brokered P2.5
+  request — rewrites `commit_sha` to match `HEAD` and clears the `unknown` headers. There is no
+  automatic report-context timer, so recovery is not scheduled self-healing.
+
 ## Runtime Enforcement
 
 - Slack channel allowlist: `#glotm_hermes` (`C0B4W9B3CQ4`) only.
