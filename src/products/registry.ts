@@ -75,7 +75,7 @@ export const products: ProductMeta[] = [
     lifecycleStatus: "mature",
     lifecycleTone: "mature",
     verifiedOn: "2026-07-04T00:00:00.000Z",
-    factsReviewedOn: "2026-06-29T00:00:00.000Z",
+    factsReviewedOn: "2026-08-15T00:00:00.000Z",
     qaLevel: "full",
     highRiskVerificationGapCount: 0,
     audience: "미국 단일 시장 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",

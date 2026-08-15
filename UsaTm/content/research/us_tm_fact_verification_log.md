@@ -56,3 +56,32 @@
 - 13장에 "출처표지적 사용 판별과 혼동·희석 이중 트랙"(Bad Spaniels 미니 케이스 포함), 12장에 신고 프레이밍·오버리치 경계·CBP 분류표, 14장에 라우팅 한 줄·오버리치 가드 추가.
 - Google/eBay는 보조 출처로만 등록(claim-map 단정 대상 아님). claim-map 총 12→15건.
 - 1차 출처 직접 확인 완료이므로 registry `factsReviewedOn` 2026-06-29 후보로 적격(owner 최종 attestation 전제).
+
+## 2026-08-15 note (60일 window 재검증 · claim 15건 전건 1차출처 재대조)
+
+- 트리거: `audit:facts` mature 60일 창이 2026-08-27 만료 예정(`health:report` Window Margin `12d left`). blind re-stamp 금지 원칙에 따라 15건을 개별 재대조했다.
+- **결과: 14건 변경 없음, 1건 정정(USA-CBP-002, HIGH).**
+- 재대조 경로: Cornell LII(§1063·§1064·§1117·19 CFR 133.21/133.22/133.23·37 CFR 2.149), USPTO(maintaining-registration·do-i-need-attorney·about-ttab·madrid outbound·itu-forms·how-much-does-it-cost·Assignment Center), CBP e-Recordation, SCOTUS slip opinion 22-148, D. Ariz. Doc. 374(2025-01-23 amended findings).
+
+### 정정 1건 — USA-CBP-002 (HIGH)
+
+종전 서술은 **두 트랙의 구제 경로를 서로 뒤바꿔** 적고 있었다.
+
+- 종전: copying-or-simulating 구제에 `반송`을 포함, counterfeit는 `표장 제거 불가`로 단정.
+- 실제: **19 CFR 133.22(c)는 ① 표장 제거·말소 ② 권리자 본인·지정인의 수입 ③ 권리자 서면 동의 ④ 1개 개인면세 네 가지만 열거하며 수출(반송)을 포함하지 않는다.** 수출(반송)과 표장 말소 후 통관은 **133.21(counterfeit)에서 권리자가 압수 통지 후 30일 내 서면 동의를 했을 때** 열리는 처분이다("importation ... or its exportation, entry after obliteration of the mark, or other appropriate disposition"). 따라서 counterfeit의 `표장 제거 불가`도 절대 규칙이 아니라 "수입자가 단독으로는 불가, 권리자 동의 시 가능"이 정확하다.
+- 반영: 12장 분류표 두 행을 조문 번호와 함께 다시 쓰고, 두 트랙을 뒤집어 외우기 쉽다는 경고 문단을 덧붙였다. claim-map `USA-CBP-002` statement·notes 갱신.
+- 인접 조문 확인: 19 CFR 133.23(gray market)도 수출을 구제 경로로 두지 않는다(억류 중 해제 또는 압수·몰수). 즉 `반송`이 133.22에 있을 다른 경로는 없다.
+
+### 변경 없음 14건 중 근거를 새로 고정한 항목
+
+- USA-OPP-001 §1063(a) "within thirty days after the publication" + 자동 30일 연장·good cause 추가 연장 문언 그대로.
+- USA-CANC-001 §1064 5년 구조 유지. 다만 §1064(3)의 **never used in commerce**(TMA 2020) 사유는 claim 열거에 이름이 없다 — `등`으로 열려 있어 오류는 아니나 본문 보강 후보로 남긴다(아래 후속).
+- USA-ATY-001 USPTO 문언 그대로: "If you are a foreign-domiciled trademark applicant or registrant, you must have a U.S.-licensed attorney represent you."
+- USA-TTAB-001 "The Board only determines whether an applicant or registrant has the right to register" + 금지명령·손해배상 권한 부재 문언 확인.
+- USA-CBP-001 CBP 문언 그대로: Principal Register 요건 + "$190 per International Class of Goods (IC)"(갱신 $80/IC 확인, 본문 하드코딩은 하지 않음).
+- USA-PARODY-001 / USA-DILUTION-001 SCOTUS 판시 문언 확인("the Rogers test does not apply", "We do not decide whether the Rogers test is ever appropriate"), 환송심에서 **혼동 부정·tarnishment 인정·영구금지명령 적절** 확인(Doc. 374).
+
+### 후속(owner 판단)
+
+- `USA-CANC-001`에 §1064(3) never-used 사유를 명시적으로 넣을지 — 5년 경과 후 취소 루트를 다루는 8장/13장 보강 여부.
+- registry `factsReviewedOn` 2026-08-15 재스탬프는 owner attestation 전제.
