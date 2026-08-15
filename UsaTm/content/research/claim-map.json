@@ -8,10 +8,17 @@
       "id": "USA-OPP-001",
       "jurisdiction": "US",
       "claim": "Opposition은 Official Gazette 공고 후 30일 이내에 제기해야 하며, 그 기간 안에 연장 신청으로 추가 기간을 확보할 수 있다.",
-      "chapterRefs": ["Ch8", "Ch14"],
+      "chapterRefs": [
+        "Ch8",
+        "Ch14"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["usc-15-1063", "cfr-37-2-101", "uspto-ttab-initiating"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "usc-15-1063",
+        "cfr-37-2-101",
+        "uspto-ttab-initiating"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -26,10 +33,16 @@
       "id": "USA-CANC-001",
       "jurisdiction": "US",
       "claim": "Cancellation은 원칙적으로 상시 제기할 수 있으나, 등록 5년 경과 후에는 genericness, functionality, abandonment, fraud, §1054/§1052 위반, source misrepresentation 등 Section 14 열거 사유로 한정되고, 2(d) 혼동 취소는 통상 5년 내에만 가능하다.",
-      "chapterRefs": ["Ch8", "Ch13"],
+      "chapterRefs": [
+        "Ch8",
+        "Ch13"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["usc-15-1064", "usc-15-1065"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "usc-15-1064",
+        "usc-15-1065"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -44,10 +57,18 @@
       "id": "USA-REM-001",
       "jurisdiction": "US",
       "claim": "연방법원은 금지명령, 손해배상, 피고 이익환수, 침해물 압수·파기까지 명할 수 있으나, TTAB는 등록 가부만 다루고 금지명령·손해배상을 줄 수 없다.",
-      "chapterRefs": ["Ch13", "Ch14"],
+      "chapterRefs": [
+        "Ch13",
+        "Ch14"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["usc-15-1116", "usc-15-1117", "usc-15-1118", "uspto-about-ttab"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "usc-15-1116",
+        "usc-15-1117",
+        "usc-15-1118",
+        "uspto-about-ttab"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 1차출처 확인(15 U.S.C. §§1116–1118): 금지명령·손해배상·이익환수·압수·파기는 연방법원 구제. TTAB 권한 범위는 USPTO About TTAB 기준."
     },
@@ -55,10 +76,16 @@
       "id": "USA-TTAB-001",
       "jurisdiction": "US",
       "claim": "TTAB는 등록받을 권리를 다투는 행정 재판부로, 사용금지명령이나 침해 손해배상은 다루지 않는다.",
-      "chapterRefs": ["Ch8", "Ch13", "Ch14"],
+      "chapterRefs": [
+        "Ch8",
+        "Ch13",
+        "Ch14"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["uspto-about-ttab"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-about-ttab"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO About TTAB): TTAB는 federal registration 권리만 판단하고 사용권, injunction, infringement, damages, attorney fee는 다루지 않음."
     },
@@ -66,10 +93,15 @@
       "id": "USA-MAINT-001",
       "jurisdiction": "US",
       "claim": "등록 유지에는 5-6년차, 9-10년차, 이후 10년마다 핵심 제출(Section 8 사용입증 + Section 9 갱신)이 있고, 5년 연속 사용 후 Section 15는 선택적 강화 수단이다. 모든 기간은 등록일 기준이다.",
-      "chapterRefs": ["Ch10"],
+      "chapterRefs": [
+        "Ch10"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["uspto-maintaining", "uspto-keeping-alive"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-maintaining",
+        "uspto-keeping-alive"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -84,10 +116,15 @@
       "id": "USA-CBP-001",
       "jurisdiction": "US",
       "claim": "CBP e-Recordation을 통한 국경집행은 Principal Register 등록을 전제로 하며, recordation 수수료는 국제분류 class별로 부과된다.",
-      "chapterRefs": ["Ch12", "Ch14"],
+      "chapterRefs": [
+        "Ch12",
+        "Ch14"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["cbp-ipr-protection"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "cbp-ipr-protection"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(CBP IPR protection): USPTO Principal Register 등록이 recordation 전제이고 e-Recordation fee는 International Class별 부과. 금액은 본문 하드코딩 금지."
     },
@@ -95,10 +132,15 @@
       "id": "USA-ATY-001",
       "jurisdiction": "US",
       "claim": "외국 주소 출원인(foreign-domiciled applicant)은 미국 면허 변호사를 선임해야 한다.",
-      "chapterRefs": ["Ch2", "Ch5"],
+      "chapterRefs": [
+        "Ch2",
+        "Ch5"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["uspto-need-attorney"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-need-attorney"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO Do I need an attorney): foreign-domiciled applicant/registrant는 U.S.-licensed attorney 필요. 예외 여부는 단정 확장 금지."
     },
@@ -106,10 +148,15 @@
       "id": "USA-FEE-001",
       "jurisdiction": "US",
       "claim": "USPTO 출원·유지 정부수수료는 클래스별로 부과되며 금액은 변동하므로, 본문은 구조적 표기(클래스별 정부수수료)로 두고 정확 금액은 공식 fee schedule에서 확인한다.",
-      "chapterRefs": ["Ch5", "Ch10"],
+      "chapterRefs": [
+        "Ch5",
+        "Ch10"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["uspto-fees"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-fees"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO How much does it cost): filing/maintenance cost는 classes 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지."
     },
@@ -117,10 +164,15 @@
       "id": "USA-ASSIGN-001",
       "jurisdiction": "US",
       "claim": "Trademark ownership transfer나 owner name change 관련 recordation은 USPTO Assignment Center를 현재 시스템명으로 사용하며, 실제 제출 화면과 요구자료는 제출 직전 재확인한다.",
-      "chapterRefs": ["Ch11"],
+      "chapterRefs": [
+        "Ch11"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["uspto-assignment-center", "uspto-assignment-center-2026-pdf"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-assignment-center",
+        "uspto-assignment-center-2026-pdf"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(assignmentcenter.uspto.gov + USPTO Feb 2026 overview material): Assignment Center 명칭 확인. 세부 화면/자료 요건은 제출 직전 재확인."
     },
@@ -128,10 +180,15 @@
       "id": "USA-SOU-001",
       "jurisdiction": "US",
       "claim": "Intent-to-use 출원은 Notice of Allowance 이후 실제 사용 증거를 포함한 Statement of Use 또는 허용된 extension request 흐름을 통해 등록 단계로 넘어간다.",
-      "chapterRefs": ["Ch5", "Ch9"],
+      "chapterRefs": [
+        "Ch5",
+        "Ch9"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["uspto-itu-forms"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-itu-forms"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO ITU forms): NOA 이후 acceptable allegation of use와 commerce use evidence가 필요한 SOU 흐름. 세부 fee/extension 수치는 본문 하드코딩 금지."
     },
@@ -139,10 +196,15 @@
       "id": "USA-LOP-001",
       "jurisdiction": "US",
       "claim": "Letter of Protest는 pending application의 registrability에 관한 objective evidence를 USPTO에 제출해 심사 과정에서 고려되도록 하는 보조 절차이며, adversarial argument나 opposition 대체 수단으로 운영하지 않는다.",
-      "chapterRefs": ["Ch8"],
+      "chapterRefs": [
+        "Ch8"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["uspto-lop-practice-tip", "tmep-1715-lop"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-lop-practice-tip",
+        "tmep-1715-lop"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO LOP practice tip + TMEP 1715): relevant objective evidence 중심, letter/arguments가 아니라 관련 evidence와 ground가 심사관에게 전달되는 구조."
     },
@@ -150,10 +212,14 @@
       "id": "USA-MADRID-001",
       "jurisdiction": "US",
       "claim": "미국 기초출원/기초등록을 바탕으로 Madrid Protocol outbound 신청이 가능하다.",
-      "chapterRefs": ["Ch5"],
+      "chapterRefs": [
+        "Ch5"
+      ],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["uspto-madrid-outbound"],
-      "lastVerified": "2026-06-28",
+      "sourceIds": [
+        "uspto-madrid-outbound"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "notes": "2026-06-28 재확인(USPTO Madrid outbound applicants)."
     },
@@ -161,10 +227,15 @@
       "id": "USA-PARODY-001",
       "jurisdiction": "US",
       "claim": "침해자가 타인의 표장을 자기 상품의 출처표지(designation of source)로 사용하면 표현물용 문턱 심사(Rogers)는 적용되지 않고 통상의 혼동가능성 분석으로 들어간다. 다만 대법원은 Rogers의 일반적 타당성까지는 판단하지 않았다.",
-      "chapterRefs": ["Ch13", "Ch14"],
+      "chapterRefs": [
+        "Ch13",
+        "Ch14"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["scotus-jack-daniels-v-vip-2023"],
-      "lastVerified": "2026-06-29",
+      "sourceIds": [
+        "scotus-jack-daniels-v-vip-2023"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "source_designating_use",
       "notes": "2026-06-29 1차출처 확인(SCOTUS Jack Daniel's Properties v. VIP Products, 599 U.S. 140 (2023)): 'When an alleged infringer uses a trademark as a designation of source for the infringer's own goods, the Rogers test does not apply.' 'We do not decide whether the Rogers test is ever appropriate.'"
@@ -173,10 +244,16 @@
       "id": "USA-DILUTION-001",
       "jurisdiction": "US",
       "claim": "TDRA dilution(blurring·tarnishment)은 유명상표를 위한 별도 청구원인이며, 패러디·비판·논평 fair use 예외는 그 표장을 '자기 상품의 출처표지로 사용하는 경우'에는 적용되지 않는다. 따라서 패러디 상품이라도 출처표지로 쓰이면 혼동이 약해도 tarnishment가 인정될 수 있다(Jack Daniel's 환송심에서 혼동은 부정, tarnishment는 인정, 영구금지명령이 적절하다고 판단).",
-      "chapterRefs": ["Ch13"],
+      "chapterRefs": [
+        "Ch13"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["usc-15-1125", "scotus-jack-daniels-v-vip-2023", "azd-jack-daniels-v-vip-2025-remand"],
-      "lastVerified": "2026-06-29",
+      "sourceIds": [
+        "usc-15-1125",
+        "scotus-jack-daniels-v-vip-2023",
+        "azd-jack-daniels-v-vip-2025-remand"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "dilution_exclusion",
       "notes": "2026-06-29 1차출처 확인: 15 U.S.C. §1125(c)(1) blurring·tarnishment, §1125(c)(3)(A) fair use 예외는 'other than as a designation of source for the person's own goods or services'. SCOTUS: parody는 'exempt only if not used to designate source'. 환송심 결론 문구는 Arizona D.C. order 기준."
@@ -184,14 +261,19 @@
     {
       "id": "USA-CBP-002",
       "jurisdiction": "US",
-      "claim": "CBP는 기록상표에 대해 counterfeit(등록표장과 동일하거나 실질적으로 구별 불가)와 copying-or-simulating(공중이 기록표장과 연관 지을 만큼 유사)을 구분한다. counterfeit는 억류 후 압수·몰수 대상이고 표장 제거가 허용되지 않으며, copying-or-simulating은 통관 거절·억류 대상으로 기간 내 표장 제거·권리자 동의·반송 등 구제 경로가 있다.",
-      "chapterRefs": ["Ch12"],
+      "claim": "CBP는 기록상표에 대해 counterfeit(19 CFR 133.21: 등록표장과 동일하거나 실질적으로 구별 불가)와 copying-or-simulating(19 CFR 133.22: 공중이 기록표장과 연관 지을 만큼 유사)을 구분한다. counterfeit는 압수 후 권리자의 서면 동의가 없으면 몰수되며, 수입자가 스스로 표장을 제거해 통관시킬 수 없다 — 다만 권리자가 압수 통지로부터 30일 내 서면 동의를 하면 현상 통관·수출(반송)·표장 말소 후 통관 등 대체 처분이 열린다. copying-or-simulating은 통관 거절·억류 대상이고 30일 내 표장 제거·말소, 권리자 본인 또는 지정인의 수입, 권리자 서면 동의, 1개 개인면세 중 하나로 해제되며, 수출(반송)은 이 열거 경로에 포함되지 않는다.",
+      "chapterRefs": [
+        "Ch12"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["cfr-19-133-21", "cfr-19-133-22"],
-      "lastVerified": "2026-06-29",
+      "sourceIds": [
+        "cfr-19-133-21",
+        "cfr-19-133-22"
+      ],
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "cbp_mark_classification",
-      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지."
+      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지. 2026-08-15 재검증 정정: 종전 서술은 수출(반송)을 copying-or-simulating(133.22)의 구제 경로로, 표장 제거 불가를 counterfeit(133.21)의 절대 규칙으로 적었으나 두 축이 뒤바뀌어 있었다. 133.22(c)는 표장 제거·권리자 수입·서면 동의·개인면세 4가지만 열거하고 수출을 포함하지 않으며, 수출과 표장 말소 후 통관은 133.21의 권리자 서면 동의 경로에 있다."
     }
   ]
 }
