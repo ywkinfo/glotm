@@ -19,7 +19,11 @@ import { describe, expect, it } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
 import { reports } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
-import type { DocumentData } from "../src/products/shared";
+import {
+  CHAPTER_TITLE_QUALIFIER_BY_SLUG,
+  type Chapter,
+  type DocumentData
+} from "../src/products/shared";
 import {
   legalNavLinks,
   legalNoticeBullets,
@@ -541,5 +545,170 @@ describe("SEO build helpers", () => {
     expect(sitemapXml).toContain("<priority>1.0</priority>");
     expect(sitemapXml).toContain("<changefreq>weekly</changefreq>");
     expect(sitemapXml).toContain("<changefreq>monthly</changefreq>");
+  });
+});
+
+// 2026-08-15 라이브 실측에서 확인된 결함 2종을 잠근다.
+// ⓐ `<title>` 중복 10건 / 4클러스터 — `서문 | GloTm`이 china·japan·mexico·usa에 동시에 있었고,
+//    `제12장 …(RACI)`·`부록: …`(japan·mexico), `등록 후 유지관리와 갱신 체계`(uk·usa)도 각각 겹쳤다.
+// ⓑ description 중복 7건 — MexTm 7개 챕터의 summary가 전부 절 제목 `도입`이라
+//    `도입 MexTm 가이드 챕터.` 하나를 공유했다.
+// 개별 문자열을 고정하면 원고가 바뀔 때마다 깨지므로, 값이 아니라 **유일성 자체**를 단정한다.
+describe("SEO metadata uniqueness", () => {
+  const buildPages = () =>
+    buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+
+  const findDuplicates = (values: string[]) => {
+    const counts = new Map<string, number>();
+
+    for (const value of values) {
+      counts.set(value, (counts.get(value) ?? 0) + 1);
+    }
+
+    return [...counts.entries()].filter(([, count]) => count > 1).map(([value]) => value);
+  };
+
+  it("gives every live shell product a chapter title qualifier", () => {
+    // 신규 가이드를 붙이면서 매핑을 빠뜨리면 buildChapterDocumentTitle이 throw한다.
+    // 그 전에 여기서 먼저 잡아 원인을 명시적으로 알린다.
+    const missing = liveShellProducts
+      .filter((product) => !CHAPTER_TITLE_QUALIFIER_BY_SLUG[product.slug])
+      .map((product) => product.slug);
+
+    expect(missing).toEqual([]);
+  });
+
+  it("keeps every page title unique", () => {
+    const duplicates = findDuplicates(buildPages().map((page) => page.title));
+
+    expect(duplicates).toEqual([]);
+  });
+
+  it("keeps every page description unique", () => {
+    const duplicates = findDuplicates(buildPages().map((page) => page.description));
+
+    expect(duplicates).toEqual([]);
+  });
+
+  it("qualifies chapter titles by jurisdiction so same-named chapters stay distinguishable", () => {
+    const pages = buildPages();
+    const seomunTitles = liveShellProducts
+      .map((product) => {
+        const chapters = documentDataBySlug.get(product.slug)?.chapters ?? [];
+        const seomun = chapters.find((chapter) => chapter.title === "서문");
+
+        return seomun
+          ? pages.find(
+              (page) => page.routePath === `${product.path}/chapter/${seomun.slug}`
+            )?.title
+          : undefined;
+      })
+      .filter((title): title is string => Boolean(title));
+
+    // 실측 기준 `서문` 챕터는 4개 가이드에 있다. 하나라도 없으면 이 회귀 가드가 무력해지므로 함께 단정한다.
+    expect(seomunTitles.length).toBeGreaterThanOrEqual(4);
+    expect(new Set(seomunTitles).size).toBe(seomunTitles.length);
+    expect(seomunTitles).toContain("서문 | 멕시코 | GloTm");
+  });
+
+  it("falls back to the first body paragraph only when a summary repeats inside its guide", () => {
+    const pages = buildPages();
+    const mexicoChapters = documentDataBySlug.get("mexico")!.chapters;
+    const descriptionFor = (productPath: string, slug: string) =>
+      pages.find((page) => page.routePath === `${productPath}/chapter/${slug}`)!.description;
+
+    // 되풀이되는 요약(`도입`)은 description으로 쓰이지 않는다.
+    const repeated = mexicoChapters.filter((chapter) => chapter.summary?.trim() === "도입");
+
+    expect(repeated.length).toBeGreaterThan(1);
+
+    for (const chapter of repeated) {
+      const description = descriptionFor("/mexico", chapter.slug);
+
+      expect(description).not.toBe("도입 MexTm 가이드 챕터.");
+      // 본문 전체를 훑는 대신 첫 문단만 뽑는 이유가 여기 있다. stripHtml(html)로 내려가면
+      // 선두의 `도입` 절 제목이 그대로 description 앞에 붙어 7개 장이 다시 같은 말로 시작한다.
+      expect(description.startsWith("도입")).toBe(false);
+    }
+
+    // 짧아도 고유한 요약은 그대로 쓴다 — 길이 임계값으로 바꾸면 이 단정이 깨진다.
+    const uniqueShort = mexicoChapters.find((chapter) => chapter.title === "서문")!;
+
+    expect(descriptionFor("/mexico", uniqueShort.slug)).toContain(uniqueShort.summary!);
+  });
+});
+
+// description fallback 사슬의 방어 구간. 실제 가이드 데이터는 모든 장에 `<p>`가 있어
+// 이 rung들이 한 번도 평가되지 않는다 — 합성 문서로 각 단계를 직접 친다.
+// 이걸 안 잠그면 원고 구조가 바뀔 때(요약 없는 장, 표만 있는 장) 조용히 빈 description이 나간다.
+describe("chapter description fallback chain", () => {
+  const syntheticGuide = (chapters: Array<Partial<Chapter>>): DocumentData => ({
+    meta: { title: "합성 가이드", builtAt: "2026-08-15T00:00:00.000Z", chapterCount: chapters.length },
+    chapters: chapters.map((chapter, index) => ({
+      id: chapter.slug ?? `ch-${index}`,
+      slug: chapter.slug ?? `ch-${index}`,
+      title: chapter.title ?? `합성 제${index}장`,
+      summary: chapter.summary,
+      html: chapter.html ?? "",
+      headings: []
+    }))
+  });
+
+  // mexico slot을 합성 문서로 갈아끼워 fallback 단계만 관찰한다.
+  const descriptionsFor = (chapters: Array<Partial<Chapter>>) => {
+    const swapped = new Map(documentDataBySlug);
+    swapped.set("mexico", syntheticGuide(chapters));
+
+    const pages = buildStaticPageDefinitions(swapped, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+
+    return chapters.map(
+      (chapter, index) =>
+        pages.find((page) => page.routePath === `/mexico/chapter/${chapter.slug ?? `ch-${index}`}`)!
+          .description
+    );
+  };
+
+  it("uses body text when a repeated summary has no paragraph to fall back to", () => {
+    // 되풀이 요약 + <p> 없음 → extractFirstParagraphText가 ""를 돌려주고 stripHtml(html)로 내려간다.
+    const [first, second] = descriptionsFor([
+      { slug: "table-only-a", summary: "도입", html: "<table><tr><td>갱신 기한 6개월</td></tr></table>" },
+      { slug: "table-only-b", summary: "도입", html: "<table><tr><td>이의신청 2개월</td></tr></table>" }
+    ]);
+
+    expect(first).toContain("갱신 기한 6개월");
+    expect(second).toContain("이의신청 2개월");
+    expect(first).not.toBe(second);
+    expect(first).not.toContain("도입 MexTm");
+  });
+
+  it("falls back to the product summary when a chapter has neither summary nor body", () => {
+    const mexico = liveShellProducts.find((product) => product.slug === "mexico")!;
+    const [description] = descriptionsFor([{ slug: "empty-chapter", summary: undefined, html: "" }]);
+
+    expect(description).toContain(mexico.summary.slice(0, 20));
+  });
+
+  it("derives distinct descriptions for chapters that carry no summary at all", () => {
+    // 요약이 없는 장은 본문 첫 문단으로 서로 다른 description을 받아야 한다.
+    // 주의: `collectRepeatedSummaries`의 빈 문자열 스킵 가드는 이 경로로 관찰되지 않는다 —
+    // `buildChapterDescription`의 `summary &&` 단락이 이미 빈 요약을 fallback으로 보내기 때문에,
+    // 가드를 제거해도 동작이 같다(주입으로 확인). 가드는 set을 깨끗이 유지하는 용도이고,
+    // 이 테스트가 잠그는 것은 "요약 없는 장도 고유한 description을 받는다"는 관찰 가능한 계약이다.
+    const [first, second] = descriptionsFor([
+      { slug: "blank-a", summary: undefined, html: "<p>표장 사용 증거는 채널별로 모은다.</p>" },
+      { slug: "blank-b", summary: undefined, html: "<p>세관 등록은 등록증 발급 후 신청한다.</p>" }
+    ]);
+
+    expect(first).toContain("표장 사용 증거는 채널별로 모은다.");
+    expect(second).toContain("세관 등록은 등록증 발급 후 신청한다.");
+    expect(first).not.toBe(second);
   });
 });
