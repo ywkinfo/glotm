@@ -75,6 +75,49 @@ describe.each(workspaces)("$workspace claim-map ↔ source register", ({ workspa
   });
 });
 
+describe("JapTm 법령 소스 최신성", () => {
+  // 2026-08-15 확인: 3047/en은 "Last Version: Act No. 55 of 2015" 번역이라 2023년 개정(법률 제51호)으로
+  // 신설된 상표법 제4조 제4항(병존동의)이 아예 없다. JP-CONSENT-001의 근거가 될 수 없는 소스였다.
+  // 2149/en도 같은 이유로 현행 부정경쟁방지법을 뒷받침하지 못한다.
+  //
+  // 스킴이 붙은 형태만 막는다. 이 URL들이 왜 부적격이었는지 기록한 fact log의 서술
+  // (백틱 안의 호스트명 표기)까지 지우면, 다음 세션이 같은 번역본을 다시 주워 온다.
+  const staleTranslationUrls = [
+    "https://www.japaneselawtranslation.go.jp/en/laws/view/3047/en",
+    "https://www.japaneselawtranslation.go.jp/en/laws/view/2149/en"
+  ];
+
+  const japanFiles = [
+    "JapTm/content/research/jp_tm_source_register.md",
+    "JapTm/content/research/jp_tm_fact_verification_log.md",
+    "JapTm/content/research/jp_tm_accuracy_completeness_review.md",
+    "JapTm/content/source/chapters/11-domain-design-copyright-unfair-competition.md"
+  ];
+
+  it.each(japanFiles)("%s가 구 영문 법령 번역을 출처로 걸지 않는다", (relativePath) => {
+    const contents = readRepoFile(relativePath);
+    const stale = staleTranslationUrls.filter((staleUrl) => contents.includes(staleUrl));
+
+    expect(stale).toEqual([]);
+  });
+
+  it.each([
+    "https://laws.e-gov.go.jp/law/334AC0000000127",
+    "https://laws.e-gov.go.jp/law/405AC0000000047",
+    "https://www.japaneselawtranslation.go.jp/en/laws/view/4764/en",
+    "https://www.japaneselawtranslation.go.jp/en/laws/view/4709/en",
+    "https://www.jpo.go.jp/system/trademark/gaiyo/consent/index.html"
+  ])("현행 1차 출처 %s가 source register에 등록돼 있다", (url) => {
+    expect(readRepoFile("JapTm/content/research/jp_tm_source_register.md")).toContain(url);
+  });
+
+  it("JP-REP-001의 chapterRefs가 실제 인용 장(Ch1·Ch5)을 가리킨다", () => {
+    const claim = findClaim(readClaimMap(getClaimMapPath(rootDir, "JapTm")).claims, "JP-REP-001");
+
+    expect(claim.chapterRefs).toEqual(["Ch1", "Ch5"]);
+  });
+});
+
 describe("UsaTm 고위험 claim 정정 회귀 가드", () => {
   const claims = readClaimMap(getClaimMapPath(rootDir, "UsaTm")).claims;
 
