@@ -15,7 +15,7 @@ The plan is intentionally narrow. Factual QA enters first as helper audits under
 - No new npm dependency should be required for v1. Use Node, `tsx`, and the existing test stack.
 - The current root content lane already mixes full-pipeline and shortcut refresh behavior by workspace.
 - `ChaTm`, `MexTm`, `EuTm`, and `UsaTm` currently align with full-pipeline content verification at the root.
-- `JapTm` currently remains the root shortcut-refresh exception.
+- `JapTm` was described here as the root shortcut-refresh exception. Corrected 2026-08-15: `content:japan` runs `build-master` + `qa-content` + `build-content`, the same three steps as every other guide, and `health:content` invokes `JapTm` `content:prepare` alongside the rest. There is no shortcut lane left to except it from.
 - Workspace content facts already live in workspace-local `content/research/` directories, mostly as markdown fact verification logs and, in some workspaces, source registers.
 
 ## Goals
@@ -54,7 +54,7 @@ The plan is intentionally narrow. Factual QA enters first as helper audits under
 The repo is not fully uniform:
 
 - `ChaTm`, `MexTm`, `UsaTm`, `EuTm`, `UKTm`, and `LatTm` currently participate in root full-pipeline content refresh.
-- `JapTm` remains the root shortcut-refresh workspace.
+- ~~`JapTm` remains the root shortcut-refresh workspace.~~ Corrected 2026-08-15: `JapTm` runs the same full pipeline as the others (see above).
 - Some workspaces already have source register files, others do not.
 - Fact verification logs exist today, but structured claim coverage does not yet appear to be standardized.
 
@@ -362,7 +362,7 @@ Why third:
 Why fourth:
 
 - these started as incubate or lighter-track products
-- `UsaTm` has since adopted claim-map + full-pipeline review for its 2026-06-28 growth/mature closeout; `JapTm` still relies on root shortcut refresh, so hard coupling remains premature there
+- `UsaTm` has since adopted claim-map + full-pipeline review for its 2026-06-28 growth/mature closeout; `JapTm` followed with its 2026-06-30 growth/mature/full closeout (#114) and runs the same full pipeline — the earlier "still relies on root shortcut refresh" reading was wrong and is corrected 2026-08-15
 - `UKTm` adopted claim-map + full-QA pipeline (audit:facts + health:content) for its 2026-07-07 growth/mature closeout (owner override); it now participates on the same footing as UsaTm/JapTm
 
 This phase should focus on schema adoption and advisory reporting, not aggressive gate tightening.
