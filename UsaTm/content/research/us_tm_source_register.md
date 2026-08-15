@@ -57,11 +57,14 @@
 | scotus-jack-daniels-v-vip-2023 | Jack Daniel's Properties, Inc. v. VIP Products LLC, 599 U.S. 140 (2023) | https://www.supremecourt.gov/opinions/22pdf/22-148_3e04.pdf |
 | azd-jack-daniels-v-vip-2025-remand | Jack Daniel's 환송심 order (D. Ariz., 2:14-cv-02057) | https://www.govinfo.gov/content/pkg/USCOURTS-azd-2_14-cv-02057/pdf/USCOURTS-azd-2_14-cv-02057-3.pdf |
 | usc-15-1125 | 15 U.S.C. §1125(c) (dilution; (c)(3) fair use 제외 단서) | https://www.law.cornell.edu/uscode/text/15/1125 |
-| cfr-19-133-21 | 19 C.F.R. §133.21 (counterfeit 표장 억류·압수·몰수) | https://www.law.cornell.edu/cfr/text/19/133.21 |
-| cfr-19-133-22 | 19 C.F.R. §133.22 (copying or simulating 통관 거절·억류) | https://www.law.cornell.edu/cfr/text/19/133.22 |
+| cfr-19-133-21 | 19 C.F.R. §133.21 (counterfeit 억류·압수·몰수, (g) 권리자 동의 30일) | https://www.ecfr.gov/current/title-19/chapter-I/part-133/subpart-C/section-133.21 |
+| cfr-19-133-22 | 19 C.F.R. §133.22 (copying or simulating 통관 거절, (c) 해제 4경로, (f) 압수 전환) | https://www.ecfr.gov/current/title-19/chapter-I/part-133/subpart-C/section-133.22 |
+| cfr-19-133-25 | 19 C.F.R. §133.25 (억류 절차: 제시일 기산 30일 + good cause 연장) | https://www.ecfr.gov/current/title-19/chapter-I/part-133/subpart-C/section-133.25 |
 
 USC/CFR·USPTO·CBP 항목은 2026-06-28 owner scorecard review에서 한 번 더 1차출처로 확인하고 claim-map의 `lastVerified`를 재스탬프했다.
 SCOTUS Jack Daniel's·환송심·§1125(c)·19 C.F.R. §133.21/§133.22 항목은 2026-06-29 Jack Daniel's 집행 보강 시 1차출처로 확인했다(USA-PARODY-001·USA-DILUTION-001·USA-CBP-002).
+19 C.F.R. §133.21/§133.22/§133.25는 2026-08-15 eCFR 현행본(Title 19, up to date as of 2026-08-13)으로 재대조하고, 조문 링크를 Cornell LII 미러에서 eCFR 원본으로 옮겼다. §133.25는 이때 신규 등록했다.
+15 U.S.C. §1064는 2026-08-15 Cornell LII로 (3)·(6)항 원문을 재대조했다. 공식 미러인 `uscode.house.gov`는 이 작업 환경에서 접속이 거부돼(ECONNREFUSED) 등록 URL을 바꾸지 않았다.
 
 ## 보조 출처 (12장 플랫폼 신고 맥락)
 
