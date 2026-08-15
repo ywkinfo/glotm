@@ -40,3 +40,41 @@
 - `claim-map.json`(12건: HIGH 8 / MEDIUM 4) 신설, sourceIds는 `jp_tm_source_register.md` 항목과 매칭.
 - 휘발성 수치(출원 `JPY 3,400 + class당 JPY 8,600` 등)는 구조적 표기 유지(본문 하드코딩 제외).
 - registry `factsReviewedOn` 2026-06-29 후보로 적격(owner 최종 attestation 전제).
+
+## 2026-08-15 note (60일 window 재검증 — **부분 완료**, 6/12)
+
+- 트리거: `audit:facts` mature 60일 창이 2026-08-28 만료 예정(`health:report` Window Margin `13d left`).
+- **결과: 6건 재대조 완료(전부 변경 없음), 6건 미완료.** 미완료분은 `lastVerified`를 옮기지 않았다 — blind re-stamp 금지.
+
+### 접근 제약(코드 아님, 이번 세션의 사실)
+
+- **`jpo.go.jp`가 403을 반환한다**(WebFetch·curl 모두). claim-map의 12건 중 7건이 JPO 페이지를 등록 소스로 쓰므로 그 경로로는 재대조할 수 없었다.
+- **영문 법령번역이 최신이 아니다.** `japaneselawtranslation.go.jp/en/laws/view/3047/en`(Trademark Act)은 **Act No. 55 of 2015** 개정 수준이라 **제4조 제4항이 존재하지 않는다.** 즉 `jpn-trademark-act`는 2023년 개정으로 도입된 병존동의제도(2024-04-01 시행)를 **구조적으로 뒷받침하지 못한다** — 접근 문제가 아니라 소스 적합성 문제다. `jpn-ucpa`(Act No. 47 of 1993)도 2011년 개정 수준이다.
+
+### 재대조 완료 6건 (전부 변경 없음)
+
+| claim | 근거(직접 인용 확인) |
+|---|---|
+| JP-FIRST-001 | Trademark Act 제8조 — "only the applicant who filed the application on the earlier date is entitled to register the trademark" |
+| JP-TERM-001 | 제19조 — "A trademark right expires after ten years from the date of registration of establishment of the right"(설정등록일 기산 확인) |
+| JP-OPP-001 | 제43조의2 — "an opposition to registration within two months from the date of publication of the bulletin containing the trademark" |
+| JP-CUSTOMS-001 | 일본 세관 Application for Suspension — 상표권 포함, 근거 관세법 제69조의4·제69조의13 |
+| JP-IPHC-001 | IP High Court — JPO 심결취소소송은 도쿄고재 전속관할이며 IP High Court가 심리. 상표 민사 항소는 1심 법원 소재지에 따라 8개 고재로 갈리므로 claim의 "일부"라는 한정이 정확하다 |
+| JP-DRP-001 | JPRS JP-DRP — 3요소 구조 확인, 처리기관은 일본지적재산중재센터 |
+
+### 미완료 6건 (lastVerified 2026-06-29 유지)
+
+| claim | 막힌 이유 |
+|---|---|
+| JP-CONSENT-001 | jpo.go.jp 403 + 등록 법령소스가 2015년판이라 제4조 제4항 부재. **소스 교체가 필요하다**(e-Gov 법령검색 또는 JPO 원문) |
+| JP-REP-001 | jpo-step-by-step 403. 법령 번역본에서는 재외자 기간연장(2개월)만 확인되고 대리인·납부 구조는 미확인 |
+| JP-MADRID-REFUSAL-001 | jpo-madrid-faq 403 |
+| JP-FEE-001 | jpo-fees 403(수수료표는 행정 고시라 대체 1차 출처가 없다) |
+| JP-ACCEL-001 | jpo-accelerated-exam 403(가속심사 제외 대상은 JPO 운용지침) |
+| JP-UCPA-001 | 법령 자체는 도달했으나 조문 대조 미실시 |
+
+### owner 후속
+
+1. **JapTm `factsReviewedOn`은 2026-06-29에서 옮기지 않았다.** 6건이 미대조 상태이므로 전건 재검증으로 표기할 수 없다.
+2. 2026-08-28 window가 지나면 `audit:facts`가 `gate=warn`·staleHighRisk로 떨어진다. 이는 정직한 상태 표시다.
+3. **`jpn-trademark-act` 소스 교체가 선결 과제다.** 병존동의제도를 다루면서 그 조문이 없는 번역본을 근거로 두는 구조는 이번에 드러난 진짜 결함이다.
