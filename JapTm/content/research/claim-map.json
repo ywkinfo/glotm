@@ -70,15 +70,16 @@
       "jurisdiction": "JP",
       "claim": "일본 비거주자(외국 주소 출원인)는 일본 내 대표자 또는 대리인 구조를 먼저 정해야 하며, 수수료를 JPO에 직접 납부할 수 없어 일본 내 대표자·대리인을 통한 납부 구조가 필요하다.",
       "chapterRefs": [
+        "Ch1",
         "Ch5"
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
         "jpo-step-by-step"
       ],
-      "lastVerified": "2026-06-29",
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
-      "notes": "JPO Step-by-step Guide: 비거주자 대표자/대리인 구조 + 직접 납부 제약. 세부 자격 범위는 확장 단정 금지. 2026-08-15 재검증 시도: 등록 소스가 이번 세션에서 확인 불가(jpo.go.jp 403 / 영문 법령번역이 2015년 개정판 수준). lastVerified 유지 — blind re-stamp 금지."
+      "notes": "JPO Step-by-step Guide: 비거주자 대표자/대리인 구조 + 직접 납부 제약. 세부 자격 범위는 확장 단정 금지. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 [Last updated 23 March 2021]): 'If you do not have a permanent address or residence ... in Japan, a legal representative (such as a patent attorney) ... must be appointed as a \"Patent Administrator\" (Article 8, Patent Act)' + 'Overseas residents cannot make a payment of any fees directly to our Office by any means ... The payment has to be made by your representative (e.g., patent attorney) in Japan.' 변경 없음. chapterRefs를 실제 인용처(Ch1 §1.39·Ch5 §5.21)에 맞춰 Ch1 추가."
     },
     {
       "id": "JP-MADRID-REFUSAL-001",
@@ -91,9 +92,9 @@
       "sourceIds": [
         "jpo-madrid-faq"
       ],
-      "lastVerified": "2026-06-29",
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
-      "notes": "JPO Madrid FAQ: 일본 지정 국제출원의 provisional refusal 대응 구조. 정확한 응답 기간 일수는 본문 하드코딩 금지(사안·통지 기준 재확인). 2026-08-15 재검증 시도: 등록 소스가 이번 세션에서 확인 불가(jpo.go.jp 403 / 영문 법령번역이 2015년 개정판 수준). lastVerified 유지 — blind re-stamp 금지."
+      "notes": "JPO Madrid FAQ: 일본 지정 국제출원의 provisional refusal 대응 구조. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 [Last updated 13 March 2023], FAQ 11-2·11-3): 'Under Article 8 of the Patent Act of Japan, applicants who do not reside or who are not domiciled in Japan cannot directly conduct any procedures with the JPO' + 대응 경로는 ⅰ) 일본 내 대표자를 통한 amendment 제출 — 'within three months from the \"date of pronouncement\"(i.e., the mailing date of the notification)' 또는 ⅱ) WIPO에 MM6 limitation. 변경 없음. 3개월은 Ch4 본문 서술과 일치하나 통지별 기재가 우선이므로 다른 장으로 확산하지 않는다."
     },
     {
       "id": "JP-CONSENT-001",
@@ -106,11 +107,12 @@
       "riskLevel": "HIGH",
       "sourceIds": [
         "jpo-consent-system",
-        "jpn-trademark-act"
+        "jpn-trademark-act",
+        "jpn-trademark-act-en"
       ],
-      "lastVerified": "2026-06-29",
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
-      "notes": "2023 改正 상표법, 2024-04-01 시행. 제4조 제1항 제11호 거절을 선등록권자 동의 + 비혼동 요건으로 극복하는 letter-of-consent 구조. 본문에는 '동의만으로 자동 등록'이 아니라 '동의 + 비혼동 요건'임을 명확히 한다. JPO consent system guidance 정확 URL은 공개 직전 재확인. 2026-08-15 재검증 시도: 등록 소스가 이번 세션에서 확인 불가(jpo.go.jp 403 / 영문 법령번역이 2015년 개정판 수준). lastVerified 유지 — blind re-stamp 금지."
+      "notes": "2023 改正 상표법(법률 제51호, 2023-06-14 공포), 2024-04-01 시행. 본문에는 '동의만으로 자동 등록'이 아니라 '동의 + 비혼동 요건'임을 명확히 한다. 2026-08-15 조문 정본 재대조(e-Gov 현행 商標法, 令和8年5月21日 施行): 제4조 제4항 — '第一項第十一号に該当する商標であつても、その商標登録出願人が、商標登録を受けることについて同号の他人の承諾を得ており、かつ、…混同を生ずるおそれがないものについては、同号の規定は、適用しない.' 영문 번역(4764/en, Last Version: Act No. 51 of 2023)도 같은 조항을 담고 있어 인용 가능. JPO 전용 안내 페이지(2026-04-01 갱신)에서 제8조 정비·혼동방지표시청구(제24조의4)·부정사용취소심판(제52조의2) 연결도 확인. 변경 없음."
     },
     {
       "id": "JP-CUSTOMS-001",
@@ -169,9 +171,9 @@
       "sourceIds": [
         "jpo-fees"
       ],
-      "lastVerified": "2026-06-29",
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
-      "notes": "JPO Schedule of fees: class 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지. 2026-08-15 재검증 시도: 등록 소스가 이번 세션에서 확인 불가(jpo.go.jp 403 / 영문 법령번역이 2015년 개정판 수준). lastVerified 유지 — blind re-stamp 금지."
+      "notes": "JPO Schedule of fees: class 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지. 2026-08-15 원문 재대조(브라우저 직접 열람, 'Schedule of fees (on or after April 1, 2022)' · [Last updated 1 April 2022]): 출원 ¥3,400 + class당 ¥8,600 / 등록료 class당 ¥32,900(분납 ¥17,200) / 갱신료 class당 ¥43,600(분납 ¥22,800). 출원·등록·갱신 세 축 모두 class별 구조임을 확인. 변경 없음."
     },
     {
       "id": "JP-ACCEL-001",
@@ -184,9 +186,9 @@
       "sourceIds": [
         "jpo-accelerated-exam"
       ],
-      "lastVerified": "2026-06-29",
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
-      "notes": "JPO Accelerated Examination: 제외 대상 포함. 세부 범위는 검증 로그를 우선 기준으로 본다. 2026-08-15 재검증 시도: 등록 소스가 이번 세션에서 확인 불가(jpo.go.jp 403 / 영문 법령번역이 2015년 개정판 수준). lastVerified 유지 — blind re-stamp 금지."
+      "notes": "JPO Accelerated Examination: 제외 대상 포함. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 표기 'October 2025' · 가이드라인 2025-10-01 개정): 'applications for non-traditional trademarks, which are \"motion trademarks,\" \"hologram trademarks,\" \"color trademarks ...,\" \"sound trademarks,\" and \"position trademarks,\" and some three-dimensional trademarks ... and trademarks that claim for application of the consent system are not subject to accelerated examinations' + 'applications for international application (designating Japan) are also not subject to accelerated examinations.' claim의 세 갈래(비전통상표 일부·consent 청구 상표·일본 지정 국제출원)가 그대로 확인됨. 변경 없음."
     },
     {
       "id": "JP-UCPA-001",
@@ -197,11 +199,12 @@
       ],
       "riskLevel": "MEDIUM",
       "sourceIds": [
-        "jpn-ucpa"
+        "jpn-ucpa",
+        "jpn-ucpa-en"
       ],
-      "lastVerified": "2026-06-29",
+      "lastVerified": "2026-08-15",
       "status": "BODY_READY",
-      "notes": "Unfair Competition Prevention Act: 보완축. 영문 번역 최신성은 별도 확인이므로 조문 세부 인용은 원문 확인 전까지 구조 수준으로만. 2026-08-15 재검증 시도: 등록 소스가 이번 세션에서 확인 불가(jpo.go.jp 403 / 영문 법령번역이 2015년 개정판 수준). lastVerified 유지 — blind re-stamp 금지."
+      "notes": "Unfair Competition Prevention Act: 보완축. 2026-08-15 조문 정본 재대조(e-Gov 현행 不正競争防止法, 令和8年5月21日 施行) + 현행 영문 번역(4709/en, Last Version: Act No. 51 of 2023). 제2조 제1항 제1호=주지 상품등표시와 동일·유사 사용으로 '混同を生じさせる行為', 제2호=자기 상품등표시로 타인의 **저명** 상품등표시를 사용하는 행위, 제3호=타인 상품의 **형태 모방**. 주의: 제2호는 혼동을 요건으로 하지 않으므로, 세 갈래를 한 덩어리로 '혼동야기'라 부르지 않는다. claim의 보완축 서술 자체는 변경 없음."
     }
   ]
 }

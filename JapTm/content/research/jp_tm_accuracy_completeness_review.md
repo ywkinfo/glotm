@@ -95,4 +95,6 @@
 - [Japan Customs: For Right Holders](https://www.customs.go.jp/mizugiwa/chiteki/pages/b_001_e.htm)
 - [IP High Court Jurisdiction](https://www.courts.go.jp/ip/eng/aboutus/jurisdiction/index.html)
 - [JPRS JP-DRP](https://jprs.jp/about/dom-rule/drp/)
-- [Japanese Law Translation: Unfair Competition Prevention Act](https://www.japaneselawtranslation.go.jp/en/laws/view/2149/en)
+- [e-Gov 법령검색: 부정경쟁방지법(현행)](https://laws.e-gov.go.jp/law/405AC0000000047) · [현행 공식 영문 번역](https://www.japaneselawtranslation.go.jp/en/laws/view/4709/en)
+- [e-Gov 법령검색: 상표법(현행)](https://laws.e-gov.go.jp/law/334AC0000000127) · [현행 공식 영문 번역](https://www.japaneselawtranslation.go.jp/en/laws/view/4764/en)
+- [JPO 병존동의제도(コンセント制度)の導入](https://www.jpo.go.jp/system/trademark/gaiyo/consent/index.html)

@@ -32,7 +32,7 @@
     {
       "id": "USA-CANC-001",
       "jurisdiction": "US",
-      "claim": "Cancellation은 원칙적으로 상시 제기할 수 있으나, 등록 5년 경과 후에는 genericness, functionality, abandonment, fraud, §1054/§1052 위반, source misrepresentation 등 Section 14 열거 사유로 한정되고, 2(d) 혼동 취소는 통상 5년 내에만 가능하다.",
+      "claim": "Cancellation은 원칙적으로 상시 제기할 수 있으나, 등록 5년 경과 후에는 genericness, functionality, abandonment, fraud, §1054 위반, §1052(a)·(b)·(c) 위반, source misrepresentation 등 §1064(3)이 열거한 사유로 한정되고, 2(d) 혼동 취소는 통상 5년 내에만 가능하다. 5년 축과 별개로 §1064(6)은 등록 3년 경과 후 상업적 사용이 전혀 없었던(never used in commerce) 지정상품·서비스에 대해 언제든 취소를 구할 수 있는 경로를 둔다.",
       "chapterRefs": [
         "Ch8",
         "Ch13"
@@ -51,7 +51,7 @@
         "unit": "years",
         "expression": "after 5 years, cancellation grounds limited to Section 14 enumerated grounds"
       },
-      "notes": "2026-06-28 1차출처 확인(Cornell LII 15 U.S.C. §1064): 5년 후 열거 사유 한정, 3년 후 never-used 사유 추가, 2(d)는 목록 외."
+      "notes": "2026-06-28 1차출처 확인(Cornell LII 15 U.S.C. §1064): 5년 후 열거 사유 한정, 3년 후 never-used 사유 추가, 2(d)는 목록 외. 2026-08-15 재검증 정정: 종전 claim은 5년 후 사유를 '§1054/§1052 위반'으로 뭉뚱그려, 5년이 지나면 다툴 수 없는 §1052(d)(혼동)·§1052(e)(기술적 표장)까지 취소 사유인 것처럼 읽혔다. §1064(3) 원문은 'contrary to the provisions of section 1054 of this title or of subsection (a), (b), or (c) of section 1052'로 §1052를 (a)·(b)·(c)로 한정한다. 또한 notes에만 있던 §1064(6)('At any time after the 3-year period following the date of registration, if the registered mark has never been used in commerce')를 claim 본문으로 올렸다."
     },
     {
       "id": "USA-REM-001",
@@ -261,19 +261,20 @@
     {
       "id": "USA-CBP-002",
       "jurisdiction": "US",
-      "claim": "CBP는 기록상표에 대해 counterfeit(19 CFR 133.21: 등록표장과 동일하거나 실질적으로 구별 불가)와 copying-or-simulating(19 CFR 133.22: 공중이 기록표장과 연관 지을 만큼 유사)을 구분한다. counterfeit는 압수 후 권리자의 서면 동의가 없으면 몰수되며, 수입자가 스스로 표장을 제거해 통관시킬 수 없다 — 다만 권리자가 압수 통지로부터 30일 내 서면 동의를 하면 현상 통관·수출(반송)·표장 말소 후 통관 등 대체 처분이 열린다. copying-or-simulating은 통관 거절·억류 대상이고 30일 내 표장 제거·말소, 권리자 본인 또는 지정인의 수입, 권리자 서면 동의, 1개 개인면세 중 하나로 해제되며, 수출(반송)은 이 열거 경로에 포함되지 않는다.",
+      "claim": "CBP는 기록상표에 대해 counterfeit(19 CFR 133.21: 등록표장과 동일하거나 실질적으로 구별 불가)와 copying-or-simulating(19 CFR 133.22: 공중이 기록표장과 연관 지을 만큼 유사)을 구분한다. counterfeit는 압수 후 권리자의 서면 동의가 없으면 몰수되며, 수입자가 스스로 표장을 제거해 통관시킬 수 없다 — 다만 권리자가 압수 통지로부터 30일 내 서면 동의를 하면 현상 통관·수출(반송)·표장 말소 후 통관 등 대체 처분이 열린다(§133.21(g)). copying-or-simulating은 통관 거절 대상이고, 억류 기간은 §133.25(a)에 따라 상품을 CBP 검사에 제시한 날부터 30일이되 good cause가 소명되면 고정 상한 없이 연장된다. 그 기간 안에 표장 제거·말소, 권리자 본인 또는 지정인의 수입, 권리자 서면 동의, 1개 개인면세 중 하나가 성립해야 해제되고(수출(반송)은 이 열거 경로에 없다), 연장된 억류 기간까지 해제되지 않으면 압수·몰수 절차로 넘어간다(§133.22(f)). 두 30일은 기산점이 다른 별개의 시계다.",
       "chapterRefs": [
         "Ch12"
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
         "cfr-19-133-21",
-        "cfr-19-133-22"
+        "cfr-19-133-22",
+        "cfr-19-133-25"
       ],
       "lastVerified": "2026-08-15",
       "status": "BODY_READY",
       "conceptKey": "cbp_mark_classification",
-      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지. 2026-08-15 재검증 정정: 종전 서술은 수출(반송)을 copying-or-simulating(133.22)의 구제 경로로, 표장 제거 불가를 counterfeit(133.21)의 절대 규칙으로 적었으나 두 축이 뒤바뀌어 있었다. 133.22(c)는 표장 제거·권리자 수입·서면 동의·개인면세 4가지만 열거하고 수출을 포함하지 않으며, 수출과 표장 말소 후 통관은 133.21의 권리자 서면 동의 경로에 있다."
+      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지. 2026-08-15 재검증 정정: 종전 서술은 수출(반송)을 copying-or-simulating(133.22)의 구제 경로로, 표장 제거 불가를 counterfeit(133.21)의 절대 규칙으로 적었으나 두 축이 뒤바뀌어 있었다. 133.22(c)는 표장 제거·권리자 수입·서면 동의·개인면세 4가지만 열거하고 수출을 포함하지 않으며, 수출과 표장 말소 후 통관은 133.21의 권리자 서면 동의 경로에 있다. 2026-08-15 2차 정정(eCFR 원문 대조): 두 30일을 '같은 시계'로 묶은 것이 오류였다. §133.25(a)는 §§133.22·133.23에만 적용되고 'shall be detained for 30 days from the date on which the merchandise is presented for CBP examination' + 'Extensions of the 30-day time period may be freely granted for good cause shown'이라 상한이 고정돼 있지 않다. 반면 §133.21(g)의 30일은 'within thirty days from notification of seizure'로 기산점 자체가 다르다. §133.22(f)는 연장된 억류 기간까지 해제되지 않으면 seizure·forfeiture로 넘어간다고 규정한다. counterfeit 자체의 억류는 §133.21(b)(1)의 별개 30일(제시일 기산)이고, 미해제 시 19 U.S.C. 1499(c)에 따라 excluded로 처리된다."
     }
   ]
 }

@@ -16,14 +16,14 @@
 | 해외 거주자의 직접 납부 | 비거주자는 상표 관련 수수료를 JPO에 직접 납부할 수 없다 | 2026-06-29 재확인 | 운영 체크리스트에 반영 가능. 일본 내 대표자 또는 대리인을 통한 납부 구조로 설명 | https://www.jpo.go.jp/e/system/professionals/step-by-step-trademark.html |
 | 가속심사 | 일정 요건 충족 시 trademark accelerated examination이 가능하다 | 2026-06-29 재확인 | 본문에 반영 가능. 신청 자체는 가능성 설명 수준으로 유지 | https://www.jpo.go.jp/e/system/trademark/shinsa/outline_accelerated_trademark.html |
 | 가속심사 제외 대상 | 일부 비전통상표, consent system 청구 상표, 일본 지정 국제출원은 현재 가속심사 대상이 아니다 | 2026-06-29 재확인 | 본문에는 “일부 유형 제외” 수준을 넘겨도 되지만, 세부 범위는 검증 로그를 우선 기준으로 본다 | https://www.jpo.go.jp/e/system/trademark/shinsa/outline_accelerated_trademark.html |
-| 병존동의제도(consent system) | 2023년 개정 상표법으로 도입(2024-04-01 시행). 제4조 제1항 제11호(선등록상표와의 충돌) 거절을 선등록권자 동의 + 출처혼동 비유발 요건을 함께 충족하면 병존등록으로 극복할 수 있다 | 2026-06-29 재확인 | 본문에는 “동의만으로 자동 등록”이 아니라 “동의 + 비혼동 요건”임을 명확히 반영. JPO consent system guidance 정확 URL은 공개 직전 재확인 | https://www.jpo.go.jp/e/system/trademark/gaiyo/chizai08.html · https://www.japaneselawtranslation.go.jp/en/laws/view/3047/en |
+| 병존동의제도(consent system) | 2023년 개정 상표법으로 도입(2024-04-01 시행). 제4조 제1항 제11호(선등록상표와의 충돌) 거절을 선등록권자 동의 + 출처혼동 비유발 요건을 함께 충족하면 병존등록으로 극복할 수 있다 | 2026-08-15 조문 정본 재대조 | 본문에는 “동의만으로 자동 등록”이 아니라 “동의 + 비혼동 요건”임을 명확히 반영. 근거는 상표법 제4조 제4항 | https://www.jpo.go.jp/system/trademark/gaiyo/consent/index.html · https://laws.e-gov.go.jp/law/334AC0000000127 |
 | Madrid outbound 전제 | 일본을 본국관청으로 쓰는 국제출원은 일본 기초출원 또는 기초등록이 필요하다 | 2026-06-29 재확인 | 본문에 반영 가능 | https://www.jpo.go.jp/e/system/trademark/madrid/index.html |
 | 일본 지정 국제출원 응답 | 일본 지정 국제출원에 대한 provisional refusal 대응에는 일본 내 절차 대응이 필요하고, 비거주자는 일본 내 대표자를 세워야 한다 | 2026-06-29 재확인 | 본문에는 “현지 대리인 대응 가능성”보다 한 단계 구체적으로 반영 가능 | https://www.jpo.go.jp/e/faq/yokuaru/madrid.html |
 | 세관 차단 구조 | 권리자는 Application for Suspension으로 수입·수출 단계 검증 절차를 유도할 수 있다 | 2026-06-29 재확인 | 본문에 반영 가능 | https://www.customs.go.jp/mizugiwa/chiteki/pages/b_001_e.htm |
 | 일본 세관 집행 범위 | 상표권 외에도 저작권·부정경쟁 관련 일부 행위가 국경 집행과 연결된다 | 2026-06-29 재확인 | 본문에 반영 가능. 구체 조문 확장은 별도 확인 | https://www.customs.go.jp/mizugiwa/chiteki/pages/a_003_e.htm |
 | IP High Court 역할 | JPO appeal/trial decision 소송은 IP High Court가 담당하고, 일부 민사 항소도 연결된다 | 2026-06-29 재확인 | 본문에 반영 가능. 1심 법원 분기는 도식화 전 재확인 | https://www.courts.go.jp/ip/eng/aboutus/jurisdiction/index.html |
 | JP-DRP 존재 | JP 도메인에는 전용 분쟁처리 정책이 존재하고, 3요소 심사 구조를 가진다 | 2026-06-29 재확인 | 본문에 반영 가능. 세부 입증요건과 절차 기간은 source register와 같이 관리 | https://jprs.jp/about/dom-rule/drp/ |
-| 부정경쟁방지법 영문 번역 상태 | 영문 번역 페이지는 존재하나 최신성 표기가 혼재하므로 본문에서는 보완축 수준으로만 사용한다 | 2026-06-29 재확인 | 조문 세부 인용은 일본어 원문 또는 최신 번역 확인 전까지 본문에 승격하지 않는다 | https://www.japaneselawtranslation.go.jp/en/laws/view/2149/en |
+| 부정경쟁방지법 조문 구조 | 제2조 제1항 제1호=주지표시 혼동야기, 제2호=저명표시 모용(혼동 불요), 제3호=상품형태 모방. 세 갈래의 요건이 서로 다르다 | 2026-08-15 조문 정본 재대조 | 11장에 세 갈래를 나눠 반영. 제2호가 혼동을 요건으로 하지 않는다는 점을 명시 | https://laws.e-gov.go.jp/law/405AC0000000047 · https://www.japaneselawtranslation.go.jp/en/laws/view/4709/en |
 
 ## Editorial Rule
 
@@ -41,10 +41,11 @@
 - 휘발성 수치(출원 `JPY 3,400 + class당 JPY 8,600` 등)는 구조적 표기 유지(본문 하드코딩 제외).
 - registry `factsReviewedOn` 2026-06-29 후보로 적격(owner 최종 attestation 전제).
 
-## 2026-08-15 note (60일 window 재검증 — **부분 완료**, 6/12)
+## 2026-08-15 note (60일 window 재검증 — 1차 패스, 6/12)
 
-- 트리거: `audit:facts` mature 60일 창이 2026-08-28 만료 예정(`health:report` Window Margin `13d left`).
-- **결과: 6건 재대조 완료(전부 변경 없음), 6건 미완료.** 미완료분은 `lastVerified`를 옮기지 않았다 — blind re-stamp 금지.
+- 트리거: `audit:facts` mature 60일 창. `lastVerified` 2026-06-29 기준으로 `freshnessDays > 60`이 되는 첫날은 **2026-08-29**다.
+- **1차 패스 결과: 6건 재대조 완료(전부 변경 없음), 6건 미완료.** 미완료분은 `lastVerified`를 옮기지 않았다 — blind re-stamp 금지.
+- 나머지 6건은 같은 날 2차 패스에서 완료했다(이 문서 마지막 섹션).
 
 ### 접근 제약(코드 아님, 이번 세션의 사실)
 
@@ -73,8 +74,47 @@
 | JP-ACCEL-001 | jpo-accelerated-exam 403(가속심사 제외 대상은 JPO 운용지침) |
 | JP-UCPA-001 | 법령 자체는 도달했으나 조문 대조 미실시 |
 
-### owner 후속
+### owner 후속 (1차 패스 시점)
 
 1. **JapTm `factsReviewedOn`은 2026-06-29에서 옮기지 않았다.** 6건이 미대조 상태이므로 전건 재검증으로 표기할 수 없다.
-2. 2026-08-28 window가 지나면 `audit:facts`가 `gate=warn`·staleHighRisk로 떨어진다. 이는 정직한 상태 표시다.
+2. 2026-08-29부터 `audit:facts`가 staleHighRisk를 보고한다. 이는 정직한 상태 표시다.
 3. **`jpn-trademark-act` 소스 교체가 선결 과제다.** 병존동의제도를 다루면서 그 조문이 없는 번역본을 근거로 두는 구조는 이번에 드러난 진짜 결함이다.
+
+## 2026-08-15 note (2차 패스 — 잔여 6건 완료, 12/12)
+
+1차 패스가 남긴 6건을 모두 원문 대조로 닫았다. **선결 과제였던 소스 교체가 문제의 절반이었다.**
+
+### 접근 제약이 아니었다
+
+1차 패스는 `jpo.go.jp` 403을 접근 불가로 기록했지만, 이는 **도구의 문제였지 사이트의 문제가 아니었다.**
+WebFetch/curl은 403을 받지만 인앱 브라우저로는 JPO 페이지가 그대로 열린다. 실제로 이번 패스에서
+JPO 4개 페이지(step-by-step · Madrid FAQ · Schedule of fees · Accelerated Examination)와
+JPO 병존동의제도 전용 페이지를 모두 직접 열어 대조했다. 다음 세션은 403을 만나면 **채널을 바꿔 본 뒤에**
+접근 불가로 기록한다.
+
+반면 **번역본 문제는 실재했다.** `view/3047/en`은 `Last Version: Act No. 55 of 2015`라서 제4조 제4항이
+없는 것이 맞았다. 현행 번역은 `view/4764/en`(`Act No. 51 of 2023`)이고, 여기에는 제4조 제4항이 들어 있다.
+
+### 재대조 완료 6건
+
+| claim | 대조한 근거 | 결과 |
+|---|---|---|
+| JP-CONSENT-001 | e-Gov 현행 商標法 제4조 제4항 원문(`第一項第十一号に該当する商標であつても、…同号の他人の承諾を得ており、かつ、…混同を生ずるおそれがないものについては、同号の規定は、適用しない`) + JPO 전용 페이지(2026-04-01 갱신) | 변경 없음. 소스를 e-Gov 정본 + JPO 전용 페이지로 교체 |
+| JP-REP-001 | JPO step-by-step([Last updated 23 March 2021]) — `Patent Administrator`(Article 8, Patent Act) 선임 의무 + `Overseas residents cannot make a payment of any fees directly to our Office by any means` | 변경 없음. chapterRefs에 Ch1 추가 |
+| JP-MADRID-REFUSAL-001 | JPO Madrid FAQ 11-2·11-3([Last updated 13 March 2023]) — 비거주자 직접 절차 불가 + amendment는 `date of pronouncement`부터 3개월, 또는 WIPO MM6 | 변경 없음 |
+| JP-FEE-001 | JPO Schedule of fees(2022-04-01 이후판) — 출원 ¥3,400+class당 ¥8,600 / 등록 class당 ¥32,900 / 갱신 class당 ¥43,600 | 변경 없음. 세 축 모두 class별 구조 확인 |
+| JP-ACCEL-001 | JPO Accelerated Examination(2025년 10월판, 가이드라인 2025-10-01 개정) — 비전통상표 일부·`trademarks that claim for application of the consent system`·`international application (designating Japan)` 제외 | 변경 없음 |
+| JP-UCPA-001 | e-Gov 현행 不正競争防止法 제2조 제1항 + 현행 영문 번역(`Act No. 51 of 2023`) | claim 유지. 11장에 세 갈래 요건 분리 반영 |
+
+### 본문 반영 1건 — 11장 부정경쟁방지법 절
+
+조문을 대조하면서 세 갈래의 요건이 서로 다르다는 점이 본문에 안 드러나 있었다.
+제2조 제1항 **제2호(저명표시 모용)는 혼동을 요건으로 하지 않는다.** "부정경쟁 = 혼동"으로 뭉쳐 두면
+저명표지 편승 사건에서 "고객이 헷갈릴 리 없다"는 반론을 과대평가하게 된다. 세 갈래를 나눠 적고,
+링크도 구 번역본(`2149/en`)에서 e-Gov 정본 + 현행 번역으로 교체했다.
+
+### 상태
+
+- **12/12 재대조 완료.** 전건 `lastVerified` 2026-08-15.
+- registry Japan `factsReviewedOn`을 2026-08-15로 옮겼다(전건 대조 완료 요건 충족). 최종 attestation은 owner 몫이다.
+- `scripts/research-audit/claim-source-register.test.ts`가 구 번역본 URL 재유입과 sourceId 미등록을 테스트로 막는다.

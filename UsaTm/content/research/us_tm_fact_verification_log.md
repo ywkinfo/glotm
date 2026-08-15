@@ -83,5 +83,46 @@
 
 ### 후속(owner 판단)
 
-- `USA-CANC-001`에 §1064(3) never-used 사유를 명시적으로 넣을지 — 5년 경과 후 취소 루트를 다루는 8장/13장 보강 여부.
+- `USA-CANC-001`에 never-used 사유를 명시적으로 넣을지 — 5년 경과 후 취소 루트를 다루는 8장/13장 보강 여부. → **아래 2026-08-15 2차 패스에서 반영 완료.**
 - registry `factsReviewedOn` 2026-08-15 재스탬프는 owner attestation 전제.
+
+## 2026-08-15 note (2차 패스 · 고위험 오류 2건 정정)
+
+1차 패스가 남긴 후속 항목을 닫으면서 조문을 다시 읽는 과정에서, 1차 패스에서 못 잡은 오류 1건이 추가로 드러났다.
+확인 경로: eCFR 현행본(Title 19, up to date as of 2026-08-13) 원문 직접 대조, Cornell LII 15 U.S.C. §1064.
+
+### 정정 1 — USA-CANC-001 (HIGH): 5년 후 취소 사유의 범위
+
+- 종전: "genericness, functionality, abandonment, fraud, **§1054/§1052 위반**, source misrepresentation 등 Section 14 열거 사유".
+- 실제: §1064(3) 원문은 "obtained fraudulently or contrary to the provisions of section 1054 of this title **or of subsection (a), (b), or (c) of section 1052**"다. §1052 전체가 아니라 (a)·(b)·(c)로 한정된다.
+- 왜 위험한가: "§1052 위반"으로 읽으면 5년이 지나면 더는 다툴 수 없는 **§1052(d)(선등록과의 혼동)·§1052(e)(기술적 표장)** 까지 취소 사유로 보인다. 바로 다음 문장이 "2(d) 취소는 통상 5년 내에만 가능"이라 같은 claim 안에서 서로 어긋나 있었다.
+- 반영: claim 본문을 `§1054 위반, §1052(a)·(b)·(c) 위반`으로 좁히고 근거를 §1064(3)으로 명시. 13장에 같은 취지의 주의 문단 추가.
+
+### 정정 2 — USA-CANC-001 (HIGH): never-used 경로의 조문 위치
+
+- 1차 패스 note는 never-used 사유를 **§1064(3)**로 적었으나, 실제 위치는 **§1064(6)**이다: "At any time after the 3-year period following the date of registration, if the registered mark has never been used in commerce on or in connection with some or all of the goods or services recited in the registration."
+- 반영: claim 본문에 3년 축을 별도 문장으로 올리고, 13장에 "5년 축과 별개로 3년 축" 문단 추가.
+
+### 정정 3 — USA-CBP-002 (HIGH): 두 30일을 하나의 시계로 묶은 서술
+
+1차 패스에서 좌우 트랙은 바로잡았지만, **"어느 쪽이든 30일이라는 같은 시계를 쓰므로"** 라는 12장 문장이 남아 있었다. 이건 별개의 오류다.
+
+| 어느 30일 | 조문 | 원문 | 기산점 | 연장 |
+|---|---|---|---|---|
+| copying-or-simulating 억류 | §133.25(a) | "shall be detained for 30 days from the date on which the merchandise is presented for CBP examination" | 상품 제시일 | "Extensions of the 30-day time period may be **freely granted for good cause shown**" — 고정 상한 없음 |
+| counterfeit 권리자 동의 | §133.21(g) | "The owner of the recorded mark, **within thirty days from notification of seizure**, may provide written consent" | 압수 통지일 | 조문에 연장 규정 없음 |
+
+- 추가 확인: §133.25는 적용 범위 자체가 **§§133.22·133.23**으로, counterfeit(§133.21)는 이 조문을 타지 않는다. counterfeit의 억류는 §133.21(b)(1)의 별개 30일(제시일 기산)이고, 미해제 시 19 U.S.C. 1499(c)에 따라 **excluded**로 처리된다(압수가 아니다). 반면 §133.22(f)는 "if the importer has not obtained release of detained articles within the period of detention as provided in §133.25 ... shall be seized and forfeiture proceedings instituted"로, **연장된** 억류 기간이 기준이다.
+- 반영: 12장 분류표 아래에 "어느 30일인가" 표를 넣어 기산점·연장 가능성을 분리하고, 해제 실패 시 압수 전환이 연장 기간 기준임을 명시. claim-map `USA-CBP-002`에 `cfr-19-133-25` sourceId 추가.
+- source register: §133.21/§133.22 링크를 Cornell LII 미러에서 eCFR 원본으로 교체하고 §133.25를 신규 등록.
+
+### 회귀 가드
+
+`scripts/research-audit/claim-source-register.test.ts`를 추가해 위 두 정정을 테스트로 고정했다.
+`audit:facts`는 sourceId의 **개수**만 세므로 이런 내용 오류를 잡지 못한다. 같은 파일에서 claim-map의 sourceId가
+source register 표에 실제로 존재하고 URL까지 추적되는지도 함께 검사한다.
+
+### 남은 상태
+
+- registry `factsReviewedOn`은 owner attestation 전제이므로 이 커밋에서 옮기지 않았다.
+- `uscode.house.gov`는 이 작업 환경에서 접속이 거부돼(ECONNREFUSED) §1064 등록 URL은 Cornell LII를 유지했다.
