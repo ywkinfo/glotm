@@ -24,6 +24,7 @@ import {
 import { liveShellProducts } from "../src/products/registry";
 import { gatewayHeroSupportingParagraphs } from "../src/content/gateway";
 import {
+  buildChapterPageTitle,
   buildChapterPath,
   buildProductPath,
   buildRuntimeDocumentTitle,
@@ -635,8 +636,51 @@ function buildProductDescription(product: ProductMeta, documentData: DocumentDat
   );
 }
 
-function buildChapterDescription(product: ProductMeta, chapter: Chapter) {
-  const summarySource = chapter.summary || stripHtml(chapter.html) || product.summary;
+// 챕터 제목의 관할 라벨은 SPA와 공유해야 하므로 정본이 `src/products/shared.ts`에 있다.
+// prerender에서는 거기에 `| GloTm`만 얹는다.
+function buildChapterDocumentTitle(product: ProductMeta, chapter: Chapter) {
+  return buildRuntimeDocumentTitle(buildChapterPageTitle(product, chapter));
+}
+
+// chapter.summary는 원고의 첫 구획에서 뽑히므로 본문이 아니라 절 제목만 잡히는 경우가 있다.
+// MexTm 7개 챕터가 `도입` 하나를 공유해 description까지 같아져 있었다(2026-08-15 라이브 실측).
+// 판정 기준은 길이가 아니라 **같은 가이드 안에서의 중복**이다. 길이 임계값을 쓰면
+// `핵심 원칙: 행정과 사법을 병행하라`(LatTm 19자)처럼 짧지만 고유한 요약까지 버린다.
+function collectRepeatedSummaries(documentData: DocumentData) {
+  const counts = new Map<string, number>();
+
+  for (const chapter of documentData.chapters) {
+    const summary = stripHtml(chapter.summary ?? "");
+
+    if (summary) {
+      counts.set(summary, (counts.get(summary) ?? 0) + 1);
+    }
+  }
+
+  return new Set(
+    [...counts.entries()].filter(([, count]) => count > 1).map(([summary]) => summary)
+  );
+}
+
+function extractFirstParagraphText(html: string) {
+  const match = html.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i);
+
+  return match ? stripHtml(match[1]!) : "";
+}
+
+function buildChapterDescription(
+  product: ProductMeta,
+  chapter: Chapter,
+  repeatedSummaries: ReadonlySet<string>
+) {
+  const summary = stripHtml(chapter.summary ?? "");
+  const summarySource =
+    summary && !repeatedSummaries.has(summary)
+      ? summary
+      : extractFirstParagraphText(chapter.html) ||
+        stripHtml(chapter.html) ||
+        summary ||
+        product.summary;
 
   return trimDescription(`${summarySource} ${product.shortLabel} 가이드 챕터.`);
 }
@@ -892,8 +936,11 @@ export function buildStaticPageDefinitions(
       changeFrequency: "monthly"
     });
 
+    const repeatedSummaries = collectRepeatedSummaries(documentData);
+
     for (let index = 0; index < documentData.chapters.length; index += 1) {
       const chapter = documentData.chapters[index]!;
+      const chapterDescription = buildChapterDescription(product, chapter, repeatedSummaries);
       const chapterRoutePath = buildChapterPath(product.path, chapter.slug);
       const chapterUrl = buildCanonicalUrl(chapterRoutePath, siteOrigin, basePath);
       const chapterSocialImage = buildDefaultSocialImage(siteOrigin, basePath);
@@ -904,8 +951,8 @@ export function buildStaticPageDefinitions(
       pages.push({
         routePath: chapterRoutePath,
         outputPath: buildOutputPath(chapterRoutePath, distDir),
-        title: buildRuntimeDocumentTitle(chapter.title),
-        description: buildChapterDescription(product, chapter),
+        title: buildChapterDocumentTitle(product, chapter),
+        description: chapterDescription,
         canonicalUrl: chapterUrl,
         ...chapterSocialImage,
         ogType: "article",
@@ -921,7 +968,7 @@ export function buildStaticPageDefinitions(
         structuredData: [
           buildArticleNode({
             headline: chapter.title,
-            description: buildChapterDescription(product, chapter),
+            description: chapterDescription,
             url: chapterUrl,
             imageUrl: chapterSocialImage.ogImageUrl,
             dateModified: productBuiltIso,
