@@ -48,6 +48,7 @@ import {
 import { products } from "./registry";
 import {
   buildProductStatusLabel,
+  buildChapterPageTitle,
   buildChapterPath,
   buildProductPath,
   buildSectionLocation,
@@ -676,7 +677,9 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         return undefined;
       }
 
-      setRuntimeDocumentTitle(chapter.title);
+      // prerender와 같은 제목을 만든다. 여기서 chapter.title만 쓰면 hydration 직후 SPA가
+      // 관할 라벨이 붙은 prerender 제목을 덮어써서 중복 제목이 되살아난다.
+      setRuntimeDocumentTitle(buildChapterPageTitle(productMeta, chapter));
 
       const anchor = decodeRouteSegment(location.hash.replace(/^#/, "")) || "";
 

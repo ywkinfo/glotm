@@ -38,7 +38,12 @@ import {
   UsaReaderRoot
 } from "./usa";
 import { products } from "./registry";
-import { isPriorityLaneProduct, type DocumentData, type SearchEntry } from "./shared";
+import {
+  CHAPTER_TITLE_QUALIFIER_BY_SLUG,
+  isPriorityLaneProduct,
+  type DocumentData,
+  type SearchEntry
+} from "./shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
 const priorityGuideSlugs = new Set(
@@ -811,7 +816,11 @@ describe("Shared reader runtime contract", () => {
         { timeout: 10000 }
       );
       await waitFor(() => {
-        expect(document.title).toBe(`${readerCase.targetChapterTitle} | GloTm`);
+        // prerender(`scripts/seo.ts`)가 만드는 제목과 같아야 한다. SPA가 관할 라벨을 떨어뜨리면
+        // hydration 직후 prerender 제목을 덮어써서 가이드 간 중복 제목이 되살아난다.
+        expect(document.title).toBe(
+          `${readerCase.targetChapterTitle} | ${CHAPTER_TITLE_QUALIFIER_BY_SLUG[readerCase.basePath.slice(1)]} | GloTm`
+        );
       });
       await waitFor(() => {
         expect(screen.getByTestId("reader-location")).toHaveTextContent(

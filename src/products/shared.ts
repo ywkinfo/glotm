@@ -545,6 +545,40 @@ export function buildRuntimeDocumentTitle(pageTitle?: string) {
   return `${pageTitle} | GloTm`;
 }
 
+// 챕터 제목은 가이드끼리 겹친다. 2026-08-15 라이브 실측에서 `서문`이 4개 가이드에,
+// `부록: …`·`제12장 …(RACI)`·`등록 후 유지관리와 갱신 체계`가 각각 2개 가이드에 있었고,
+// `<챕터> | GloTm`만으로는 어느 관할인지 알 수 없어 10개 면이 서로를 밀어냈다.
+// registry.ts에는 짧은 관할 라벨 필드가 없고, `title`에서 잘라 쓰는 방식은
+// `EuTm 유럽 상표 운영 가이드북`처럼 접두어가 붙은 항목에서 조용히 깨진다. 그래서 slug로 명시 매핑한다.
+//
+// 이 파일에 두는 이유: prerender(`scripts/seo.ts`)와 SPA(`configuredReader.tsx`)가 **같은 제목**을
+// 만들어야 한다. 한쪽에만 두면 hydration 직후 SPA가 prerender 제목을 덮어써서 JS를 실행하는
+// 크롤러에게는 중복 제목이 그대로 남는다.
+export const CHAPTER_TITLE_QUALIFIER_BY_SLUG: Record<string, string> = {
+  latam: "중남미",
+  mexico: "멕시코",
+  usa: "미국",
+  japan: "일본",
+  china: "중국",
+  europe: "유럽",
+  uk: "영국"
+};
+
+export function buildChapterPageTitle(
+  product: Pick<ProductMeta, "slug">,
+  chapter: Pick<Chapter, "title">
+) {
+  const qualifier = CHAPTER_TITLE_QUALIFIER_BY_SLUG[product.slug];
+
+  if (!qualifier) {
+    throw new Error(
+      `Missing chapter title qualifier for ${product.slug}. Add it to CHAPTER_TITLE_QUALIFIER_BY_SLUG in src/products/shared.ts.`
+    );
+  }
+
+  return `${chapter.title} | ${qualifier}`;
+}
+
 export function setRuntimeDocumentTitle(pageTitle?: string) {
   if (typeof document === "undefined") {
     return;
