@@ -397,9 +397,10 @@ export const briefCandidates: BriefCandidate[] = [
     sourceIds: ["govuk-ipo"],
     jurisdictions: ["United Kingdom", "Europe", "Non-Use Cancellation"],
     relatedProductSlugs: ["uk", "europe"],
-    status: "ready",
+    status: "published",
+    publishedAs: "2026-08-comparable-uk-mark-eu-use-cutoff",
     notes:
-      "가이드 본문 반영(UKTm 제8장 2026-07-21, EuTm 제8장·부록 2026-08-02)과 1차 출처 재대조가 모두 끝났는데 브리프 lane에는 나가지 않았다. 별도 취재 없이 바로 쓸 수 있는 후보다."
+      "가이드 본문 반영(UKTm 제8장 2026-07-21, EuTm 제8장·부록 2026-08-02)과 1차 출처 재대조가 모두 끝났는데 브리프 lane에는 나가지 않았다. 별도 취재 없이 바로 쓸 수 있는 후보다. 2026-08-24 발행 — 본문 사실은 EU-UKUSE-001(1차 출처 재대조 2026-08-02)과 UKTm claim-map(UK-NONUSE-001·UK-COMPARABLE-001·UK-BREXIT-001)에서만 가져왔고, 발행 라운드에서 소스를 새로 연 것은 아니므로 sweep 회차로 기록하지 않는다."
   },
   {
     id: "2026-08-kbrand-overseas-licensing-support",

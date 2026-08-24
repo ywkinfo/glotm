@@ -14,7 +14,10 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-08-kbrand-overseas-licensing-control");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-08-comparable-uk-mark-eu-use-cutoff");
+    expect(getBriefIssueBySlug("2026-08-comparable-uk-mark-eu-use-cutoff")?.title).toBe(
+      "2026년 8월 Hot Global TM Brief | comparable UK mark를 EU 사용으로 방어하던 경과 규정이 2026년 1월 1일로 끝났습니다"
+    );
     expect(getBriefIssueBySlug("2026-08-kbrand-overseas-licensing-control")?.title).toBe(
       "2026년 8월 Hot Global TM Brief | K-브랜드 해외 라이선싱 지원, 신청 전에 계약보다 통제표를 먼저 만들 때입니다"
     );

@@ -21,7 +21,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 
 | 항목 | 상태 | 재확인 명령 (read-only) |
 |------|------|-------------------------|
-| sitemap | live, **146 URL** (2026-08-15 실측) | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 146 |
+| sitemap | live, **147 URL** (2026-08-24 로컬 release 산출 기준) | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 147 |
 | robots | `/glotm/robots.txt`는 존재하지만 host-root `https://ywkinfo.github.io/robots.txt`는 404 | `curl -I https://ywkinfo.github.io/robots.txt`; `curl -s https://ywkinfo.github.io/glotm/robots.txt` |
 | GA4 배선 | 배포 번들에 `G-0XF5JG96CC` + gtag 인라인 | 홈 HTML의 `assets/index-*.js`를 받아 `G-0XF5JG96CC` grep |
 | 이벤트 코드 | manual page_view + 6 KPI 이벤트 emit·테스트 통과 | `npm run test`(unit), `e2e:smoke`(흐름) |
@@ -30,14 +30,14 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 > 배포본에서** 한다. GA id를 바꾸려면 owner가 GitHub repo variable `VITE_GA_MEASUREMENT_ID`를 갱신하고
 > 재배포해야 한다(코드 변경 아님).
 
-### sitemap URL 인벤토리 (146 = SC 색인 대상, 2026-08-15 기준)
+### sitemap URL 인벤토리 (147 = SC 색인 대상, 2026-08-24 기준)
 
 | 그룹 | 수 | 우선 색인 |
 |------|----|-----------|
 | Gateway 홈 `/` | 1 | ★ |
 | guide 홈 (`/china /mexico /europe /latam /japan /uk /usa`) | 7 | ★ china·mexico·europe |
 | 챕터 (latam 20 · china/europe/japan/mexico/usa/uk 15) | 110 | 대표 챕터 위주 |
-| briefs (index 1 + issue 17) | 18 | ★ 최신 3개호 위주 |
+| briefs (index 1 + issue 18) | 19 | ★ 최신 3개호 위주 |
 | reports (index 1 + detail 6) | 7 | ★ 대표 report 2건 |
 | trust/legal (`/legal /privacy /contact`) | 3 | — |
 
