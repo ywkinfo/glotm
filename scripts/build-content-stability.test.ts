@@ -218,13 +218,19 @@ describe("generated content builtAt stability", () => {
         path.join(shallow, "scripts", "build-content.ts")
       );
 
+      // `%cI`가 UTC를 찍는 표기는 git 버전마다 다르다(2.43은 `+00:00`, CI 러너의 2.54는 `Z`).
+      // 문자열로 단정하면 이 전제 검사가 git 버전에 묶여, 검증 대상과 무관한 이유로 로컬에서만
+      // 붉어진다. 여기서 확인하려는 것은 표기가 아니라 "어느 커밋으로 붕괴했는가"이므로 시각으로 본다.
+      const collapsedCommitAt = execFileSync(
+        "git",
+        ["log", "-1", "--format=%cI", "--", "content/source"],
+        { cwd: shallow, encoding: "utf-8" }
+      ).trim();
+
       expect(
-        execFileSync("git", ["log", "-1", "--format=%cI", "--", "content/source"], {
-          cwd: shallow,
-          encoding: "utf-8"
-        }).trim(),
-        "the shallow clone must actually collapse the path history for this test to mean anything"
-      ).toBe("2026-05-05T05:05:05Z");
+        new Date(collapsedCommitAt).getTime(),
+        `the shallow clone must actually collapse the path history for this test to mean anything (git reported ${collapsedCommitAt})`
+      ).toBe(new Date("2026-05-05T05:05:05Z").getTime());
 
       runBuild(shallow);
 
