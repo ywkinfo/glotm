@@ -105,7 +105,59 @@ const ukInfluencerCounterfeitDamagesIssue: BriefIssue = {
   ]
 };
 
+const comparableUkMarkEuUseCutoffIssue: BriefIssue = {
+  slug: "2026-08-comparable-uk-mark-eu-use-cutoff",
+  title:
+    "2026년 8월 Hot Global TM Brief | comparable UK mark를 EU 사용으로 방어하던 경과 규정이 2026년 1월 1일로 끝났습니다",
+  summary:
+    "Brexit 전환으로 기존 EUTM에서 자동 생성된 comparable UK trade mark는 지금까지 불사용 방어에서 전환 전 EU 사용을 일부 원용할 수 있었습니다. GOV.UK의 comparable UK trade marks 안내는 5년 구간에 2021년 1월 1일 이전이 포함되면 EU 사용을 고려하지만, 그 구간에 2021년 1월 1일 이후가 포함되면 EU에서의 사용은 산입하지 않는다고 설명합니다. 전환일로부터 5년이 지나 2026년 1월 1일부터는 관련 5년 look-back 구간이 전부 2021년 1월 1일 이후가 되므로, 이제 UK 실사용만 genuine use로 설명할 수 있습니다. 2026년은 EU 실적으로 영국 등록을 방어할 수 없는 첫 해이며, 이번 브리프는 comparable mark 재고조사와 증거 지역 태깅을 어떤 순서로 정리할지 제안합니다.",
+  cadenceLabel: "주간 브리프",
+  publishedAt: "2026-08-24T00:00:00.000Z",
+  jurisdictions: [
+    "United Kingdom",
+    "Europe",
+    "Non-Use Cancellation",
+    "Brexit Transition",
+    "Evidence Management"
+  ],
+  bodyParagraphs: [
+    "GOV.UK의 EU trade mark protection and comparable UK trade marks 안내는 comparable UK right의 사용 인정 범위를 이렇게 설명합니다. 'any use of the mark in the EU made before 1 January 2021, whether inside or outside the UK, counts as use of the comparable UK right. Where the 5-year period includes time before 1 January 2021, use in the EU will be considered. Where the period includes any time after 1 January 2021, use of the comparable trade mark in the EU (and outside of the UK) within that period will not be taken into account.' 즉 EU 사용의 원용 가능 여부는 규정이 바뀌어서가 아니라, 문제되는 5년 구간이 전환일을 걸치는지에 따라 달라집니다.",
+    "그 구간이 2026년 1월 1일부터 전환일을 더 이상 걸치지 않습니다. comparable UK mark는 2021년 1월 1일에 기존 EUTM에서 생성됐고, 그로부터 5년이 지나면 이후의 모든 5년 look-back 구간은 전부 2021년 1월 1일 이후에 들어갑니다. 경과 규정이 폐지된 것이 아니라, 적용될 구간이 사라진 것입니다. 결과적으로 지금부터 comparable UK right의 불사용 방어는 영국 내 실사용만으로 설명해야 합니다.",
+    "이 변화는 다른 두 시계와 겹칩니다. 첫째, 영국에서 non-use revocation은 등록 후 5년이 지난 시점부터 문제될 수 있고, 연속 5년 불사용이 가장 위험한 신호입니다. 둘째, comparable UK mark는 원 EUTM의 갱신일을 그대로 유지하므로 신규 UK 출원과는 관리 이벤트가 어긋납니다. 갱신일 기준으로 포트폴리오를 보고 있으면 불사용 리스크가 열리는 시점을 놓치기 쉽습니다. 또한 일부 goods/services만 사용한 경우에는 실제 사용 범위를 기준으로 부분 취소가 이뤄질 수 있으므로, 등록 명세 전체가 아니라 클래스와 상품군 단위로 봐야 합니다.",
+    "실무에서 가장 흔한 오해는 'EU에서 잘 팔리고 있으니 영국 등록도 설명된다'는 가정입니다. 전환 이후 EUTM은 자동으로 영국을 커버하지 않으며, 신규 영국 보호는 UK national filing이나 UK 지정 국제등록으로 따로 설계해야 합니다. 사용증거도 마찬가지입니다. 영국 판매 페이지, 영국 배송 기록, 영국 대상 마케팅 자료를 EU 자료와 섞어 보관해 두면, 취소 위협이 왔을 때 어느 자료가 영국 사용을 설명하는지 골라내는 데만 시간이 듭니다.",
+    "그래서 지금 필요한 일은 새로운 서류가 아니라 재고조사입니다. 먼저 보유 등록에서 comparable UK mark를 분리해 목록으로 만듭니다. 원 EUTM에서 전환된 건이므로 UK 신규 출원건과 섞여 있는 경우가 많습니다. 그다음 각 mark별로 최근 5년 구간의 영국 실사용 여부를 확인하고, 판매·배송·광고·유통 자료를 UK, EU, Global로 지역 태그를 나눠 정리합니다. 사용이 약한 mark는 유지, 범위 축소, 집중 중 무엇으로 갈지 미리 정해 두면 취소 신청이 실제로 들어왔을 때 대응이 흔들리지 않습니다.",
+    "증거는 모으는 것과 제출 형식이 다릅니다. 표장 형태(word, logo, composite), 채널, 증빙 자료, 최근 검토일, 권리자와 실제 사용 주체, 원본 URL이나 문서 ID, 지역 태그를 한 장의 카드로 유지하고 분기마다 갱신하면, 위협 인지 시점에 최신본을 그대로 꺼낼 수 있습니다. 라이선시나 유통사가 실제 사용 주체라면 사용권과 승인 라인을 함께 적어 두어야 누구의 사용인지 설명이 비지 않습니다.",
+    "범위는 넘겨 읽지 않는 편이 안전합니다. 이 정리는 GOV.UK 안내가 설명하는 사용 인정 범위와 영국의 불사용 취소 구조를 운영 관점으로 옮긴 것이고, 개별 사건에서 무엇이 genuine use로 인정되는지, 부분 취소의 범위가 어디까지인지는 사실관계에 따라 달라집니다. EU 사용이 무의미해진 것도 아닙니다. EUTM 자체의 방어에는 EU 내 사용이 그대로 쓰이며, 달라진 것은 별개 권리가 된 comparable UK right를 무엇으로 설명하느냐입니다. 구체적 판단이 필요하면 현지 대리인 확인을 거쳐야 합니다."
+  ],
+  items: [
+    {
+      id: "comparable-uk-mark-uk-use-inventory",
+      headline:
+        "comparable UK mark를 따로 목록화하고 최근 5년 구간의 영국 실사용을 mark별로 확인해야 합니다",
+      whatChanged:
+        "GOV.UK의 comparable UK trade marks 안내에 따르면 5년 구간에 2021년 1월 1일 이전이 포함될 때만 EU 사용이 고려되고, 그 구간에 2021년 1월 1일 이후가 포함되면 EU에서의 사용은 산입되지 않습니다. 전환일로부터 5년이 지나 2026년 1월 1일부터는 관련 5년 구간이 전부 2021년 1월 1일 이후가 되므로, comparable UK right의 불사용 방어에서 전환 전 EU 사용조차 더 이상 원용할 수 없습니다. 규정 개정이 아니라 경과 구간의 소멸이며, 영국에서 non-use revocation은 등록 후 5년이 지난 시점부터 문제될 수 있습니다.",
+      whoShouldCare:
+        "Brexit 전환으로 comparable UK mark를 보유하게 된 K-브랜드의 IP·법무팀, 영국 매출은 작지만 EU 매출로 브랜드를 운영해 온 사업팀, 영국 유통사·마켓플레이스 셀러의 사용 자료를 관리하는 브랜드·채널팀, 갱신일 기준으로만 포트폴리오를 점검해 온 관리 담당.",
+      whyItMatters:
+        "comparable UK mark는 원 EUTM의 갱신일을 유지하기 때문에, 갱신 캘린더만 보고 있으면 불사용 리스크가 열리는 시점이 드러나지 않습니다. 영국 실사용이 얇은 등록은 취소 신청이 들어온 뒤에 증거를 모으기 시작하면 늦고, 일부 상품군만 사용한 경우에는 실제 사용 범위를 기준으로 부분 취소가 이뤄질 수 있습니다. EU 자료와 UK 자료를 섞어 보관해 온 팀일수록 방어 준비에 걸리는 시간이 길어집니다.",
+      nextAction:
+        "① 보유 등록에서 comparable UK mark를 분리해 원 EUTM 번호와 함께 목록화합니다. ② mark별로 최근 5년 구간의 영국 실사용 여부와 사용 중인 goods/services를 확인합니다. ③ 판매 페이지, 배송 기록, invoice, 광고, 유통 자료에 UK / EU / Global 지역 태그를 붙여 분리합니다. ④ 사용이 약한 mark를 유지·범위 축소·집중으로 triage하고 갱신 전 재평가 대상으로 표시합니다. ⑤ 표장 형태, 채널, 증빙, 최근 검토일, 권리자와 실제 사용 주체, 지역 태그를 담은 카드를 분기 루틴으로 갱신합니다. 개별 등록의 취소 위험 판단과 대응 서식은 현지 대리인과 확인합니다.",
+      relatedGuideLinks: [
+        {
+          label: "UKTm 제8장 · 사용증거와 Non-Use Cancellation 운영",
+          href: `${getProductPathBySlug("uk")}/chapter/사용증거와-non-use-cancellation-운영#euuk-사용증거를-분리-태깅한다`
+        },
+        {
+          label: "EuTm 제8장 · EU / UK 분기 캘린더",
+          href: `${getProductPathBySlug("europe")}/chapter/제8장-등록-후-사용-갱신-증거-관리#comparable-uk-mark는-이제-eu-사용으로-방어되지-않는다`
+        }
+      ]
+    }
+  ]
+};
+
 const briefIssueSource: BriefIssue[] = [
+  comparableUkMarkEuUseCutoffIssue,
   kbrandOverseasLicensingIssue,
   ukInfluencerCounterfeitDamagesIssue,
   ...legacyBriefIssues
