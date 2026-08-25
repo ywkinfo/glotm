@@ -46,6 +46,15 @@ mature 승격 중 워크스페이스 간 UK 수수료 값 상충을 발견했고
 
 **2026-07-22 owner 후속 종결:** GOV.UK 공식 출원·갱신 안내를 재대조해 첫 클래스 출원 £205, 갱신 £245, 추가 클래스당 £60으로 확정했다. 본문·claim-map·source register를 같은 값으로 정합화했고, registry `factsReviewedOn`을 2026-07-22로 갱신했다.
 
+## 다음 재검증 준비 메모 (2026-08-25, triage — 재대조 아님)
+
+`uk` claim 창은 2026-09-20에 닫힌다. 아래는 소스를 직접 연 것이 아니라 검색 채널로 훑은 **변경 신호 triage**다.
+`lastVerified`·`factsReviewedOn`은 이 메모로 움직이지 않는다.
+
+- **UK-FEE-001 — 확인 신호(변경 없음).** 2026-04-01 개정 기준 온라인 출원 첫 클래스 £205, 추가 클래스당 £60이 GOV.UK 수수료 안내에서 그대로 확인된다.
+- **UK-IPEC-001 — 값은 맞지만 출처가 값을 뒷받침하지 못한다(재검증 시 함정 주의).** claim이 적은 `recoverable costs cap £60,000`(liability, quantum은 별도 £30,000)은 **2022-10-01 개시 사건부터 적용되는 CPR Practice Direction 개정값**이 맞다. 문제는 이 claim의 `sourceIds`(`ukipo-ipec-small-claims`, `gov-ip-crime-enforcement`)가 그 규칙을 가리키지 않고, **GOV.UK·judiciary.uk의 IPEC 안내 면 일부가 개정 이전 값 £50,000을 그대로 싣고 있다**는 점이다. 등록된 sourceIds만 열고 재대조하면 **맞는 값을 틀린 값으로 정정할 위험**이 있다.
+  - owner 액션: 다음 재검증에서 £60,000/£30,000을 설정한 규칙(CPR Practice Direction 45/46의 IPEC scale costs 절)을 직접 열어 source register에 등록하고 `UK-IPEC-001.sourceIds`에 추가한다. 이 세션은 해당 페이지를 열 수 없어 URL을 추정 등록하지 않았다.
+
 ## 편집 규칙
 
 - 숫자, 기간, 수수료, 제도 명칭은 이 로그에서 `확정` 되기 전 본문에 단정적으로 쓰지 않는다.
