@@ -150,7 +150,7 @@ owner 전용 실행 절차는 [`phase2.5-organic-indexing-ops.md`](phase2.5-orga
 
 | 항목 | 이번 달 값 | 비고 |
 |------|------------|------|
-| sitemap 색인 제출 status |  | SC Sitemaps. 기대 discovered 수는 하드코딩하지 않고 [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md) 인벤토리 표(현재 145)와 대조한다 |
+| sitemap 색인 제출 status |  | SC Sitemaps. 기대 discovered 수는 하드코딩하지 않고 [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md) 인벤토리 표와 대조한다(그 표가 정본이므로 여기에 숫자를 복제하지 않는다) |
 | 색인된 URL 수 / 미색인 |  | SC Pages 리포트 |
 | 색인 요청한 우선 URL |  | Gateway·china/mexico/europe home·최신 brief/report |
 | GA4 page_view 도착 |  | DebugView, manual SPA 발사 |
