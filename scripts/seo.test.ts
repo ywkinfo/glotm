@@ -17,7 +17,12 @@ import documentDataUk from "../public/generated/uk/document-data.json";
 import documentDataUsa from "../public/generated/usa/document-data.json";
 import { describe, expect, it } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
-import { reports } from "../src/reports/registry";
+import {
+  buildReportArchivePath,
+  buildReportPath,
+  getLatestReports,
+  reports
+} from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
 import {
   CHAPTER_TITLE_QUALIFIER_BY_SLUG,
@@ -312,6 +317,34 @@ describe("SEO build helpers", () => {
           `href="${buildPublicHref(link.path, "/glotm")}"`
         );
       }
+    }
+  });
+
+  // 게이트웨이 본문은 최신 리포트를 문장으로 약속하는데, prerender된 크롤 표면에는 오래도록
+  // report 링크가 하나도 없었다 — `/reports/` 클러스터로 들어가는 인바운드가 리포트 상세끼리뿐이라
+  // 링크 고립섬이었다(2026-08-31 실측). 이 케이스가 그 상태로 되돌아가는 것을 막는다.
+  it("links the gateway into the report cluster so it is not a crawl island", () => {
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+    const gateway = pages.find((entry) => entry.routePath === "/");
+
+    expect(gateway).toBeDefined();
+
+    const featured = getLatestReports(2);
+
+    expect(featured.length).toBeGreaterThan(0);
+    expect(gateway!.bodyHtml).toContain(
+      `href="${buildPublicHref(buildReportArchivePath(), "/glotm")}"`
+    );
+
+    for (const report of featured) {
+      expect(
+        gateway!.bodyHtml,
+        `gateway is missing a link to report ${report.slug}`
+      ).toContain(`href="${buildPublicHref(buildReportPath(report.slug), "/glotm")}"`);
     }
   });
 
