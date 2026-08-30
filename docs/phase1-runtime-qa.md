@@ -39,7 +39,7 @@ Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` �
 
 - `npm run health:runtime`: `typecheck:runtime`, `test:runtime`, `npm run e2e:smoke`를 묶어 셸 계약, 리더 계약, 콘텐츠 링크 계약, 실제 브라우저 스모크를 검증한다. generated-content 의존 회귀 테스트와 generated artifact가 필요한 node-side 검사는 이 lane에서 제외해 pure runtime check로 유지한다.
 - `npm run health:content`: 루트 `content:prepare`와 `test:content`를 실행한 뒤 `ChaTm`·`MexTm`·`EuTm`·`UsaTm`·`JapTm`·`UKTm` workspace local `content:prepare`까지 재현한다. 여기에는 generated article HTML의 external-link safe attribute와 raw internal app anchor 금지 회귀도 포함된다. `LatTm`은 루트 `content:prepare`에서 full pipeline(`build-master → qa-content → build-content`)을 사용하지만, `health:content`의 workspace-local run에는 포함하지 않는다.
-- `npm run health:release`: `npm run build`, `npm run build:pages:glotm`를 묶어 루트 셸 빌드와 GitHub Pages subpath 배포 경로를 검증한다. 여기에는 representative prerendered HTML, `dist/sitemap.xml`, `dist/robots.txt`, `dist/404.html`, `dist/.nojekyll` 확인이 포함된다. Gateway-facing copy나 hierarchy 조정이 `scripts/seo.ts` mirrored output, prerendered HTML, canonical/OG/Twitter metadata, sitemap/robots, `/glotm/` Pages-path behavior에 닿으면 runtime-only가 아니라 release lane change로 본다. 로컬 release verification은 `build:pages:glotm`, GitHub Actions workflow deploy path는 `deploy-pages.yml`에서 env를 주입한 뒤 실행하는 `build:pages`로 구분해서 적는다.
+- `npm run health:release`: `build:pages:glotm -> check:dist-boundary -> test:seo`를 묶어 GitHub Pages subpath 출하 상태를 검증한다. `check:dist-boundary`는 산출물에 발굴 lane ops 데이터가 실렸는지 확인하고, `test:seo`는 prerender·canonical·sitemap 계약을 검사한다 — 둘 다 이 lane의 필수 게이트다. 여기에는 representative prerendered HTML, `dist/sitemap.xml`, `dist/robots.txt`, `dist/404.html`, `dist/.nojekyll` 확인이 포함된다. Gateway-facing copy나 hierarchy 조정이 `scripts/seo.ts` mirrored output, prerendered HTML, canonical/OG/Twitter metadata, sitemap/robots, `/glotm/` Pages-path behavior에 닿으면 runtime-only가 아니라 release lane change로 본다. 로컬 release verification은 `build:pages:glotm`, GitHub Actions workflow deploy path는 `deploy-pages.yml`에서 env를 주입한 뒤 실행하는 `build:pages`로 구분해서 적는다.
 - `npm run health:report`: 최근 실행한 루트 lane 결과와 product scorecard 메타데이터를 같은 포맷으로 정리한다. 필요하면 lane 플래그로 일시 덮어쓸 수 있다.
 
 ## 루트 계약과 워크스페이스 로컬 계약
@@ -91,7 +91,7 @@ Phase 1의 기준 런타임은 `LatTm/` 단독 앱이 아니라 루트 `GloTm` �
 10. 모바일에서 chapter/section 링크가 손가락으로 눌릴 정도로 안정적으로 노출된다.
 11. external official link는 새 탭으로 열리고 `rel="noreferrer noopener"`를 유지한다.
 
-### Skeleton 가이드 추가 점검 (UsaTm·JapTm·ChaTm·EuTm·UKTm)
+### 후발 growth 가이드 추가 점검 (UsaTm·JapTm·ChaTm·EuTm·UKTm)
 12. 각 가이드 홈(`/usa`, `/japan`, `/china`, `/europe`, `/uk`)이 빈 화면 없이 챕터 목록을 표시한다.
 13. 챕터 카드를 클릭했을 때 빈 본문(콘텐츠 0줄) 페이지가 노출되지 않는다.
 14. 검색 결과 0건이 반환될 때 "결과 없음" 상태가 명확히 표시되며 빈 드롭다운이 열리지 않는다.
@@ -201,7 +201,7 @@ npm run content:uk
 `priority-copy alignment smoke`는 새 verification lane이 아니라 아래 수동 스모크 핵심 항목의 확장으로 본다.
 
 - mobile local root / mobile Pages subpath에서 drawer, scrim, `body.style.overflow` 복구
-- skeleton guide의 빈 본문, 검색 0건 empty state, 짧은 챕터 footer 겹침
+- 후발 growth 가이드의 빈 본문, 검색 0건 empty state, 짧은 챕터 footer 겹침
 - search dropdown과 action layer의 overlay 충돌
 - priority guide home의 report handoff CTA와 report-to-guide deep link 왕복
 - Gateway first viewport에서 `ChaTm` first, `MexTm` next, latest report trust layer read와 priority copy가 실제 portfolio status와 정합한지

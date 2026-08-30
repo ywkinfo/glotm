@@ -3,7 +3,7 @@
 ## Purpose
 
 `UKTm`은 영국 상표 실무를 다루는 단일국가 워크스페이스다.
-루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비한다. 현재 lane 포지션은 early-track `verified 공개본`이며, 포트폴리오 메타데이터 기준 lifecycle은 `beta`, QA level은 `standard`다(2026-05-12 #53 승급, 정본은 `../src/products/registry.ts`).
+루트 `GloTm` 셸의 `/uk` 리더가 이 워크스페이스의 generated JSON을 소비한다. 포트폴리오 메타데이터 기준 `portfolioTier`는 `growth`, lifecycle은 `mature`, QA level은 `full`이다(2026-07-07 #121 승급, 정본은 `../src/products/registry.ts`).
 
 ## Source Of Truth
 
@@ -30,7 +30,7 @@
 - refresh review 메모: `content/research/uk_tm_accuracy_completeness_review.md`
 - 조립 순서: `build-master.ts -> qa-content.ts -> build-content.ts`
 - 현재 챕터 수, 검색 엔트리, lifecycle, QA level, 포트폴리오 우선순위는 루트 `README.md`, `PROJECT-OVERVIEW.md`, `src/products/registry.ts`를 기준으로 확인한다.
-- 현재 유지보수 목표는 early-track 설명, fact verification hygiene, `/uk` 홈·continue reading·search 안정화를 유지하는 것이며, 대형 확장이나 lifecycle 승격이 아니다.
+- 현재 유지보수 목표는 승급 후 상태 유지다 — fact verification hygiene과 `/uk` 홈·continue reading·search 안정화를 지키는 것이며, 대형 확장이나 추가 lifecycle 승격이 아니다.
 
 ## Editing Rules
 
@@ -39,7 +39,7 @@
 - `master.md`는 조립 결과물이다. 수동 편집보다 재생성을 우선한다.
 - generated JSON은 손으로 수정하지 않는다.
 - 영국 fee, 기한, 제도 설명은 `content/research/uk_tm_fact_verification_log.md`에서 먼저 검증한다.
-- reader-facing 요약이나 운영 메모를 조정할 때는 `verified 공개본`, `beta`, `standard QA` 포지션과 충돌하는 growth/mature·full-depth 표현을 피한다(`portfolioTier`는 incubate 유지).
+- reader-facing 요약이나 운영 메모를 조정할 때는 현재 `growth` / `mature` / `full QA` 포지션과 충돌하는 표현을 피한다 — `beta`, `standard QA`, `early-track`, `incubate` 같은 승급 이전 라벨을 현재형으로 쓰지 않는다(dated 검증 로그의 당시 표기는 그대로 보존한다).
 
 ## Implementation Notes
 

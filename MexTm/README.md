@@ -28,7 +28,7 @@
 ## Current Lane Truth
 
 - 현재 baseline은 `15개 챕터 구조 유지`다.
-- 현재 Sprint 2 우선 장은 `제5장`, `제7장`, `제10장`이다.
+- 현재 초점은 승급 후 상태 유지이며, 운영 handoff 3장(`제5장`·`제7장`·`제10장`)의 연결 메모를 깨뜨리지 않는 것이다(Sprint 2 자체는 2026-05-17 완료 — `docs/current-ops-taskboard.md`).
 - workspace-local gate는 `npm --prefix MexTm run content:prepare` 기준으로 확인한다.
 - Gateway, `/mexico` reader, root build/pages, registry sync는 `MexTm` 단독 레인이 아니라 리더 통합 단계의 shared root gate에서 처리한다.
 
