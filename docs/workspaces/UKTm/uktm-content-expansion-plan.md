@@ -1,6 +1,6 @@
 # UKTm 콘텐츠 안정화 실행 계획서
 
-> **2026-05-12 갱신 (superseded)**: 이 계획서는 작성 당시 `pilot 유지` 전제였으나, 이후 #53로 `UKTm`이 `pilot→beta`·`smoke→standard`로 승급됐다. 아래 `pilot / smoke QA / draft 공개본` 전제 문구는 그 시점 기준의 historical 기록으로 읽고, 현재 lifecycle/QA의 정본은 `src/products/registry.ts`(= `beta` / `standard` / verified 공개본)를 기준으로 본다.
+> **2026-07-07 갱신 (superseded)**: 이 계획서는 작성 당시 `pilot 유지` 전제였고, #53(2026-05-12)로 `beta / standard`, 다시 #121(2026-07-07)로 `growth / mature / full QA`까지 승급됐다. 아래 `pilot / smoke QA / draft 공개본`·`beta / standard`·`early-track` 전제 문구는 **모두** 그 시점 기준의 historical 기록으로 읽고, 현재 tier/lifecycle/QA의 정본은 `src/products/registry.ts`(= `growth` / `mature` / `full`)를 기준으로 본다.
 
 ## 목적
 
@@ -19,8 +19,8 @@
 
 ### 1. 문서 정합성 고정
 
-- `UKTm/README.md`, `UKTm/Harness/Architecture.md`, `UKTm/Harness/Content-Spec.md`가 현재 early-track 상태를 일관되게 설명
-- `/uk`가 이미 live route라는 사실과 현재 `beta / standard QA / verified 공개본 · early-track` 포지션을 문서에 명시(2026-05-12 #53 승급 반영)
+- (작성 당시 기준) `UKTm/README.md`, `UKTm/Harness/Architecture.md`, `UKTm/Harness/Content-Spec.md`가 early-track 상태를 일관되게 설명 → **2026-07-07 승급 이후 이 세 문서의 현재 포지션 기준은 `growth` / `mature` / `full`이다.**
+- `/uk`가 이미 live route라는 사실과 현재 `growth / mature / full QA` 포지션을 문서에 명시(2026-07-07 #121 승급 반영 — 2026-05-12 #53의 `beta / standard`는 그 이전 단계다)
 
 ### 2. fact verification 우선
 
@@ -44,7 +44,7 @@
 
 ## 성공 기준
 
-- 14개 챕터 구조와 조립 파이프라인이 계속 유지됨
+- 챕터 구조와 조립 파이프라인이 계속 유지됨(작성 당시 14장 → 2026-07-07 승급으로 현재 15장, 정본은 `src/products/registry.ts`)
 - `build-master -> qa-content -> build-content` 정상 동작
 - `/uk` 홈/챕터/검색/continue reading 동작
 - 기존 live guide 회귀 없음

@@ -106,7 +106,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 - `ChaTm`: mature 단계 반영 완료, reader/search QA와 Gateway sync 유지
 - `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, Gateway/registry/root-doc sync도 정합 완료 — 현재는 sync 정합 유지(maintenance)만 남음
-- `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 10건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
+- `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 11건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
 - `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 15건, full-QA 파이프라인을 유지하되 Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 흔들지 않는다
 - `JapTm`: 2026-06-29 growth/mature/full-QA 승급(owner override). 병존동의제도(2024-04-01) 집행 보강, claim-map 12건, 저밀도 장 운영 섹션 보강(density 12.33), root full pipeline 편입. Gateway 첫 화면 `ChaTm`·`MexTm`·`EuTm` 우선은 유지하고 supporting lane으로 운영
@@ -166,7 +166,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 10건 + 공식 URL 인덱스). mature 승급(#69/#70)과 2026-06-10 factsReviewedOn 기록이 `src/products/registry.ts` 정본에 반영돼 있으며(verifiedOn은 월간 lane re-stamp로 관리), 현재는 growth lane baseline으로 운영한다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 11건 + 공식 URL 인덱스). mature 승급(#69/#70)이 `src/products/registry.ts` 정본에 반영돼 있고, `factsReviewedOn`은 2026-08-02 재대조 라운드 기준이다(verifiedOn은 월간 lane re-stamp로 관리). 현재는 growth lane baseline으로 운영한다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 growth mature lane
 
@@ -188,7 +188,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ```
 마크다운 원고 → 워크스페이스별 콘텐츠 파이프라인
-              (full pipeline 또는 build-content shortcut)
+              (build-master -> qa-content -> build-content full pipeline)
                                                  ↓
                                   document-data.json / search-index.json
                                                  ↓

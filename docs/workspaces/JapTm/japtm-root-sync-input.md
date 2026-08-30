@@ -53,7 +53,7 @@
 ## Research Hygiene Packet
 
 - `jp_tm_accuracy_completeness_review.md` 기준 현재 공개 가능 상태는 유지된다.
-- `jp_tm_fact_verification_log.md` 기준 선출원주의, 10년 존속, 2개월 opposition, 비거주자 절차, accelerated examination 가능성, 세관 차단 구조 등 핵심 사실은 `2026-03-31` 재확인 상태다.
+- `jp_tm_fact_verification_log.md` 기준 선출원주의, 10년 존속, 2개월 opposition, 비거주자 절차, accelerated examination 가능성, 세관 차단 구조 등 핵심 사실은 `2026-08-15` 재확인 상태다(claim-map 12건 전건 BODY_READY · HIGH 8 / MEDIUM 4). `2026-03-31`은 lighter-track 시절 마지막 재확인일이다.
 - fee, 세부 기한, 시스템 명칭은 본문 확장보다 공개 직전 재확인 원칙을 유지한다.
 - lighter-track 유지 구간에서는 숫자를 더 늘리는 것보다 route / maintenance / evidence hygiene 흐름이 깨지지 않는지가 더 중요하다.
 
