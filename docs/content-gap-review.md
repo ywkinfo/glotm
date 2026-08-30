@@ -54,6 +54,15 @@
 
 - **갭1 처리 경로(진단↔후속 연계).** 먼저 워크스페이스 fact-log의 날짜가 `factsReviewedOn` 계약(핵심 claim 1차 출처 재대조)에 부합하는지 **provenance/적격성 검토**가 필요하다(날짜 형식이 검증 기준일·per-claim Verified 등 제각각). 적격하면 registry에 표면화한다. 이후 2026-06-28 UsaTm은 claim-map adoption과 `factsReviewedOn` 표면화까지 완료했다. 남은 Phase 4 lighter-track adoption은 UKTm·JapTm 중심으로 읽는다.
 - **갭2 search-entry 회귀 가드.** UKTm·JapTm은 **현재 beta 충족**(UKTm 128≥126, JapTm 145≥135)이다. lifecycle은 **자동 강등되지 않으며** 월 1회 scorecard 리뷰에서만 조정되고 grandfathered status도 허용된다([`../PROJECT-OVERVIEW.md`](../PROJECT-OVERVIEW.md)). 따라서 이 갭은 "추가"가 아니라 **search-entry 회귀 가드**다 — 편집으로 검색 엔트리를 floor(UKTm 126 / JapTm 135) 아래로 떨구지 않는다. 거꾸로 밀도를 올리려 본문을 늘리는 패딩은 **#61의 anti-padding 취지와 상충**하므로 하지 않는다.
+
+> **Update (2026-08-30) — 갭2의 플로어가 바뀌었다.** 위 문단과 표의 갭2 행은 **beta 기준(density ≥9.0)** 으로 계산한 2026-06-08 스냅샷이다. 그 뒤 두 가이드 모두 mature로 승급했고(JapTm 2026-06-29 #114 · UKTm 2026-07-07 #121), mature floor는 **density ≥12.0**(`../src/products/scorecard.ts` `lifecycleCriteriaByStatus`)이다. 따라서 현재 유효한 회귀 가드는 아래 값이다.
+>
+> | 가이드 | chapters | 현재 search | mature floor (chapters×12) | 여유 |
+> |---|---|---|---|---|
+> | UKTm | 15 | 183 | **180** | **3** |
+> | JapTm | 15 | 185 | **180** | **5** |
+>
+> 즉 위 문단이 적은 여유(UKTm 2 / JapTm 10)는 더 이상 맞지 않고, **실제 여유는 UKTm 3엔트리 · JapTm 5엔트리**다. 문장 몇 개를 합치는 편집만으로도 `scorecard.test.ts`의 registry 전수 가드가 붉어져 `test:runtime`이 막히는 폭이다. 회귀 가드의 취지(플로어 아래로 떨구지 않되 패딩도 하지 않는다)는 그대로 유효하다.
 - **갭3 처리 규칙.** 분량만으로 보강하지 않는다. **구체적 reader-action 누락이 입증될 때만** 좁게 보강한다. #61(`2707b31`)은 보강 세트를 ch02·08·13·14로 두고 "**ch10·11: 이미 표 2개씩 완비 → 보강 제외(패딩 방지)**"라고 명시했다. **EuTm 후반 운영장은 계약상 전면 확장 불가**(controlled EU+UK scope 내 좁은 operational note만).
 - **제외(보충 불필요).** UKTm(분량은 최소지만 표 3~7개 + 템플릿 부록 5종으로 의무 계약 충족), ChaTm·MexTm·LatTm(mature·깊음·표 풍부).
 

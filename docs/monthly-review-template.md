@@ -49,7 +49,9 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 
 재대조를 수행한 가이드는 `../src/products/registry.ts`의 `factsReviewedOn`에 날짜를 적으면 `npm run health:report`의 `Fact-Review (advisory, non-gating)` 섹션에 반영된다(미기록은 `unrecorded`로 표시되고 tier에 영향 없음).
 
-> fact-review cadence 목표는 아직 미설정이다. 휴면(`Phase 2.5`) 포트폴리오 기준으로 현실적인 주기(예: 분기 또는 반기)를 운영자가 정한다. 정하기 전까지는 "재대조한 것만 기록"으로 운영하고, 미기록을 자동으로 stale 처리하지 않는다.
+> fact-review staleness window는 lifecycle별로 `../scripts/research-audit/shared.ts`가 정본이며 **mature는 60일**(pilot 120 / beta 90)이다. `audit:staleness`가 이 창을 advisory(warn)로 측정하고 tier를 게이팅하지 않는다. 미기록(`unrecorded`)은 자동으로 stale 처리하지 않는다.
+>
+> 즉 "주기 미설정"이 아니라 **측정되는 창이 이미 있고 게이팅만 안 한다**. 만료가 다가오는 claim 세트는 `npm run health:report`의 `Research Coverage` 표 `Window Margin` 열에서 본다.
 
 ## Locked defaults (2026-05-12)
 

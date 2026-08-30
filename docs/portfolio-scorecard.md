@@ -149,7 +149,7 @@ KPI binding:
 ## Root health lanes
 
 - `health:runtime`: typecheck, runtime-safe unit tests, runtime smoke
-- `health:content`: generated content refresh + generated-content regression tests + ChaTm/MexTm/EuTm/UsaTm local full pipeline 재현
+- `health:content`: generated content refresh + generated-content regression tests + ChaTm/MexTm/EuTm/UsaTm/JapTm/UKTm local full pipeline 재현(LatTm은 루트 full pipeline만)
 - `health:release`: build + Pages subpath 출하 전 검증
 - `health:report`: 최근 lane 결과와 advisory research status를 같은 report shape로 정리
 

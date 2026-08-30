@@ -203,9 +203,12 @@ soul/persona 정본은 GloTm repo가 아니라 아래 **2개 canon**으로 나�
 - 단정 전 현재 `main`을 실측한다(차터 Cardinal 검증룰).
 - 불확실하거나 반복 실패가 누적되면 멈춰서 보고한다.
 
-## PAT rotation (마감 `2026-07-15`)
+## PAT rotation — **마감 `2026-07-15` 경과 (2026-08-31 기준 47일 초과)**
 
-만료 후엔 push/PR이 실패한다. 그 전에:
+> **상태: 미해결.** 저장소 전수 검색에서 회전 수행 기록을 찾지 못했다(`2026-07-15`·`PAT`·`gh-token` grep). 즉 `/srv/hermes/secrets/gh-token`이 이미 만료됐거나 곧 만료된다. 만료되면 Hermes의 push·PR이 실패하는데, **bounded task는 owner가 트리거할 때만 도는 구조라 실패가 조용히 지나갈 수 있다** — 다음 `ssh hermes-host <slug>` 실행 전에 확인한다.
+> 회전은 GitHub 계정 접근이 필요해 owner만 할 수 있다. 완료하면 이 절의 상태 줄을 회전일로 바꾼다.
+
+만료 후엔 push/PR이 실패한다. 회전 절차:
 
 1. GitHub Settings → Developer settings → Personal access tokens → 신규 발급.
    scope는 **`ywkinfo/glotm` 단일 repo**, `Contents:write` + `Pull requests:write` (광역 repo scope 아님).

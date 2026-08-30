@@ -102,11 +102,16 @@ export function ReaderShellSidebar({
   onNavigate,
   productPath
 }: ReaderSidebarProps) {
+  // 이 사이드바에는 aria-hidden을 걸지 않는다. `isNavOpen`은 모바일 드로어 상태라 데스크톱에서는 항상
+  // false인데, 데스크톱 `.left-rail`은 sticky로 계속 보인다 — aria-hidden을 걸면 화면에 보이는 목차
+  // (챕터 링크 20여 개)가 보조기술에서 통째로 사라지고, 포커스 가능한 링크가 aria-hidden 컨테이너
+  // 안에 들어가 WAI-ARIA 위반이 된다. 모바일에서 닫힌 드로어는 CSS가 이미
+  // `display: none; visibility: hidden`으로 접근성 트리와 포커스 순서에서 제거하므로
+  // (`LatTm/src/styles.css`의 `@media (max-width: 920px)`) 속성이 따로 필요하지 않다.
   return (
     <aside
       id="reader-sidebar-navigation"
       className={`left-rail ${isNavOpen ? "open" : ""}`}
-      aria-hidden={isNavOpen ? undefined : true}
       style={isNavOpen && mobileTopOffset
         ? {
             top: mobileTopOffset,

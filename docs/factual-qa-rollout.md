@@ -13,8 +13,8 @@ The plan is intentionally narrow. Factual QA enters first as helper audits under
 - Lifecycle truth stays in `src/products/registry.ts` and `src/products/scorecard.ts`.
 - Health report shape stays in `src/products/health.ts` and `scripts/health-report.ts`.
 - No new npm dependency should be required for v1. Use Node, `tsx`, and the existing test stack.
-- The current root content lane already mixes full-pipeline and shortcut refresh behavior by workspace.
-- `ChaTm`, `MexTm`, `EuTm`, and `UsaTm` currently align with full-pipeline content verification at the root.
+- The root content lane runs the same full pipeline (build-master -> qa-content -> build-content) for all seven workspaces; the earlier mixed full-pipeline/shortcut model is gone (corrected 2026-08-15).
+- All seven workspaces (`LatTm`, `MexTm`, `UsaTm`, `JapTm`, `ChaTm`, `EuTm`, `UKTm`) currently align with full-pipeline content verification at the root.
 - `JapTm` was described here as the root shortcut-refresh exception. Corrected 2026-08-15: `content:japan` runs `build-master` + `qa-content` + `build-content`, the same three steps as every other guide, and `health:content` invokes `JapTm` `content:prepare` alongside the rest. There is no shortcut lane left to except it from.
 - Workspace content facts already live in workspace-local `content/research/` directories, mostly as markdown fact verification logs and, in some workspaces, source registers.
 
@@ -461,7 +461,7 @@ Exit criteria:
 Current shipped state:
 
 - `EuTm/content/research/claim-map.json` is adopted.
-- `EuTm` now chains `content:qa:facts` into its workspace `content:prepare` (same wiring as `ChaTm` and `MexTm`), so all three adopted workspaces hard-gate claim-map schema under root `health:content`. A root convenience command `npm run audit:facts` runs the three workspace audits directly without a full content refresh.
+- `EuTm` now chains `content:qa:facts` into its workspace `content:prepare` (same wiring as `ChaTm` and `MexTm`), so every adopted workspace hard-gates claim-map schema under root `health:content`. A root convenience command `npm run audit:facts` runs the workspace audits directly without a full content refresh — as of 2026-08-30 that is six workspaces (`ChaTm`, `MexTm`, `EuTm`, `UsaTm`, `JapTm`, `UKTm`).
 - `scripts/health-report.ts` already exposes advisory `research` coverage for `europe`.
 - the current EuTm follow-up stayed narrow: Ch5 priority window, Ch11 marketplace reporting-channel memo, Ch12 UK customs AFA split.
 
@@ -567,7 +567,7 @@ The rollout is working as intended when all of the following are true:
 2. Factual QA runs only as helper audits under `health:content`.
 3. `src/products/registry.ts` and `src/products/scorecard.ts` remain the lifecycle source of truth in v1.
 4. `src/products/health.ts` and `scripts/health-report.ts` remain the report-shape source of truth, with only additive advisory research exposure.
-5. `claim-map.json` is the first required structured factual QA artifact for adopted workspaces, and `ChaTm`, `MexTm`, `EuTm` have already crossed that line.
+5. `claim-map.json` is the first required structured factual QA artifact for adopted workspaces, and `ChaTm`, `MexTm`, `EuTm`, `UsaTm`, `JapTm`, `UKTm` have all crossed that line (`LatTm` has not — it still has no claim-map).
 6. `source-registry.json` remains optional and phased.
 7. Migrated products can show advisory `research` data in the health report before any scorecard coupling.
 8. `audit:facts`, `audit:staleness`, and `audit:consistency` all live under `health:content`.
