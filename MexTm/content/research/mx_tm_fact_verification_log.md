@@ -42,7 +42,9 @@
 
 이 두 조문이 `IMPI-00-002`(갱신+사용선언)와 `IMPI-00-014`(3년차 단독 선언)가 왜 별개 서식인지를 설명한다 — 서식 분리는 법 구조의 결과다. 2026-07-21 회차가 서식 대응을 정정하면서 근거로 삼았던 안내면 대신, 이제 규범이 그 자리를 진다.
 
-**남은 갭 (owner):** ficha ID `IMPI88`·`IMPI3170` 자체는 오늘 확인하지 못했다. 후속 등록부인 CONAMER 「Catálogo Nacional de Regulaciones, Trámites y Servicios」(https://www.catalogonacional.gob.mx/)는 이 채널에서 검색 결과를 반환하지 않았고(Buscador가 결과를 JS로 채우는데 그 호출이 뜨지 않는다), IMPI 자체 formatos 면(https://www.impi.gob.mx/formatos)은 텍스트 추출이 되지 않는 스캔 PDF(`MARCAS.pdf` 등)만 싣는다. **claim 본문에서 ficha ID를 계속 쓸지, 아니면 서식(formato) 축만 남길지는 owner 판단이다.** claim의 실질(절차 분리·기한·소멸 효과)은 이제 LFPPI로 전부 뒷받침되므로, ficha 축은 편의 식별자로만 남아 있다.
+**남은 갭 (owner):** ficha ID `IMPI88`·`IMPI3170` 자체는 확인하지 못했다. 후속 등록부인 CONAMER 「Catálogo Nacional de Regulaciones, Trámites y Servicios」(https://www.catalogonacional.gob.mx/)는 이 채널에서 검색 결과를 반환하지 않는다(Buscador가 결과를 JS로 채우는데 그 호출이 뜨지 않는다). **claim 본문에서 ficha ID를 계속 쓸지, 아니면 서식(formato) 축만 남길지는 owner 판단이다.** claim의 실질(절차 분리·기한·소멸 효과)은 이제 LFPPI로 전부 뒷받침되므로, ficha 축은 편의 식별자로만 남아 있다.
+
+> **[정정 2026-08-30 후속]** 위 문단은 처음에 "IMPI 자체 formatos 면은 텍스트 추출이 되지 않는 스캔 PDF만 싣는다"고 적었으나 **틀린 페이지를 본 것이었다.** `https://www.impi.gob.mx/formatos`는 배너·플라이어 등 홍보 자산 폴더이고, 서식 코드 정본 목록은 `https://www.gob.mx/impi/acciones-y-programas/servicios-que-ofrece-el-impi-formatos`에 **HTML 표로 살아 있다.** 거기서 `IMPI-00-002`(Solicitud de Renovación **y** Declaración de Uso Real y Efectivo de Signos Distintivos)와 `IMPI-00-014`(Declaración de Uso Real y Efectivo de Signos Distintivos)를 직접 확인했다. 따라서 **서식(formato) 축의 갭은 닫혔고**(`impi-formatos-list`로 source register에 등록), 남은 것은 ficha ID 축뿐이다.
 
 > **채널 함정 2건 기록.** ① gob.mx의 죽은 ficha URL은 `curl`에 **HTTP 200**을 돌려준다. 본문은 1,907바이트짜리 `Challenge Validation` WAF 응답이고 실제 콘텐츠가 아니다 — **200을 도달 증거로 쓰면 안 된다.** ② 같은 함정이 `gob.mx/impi/documentos/*` 계열에도 있다(길이 22자 challenge 응답). 브라우저로 본문을 열어 확인해야 한다.
 

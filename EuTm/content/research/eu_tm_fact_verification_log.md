@@ -9,6 +9,29 @@
 현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
+## 2026-08-30 sourceId 정합 (재대조 아님)
+
+`lastVerified`는 움직이지 않았다 — 사실 재대조 회차가 아니라 **출처 추적 체인을 고친 회차**다.
+
+회귀 가드([`claim-source-register.test.ts`](../../../scripts/research-audit/claim-source-register.test.ts))를 claim-map을 가진 6개 워크스페이스 전체로 넓히자, `EuTm`의 sourceId 15개 중 **8개가 이 워크스페이스 source register에 없다**는 것이 드러났다. `audit:facts`는 sourceId 개수만 세므로 그동안 `factIntegrity=100`이었다.
+
+확인 결과 그 8개는 **실제 검증 근거가 아니었다.** 위 `2026-08-02 재검증 라운드` 표의 `결정 근거` 열이 그대로 말해 준다 — 그 라운드는 전건을 EUTMR 조문과 GOV.UK 안내로 대조했고, EUIPO 안내면을 연 회차는 없다. 그래서 URL을 찾아 붙이는 대신 **실제 근거로 remap** 했다.
+
+| 폐기 | claim | 대체 |
+|---|---|---|
+| euipo-trade-mark-guidance | EU-SEL-001 | eutmr-consolidated |
+| euipo-after-applying-guidance | EU-DL-001 | eutmr-consolidated |
+| euipo-cancellation-guidance · euipo-genuine-use-materials | EU-EVD-001 | eutmr-consolidated |
+| euipo-fees-payments-guidance · euipo-renewal-guidance | EU-RNW-001 | eutmr-consolidated |
+| euipo-brexit-qa | EU-SEL-001 · EU-UK-001 · EU-AG-001 | govuk-comparable-uk-marks / eutmr-consolidated |
+| govuk-eu-trade-mark-protection | EU-SEL-001 · EU-UK-001 | govuk-comparable-uk-marks (**같은 URL의 중복 id**) |
+
+**열어본 적 없는 URL을 붙이지 않은 이유**는 register 문서에 적었다 — 추적 가능성의 외형만 만들면 가드에 같은 종류의 빈틈을 새로 넣는 셈이다.
+
+**부수 확인.** `publications.europa.eu` CELEX 경로는 register 접근 메모대로 `Accept: application/xhtml+xml`만 붙이면 **HTTP 400**이 난다(`Invalid content type CONTENT_STREAM for WORK ... without language`). `Accept-Language: eng`를 함께 보내야 통합본 731KB가 나온다. 메모를 고쳤고, 오늘 그 경로로 제1조 제2항·제46조 제1항·제58조 제1항(a)·제52조를 전부 재확인했다(값 변경 없음 — `lastVerified`를 옮기지 않은 이유는 이것이 sourceId 정합 회차이지 전건 재대조 회차가 아니기 때문이다).
+
+**`www.euipo.europa.eu`는 이번 세션에서 인용 근거로 쓸 수 없었다.** curl은 물론 인앱 브라우저에서도 Next.js 본문이 하이드레이트되지 않아 내비게이션 6.9KB만 렌더된다. 이미 등록돼 있는 `euipo-fees`·`euipo-faq-renewals`도 같은 제약을 받으므로, 다음 라운드에서 EUIPO 안내면을 근거로 삼으려면 채널부터 확보해야 한다.
+
 ## 2026-08-02 재검증 라운드 (claim 11건)
 
 claim-map 10건 전부가 mature 60일 창 만료(2026-08-08/09)를 앞두고 있어 1차 출처로 재대조했다. **10건 모두 변경 없음**이며, 본문 정정은 발생하지 않았다. `lastVerified`는 전 항목 `2026-08-02`로 갱신했다.
