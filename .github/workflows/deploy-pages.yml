@@ -1,7 +1,18 @@
 name: Deploy GitHub Pages
 
+# 이 워크플로는 `push: main` 이 아니라 **CI 성공** 을 기다린다.
+# 이전에는 셋(CI · Verify Release · Deploy GitHub Pages)이 같은 push 에서 서로 독립적으로 떠서,
+# 테스트가 붉어도 배포는 그대로 라이브까지 나갔다. 게이트가 없었다는 뜻이다.
+#
+# `workflow_run` 의 알려진 함정 두 가지를 여기서 함께 막는다:
+#   1) 체크아웃 기본값이 **트리거한 커밋이 아니라 기본 브랜치 HEAD** 다 → `head_sha` 로 못박는다.
+#      이걸 빠뜨리면 CI 가 통과한 커밋과 다른 트리를 배포할 수 있다.
+#   2) 참조하는 워크플로 이름(`CI`)이 바뀌면 트리거가 **조용히** 멈춰 배포가 영원히 안 돈다.
+#      `scripts/deploy-gate-contract.test.ts` 가 그 이름 일치를 PR 단계에서 강제한다.
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
     branches: ["main"]
   workflow_dispatch:
 
@@ -13,29 +24,79 @@ permissions:
   pages: write
   id-token: write
 
+# GitHub 공식 Pages 템플릿의 지침을 따른다: 큐는 하나로 묶되 **진행 중인 배포는 취소하지 않는다.**
+# 취소하면 프로덕션 배포가 중간에 끊길 수 있고, 게이트를 붙인 뒤로는 더 나빠진다 —
+# CI 가 붉어 job 이 skip 될 run 도 이 그룹에 들어오므로, cancel-in-progress: true 였다면
+# **skip 될 run 이 진행 중인 정상 배포를 죽일 수 있다.**
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # workflow_dispatch 는 owner 의 수동 override 경로다(게이트를 의도적으로 우회한다).
+    #
+    # workflow_run 경로는 세 조건을 **모두** 만족해야 한다. conclusion 하나로는 부족하다:
+    #
+    #   - `event == 'push'` — 이게 없으면 **포크 PR 이 프로덕션에 배포된다.** ci.yml 은
+    #     `pull_request` 에서도 돌고, `branches: ["main"]` 필터는 트리거한 run 의 head_branch 를 본다.
+    #     포크의 브랜치 이름이 `main` 이면 그 필터를 통과한다. 이 저장소는 public + allow_forking=true 라
+    #     (`gh api repos/ywkinfo/glotm` 실측) 누구나 그 조건을 만들 수 있고, 그러면 머지 없이
+    #     외부 커밋이 head_sha 로 체크아웃돼 라이브로 나간다. push 로 한정하면 write 권한이 다시 전제가 된다.
+    #   - `head_repository.full_name == github.repository` — 위 조건의 이중 방어.
+    #   - `conclusion == 'success'` — failure·cancelled·skipped 는 배포하지 않는다.
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || (github.event.workflow_run.event == 'push'
+          && github.event.workflow_run.head_repository.full_name == github.repository
+          && github.event.workflow_run.head_branch == 'main'
+          && github.event.workflow_run.conclusion == 'success')
     env:
       VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
     steps:
       # fetch-depth: 0 은 선택 사항이 아니다 — 근거는 ci.yml 의 같은 스텝 주석을 본다.
       # 실제로 공개 sitemap.xml 을 만드는 워크플로가 여기이므로, 이 설정이 빠지면
-      # lastmod 145건이 다시 전부 배포 시각이 된다.
+      # lastmod 147건이 다시 전부 배포 시각이 된다.
+      #
+      # ref 도 선택 사항이 아니다. `workflow_run` 이벤트의 체크아웃 기본값은 기본 브랜치 HEAD 라,
+      # 이것을 비워 두면 "CI 가 통과한 커밋"과 "배포되는 커밋"이 갈라질 수 있다.
+      # workflow_dispatch 로 수동 실행할 때는 head_sha 가 비어 있으므로 기본 동작(현재 ref)으로 떨어진다.
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
+
+      # 이 저장소는 sitemap lastmod 를 콘텐츠 소스의 커밋일에서 만든다(scripts/git-last-modified.ts).
+      # shallow clone 이면 모든 경로의 마지막 커밋이 체크아웃 커밋 하나로 붕괴하고,
+      # build-content 는 조용히 fallback 으로 내려가 lastmod 147건이 전부 배포 시각이 된다.
+      # 유닛 테스트(scripts/build-content-stability.test.ts)가 그 fallback 동작 자체는 잠그지만,
+      # **실제 러너의 클론이 shallow 인지**는 런타임에만 알 수 있다.
+      # 게다가 이번 변경으로 체크아웃이 "push 이벤트 + 브랜치 ref" 에서 "workflow_run + bare SHA" 로 바뀌었다 —
+      # 그 전제가 달라졌으므로 가정하지 않고 확인한다.
+      - name: Assert full history (sitemap lastmod depends on it)
+        run: |
+          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
+            echo "::error::shallow clone 이다 — sitemap lastmod 가 배포 시각으로 붕괴한다. checkout 의 fetch-depth 를 확인하라."
+            exit 1
+          fi
+
+      - name: Record the commit this deploy is proving
+        run: |
+          {
+            echo "## Deploy source"
+            echo
+            echo "- Trigger: \`${{ github.event_name }}\`"
+            echo "- Gating CI run: \`${{ github.event.workflow_run.conclusion || 'n/a (manual dispatch)' }}\`"
+            echo "- Deployed commit: \`$(git rev-parse HEAD)\`"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Configure base path
         run: |
