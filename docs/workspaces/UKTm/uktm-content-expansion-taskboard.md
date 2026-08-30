@@ -1,5 +1,7 @@
 # UKTm 콘텐츠 확충 작업 분배표
 
+> **SUPERSEDED (2026-07-07)**: 아래 14장 분배안은 승급 이전 dated 기록이다. 현재 정본은 `src/products/registry.ts`(15장 / 183 검색 엔트리 / `growth` · `mature` · `full`)다.
+
 ## 공통 규칙
 
 - 모든 공개본 수정은 `UKTm/content/source/chapters/`와 `UKTm/content/source/manifest.json`에서 시작한다.

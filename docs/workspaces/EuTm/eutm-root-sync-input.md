@@ -36,7 +36,7 @@
 | High-risk gap count | `0` | `src/products/registry.ts` |
 | Root metadata verifiedOn / factsReviewedOn | `2026-08-25` / `2026-08-02` | `src/products/registry.ts` |
 | Workspace gate rerun | `2026-04-21` `npm --prefix EuTm run content:prepare` pass (pre-expansion baseline, historical); growth expansion 통합·검증은 #69/#70에서 처리 | local rerun + shared root gate |
-| Research baseline | claim-map 10건 (2026-06-10 신규 4건 포함), BODY_READY 6건, source-register companion 유지 | `claim-map.json`, fact log, source register |
+| Research baseline | claim-map 11건(전 항목 BODY_READY · HIGH 9 / MEDIUM 2 · lastVerified 2026-08-02), source-register companion 유지 | `claim-map.json`, fact log, source register |
 
 ## Chapter Drift Map
 
@@ -57,7 +57,7 @@
 ## Research Alignment Packet
 
 - Scope guardrail: 본문은 `EU 공통 프레임 + UK 병행 판단`까지만 유지하고, 회원국별 deep dive는 controlled gap으로 남긴다.
-- BODY_READY claims 6건: `EU-SEL-001`, `EU-DL-001`, `EU-EVD-001`, `EU-RNW-001`, `EU-UK-001`, `EU-ENF-001`.
+- BODY_READY claims 11건: `EU-SEL-001`, `EU-DL-001`, `EU-EVD-001`, `EU-RNW-001`, `EU-UK-001`, `EU-ENF-001`, `EU-FEE-001`, `EU-PRIO-001`, `EU-UKCOMP-001`, `EU-AG-001`, `EU-UKUSE-001`.
 - Chapter linkage:
   - Ch2: rights split, UK parallel handling
   - Ch7: opposition timeline
@@ -69,7 +69,7 @@
 ## Local Gate Evidence
 
 > 아래는 growth expansion 이전 **pre-expansion baseline (historical, 2026-04-21)** 기록이다. 현재 정본 수치는
-> `15개 챕터 / 260 엔트리`이며, growth expansion 통합·검증은 #69/#70에서 반영됐다.
+> `15개 챕터 / 261 엔트리`이며, growth expansion 통합·검증은 #69/#70에서 반영됐다(엔트리는 2026-08-02 `EU-UKUSE-001` 신설로 260→261).
 
 - `2026-04-21` `npm --prefix EuTm run content:prepare` (baseline rerun)
   - `Generated EuTm master manuscript from 14 sources.`

@@ -791,12 +791,16 @@ describe("Shared reader runtime contract", () => {
 
     await screen.findByRole("heading", { name: latamCase.homeHeading });
 
+    // 사이드바 목차도 같은 챕터로 가는 링크를 들고 있고, 그쪽은 finder의 대상이 아니다.
+    // (2026-08-31: 사이드바에서 aria-hidden을 걷어내면서 이 쿼리가 양쪽을 잡게 됐다.)
+    const catalog = () => within(document.querySelector(".content-pane") as HTMLElement);
+
     await user.click(screen.getByRole("button", { name: "전략" }));
-    expect(screen.getByRole("link", { name: /제1장. 전략 프레임/ })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /제11장. Enforcement/ })).not.toBeInTheDocument();
+    expect(catalog().getByRole("link", { name: /제1장. 전략 프레임/ })).toBeInTheDocument();
+    expect(catalog().queryByRole("link", { name: /제11장. Enforcement/ })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "전체 보기" }));
-    expect(screen.getByRole("link", { name: /제11장. Enforcement/ })).toBeInTheDocument();
+    expect(catalog().getByRole("link", { name: /제11장. Enforcement/ })).toBeInTheDocument();
   });
 
   it.each(readerCases)(
@@ -899,7 +903,11 @@ describe("Shared reader runtime contract", () => {
 
       await screen.findByRole("heading", { name: readerCase.targetChapterTitle });
 
-      await user.click(screen.getByRole("link", { name: readerCase.alternateSectionTitle }));
+      // 본문 섹션 링크를 눌러야 한다. 사이드바 목차에도 같은 이름의 링크가 있다
+      // (2026-08-31: 사이드바 aria-hidden 제거로 접근성 트리에 함께 노출된다).
+      const contentPane = within(document.querySelector(".content-pane") as HTMLElement);
+
+      await user.click(contentPane.getByRole("link", { name: readerCase.alternateSectionTitle }));
 
       await waitFor(() => {
         expect(screen.getByTestId("reader-location")).toHaveTextContent(
@@ -979,6 +987,31 @@ describe("Shared reader runtime contract", () => {
       } finally {
         restoreMatchMedia();
       }
+    }
+  );
+
+  // 데스크톱에서 `.left-rail`은 sticky로 계속 보이는데 `isNavOpen`은 모바일 드로어 상태라 항상 false다.
+  // 그 값으로 aria-hidden을 걸면 화면에 보이는 챕터 목차가 보조기술에서 통째로 사라지고,
+  // 포커스 가능한 링크가 aria-hidden 컨테이너 안에 들어가 WAI-ARIA 위반이 된다(실측: 라이브 1440px에서
+  // 280x788px·링크 26개가 aria-hidden="true" 상태였다). 모바일 닫힘은 CSS가 처리하므로 속성은 두지 않는다.
+  it.each([readerCases[0]!, readerCases[4]!])(
+    "keeps the chapter sidebar exposed to assistive tech for $name",
+    async (readerCase) => {
+      installFetchMock();
+      installNavigationMocks();
+
+      renderReaderCase(
+        readerCase,
+        `${readerCase.basePath}/chapter/${readerCase.targetChapterSlug}`
+      );
+
+      await screen.findByRole("heading", { name: readerCase.targetChapterTitle });
+
+      const sidebar = document.getElementById("reader-sidebar-navigation");
+
+      expect(sidebar).not.toBeNull();
+      expect(sidebar!.hasAttribute("aria-hidden")).toBe(false);
+      expect(sidebar!.querySelectorAll("a").length).toBeGreaterThan(0);
     }
   );
 
