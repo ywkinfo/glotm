@@ -49,7 +49,37 @@
 | govuk-ip-in-eu-and-eea | GOV.UK — IP in the EU and EEA | https://www.gov.uk/guidance/ip-in-the-eu-and-eea |
 | govuk-retaining-protection | GOV.UK — Retaining protection in the UK for EU Intellectual Property rights | https://www.gov.uk/government/publications/retaining-protection-in-the-uk-for-eu-intellectual-property-rights/retaining-protection-in-the-uk-for-eu-intellectual-property-rights |
 
-> **접근 메모**: `eur-lex.europa.eu`와 `www.euipo.europa.eu`는 일반 fetch에 빈 본문/403을 반환하고,
-> `guidelines.euipo.europa.eu`는 JS 앱이라 텍스트가 나오지 않는다. 다음 재검증에서는
-> `https://publications.europa.eu/resource/celex/<CELEX>`에 `Accept: application/xhtml+xml`을 붙이는 경로를 쓴다.
-> 규정 본문과 Annex I은 Guidelines보다 상위 근거이므로 이 경로만으로 수수료·기한 claim이 모두 결론난다.
+> **접근 메모 (2026-08-30 실측 갱신)**: `eur-lex.europa.eu`와 `www.euipo.europa.eu`는 일반 fetch에 빈 본문/403을 반환하고,
+> `guidelines.euipo.europa.eu`는 JS 앱이라 텍스트가 나오지 않는다. `www.euipo.europa.eu`는 인앱 브라우저에서도
+> 본문이 하이드레이트되지 않아(내비게이션 6.9KB만 렌더) 인용 근거로 쓸 수 없었다.
+> 규정 본문 경로는 `https://publications.europa.eu/resource/celex/<CELEX>`이며,
+> **`Accept: application/xhtml+xml`만으로는 HTTP 400이 난다** — `Accept-Language: eng`를 함께 보내야 한다.
+> 그렇게 하면 통합본 731KB(본문 292KB)가 그대로 나온다. 규정 본문과 Annex I은 Guidelines보다 상위 근거이므로
+> 이 경로만으로 수수료·기한 claim이 모두 결론난다.
+>
+> ```bash
+> curl -sSL -H "Accept: application/xhtml+xml" -H "Accept-Language: eng" \
+>   https://publications.europa.eu/resource/celex/02017R1001-20251201
+> ```
+
+## 폐기된 sourceId (2026-08-30)
+
+아래 8개는 claim-map의 `sourceIds`에 있었으나 **이 레지스터에 대응 항목이 없었고, 실제 검증 근거도 아니었다.**
+2026-08-02 재검증 라운드는 이 claim들을 전부 EUTMR 조문과 GOV.UK 안내로 대조했다(`eu_tm_fact_verification_log.md`
+`2026-08-02 재검증 라운드` 표의 `결정 근거` 열 참조). EUIPO 안내면을 연 회차는 없었다.
+
+| 폐기된 sourceId | 쓰이던 claim | 대체 |
+|---|---|---|
+| euipo-trade-mark-guidance | EU-SEL-001 | eutmr-consolidated (제1조 제2항 unitary character) |
+| euipo-after-applying-guidance | EU-DL-001 | eutmr-consolidated (제46조 제1항 3개월) |
+| euipo-cancellation-guidance | EU-EVD-001 | eutmr-consolidated (제58조 제1항(a)) |
+| euipo-genuine-use-materials | EU-EVD-001 | eutmr-consolidated (제58조 제2항 부분취소) |
+| euipo-fees-payments-guidance | EU-RNW-001 | eutmr-consolidated (제52·53조, Annex I item 19) |
+| euipo-renewal-guidance | EU-RNW-001 | eutmr-consolidated (동일) |
+| euipo-brexit-qa | EU-SEL-001, EU-UK-001, EU-AG-001 | govuk-comparable-uk-marks / eutmr-consolidated |
+| govuk-eu-trade-mark-protection | EU-SEL-001, EU-UK-001 | govuk-comparable-uk-marks (**같은 URL을 가리키던 중복 id**) |
+
+**왜 URL을 찾아 붙이지 않고 폐기했는가.** 이 레지스터가 존재하는 이유가 "sourceId가 실재하는 출처를 가리키는가"를
+보증하는 것인데, 아무도 열어본 적 없는 EUIPO 안내면 URL을 그럴듯하게 붙이면 **추적 가능성의 외형만 만들어진다.**
+`audit:facts`가 sourceId 개수만 세는 빈틈을 메우려고 만든 가드에 같은 종류의 빈틈을 새로 넣는 셈이다.
+EUIPO 안내면을 근거로 쓰고 싶다면 그 페이지를 실제로 열어 인용을 확보한 회차에서 추가한다.

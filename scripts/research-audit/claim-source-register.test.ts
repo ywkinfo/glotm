@@ -1,3 +1,4 @@
+import { existsSync, readdirSync } from "node:fs";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
@@ -7,10 +8,30 @@ import { getClaimMapPath, readClaimMap, type ClaimMapEntry } from "./shared";
 
 const rootDir = process.cwd();
 
-const workspaces = [
-  { workspace: "JapTm", registerPath: "JapTm/content/research/jp_tm_source_register.md" },
-  { workspace: "UsaTm", registerPath: "UsaTm/content/research/us_tm_source_register.md" }
-] as const;
+// 워크스페이스 목록을 손으로 들고 있으면 새 워크스페이스가 조용히 가드 밖에 남는다.
+// 실제로 그렇게 됐다: 이 배열이 JapTm·UsaTm 2개만 담고 있는 동안 ChaTm·MexTm은 register 파일이
+// 아예 없었고 EuTm은 sourceId 8개가 표에 없었는데도 `audit:facts`는 factIntegrity=100을 냈다.
+// 그래서 목록을 고정하지 않고 claim-map을 가진 워크스페이스를 전부 찾아 register를 요구한다.
+function discoverClaimMapWorkspaces() {
+  return readdirSync(rootDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
+    .map((entry) => entry.name)
+    .filter((name) => existsSync(path.resolve(rootDir, name, "content/research/claim-map.json")))
+    .sort();
+}
+
+// register 파일명 규약: `<workspace>/content/research/*_source_register.md` 하나.
+function findRegisterPath(workspace: string) {
+  const researchDir = path.resolve(rootDir, workspace, "content/research");
+  const matches = readdirSync(researchDir).filter((name) => name.endsWith("_source_register.md"));
+
+  return matches.length === 1 ? `${workspace}/content/research/${matches[0]}` : null;
+}
+
+const workspaces = discoverClaimMapWorkspaces().map((workspace) => ({
+  workspace,
+  registerPath: findRegisterPath(workspace)
+}));
 
 function readRepoFile(relativePath: string) {
   return readFileSync(path.resolve(rootDir, relativePath), "utf8");
@@ -50,9 +71,19 @@ function findClaim(claims: ClaimMapEntry[], claimId: string) {
   return claim;
 }
 
-describe.each(workspaces)("$workspace claim-map ↔ source register", ({ workspace, registerPath }) => {
+it("claim-map을 가진 워크스페이스는 전부 source register를 갖는다", () => {
+  const withoutRegister = workspaces.filter((entry) => entry.registerPath === null);
+
+  expect(withoutRegister.map((entry) => entry.workspace)).toEqual([]);
+});
+
+// register가 없는 워크스페이스는 위 테스트가 이미 실패로 잡는다. 여기서 또 터뜨리면
+// collection 단계에서 파일 전체가 죽어 나머지 가드까지 못 돌린다.
+const workspacesWithRegister = workspaces.filter((entry) => entry.registerPath !== null);
+
+describe.each(workspacesWithRegister)("$workspace claim-map ↔ source register", ({ workspace, registerPath }) => {
   const claimMap = readClaimMap(getClaimMapPath(rootDir, workspace));
-  const registered = collectRegisteredSources(readRepoFile(registerPath));
+  const registered = collectRegisteredSources(readRepoFile(registerPath as string));
 
   it("모든 claim sourceId가 source register에 등록돼 있다", () => {
     const missing = claimMap.claims.flatMap((claim) =>

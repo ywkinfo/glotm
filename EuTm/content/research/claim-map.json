@@ -13,10 +13,9 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "euipo-trade-mark-guidance",
+        "eutmr-consolidated",
         "govuk-ip-in-eu-and-eea",
-        "govuk-eu-trade-mark-protection",
-        "euipo-brexit-qa"
+        "govuk-comparable-uk-marks"
       ],
       "lastVerified": "2026-08-02",
       "status": "BODY_READY",
@@ -38,7 +37,7 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "euipo-after-applying-guidance"
+        "eutmr-consolidated"
       ],
       "lastVerified": "2026-08-02",
       "status": "BODY_READY",
@@ -60,8 +59,7 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "euipo-cancellation-guidance",
-        "euipo-genuine-use-materials"
+        "eutmr-consolidated"
       ],
       "lastVerified": "2026-08-02",
       "status": "BODY_READY",
@@ -83,8 +81,7 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "euipo-fees-payments-guidance",
-        "euipo-renewal-guidance"
+        "eutmr-consolidated"
       ],
       "lastVerified": "2026-08-02",
       "status": "BODY_READY",
@@ -106,8 +103,7 @@
       ],
       "riskLevel": "MEDIUM",
       "sourceIds": [
-        "govuk-eu-trade-mark-protection",
-        "euipo-brexit-qa"
+        "govuk-comparable-uk-marks"
       ],
       "lastVerified": "2026-08-02",
       "status": "BODY_READY",
@@ -188,8 +184,8 @@
       ],
       "riskLevel": "MEDIUM",
       "sourceIds": [
-        "euipo-absolute-grounds-guidelines",
-        "euipo-brexit-qa"
+        "eutmr-consolidated",
+        "euipo-absolute-grounds-guidelines"
       ],
       "lastVerified": "2026-08-02",
       "status": "BODY_READY",
