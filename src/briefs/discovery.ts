@@ -355,9 +355,23 @@ export const briefCandidates: BriefCandidate[] = [
     sourceIds: ["kipo"],
     jurisdictions: ["Korea", "Certification Mark"],
     relatedProductSlugs: ["china", "mexico", "europe"],
-    status: "watching",
+    status: "ready",
     notes:
-      "시행일 도달 전이라 아직 쓸 수 없다. 8월 말 이후 실제 시행·신청 개시가 확인되면 ready로 올린다. 관련 가이드는 인증 레이어가 대체하지 못하는 축(중국 해관 등록·멕시코 국경조치·EU AFA)을 기준으로 골랐다."
+      "2026-08-30 sweep에서 트리거 발화를 확인해 watching → ready. 지식재산처 2026-08-24 보도자료(게시물 21009)를 직접 열었다: 「2026년 K-브랜드 정부인증제도」 1차 참여기업 모집 2026-08-24~2026-09-11(3주), 정부가 권리자인 국가인증상표를 73개국에 출원·등록해 선정 기업이 사용, 최대 2억원 정품인증기술 도입비 지원(중소 자부담 50%·현물 중소 20%/중견 10%, 대기업은 비용 지원 없이 상표 사용 신청만 가능), 신청 창구는 한국지식재산보호원(koipa.re.kr/k-brand)·지식재산보호종합포털(ip-navi.or.kr). 브리프 각도는 참여요건 (1)이 그대로 준다 — 국가인증상표를 쓰려는 해외 국가에 **기업 자신의 상표가 이미 출원 또는 등록돼 있어야 한다**. 즉 인증 레이어는 기업 자신의 권리 공백을 대체하지 않으며, 9월 11일 마감 전에 대상국 등록 상태부터 확인해야 한다는 것이 실무 질문이다. 관련 가이드는 인증 레이어가 대체하지 못하는 축(중국 해관 등록·멕시코 국경조치·EU AFA)을 기준으로 골랐다."
+  },
+  {
+    id: "2026-10-uspto-madrid-efiling-cutover",
+    headline:
+      "미국 기반 마드리드 출원 창구가 2026년 10월 1일 TEASi에서 Madrid e-Filing으로 완전히 넘어간다 — 미국을 본국관청으로 쓰는 포트폴리오는 전환 전에 계정과 수수료 경로를 정리해야 한다",
+    trigger:
+      "WIPO Madrid System 공지 2026-07-31 「Transition to Madrid e-Filing at the USPTO」. USPTO가 Madrid e-Filing에 합류(soft launch)했고, TEASi는 2026-09-30까지만 유지된다. 2026-10-01부터 미국 출원·등록에 기초한 신규 국제출원은 Madrid e-Filing이 유일한 창구가 된다. WIPO 수수료는 스위스 프랑으로 WIPO에 직접 납부하며, 사용에는 WIPO Account가 필요하다.",
+    discoveredOn: "2026-08-30",
+    sourceIds: ["wipo-madrid", "uspto"],
+    jurisdictions: ["United States", "Global", "Madrid System"],
+    relatedProductSlugs: ["usa"],
+    status: "ready",
+    notes:
+      "2026-08-30 sweep에서 WIPO Madrid System 뉴스 목록을 열어 확인했다(https://www.wipo.int/en/web/madrid-system/w/news/2026/transition-to-madrid-efiling-at-the-uspto). 날짜가 박힌 마감이 있어 바로 쓸 수 있다: 2026-07-31~09-30 병행, 10-01 단일 창구. UsaTm은 마지막 브리프 등장 2026-08-08 이후 열린 후보가 0건이었고 claim-map에 uspto-madrid-outbound 소스를 이미 들고 있어 연결이 자연스럽다. 발행 시 확인할 것: 이 전환은 '미국을 본국관청으로 하는 outbound 국제출원' 창구 변경이며, 한국 기업이 KIPO를 본국관청으로 쓰는 경로에는 영향이 없다는 점을 본문에서 분명히 구분한다."
   },
   {
     id: "2027-china-implementing-rules",
@@ -424,6 +438,23 @@ export const briefCandidates: BriefCandidate[] = [
 // 최신순으로 유지한다(archive 정렬 계약과 동일). 산출이 없어도 기록한다.
 
 export const briefSweepLog: BriefSweep[] = [
+  {
+    sweptOn: "2026-08-30",
+    kind: "verified",
+    sourceIds: [
+      "kipo",
+      "wipo-madrid",
+      "jpo",
+      "cnipa-official",
+      "cnipa-trademark-office"
+    ],
+    foundCandidateIds: [
+      "2026-08-kbrand-certification-launch",
+      "2026-10-uspto-madrid-efiling-cutover"
+    ],
+    note:
+      "9월 만료 claim 재대조와 같은 라운드에서 돈 실사 회차다. 다섯 소스의 sweepTarget을 실제로 열었다. ⓐ kipo(지식재산처 보도자료 목록 + 2026-08-24 게시물 21009 본문): K-브랜드 정부인증제도 1차 모집 2026-08-24~09-11 확인 → watching 후보를 ready로 올렸다. ⓑ wipo-madrid(Madrid System News 목록): 2026-07-31 USPTO Madrid e-Filing 전환 공지 확인 → 신규 후보 등록(2026-10-01 TEASi 종료). ⓒ jpo(報道発表 2026年度 목록): 2026-07-01 이후 게시물은 7-27 JPO AI 비전, 7-22 INPIT 규슈 개설 두 건뿐으로 상표 실무 트리거 없음 — 산출 없음. ⓓ cnipa-official·cnipa-trademark-office(개정 상표법 專題 col3684, 综合消息 col3685, 「修订主要内容」 2026-07-10, 商标局 通知公告 ~2026-08-20): 商标法实施条例 개정 초안·의견수렴 공표 신호 없음 — 산출 없음. 후보 2027-china-implementing-rules는 watching 유지. samr·euipo·eu-customs-reform·govuk-ipo·uspto·cbp-ipr·impi·inapi-chile·sic-colombia·inpi-argentina는 이번 회차에서 열지 않았으므로 freshness를 갱신하지 않는다.",
+  },
   {
     sweptOn: "2026-08-08",
     kind: "verified",

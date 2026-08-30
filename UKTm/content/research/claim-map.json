@@ -11,7 +11,7 @@
       "chapterRefs": ["Ch6"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-objecting", "ukipo-notice-to-oppose"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -20,7 +20,7 @@
         "unit": "months",
         "expression": "within 2 months from Trade Marks Journal publication, +1 month via TM7A"
       },
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/objecting-to-other-peoples-trade-marks(TM7 2개월), gov.uk/notice-to-oppose-trademark(TM7A 예고 1개월 연장). 2026-07-21 1차출처 재대조: 변경 없음(TM7A는 최초 2개월 이내 온라인·무료 제출 시 opposition 기간 1개월 연장)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/objecting-to-other-peoples-trade-marks(TM7 2개월), gov.uk/notice-to-oppose-trademark(TM7A 예고 1개월 연장). 2026-07-21 1차출처 재대조: 변경 없음(TM7A는 최초 2개월 이내 온라인·무료 제출 시 opposition 기간 1개월 연장). 2026-08-30 1차출처 재대조: 변경 없음(TM7 2개월 + TM7A로 1개월 연장, 온라인·무료 축자 확인). 등록 URL이 /guidance/objecting-to-other-peoples-trade-marks-and-the-legal-costs로 301 리다이렉트되어 source register를 최종 URL로 갱신했다."
     },
     {
       "id": "UK-COOL-001",
@@ -29,9 +29,9 @@
       "chapterRefs": ["Ch6"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-fast-track-opposition"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk fast-track opposition. TM8 제출 시점과 협상 시점을 본문 표로 구분. 2026-07-21 재대조: 변경 없음(초기 9개월→TM9E로 최대 18개월, 양 당사자 동의·무료; TM9E는 2026-05-02 온라인 서비스 추가)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk fast-track opposition. TM8 제출 시점과 협상 시점을 본문 표로 구분. 2026-07-21 재대조: 변경 없음(초기 9개월→TM9E로 최대 18개월, 양 당사자 동의·무료; TM9E는 2026-05-02 온라인 서비스 추가). 2026-08-30 재대조: 변경 없음(초기 9개월, TM9E로 최대 18개월, 무수수료 축자 확인; TM9C=개시/TM9E=연장 구분 유지)."
     },
     {
       "id": "UK-RENEW-001",
@@ -40,7 +40,7 @@
       "chapterRefs": ["Ch7"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-renew"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -49,7 +49,7 @@
         "unit": "years",
         "expression": "renewal every 10 years from registration"
       },
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/renew-your-trade-mark. 갱신 수수료 금액은 UK-FEE-001에서 구조적 표기로 분리. 2026-07-21 재대조: 변경 없음. TMA 1994 §40(3)상 출원일이 등록일로 간주되어 갱신 10년 기산은 실제 등록완료일이 아니라 출원일 기준(본문 Ch07 명확화)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/renew-your-trade-mark. 갱신 수수료 금액은 UK-FEE-001에서 구조적 표기로 분리. 2026-07-21 재대조: 변경 없음. TMA 1994 §40(3)상 출원일이 등록일로 간주되어 갱신 10년 기산은 실제 등록완료일이 아니라 출원일 기준(본문 Ch07 명확화). 2026-08-30 재대조: 변경 없음('Trade marks must be renewed every 10 years' 축자 확인; 만료 전 6개월~만료 후 6개월 갱신 창도 유지)."
     },
     {
       "id": "UK-NONUSE-001",
@@ -58,7 +58,7 @@
       "chapterRefs": ["Ch8"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-revocation-nonuse"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -67,7 +67,7 @@
         "unit": "years",
         "expression": "revocation risk after 5 years; continuous 5-year non-use"
       },
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk revocation (non-use) proceedings. 절차 서식(TM26(N))·수수료 금액은 본문 하드코딩 금지. 2026-07-21 재대조: 변경 없음(UKIPO 2026-04-01 갱신 문서 확인; TM26(N) 정부수수료는 현재 £250이나 본문 비하드코딩 유지)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk revocation (non-use) proceedings. 절차 서식(TM26(N))·수수료 금액은 본문 하드코딩 금지. 2026-07-21 재대조: 변경 없음(UKIPO 2026-04-01 갱신 문서 확인; TM26(N) 정부수수료는 현재 £250이나 본문 비하드코딩 유지). 2026-08-30 재대조: 변경 없음(등록 후 5년 + 연속 5년 불사용 축자 확인). TM26(N) 정부수수료는 £250로 표기되나 본문 비하드코딩 방침을 유지한다."
     },
     {
       "id": "UK-IPEC-001",
@@ -75,10 +75,10 @@
       "claim": "IPEC small claims track은 통상 £10,000 이하 분쟁에 적합하고, IPEC multi-track은 damages up to £500,000, recoverable costs cap £60,000을 기준으로 High Court와의 포럼 선택에 반영한다.",
       "chapterRefs": ["Ch10", "Ch13"],
       "riskLevel": "HIGH",
-      "sourceIds": ["ukipo-ipec-small-claims", "gov-ip-crime-enforcement"],
-      "lastVerified": "2026-07-21",
+      "sourceIds": ["ukipo-ipec-small-claims", "gov-ip-crime-enforcement", "cpr-46-ipec-scale-costs", "cpr-pd46-ipec-tables", "si-2022-783-cpr-amendment-2", "cpr-63-ipec-damages-cap", "judiciary-ipec-guide-2024"],
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk IPEC small claims guide, gov.uk IP crime and enforcement. cost cap은 cost rule 개정 시점에만 변동(저휘발성)이나 변경 보도 시 재대조. 2026-07-21 재대조: 변경 없음(2025-26 costs cap 개정 없음; £60,000는 liability 단계 cap, quantum 단계는 별도 £30,000)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 등록 안내면 근거: gov.uk IPEC small claims guide(£10,000 소액 트랙), gov.uk IP crime and enforcement(\"Multi-track: For cases where damages are up to £500,000 with costs capped at £60,000\"). 2026-08-30 재대조: 값 3개 모두 현행 유효. 이번 회차에 cap을 규율하는 규범을 sourceIds에 추가했다 — CPR 46.21(1) \"the court will not order a party to pay total costs of more than— (a) £60,000 on the final determination of a claim in relation to liability; and (b) £30,000 on an inquiry as to damages or account of profits\", 단계별 상한은 PD 46 §11.1 Table A·B, 개정 연혁은 SI 2022/783(2022-10-01 시행, Part 45→46 이관 및 £60,000/£30,000 인상). 추가 이유는 두 가지다: (1) quantum 단계 £30,000은 등록 안내면 어디에도 없어 규범이 유일한 근거였고, (2) CPR 46.20(2)(b)는 유효성이 선행 절차에서 certified된 등록상표 사건에 이 scale costs 절이 적용되지 않는다고 규정하는데 안내면은 그 예외를 싣지 않는다. claim의 damages 상한 £500,000은 Part 46이 아니라 **CPR 63.17A(1)**이 정한다(\"the amount or value of that claim shall not exceed £500,000\"). 또한 CPR Part 63은 \"Section VII of Part 46 (scale costs …) shall not apply to claims allocated to the small claims track\"라고 하여, small claims track에는 이 costs cap이 적용되지 않는다 — 포럼 선택 표에서 두 트랙을 구분해 적어야 한다. 2026-08-25 triage가 경고한 '£50,000을 싣는 낡은 면'은 현행 안내면에서 재현되지 않았다: GOV.UK IPEC 안내는 \"costs up to £60,000\", judiciary.uk IPEC Guide(2024-11)는 Part 46 r.46.20–22와 £60,000/£30,000을 명시한다. £50,000이 남아 있는 곳은 2013·2015년 GOV.UK **보도자료 3건**뿐이며 이는 발행 시점 기준으로 정확했던 과거 기사다 — 검색으로 그 문자열을 만나 '정정'하지 않도록 주의한다."
     },
     {
       "id": "UK-BREXIT-001",
@@ -87,9 +87,9 @@
       "chapterRefs": ["Ch1", "Ch3"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-eutm-comparable"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk EU trade mark protection and comparable UK trade marks. 분리 시점 2021-01-01(전환 종료)로 EuTm 정정본과 정합. 2026-07-21 재대조: 변경 없음(comparable은 2021-01-01 전 등록 EUTM만; 미결 출원 재출원 창은 2021-09-30 종료). 참고: gov.uk/guidance/international-eu-protected-trade-marks는 404 → changes-to-international-trade-mark-registrations로 대체됨."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk EU trade mark protection and comparable UK trade marks. 분리 시점 2021-01-01(전환 종료)로 EuTm 정정본과 정합. 2026-07-21 재대조: 변경 없음(comparable은 2021-01-01 전 등록 EUTM만; 미결 출원 재출원 창은 2021-09-30 종료). 참고: gov.uk/guidance/international-eu-protected-trade-marks는 404 → changes-to-international-trade-mark-registrations로 대체됨. 2026-08-30 재대조: 변경 없음('Since 1 January 2021, EU trade marks (EUTMs) are no longer protected trade marks in the UK' 축자 확인; comparable 생성은 2021-01-01 전 등록 EUTM 한정, 재출원 창 2021-09-30 종료 유지)."
     },
     {
       "id": "UK-COMPARABLE-001",
@@ -98,9 +98,9 @@
       "chapterRefs": ["Ch3", "Ch7"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-eutm-comparable"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk comparable UK trade marks. 신규 EUTM은 UK 권리를 자동 생성하지 않음(EuTm 정정본과 정합). 2026-07-21 재대조: 변경 없음. 추가 리스크: 2026-01-01부터 comparable UK mark의 non-use 방어에 EU 사용을 원용할 수 없고 UK 사용이 필요(본문 Ch08 명확화)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk comparable UK trade marks. 신규 EUTM은 UK 권리를 자동 생성하지 않음(EuTm 정정본과 정합). 2026-07-21 재대조: 변경 없음. 추가 리스크: 2026-01-01부터 comparable UK mark의 non-use 방어에 EU 사용을 원용할 수 없고 UK 사용이 필요(본문 Ch08 명확화). 2026-08-30 재대조: 변경 없음(갱신일 승계와 EUTM 별도 갱신수수료 축자 확인). 2021-01-01 이후 구간의 EU 사용 불산입 서술도 Ch08 note와 정합한다."
     },
     {
       "id": "UK-IR-001",
@@ -108,10 +108,10 @@
       "claim": "2021-01-01 이후 UK 지정 국제출원(IR)은 영국에서 별도 보호를 받으며 Gibraltar에도 자동 효력이 미친다. EU 지정만으로는 영국을 커버하지 못한다.",
       "chapterRefs": ["Ch3"],
       "riskLevel": "MEDIUM",
-      "sourceIds": ["gov-protect-abroad", "gov-ir-changes"],
-      "lastVerified": "2026-07-21",
+      "sourceIds": ["gov-protect-abroad", "gov-ir-changes", "gov-extension-uk-ip-abroad-c-to-h"],
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk protecting your trade mark abroad, changes to international trade mark registrations. 2026-07-21 재대조: 변경 없음. Gibraltar 자동효력 근거는 WIPO 통지 + gov.uk extension-of-UK-IP-rights-abroad(마드리드 UK 지정, 2021-01-01 이후; Guernsey도 포함). national UK 상표는 Gibraltar 자동확장 아님."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk protecting your trade mark abroad, changes to international trade mark registrations. 2026-07-21 재대조: 변경 없음. Gibraltar 자동효력 근거는 WIPO 통지 + gov.uk extension-of-UK-IP-rights-abroad(마드리드 UK 지정, 2021-01-01 이후; Guernsey도 포함). national UK 상표는 Gibraltar 자동확장 아님. 2026-08-30 재대조: 값은 현행 유효하나 등록 소스가 claim 전단을 규율하지 못하는 것을 확인했다 — gov-ir-changes는 후단(EU 지정만으로 UK를 커버하지 않음)을 축자로 뒷받침하지만, Gibraltar 자동 효력은 등록 2면 어디에도 없다('Gibraltar' 히트 0건). gov-protect-abroad가 2026-06-04 전면 재작성되며 해당 서술이 빠진 결과다. 이번 회차에 GOV.UK 「Extension of UK IP rights abroad — countries C to H」 §6 Gibraltar를 열어 'As from 1 Jan 2021, the Madrid Protocol will apply to Gibraltar in respect of designations of the United Kingdom in international registrations and in subsequent designations bearing a date of January 1, 2021, or later'를 확인하고 source register와 sourceIds에 추가했다. 본문 값 정정은 불필요."
     },
     {
       "id": "UK-AFA-001",
@@ -120,9 +120,9 @@
       "chapterRefs": ["Ch12"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["gov-afa"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk apply for action to protect your IP rights. '무료'만 강조하지 않고 후속 비용 리스크를 함께 표기. 2026-07-21 재대조: 변경 없음(gov.uk 2025-07-22 갱신). detention은 Border Force가 집행, 비용 책임은 detention 시점부터."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk apply for action to protect your IP rights. '무료'만 강조하지 않고 후속 비용 리스크를 함께 표기. 2026-07-21 재대조: 변경 없음(gov.uk 2025-07-22 갱신). detention은 Border Force가 집행, 비용 책임은 detention 시점부터. 2026-08-30 재대조: 변경 없음(무료 신청 + detention 시점부터 비용 책임, 최소 30 working days 사전 제출 축자 확인). GOV.UK Last updated 2025-07-22로 직전 회차 이후 갱신 없음."
     },
     {
       "id": "UK-DRS-001",
@@ -131,9 +131,9 @@
       "chapterRefs": ["Ch11", "Ch13"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["nominet-drs", "wipo-uk-drs"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 2026-07-21 재대조·skeptic 확정으로 변경 반영: (1) 공식명은 Dispute Resolution Service(DRS)이며 기존 'Domain Disputes Resolution Service'는 URL slug에서 온 오기; (2) 2026-07-07부터 신규 .uk DRS 신청을 Nominet 대신 WIPO(wipo.int/amc)가 접수·관리(정책·총괄은 Nominet, 조정은 Nominet 무료 제공, 그 전 접수 건은 Nominet Online Services 유지). nominet.uk는 403이라 WIPO amc 미러로 확인. 절차·수수료는 정책 변경 가능(분기 재확인)."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 2026-07-21 재대조·skeptic 확정으로 변경 반영: (1) 공식명은 Dispute Resolution Service(DRS)이며 기존 'Domain Disputes Resolution Service'는 URL slug에서 온 오기; (2) 2026-07-07부터 신규 .uk DRS 신청을 Nominet 대신 WIPO(wipo.int/amc)가 접수·관리(정책·총괄은 Nominet, 조정은 Nominet 무료 제공, 그 전 접수 건은 Nominet Online Services 유지). nominet.uk는 403이라 WIPO amc 미러로 확인. 절차·수수료는 정책 변경 가능(분기 재확인). 2026-08-30 재대조: 변경 없음. nominet.uk는 curl 403이라 인앱 브라우저로 본문을 열어 DRS 공식명·2026-07-07 WIPO 접수 이관·정책 총괄 Nominet 유지·무료 조정을 축자 확인했다. WIPO 등록 URL이 /en/web/amc/domain-name-disputes/cctld/uk/index로 리다이렉트되어 register를 최종 URL로 갱신했다."
     },
     {
       "id": "UK-FEE-001",
@@ -142,9 +142,9 @@
       "chapterRefs": ["Ch4", "Ch7"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["ukipo-apply", "ukipo-renew"],
-      "lastVerified": "2026-07-22",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "2026-07-22 owner 승인 후 GOV.UK 출원·갱신 안내를 재대조해 2026-04-01 개정 금액을 확정: 온라인 출원 £205 / 갱신 £245 / 추가 클래스당 £60. 이전 £50 기록은 개정 전 금액으로 정정. 향후 개정 시 EuTm·UKTm 양 워크스페이스를 동시 갱신."
+      "notes": "2026-07-22 owner 승인 후 GOV.UK 출원·갱신 안내를 재대조해 2026-04-01 개정 금액을 확정: 온라인 출원 £205 / 갱신 £245 / 추가 클래스당 £60. 이전 £50 기록은 개정 전 금액으로 정정. 향후 개정 시 EuTm·UKTm 양 워크스페이스를 동시 갱신. 2026-08-30 재대조: 변경 없음(온라인 출원 첫 클래스 £205, 갱신 첫 클래스 £245, 출원·갱신 모두 추가 클래스당 £60을 GOV.UK 두 면에서 축자 확인). 2026-04-01 개정 금액 유지 — EuTm 동시 갱신 불필요."
     }
   ]
 }

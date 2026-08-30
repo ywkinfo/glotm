@@ -190,7 +190,7 @@ describe("portfolio health helpers", () => {
       track: "fact-review",
       gating: false,
       status: "recorded",
-      reviewedOn: "2026-07-21T00:00:00.000Z",
+      reviewedOn: "2026-08-30T00:00:00.000Z",
       freshnessDays: 0
     });
     expect(china?.verdict).toBe("hold");
