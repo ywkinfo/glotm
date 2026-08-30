@@ -18,6 +18,8 @@ import {
   buildReportDocumentTitle,
   buildReportPath,
   formatReportDate,
+  getLatestReports,
+  reportExperienceMeta,
   reports,
   type ReportMeta
 } from "../src/reports/registry";
@@ -334,6 +336,15 @@ function renderGatewayBody(basePath: string) {
     label: `${product.shortLabel} · ${product.title}`
   }));
   const latestBrief = briefIssues[0];
+  // SPA(GatewayPage)와 같은 기준으로 최신 2건을 고른다. 이 섹션이 없으면 prerender된 크롤 표면에서
+  // `/reports/` 클러스터가 링크 고립섬이 된다 — 게이트웨이 본문은 최신 리포트를 문장으로 약속하는데
+  // 정작 인바운드 링크는 리포트 상세끼리만 걸려 있었다(2026-08-31 실측: 147면 중 /reports/ 로 들어가는
+  // 링크를 가진 파일이 리포트 클러스터 내부 7개뿐).
+  const featuredReports = getLatestReports(2);
+  const reportLinks = featuredReports.map((report) => ({
+    href: buildPublicHref(buildReportPath(report.slug), basePath),
+    label: `${report.title} (${formatReportDate(report.publishedAt)})`
+  }));
 
   return `
     <main>
@@ -352,6 +363,16 @@ function renderGatewayBody(basePath: string) {
         <p>지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 골라 짧고 밀도 있게 해설하는 주간 브리프를 함께 운영합니다.</p>
         <p><a href="${escapeHtml(buildPublicHref(buildBriefArchivePath(), basePath))}">브리프 아카이브 보기</a></p>
       </section>
+      `
+        : ""}
+      ${reportLinks.length > 0
+        ? `
+      <section>
+        <h2>${escapeHtml(reportExperienceMeta.gatewaySectionTitle)}</h2>
+        <p>${escapeHtml(reportExperienceMeta.gatewaySectionSummary)}</p>
+        <p><a href="${escapeHtml(buildPublicHref(buildReportArchivePath(), basePath))}">${escapeHtml(reportExperienceMeta.archiveCtaLabel)}</a></p>
+      </section>
+      ${renderLinkList("최신 리포트", reportLinks)}
       `
         : ""}
       <section>
