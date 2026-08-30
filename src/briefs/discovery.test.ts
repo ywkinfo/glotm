@@ -582,15 +582,20 @@ describe("brief discovery report", () => {
     expect(byId["backfill-only"]?.status).toBe("never-verified");
   });
 
-  // KIPO는 2026-08-08 공식 발표를 직접 대조했지만 다른 시드 소스는 여전히 backfill뿐이다.
-  // 한 소스의 실사가 나머지 소스 freshness까지 갱신한 것처럼 보이면 안 된다.
-  it("reports the verified KIPO sweep while keeping untouched sources never-verified", () => {
-    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-08-08T00:00:00.000Z"));
-    const kipo = rows.find((row) => row.source.id === "kipo");
-    const untouched = rows.filter((row) => row.source.id !== "kipo");
+  // 2026-08-30 회차가 다섯 소스를 직접 열었고, 나머지 열 개는 여전히 backfill뿐이다.
+  // 실사한 소스의 freshness가 열지 않은 소스까지 갱신한 것처럼 보이면 안 된다 — 이 테스트가 그 경계를 지킨다.
+  it("reports verified sweeps only for the sources that were actually opened", () => {
+    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-08-30T00:00:00.000Z"));
+    const swept = ["kipo", "wipo-madrid", "jpo", "cnipa-official", "cnipa-trademark-office"];
+    const untouched = rows.filter((row) => !swept.includes(row.source.id));
 
-    expect(kipo?.lastVerifiedOn).toBe("2026-08-08");
-    expect(kipo?.status).toBe("ok");
+    for (const id of swept) {
+      const row = rows.find((entry) => entry.source.id === id);
+      expect(row?.lastVerifiedOn).toBe("2026-08-30");
+      expect(row?.status).toBe("ok");
+    }
+
+    expect(untouched).toHaveLength(10);
     expect(untouched.every((row) => row.status === "never-verified")).toBe(true);
   });
 });

@@ -10,10 +10,10 @@
       "claim": "IMPI 공식 fee 체계는 출원, 갱신, 사용 선언을 서로 다른 절차로 나눈다. gob.mx 트라미테(ficha) 기준으로 직접출원은 IMPI88, 갱신은 IMPI3170으로 관리하고, 서식(formato) 기준으로 갱신+실사용 선언은 IMPI-00-002, 등록 후 3년차 별도 실사용 선언은 IMPI-00-014를 사용한다. IMPI88·IMPI3170(ficha)와 IMPI-00-002·IMPI-00-014(formato)는 서로 다른 코드 체계다.",
       "chapterRefs": ["Ch4", "Ch5", "Ch7", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
-      "sourceIds": ["gobmx-impi88", "gobmx-impi3170", "impi-formatos-list", "impi-pase-faq-2026"],
-      "lastVerified": "2026-07-21",
+      "sourceIds": ["wipolex-lfppi-2020", "impi-formatos-list", "impi-pase-faq-2026"],
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료. 2026-07-21 재대조·skeptic 확정으로 정정: IMPI-00-002는 '갱신 및 실사용 선언 신청서(Solicitud de Renovación y Declaración de Uso Real y Efectivo de Signos Distintivos)' 즉 갱신 서식이고, 등록 후 3년차 별도 실사용 선언(허여 3주년 이후 3개월, 유예 없는 확정 기한)은 IMPI-00-014 서식이다. 기존 '사용 선언=IMPI-00-002' 서술은 오류로, 그대로 따르면 필수 3년차 선언을 놓쳐 등록이 소멸할 수 있어 본문(Ch04·Ch05·Ch07·Ch13·부록) 정정. IMPI88·IMPI3170은 gob.mx ficha ID, IMPI-00-002·IMPI-00-014는 IMPI formato 코드로 별개 체계이며 ficha URL slug가 변경되어 출처 링크 갱신 필요."
+      "notes": "제4장 기한·비용 handoff 표와 부록 캘린더에 반영 완료. 2026-07-21 재대조·skeptic 확정으로 정정: IMPI-00-002는 '갱신 및 실사용 선언 신청서(Solicitud de Renovación y Declaración de Uso Real y Efectivo de Signos Distintivos)' 즉 갱신 서식이고, 등록 후 3년차 별도 실사용 선언(허여 3주년 이후 3개월, 유예 없는 확정 기한)은 IMPI-00-014 서식이다. 기존 '사용 선언=IMPI-00-002' 서술은 오류로, 그대로 따르면 필수 3년차 선언을 놓쳐 등록이 소멸할 수 있어 본문(Ch04·Ch05·Ch07·Ch13·부록) 정정. IMPI88·IMPI3170은 gob.mx ficha ID, IMPI-00-002·IMPI-00-014는 IMPI formato 코드로 별개 체계이며 ficha URL slug가 변경되어 출처 링크 갱신 필요. 2026-08-30 재대조: 절차 분리의 근거를 규범으로 교체했다. 죽은 gob.mx ficha 출처 2건(`gobmx-impi88`·`gobmx-impi3170`)을 sourceIds에서 빼고 `wipolex-lfppi-2020`을 넣었다. LFPPI 제233조는 3년차 단독 선언을 규정한다 — \"El titular de una marca deberá declarar su uso real y efectivo … La declaración se presentará ante el Instituto durante los tres meses posteriores, contados a partir de que se cumpla el tercer año de haberse otorgado el registro\" (미선언 시 \"el registro caducará de pleno derecho\"). 제237조는 갱신을 규정하면서 \"Al presentar la solicitud de renovación, el titular deberá declarar el uso real y efectivo de la marca\"라고 하여 갱신 신청 자체가 사용선언을 품는다. 즉 IMPI-00-002(갱신+사용선언)와 IMPI-00-014(3년차 단독 선언)가 서로 다른 서식인 것은 법 구조의 결과이며, 이 축은 이제 규범으로 뒷받침된다. **남은 갭:** ficha ID `IMPI88`·`IMPI3170`은 오늘 확인할 수 없었다 — gob.mx 포털 개편으로 `/tramites/ficha/*` 네임스페이스가 사라졌고(브라우저로 열면 루트로 리다이렉트; curl 200은 `Challenge Validation` WAF 응답이라 도달 증거가 아니다), 후속 등록부인 CONAMER Catálogo Nacional(https://www.catalogonacional.gob.mx/)은 이 채널에서 검색 결과를 반환하지 않았으며, IMPI 자체 formatos 면(https://www.impi.gob.mx/formatos)은 텍스트 추출이 안 되는 스캔 PDF만 싣는다. owner 액션: CONAMER 카탈로그에서 IMPI 출원·갱신 트라미테를 찾아 ficha ID 체계 존속 여부를 확인하고, 사라졌다면 claim에서 ficha 축을 덜어낸다."
     },
     {
       "id": "MX-DL-001",
@@ -21,10 +21,10 @@
       "claim": "멕시코 공개본에서 고정 가능한 핵심 기한은 공고 후 1개월 opposition, 2018-08-10 이후 등록은 grant 후 3년+3개월 내 declaration of use, 등록 존속 10년이다.",
       "chapterRefs": ["Ch4", "Ch6", "Ch7", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
-      "sourceIds": ["impi-opposition-triptico", "impi-pase-faq-2026", "gobmx-impi3170", "wipo-madrid-2024-32"],
-      "lastVerified": "2026-07-21",
+      "sourceIds": ["wipolex-lfppi-2020", "impi-opposition-triptico", "impi-pase-faq-2026", "wipo-madrid-2024-32"],
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금. 2026-07-21 재대조: 변경 없음(LFPPI 2020 제221조 공고 후 1개월 opposition, 제233조 grant 3주년 후 3개월 실사용 선언(2018-08-10 이후 등록), 제178조 존속 10년). 존속 10년은 부여(grant)일 기산(제178조)이며 2026-04-03 LFPPI 개정도 이 3개 기한은 미변경."
+      "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금. 2026-07-21 재대조: 변경 없음(LFPPI 2020 제221조 공고 후 1개월 opposition, 제233조 grant 3주년 후 3개월 실사용 선언(2018-08-10 이후 등록), 제178조 존속 10년). 존속 10년은 부여(grant)일 기산(제178조)이며 2026-04-03 LFPPI 개정도 이 3개 기한은 미변경. 2026-08-30 재대조: 변경 없음. WIPO Lex LFPPI 원문에서 제221조('plazo improrrogable de un mes' — 공고 효력일부터 유예 불가 1개월 oposición), 제233조(허여 3주년 후 3개월 실사용 선언, 2018-08-10 이후 등록분), 제178조(허여일 기산 10년 존속)를 축자 확인했고, IMPI oposición 리플릿 도해(1 mes)와 WIPO Information Notice 32/2024도 일치한다. 다만 등록 소스 중 gob.mx IMPI3170 ficha는 링크가 소멸했다(MX-FEE-001과 동일 사유). 이번 회차에 sourceIds도 정리했다: 기한을 실제로 규율하는 `wipolex-lfppi-2020`(제221조·제233조·제178조)을 추가하고, 포털 개편으로 죽은 `gobmx-impi3170` ficha를 뺐다."
     },
     {
       "id": "MX-NORM-001",
@@ -33,9 +33,9 @@
       "chapterRefs": ["Ch1", "Ch3", "Ch4", "Ch5", "Appendix"],
       "riskLevel": "MEDIUM",
       "sourceIds": ["gobmx-pase-faq", "gobmx-pase-guide-pdf", "impi-transparencia-focalizada"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료. 2026-07-21 재대조: 변경 없음(Tu cuenta PASE·Marca en Línea·MARCia·ClasNiza·MARCANET·SIGA/Gaceta 6개 시스템 모두 현행 명칭으로 라이브 확인)."
+      "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료. 2026-07-21 재대조: 변경 없음(Tu cuenta PASE·Marca en Línea·MARCia·ClasNiza·MARCANET·SIGA/Gaceta 6개 시스템 모두 현행 명칭으로 라이브 확인). 2026-08-30 재대조: 변경 없음. gob.mx IMPI 「Tu cuenta PASE」 FAQ에서 Marca en línea·Oficialía/Ventanilla electrónica de marcas·MARCia·Clasniza·Tu Gaceta를, Transparencia Focalizada에서 MARCANET와 Gaceta 정보시스템을 확인했다. 공식 표기는 'Clasniza'·'Marca en línea'로 본문의 'ClasNiza'·'Marca en Línea'와 대소문자만 다르다(개칭이 아니라 표기 변형 — 본문 표기 통일 시 참고)."
     },
     {
       "id": "MX-ENF-001",
@@ -44,9 +44,9 @@
       "chapterRefs": ["Ch9", "Ch10", "Ch11", "Ch13", "Appendix"],
       "riskLevel": "HIGH",
       "sourceIds": ["wipolex-lfppi-2020", "anam-pedimento-copies", "anam-dpa-fees"],
-      "lastVerified": "2026-07-21",
+      "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료. 2026-07-21 재대조: 변경 없음(IMPI declaraciones administrativas·medidas provisionales, ANAM pedimento/anexo 축 현행; ANAM 명칭 유지). Ley Aduanera 2026 개정(2026-01-01 시행)은 pedimento/expediente를 전자화하나 구조는 유지."
+      "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료. 2026-07-21 재대조: 변경 없음(IMPI declaraciones administrativas·medidas provisionales, ANAM pedimento/anexo 축 현행; ANAM 명칭 유지). Ley Aduanera 2026 개정(2026-01-01 시행)은 pedimento/expediente를 전자화하나 구조는 유지. 2026-08-30 재대조: 변경 없음. WIPO Lex LFPPI(DOF 01-07-2020, vigente 05-11-2020) 원문에서 declaración administrativa·medidas provisionales와 수입·수출·통과 화물의 자유유통 정지 권한을 확인했고, ANAM copias certificadas de pedimentos y anexos(RGCE 1.1.10)와 DPA 수수료 항목(LFD 제5조)도 현행이다. 주의: WIPO Lex 게재본은 2020년 원문이라 2026-04-03 LFPPI 개정 반영본이 아니다 — 집행 조항에 개정이 닿았는지는 별도 확인 대상으로 둔다."
     }
   ]
 }

@@ -16,7 +16,7 @@
 | 출원 후 절차 | Register a trade mark: After you apply | https://www.gov.uk/how-to-register-a-trade-mark/after-you-apply | 2026-04-01 | Ch05, Ch06 | 확정 |
 | 등록 후 효력 | Register a trade mark: When your trade mark is registered | https://www.gov.uk/how-to-register-a-trade-mark/when-registered | 2026-04-01 | Ch05, Ch07 | 확정 |
 | opposition 예고 | Give notice of your intention to oppose a trade mark | https://www.gov.uk/notice-to-oppose-trademark | 2026-04-01 | Ch06 | 확정 |
-| opposition / 비용 / 타임라인 | Objecting to other peoples trade marks and the legal costs | https://www.gov.uk/objecting-to-other-peoples-trade-marks | 2026-04-01 | Ch06 | 확정 |
+| opposition / 비용 / 타임라인 | Objecting to other peoples trade marks and the legal costs | https://www.gov.uk/guidance/objecting-to-other-peoples-trade-marks-and-the-legal-costs | 2026-04-01 | Ch06 | 확정 |
 | cooling-off / fast track | Fast track opposition | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition | 2026-04-01 | Ch06 | 확정 |
 | 트리뷴얼 절차 | Manual of trade marks practice - Tribunal section | https://www.gov.uk/guidance/trade-marks-manual/tribunal-section | 2026-04-01 | Ch06, Ch08 | 확정 |
 | 갱신 | Renew your trade mark | https://www.gov.uk/renew-your-trade-mark | 2026-07-22 | Ch07 | 확정 |
@@ -26,7 +26,7 @@
 | IPEC 절차 | Take a case to the Intellectual Property Enterprise Court | https://www.gov.uk/guidance/take-a-case-to-the-intellectual-property-enterprise-court | 2026-04-01 | Ch01, Ch10 | 확정 |
 | 집행 포럼 비교 | IP crime and enforcement for businesses | https://www.gov.uk/government/publications/ip-crime-and-enforcement-for-businesses/ip-crime-and-enforcement-for-businesses | 2026-04-01 | Ch10 | 확정 |
 | .uk 도메인 분쟁 (DRS) | Dispute Resolution Service - Nominet (2026-07-07부터 WIPO 접수·관리) | https://nominet.uk/uk-registry/domain-disputes/ | 2026-07-21 | Ch11 | 확정 |
-| .uk DRS WIPO 접수 | WIPO .uk DRS (2026-07-07 이관) | https://www.wipo.int/amc/en/domains/cctld/uk/ | 2026-07-21 | Ch11 | 확정 |
+| .uk DRS WIPO 접수 | WIPO .uk DRS (2026-07-07 이관) | https://www.wipo.int/en/web/amc/domain-name-disputes/cctld/uk/index | 2026-07-21 | Ch11 | 확정 |
 | HMRC border action | Apply to protect your intellectual property rights | https://www.gov.uk/guidance/apply-for-action-to-protect-your-intellectual-property-rights | 2026-04-01 | Ch12 | 확정 |
 | EU 종료 후 comparable marks | EU trade mark protection and comparable UK trade marks | https://www.gov.uk/guidance/eu-trade-mark-protection-and-comparable-uk-trade-marks | 2026-04-01 | Ch01, Ch03, Ch07 | 확정 |
 | IR comparable marks | Changes to international trade mark registrations | https://www.gov.uk/guidance/changes-to-international-trade-mark-registrations | 2026-04-01 | Ch03, Ch07, Appendix E | 확정 |
@@ -35,6 +35,12 @@
 | 심사 일반 원칙 | Manual of trade marks practice - The examination guide | https://www.gov.uk/guidance/trade-marks-manual/the-examination-guide | 2026-04-01 | Ch05 | 확정 |
 | WIPO 검색 도구 | Madrid Monitor | https://www.wipo.int/madrid/en/monitor/ | 2026-04-01 | Ch02, Ch03 | 확정 |
 | TMview | TMview | https://www.tmdn.org/tmview/ | 2026-04-01 | Ch02 | 확정 |
+| IPEC scale costs 규범 | CPR Part 46 Section VII — Scale costs for claims in the Intellectual Property Enterprise Court (r.46.20–46.22) | https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part-46-costs-special-cases | 2026-08-30 | Ch10, Ch13 | 확정 |
+| IPEC 단계별 costs 상한 | Practice Direction 46 §11.1 Table A / Table B | https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part-46-costs-special-cases/practice-direction-46-costs-special-cases | 2026-08-30 | Ch10, Ch13 | 확정 |
+| IPEC costs 상한 개정 연혁 | The Civil Procedure (Amendment No. 2) Rules 2022 (SI 2022/783) — 2022-10-01 시행, Part 45→46 이관 및 상한 £60,000/£30,000 인상 | https://www.legislation.gov.uk/uksi/2022/783/made | 2026-08-30 | Ch10, Ch13 | 확정 |
+| UK 지정 IR의 Gibraltar 효력 | Extension of UK IP rights abroad — countries C to H, §6 Gibraltar | https://www.gov.uk/government/publications/extension-of-uk-intellectual-property-rights-abroad/extension-of-uk-ip-right-abroad-countries-c-to-h | 2026-08-30 | Ch03, Appendix E | 확정 |
+| IPEC damages 상한 | CPR Part 63 r.63.17A(1) — IPEC 손해배상·이익반환 청구액 £500,000 상한 (r.63.27~63.28: small claims track에는 Part 46 Section VII scale costs 미적용) | https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part63 | 2026-08-30 | Ch10, Ch13 | 확정 |
+| IPEC 실무 가이드 | Intellectual Property Enterprise Court (IPEC) Guide, revised November 2024 (judiciary.uk) | https://www.judiciary.uk/wp-content/uploads/2024/12/Intellectual-Property-Enterprise-Court-IPEC-Guide-revised-November-2024.pdf | 2026-08-30 | Ch10, Ch13 | 확정 |
 
 ## Claim-map sourceId 매핑
 
@@ -42,7 +48,7 @@
 
 | sourceId | 공식 문서 | 직접 URL |
 | --- | --- | --- |
-| ukipo-objecting | Objecting to other peoples trade marks | https://www.gov.uk/objecting-to-other-peoples-trade-marks |
+| ukipo-objecting | Objecting to other peoples trade marks | https://www.gov.uk/guidance/objecting-to-other-peoples-trade-marks-and-the-legal-costs |
 | ukipo-notice-to-oppose | Give notice of intention to oppose | https://www.gov.uk/notice-to-oppose-trademark |
 | ukipo-fast-track-opposition | Fast track opposition | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition |
 | ukipo-apply | Apply to register a trade mark | https://www.gov.uk/how-to-register-a-trade-mark/start-your-application |
@@ -55,7 +61,13 @@
 | gov-protect-abroad | Protecting your trade mark abroad | https://www.gov.uk/guidance/protecting-your-trade-mark-abroad |
 | gov-afa | Apply for action to protect your IP rights | https://www.gov.uk/guidance/apply-for-action-to-protect-your-intellectual-property-rights |
 | nominet-drs | Nominet Dispute Resolution Service (DRS) | https://nominet.uk/uk-registry/domain-disputes/ |
-| wipo-uk-drs | WIPO .uk DRS 접수(2026-07-07 이관) | https://www.wipo.int/amc/en/domains/cctld/uk/ |
+| wipo-uk-drs | WIPO .uk DRS 접수(2026-07-07 이관) | https://www.wipo.int/en/web/amc/domain-name-disputes/cctld/uk/index |
+| cpr-46-ipec-scale-costs | CPR 46.21 — Amount of scale costs (£60,000 liability / £30,000 inquiry) | https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part-46-costs-special-cases |
+| cpr-pd46-ipec-tables | Practice Direction 46 §11.1 Table A·B — 단계별 scale costs 상한 | https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part-46-costs-special-cases/practice-direction-46-costs-special-cases |
+| si-2022-783-cpr-amendment-2 | Civil Procedure (Amendment No. 2) Rules 2022 (SI 2022/783) | https://www.legislation.gov.uk/uksi/2022/783/made |
+| gov-extension-uk-ip-abroad-c-to-h | Extension of UK IP rights abroad — countries C to H (§6 Gibraltar) | https://www.gov.uk/government/publications/extension-of-uk-intellectual-property-rights-abroad/extension-of-uk-ip-right-abroad-countries-c-to-h |
+| cpr-63-ipec-damages-cap | CPR 63.17A(1) — IPEC £500,000 청구액 상한 / 63.27–63.28 small claims track 예외 | https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part63 |
+| judiciary-ipec-guide-2024 | IPEC Guide (revised November 2024) | https://www.judiciary.uk/wp-content/uploads/2024/12/Intellectual-Property-Enterprise-Court-IPEC-Guide-revised-November-2024.pdf |
 
 ## 운영 규칙
 
