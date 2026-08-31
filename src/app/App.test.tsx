@@ -480,30 +480,30 @@ describe("App portfolio shell", () => {
     {
       path: "/china",
       title: "중국 상표 실무 운영 가이드",
-      summary: "같은 니스류라도 서브클래스가 어긋나면 충돌·비충돌이 달라지므로, 类似群과 실제 판매 구조를 같은 표에서 먼저 매핑합니다.",
+      summary: "중국은 상거소나 영업소가 없는 외국기업이 자격을 갖춘 상표대리기구에 위임해야 하므로, 넘기기 전 handoff 메모를 먼저 표준화합니다.",
       expectedReportSlugs: [
-        "global-goods-services-class-framework",
-        "hangul-mark-global-protection-framework"
+        "global-local-agent-selection-framework",
+        "global-goods-services-class-framework"
       ]
     },
     {
       path: "/mexico",
       title: "멕시코 상표 실무 운영 가이드북",
-      summary: "멕시코는 클래스·지정상품 스코프를 별도 보드로 관리하지 않으면 니스 분류와 실제 판매가 어긋나기 쉬우므로, 스코프 리스크부터 분류합니다.",
+      summary: "멕시코는 국내 통지 주소가 요건이고 대리는 별개 문제이므로, 위임장과 서명·제출 권한을 내부에서 먼저 정리합니다.",
       expectedReportSlugs: [
+        "global-local-agent-selection-framework",
         "global-goods-services-class-framework",
-        "hangul-mark-global-protection-framework",
-        "global-filing-priority-framework"
+        "hangul-mark-global-protection-framework"
       ]
     },
     {
       path: "/europe",
       title: "EuTm 유럽 상표 운영 가이드북",
-      summary: "유럽은 '명확·정확' 원칙과 HDB 선승인 용어가 등록·집행을 좌우하므로, goods/services 설계 원칙을 먼저 확인합니다.",
+      summary: "EU는 EEA 기준으로 대리 의무가 갈리고 출원 행위에는 예외가 있으므로, 대표자와 대리인 handoff 규칙을 먼저 확인합니다.",
       expectedReportSlugs: [
+        "global-local-agent-selection-framework",
         "global-goods-services-class-framework",
-        "global-filing-priority-framework",
-        "global-filing-route-framework"
+        "global-filing-priority-framework"
       ]
     }
   ])(
@@ -779,31 +779,31 @@ describe("App portfolio shell", () => {
       within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
     ).toBeNull();
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 서브클래스(类似群) 매핑부터 잠근다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 대리인 handoff 메모부터 표준화한다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm 서브클래스 매핑 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "ChaTm handoff 메모 보기" })
     ).toHaveAttribute(
       "href",
-      "/china/chapter/제3장-검색-분류-서브클래스-리스크-분석#类似群-x-business-model-매핑표"
+      "/china/chapter/제5장-출원서-작성-실무와-지정상품-설계#대리인-handoff-메모"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "UsaTm: ID 설계 원칙을 먼저 본다" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "MexTm: 위임장과 서명 권한부터 정리한다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "UsaTm ID 설계 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "MexTm 권한·대리 실무 보기" })
     ).toHaveAttribute(
       "href",
-      "/usa/chapter/출원서-작성-실무와-id-설계#id-설계-원칙"
+      "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase#4-권한-및-대리-실무"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "JapTm: 지정 범위 설계 결정 보드" })
+      within(reportSection as HTMLElement).getByRole("heading", { name: "EuTm: 대표자/대리인 handoff 규칙을 먼저 본다" })
     ).toBeInTheDocument();
     expect(
-      within(reportSection as HTMLElement).getByRole("link", { name: "JapTm 범위 설계 보기" })
+      within(reportSection as HTMLElement).getByRole("link", { name: "EuTm handoff 규칙 보기" })
     ).toHaveAttribute(
       "href",
-      "/japan/chapter/제2장-상표-전략-수립-표장클래스지정상품서비스-스코프-설계#지정-범위-설계-결정-보드"
+      "/europe/chapter/제5장-출원-경로와-서류-설계#대표자대리인-handoff-규칙"
     );
     expect(
       within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
@@ -1200,7 +1200,7 @@ describe("App portfolio shell", () => {
       screen.queryByText(/ChaTm · MexTm · EuTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).not.toBeInTheDocument();
     expect(
-      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 지정상품·서비스 명세 설계 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
+      screen.getByText(/ChaTm · MexTm · EuTm에서 이미 다룬 현지 대리인 선임 요건과 위임 구조 판단을 이 리포트에서 한 번에 다시 정리했습니다\./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -1210,15 +1210,15 @@ describe("App portfolio shell", () => {
     expect(
       screen.getByText(
         new RegExp(
-          `ChaTm · MexTm · EuTm에서 이미 다룬 지정상품·서비스 명세 설계 판단을 이 리포트에서 한 번에 다시 정리했습니다\\..*JapTm · UsaTm은 필요할 때 이어서 보면 됩니다\\.`
+          `ChaTm · MexTm · EuTm에서 이미 다룬 현지 대리인 선임 요건과 위임 구조 판단을 이 리포트에서 한 번에 다시 정리했습니다\\..*JapTm · UKTm · UsaTm은 필요할 때 이어서 보면 됩니다\\.`
         )
       )
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/한글을 원표장으로 가진 기업이 한글·로마자·로고 버전을 어떤 순서로 확정하고, 해외 채널에서 무엇을 먼저 보호 자산으로 봐야 하는지 정리한 리포트\./)
+      screen.getByText(/니스 45류는 공통 언어일 뿐, 실제 보호범위는 관할별 심사언어/)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/대상: 한글 원표장을 그대로 해외에 내보내는 브랜드팀, 인하우스 IP 팀, 글로벌 마케팅·채널 운영 리드/)
+      screen.getByText(/대상: 여러 나라에 같은 브랜드로 출원하며 상품·서비스 명세를 먼저 표준화해야 하는 브랜드 관리자, 인하우스 IP 팀, 글로벌 사업 리드/)
     ).toBeInTheDocument();
   });
 
@@ -1323,7 +1323,7 @@ describe("App portfolio shell", () => {
 
     const gatewayRender = renderAppRouteTree("/");
 
-    clickTrackedLink(screen.getByRole("link", { name: "ChaTm 서브클래스 매핑 보기" }));
+    clickTrackedLink(screen.getByRole("link", { name: "ChaTm handoff 메모 보기" }));
 
     expect(trackEventSpy).toHaveBeenCalledWith(
       "G-TEST123",
@@ -1332,7 +1332,7 @@ describe("App portfolio shell", () => {
         report_slug: latestReport?.slug,
         guide_slug: "china",
         surface: "gateway_section",
-        target_path: "/china/chapter/제3장-검색-분류-서브클래스-리스크-분석#类似群-x-business-model-매핑표"
+        target_path: "/china/chapter/제5장-출원서-작성-실무와-지정상품-설계#대리인-handoff-메모"
       })
     );
 
