@@ -83,7 +83,7 @@ export const reportExperienceMeta: ReportExperienceMeta = {
   gatewaySectionKicker: "리포트",
   gatewaySectionTitle: "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다",
   gatewaySectionSummary:
-    "중국·멕시코·유럽 가이드를 보다 보면 브랜드 표기를 어떻게 통일할지, 지정상품·서비스를 어떻게 설계할지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
+    "중국·멕시코·유럽 가이드를 보다 보면 지정상품·서비스를 어떻게 설계할지, 현지 대리인을 언제 어떤 기준으로 세울지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다.",
   gatewayRoadmapTitle: "세 가이드의 공통 질문을 모은 리포트",
   archiveHeroKicker: "Report",
   archiveHeroTitle: "개별 guide를 넘어 교차 관할권 운영 판단을 다루는 리포트",
@@ -103,6 +103,153 @@ export const reportExperienceMeta: ReportExperienceMeta = {
 // - whyNow should explain why this report deserves Gateway real estate now
 // - focusPoints should deep-link into the next guide actions the reader should take
 const reportSource: ReportMeta[] = [
+  {
+    id: "global-local-agent-selection-framework",
+    slug: "global-local-agent-selection-framework",
+    title: "현지 대리인 선정·운영 프레임워크: 선임 요건부터 위임·교체까지",
+    summary:
+      "대리인 문제는 후보 비교보다 그 앞단에서 갈립니다. 미국은 자격을 갖춘 미국 면허 변호사 대리가 필요하고, EU는 EEA 기준에 출원 행위 예외가 붙고, 영국·멕시코는 대리인 의무가 아니라 송달주소 요건이며, Madrid는 거절통지 단계에서야 지정국 요건이 발동합니다. 법정 대리·송달주소·단계별 예외·운영상 권고를 먼저 나눠 보고 위임 범위, 계정 소유권, 교체·이관까지 하나의 운영 흐름으로 잇는 리포트입니다.",
+    trustLayerSummaryObject: "현지 대리인 선임 요건과 위임 구조 판단을",
+    publishedAt: "2026-08-31T09:00:00.000Z",
+    jurisdictions: ["Global", "USA", "Europe", "UK", "China", "Japan", "Mexico", "Madrid"],
+    tags: ["현지 대리인", "선임 요건", "송달주소", "위임 범위", "Local Representation"],
+    audience:
+      "여러 관할에 동시에 출원하며 대리인 선임 요건과 위임 범위를 먼저 정리해야 하는 브랜드 관리자, 인하우스 IP 팀, 해외 사업 리드",
+    gatewayLabel: "Report",
+    gatewayBridgeLabel: defaultReportBridgeLabel,
+    whyNow:
+      "표기, 출원 우선순위, 경로, 지정상품 명세를 잠갔다면 실제 제출 직전에 남는 것이 대리인 문제입니다. 그런데 여기서 자주 어긋나는 것은 후보 비교가 아니라 요건 구분입니다. 현지 주소가 필요한 것과 전문대리인을 반드시 선임해야 하는 것은 다른 문제인데, ChaTm handoff 메모, MexTm 위임장 실무, EuTm 대표자 규칙에 각각 흩어져 있어 관할마다 같은 질문을 다시 하게 됩니다. 제출과 사용 증거로 넘어가기 전에 요건 유형과 위임 범위를 한 장으로 묶어 두는 편이 좋습니다.",
+    trustLayerChecklist: [
+      "진행 중인 관할을 법정 대리 의무 / 송달주소 의무 / 단계별 예외 / 운영상 권고 네 가지로 먼저 나눈다.",
+      "현지 주소 요건과 전문대리인 선임 의무를 같은 칸에 적지 않는다. 근거가 불확실하면 의무로 단정하지 않는다.",
+      "회사 계정과 자격자 전용 제출 계정을 층으로 나누고, 사건 데이터 접근·export·반환 권리를 계약에 명시한다."
+    ],
+    focusPoints: [
+      {
+        id: "china-agent-handoff-memo",
+        title: "ChaTm: 대리인 handoff 메모부터 표준화한다",
+        summary:
+          "중국은 상거소나 영업소가 없는 외국기업이 자격을 갖춘 상표대리기구에 위임해야 하므로, 넘기기 전 handoff 메모를 먼저 표준화합니다.",
+        href: buildGuideSectionPath(
+          "china",
+          "제5장-출원서-작성-실무와-지정상품-설계",
+          "대리인-handoff-메모"
+        ),
+        guideSlug: "china",
+        ctaLabel: "ChaTm handoff 메모 보기"
+      },
+      {
+        id: "mexico-authority-practice",
+        title: "MexTm: 위임장과 서명 권한부터 정리한다",
+        summary:
+          "멕시코는 국내 통지 주소가 요건이고 대리는 별개 문제이므로, 위임장과 서명·제출 권한을 내부에서 먼저 정리합니다.",
+        href: buildGuideSectionPath(
+          "mexico",
+          "제5장-출원서-작성-실무-제출서류권한전자출원pase",
+          "4-권한-및-대리-실무"
+        ),
+        guideSlug: "mexico",
+        ctaLabel: "MexTm 권한·대리 실무 보기"
+      },
+      {
+        id: "europe-representative-handoff",
+        title: "EuTm: 대표자/대리인 handoff 규칙을 먼저 본다",
+        summary:
+          "EU는 EEA 기준으로 대리 의무가 갈리고 출원 행위에는 예외가 있으므로, 대표자와 대리인 handoff 규칙을 먼저 확인합니다.",
+        href: buildGuideSectionPath(
+          "europe",
+          "제5장-출원-경로와-서류-설계",
+          "대표자대리인-handoff-규칙"
+        ),
+        guideSlug: "europe",
+        ctaLabel: "EuTm handoff 규칙 보기"
+      },
+      {
+        id: "usa-counsel-operating-structure",
+        title: "UsaTm: 변호사 선임 구조를 운영 체계에 넣는다",
+        summary:
+          "미국은 외국 domicile 출원인에게 미국 면허 변호사 대리가 필요하므로, 선임 구조를 처음부터 운영 체계에 포함합니다.",
+        href: buildGuideSectionPath(
+          "usa",
+          "미국-상표-제도-개요와-uspto-운영-구조",
+          "실무자가-먼저-정할-운영-체계"
+        ),
+        guideSlug: "usa",
+        ctaLabel: "UsaTm 운영 체계 보기"
+      },
+      {
+        id: "japan-agent-red-flag",
+        title: "JapTm: handoff 직전 red flag를 점검한다",
+        summary:
+          "일본은 재외자가 상표관리인을 통해 절차를 밟으므로, 넘기기 직전 red flag를 같은 체크리스트로 점검합니다.",
+        href: buildGuideSectionPath(
+          "japan",
+          "제5장-출원서-작성-실무-출원인-구조대리인전자출원-준비",
+          "대리인-handoff-직전-red-flag"
+        ),
+        guideSlug: "japan",
+        ctaLabel: "JapTm red flag 보기"
+      }
+    ],
+    relatedGuideLinks: [
+      {
+        label: "ChaTm 대리인 handoff 메모",
+        href: buildGuideSectionPath(
+          "china",
+          "제5장-출원서-작성-실무와-지정상품-설계",
+          "대리인-handoff-메모"
+        )
+      },
+      {
+        label: "MexTm 권한 및 대리 실무",
+        href: buildGuideSectionPath(
+          "mexico",
+          "제5장-출원서-작성-실무-제출서류권한전자출원pase",
+          "4-권한-및-대리-실무"
+        )
+      },
+      {
+        label: "EuTm 대표자/대리인 handoff 규칙",
+        href: buildGuideSectionPath(
+          "europe",
+          "제5장-출원-경로와-서류-설계",
+          "대표자대리인-handoff-규칙"
+        )
+      },
+      {
+        label: "UsaTm 실무자가 먼저 정할 운영 체계",
+        href: buildGuideSectionPath(
+          "usa",
+          "미국-상표-제도-개요와-uspto-운영-구조",
+          "실무자가-먼저-정할-운영-체계"
+        )
+      },
+      {
+        label: "JapTm 대리인 handoff 직전 red flag",
+        href: buildGuideSectionPath(
+          "japan",
+          "제5장-출원서-작성-실무-출원인-구조대리인전자출원-준비",
+          "대리인-handoff-직전-red-flag"
+        )
+      },
+      {
+        label: "UKTm 외부 대리인 인터페이스 관리",
+        href: buildGuideSectionPath(
+          "uk",
+          "포트폴리오-운영-내부-통제-raci",
+          "외부-대리인-인터페이스를-관리한다"
+        )
+      },
+      {
+        label: "LatTm 외부 대리인 관리 체계 구축",
+        href: buildGuideSectionPath(
+          "latam",
+          "제15장-포트폴리오-관리-및-내부-통제-raci-기반",
+          "157-외부-대리인-관리-체계-구축"
+        )
+      }
+    ]
+  },
   {
     id: "global-goods-services-class-framework",
     slug: "global-goods-services-class-framework",

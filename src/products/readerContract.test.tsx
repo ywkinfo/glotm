@@ -51,26 +51,26 @@ const priorityGuideSlugs = new Set(
 );
 const priorityGuideHandoffExpectations = {
   china: {
-    expectedSummary: "같은 니스류라도 서브클래스가 어긋나면 충돌·비충돌이 달라지므로, 类似群과 실제 판매 구조를 같은 표에서 먼저 매핑합니다.",
+    expectedSummary: "중국은 상거소나 영업소가 없는 외국기업이 자격을 갖춘 상표대리기구에 위임해야 하므로, 넘기기 전 handoff 메모를 먼저 표준화합니다.",
     expectedReportSlugs: [
+      "global-local-agent-selection-framework",
+      "global-goods-services-class-framework"
+    ]
+  },
+  mexico: {
+    expectedSummary: "멕시코는 국내 통지 주소가 요건이고 대리는 별개 문제이므로, 위임장과 서명·제출 권한을 내부에서 먼저 정리합니다.",
+    expectedReportSlugs: [
+      "global-local-agent-selection-framework",
       "global-goods-services-class-framework",
       "hangul-mark-global-protection-framework"
     ]
   },
-  mexico: {
-    expectedSummary: "멕시코는 클래스·지정상품 스코프를 별도 보드로 관리하지 않으면 니스 분류와 실제 판매가 어긋나기 쉬우므로, 스코프 리스크부터 분류합니다.",
-    expectedReportSlugs: [
-      "global-goods-services-class-framework",
-      "hangul-mark-global-protection-framework",
-      "global-filing-priority-framework"
-    ]
-  },
   europe: {
-    expectedSummary: "유럽은 '명확·정확' 원칙과 HDB 선승인 용어가 등록·집행을 좌우하므로, goods/services 설계 원칙을 먼저 확인합니다.",
+    expectedSummary: "EU는 EEA 기준으로 대리 의무가 갈리고 출원 행위에는 예외가 있으므로, 대표자와 대리인 handoff 규칙을 먼저 확인합니다.",
     expectedReportSlugs: [
+      "global-local-agent-selection-framework",
       "global-goods-services-class-framework",
-      "global-filing-priority-framework",
-      "global-filing-route-framework"
+      "global-filing-priority-framework"
     ]
   }
 } as const;

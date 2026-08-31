@@ -13,13 +13,14 @@ import {
 describe("report registry", () => {
   it("returns the latest reports in publishedAt order", () => {
     expect(getLatestReports(2).map((report) => report.slug)).toEqual([
-      "global-goods-services-class-framework",
-      "hangul-mark-global-protection-framework"
+      "global-local-agent-selection-framework",
+      "global-goods-services-class-framework"
     ]);
   });
 
   it("keeps the full report list sorted only by publishedAt", () => {
-    expect(getLatestReports(6).map((report) => report.slug)).toEqual([
+    expect(getLatestReports(7).map((report) => report.slug)).toEqual([
+      "global-local-agent-selection-framework",
       "global-goods-services-class-framework",
       "hangul-mark-global-protection-framework",
       "global-filing-priority-framework",
@@ -30,7 +31,7 @@ describe("report registry", () => {
   });
 
   it("pins the latest gateway report to the newest report entry", () => {
-    expect(getLatestReport()?.slug).toBe("global-goods-services-class-framework");
+    expect(getLatestReport()?.slug).toBe("global-local-agent-selection-framework");
     expect(getLatestReport()?.gatewayBridgeLabel).toBe(defaultReportBridgeLabel);
   });
 
@@ -108,6 +109,7 @@ describe("report registry", () => {
     const handoffs = getReportsForGuideSlug("china");
 
     expect(handoffs.map(({ report }) => report.slug)).toEqual([
+      "global-local-agent-selection-framework",
       "global-goods-services-class-framework",
       "hangul-mark-global-protection-framework",
       "global-filing-priority-framework",
@@ -116,16 +118,16 @@ describe("report registry", () => {
       "global-use-evidence-system"
     ]);
     expect(handoffs[0]?.focusPoint).toMatchObject({
+      id: "china-agent-handoff-memo",
+      title: "ChaTm: 대리인 handoff 메모부터 표준화한다"
+    });
+    expect(handoffs[1]?.focusPoint).toMatchObject({
       id: "china-subclass-mapping",
       title: "ChaTm: 서브클래스(类似群) 매핑부터 잠근다"
     });
-    expect(handoffs[1]?.focusPoint).toMatchObject({
+    expect(handoffs[2]?.focusPoint).toMatchObject({
       id: "china-hangul-handoff-lock",
       title: "ChaTm: 표기 결정과 handoff 논리"
-    });
-    expect(handoffs[2]?.focusPoint).toMatchObject({
-      id: "china-launch-sequencing",
-      title: "ChaTm: 중국 launch sequencing부터 적는다"
     });
   });
 
@@ -162,7 +164,7 @@ describe("report registry", () => {
     );
     expect(reportExperienceMeta.gatewayRoadmapTitle).toBe("세 가이드의 공통 질문을 모은 리포트");
     expect(reportExperienceMeta.gatewaySectionSummary).toBe(
-      "중국·멕시코·유럽 가이드를 보다 보면 브랜드 표기를 어떻게 통일할지, 지정상품·서비스를 어떻게 설계할지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다."
+      "중국·멕시코·유럽 가이드를 보다 보면 지정상품·서비스를 어떻게 설계할지, 현지 대리인을 언제 어떤 기준으로 세울지처럼 여러 시장에 걸친 공통 질문이 반복됩니다. 최신 리포트 2개는 그 질문들을 한곳에 모아 정리한 자료입니다. 다른 리포트는 리포트 목록에서 이어서 볼 수 있습니다."
     );
   });
 });

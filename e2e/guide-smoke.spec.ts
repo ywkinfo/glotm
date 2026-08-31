@@ -15,31 +15,33 @@ const trustLayerRoundtripCases = [
   {
     guideName: "ChaTm",
     guidePath: "/china",
-    reportTitle: "한글 표장 글로벌 보호 운영 프레임워크",
+    reportTitle: "현지 대리인 선정·운영 프레임워크: 선임 요건부터 위임·교체까지",
     reportPath:
-      "/reports/hangul-mark-global-protection-framework?fromGuide=china",
+      "/reports/global-local-agent-selection-framework?fromGuide=china",
     returnLinkName: "ChaTm로 돌아가기",
-    returnHref: "/china/chapter/제2장-브랜드-구조와-중국어-표기-전략",
-    focusPointLinkName: "ChaTm 표기 결정 보기"
+    returnHref:
+      "/china/chapter/제5장-출원서-작성-실무와-지정상품-설계#대리인-handoff-메모",
+    focusPointLinkName: "ChaTm handoff 메모 보기"
   },
   {
     guideName: "MexTm",
     guidePath: "/mexico",
-    reportTitle: "한글 표장 글로벌 보호 운영 프레임워크",
-    reportPath: "/reports/hangul-mark-global-protection-framework?fromGuide=mexico",
+    reportTitle: "현지 대리인 선정·운영 프레임워크: 선임 요건부터 위임·교체까지",
+    reportPath: "/reports/global-local-agent-selection-framework?fromGuide=mexico",
     returnLinkName: "MexTm로 돌아가기",
-    returnHref: "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase",
-    focusPointLinkName: "MexTm 출원 실무 보기"
+    returnHref:
+      "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase#4-권한-및-대리-실무",
+    focusPointLinkName: "MexTm 권한·대리 실무 보기"
   },
   {
     guideName: "EuTm",
     guidePath: "/europe",
-    reportTitle: "글로벌 지정상품·지정서비스 설계 프레임워크: 니스분류를 넘어 관할별 심사언어에 맞추기",
-    reportPath: "/reports/global-goods-services-class-framework?fromGuide=europe",
+    reportTitle: "현지 대리인 선정·운영 프레임워크: 선임 요건부터 위임·교체까지",
+    reportPath: "/reports/global-local-agent-selection-framework?fromGuide=europe",
     returnLinkName: "EuTm로 돌아가기",
     returnHref:
-      "/europe/chapter/제5장-출원-경로와-서류-설계#goodsservices-설계-원칙",
-    focusPointLinkName: "EuTm 설계 원칙 보기"
+      "/europe/chapter/제5장-출원-경로와-서류-설계#대표자대리인-handoff-규칙",
+    focusPointLinkName: "EuTm handoff 규칙 보기"
   }
 ] as const;
 

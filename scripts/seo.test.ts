@@ -5,6 +5,7 @@ import path from "node:path";
 import documentDataBrandLocalizationReport from "../public/generated/reports/brand-localization-vs-standardization-framework/document-data.json";
 import documentDataFilingPriorityReport from "../public/generated/reports/global-filing-priority-framework/document-data.json";
 import documentDataGoodsServicesReport from "../public/generated/reports/global-goods-services-class-framework/document-data.json";
+import documentDataLocalAgentReport from "../public/generated/reports/global-local-agent-selection-framework/document-data.json";
 import documentDataHangulReport from "../public/generated/reports/hangul-mark-global-protection-framework/document-data.json";
 import documentDataChina from "../public/generated/china/document-data.json";
 import documentDataEurope from "../public/generated/europe/document-data.json";
@@ -60,6 +61,7 @@ const reportDocumentDataBySlug = new Map<string, DocumentData>([
   ["brand-localization-vs-standardization-framework", documentDataBrandLocalizationReport as DocumentData],
   ["global-filing-priority-framework", documentDataFilingPriorityReport as DocumentData],
   ["global-goods-services-class-framework", documentDataGoodsServicesReport as DocumentData],
+  ["global-local-agent-selection-framework", documentDataLocalAgentReport as DocumentData],
   ["hangul-mark-global-protection-framework", documentDataHangulReport as DocumentData],
   ["global-filing-route-framework", documentDataRouteReport as DocumentData],
   ["global-use-evidence-system", documentDataReport as DocumentData]
