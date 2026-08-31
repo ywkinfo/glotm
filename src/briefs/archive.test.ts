@@ -14,7 +14,12 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-08-comparable-uk-mark-eu-use-cutoff");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-08-kbrand-certification-first-round-rights-gap");
+    expect(
+      getBriefIssueBySlug("2026-08-kbrand-certification-first-round-rights-gap")?.title
+    ).toBe(
+      "2026년 8월 Hot Global TM Brief | K-브랜드 정부인증 1차 모집이 열렸습니다 — 참여요건이 '대상국에 기업 자신의 상표가 먼저 있을 것'입니다"
+    );
     expect(getBriefIssueBySlug("2026-08-comparable-uk-mark-eu-use-cutoff")?.title).toBe(
       "2026년 8월 Hot Global TM Brief | comparable UK mark를 EU 사용으로 방어하던 경과 규정이 2026년 1월 1일로 끝났습니다"
     );
@@ -184,6 +189,17 @@ describe("brief lane contract", () => {
     );
     // 개정 상표법 공포·시행 확정 사실이 정정 문구에 남아 있어야 한다.
     expect(supersededIssue?.supersededBy?.note).toContain("2027년 1월 1일");
+  });
+
+  it("keeps the 2026-07 K-brand certification issue pointing at its 2026-08 correction", () => {
+    const supersededIssue = getBriefIssueBySlug("2026-07-kbrand-government-certification-mark");
+
+    expect(supersededIssue?.supersededBy?.slug).toBe(
+      "2026-08-kbrand-certification-first-round-rights-gap"
+    );
+    // 예고 단계였던 일정·대상국이 확정값으로 바뀐 사실이 정정 문구에 남아 있어야 한다.
+    expect(supersededIssue?.supersededBy?.note).toContain("9월 11일");
+    expect(supersededIssue?.supersededBy?.note).toContain("73개국");
   });
 
   it("keeps the archive sorted newest-first with unique publish dates", () => {
