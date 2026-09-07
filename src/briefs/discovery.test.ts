@@ -597,7 +597,7 @@ describe("brief discovery report", () => {
 
     // 등록부 크기에 묶인 pin이다(= briefSources.length - swept.length). 소스를 추가하면 여기서
     // 한 번 걸리고, 그때 "새 소스는 실사 이력 없음으로 시작한다"를 의식적으로 확인하게 된다.
-    expect(untouched).toHaveLength(11);
+    expect(untouched).toHaveLength(12);
     expect(untouched.every((row) => row.status === "never-verified")).toBe(true);
   });
 });

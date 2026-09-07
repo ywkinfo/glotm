@@ -349,6 +349,19 @@ export const briefSources: BriefSource[] = [
     sweepCadence: "monthly",
     notes:
       "공표 채널(관보) 축. 등록 소스 15개가 전부 기관 뉴스·안내면이라 '공포되었다'가 정의상 관측되는 면이 등록부에 없었고, 20호(멕시코 LFPPI 신 시행규칙)가 그 공백에서 나왔다 — 경위는 docs/briefs-discovery-latency-review.md D2. 2026-09-07 owner 지시(P2-1)로 등록했다. **URL 직접 대조 미완**: 이 세션에서 dof.gob.mx·www.dof.gob.mx·sidof.segob.gob.mx 전부 CONNECT 403이고 WebFetch도 EGRESS_BLOCKED라, 기관 도메인만 WebSearch로 확인했다. 등록은 '볼 곳 목록에 올린다'이지 '봤다'가 아니므로 sweep 회차를 추가하지 않았고 radar에는 `실사 이력 없음`으로 뜬다. cadence를 weekly가 아니라 monthly로 둔 이유는 DOF가 평일 매일 2회 발행이라 완료 조건이 일자별 통독이 아니라 기간 검색이고, 실제 실행 훅도 월 1회(phase2.5 §5)이기 때문이다. 20호가 2차 해설 일치 범위에서 기록한 2026-04-28 게재 대조는 owner 1차 확인 항목으로 계속 열려 있다."
+  },
+  {
+    id: "diario-oficial-chile",
+    label: "칠레 관보(Diario Oficial de la República de Chile)",
+    url: "https://diariooficial.interior.gob.cl/",
+    sweepTarget:
+      "마지막 verified sweep 이후 기간에 게재된 propiedad industrial 관련 ley·decreto·reglamento(산업재산법 개정, INAPI 절차·수수료 규정)를 본다. 이 관보는 INAPI 상표출원 공고면을 겸하지만 개별 marca 공고는 이 소스의 대상이 아니다 — 그쪽은 독자용 모니터링 데이터이지 브리프 소재가 아니고, 일간 발행이라 섞으면 신호가 묻힌다.",
+    tier: "primary",
+    jurisdictions: ["Latin America"],
+    relatedProductSlugs: ["latam"],
+    sweepCadence: "monthly",
+    notes:
+      "공표 채널(관보) 축 두 번째. URL은 LatTm 제10장 모니터링 시스템(칠레 INAPI / Diario Oficial 행)에 이미 기록된 호스트의 origin이라 등록 규칙 ⓐ 경로다 — dof-mexico(ⓑ 경로)와 다르다. **멕시코 DOF와 기능이 같지 않다**: DOF는 법령 공포면이고, 칠레 관보는 법령 공포면이면서 동시에 INAPI 상표출원 공고면(일간 발행, 공고일로부터 30일 이의기간)이다. 그래서 sweepTarget이 개별 marca 공고를 명시적으로 제외한다. **URL 직접 대조 미완**: 2026-09-07 실측으로 diariooficial.interior.gob.cl·www 서브도메인 모두 CONNECT 403이라 열지 못했고, sweep 회차를 추가하지 않았으므로 radar에는 `실사 이력 없음`으로 뜬다. inapi-chile(기관 뉴스면)과 역할이 겹치지 않는다 — 기관이 뉴스로 알리지 않은 법령 변경이 이 면에는 정의상 실린다."
   }
 ];
 
