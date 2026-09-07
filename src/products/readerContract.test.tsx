@@ -44,6 +44,7 @@ import {
   type DocumentData,
   type SearchEntry
 } from "./shared";
+import { formatFactsReviewedNote, readerDisclaimerParagraph } from "../trustLegal";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
 const priorityGuideSlugs = new Set(
@@ -806,6 +807,54 @@ describe("Shared reader runtime contract", () => {
       expect(profileLink).toHaveAttribute("rel", "noreferrer noopener");
       expect(
         profileNote.compareDocumentPosition(disclaimer) & Node.DOCUMENT_POSITION_FOLLOWING
+      ).not.toBe(0);
+    }
+  );
+
+  it.each(readerCases)(
+    "renders the legal disclaimer from the trustLegal canon for $name",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      // 문구가 컴포넌트에 하드코딩돼 있으면 정본(trustLegal.ts)을 고쳐도 독자가 보는 문구가
+      // 바뀌지 않는다. 두 곳이 같은 문자열을 쓰는지 직접 단정한다.
+      const disclaimer = screen.getByText(/법적 고지:/).closest(".disclaimer");
+
+      expect(disclaimer).not.toBeNull();
+      expect(disclaimer?.textContent).toContain(readerDisclaimerParagraph);
+    }
+  );
+
+  it.each(readerCases)(
+    "puts the facts-reviewed date above the fold instead of in the footer for $name",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const product = products.find((entry) => entry.slug === readerCase.productSlug);
+      const expectedNote = formatFactsReviewedNote(product?.factsReviewedOn);
+      const provenanceNote = document.querySelector('[data-provenance="facts-reviewed"]');
+
+      // factsReviewedOn이 없는 가이드(LatTm)는 아무것도 렌더하지 않는 것이 정상이다.
+      if (!expectedNote) {
+        expect(provenanceNote).toBeNull();
+        return;
+      }
+
+      expect(provenanceNote).not.toBeNull();
+      expect(provenanceNote?.textContent).toBe(expectedNote);
+
+      // 하단 법적 고지보다 위에 있어야 한다 — 읽기 전에 판단할 정보이기 때문이다.
+      const disclaimer = screen.getByText(/법적 고지:/);
+
+      expect(
+        (provenanceNote as Element).compareDocumentPosition(disclaimer)
+        & Node.DOCUMENT_POSITION_FOLLOWING
       ).not.toBe(0);
     }
   );

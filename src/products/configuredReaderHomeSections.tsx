@@ -7,6 +7,7 @@ import {
   type GuideReportHandoff
 } from "../reports/registry";
 import { trackEngagement } from "../app/appShared";
+import { formatFactsReviewedNote } from "../trustLegal";
 import {
   buildChapterPath,
   buildSectionLocation,
@@ -66,6 +67,23 @@ export function ContinueReadingCard({
         이어 읽기
       </NavLink>
     </section>
+  );
+}
+
+// 1차 출처 대조 기준일. 독자가 신뢰 여부를 판단하는 시점은 읽기 **전**이라 챕터 헤더와
+// 가이드 홈 히어로 상단에 둔다. 정확성 '보증'이 아니라 '대조 기준일' 표기다.
+// factsReviewedOn 미기록 가이드(LatTm 등)에서는 아무것도 렌더하지 않는다.
+export function ReaderProvenanceNote({ factsReviewedOn }: { factsReviewedOn?: string }) {
+  const factsReviewedNote = formatFactsReviewedNote(factsReviewedOn);
+
+  if (!factsReviewedNote) {
+    return null;
+  }
+
+  return (
+    <p className="reader-provenance-note" data-provenance="facts-reviewed">
+      {factsReviewedNote}
+    </p>
   );
 }
 

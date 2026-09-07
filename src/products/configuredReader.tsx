@@ -43,7 +43,8 @@ import {
   ConfiguredChapterGrid,
   ContinueReadingCard,
   GuideReportHandoffSection,
-  DraftNotice
+  DraftNotice,
+  ReaderProvenanceNote
 } from "./configuredReaderHomeSections";
 import { products } from "./registry";
 import {
@@ -691,7 +692,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
                   jumpToSection
                 }}
               />
-              <ReaderShellFooter factsReviewedOn={productMeta.factsReviewedOn} />
+              <ReaderShellFooter />
             </main>
           </div>
 
@@ -910,6 +911,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               <div className="chapter-header-topline">{chapterHeaderTopline}</div>
               <h1>{chapter.title}</h1>
               {chapter.summary ? <p className="chapter-summary">{chapter.summary}</p> : null}
+              <ReaderProvenanceNote factsReviewedOn={productMeta.factsReviewedOn} />
             </div>
             {chapterMeta ? (
               <div className="chapter-header-stats" aria-label="챕터 메타 정보">
@@ -997,6 +999,7 @@ export function createConfiguredReader(config: ReaderConfig) {
             <span>총 {documentData.meta.chapterCount}개 챕터</span>
             <span>{buildProductStatusLabel(productMeta)}</span>
           </div>
+          <ReaderProvenanceNote factsReviewedOn={productMeta.factsReviewedOn} />
         </section>
 
         {continueChapter && readingBookmark ? (
@@ -1010,9 +1013,14 @@ export function createConfiguredReader(config: ReaderConfig) {
 
         {config.contentStatus === "draft" ? <DraftNotice /> : null}
 
-        <GuideReportHandoffSection
-          guideSlug={productMeta.slug}
-          reportHandoffs={reportHandoffs}
+        {/* 이 가이드에 온 사람의 첫 업무는 "읽을 장을 고르는 것"이다. 챕터 목록이 먼저 오고,
+            포지셔닝 설명과 교차 관할 리포트 핸드오프가 그 뒤를 잇는다. 이전에는 리포트
+            핸드오프가 챕터 목록보다 위에 있어, 이 가이드를 보러 온 사람에게 다른 문서를
+            먼저 권하는 순서였다. */}
+        <ConfiguredChapterGrid
+          chapterBadge={config.chapterBadge}
+          chapters={documentData.chapters}
+          productPath={productPath}
         />
 
         <section className="gateway-section" data-reader-home-section="positioning">
@@ -1025,10 +1033,9 @@ export function createConfiguredReader(config: ReaderConfig) {
           <p className="reader-product-note">{config.positioningNote}</p>
         </section>
 
-        <ConfiguredChapterGrid
-          chapterBadge={config.chapterBadge}
-          chapters={documentData.chapters}
-          productPath={productPath}
+        <GuideReportHandoffSection
+          guideSlug={productMeta.slug}
+          reportHandoffs={reportHandoffs}
         />
       </div>
     );

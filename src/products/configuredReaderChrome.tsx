@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import type { Chapter, SearchEntry } from "./shared";
 import { SearchPanel, SidebarNav } from "./components";
-import { formatFactsReviewedNote, siteAuthor } from "../trustLegal";
+import { readerDisclaimerParagraph, siteAuthor } from "../trustLegal";
 
 // operatorProfileUrl은 siteAuthor(trustLegal.ts) 정본에서 파생한다(단일 소스).
 const operatorProfileUrl = siteAuthor.url;
@@ -135,11 +135,10 @@ export function ReaderShellSidebar({
   );
 }
 
-export function ReaderShellFooter({ factsReviewedOn }: { factsReviewedOn?: string }) {
-  // factsReviewedOn(1차 출처 대조 기준일)이 기록된 가이드에만 정직한 provenance 라인을 노출한다.
-  // 정확성 '보증'이 아니라 '대조 기준일' 표기이며, 위 법적 고지와 의미가 충돌하지 않는다.
-  const factsReviewedNote = formatFactsReviewedNote(factsReviewedOn);
-
+// 1차 출처 대조 기준일(factsReviewedOn)은 더 이상 여기서 렌더하지 않는다. 독자가 신뢰 여부를
+// 판단하는 시점은 읽기 **전**이고, prerender(scripts/seo.ts)도 이미 헤더에 둔다. 미러가 아니라
+// SPA를 prerender에 맞춰 챕터 헤더·가이드 홈 히어로로 올렸다(ReaderProvenanceNote).
+export function ReaderShellFooter() {
   return (
     <footer className="reader-layout" style={{ paddingTop: 0 }}>
       <div />
@@ -150,16 +149,8 @@ export function ReaderShellFooter({ factsReviewedOn }: { factsReviewedOn?: strin
             ywkinfo.github.io
           </a>
         </p>
-        {factsReviewedNote ? (
-          <p className="reader-product-note reader-footer-note" data-provenance="facts-reviewed">
-            {factsReviewedNote}
-          </p>
-        ) : null}
         <div className="disclaimer">
-          <strong>법적 고지:</strong> 이 가이드는 일반적인 정보 제공 목적이며 법률 자문이 아닙니다.
-          수록된 정보는 작성 시점 기준이며, 법령·판례 변경에 따라 내용이 달라질 수 있습니다.
-          구체적인 법률 문제는 자격 있는 변호사 또는 변리사에게 문의하시기 바랍니다.
-          저자와 독자 사이에는 변호사·의뢰인 관계가 성립하지 않습니다.
+          <strong>법적 고지:</strong> {readerDisclaimerParagraph}
         </div>
         <p className="copyright-notice">© 2026 GloTm. All rights reserved.</p>
       </div>

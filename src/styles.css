@@ -894,6 +894,15 @@ body.reader-mobile-nav-open {
   margin-bottom: 0.8rem;
 }
 
+/* 1차 출처 대조 기준일. 챕터 헤더와 가이드 홈 히어로 상단에 놓이며, 본문을 밀지 않도록
+   보조 정보 톤을 유지한다. */
+.reader-provenance-note {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  max-width: 68ch;
+}
+
 .status-card .gateway-kicker {
   margin-bottom: 0.4rem;
 }
