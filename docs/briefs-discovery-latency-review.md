@@ -144,7 +144,7 @@ radar는 `impi`를 `실사 이력 없음`으로 찍는다. `주기 초과`가 �
 | 항목 | 내용 | 막았나 | 위험 |
 |---|---|---|---|
 | **P1-1** `BriefSweepKind`에 `mediated` 추가 | WebSearch triage 회차를 기록하되 `lastVerified`는 **갱신하지 않는다**(`repository-backfill`과 같은 취급). radar에 `mediated` 열 → "1차 대조 미결" 큐가 생긴다 | 부분 — 8/25·8/30·9/7 회차가 데이터로 남아 "봤지만 규범 층은 안 물었다"가 다음 회차로 승계된다 | `verified` 의미 희석. 완화: freshness 미산입을 **테스트로** 못 박는다(backfill 선례 존재). `briefs-discovery.md`가 이미 미결로 올려 둔 항목이다 |
-| **P1-2** claim-map 미결 → 발굴 큐 다리 | claim-map에 `openQuestions: [{ id, question, raisedOn, candidateId? }]` 구조 필드. radar에 "워크스페이스 미결" 블록(표시만, 게이트 아님) | **예** — `MX-ENF-001`의 8/30 미결이 9/7 이전에 radar에 떴다 | claim-map 스키마 변경 → `scripts/research-audit/*` 영향. 6개 워크스페이스 소급 채우기 필요 |
+| **P1-2** claim-map 미결 → 발굴 큐 다리 | claim-map에 `openQuestions: [{ id, question, raisedOn, candidateId? }]` 구조 필드. radar에 "워크스페이스 미결" 블록(표시만, 게이트 아님) | **예** — `MX-ENF-001`의 8/30 미결이 9/7 이전에 radar에 떴다 | claim-map 스키마 변경 → `scripts/research-audit/*` 영향. 6개 워크스페이스 소급 채우기 필요  **→ 2026-09-07 owner 지시로 반영, 아래 §9** |
 | **P1-3** 규범 층 짝 규칙 | `BriefCandidate`에 `changeLayer` 축. `statute` 후보가 열려 있으면 같은 관할의 `regulation` 후보 또는 명시적 면제 사유를 요구 | **예** — 중국 패턴이 규칙이 되어 멕시코에도 걸렸다 | 기존 후보 7건에 필드 채우기. 소급 적용하면 즉시 위반이 뜨는데 **그게 요점이다** |
 | **P1-4** 발효일 캘린더 | 후보에 `effectiveOn` / `closesOn`. radar에 "다가오는 날짜" 블록 | 부분 — 7/22에 두 번째 기회가 떴다 | 낮음. taskboard가 이미 적어 둔 `timeSensitive.closesOn` 부재와 같은 필드 하나로 덮인다 |
 
@@ -229,6 +229,58 @@ owner 지시로 관보 소스를 등록했다. 이 절은 그 결과만 기록�
 이제 관보 축은 둘이고, **나머지 관할은 저장소에 관보 URL 기록이 없어 ⓑ 경로로만 열린다**(미국 Federal
 Register, EU Official Journal, 영국 The Gazette, 일본 官報, 중국 国务院公报). 확대 판단은 owner에게
 남는다.
+
+## 9. 후속 — P1-2 반영 (2026-09-07)
+
+owner 지시로 **워크스페이스 미결 → 발굴 큐 다리**를 놓았다. 3.1이 짚은 결함, 즉 *"미결을 적을 자리는
+있는데 발굴 lane으로 옮길 통로가 없다"*를 직접 겨눈 변경이다.
+
+| 층 | 무엇 |
+|---|---|
+| 정본 | 워크스페이스 `content/research/claim-map.json`의 `openQuestions` |
+| 타입 | `scripts/research-audit/shared.ts`의 `ClaimOpenQuestion` |
+| 다리 | `scripts/brief-open-questions.ts` — I/O(`loadOpenQuestionRows`)와 순수 계산(`summarizeOpenQuestions`) 분리 |
+| 표면 | `npm run briefs:radar`의 `Workspace Open Questions` 블록 (advisory) |
+| 게이트 | `scripts/brief-open-questions.test.ts` (7건) |
+| 월간 훅 | `monthly-review-template.md`의 `Brief discovery check`에 "워크스페이스 미결(후보 없음)" 행 |
+
+**게이트를 일부러 나눴다.** `validateClaimMap`(= `audit:facts`의 계약)은 `openQuestions`를 보지 않는다.
+두 게이트를 섞으면 fact freshness 점수와 미결 위생이 서로를 가리는데, **그 가림이 정확히 이 사건을
+만들었다** — 3.2에서 본 대로 같은 회차가 근거 규범을 "현행 아님"으로 적으면서 `lastVerified`를 올렸다.
+
+### 시드한 미결 5건 (전부 저장소에 이미 기록돼 있던 것)
+
+새 사실을 만들지 않았다. 기존 `notes`·fact log·source register 산문을 구조로 옮겼을 뿐이다.
+
+| id | claim | raisedOn | 후보 | 출처 |
+|---|---|---|---|---|
+| `MX-OQ-001` | `MX-ENF-001` | 2026-08-30 | `2026-09-mexico-lfppi-implementing-rules` | 3.1이 인용한 그 문장 |
+| `MX-OQ-002` | `MX-DL-001` | 2026-04-01 | 같은 후보 | 제6장 office action 기한 "계속 보류" |
+| `MX-OQ-003` | `MX-FEE-001` | 2026-08-30 | **—** | `mx_tm_source_register.md` 미해결(ficha ID 존속) |
+| `CN-OQ-001` | `CN-FIL-001` | 2026-08-31 | **—** | `cn_tm_source_register.md` 미해결(sphfwfl sourceId 부재) |
+| `CN-OQ-002` | `CN-NORM-001` | 2026-08-31 | **—** | 같은 파일(SAMR sourcing gap) |
+
+첫 렌더에서 **`MX-OQ-002`가 159일째 열린 채로 뜬다.** 4월부터 제6장에 "계속 보류"로 있던 항목인데
+어떤 운영 표면도 그 나이를 보여준 적이 없었다. 그리고 `MX-OQ-001`·`MX-OQ-002`가 같은 후보를 가리킨다 —
+후보 하나가 미결 둘을 닫을 수 있다는 것이 표에 드러난다.
+
+EuTm·UsaTm·JapTm·UKTm은 시드하지 않았다. **미결이 없다고 단정한 것이 아니라** 이번 라운드에서 산문으로
+확인 가능한 열린 항목을 찾지 못한 것이다(UKTm `UK-IPEC-001`은 2026-08-15에 종결됐고, UsaTm의 남은
+항목은 `factsReviewedOn` 재스탬프의 owner attestation 전제라 미결이라기보다 단서다). 로더는 목록을
+하드코딩하지 않고 claim-map 실재로 도출하므로, 그 워크스페이스들이 미결을 적기 시작하면 자동으로 뜬다.
+
+### 위반 주입 6건 확인
+
+계약 테스트가 실제로 막는지 각각 주입해 확인했다: 존재하지 않는 `claimId`, 존재하지 않는
+`candidateId`, 중복 id, `resolution` 없는 `resolvedOn`, 열린 상태의 `resolution`, 빈 `claimIds` —
+**6/6 모두 붉어졌다.**
+
+### 이 변경이 이 사건을 막았겠는가
+
+**부분적으로 그렇다.** 8/30 회차가 `MX-OQ-001`을 적었다면 9/7 이전 radar에 `후보 —` 상태로 떴을 것이다.
+다만 이 다리는 **미결을 적는 행위 자체를 강제하지 않는다** — 재대조가 산문으로만 적고 `openQuestions`에
+넣지 않으면 여전히 보이지 않는다. 그 마지막 구멍을 막으려면 claim `notes`의 미결 표현을 검사하는
+휴리스틱 게이트가 필요한데, 산문 검사는 오탐이 많아 이번 범위에 넣지 않았다. **owner 판단으로 남긴다.**
 
 ## Authority
 

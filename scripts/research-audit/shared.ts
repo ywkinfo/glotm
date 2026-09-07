@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 import type { LifecycleStatus, ProductMeta } from "../../src/products/shared";
@@ -37,12 +37,33 @@ export type ClaimMapEntry = {
   notes?: string;
 };
 
+// 워크스페이스가 "이건 아직 확인 못 했다"를 적는 자리다. 종전에는 claim의 `notes` 산문에만 있었고,
+// 그래서 발굴 lane이 읽을 수 없었다 — 2026-09-07 지연 진단이 짚은 결함이다
+// (`docs/briefs-discovery-latency-review.md` 3.1: 8/30 재대조가 답을 가리키는 문장을 적고도
+// 큐로 넘기지 못했다). 구조 강제는 `scripts/brief-open-questions.test.ts`가 하고,
+// `validateClaimMap`(= audit:facts의 계약)은 이 필드를 보지 않는다. 두 게이트를 섞지 않는다.
+export type ClaimOpenQuestion = {
+  // 워크스페이스 안에서 고유. claim id와 같은 형태를 쓴다(예: MX-OQ-001).
+  id: string;
+  // 무엇을 확인해야 닫히는가. "확인 필요" 같은 말이 아니라 확인 대상을 적는다.
+  question: string;
+  raisedOn: string;
+  // 이 미결이 걸려 있는 claim. 최소 1개 — 어떤 claim에도 닿지 않는 미결은 이 파일의 것이 아니다.
+  claimIds: string[];
+  // 발굴 백로그로 넘어갔으면 그 후보 id. 비어 있는 것이 이 표면의 신호다.
+  candidateId?: string;
+  resolvedOn?: string;
+  // resolvedOn이 있으면 필수. 무엇으로 닫혔는지 없이 닫으면 같은 질문이 몇 달 뒤 다시 올라온다.
+  resolution?: string;
+};
+
 export type ClaimMapDocument = {
   workspace: string;
   productSlug: string;
   version: number;
   auditMode: "advisory";
   claims: ClaimMapEntry[];
+  openQuestions?: ClaimOpenQuestion[];
 };
 
 export type AuditIssue = {
@@ -75,6 +96,17 @@ const allowedStatuses = new Set<ClaimStatus>([
 const allowedRiskLevels = new Set<RiskLevel>(["HIGH", "MEDIUM", "LOW"]);
 
 const unresolvedStatuses = new Set<ClaimStatus>(["PENDING", "NEEDS_UPDATE", "CONFLICT"]);
+
+// 워크스페이스 목록을 손으로 들고 있으면 새 워크스페이스가 조용히 가드 밖에 남는다 —
+// `claim-source-register.test.ts`가 실제로 그 사고를 겪고 이 방식으로 바꿨다. 그 발견을
+// 테스트 안에 가둬 두면 다음 소비자가 같은 실수를 반복하므로 여기로 올려 공유한다.
+export function discoverClaimMapWorkspaces(rootDir: string) {
+  return readdirSync(rootDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
+    .map((entry) => entry.name)
+    .filter((name) => existsSync(getClaimMapPath(rootDir, name)))
+    .sort();
+}
 
 export function getClaimMapPath(rootDir: string, workspaceName: string) {
   return path.resolve(rootDir, workspaceName, "content", "research", "claim-map.json");

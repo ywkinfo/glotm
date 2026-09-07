@@ -67,6 +67,32 @@ sweep 회차의 `foundCandidateIds`에 오른 후보는 **그 회차가 실제�
 - `dropped`에 이유를 요구하는 이유는 같은 소재를 몇 달 뒤 다시 주워 오는 루프를 끊기 위해서다.
 - `watching`으로 30일을 넘기면 radar가 `Stalled watching`으로 표시한다. **버리라는 신호가 아니라 살릴지 버릴지 한 번 판단하라는 신호다.**
 
+## 워크스페이스 미결 → 후보 다리
+
+후보는 소스 sweep에서만 오지 않는다. **워크스페이스가 claim을 재대조하다가 남긴 미결**도 소재이며,
+2026-09-07 지연 진단이 확인한 바로는 이쪽이 더 빨랐다 —
+[`briefs-discovery-latency-review.md`](briefs-discovery-latency-review.md) 3.1을 본다.
+
+정본은 각 워크스페이스 `content/research/claim-map.json`의 **`openQuestions`**다. 종전에는 같은 내용이
+claim의 `notes` 산문("별도 확인 대상", "계속 보류")에만 있었고, 그건 타입도 id도 큐도 없어서 이 lane이
+읽을 수 없었다. 그래서 답을 가리키는 문장을 적어 둔 회차가 그것을 발굴 큐로 넘기지 못했다.
+
+| 필드 | 규칙 |
+|---|---|
+| `id` | 워크스페이스 안에서 고유. claim id와 같은 형태를 쓴다(`MX-OQ-001`) |
+| `question` | **무엇을 확인해야 닫히는가.** "확인 필요"가 아니라 확인 대상을 적는다 |
+| `raisedOn` | 미결이 처음 기록된 날. 재대조 회차 날짜이지 오늘이 아니다 |
+| `claimIds` | 최소 1개. 어떤 claim에도 닿지 않는 미결은 이 파일의 것이 아니다 |
+| `candidateId` | 발굴 백로그로 넘어갔으면 그 후보 id. **비어 있는 것이 신호다** |
+| `resolvedOn` + `resolution` | 닫을 때 함께 적는다. 무엇으로 닫혔는지 없이 닫으면 같은 질문이 몇 달 뒤 처음부터 다시 올라온다 |
+
+- **후보로 넘어간 것과 닫힌 것은 다르다.** `candidateId`가 붙어도 1차 대조가 남아 있으면 계속 열린 상태다.
+- 구조 강제는 [`../scripts/brief-open-questions.test.ts`](../scripts/brief-open-questions.test.ts)가 한다.
+  `validateClaimMap`(= `audit:facts`의 계약)은 이 필드를 **보지 않는다** — 두 게이트를 섞으면 fact
+  freshness 점수와 미결 위생이 서로를 가린다. 실제로 그 가림이 이 사건을 만들었다(같은 회차가 근거 규범을
+  "현행 아님"으로 적으면서 `lastVerified`를 올렸다).
+- 표시는 `npm run briefs:radar`의 `Workspace Open Questions` 블록이고, **게이트가 아니다.**
+
 ## 소스 등록 규칙
 
 - `url`은 두 경로로만 들어온다. **추정 URL을 만들지 않는다.**
@@ -106,6 +132,7 @@ sweep 회차의 `foundCandidateIds`에 오른 후보는 **그 회차가 실제�
 | `Backlog` | status별 건수 · `ready` 목록 · 정체 후보 | `ready`가 0이면 다음 발행 때 맨땅에서 시작해야 한다는 뜻이다 |
 | `Guide Coverage` | guide별 마지막 브리프 등장일과 열린 후보 수 | 오래 굶은 가이드 + 후보 0 조합이 다음 sweep의 우선순위다 |
 | `Source Sweep` | 소스별 마지막 **verified** 실사 경과일 | `실사 이력 없음`·`주기 초과`가 이번 회차에 열 목록이다. `backfill` 열은 계보 표시일 뿐 실사 증거가 아니다 |
+| `Workspace Open Questions` | 워크스페이스 claim-map이 적어 둔 미결과 그것이 후보로 넘어갔는지 | `후보` 열이 `—`인 항목이 다음 sweep이 주울 대상이다. 오래된 순으로 뜨며, 닫힌 것은 목록에서 빠지고 수만 남는다 |
 
 ## 주기성
 

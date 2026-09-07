@@ -1,24 +1,16 @@
-import { existsSync, readdirSync } from "node:fs";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { getClaimMapPath, readClaimMap, type ClaimMapEntry } from "./shared";
+import {
+  discoverClaimMapWorkspaces,
+  getClaimMapPath,
+  readClaimMap,
+  type ClaimMapEntry
+} from "./shared";
 
 const rootDir = process.cwd();
-
-// 워크스페이스 목록을 손으로 들고 있으면 새 워크스페이스가 조용히 가드 밖에 남는다.
-// 실제로 그렇게 됐다: 이 배열이 JapTm·UsaTm 2개만 담고 있는 동안 ChaTm·MexTm은 register 파일이
-// 아예 없었고 EuTm은 sourceId 8개가 표에 없었는데도 `audit:facts`는 factIntegrity=100을 냈다.
-// 그래서 목록을 고정하지 않고 claim-map을 가진 워크스페이스를 전부 찾아 register를 요구한다.
-function discoverClaimMapWorkspaces() {
-  return readdirSync(rootDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
-    .map((entry) => entry.name)
-    .filter((name) => existsSync(path.resolve(rootDir, name, "content/research/claim-map.json")))
-    .sort();
-}
 
 // register 파일명 규약: `<workspace>/content/research/*_source_register.md` 하나.
 function findRegisterPath(workspace: string) {
@@ -28,7 +20,7 @@ function findRegisterPath(workspace: string) {
   return matches.length === 1 ? `${workspace}/content/research/${matches[0]}` : null;
 }
 
-const workspaces = discoverClaimMapWorkspaces().map((workspace) => ({
+const workspaces = discoverClaimMapWorkspaces(rootDir).map((workspace) => ({
   workspace,
   registerPath: findRegisterPath(workspace)
 }));

@@ -143,6 +143,7 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 | `ready` 잔량 |  | 0이면 다음 발행을 맨땅에서 시작한다는 뜻 |
 | 정체 후보(30일+ watching) |  | 살릴지 버릴지 판단 대상 |
 | 커버리지 공백 guide |  | 마지막 브리프 등장이 오래됐고 열린 후보가 0인 guide |
+| 워크스페이스 미결(후보 없음) |  | radar `Workspace Open Questions`의 `후보` 열이 `—`인 건수 |
 | 마지막 발행 후 경과일 |  | advisory — 목표 7일 대비 |
 
 ## Organic indexing & measurement check

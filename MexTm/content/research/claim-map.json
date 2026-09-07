@@ -48,5 +48,27 @@
       "status": "BODY_READY",
       "notes": "제11장 통제 포트폴리오 보드와 제13장 사례 회수 표의 one-pack evidence board에 반영 완료. 2026-07-21 재대조: 변경 없음(IMPI declaraciones administrativas·medidas provisionales, ANAM pedimento/anexo 축 현행; ANAM 명칭 유지). Ley Aduanera 2026 개정(2026-01-01 시행)은 pedimento/expediente를 전자화하나 구조는 유지. 2026-08-30 재대조: 변경 없음. WIPO Lex LFPPI(DOF 01-07-2020, vigente 05-11-2020) 원문에서 declaración administrativa·medidas provisionales와 수입·수출·통과 화물의 자유유통 정지 권한을 확인했고, ANAM copias certificadas de pedimentos y anexos(RGCE 1.1.10)와 DPA 수수료 항목(LFD 제5조)도 현행이다. 주의: WIPO Lex 게재본은 2020년 원문이라 2026-04-03 LFPPI 개정 반영본이 아니다 — 집행 조항에 개정이 닿았는지는 별도 확인 대상으로 둔다."
     }
+  ],
+  "openQuestions": [
+    {
+      "id": "MX-OQ-001",
+      "question": "2026-04-03 LFPPI 개정이 집행 조항(declaración administrativa·medidas provisionales·국경 자유유통 정지)에 닿았는지. 근거로 쓰는 WIPO Lex 게재본은 DOF 01-07-2020 원문이라 개정 반영본이 아니다.",
+      "raisedOn": "2026-08-30",
+      "claimIds": ["MX-ENF-001"],
+      "candidateId": "2026-09-mexico-lfppi-implementing-rules"
+    },
+    {
+      "id": "MX-OQ-002",
+      "question": "office action(거절이유통지) 답변기한과 연장 규칙을 공개본에 단정할지, 단정한다면 근거 조문이 무엇인지. 제6장에서 계속 보류 상태다.",
+      "raisedOn": "2026-04-01",
+      "claimIds": ["MX-DL-001"],
+      "candidateId": "2026-09-mexico-lfppi-implementing-rules"
+    },
+    {
+      "id": "MX-OQ-003",
+      "question": "gob.mx ficha ID(IMPI88·IMPI3170) 존속 여부와, claim에서 ficha 축을 유지할지 서식(formato) 축만 남길지. 후속 등록부인 CONAMER 카탈로그는 Buscador가 결과를 JS로 채워 이 채널에서 확인되지 않는다.",
+      "raisedOn": "2026-08-30",
+      "claimIds": ["MX-FEE-001"]
+    }
   ]
 }

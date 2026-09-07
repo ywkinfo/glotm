@@ -9,6 +9,7 @@
 import { pathToFileURL } from "node:url";
 
 import { briefCandidateStaleDays } from "../src/briefs/discovery";
+import { summarizeOpenQuestions } from "./brief-open-questions";
 import {
   summarizeBacklog,
   summarizeCadence,
@@ -79,7 +80,8 @@ export function buildRadar(now = new Date()) {
     cadence: summarizeCadence(undefined, now),
     backlog: summarizeBacklog(undefined, now),
     coverage: summarizeCoverage(undefined, undefined, now),
-    sources: summarizeSourceSweep(undefined, undefined, now)
+    sources: summarizeSourceSweep(undefined, undefined, now),
+    openQuestions: summarizeOpenQuestions(undefined, undefined, now)
   };
 }
 
@@ -195,6 +197,32 @@ export function formatMarkdown(now = new Date()) {
   lines.push("> `verified`는 소스를 실제로 연 회차만 센다. `repository-backfill`은 후보의 계보 기록이라 freshness를 리셋하지 않는다.");
   lines.push("> `never-verified`는 cadence와 무관하게 표시된다 — event-driven 소스도 한 번은 실사해야 한다.");
   lines.push("> sweep을 돌면 `src/briefs/discovery.ts`의 `briefSweepLog`에 회차를 append한다. 산출이 없어도 기록한다.");
+
+  lines.push("");
+  lines.push("## Workspace Open Questions");
+  lines.push("");
+
+  if (radar.openQuestions.open.length === 0) {
+    lines.push("- 열린 미결 없음");
+  } else {
+    lines.push("| Workspace | 미결 | 제기 후 | Claim | 후보 | 질문 |");
+    lines.push("| --- | --- | --- | --- | --- | --- |");
+
+    for (const entry of radar.openQuestions.open) {
+      lines.push(
+        `| ${entry.workspace} | ${entry.question.id} | ${toDays(entry.ageDays)} | ${entry.question.claimIds.join(", ")} | ${entry.question.candidateId ?? "—"} | ${truncate(entry.question.question, 72)} |`
+      );
+    }
+  }
+
+  lines.push("");
+  lines.push(
+    `- 열림 ${radar.openQuestions.open.length} · 그중 후보 없음 ${radar.openQuestions.unlinked.length} · 닫힘 ${radar.openQuestions.resolvedCount}`
+  );
+  lines.push("");
+  lines.push("> 워크스페이스 `content/research/claim-map.json`의 `openQuestions`가 정본이다. 이 블록은 그것을 발굴 lane 쪽에서 보이게만 한다 — 게이트가 아니다.");
+  lines.push("> **`후보` 열이 `—`인 항목이 이 블록의 요점이다.** 후보가 되지 못한 미결은 워크스페이스 안에서만 늙고, 발굴 회차가 그것을 승계하지 못한다.");
+  lines.push("> 미결이 후보로 넘어갔다고 닫히는 것은 아니다. 닫을 때는 `resolvedOn`과 `resolution`을 함께 적는다.");
 
   return lines.join("\n");
 }
