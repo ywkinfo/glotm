@@ -431,6 +431,26 @@ export const briefCandidates: BriefCandidate[] = [
     publishedAs: "2026-08-kbrand-overseas-licensing-control",
     notes:
       "1차 출처를 2026-08-08에 직접 대조했다: https://www.moip.go.kr/ko/kpoBultnDetail.do?aprchId=BUT0000029&menuCd=SCD0200618&ntatcSeq=20996&sysCd=SCD02. 기존 정부인증 후보는 정부 소유 인증표장의 보호 레이어이고, 이 후보는 기업 소유 상표의 사용허락·가맹·사용료·종료 통제를 다루는 수익화 레이어라 별개다."
+  },
+  {
+    id: "2026-09-mexico-lfppi-implementing-rules",
+    headline:
+      "멕시코 LFPPI 신 시행규칙이 1994년 규칙을 대체하며 2026년 7월 22일 발효됐다 — 진행 중인 출원과 침해 대응이 이미 새 규칙 아래 있으므로 기한·증거 구조를 다시 확인해야 한다",
+    trigger:
+      "멕시코 연방관보(DOF) 2026년 4월 28일 공포 「Reglamento de la Ley Federal de Protección a la Propiedad Industrial」, 시행일 2026년 7월 22일(공포 후 60 영업일). 1994년 11월 23일 구 시행규칙(RLPI)을 폐지·대체하며 조문이 79개에서 202개로 늘었다. IMPI 온라인 침해절차 규정화, 행정단계 조정 절차, 비전통상표(소리·냄새·위치·동작·멀티미디어) 명문 규정, 사용에 의한 식별력 입증 기준, 상표 심결 최대 5개월 기한이 함께 들어왔다.",
+    discoveredOn: "2026-09-07",
+    sourceIds: ["impi"],
+    jurisdictions: [
+      "Mexico",
+      "Industrial Property Reform",
+      "Online Enforcement",
+      "Franchise Disclosure"
+    ],
+    relatedProductSlugs: ["mexico"],
+    status: "published",
+    publishedAs: "2026-09-mexico-lfppi-regulations-in-force",
+    notes:
+      "2026-09-07 WebSearch triage로 발굴했다. 저장소는 이 시행규칙을 전혀 들고 있지 않았다 — `reglamento`·`시행규칙`·`2026-07-22`를 MexTm·docs·src/briefs 전체에서 검색해 0건을 확인했다. 2026-08-30 claim-refresh 라운드는 법률 개정(2026-04-03)까지만 봤고 MX-ENF-001에 '집행 조항에 개정이 닿았는지는 별도 확인 대상'을 미결로 남겨 뒀는데, 이 시행규칙이 그 답을 들고 있을 가능성이 크다. MexTm 제6장이 '보류'로 남긴 office action 답변기한·연장 규칙도 같은 자리다. **1차 출처 미대조**: DOF·IMPI는 이 세션에서 열리지 않아(등록 소스 전부 연결 실패) sweep 회차를 추가하지 않는다. 사실은 Pérez-Llorca, AIPPI, Mijares, CCN, FisherBroyles, Chevez, BDO México, EY México, Panamericana de Patentes y Marcas가 일치하는 범위에서만 가져왔고, 조문 번호는 본문에 쓰지 않았다. owner 1차 대조와 MexTm 본문·claim-map 정합은 별도 라운드로 넘긴다."
   }
 ];
 
