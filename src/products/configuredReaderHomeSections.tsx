@@ -89,7 +89,11 @@ export function GuideReportHandoffSection({
   }
 
   return (
-    <section className="gateway-section" aria-label="관련 Report / Trust Layer">
+    <section
+      className="gateway-section"
+      aria-label="관련 Report / Trust Layer"
+      data-reader-home-section="report-handoff"
+    >
       <div className="gateway-section-header">
         <div>
           <p className="gateway-kicker">Trust Layer Handoff</p>
@@ -137,7 +141,7 @@ export function ConfiguredChapterGrid({
   productPath
 }: ConfiguredChapterGridProps) {
   return (
-    <section className="chapter-grid">
+    <section className="chapter-grid" data-reader-home-section="chapters">
       {chapters.map((chapter) => {
         const meta = getChapterMeta(chapter);
 

@@ -152,7 +152,7 @@ function LatamHomeContent({
         </div>
       </section>
 
-      <section className="chapter-grid">
+      <section className="chapter-grid" data-reader-home-section="chapters">
         {filteredChapters.length > 0 ? (
           filteredChapters.map(({ chapter, meta, match }) => {
             const chapterNumber = getChapterNumber(chapter.title);

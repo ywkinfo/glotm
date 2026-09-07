@@ -632,6 +632,33 @@ describe("Shared reader runtime contract", () => {
   );
 
   it.each(readerCases)(
+    "puts the chapter list ahead of the related report handoff on the $name home",
+    async (readerCase) => {
+      installFetchMock();
+      renderReaderCase(readerCase, readerCase.basePath);
+
+      await screen.findByRole("heading", { name: readerCase.homeHeading });
+
+      const chapterSection = document.querySelector('[data-reader-home-section="chapters"]');
+
+      expect(chapterSection).not.toBeNull();
+
+      const handoffSection = document.querySelector('[data-reader-home-section="report-handoff"]');
+
+      // 리포트 핸드오프는 priority 가이드에만 렌더된다. 렌더된 경우에만 순서를 단정한다.
+      if (!handoffSection) {
+        expect(priorityGuideSlugs.has(readerCase.productSlug)).toBe(false);
+        return;
+      }
+
+      expect(
+        (chapterSection as Element).compareDocumentPosition(handoffSection)
+        & Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+    }
+  );
+
+  it.each(readerCases)(
     "restores continue-reading link contracts for $name",
     async (readerCase) => {
       installFetchMock();

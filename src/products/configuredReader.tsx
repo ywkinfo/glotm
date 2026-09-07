@@ -803,7 +803,7 @@ export function createConfiguredReader(config: ReaderConfig) {
 
     return (
       <div className="home-page">
-        <section className="hero-card">
+        <section className="hero-card" data-reader-home-section="hero">
           <p className="hero-kicker">{config.homeHeroKicker}</p>
           <h1>{documentData.meta.title}</h1>
           <p className="hero-summary">{config.homeSummary}</p>
@@ -829,7 +829,7 @@ export function createConfiguredReader(config: ReaderConfig) {
           reportHandoffs={reportHandoffs}
         />
 
-        <section className="gateway-section">
+        <section className="gateway-section" data-reader-home-section="positioning">
           <div className="gateway-section-header">
             <div>
               <p className="gateway-kicker">{config.positioningKicker}</p>

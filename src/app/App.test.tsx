@@ -14,7 +14,7 @@ import {
   reportExperienceMeta,
   reports
 } from "../reports/registry";
-import { products } from "../products/registry";
+import { liveShellProducts, products } from "../products/registry";
 import {
   isBaselineLaneProduct,
   isPriorityLaneProduct,
@@ -35,6 +35,12 @@ const priorityLaneLabelSequence = orderedProducts
   .map((product) => product.shortLabel)
   .join(" -> ");
 const baselineGuide = orderedProducts.find(isBaselineLaneProduct);
+const orderedLiveGuidePaths = [...liveShellProducts]
+  .sort(
+    (left, right) =>
+      (left.gatewayOrder ?? Number.MAX_SAFE_INTEGER) - (right.gatewayOrder ?? Number.MAX_SAFE_INTEGER)
+  )
+  .map((product) => `/${product.slug}`);
 
 function createMockDocumentData(title: string, chapterTitle: string, slug: string): DocumentData {
   return {
@@ -289,6 +295,12 @@ function renderAppRouteTree(initialEntry: string, basename?: string) {
       <LocationProbe />
     </MemoryRouter>
   );
+}
+
+// 게이트웨이 구성 계약은 `health:release`(prerender 미러)로 증명되지 않는다. 렌더된 DOM에서
+// 두 섹션의 상대 순서를 직접 확인하는 것이 유일한 증명이라 문서 위치를 비교한다.
+function expectPrecedes(first: Element, second: Element) {
+  expect(first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 }
 
 function clickTrackedLink(link: HTMLElement) {
@@ -1404,5 +1416,43 @@ describe("App portfolio shell", () => {
     expect(document.querySelector('a[href="/glotm/japan"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/europe"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/uk"]')).not.toBeNull();
+  });
+
+  it("puts the guide entry section ahead of the report section on the gateway", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/");
+
+    await screen.findByRole("heading", {
+      name: "인하우스 팀을 위한 cross-border trademark operating guide"
+    });
+
+    const guideEntrySection = document.querySelector('[data-gateway-section="guide-entry"]');
+    const reportSection = document.querySelector('[data-gateway-section="reports"]');
+
+    expect(guideEntrySection).not.toBeNull();
+    expect(reportSection).not.toBeNull();
+    expectPrecedes(guideEntrySection as Element, reportSection as Element);
+  });
+
+  it("leads the gateway guide entry with china, mexico, europe and reaches every live guide", async () => {
+    installFetchMock();
+
+    renderAppRouteTree("/");
+
+    await screen.findByRole("heading", {
+      name: "인하우스 팀을 위한 cross-border trademark operating guide"
+    });
+
+    const entryHrefs = [
+      ...document.querySelectorAll('[data-gateway-section="guide-entry"] [data-guide-entry-slug]')
+    ].map((link) => link.getAttribute("href"));
+
+    // PROJECT-OVERVIEW.md가 산문으로만 약속하던 우선 순서를 기계 검증 계약으로 바꾼다.
+    expect(entryHrefs.slice(0, 3)).toEqual(["/china", "/mexico", "/europe"]);
+    // 순서는 registry의 gatewayOrder에서 구조적으로 파생되어야 한다(드리프트 불가).
+    expect(entryHrefs).toEqual(orderedLiveGuidePaths);
+    // 신규 국가 추가는 owner 결정 사항이라, 개수 변화는 의도적으로 이 테스트를 깨야 한다.
+    expect(entryHrefs).toHaveLength(7);
   });
 });

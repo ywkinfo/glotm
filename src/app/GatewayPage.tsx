@@ -252,7 +252,10 @@ export function GatewayLandingPage() {
         </section>
       ) : null}
 
-      <section className="gateway-section gateway-section--trust-layer">
+      <section
+        className="gateway-section gateway-section--trust-layer"
+        data-gateway-section="reports"
+      >
         <div className="gateway-section-header">
           <div>
             <p className="gateway-kicker">{reportExperienceMeta.gatewaySectionKicker}</p>
@@ -464,7 +467,7 @@ export function GatewayLandingPage() {
         ) : null}
       </section>
 
-      <section id="portfolio-focus" className="gateway-section">
+      <section id="portfolio-focus" className="gateway-section" data-gateway-section="operations">
         <div className="gateway-section-header">
           <div>
             <p className="gateway-kicker">Portfolio Focus</p>
