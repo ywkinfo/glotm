@@ -23,6 +23,7 @@ describe("briefs radar cli", () => {
     expect(output).toContain("## Backlog");
     expect(output).toContain("## Guide Coverage");
     expect(output).toContain("## Source Sweep");
+    expect(output).toContain("## Workspace Open Questions");
   });
 
   // 이 리포트가 게이트로 오해되면 cadence가 사실상 SLA가 된다. 면책 문구를 계약으로 잠근다.
@@ -43,6 +44,7 @@ describe("briefs radar cli", () => {
       "cadence",
       "coverage",
       "generatedOn",
+      "openQuestions",
       "sources"
     ]);
     expect(parsed.generatedOn).toBe("2026-08-03");
