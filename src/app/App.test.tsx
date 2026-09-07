@@ -435,20 +435,63 @@ describe("App portfolio shell", () => {
     expect(screen.getByText(statusLabel)).toBeInTheDocument();
   });
 
-  it("scrolls the active product chip into view on route changes", async () => {
+  // 의도적으로 다시 쓴 테스트다. 이전 계약은 "scrollIntoView가 호출된다"였는데, 그 API는
+  // 대상의 조상 스크롤 컨테이너를 문서 스크롤포트까지 거슬러 올라가며 스크롤한다. 지켜야 할
+  // 계약은 "활성 칩이 내비 안에서 가운데로 온다"이지 "문서를 스크롤한다"가 아니다.
+  it("centers the active product chip inside the nav without scrolling the document", async () => {
     installFetchMock();
+
     const scrollIntoView = vi.fn();
 
     Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
       configurable: true,
+      writable: true,
       value: scrollIntoView
     });
 
-    renderAppRouteTree("/europe");
+    // jsdom에는 레이아웃이 없어 가로 스크롤 상황을 직접 만들어 준다.
+    const clientWidthSpy = vi
+      .spyOn(Element.prototype, "clientWidth", "get")
+      .mockReturnValue(600);
+    const scrollWidthSpy = vi
+      .spyOn(Element.prototype, "scrollWidth", "get")
+      .mockReturnValue(1200);
+    const rectSpy = vi
+      .spyOn(Element.prototype, "getBoundingClientRect")
+      .mockImplementation(function mockRect(this: Element) {
+        if (this.classList.contains("global-nav")) {
+          return { left: 0, width: 600 } as DOMRect;
+        }
 
-    await screen.findByRole("heading", { name: "EuTm 유럽 상표 운영 가이드북" });
+        if (
+          this.classList.contains("global-nav-link")
+          && this.getAttribute("aria-current") === "page"
+        ) {
+          return { left: 900, width: 100 } as DOMRect;
+        }
 
-    expect(scrollIntoView).toHaveBeenCalled();
+        return { left: 0, width: 0 } as DOMRect;
+      });
+
+    try {
+      renderAppRouteTree("/europe");
+
+      await screen.findByRole("heading", { name: "EuTm 유럽 상표 운영 가이드북" });
+
+      const nav = screen.getByRole("navigation", { name: "제품 전환" });
+
+      // 활성 칩(900..1000)을 폭 600 컨테이너 가운데로: 900 - 0 - (600 - 100) / 2 = 650
+      await waitFor(() => {
+        expect(nav.scrollLeft).toBe(650);
+      });
+
+      // 문서 스크롤을 건드리는 경로는 남아 있으면 안 된다.
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    } finally {
+      rectSpy.mockRestore();
+      scrollWidthSpy.mockRestore();
+      clientWidthSpy.mockRestore();
+    }
   });
 
   it("renders full document hrefs for top navigation and brand links", async () => {

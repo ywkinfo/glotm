@@ -61,11 +61,32 @@ function AppLayout() {
   const getGlobalNavClassName = (isActive: boolean) =>
     isActive ? "global-nav-link active" : "global-nav-link";
 
+  // 활성 칩을 `.global-nav` 안에서만 가운데로 옮긴다.
+  //
+  // 이전에는 `activeNavItemRef.scrollIntoView({ block: "nearest", inline: "center" })`를 썼는데,
+  // `scrollIntoView`는 대상의 조상 스크롤 컨테이너를 문서 스크롤포트까지 거슬러 올라가며 스크롤한다.
+  // 여기서 필요한 것은 내비 컨테이너의 가로 스크롤뿐이므로 컨테이너 scrollLeft만 직접 옮겨
+  // 문서 스크롤에 아예 손대지 않는다. 그러면 이 effect와 챕터 앵커 이동의 실행 순서를
+  // 다툴 여지 자체가 없어진다.
   useEffect(() => {
-    activeNavItemRef.current?.scrollIntoView?.({
-      block: "nearest",
-      inline: "center"
-    });
+    const activeNavItem = activeNavItemRef.current;
+    const navElement = activeNavItem?.closest(".global-nav");
+
+    if (!activeNavItem || !(navElement instanceof HTMLElement)) {
+      return;
+    }
+
+    // 데스크톱에서는 칩이 감싸져(flex-wrap) 가로 스크롤이 없다. 그때는 옮길 것이 없다.
+    if (navElement.scrollWidth <= navElement.clientWidth) {
+      return;
+    }
+
+    const navRect = navElement.getBoundingClientRect();
+    const activeRect = activeNavItem.getBoundingClientRect();
+    const centeringOffset =
+      activeRect.left - navRect.left - (navRect.width - activeRect.width) / 2;
+
+    navElement.scrollLeft = Math.max(0, navElement.scrollLeft + centeringOffset);
   }, [location.pathname]);
 
   useEffect(() => {

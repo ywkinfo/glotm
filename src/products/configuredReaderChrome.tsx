@@ -35,6 +35,7 @@ type ReaderSidebarProps = {
   mobileTopOffset?: string;
   onClose: () => void;
   onNavigate: () => void;
+  onSectionJump?: (sectionId: string) => void;
   productPath: string;
 };
 
@@ -100,6 +101,7 @@ export function ReaderShellSidebar({
   mobileTopOffset,
   onClose,
   onNavigate,
+  onSectionJump,
   productPath
 }: ReaderSidebarProps) {
   // 이 사이드바에는 aria-hidden을 걸지 않는다. `isNavOpen`은 모바일 드로어 상태라 데스크톱에서는 항상
@@ -127,6 +129,7 @@ export function ReaderShellSidebar({
         currentSectionId={currentSectionId}
         onClose={onClose}
         onNavigate={onNavigate}
+        onSectionJump={onSectionJump}
       />
     </aside>
   );

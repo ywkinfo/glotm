@@ -16,7 +16,7 @@ type UseTrackedActiveSectionOptions = {
   firstOutlineId?: string;
   hasLocationHash: boolean;
   initialSectionId?: string;
-  isProgrammaticScrollActive: boolean;
+  isProgrammaticScrollActive: () => boolean;
   outlineItems: OutlineItem[];
   outlineSignature: string;
   syncCurrentSectionId: (sectionId?: string) => void;
@@ -75,7 +75,7 @@ export function useTrackedActiveSection({
         .filter((element): element is HTMLElement => Boolean(element));
 
     const updateActiveSection = () => {
-      if (isProgrammaticScrollActive) {
+      if (isProgrammaticScrollActive()) {
         return;
       }
 

@@ -188,6 +188,12 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
   const ReaderContext = createContext<ReaderContextValue | null>(null);
   let programmaticScrollResetId = 0;
   let isProgrammaticScrollActive = false;
+  let activeScrollGeneration = 0;
+  let activeScrollFrameId = 0;
+  let releaseActiveScrollCorrection: (() => void) | null = null;
+  // 이동 원인은 `behavior` 인자만으로 구분되지 않는다. 목차 클릭은 hash를 바꾸고, 그 hash 변경이
+  // ChapterPage의 같은 effect로 흘러 들어오기 때문이다. 그래서 원인을 표시해 두고 effect가 소비한다.
+  let requestedScrollBehavior: ScrollBehavior | null = null;
 
   function useReader() {
     const value = useContext(ReaderContext);
@@ -199,43 +205,124 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
     return value;
   }
 
+  function prefersReducedMotion() {
+    return (
+      typeof window !== "undefined"
+      && typeof window.matchMedia === "function"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
+
+  // `behavior: "auto"`는 `html { scroll-behavior: smooth }`(LatTm/src/styles.css) 아래에서
+  // 여전히 애니메이션으로 해석된다. 즉시 이동이 필요한 경로는 "instant"를 명시해야 한다.
+  function resolveScrollBehavior(behavior: ScrollBehavior): ScrollBehavior {
+    return prefersReducedMotion() ? "instant" : behavior;
+  }
+
+  function requestScrollBehavior(behavior: ScrollBehavior) {
+    requestedScrollBehavior = behavior;
+  }
+
+  function consumeRequestedScrollBehavior(): ScrollBehavior {
+    const behavior = requestedScrollBehavior ?? "instant";
+
+    requestedScrollBehavior = null;
+
+    return behavior;
+  }
+
+  // 도착 기준선은 대상 제목에 적용된 `scroll-margin-top`을 그대로 읽는다. 브라우저가 실제
+  // 스크롤에 쓰는 값과 판정 값이 정의상 같아져서, CSS와 JS가 다시 어긋날 수 없다.
+  function getAnchorClearance(target: HTMLElement) {
+    const parsed = Number.parseFloat(window.getComputedStyle(target).scrollMarginTop);
+
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+  }
+
+  function isDocumentScrolledToEnd() {
+    const maxScrollTop = Math.max(
+      0,
+      document.documentElement.scrollHeight - window.innerHeight
+    );
+
+    return window.scrollY >= maxScrollTop - 1;
+  }
+
+  function hasReachedSection(target: HTMLElement) {
+    const clearance = getAnchorClearance(target);
+    const { top } = target.getBoundingClientRect();
+    // 서브픽셀 오차 + 스크롤 앵커링 여유.
+    const arrivalBand = Math.max(48, window.innerHeight * 0.25);
+
+    if (top >= clearance - 2 && top <= clearance + arrivalBand) {
+      return true;
+    }
+
+    // 문서 끝에서는 모든 제목을 clearance 선까지 올릴 수 없다. 더 스크롤할 여지가 없으면
+    // 그 자리가 도달 가능한 최선이므로 도착으로 본다(마지막 절에서 영구 실패하지 않게).
+    return isDocumentScrolledToEnd() && top <= clearance + arrivalBand;
+  }
+
+  function cancelActiveScrollCorrection() {
+    activeScrollGeneration += 1;
+
+    if (typeof window !== "undefined") {
+      window.cancelAnimationFrame(activeScrollFrameId);
+    }
+
+    releaseActiveScrollCorrection?.();
+    releaseActiveScrollCorrection = null;
+  }
+
   function scrollToSection(sectionId: string, behavior: ScrollBehavior) {
     if (typeof document === "undefined" || typeof window === "undefined") {
       return;
     }
 
-    const targetTopThreshold = window.innerWidth <= 640 ? 104 : 136;
-    const targetBottomThreshold = Math.max(targetTopThreshold + 24, window.innerHeight * 0.42);
+    cancelActiveScrollCorrection();
 
-    window.clearTimeout(programmaticScrollResetId);
-    isProgrammaticScrollActive = true;
+    const generation = activeScrollGeneration;
+    const resolvedBehavior = resolveScrollBehavior(behavior);
+    // 보정에 쓸 수 있는 최대 시간. 이 안에 못 맞추면 더 매달리지 않고 종료한다.
+    const correctionDeadline =
+      performance.now() + (resolvedBehavior === "smooth" ? 1200 : 600);
 
-    const isTargetInView = () => {
-      const target = document.getElementById(sectionId);
+    let isCancelled = false;
+    let previousScrollY = Number.NaN;
+    let hasCheckedAfterFonts = false;
 
-      if (!target) {
-        return false;
+    const abortOnUserScroll = () => {
+      // 사용자가 직접 스크롤을 시작하면 자동 보정은 그 자리에서 멈춘다.
+      isCancelled = true;
+    };
+    const abortOnScrollKey = (event: KeyboardEvent) => {
+      const scrollKeys = [
+        "ArrowUp",
+        "ArrowDown",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        " ",
+        "Spacebar"
+      ];
+
+      if (scrollKeys.includes(event.key)) {
+        isCancelled = true;
       }
-
-      const { top } = target.getBoundingClientRect();
-
-      return top >= targetTopThreshold && top <= targetBottomThreshold;
     };
 
-    const scrollTarget = () => {
-      const target = document.getElementById(sectionId);
+    window.addEventListener("wheel", abortOnUserScroll, { passive: true });
+    window.addEventListener("touchstart", abortOnUserScroll, { passive: true });
+    window.addEventListener("keydown", abortOnScrollKey);
 
-      if (!target) {
-        return false;
-      }
-
-      target.scrollIntoView({
-        block: "start",
-        behavior
-      });
-
-      return isTargetInView();
+    const detachAbortListeners = () => {
+      window.removeEventListener("wheel", abortOnUserScroll);
+      window.removeEventListener("touchstart", abortOnUserScroll);
+      window.removeEventListener("keydown", abortOnScrollKey);
     };
+
+    releaseActiveScrollCorrection = detachAbortListeners;
 
     const releaseProgrammaticScroll = (delayMs: number) => {
       window.clearTimeout(programmaticScrollResetId);
@@ -244,20 +331,105 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       }, delayMs);
     };
 
-    const retryScroll = (remainingAttempts: number, shouldReissueScroll: boolean) => {
-      const reachedTarget = shouldReissueScroll ? scrollTarget() : isTargetInView();
+    const finish = () => {
+      detachAbortListeners();
 
-      if (reachedTarget || remainingAttempts <= 0) {
-        releaseProgrammaticScroll(behavior === "smooth" ? 420 : 120);
-        return;
+      if (releaseActiveScrollCorrection === detachAbortListeners) {
+        releaseActiveScrollCorrection = null;
       }
 
-      window.requestAnimationFrame(() => {
-        retryScroll(remainingAttempts - 1, false);
+      releaseProgrammaticScroll(resolvedBehavior === "smooth" ? 420 : 120);
+    };
+
+    const issueScroll = (target: HTMLElement) => {
+      target.scrollIntoView({
+        block: "start",
+        behavior: resolvedBehavior
       });
     };
 
-    retryScroll(8, true);
+    // 폰트 swap은 재시도 종료 뒤에도 일어나 레이아웃을 밀 수 있다. `document.fonts.ready`
+    // (표준 API, 의존성 0) 이후 **1회만** 다시 확인하고, 그 뒤로는 보정하지 않는다.
+    const recheckAfterFonts = () => {
+      if (hasCheckedAfterFonts || isCancelled || generation !== activeScrollGeneration) {
+        return;
+      }
+
+      hasCheckedAfterFonts = true;
+
+      const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+
+      if (!fonts?.ready) {
+        return;
+      }
+
+      fonts.ready
+        .then(() => {
+          if (isCancelled || generation !== activeScrollGeneration) {
+            return;
+          }
+
+          const target = document.getElementById(sectionId);
+
+          if (target && !hasReachedSection(target)) {
+            target.scrollIntoView({ block: "start", behavior: "instant" });
+          }
+        })
+        .catch(() => {
+          // 폰트 로딩 실패는 읽기를 막지 않는다.
+        });
+    };
+
+    isProgrammaticScrollActive = true;
+
+    const step = () => {
+      if (isCancelled || generation !== activeScrollGeneration) {
+        finish();
+        return;
+      }
+
+      const target = document.getElementById(sectionId);
+
+      if (!target) {
+        finish();
+        return;
+      }
+
+      if (hasReachedSection(target)) {
+        finish();
+        recheckAfterFonts();
+        return;
+      }
+
+      if (performance.now() >= correctionDeadline) {
+        finish();
+        recheckAfterFonts();
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      const hasScrollSettled = currentScrollY === previousScrollY;
+
+      previousScrollY = currentScrollY;
+
+      // 진행 중인 스크롤 애니메이션을 매 프레임 재발행하면 애니메이션이 계속 처음부터 다시
+      // 시작한다. 멎었는데도 도착하지 않은 경우에만 다시 발행한다.
+      if (hasScrollSettled) {
+        issueScroll(target);
+      }
+
+      activeScrollFrameId = window.requestAnimationFrame(step);
+    };
+
+    const target = document.getElementById(sectionId);
+
+    if (!target) {
+      finish();
+      return;
+    }
+
+    issueScroll(target);
+    activeScrollFrameId = window.requestAnimationFrame(step);
   }
 
   function ReaderShell() {
@@ -382,10 +554,13 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       }
     }, [currentChapterSlug]);
 
+    // 기본값은 즉시 이동이다. 직접 URL, 검색 결과, 이어 읽기, 리포트 딥링크는 모두 "도착"이
+    // 목적이라 애니메이션이 이득이 없다. 부드러운 이동은 사용자가 목차를 눌러 현재 문서 안에서
+    // 위치를 옮길 때만 쓴다(jumpToSection).
     const navigateToSection = (
       chapterSlug: string,
       sectionId?: string,
-      behavior: ScrollBehavior = "auto"
+      behavior: ScrollBehavior = "instant"
     ) => {
       const sectionLocation = buildSectionLocation(productPath, chapterSlug, sectionId);
       const isSameLocation =
@@ -400,19 +575,22 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         } else if (typeof window !== "undefined") {
           window.scrollTo({
             top: 0,
-            behavior
+            behavior: resolveScrollBehavior(behavior)
           });
         }
 
         return;
       }
 
+      // hash가 바뀌면 ChapterPage의 앵커 effect가 이동을 수행한다. behavior 인자만으로는
+      // 목차 클릭과 딥링크가 구분되지 않으므로 이동 원인을 남겨 effect가 소비하게 한다.
+      requestScrollBehavior(behavior);
       navigate(sectionLocation);
 
       if (!sectionId && typeof window !== "undefined") {
         window.scrollTo({
           top: 0,
-          behavior
+          behavior: resolveScrollBehavior(behavior)
         });
       }
     };
@@ -499,6 +677,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               onClose={closeNavigation}
               isNavOpen={isNavOpen}
               onNavigate={closeNavigation}
+              onSectionJump={jumpToSection}
               productPath={productPath}
             />
 
@@ -652,7 +831,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       firstOutlineId,
       hasLocationHash: Boolean(location.hash),
       initialSectionId: routeSectionId,
-      isProgrammaticScrollActive,
+      isProgrammaticScrollActive: () => isProgrammaticScrollActive,
       outlineItems,
       outlineSignature,
       syncCurrentSectionId
@@ -684,11 +863,17 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
       const anchor = decodeRouteSegment(location.hash.replace(/^#/, "")) || "";
 
       if (!anchor) {
+        cancelActiveScrollCorrection();
         window.scrollTo({ top: 0 });
-        return;
+        return undefined;
       }
 
-      scrollToSection(anchor, "auto");
+      scrollToSection(anchor, consumeRequestedScrollBehavior());
+
+      // 새 이동·장 전환·언마운트 시 이전 보정 루프(rAF와 이벤트 리스너)를 반드시 취소한다.
+      return () => {
+        cancelActiveScrollCorrection();
+      };
     }, [chapter, location.hash]);
     useChapterBookmark({
       activeSectionId,
@@ -751,6 +936,7 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
           chapterSlug={chapter.slug}
           headings={chapter.headings}
           activeSectionId={activeSectionId}
+          onSectionJump={jumpToSection}
         />
         <MarkdownArticle chapter={chapter} articleRef={articleRef} />
         <ReaderActionBar

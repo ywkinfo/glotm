@@ -4,6 +4,24 @@
   --global-topbar-height: 4.85rem;
   --focus-ring: rgba(14, 107, 109, 0.26);
   --focus-ring-shadow: 0 0 0 4px rgba(14, 107, 109, 0.12);
+
+  /* 진행률 바의 실측 높이. ReadingProgressBar가 ResizeObserver로 갱신하고, 바가 없는 화면
+     (가이드 홈 등)에서는 이 기본값으로 돌아간다. */
+  --reader-progress-height: 2.05rem;
+  --reader-progress-gap: 0.55rem;
+  --reader-anchor-gap: 0.8rem;
+
+  /* 앵커 도착 기준선 하나.
+     고정 배치로 본문을 가리는 높이(전역 topbar + 그 아래 붙는 진행률 바)에 여백을 더한 값이며,
+     CSS scroll-margin-top · 진행률 바 sticky 오프셋 · JS 도착 판정이 **모두 이 한 값을 소비**한다.
+     세 값이 각각 따로 정해져 어긋난 것이 앵커 이동 결함의 본질이었다:
+     scroll-margin-top은 6.6rem(105.6px) 고정, JS 성공 문턱은 데스크톱 136이라 도착해도 성공
+     분기에 닿지 못했고, 진행률 바는 5.2rem 고정이라 실측 topbar(1280x720에서 약 141px)보다
+     위에 붙어 데스크톱에서 통째로 가려져 있었다. */
+  --reader-anchor-clearance: calc(
+    var(--global-topbar-height) + var(--reader-progress-gap) + var(--reader-progress-height)
+      + var(--reader-anchor-gap)
+  );
 }
 
 :where(
@@ -841,6 +859,25 @@ body.reader-mobile-nav-open {
 
 .reader-shell .left-rail {
   top: calc(var(--global-topbar-height) + 1.25rem);
+}
+
+/* 진행률 바는 실측 전역 topbar 바로 아래에 붙는다. LatTm 원본은 `top: 5.2rem` 고정이라
+   데스크톱에서 topbar(약 141px, 칩이 두 줄로 감김) 안쪽에 들어갔고 z-index도 20이라
+   topbar(120) 뒤로 완전히 가려져 있었다. */
+.reading-progress {
+  top: calc(var(--global-topbar-height) + var(--reader-progress-gap));
+  z-index: 110;
+}
+
+/* 앵커 대상 제목은 clearance 정본 하나만 소비한다.
+   LatTm 원본은 `.article h3/h4/h5`만 덮어 MexTm의 h6 앵커 14개는 scroll-margin이 아예 없었고,
+   딥링크로 열면 제목이 뷰포트 최상단(=고정 헤더 뒤)에 붙었다. h2~h6를 같은 기준으로 맞춘다. */
+.article h2,
+.article h3,
+.article h4,
+.article h5,
+.article h6 {
+  scroll-margin-top: var(--reader-anchor-clearance);
 }
 
 .reader-product-note {

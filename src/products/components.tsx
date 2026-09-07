@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 export {
   ChapterOutline,
   flattenOutlineHeadings,
@@ -67,9 +69,49 @@ export function ReaderActionBar({
 
 export function ReadingProgressBar({ progress }: { progress: number }) {
   const normalizedProgress = Math.max(0, Math.min(100, progress));
+  const progressRef = useRef<HTMLDivElement | null>(null);
+
+  // 진행률 바의 실측 높이를 `--reader-progress-height`로 올려 둔다. 이 값은
+  // `--reader-anchor-clearance`(styles.css)로 들어가고, 그 clearance를 CSS scroll-margin-top과
+  // JS 도착 판정이 함께 소비한다. 폰트 로딩이나 줄바꿈으로 바 높이가 변하면 세 곳이 같이 따라온다.
+  useEffect(() => {
+    const progressElement = progressRef.current;
+
+    if (typeof document === "undefined" || !progressElement) {
+      return undefined;
+    }
+
+    const rootElement = document.documentElement;
+    const syncProgressHeight = () => {
+      const { height } = progressElement.getBoundingClientRect();
+
+      if (height > 0) {
+        rootElement.style.setProperty("--reader-progress-height", `${height}px`);
+      }
+    };
+
+    syncProgressHeight();
+
+    const restore = () => {
+      rootElement.style.removeProperty("--reader-progress-height");
+    };
+
+    if (typeof ResizeObserver === "undefined") {
+      return restore;
+    }
+
+    const resizeObserver = new ResizeObserver(syncProgressHeight);
+
+    resizeObserver.observe(progressElement);
+
+    return () => {
+      resizeObserver.disconnect();
+      restore();
+    };
+  }, []);
 
   return (
-    <div className="reading-progress" aria-label="읽기 진행률">
+    <div className="reading-progress" ref={progressRef} aria-label="읽기 진행률">
       <div
         className="reading-progress-bar"
         style={{ width: `${normalizedProgress}%` }}
