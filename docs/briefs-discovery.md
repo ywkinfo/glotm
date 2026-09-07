@@ -69,9 +69,12 @@ sweep 회차의 `foundCandidateIds`에 오른 후보는 **그 회차가 실제�
 
 ## 소스 등록 규칙
 
-- `url`은 저장소에 이미 기록된 URL 또는 그 origin만 쓴다. 워크스페이스 `content/research/*_source_register.md`·`claim-map.json`과 기존 브리프 본문이 근거다. **추정 URL을 만들지 않는다.**
+- `url`은 두 경로로만 들어온다. **추정 URL을 만들지 않는다.**
+  - ⓐ 저장소에 이미 기록된 URL 또는 그 origin. 워크스페이스 `content/research/*_source_register.md`·`claim-map.json`과 기존 브리프 본문이 근거다.
+  - ⓑ **owner가 등록을 지시한 소스의 기관 도메인.** 저장소에 선례가 없는 채널을 새로 여는 유일한 경로이며(ⓐ만 두면 저장소가 이미 아는 곳 밖으로 등록부가 넓어지지 않는다), 이때 `notes`에 **지시 근거·확인 경로·대조 상태**를 남긴다. 직접 열지 못한 채 등록했으면 그 사실을 적는다.
+- **등록은 실사가 아니다.** 소스를 등록부에 올리는 것은 "볼 곳 목록에 넣는다"이지 "봤다"가 아니다. 그러므로 등록만으로 `briefSweepLog`에 회차를 append하지 않고 `lastVerified`도 생기지 않는다 — 새 소스는 radar에 `실사 이력 없음`으로 뜨는 것이 정상이며, 그 상태가 첫 sweep 대상 큐다(`phase2.5-organic-indexing-ops.md` §5).
 - `sweepTarget`은 필수다. 넓은 루트 URL(`https://www.gov.uk/` 등)은 "무엇을 봐야 하는지"를 말해 주지 못하므로, **무엇을 보면 이 소스의 sweep이 끝나는가**를 한 문장으로 적는다. 정확한 뉴스·공고 페이지 URL이 확정되면 `url`을 그 페이지로 좁힌다.
-- `tier: "primary"`는 기관 공식면이다. 업계 매체(`secondary`)는 실제 인용 URL이 저장소에 남은 뒤 등록한다. 현재 시드는 전부 primary이며, 매체는 primary 공고에서 파생 확인한다.
+- `tier: "primary"`는 기관 공식면이다. **관보(공표 채널)도 여기 들어간다** — 별도 `gazette` tier를 두지 않는다(관보는 기관 공식면이고, tier를 늘리면 타입·리포트·테스트가 함께 움직인다). 업계 매체(`secondary`)는 실제 인용 URL이 저장소에 남은 뒤 등록한다. 매체는 primary 공고에서 파생 확인한다.
 - `relatedProductSlugs`는 `src/products/registry.ts`의 live guide slug만 쓴다. 어떤 가이드에도 닿지 않는 소스는 이 lane의 소스가 아니다.
 - `sweepCadence: "event-driven"`인 소스는 `reviewTrigger`가 필수다. 주기가 없는데 "무엇이 오면 다시 보는가"까지 없으면 그 소스는 아무도 다시 열지 않는다.
 - **커버리지 바닥**: live guide 7개는 각각 **자기 관할을 다루는** primary 소스를 최소 1개 갖는다(KIPO·WIPO처럼 전 가이드를 대는 cross-cutting 소스만으로는 충족되지 않는다). 테스트가 강제한다.
@@ -159,5 +162,7 @@ sweep 회차의 `foundCandidateIds`에 오른 후보는 **그 회차가 실제�
   - 채널 실측(2026-08-25): 에이전트 세션에서 `curl`·WebFetch는 등록된 15개 소스 전부가 CONNECT 403이다(환경 프록시 정책). 반면 **WebSearch는 같은 프록시를 타지 않아 열리고**, 1차 출처 페이지의 내용을 요약해 돌려준다. 즉 "egress 차단"은 채널별로 갈리며, 이는 2026-08-15 라운드가 JPO 403에서 얻은 결론(`403은 사이트가 아니라 채널의 문제`)과 같은 형태다.
   - 다만 **WebSearch는 `verified` sweep의 근거가 되지 못한다.** 이 lane이 `verified`로 인정하는 것은 소스를 실제로 연 회차인데, WebSearch가 주는 것은 검색엔진 결과와 요약 모델의 렌더링이다. 실제로 이 차이가 사고를 만들 수 있다는 근거가 있다 — 아래 UK-IPEC 사례처럼 **기관 공식 페이지 자체가 낡은 값을 싣고 있는** 경우, 요약만 보고 판단하면 맞는 값을 틀린 값으로 "정정"하게 된다.
   - 따라서 에이전트 세션이 WebSearch로 할 수 있는 일은 **변경 신호 triage**(어느 claim을 먼저 열어봐야 하는지 좁히기)까지이고, `briefSweepLog` append와 `lastVerified` 갱신은 소스를 직접 여는 주체(owner 또는 그 채널이 열리는 세션)의 몫이다. 이 구분을 기록으로 남길 자리가 지금 없다 — `BriefSweepKind`에 mediated 채널용 3번째 종류를 둘지는 계약 변경이라 owner 판단으로 남긴다.
-- **소스 커버리지 승인**: 15건이 실제로 봐야 할 곳을 다 덮는지.
+- **소스 커버리지 승인**: 16건이 실제로 봐야 할 곳을 다 덮는지.
+- **`dof-mexico` 1차 대조**(2026-09-07 owner 지시로 등록). 채널 실측(2026-09-07): `dof.gob.mx`·`www.dof.gob.mx`·`sidof.segob.gob.mx` 모두 `curl` CONNECT 403 + WebFetch `EGRESS_BLOCKED`이고, 기관 도메인만 WebSearch로 확인했다. 위 등록 규칙 ⓑ 경로이며 **직접 열기 미완**이므로 sweep 회차도 `lastVerified`도 없다. owner가 한 번 열어 ⓐ 정확한 검색·게재 페이지 URL 확정, ⓑ 20호가 2차 해설 기준으로 적은 2026-04-28 게재 대조를 함께 처리하면 이 항목이 닫힌다.
+- **관보 축 확대 여부**: 현재 관보 소스는 멕시코 DOF 하나다. 칠레 `Diario Oficial`(`diariooficial.interior.gob.cl`)은 `LatTm` 본문에 URL이 이미 기록돼 있어 위 ⓐ 경로만으로도 등록 가능하지만, 나머지 관할은 저장소에 관보 URL 기록이 없다. 어디까지 넓힐지는 owner 판단이다.
 - **secondary(업계 매체) 등록 기준**: 현재는 인용 URL이 저장소에 남은 뒤에만 등록한다.

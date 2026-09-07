@@ -336,6 +336,19 @@ export const briefSources: BriefSource[] = [
     relatedProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
     sweepCadence: "monthly",
     notes: "개별 수수료·가입국 변경은 전 가이드의 출원 경로 판단에 동시에 닿는다."
+  },
+  {
+    id: "dof-mexico",
+    label: "멕시코 연방관보(Diario Oficial de la Federación)",
+    url: "https://dof.gob.mx/",
+    sweepTarget:
+      "DOF 검색(búsqueda)에서 마지막 verified sweep 이후 기간을 대상으로 propiedad industrial·marcas·reglamento 게재분을 훑어, LFPPI와 그 시행규칙·관련 decreto/acuerdo의 신규 공포·개정 게재 여부를 본다. 일자별 edición 전문을 읽는 것은 이 소스의 완료 조건이 아니다.",
+    tier: "primary",
+    jurisdictions: ["Mexico"],
+    relatedProductSlugs: ["mexico", "latam"],
+    sweepCadence: "monthly",
+    notes:
+      "공표 채널(관보) 축. 등록 소스 15개가 전부 기관 뉴스·안내면이라 '공포되었다'가 정의상 관측되는 면이 등록부에 없었고, 20호(멕시코 LFPPI 신 시행규칙)가 그 공백에서 나왔다 — 경위는 docs/briefs-discovery-latency-review.md D2. 2026-09-07 owner 지시(P2-1)로 등록했다. **URL 직접 대조 미완**: 이 세션에서 dof.gob.mx·www.dof.gob.mx·sidof.segob.gob.mx 전부 CONNECT 403이고 WebFetch도 EGRESS_BLOCKED라, 기관 도메인만 WebSearch로 확인했다. 등록은 '볼 곳 목록에 올린다'이지 '봤다'가 아니므로 sweep 회차를 추가하지 않았고 radar에는 `실사 이력 없음`으로 뜬다. cadence를 weekly가 아니라 monthly로 둔 이유는 DOF가 평일 매일 2회 발행이라 완료 조건이 일자별 통독이 아니라 기간 검색이고, 실제 실행 훅도 월 1회(phase2.5 §5)이기 때문이다. 20호가 2차 해설 일치 범위에서 기록한 2026-04-28 게재 대조는 owner 1차 확인 항목으로 계속 열려 있다."
   }
 ];
 
