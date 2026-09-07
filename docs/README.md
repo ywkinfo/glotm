@@ -24,6 +24,7 @@
 - current ops taskboard: [`current-ops-taskboard.md`](current-ops-taskboard.md)
 - briefs lane contract: [`briefs-lane.md`](briefs-lane.md) (정본 콘텐츠·인벤토리는 `../src/briefs/archive.ts`)
 - brief discovery harness (발행 앞단 — 소스 등록부·후보 백로그·sweep): [`briefs-discovery.md`](briefs-discovery.md) (정본은 `../src/briefs/discovery.ts`)
+- brief discovery 지연 진단 (2026-09-07 멕시코 LFPPI 시행규칙 — 결함 보고서, 계약 아님): [`briefs-discovery-latency-review.md`](briefs-discovery-latency-review.md)
 - runtime QA checklist: [`phase1-runtime-qa.md`](phase1-runtime-qa.md)
 - portfolio scorecard: [`portfolio-scorecard.md`](portfolio-scorecard.md)
 - buyer narrative: [`buyer-narrative.md`](buyer-narrative.md)

@@ -119,7 +119,9 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 브리프 lane은 이 phase의 신선도 surface다. 그 lane에 소재를 대는 발굴 절차는
 [`briefs-discovery.md`](briefs-discovery.md)가 계약이고, 여기서는 월 1회 실행 훅만 건다.
 
-1. `npm run briefs:radar` 실행. `Source Sweep`의 `주기 초과` 소스가 이번 회차 대상이다.
+1. `npm run briefs:radar` 실행. `Source Sweep`의 `실사 이력 없음`·`주기 초과` 소스가 이번 회차 대상이다.
+   (`briefs-discovery.md` sweep 절차와 같은 집합이다. `실사 이력 없음`은 `주기 초과`로 표시되지 않으므로
+   여기서 빼면 한 번도 열지 않은 소스가 이 훅의 대상에서 영구히 제외된다 — [`briefs-discovery-latency-review.md`](briefs-discovery-latency-review.md) D6.)
 2. 그 소스들을 실제로 열고, 소재가 나오면 `src/briefs/discovery.ts`의 `briefCandidates`에 후보를 추가한다.
 3. 산출이 없어도 `briefSweepLog`에 회차를 append한다.
 4. 결과를 [`monthly-review-template.md`](monthly-review-template.md)의 `Brief discovery check`에 기록한다.
@@ -134,4 +136,4 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 - [ ] §2 GA4 DebugView: debugger extension ON 상태에서 page_view + 6 KPI 이벤트 도착, 또는 Realtime 대체 확인
 - [ ] §3 라이브 QA(agent 스모크 → owner 육안)
 - [ ] §4 organic sessions 집계 → 월 100 트리거 대비 기록
-- [ ] §5 `npm run briefs:radar` → 주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록
+- [ ] §5 `npm run briefs:radar` → 실사 이력 없음·주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록
