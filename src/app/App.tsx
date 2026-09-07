@@ -25,7 +25,7 @@ import {
 import { liveShellReaderEntries } from "../products/liveShellReaders";
 import {
   buildProductPath,
-  getLifecycleStatusLabel,
+  getJurisdictionLabel,
   getPortfolioTierLabel,
   getRouterBasename
 } from "../products/shared";
@@ -164,6 +164,11 @@ function AppLayout() {
           >
             <span className="global-nav-label">Report</span>
           </FullDocumentLink>
+          {/* 주 라벨은 국가·권역명이다. 이용자는 `중국`을 찾지 `ChaTm`을 찾지 않는다.
+              약칭은 데스크톱에서만 병기하고(≤920px에서는 CSS로 숨긴다) 라이프사이클 pill은
+              내비에서 뺐다 — 운영 지표라 신뢰 정보에 섞이고, 칩 폭을 키워 고정 헤더가 높아지며,
+              그 높이가 그대로 앵커 clearance(`--reader-anchor-clearance`)를 키운다.
+              tier·lifecycle은 게이트웨이의 접힌 운영 영역에서 계속 볼 수 있다. */}
           {orderedNavProducts.map((product) => {
             const isProductActive = activeProduct?.id === product.id;
 
@@ -175,10 +180,8 @@ function AppLayout() {
                 className={getGlobalNavClassName(isProductActive)}
                 aria-current={isProductActive ? "page" : undefined}
               >
-                <span className="global-nav-label">{product.shortLabel}</span>
-                <span className={`status-pill status-pill--${product.lifecycleTone}`}>
-                  {getLifecycleStatusLabel(product.lifecycleStatus)}
-                </span>
+                <span className="global-nav-label">{getJurisdictionLabel(product)}</span>
+                <span className="global-nav-shortlabel">{product.shortLabel}</span>
               </FullDocumentLink>
             );
           })}

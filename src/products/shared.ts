@@ -564,19 +564,27 @@ export const CHAPTER_TITLE_QUALIFIER_BY_SLUG: Record<string, string> = {
   uk: "영국"
 };
 
+// 위 맵의 유일한 접근자. 내비·게이트웨이 카드처럼 "사람이 아는 이름"이 필요한 표면과
+// 챕터 제목이 같은 값을 쓰고, 미등록 slug의 throw 지점도 여기 하나로 모인다.
+// registry(ProductMeta)에 라벨 필드를 새로 만들지 않는다 — 이미 전수 테스트로 보호되는
+// 이 맵의 중복이 될 뿐이다.
+export function getJurisdictionLabel(product: Pick<ProductMeta, "slug">) {
+  const label = CHAPTER_TITLE_QUALIFIER_BY_SLUG[product.slug];
+
+  if (!label) {
+    throw new Error(
+      `Missing jurisdiction label for ${product.slug}. Add it to CHAPTER_TITLE_QUALIFIER_BY_SLUG in src/products/shared.ts.`
+    );
+  }
+
+  return label;
+}
+
 export function buildChapterPageTitle(
   product: Pick<ProductMeta, "slug">,
   chapter: Pick<Chapter, "title">
 ) {
-  const qualifier = CHAPTER_TITLE_QUALIFIER_BY_SLUG[product.slug];
-
-  if (!qualifier) {
-    throw new Error(
-      `Missing chapter title qualifier for ${product.slug}. Add it to CHAPTER_TITLE_QUALIFIER_BY_SLUG in src/products/shared.ts.`
-    );
-  }
-
-  return `${chapter.title} | ${qualifier}`;
+  return `${chapter.title} | ${getJurisdictionLabel(product)}`;
 }
 
 export function setRuntimeDocumentTitle(pageTitle?: string) {

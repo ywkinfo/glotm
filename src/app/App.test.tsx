@@ -367,7 +367,10 @@ describe("App portfolio shell", () => {
     30000
   );
 
-  it("orders live guides in the current active lane sequence after utility routes", async () => {
+  // 의도적으로 갱신한 단정이다. 이전 계약은 약칭 배열(`ChaTm`, `MexTm`, …)이었는데,
+  // 이용자는 `중국`을 찾지 `ChaTm`을 찾지 않는다. 보존할 계약은 목적지·순서·활성 상태·
+  // 키보드 접근성이고, 표기 자체는 이번 라운드의 변경 대상이다.
+  it("orders live guides by jurisdiction name in the current active lane sequence", async () => {
     installFetchMock();
 
     renderAppRouteTree("/");
@@ -377,20 +380,40 @@ describe("App portfolio shell", () => {
     });
 
     const nav = screen.getByRole("navigation", { name: "제품 전환" });
-    const navLabels = [...nav.querySelectorAll(".global-nav-label")].map((label) => label.textContent?.trim());
+    const navLabels = [...nav.querySelectorAll(".global-nav-label")].map((label) =>
+      label.textContent?.trim()
+    );
 
     expect(navLabels).toEqual([
       "Gateway",
       "Brief",
       "Report",
-      "ChaTm",
-      "MexTm",
-      "EuTm",
-      "LatTm",
-      "JapTm",
-      "UKTm",
-      "UsaTm"
+      "중국",
+      "멕시코",
+      "유럽",
+      "중남미",
+      "일본",
+      "영국",
+      "미국"
     ]);
+
+    // 순서는 registry의 gatewayOrder에서 파생되어야 한다 — 표기와 목적지가 따로 놀지 않게.
+    const guideHrefs = [...nav.querySelectorAll("a")]
+      .map((link) => link.getAttribute("href"))
+      .filter((href): href is string => orderedLiveGuidePaths.includes(href ?? ""));
+
+    expect(guideHrefs).toEqual(orderedLiveGuidePaths);
+
+    // 약칭은 데스크톱 보조 표기로만 남는다(≤920px에서는 CSS로 숨긴다).
+    const shortLabels = [...nav.querySelectorAll(".global-nav-shortlabel")].map((label) =>
+      label.textContent?.trim()
+    );
+
+    expect(shortLabels).toEqual(["ChaTm", "MexTm", "EuTm", "LatTm", "JapTm", "UKTm", "UsaTm"]);
+
+    // 라이프사이클 pill은 운영 지표라 내비에서 제거했다. 헤더 높이를 늘리고, 그 높이가
+    // 그대로 앵커 clearance를 키운다.
+    expect(nav.querySelectorAll(".status-pill")).toHaveLength(0);
   });
 
   it.each([
