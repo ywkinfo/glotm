@@ -31,7 +31,7 @@ import {
 } from "../products/shared";
 import { legalNavLinks, legalPages } from "../trustLegal";
 import { BriefArchivePage, BriefIssuePage } from "./BriefPages";
-import { GatewayLandingPage } from "./GatewayPage";
+import { GatewayLandingPage } from "./gateway/GatewayLandingPage";
 import { LegalPage } from "./LegalPages";
 import { ReportArchivePage, ReportPage } from "./ReportPages";
 import {

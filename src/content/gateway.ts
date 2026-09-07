@@ -1,5 +1,5 @@
 // Gateway 히어로의 supporting 문단 정본.
-// SPA(src/app/GatewayPage.tsx)와 정적 SEO 본문(scripts/seo.ts)이 이 한 곳을 함께 import해
+// SPA(src/app/gateway/gatewaySections.tsx)와 정적 SEO 본문(scripts/seo.ts)이 이 한 곳을 함께 import해
 // 문구 drift가 재발하지 않게 한다. Vite 전용 import(`?raw` 등) 없이 순수 문자열만 둬서
 // tsx로 도는 빌드 스크립트에서도 안전하게 불러올 수 있다.
 export const gatewayHeroSupportingParagraphs = [
