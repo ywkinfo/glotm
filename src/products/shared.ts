@@ -766,8 +766,30 @@ export function getChapterStage(title: string) {
   };
 }
 
+// "지금 읽고 있는 섹션"의 기준선은 **앵커 도착 기준선과 같아야 한다.**
+//
+// 대상 제목의 `scroll-margin-top`이 곧 고정 크롬(전역 topbar + sticky 바)이 가리는 높이이고,
+// `configuredReader.tsx`의 도착 판정도 같은 값을 읽는다. 여기에만 상수를 두면 헤더 높이가
+// 바뀔 때 조용히 어긋난다 — 실제로 내비를 한 줄로 만들어 topbar가 136px -> 79px가 되자
+// 하드코딩된 168이 새 clearance보다 커져서, 앵커로 이동한 바로 그 섹션이 "현재"로 잡히지
+// 않고 다음 섹션이 잡혔다(복사 링크가 옆 섹션을 가리켰다).
+function getReadingThreshold(targets: HTMLElement[]) {
+  const firstTarget = targets[0];
+  const clearance = firstTarget
+    ? Number.parseFloat(window.getComputedStyle(firstTarget).scrollMarginTop)
+    : Number.NaN;
+
+  if (Number.isFinite(clearance) && clearance > 0) {
+    // 서브픽셀 반올림으로 도착한 제목이 기준선 바로 아래로 밀리지 않게 여유를 둔다.
+    return clearance - 2;
+  }
+
+  // scroll-margin-top을 읽을 수 없는 환경(jsdom 등)에서의 보수적 기본값.
+  return window.innerWidth <= 640 ? 144 : 168;
+}
+
 export function getTrackedSectionId(targets: HTMLElement[]) {
-  const threshold = window.innerWidth <= 640 ? 144 : 168;
+  const threshold = getReadingThreshold(targets);
   const viewportFloor = window.innerHeight - Math.min(112, window.innerHeight * 0.16);
   const headingPositions = targets.map((target) => ({
     id: target.id,
