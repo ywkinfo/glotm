@@ -72,8 +72,7 @@ import {
   ChapterOutline,
   MarkdownArticle,
   ReaderActionBar,
-  ReaderChapterTools,
-  ReadingProgressBar,
+  ReaderStickyBar,
   StatusPage,
   flattenOutlineHeadings
 } from "./components";
@@ -910,7 +909,14 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
         // 인쇄 전용 출처 표기(styles.css의 @media print). 어느 문서의 출력인지 종이에 남는다.
         data-print-source={`${getRouterBasePath()}${buildChapterPath(productPath, chapter.slug)}`}
       >
-        <ReadingProgressBar progress={readingProgress} />
+        {/* 읽기 바(readingProgress >= 20)와 분리된, 항상 접근 가능한 도구. sticky라 읽던
+            자리를 떠나지 않고 쓸 수 있다. */}
+        <ReaderStickyBar
+          chapterSlug={chapter.slug}
+          outlineIds={outlineItems.map((item) => item.id)}
+          productPath={productPath}
+          progress={readingProgress}
+        />
         <section className="chapter-header">
           <div className="chapter-header-grid">
             <div className="chapter-header-copy">
@@ -918,12 +924,6 @@ export function createReaderRuntime(config: ReaderRuntimeConfig) {
               <h1>{chapter.title}</h1>
               {chapter.summary ? <p className="chapter-summary">{chapter.summary}</p> : null}
               <ReaderProvenanceNote factsReviewedOn={productMeta.factsReviewedOn} />
-              {/* 읽기 바(readingProgress >= 20)와 분리된, 항상 접근 가능한 도구. */}
-              <ReaderChapterTools
-                chapterSlug={chapter.slug}
-                outlineIds={outlineItems.map((item) => item.id)}
-                productPath={productPath}
-              />
             </div>
             {chapterMeta ? (
               <div className="chapter-header-stats" aria-label="챕터 메타 정보">

@@ -26,6 +26,11 @@ test("copies a link to the section actually being read", async ({ page, context 
   await expect(tools).toBeVisible();
   await expect(page.locator(".reader-action-bar")).toHaveCount(0);
 
+  // 본문을 한참 읽어 내려간 뒤에도 스크롤 없이 닿을 수 있어야 한다.
+  await page.evaluate(() => window.scrollTo({ top: 4000, behavior: "instant" }));
+  await waitForScrollToSettle(page);
+  await expect(tools).toBeInViewport();
+
   // 목차에서 한 섹션으로 이동한 뒤 복사하면, 진입 주소가 아니라 지금 위치를 가리켜야 한다.
   const outlineLinks = page.locator(".chapter-outline-link");
   const linkCount = await outlineLinks.count();
@@ -39,7 +44,13 @@ test("copies a link to the section actually being read", async ({ page, context 
   await targetLink.click();
   await waitForScrollToSettle(page);
 
+  // 도구는 sticky라 읽던 자리를 떠나지 않고 쓸 수 있어야 한다. 클릭이 페이지를 움직이면
+  // "지금 읽는 섹션"이 달라지고, 그게 CI에서 이 테스트를 깨뜨렸던 결함이다.
+  const scrollBeforeCopy = await page.evaluate(() => window.scrollY);
+
   await tools.getByRole("button", { name: "이 위치 링크 복사" }).click();
+
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollBeforeCopy);
 
   await expect(tools.getByRole("status")).toContainText("링크를 복사했습니다");
 

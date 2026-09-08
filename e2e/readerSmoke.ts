@@ -249,19 +249,19 @@ export async function measureAnchorArrival(page: Page, sectionId: string): Promi
       stickyBottoms.push(topbar.getBoundingClientRect().bottom);
     }
 
-    const progress = document.querySelector(".reading-progress");
+    const stickyBar = document.querySelector(".reader-sticky-bar");
 
-    if (progress) {
-      const progressStyle = window.getComputedStyle(progress);
-      const progressRect = progress.getBoundingClientRect();
+    if (stickyBar) {
+      const stickyBarStyle = window.getComputedStyle(stickyBar);
+      const stickyBarRect = stickyBar.getBoundingClientRect();
 
-      // 진행률 바는 sticky라 문서 위쪽에서는 본문 흐름에 있다. 상단에 실제로 붙어 있을 때만
-      // 본문을 가리는 요소로 센다.
+      // 진행률·도구 줄은 sticky라 문서 위쪽에서는 본문 흐름에 있다. 상단에 실제로 붙어 있을
+      // 때만 본문을 가리는 요소로 센다.
       if (
-        (progressStyle.position === "sticky" || progressStyle.position === "fixed")
-        && progressRect.top < window.innerHeight * 0.5
+        (stickyBarStyle.position === "sticky" || stickyBarStyle.position === "fixed")
+        && stickyBarRect.top < window.innerHeight * 0.5
       ) {
-        stickyBottoms.push(progressRect.bottom);
+        stickyBottoms.push(stickyBarRect.bottom);
       }
     }
 

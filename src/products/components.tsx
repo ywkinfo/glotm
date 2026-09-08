@@ -130,9 +130,8 @@ export function buildCurrentSectionUrl(
 // 기존 `ReaderActionBar`는 `readingProgress >= 20`일 때만 보이므로, 처음부터 인쇄하거나 링크를
 // 넘기려는 사용자는 기능을 찾지 못한다. 그래서 '맨 위로' 바의 노출 조건과 분리했다.
 //
-// 위치는 스크롤 중에 **계속** 샘플링해 둔다. 클릭 시점에만 재면 안 되는 이유가 있다: 도구가
-// 장 헤더에 있으므로 사용자가 본문을 읽다가 이 버튼을 쓰려면 위로 올라와야 하고, 브라우저가
-// 버튼으로 스크롤을 옮긴 뒤 재면 "지금 읽던 섹션"이 아니라 장 첫 섹션이 잡힌다.
+// 이 도구는 sticky 바 안에 있어 읽는 위치를 떠나지 않고 쓸 수 있다. 그래서 클릭 시점의
+// 기하가 곧 "지금 읽고 있는 섹션"이며, 별도 추적이 필요 없다.
 export function ReaderChapterTools({
   chapterSlug,
   outlineIds,
@@ -140,12 +139,9 @@ export function ReaderChapterTools({
 }: ReaderChapterToolsProps) {
   const [copyState, setCopyState] = useState<CopyState>({ kind: "idle" });
   const manualInputRef = useRef<HTMLInputElement | null>(null);
-  const trackedSectionIdRef = useRef<string | undefined>(undefined);
-  const outlineSignature = outlineIds.join("|");
 
   useEffect(() => {
     setCopyState({ kind: "idle" });
-    trackedSectionIdRef.current = undefined;
   }, [chapterSlug]);
 
   useEffect(() => {
@@ -154,41 +150,8 @@ export function ReaderChapterTools({
     }
   }, [copyState]);
 
-  useEffect(() => {
-    const ids = outlineSignature ? outlineSignature.split("|") : [];
-
-    if (typeof window === "undefined" || ids.length === 0) {
-      return undefined;
-    }
-
-    let frameId = 0;
-
-    const sampleCurrentSection = () => {
-      const sectionId = resolveCurrentSectionId(ids);
-
-      if (sectionId) {
-        trackedSectionIdRef.current = sectionId;
-      }
-    };
-
-    const scheduleSample = () => {
-      window.cancelAnimationFrame(frameId);
-      frameId = window.requestAnimationFrame(sampleCurrentSection);
-    };
-
-    sampleCurrentSection();
-    window.addEventListener("scroll", scheduleSample, { passive: true });
-    window.addEventListener("resize", scheduleSample);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("scroll", scheduleSample);
-      window.removeEventListener("resize", scheduleSample);
-    };
-  }, [outlineSignature]);
-
   const handleCopyLink = async () => {
-    const sectionId = trackedSectionIdRef.current ?? resolveCurrentSectionId(outlineIds);
+    const sectionId = resolveCurrentSectionId(outlineIds);
     const url = buildSectionUrl(productPath, chapterSlug, sectionId);
     const sectionLabel = sectionId
       ? document.getElementById(sectionId)?.textContent?.trim() || "현재 섹션"
@@ -250,40 +213,64 @@ export function ReaderChapterTools({
 
 export function ReadingProgressBar({ progress }: { progress: number }) {
   const normalizedProgress = Math.max(0, Math.min(100, progress));
-  const progressRef = useRef<HTMLDivElement | null>(null);
 
-  // 진행률 바의 실측 높이를 `--reader-progress-height`로 올려 둔다. 이 값은
-  // `--reader-anchor-clearance`(styles.css)로 들어가고, 그 clearance를 CSS scroll-margin-top과
-  // JS 도착 판정이 함께 소비한다. 폰트 로딩이나 줄바꿈으로 바 높이가 변하면 세 곳이 같이 따라온다.
+  return (
+    <div className="reading-progress" aria-label="읽기 진행률">
+      <div
+        className="reading-progress-bar"
+        style={{ width: `${normalizedProgress}%` }}
+      />
+      <span className="reading-progress-label">{Math.round(normalizedProgress)}% 읽음</span>
+    </div>
+  );
+}
+
+// 진행률과 도구를 한 sticky 줄에 둔다.
+//
+// 도구를 장 헤더에만 두면 본문을 읽다가 쓰려고 위로 올라와야 하고, 올라온 뒤에 위치를 재면
+// "지금 읽던 섹션"이 아니라 장 첫 섹션이 잡힌다(CI 실측: 기대 `next-action-한-줄-요약`,
+// 실제 `도입`). 읽는 자리를 떠나지 않고 쓸 수 있게 하면 그 문제 자체가 사라지고,
+// 계획서가 요구한 "항상 접근 가능"(진행률 20% 조건과 분리)도 더 잘 지켜진다.
+//
+// 이 줄의 실측 높이를 `--reader-sticky-bar-height`로 올려 `--reader-anchor-clearance`가 따라오게
+// 한다(styles.css). 도구가 들어와 줄이 높아져도 앵커 도착 기준이 자동으로 맞춰진다.
+export function ReaderStickyBar({
+  chapterSlug,
+  outlineIds,
+  productPath,
+  progress
+}: ReaderChapterToolsProps & { progress: number }) {
+  const stickyBarRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const progressElement = progressRef.current;
+    const stickyBarElement = stickyBarRef.current;
 
-    if (typeof document === "undefined" || !progressElement) {
+    if (typeof document === "undefined" || !stickyBarElement) {
       return undefined;
     }
 
     const rootElement = document.documentElement;
-    const syncProgressHeight = () => {
-      const { height } = progressElement.getBoundingClientRect();
+    const syncStickyBarHeight = () => {
+      const { height } = stickyBarElement.getBoundingClientRect();
 
       if (height > 0) {
-        rootElement.style.setProperty("--reader-progress-height", `${height}px`);
+        rootElement.style.setProperty("--reader-sticky-bar-height", `${height}px`);
       }
     };
 
-    syncProgressHeight();
+    syncStickyBarHeight();
 
     const restore = () => {
-      rootElement.style.removeProperty("--reader-progress-height");
+      rootElement.style.removeProperty("--reader-sticky-bar-height");
     };
 
     if (typeof ResizeObserver === "undefined") {
       return restore;
     }
 
-    const resizeObserver = new ResizeObserver(syncProgressHeight);
+    const resizeObserver = new ResizeObserver(syncStickyBarHeight);
 
-    resizeObserver.observe(progressElement);
+    resizeObserver.observe(stickyBarElement);
 
     return () => {
       resizeObserver.disconnect();
@@ -292,12 +279,13 @@ export function ReadingProgressBar({ progress }: { progress: number }) {
   }, []);
 
   return (
-    <div className="reading-progress" ref={progressRef} aria-label="읽기 진행률">
-      <div
-        className="reading-progress-bar"
-        style={{ width: `${normalizedProgress}%` }}
+    <div className="reader-sticky-bar" ref={stickyBarRef}>
+      <ReadingProgressBar progress={progress} />
+      <ReaderChapterTools
+        chapterSlug={chapterSlug}
+        outlineIds={outlineIds}
+        productPath={productPath}
       />
-      <span className="reading-progress-label">{Math.round(normalizedProgress)}% 읽음</span>
     </div>
   );
 }
