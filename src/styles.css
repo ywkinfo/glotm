@@ -921,6 +921,53 @@ body.reader-mobile-nav-open {
   margin-bottom: 0.4rem;
 }
 
+/* 장 헤더 도구 — '맨 위로' 바의 노출 조건(readingProgress >= 20)과 분리해 늘 보인다. */
+.reader-chapter-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.reader-chapter-tool {
+  padding: 0.42rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.reader-chapter-tool:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ink);
+}
+
+.reader-chapter-tools-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.reader-chapter-tools-status:empty {
+  display: none;
+}
+
+.reader-chapter-tools-manual {
+  flex: 1 1 100%;
+  min-width: 0;
+  padding: 0.42rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.82rem;
+}
+
 /* 히어로는 제목 + 짧은 문단이다. 보조 패널이 없으므로 단일 컬럼으로 두고, 국가 진입이
    첫 화면(390x844 기준) 안에 들어오도록 세로 여백을 줄인다. */
 .gateway-hero--compact {
@@ -1064,12 +1111,12 @@ body.reader-mobile-nav-open {
   .left-rail,
   .reading-progress,
   .reader-action-bar,
+  .reader-chapter-tools,
   .mobile-scrim,
   .search-shell,
   .search-results,
   .global-status-panel,
   .catalog-panel,
-  .chapter-outline,
   .continue-card,
   .latest-brief-banner-actions,
   .gateway-actions,
@@ -1166,6 +1213,51 @@ body.reader-mobile-nav-open {
   .article th,
   .article td {
     white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* 목차는 종이에서 오히려 쓸모가 크다(어디를 인쇄했는지 남는다). 다만 `.chapter-outline`만
+     되살리면 안쪽 목록이 계속 숨겨진다 — 모바일에서 접힌 상태로 인쇄하면
+     `.chapter-outline-list.collapsed { display: none }`(LatTm/src/styles.css)이 그대로 걸린다.
+     접힘 상태와 무관하게 펼쳐서 출력한다. */
+  .chapter-outline {
+    display: block !important;
+    break-inside: avoid;
+    border-color: rgba(39, 58, 62, 0.16);
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .chapter-outline-actions,
+  .chapter-outline-toggle {
+    display: none !important;
+  }
+
+  .chapter-outline-list,
+  .chapter-outline-list.collapsed {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* 화면에서는 링크 텍스트만 보이지만 종이에서는 목적지가 사라진다. 본문 링크의 주소를
+     함께 찍되, 내부 앵커와 이미 주소가 노출된 링크는 제외해 지면을 낭비하지 않는다. */
+  .article a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.82em;
+    color: rgba(39, 58, 62, 0.7);
+    overflow-wrap: anywhere;
+  }
+
+  /* 인쇄 전용 출처 표기. 어느 문서의 어느 시점 출력인지 종이에 남는다. */
+  .chapter-page::after,
+  .home-page::after {
+    content: "GloTm · " attr(data-print-source);
+    display: block;
+    margin-top: 1.2rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(39, 58, 62, 0.16);
+    color: rgba(39, 58, 62, 0.7);
+    font-size: 0.78rem;
     overflow-wrap: anywhere;
   }
 }
