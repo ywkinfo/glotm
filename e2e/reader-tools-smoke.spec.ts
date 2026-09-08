@@ -1,6 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-import { mobileReaderViewport, readerSmokeCases, waitForScrollToSettle } from "./readerSmoke";
+import {
+  expectAnchorArrivalEventually,
+  mobileReaderViewport,
+  readerSmokeCases,
+  waitForScrollToSettle
+} from "./readerSmoke";
 
 // 링크 복사와 인쇄.
 //
@@ -43,6 +48,11 @@ test("copies a link to the section actually being read", async ({ page, context 
   expect(decodeURIComponent(copied)).toBe(
     `${new URL(page.url()).origin}${decodeURIComponent(chapterPath)}#${expectedSectionId}`
   );
+
+  // 주소가 맞다는 것만으로는 부족하다 — 그 링크를 실제로 열었을 때 그 섹션에 도착해야 한다.
+  await page.goto(copied);
+  await page.locator(`[id="${expectedSectionId}"]`).waitFor({ state: "attached" });
+  await expectAnchorArrivalEventually(page, expectedSectionId);
 });
 
 // 목차 접기 컨트롤은 640px 이하에서만 노출된다(`LatTm/src/styles.css`). 즉 "접힌 목차를
