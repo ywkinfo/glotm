@@ -7,6 +7,7 @@ import {
   type GuideReportHandoff
 } from "../reports/registry";
 import { trackEngagement } from "../app/appShared";
+import { formatFactsReviewedNote } from "../trustLegal";
 import {
   buildChapterPath,
   buildSectionLocation,
@@ -69,6 +70,23 @@ export function ContinueReadingCard({
   );
 }
 
+// 1차 출처 대조 기준일. 독자가 신뢰 여부를 판단하는 시점은 읽기 **전**이라 챕터 헤더와
+// 가이드 홈 히어로 상단에 둔다. 정확성 '보증'이 아니라 '대조 기준일' 표기다.
+// factsReviewedOn 미기록 가이드(LatTm 등)에서는 아무것도 렌더하지 않는다.
+export function ReaderProvenanceNote({ factsReviewedOn }: { factsReviewedOn?: string }) {
+  const factsReviewedNote = formatFactsReviewedNote(factsReviewedOn);
+
+  if (!factsReviewedNote) {
+    return null;
+  }
+
+  return (
+    <p className="reader-provenance-note" data-provenance="facts-reviewed">
+      {factsReviewedNote}
+    </p>
+  );
+}
+
 export function DraftNotice() {
   return (
     <div className="draft-notice" role="note" aria-label="콘텐츠 준비 중 안내">
@@ -89,7 +107,11 @@ export function GuideReportHandoffSection({
   }
 
   return (
-    <section className="gateway-section" aria-label="관련 Report / Trust Layer">
+    <section
+      className="gateway-section"
+      aria-label="관련 Report / Trust Layer"
+      data-reader-home-section="report-handoff"
+    >
       <div className="gateway-section-header">
         <div>
           <p className="gateway-kicker">Trust Layer Handoff</p>
@@ -137,7 +159,7 @@ export function ConfiguredChapterGrid({
   productPath
 }: ConfiguredChapterGridProps) {
   return (
-    <section className="chapter-grid">
+    <section className="chapter-grid" data-reader-home-section="chapters">
       {chapters.map((chapter) => {
         const meta = getChapterMeta(chapter);
 

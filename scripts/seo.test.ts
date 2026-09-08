@@ -18,6 +18,7 @@ import documentDataUk from "../public/generated/uk/document-data.json";
 import documentDataUsa from "../public/generated/usa/document-data.json";
 import { describe, expect, it } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
+import { gatewayHeroSupportingParagraphs } from "../src/content/gateway";
 import {
   buildReportArchivePath,
   buildReportPath,
@@ -398,12 +399,11 @@ describe("SEO build helpers", () => {
       '<meta property="og:image:alt" content="GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지" />'
     );
     expect(html).toContain('<h1>인하우스 팀을 위한 cross-border trademark operating guide</h1>');
-    expect(html).toContain(
-      '<p>중국 가이드(ChaTm)에서는 중국어 브랜드명, 시장별 출시 순서, 상표 출원 방식을 먼저 정리합니다. 이어 멕시코 가이드(MexTm)에서는 출원 준비와 등록 후 관리, 세관에서 위조품을 막기 위한 준비를 살펴봅니다. 유럽 가이드(EuTm)에서는 EU와 영국에서 상표를 어디까지 보호할지, 권리를 지키기 위해 어떤 증거가 필요한지 살펴봅니다.</p>'
-    );
-    expect(html).toContain(
-      '<p>최신 리포트 2개는 세 가이드에서 반복해서 나오는 질문을 한곳에 모아 정리한 자료입니다.</p>'
-    );
+    // 문구를 여기 다시 적지 않고 정본에서 파생한다. SPA(gatewaySections.tsx)와 이 prerender가
+    // 같은 배열을 소비한다는 것이 지켜야 할 계약이고, 문구 자체는 언제든 바뀔 수 있다.
+    for (const paragraph of gatewayHeroSupportingParagraphs) {
+      expect(html).toContain(`<p>${paragraph}</p>`);
+    }
     expect(html).toContain(
       '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
     );

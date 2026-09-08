@@ -96,7 +96,7 @@ Hard constraints:
 
 Gateway와 Report 아카이브의 report 노출 순서는 `publishedAt` 최신순으로 고정한다. 별도 placement 메타데이터는 두지 않는다.
 
-- Gateway 첫 화면: 최신 report 2개만 먼저 보여 준다.
+- Gateway: 국가 진입 그리드 아래 트러스트 레이어에서 최신 report 2개만, 한 번만 보여 준다(별도 Report 섹션 중복 없음).
 - Report archive hero: 최신 report 1개를 대표 CTA와 보조 설명의 기준으로 쓴다.
 - Report archive 목록: 전체 report를 최신순으로 모두 보여 준다.
 

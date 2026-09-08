@@ -108,9 +108,9 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 - `MexTm`: growth 대표 트랙. Sprint 2 우선 3장(제5장·제7장·제10장) 보강과 shared root gate 재현을 잠갔고, Gateway/registry/root-doc sync도 정합 완료 — 현재는 sync 정합 유지(maintenance)만 남음
 - `EuTm`: growth/mature 승급 반영(15장·부록·claim-map 11건), 2026-06-10 법률 사실정정 유지, EU+UK scope 정합 관리
 - `Report`·`Gateway`: shipped trust layer, latest-report handoff, Gateway 진입 신뢰를 유지하면서 workflow path와 문서 정합성 관리
-- `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 15건, full-QA 파이프라인을 유지하되 Gateway 첫 화면의 `ChaTm`·`MexTm`·`EuTm` 약속은 흔들지 않는다
-- `JapTm`: 2026-06-29 growth/mature/full-QA 승급(owner override). 병존동의제도(2024-04-01) 집행 보강, claim-map 12건, 저밀도 장 운영 섹션 보강(density 12.33), root full pipeline 편입. Gateway 첫 화면 `ChaTm`·`MexTm`·`EuTm` 우선은 유지하고 supporting lane으로 운영
-- `UKTm`: 2026-07-07 growth/mature/full-QA 승급(owner override). 다중 포럼 집행 오케스트레이션 15장 신설, 저밀도 장 보강(density 12.2), claim-map 11건, UK 수수료 £205/£245 EuTm 정합, root full pipeline 편입. Gateway 첫 화면 `ChaTm`·`MexTm`·`EuTm` 우선은 유지하고 supporting lane으로 운영
+- `UsaTm`: growth/mature supporting lane. 15장 체계, claim-map 15건, full-QA 파이프라인을 유지하되 Gateway 국가 진입의 `중국`·`멕시코`·`유럽` 우선 순서는 흔들지 않는다
+- `JapTm`: 2026-06-29 growth/mature/full-QA 승급(owner override). 병존동의제도(2024-04-01) 집행 보강, claim-map 12건, 저밀도 장 운영 섹션 보강(density 12.33), root full pipeline 편입. Gateway 국가 진입의 `중국`·`멕시코`·`유럽` 우선은 유지하고 supporting lane으로 운영
+- `UKTm`: 2026-07-07 growth/mature/full-QA 승급(owner override). 다중 포럼 집행 오케스트레이션 15장 신설, 저밀도 장 보강(density 12.2), claim-map 11건, UK 수수료 £205/£245 EuTm 정합, root full pipeline 편입. Gateway 국가 진입의 `중국`·`멕시코`·`유럽` 우선은 유지하고 supporting lane으로 운영
 - `LatTm`: flagship 보호. freshness, search density, reader QA 우선
 
 ### 현재 실행 순서
@@ -208,8 +208,8 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | GloTm build status | pass |
 | MexTm build status | pass |
 | 루트 `content:prepare` 특징 | 7개 가이드 generated content + Reports generated content를 재생성하며, `LatTm`·`MexTm`·`UsaTm`·`JapTm`·`ChaTm`·`EuTm`·`UKTm` 전부 `build-master -> qa-content -> build-content` full pipeline을 사용 |
-| Gateway 랜딩 | intro 문서 전체 복제가 아니라 복수의 핵심 섹션과 CTA 중심의 선별 랜딩 |
-| Report / Gateway handoff | Gateway 첫 화면에 최신 리포트 2개를 노출하고, Report archive와 최신순 handoff를 공유 |
+| Gateway 랜딩 | 히어로(제목 + 짧은 문단) 다음에 국가 진입 그리드를 두고, 브리프·리포트를 각각 한 번만 노출하는 선별 랜딩. tier·빌드 순서·Portfolio Snapshot은 접힌 운영 영역으로 유지 |
+| Report / Gateway handoff | Gateway에서 최신 리포트 2개를 국가 진입 아래 한 곳에만 노출하고, report focus point 핸드오프와 archive 링크를 같은 섹션이 함께 진다 |
 | favicon / workflow path | favicon asset은 GitHub Pages 공개본에서 확인됐고, local release verification은 `build:pages:glotm`, workflow deploy는 env 주입 기반 `build:pages`를 사용 |
 | 추가 live routes | `/japan`, `/china`, `/europe`, `/uk` 연결 완료 |
 | 배포 상태 | GitHub Pages 공개본 운영 중 (`/glotm/`) |

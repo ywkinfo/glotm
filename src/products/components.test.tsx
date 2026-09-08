@@ -1,14 +1,16 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   ChapterOutline,
   MarkdownArticle,
   ReaderActionBar,
+  ReaderChapterTools,
   SearchPanel,
-  SidebarNav
+  SidebarNav,
+  buildCurrentSectionUrl
 } from "./components";
 import type { Chapter, SearchEntry } from "./shared";
 
@@ -781,5 +783,138 @@ describe("MarkdownArticle", () => {
     } finally {
       restoreResizeObserver();
     }
+  });
+});
+
+describe("ReaderChapterTools", () => {
+  const outlineIds = ["filing", "filing-risk"];
+
+  // 아웃라인 대상들의 기하를 만들어 준다. jsdom에는 레이아웃이 없어 rect가 전부 0이라
+  // `getTrackedSectionId`가 실제로 무엇을 고르는지 확인할 수 없다.
+  function installSectionGeometry(topBySectionId: Record<string, number>) {
+    for (const id of outlineIds) {
+      const heading = document.createElement("h3");
+
+      heading.id = id;
+      heading.textContent = id === "filing" ? "출원 전략" : "리스크";
+      Object.defineProperty(heading, "getBoundingClientRect", {
+        configurable: true,
+        value: () => ({ top: topBySectionId[id] ?? 0 }) as DOMRect
+      });
+      document.body.append(heading);
+    }
+  }
+
+  function renderTools() {
+    return render(
+      <MemoryRouter>
+        <ReaderChapterTools
+          chapterSlug="chapter-2"
+          outlineIds={outlineIds}
+          productPath="/latam"
+        />
+      </MemoryRouter>
+    );
+  }
+
+  afterEach(() => {
+    for (const id of outlineIds) {
+      document.getElementById(id)?.remove();
+    }
+  });
+
+  it("copies a link to the section being read, not the one the URL was opened at", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+
+    // hash 진입 시 섹션 추적이 꺼지므로 location.hash와 activeSectionId는 stale하다.
+    // 여기서는 두 번째 섹션까지 읽어 내려온 상태를 기하로 만든다.
+    installSectionGeometry({ filing: -400, "filing-risk": 200 });
+    vi.stubGlobal("isSecureContext", true);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText }
+    });
+
+    renderTools();
+
+    await user.click(screen.getByRole("button", { name: "이 위치 링크 복사" }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledWith(
+        `${window.location.origin}/latam/chapter/chapter-2#filing-risk`
+      );
+    });
+    expect(await screen.findByText("리스크 링크를 복사했습니다.")).toBeInTheDocument();
+  });
+
+  it("falls back to the chapter link rather than appending an empty hash", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+
+    vi.stubGlobal("isSecureContext", true);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText }
+    });
+
+    // 아웃라인 대상이 하나도 없는 장(섹션을 특정할 수 없는 경우).
+    render(
+      <MemoryRouter>
+        <ReaderChapterTools chapterSlug="chapter-1" outlineIds={[]} productPath="/latam" />
+      </MemoryRouter>
+    );
+
+    await user.click(screen.getByRole("button", { name: "이 위치 링크 복사" }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledWith(
+        `${window.location.origin}/latam/chapter/chapter-1`
+      );
+    });
+  });
+
+  it("offers a manual copy path when the clipboard is unavailable", async () => {
+    const user = userEvent.setup();
+
+    installSectionGeometry({ filing: 200, "filing-risk": 900 });
+    vi.stubGlobal("isSecureContext", false);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: undefined
+    });
+
+    renderTools();
+
+    await user.click(screen.getByRole("button", { name: "이 위치 링크 복사" }));
+
+    expect(
+      await screen.findByText("복사 권한이 없어 주소를 직접 복사해 주세요.")
+    ).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "복사할 주소" })).toHaveValue(
+      `${window.location.origin}/latam/chapter/chapter-2#filing`
+    );
+  });
+
+  it("preserves a deployment base path in the copied absolute URL", () => {
+    installSectionGeometry({ filing: 200, "filing-risk": 900 });
+
+    // GitHub Pages 배포는 `/glotm/` 아래에 있다. base path가 빠지면 복사한 링크가 404가 된다.
+    expect(buildCurrentSectionUrl("/latam", "chapter-2", outlineIds, "/glotm").url).toBe(
+      `${window.location.origin}/glotm/latam/chapter/chapter-2#filing`
+    );
+  });
+
+  it("stays reachable regardless of reading progress and triggers printing", async () => {
+    const user = userEvent.setup();
+    const print = vi.fn();
+
+    vi.stubGlobal("print", print);
+    renderTools();
+
+    // ReaderActionBar와 달리 노출 조건이 없다 — 진행률 0%에서도 인쇄를 찾을 수 있어야 한다.
+    await user.click(screen.getByRole("button", { name: "인쇄" }));
+
+    expect(print).toHaveBeenCalledTimes(1);
   });
 });

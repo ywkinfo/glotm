@@ -27,6 +27,16 @@ export const legalNoticeBullets = [
   "사이트와 저장소의 문서, 리포트, 브리프, generated content, 디자인, 소스 코드는 별도 허락 없이 복제·배포·재게시할 수 없습니다."
 ];
 
+// 리더 하단 법적 고지 문단의 정본.
+//
+// 이 문구는 `configuredReaderChrome.tsx`에 하드코딩돼 있었다. 그래서 이 파일(정본)을 고쳐도
+// 정작 독자가 보는 문구는 바뀌지 않는, 조용히 갈라지는 구조였다. 문자열을 여기로 올려
+// 두 곳이 같은 값을 쓰게 한다.
+export const readerDisclaimerParagraph =
+  "이 가이드는 일반적인 정보 제공 목적이며 법률 자문이 아닙니다. 수록된 정보는 작성 시점 기준이며, "
+  + "법령·판례 변경에 따라 내용이 달라질 수 있습니다. 구체적인 법률 문제는 자격 있는 변호사 또는 "
+  + "변리사에게 문의하시기 바랍니다. 저자와 독자 사이에는 변호사·의뢰인 관계가 성립하지 않습니다.";
+
 export const legalNavLinks = [
   { path: "/legal", label: "Legal" },
   { path: "/privacy", label: "Privacy" },

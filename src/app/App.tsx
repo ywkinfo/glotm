@@ -25,13 +25,14 @@ import {
 import { liveShellReaderEntries } from "../products/liveShellReaders";
 import {
   buildProductPath,
-  getLifecycleStatusLabel,
+  getJurisdictionLabel,
   getPortfolioTierLabel,
   getRouterBasename
 } from "../products/shared";
 import { legalNavLinks, legalPages } from "../trustLegal";
+import { syncScrollRestorationForLocation } from "./scrollRestoration";
 import { BriefArchivePage, BriefIssuePage } from "./BriefPages";
-import { GatewayLandingPage } from "./GatewayPage";
+import { GatewayLandingPage } from "./gateway/GatewayLandingPage";
 import { LegalPage } from "./LegalPages";
 import { ReportArchivePage, ReportPage } from "./ReportPages";
 import {
@@ -61,11 +62,37 @@ function AppLayout() {
   const getGlobalNavClassName = (isActive: boolean) =>
     isActive ? "global-nav-link active" : "global-nav-link";
 
+  // SPA 안에서 해시 유무가 바뀔 때도 소유권을 맞춘다(최초 로드는 main.tsx가 먼저 정한다).
   useEffect(() => {
-    activeNavItemRef.current?.scrollIntoView?.({
-      block: "nearest",
-      inline: "center"
-    });
+    syncScrollRestorationForLocation(location.hash);
+  }, [location.hash]);
+
+  // 활성 칩을 `.global-nav` 안에서만 가운데로 옮긴다.
+  //
+  // 이전에는 `activeNavItemRef.scrollIntoView({ block: "nearest", inline: "center" })`를 썼는데,
+  // `scrollIntoView`는 대상의 조상 스크롤 컨테이너를 문서 스크롤포트까지 거슬러 올라가며 스크롤한다.
+  // 여기서 필요한 것은 내비 컨테이너의 가로 스크롤뿐이므로 컨테이너 scrollLeft만 직접 옮겨
+  // 문서 스크롤에 아예 손대지 않는다. 그러면 이 effect와 챕터 앵커 이동의 실행 순서를
+  // 다툴 여지 자체가 없어진다.
+  useEffect(() => {
+    const activeNavItem = activeNavItemRef.current;
+    const navElement = activeNavItem?.closest(".global-nav");
+
+    if (!activeNavItem || !(navElement instanceof HTMLElement)) {
+      return;
+    }
+
+    // 데스크톱에서는 칩이 감싸져(flex-wrap) 가로 스크롤이 없다. 그때는 옮길 것이 없다.
+    if (navElement.scrollWidth <= navElement.clientWidth) {
+      return;
+    }
+
+    const navRect = navElement.getBoundingClientRect();
+    const activeRect = activeNavItem.getBoundingClientRect();
+    const centeringOffset =
+      activeRect.left - navRect.left - (navRect.width - activeRect.width) / 2;
+
+    navElement.scrollLeft = Math.max(0, navElement.scrollLeft + centeringOffset);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -143,6 +170,11 @@ function AppLayout() {
           >
             <span className="global-nav-label">Report</span>
           </FullDocumentLink>
+          {/* 주 라벨은 국가·권역명이다. 이용자는 `중국`을 찾지 `ChaTm`을 찾지 않는다.
+              약칭은 데스크톱에서만 병기하고(≤920px에서는 CSS로 숨긴다) 라이프사이클 pill은
+              내비에서 뺐다 — 운영 지표라 신뢰 정보에 섞이고, 칩 폭을 키워 고정 헤더가 높아지며,
+              그 높이가 그대로 앵커 clearance(`--reader-anchor-clearance`)를 키운다.
+              tier·lifecycle은 게이트웨이의 접힌 운영 영역에서 계속 볼 수 있다. */}
           {orderedNavProducts.map((product) => {
             const isProductActive = activeProduct?.id === product.id;
 
@@ -154,10 +186,8 @@ function AppLayout() {
                 className={getGlobalNavClassName(isProductActive)}
                 aria-current={isProductActive ? "page" : undefined}
               >
-                <span className="global-nav-label">{product.shortLabel}</span>
-                <span className={`status-pill status-pill--${product.lifecycleTone}`}>
-                  {getLifecycleStatusLabel(product.lifecycleStatus)}
-                </span>
+                <span className="global-nav-label">{getJurisdictionLabel(product)}</span>
+                <span className="global-nav-shortlabel">{product.shortLabel}</span>
               </FullDocumentLink>
             );
           })}

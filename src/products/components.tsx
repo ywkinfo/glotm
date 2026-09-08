@@ -1,3 +1,11 @@
+import { useEffect, useRef, useState } from "react";
+
+import {
+  buildSectionLocation,
+  getRouterBasePath,
+  getTrackedSectionId
+} from "./shared";
+
 export {
   ChapterOutline,
   flattenOutlineHeadings,
@@ -12,6 +20,17 @@ type ReaderActionBarProps = {
   onScrollToTop: () => void;
   visible: boolean;
 };
+
+type ReaderChapterToolsProps = {
+  chapterSlug: string;
+  outlineIds: string[];
+  productPath: string;
+};
+
+type CopyState =
+  | { kind: "idle" }
+  | { kind: "copied"; sectionLabel: string }
+  | { kind: "manual"; url: string };
 
 type StatusPageProps = {
   kicker: string;
@@ -65,6 +84,133 @@ export function ReaderActionBar({
   );
 }
 
+// 지금 읽고 있는 섹션을 기하로 정한다.
+//
+// `location.href`도 `activeSectionId`도 쓸 수 없다. hash로 진입하면 섹션 추적이 통째로 꺼져
+// (`configuredReaderChapterHooks.ts`) 둘 다 진입 시점 값에 머무르기 때문이다.
+// `getTrackedSectionId`는 순수 기하 함수라 언제든 그대로 호출할 수 있다.
+export function resolveCurrentSectionId(outlineIds: string[]) {
+  const targets = outlineIds
+    .map((id) => document.getElementById(id))
+    .filter((element): element is HTMLElement => Boolean(element));
+
+  return targets.length > 0 ? getTrackedSectionId(targets) : undefined;
+}
+
+// 섹션을 특정할 수 없으면 장 링크로 대체한다(빈 hash를 붙이지 않는다).
+// `basePath` 기본값이 `getRouterBasePath()`라 `/glotm/` 같은 배포 경로가 절대 URL에 보존된다
+// (인자는 테스트에서 배포 경로를 명시하기 위한 seam이다).
+export function buildSectionUrl(
+  productPath: string,
+  chapterSlug: string,
+  sectionId: string | undefined,
+  basePath = getRouterBasePath()
+) {
+  const sectionLocation = buildSectionLocation(productPath, chapterSlug, sectionId);
+
+  return `${window.location.origin}${basePath}${sectionLocation.pathname}${sectionLocation.hash}`;
+}
+
+export function buildCurrentSectionUrl(
+  productPath: string,
+  chapterSlug: string,
+  outlineIds: string[],
+  basePath = getRouterBasePath()
+) {
+  const sectionId = resolveCurrentSectionId(outlineIds);
+
+  return {
+    sectionId,
+    url: buildSectionUrl(productPath, chapterSlug, sectionId, basePath)
+  };
+}
+
+// 장 헤더에 늘 붙어 있는 도구.
+//
+// 기존 `ReaderActionBar`는 `readingProgress >= 20`일 때만 보이므로, 처음부터 인쇄하거나 링크를
+// 넘기려는 사용자는 기능을 찾지 못한다. 그래서 '맨 위로' 바의 노출 조건과 분리했다.
+//
+// 이 도구는 sticky 바 안에 있어 읽는 위치를 떠나지 않고 쓸 수 있다. 그래서 클릭 시점의
+// 기하가 곧 "지금 읽고 있는 섹션"이며, 별도 추적이 필요 없다.
+export function ReaderChapterTools({
+  chapterSlug,
+  outlineIds,
+  productPath
+}: ReaderChapterToolsProps) {
+  const [copyState, setCopyState] = useState<CopyState>({ kind: "idle" });
+  const manualInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setCopyState({ kind: "idle" });
+  }, [chapterSlug]);
+
+  useEffect(() => {
+    if (copyState.kind === "manual") {
+      manualInputRef.current?.select();
+    }
+  }, [copyState]);
+
+  const handleCopyLink = async () => {
+    const sectionId = resolveCurrentSectionId(outlineIds);
+    const url = buildSectionUrl(productPath, chapterSlug, sectionId);
+    const sectionLabel = sectionId
+      ? document.getElementById(sectionId)?.textContent?.trim() || "현재 섹션"
+      : "이 장";
+
+    // 클립보드 권한 거부·비보안 컨텍스트에서도 막다른 길로 끝내지 않는다.
+    try {
+      if (!window.isSecureContext || !navigator.clipboard?.writeText) {
+        throw new Error("clipboard unavailable");
+      }
+
+      await navigator.clipboard.writeText(url);
+      setCopyState({ kind: "copied", sectionLabel });
+    } catch {
+      setCopyState({ kind: "manual", url });
+    }
+  };
+
+  return (
+    <div className="reader-chapter-tools" data-reader-chapter-tools="">
+      <button
+        className="reader-chapter-tool"
+        type="button"
+        onClick={() => {
+          void handleCopyLink();
+        }}
+      >
+        이 위치 링크 복사
+      </button>
+      <button
+        className="reader-chapter-tool"
+        type="button"
+        onClick={() => {
+          window.print();
+        }}
+      >
+        인쇄
+      </button>
+      <p className="reader-chapter-tools-status" role="status">
+        {copyState.kind === "copied" ? `${copyState.sectionLabel} 링크를 복사했습니다.` : null}
+        {copyState.kind === "manual" ? "복사 권한이 없어 주소를 직접 복사해 주세요." : null}
+      </p>
+      {copyState.kind === "manual" ? (
+        <input
+          ref={manualInputRef}
+          className="reader-chapter-tools-manual"
+          type="text"
+          readOnly
+          aria-label="복사할 주소"
+          value={copyState.url}
+          onFocus={(event) => {
+            event.currentTarget.select();
+          }}
+        />
+      ) : null}
+    </div>
+  );
+}
+
 export function ReadingProgressBar({ progress }: { progress: number }) {
   const normalizedProgress = Math.max(0, Math.min(100, progress));
 
@@ -75,6 +221,71 @@ export function ReadingProgressBar({ progress }: { progress: number }) {
         style={{ width: `${normalizedProgress}%` }}
       />
       <span className="reading-progress-label">{Math.round(normalizedProgress)}% 읽음</span>
+    </div>
+  );
+}
+
+// 진행률과 도구를 한 sticky 줄에 둔다.
+//
+// 도구를 장 헤더에만 두면 본문을 읽다가 쓰려고 위로 올라와야 하고, 올라온 뒤에 위치를 재면
+// "지금 읽던 섹션"이 아니라 장 첫 섹션이 잡힌다(CI 실측: 기대 `next-action-한-줄-요약`,
+// 실제 `도입`). 읽는 자리를 떠나지 않고 쓸 수 있게 하면 그 문제 자체가 사라지고,
+// 계획서가 요구한 "항상 접근 가능"(진행률 20% 조건과 분리)도 더 잘 지켜진다.
+//
+// 이 줄의 실측 높이를 `--reader-sticky-bar-height`로 올려 `--reader-anchor-clearance`가 따라오게
+// 한다(styles.css). 도구가 들어와 줄이 높아져도 앵커 도착 기준이 자동으로 맞춰진다.
+export function ReaderStickyBar({
+  chapterSlug,
+  outlineIds,
+  productPath,
+  progress
+}: ReaderChapterToolsProps & { progress: number }) {
+  const stickyBarRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const stickyBarElement = stickyBarRef.current;
+
+    if (typeof document === "undefined" || !stickyBarElement) {
+      return undefined;
+    }
+
+    const rootElement = document.documentElement;
+    const syncStickyBarHeight = () => {
+      const { height } = stickyBarElement.getBoundingClientRect();
+
+      if (height > 0) {
+        rootElement.style.setProperty("--reader-sticky-bar-height", `${height}px`);
+      }
+    };
+
+    syncStickyBarHeight();
+
+    const restore = () => {
+      rootElement.style.removeProperty("--reader-sticky-bar-height");
+    };
+
+    if (typeof ResizeObserver === "undefined") {
+      return restore;
+    }
+
+    const resizeObserver = new ResizeObserver(syncStickyBarHeight);
+
+    resizeObserver.observe(stickyBarElement);
+
+    return () => {
+      resizeObserver.disconnect();
+      restore();
+    };
+  }, []);
+
+  return (
+    <div className="reader-sticky-bar" ref={stickyBarRef}>
+      <ReadingProgressBar progress={progress} />
+      <ReaderChapterTools
+        chapterSlug={chapterSlug}
+        outlineIds={outlineIds}
+        productPath={productPath}
+      />
     </div>
   );
 }

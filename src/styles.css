@@ -4,6 +4,24 @@
   --global-topbar-height: 4.85rem;
   --focus-ring: rgba(14, 107, 109, 0.26);
   --focus-ring-shadow: 0 0 0 4px rgba(14, 107, 109, 0.12);
+
+  /* 진행률·도구 sticky 줄의 실측 높이. ReaderStickyBar가 ResizeObserver로 갱신하고,
+     그 줄이 없는 화면(가이드 홈 등)에서는 이 기본값으로 돌아간다. */
+  --reader-sticky-bar-height: 2.35rem;
+  --reader-progress-gap: 0.55rem;
+  --reader-anchor-gap: 0.8rem;
+
+  /* 앵커 도착 기준선 하나.
+     고정 배치로 본문을 가리는 높이(전역 topbar + 그 아래 붙는 진행률 바)에 여백을 더한 값이며,
+     CSS scroll-margin-top · 진행률 바 sticky 오프셋 · JS 도착 판정이 **모두 이 한 값을 소비**한다.
+     세 값이 각각 따로 정해져 어긋난 것이 앵커 이동 결함의 본질이었다:
+     scroll-margin-top은 6.6rem(105.6px) 고정, JS 성공 문턱은 데스크톱 136이라 도착해도 성공
+     분기에 닿지 못했고, 진행률 바는 5.2rem 고정이라 실측 topbar(1280x720에서 약 141px)보다
+     위에 붙어 데스크톱에서 통째로 가려져 있었다. */
+  --reader-anchor-clearance: calc(
+    var(--global-topbar-height) + var(--reader-progress-gap) + var(--reader-sticky-bar-height)
+      + var(--reader-anchor-gap)
+  );
 }
 
 :where(
@@ -106,6 +124,20 @@ body.reader-mobile-nav-open {
 .global-nav-label {
   font-weight: 700;
   white-space: nowrap;
+}
+
+/* 약칭은 보조 표기다. 데스크톱에서만 국가명 옆에 병기한다. */
+.global-nav-shortlabel {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.global-nav-link.active .global-nav-shortlabel {
+  color: inherit;
+  opacity: 0.75;
 }
 
 .status-pill {
@@ -843,6 +875,50 @@ body.reader-mobile-nav-open {
   top: calc(var(--global-topbar-height) + 1.25rem);
 }
 
+/* 진행률과 도구를 담은 sticky 줄. 실측 전역 topbar 바로 아래에 붙는다. LatTm 원본의
+   `.reading-progress`는 `top: 5.2rem` 고정이라 데스크톱에서 topbar(약 141px, 칩이 두 줄로
+   감김) 안쪽에 들어갔고 z-index도 20이라 topbar(120) 뒤로 완전히 가려져 있었다. */
+.reader-sticky-bar {
+  position: sticky;
+  top: calc(var(--global-topbar-height) + var(--reader-progress-gap));
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  /* 배경이 없으면 본문이 줄 사이 틈으로 비쳐 지나간다(모바일에서 두 줄로 감길 때 특히). */
+  padding: 0.3rem 0.4rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(246, 240, 231, 0.97), rgba(246, 240, 231, 0.9));
+  backdrop-filter: blur(10px);
+}
+
+/* sticky 배치는 이제 감싼 줄이 진다. */
+.reading-progress {
+  position: static;
+  top: auto;
+  z-index: auto;
+  flex: 1 1 11rem;
+  min-width: 0;
+  /* 감싼 줄이 이미 배경과 그림자를 지므로 중복 장식을 덜어낸다. */
+  border-color: transparent;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 0 0.2rem;
+}
+
+/* 앵커 대상 제목은 clearance 정본 하나만 소비한다.
+   LatTm 원본은 `.article h3/h4/h5`만 덮어 MexTm의 h6 앵커 14개는 scroll-margin이 아예 없었고,
+   딥링크로 열면 제목이 뷰포트 최상단(=고정 헤더 뒤)에 붙었다. h2~h6를 같은 기준으로 맞춘다. */
+.article h2,
+.article h3,
+.article h4,
+.article h5,
+.article h6 {
+  scroll-margin-top: var(--reader-anchor-clearance);
+}
+
 .reader-product-note {
   margin: 0;
   color: var(--muted);
@@ -857,8 +933,181 @@ body.reader-mobile-nav-open {
   margin-bottom: 0.8rem;
 }
 
+/* 1차 출처 대조 기준일. 챕터 헤더와 가이드 홈 히어로 상단에 놓이며, 본문을 밀지 않도록
+   보조 정보 톤을 유지한다. */
+.reader-provenance-note {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  max-width: 68ch;
+}
+
 .status-card .gateway-kicker {
   margin-bottom: 0.4rem;
+}
+
+/* 읽기 도구 — '맨 위로' 바의 노출 조건(readingProgress >= 20)과 분리해 늘 보인다. */
+.reader-chapter-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 1 auto;
+}
+
+.reader-chapter-tool {
+  padding: 0.34rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.reader-chapter-tool:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ink);
+}
+
+.reader-chapter-tools-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.reader-chapter-tools-status:empty {
+  display: none;
+}
+
+.reader-chapter-tools-manual {
+  flex: 1 1 100%;
+  min-width: 0;
+  padding: 0.42rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.82rem;
+}
+
+/* 히어로는 제목 + 짧은 문단이다. 보조 패널이 없으므로 단일 컬럼으로 두고, 국가 진입이
+   첫 화면(390x844 기준) 안에 들어오도록 세로 여백을 줄인다. */
+.gateway-hero--compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.gateway-hero--compact .gateway-hero-card {
+  padding-top: 1.7rem;
+  padding-bottom: 1.1rem;
+}
+
+/* 히어로 제목은 첫 화면 세로 예산에서 가장 큰 항목이다(1280x720 실측 159px, 3줄).
+   축약한 히어로에서는 한 단계 줄여 국가 진입이 화면 안으로 들어오게 한다. */
+.gateway-hero--compact .gateway-title {
+  font-size: clamp(1.55rem, 2.2vw, 2.05rem);
+}
+
+.gateway-guide-entry-title {
+  margin: 0;
+}
+
+/* 국가 진입 — 큰 소개 카드가 아니라 간결한 링크 그리드. */
+.gateway-guide-entry {
+  margin-top: 0.7rem;
+}
+
+.gateway-guide-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+
+.gateway-guide-entry-link {
+  display: grid;
+  grid-template-areas:
+    "name code"
+    "meta meta";
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.15rem 0.5rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.gateway-guide-entry-link:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(14, 107, 109, 0.28);
+  transform: translateY(-1px);
+}
+
+.gateway-guide-entry-name {
+  grid-area: name;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.gateway-guide-entry-code {
+  grid-area: code;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.gateway-guide-entry-meta {
+  grid-area: meta;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* 운영 영역 — 삭제가 아니라 강등. 기본 접힘. */
+.gateway-ops {
+  margin-top: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.42);
+  padding: 0 1.1rem;
+}
+
+.gateway-ops-summary {
+  cursor: pointer;
+  padding: 1rem 0;
+  font-weight: 700;
+  color: var(--muted);
+  list-style-position: inside;
+}
+
+.gateway-ops[open] .gateway-ops-summary {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.6rem;
+}
+
+.gateway-ops > .gateway-section {
+  padding-inline: 0;
+}
+
+@media (max-width: 640px) {
+  .gateway-guide-entry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.55rem;
+  }
+
+  .gateway-guide-entry-link {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .gateway-guide-entry-name {
+    font-size: 1.02rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -885,14 +1134,15 @@ body.reader-mobile-nav-open {
   .global-topbar,
   .topbar,
   .left-rail,
+  .reader-sticky-bar,
   .reading-progress,
   .reader-action-bar,
+  .reader-chapter-tools,
   .mobile-scrim,
   .search-shell,
   .search-results,
   .global-status-panel,
   .catalog-panel,
-  .chapter-outline,
   .continue-card,
   .latest-brief-banner-actions,
   .gateway-actions,
@@ -991,6 +1241,51 @@ body.reader-mobile-nav-open {
     white-space: normal;
     overflow-wrap: anywhere;
   }
+
+  /* 목차는 종이에서 오히려 쓸모가 크다(어디를 인쇄했는지 남는다). 다만 `.chapter-outline`만
+     되살리면 안쪽 목록이 계속 숨겨진다 — 모바일에서 접힌 상태로 인쇄하면
+     `.chapter-outline-list.collapsed { display: none }`(LatTm/src/styles.css)이 그대로 걸린다.
+     접힘 상태와 무관하게 펼쳐서 출력한다. */
+  .chapter-outline {
+    display: block !important;
+    break-inside: avoid;
+    border-color: rgba(39, 58, 62, 0.16);
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .chapter-outline-actions,
+  .chapter-outline-toggle {
+    display: none !important;
+  }
+
+  .chapter-outline-list,
+  .chapter-outline-list.collapsed {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* 화면에서는 링크 텍스트만 보이지만 종이에서는 목적지가 사라진다. 본문 링크의 주소를
+     함께 찍되, 내부 앵커와 이미 주소가 노출된 링크는 제외해 지면을 낭비하지 않는다. */
+  .article a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.82em;
+    color: rgba(39, 58, 62, 0.7);
+    overflow-wrap: anywhere;
+  }
+
+  /* 인쇄 전용 출처 표기. 어느 문서의 어느 시점 출력인지 종이에 남는다. */
+  .chapter-page::after,
+  .home-page::after {
+    content: "GloTm · " attr(data-print-source);
+    display: block;
+    margin-top: 1.2rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(39, 58, 62, 0.16);
+    color: rgba(39, 58, 62, 0.7);
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (max-width: 1180px) {
@@ -1068,6 +1363,12 @@ body.reader-mobile-nav-open {
     padding: 0.55rem 0.8rem;
     font-size: 0.92rem;
     scroll-snap-align: start;
+  }
+
+  /* ≤920px에서는 국가명만 노출한다. 칩이 넓어지면 고정 헤더가 높아지고, 그 높이가 그대로
+     `--reader-anchor-clearance`를 키워 본문이 아래로 밀린다. */
+  .global-nav-shortlabel {
+    display: none;
   }
 
   .global-nav-link:not(.active) .status-pill {
