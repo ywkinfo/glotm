@@ -203,6 +203,52 @@ describe("shared product helpers", () => {
     });
   });
 
+  // 이 기준선은 앵커 도착 기준선(대상 제목의 scroll-margin-top)에서 파생돼야 한다.
+  // 상수로 두면 헤더 높이가 바뀔 때 조용히 어긋나 "현재 섹션"이 한 칸 밀린다 —
+  // 내비를 한 줄로 만들어 topbar가 136px -> 79px가 됐을 때 실제로 그랬다.
+  it("derives the reading threshold from the anchor clearance, not a constant", () => {
+    const originalInnerWidth = window.innerWidth;
+    const originalInnerHeight = window.innerHeight;
+    const arrived = document.createElement("h2");
+    const next = document.createElement("h2");
+
+    arrived.id = "arrived";
+    next.id = "next";
+    // clearance 145px에 정확히 도착한 제목과, 그 아래 다음 제목.
+    arrived.getBoundingClientRect = () => ({ top: 145 } as DOMRect);
+    next.getBoundingClientRect = () => ({ top: 420 } as DOMRect);
+
+    const originalGetComputedStyle = window.getComputedStyle;
+
+    Object.defineProperty(window, "innerWidth", { configurable: true, value: 1280 });
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: 720 });
+    Object.defineProperty(window, "getComputedStyle", {
+      configurable: true,
+      value: (element: Element) =>
+        element === arrived || element === next
+          ? ({ scrollMarginTop: "145px" } as CSSStyleDeclaration)
+          : originalGetComputedStyle(element)
+    });
+
+    try {
+      // 상수 168을 쓰면 145 < 168이라 도착한 제목이 아니라 `next`가 잡힌다.
+      expect(getTrackedSectionId([arrived, next])).toBe("arrived");
+    } finally {
+      Object.defineProperty(window, "getComputedStyle", {
+        configurable: true,
+        value: originalGetComputedStyle
+      });
+      Object.defineProperty(window, "innerWidth", {
+        configurable: true,
+        value: originalInnerWidth
+      });
+      Object.defineProperty(window, "innerHeight", {
+        configurable: true,
+        value: originalInnerHeight
+      });
+    }
+  });
+
   it("tracks the section nearest the reading threshold", () => {
     const originalInnerWidth = window.innerWidth;
     const originalInnerHeight = window.innerHeight;
