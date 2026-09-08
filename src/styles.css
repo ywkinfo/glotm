@@ -921,6 +921,123 @@ body.reader-mobile-nav-open {
   margin-bottom: 0.4rem;
 }
 
+/* 히어로는 제목 + 짧은 문단이다. 보조 패널이 없으므로 단일 컬럼으로 두고, 국가 진입이
+   첫 화면(390x844 기준) 안에 들어오도록 세로 여백을 줄인다. */
+.gateway-hero--compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.gateway-hero--compact .gateway-hero-card {
+  padding-top: 1.7rem;
+  padding-bottom: 1.1rem;
+}
+
+/* 히어로 제목은 첫 화면 세로 예산에서 가장 큰 항목이다(1280x720 실측 159px, 3줄).
+   축약한 히어로에서는 한 단계 줄여 국가 진입이 화면 안으로 들어오게 한다. */
+.gateway-hero--compact .gateway-title {
+  font-size: clamp(1.55rem, 2.2vw, 2.05rem);
+}
+
+.gateway-guide-entry-title {
+  margin: 0;
+}
+
+/* 국가 진입 — 큰 소개 카드가 아니라 간결한 링크 그리드. */
+.gateway-guide-entry {
+  margin-top: 0.7rem;
+}
+
+.gateway-guide-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+
+.gateway-guide-entry-link {
+  display: grid;
+  grid-template-areas:
+    "name code"
+    "meta meta";
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.15rem 0.5rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.gateway-guide-entry-link:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(14, 107, 109, 0.28);
+  transform: translateY(-1px);
+}
+
+.gateway-guide-entry-name {
+  grid-area: name;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.gateway-guide-entry-code {
+  grid-area: code;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.gateway-guide-entry-meta {
+  grid-area: meta;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* 운영 영역 — 삭제가 아니라 강등. 기본 접힘. */
+.gateway-ops {
+  margin-top: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.42);
+  padding: 0 1.1rem;
+}
+
+.gateway-ops-summary {
+  cursor: pointer;
+  padding: 1rem 0;
+  font-weight: 700;
+  color: var(--muted);
+  list-style-position: inside;
+}
+
+.gateway-ops[open] .gateway-ops-summary {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.6rem;
+}
+
+.gateway-ops > .gateway-section {
+  padding-inline: 0;
+}
+
+@media (max-width: 640px) {
+  .gateway-guide-entry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.55rem;
+  }
+
+  .gateway-guide-entry-link {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .gateway-guide-entry-name {
+    font-size: 1.02rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

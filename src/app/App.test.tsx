@@ -15,6 +15,7 @@ import {
   reports
 } from "../reports/registry";
 import { liveShellProducts, products } from "../products/registry";
+import { gatewayHeroSupportingParagraphs } from "../content/gateway";
 import {
   isBaselineLaneProduct,
   isPriorityLaneProduct,
@@ -532,26 +533,27 @@ describe("App portfolio shell", () => {
     expect(within(nav).getByRole("link", { name: /MexTm/ })).toHaveAttribute("href", "/mexico");
   });
 
-  it("renders a full document href for the gateway hero CTA", async () => {
+  // 히어로의 CTA 버튼 3개는 바로 아래 국가 진입 그리드와 같은 목적지를 중복해서 가리켰다.
+  // 히어로를 제목 + 짧은 문단으로 줄이면서 그 역할은 진입 그리드로 넘겼다. 지켜야 할 계약
+  // (전체 문서 href)은 이제 진입 그리드가 진다.
+  it("renders full document hrefs for the gateway guide entry links", async () => {
     installFetchMock();
     renderAppRouteTree("/");
 
+    const guideEntry = document.querySelector('[data-gateway-section="guide-entry"]');
+
+    expect(guideEntry).not.toBeNull();
+    expect(
+      (guideEntry as HTMLElement).querySelector('[data-guide-entry-slug="china"]')
+    ).toHaveAttribute("href", "/china");
+    expect(
+      (guideEntry as HTMLElement).querySelector('[data-guide-entry-slug="usa"]')
+    ).toHaveAttribute("href", "/usa");
+
+    // 히어로에는 같은 목적지를 반복하는 버튼이 남아 있으면 안 된다.
     const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
 
-    expect(gatewayHero).not.toBeNull();
-    expect(within(gatewayHero as HTMLElement).queryByRole("link", { name: "UsaTm 보기" })).toBeNull();
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toHaveAttribute(
-      "href",
-      "/china"
-    );
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "MexTm 먼저 보기" })).toHaveAttribute(
-      "href",
-      "/mexico"
-    );
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "리포트 보기" })).toHaveAttribute(
-      "href",
-      `/reports/${latestReport?.slug}`
-    );
+    expect(within(gatewayHero as HTMLElement).queryByRole("link", { name: "ChaTm 보기" })).toBeNull();
   });
 
   it.each([
@@ -650,7 +652,10 @@ describe("App portfolio shell", () => {
     trackEventSpy.mockRestore();
   });
 
-  it("renders the refreshed gateway intro as one lead and two summary paragraphs", () => {
+  // 문구를 여기 다시 적지 않고 정본(`src/content/gateway.ts`)에서 파생한다. 그 파일은
+  // `scripts/seo.ts`도 함께 import하므로, SPA와 prerender가 같은 문구를 쓴다는 계약이
+  // 문구를 고칠 때마다 자동으로 유지된다.
+  it("renders the gateway intro from the shared hero copy canon", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
@@ -662,16 +667,14 @@ describe("App portfolio shell", () => {
         "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다."
       )
     ).toBeInTheDocument();
+
     const summaryParagraphs = [...(gatewayHero as HTMLElement).querySelectorAll(".gateway-summary")].map(
       (paragraph) => paragraph.textContent?.trim()
     );
-    expect(summaryParagraphs).toHaveLength(2);
-    expect(summaryParagraphs[0]).toBe(
-      "중국 가이드(ChaTm)에서는 중국어 브랜드명, 시장별 출시 순서, 상표 출원 방식을 먼저 정리합니다. 이어 멕시코 가이드(MexTm)에서는 출원 준비와 등록 후 관리, 세관에서 위조품을 막기 위한 준비를 살펴봅니다. 유럽 가이드(EuTm)에서는 EU와 영국에서 상표를 어디까지 보호할지, 권리를 지키기 위해 어떤 증거가 필요한지 살펴봅니다."
-    );
-    expect(summaryParagraphs[1]).toBe(
-      "최신 리포트 2개는 세 가이드에서 반복해서 나오는 질문을 한곳에 모아 정리한 자료입니다."
-    );
+
+    expect(summaryParagraphs).toEqual([...gatewayHeroSupportingParagraphs]);
+    // 히어로는 짧게 유지한다 — 길어지면 국가 진입이 첫 화면 밖으로 밀린다.
+    expect(summaryParagraphs.length).toBeLessThanOrEqual(2);
   });
 
   it("renders wrap-safe separators in the coverage and current status metrics", () => {
@@ -699,32 +702,28 @@ describe("App portfolio shell", () => {
     expect(copyStack).not.toBeNull();
     expect(within(copyStack as HTMLElement).getByRole("heading", { name: "인하우스 팀을 위한 cross-border trademark operating guide" })).toBeInTheDocument();
     expect(within(copyStack as HTMLElement).getByText("중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.")).toBeInTheDocument();
-    expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(2);
-    expect(within(copyStack as HTMLElement).queryByRole("link", { name: "ChaTm 보기" })).toBeNull();
-    expect(within(gatewayHero as HTMLElement).getByRole("link", { name: "ChaTm 보기" })).toBeInTheDocument();
+    expect((copyStack as HTMLElement).querySelectorAll(".gateway-summary")).toHaveLength(
+      gatewayHeroSupportingParagraphs.length
+    );
   });
 
-  it("places the reading flow above the risk section and links to the grouped portfolio", () => {
+  // `Recommended Start` 섹션은 국가 진입 그리드에 흡수됐다. "어디부터 볼지"를 산문으로
+  // 설명하는 대신 고를 수 있는 목록 자체를 앞에 둔다. 지켜야 할 계약은 진입 수단이 위험
+  // 설명 섹션보다 앞에 온다는 것이고, 그건 그대로 유지한다.
+  it("places the guide entry above the risk section", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    const readingFlowHeading = screen.getByRole("heading", {
-      name: "ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다"
-    });
+    const guideEntry = document.querySelector('[data-gateway-section="guide-entry"]');
     const whyLateHeading = screen.getByRole("heading", { name: "상표 리스크는 늦게 보일수록 비싸집니다" });
 
-    expect(
-      readingFlowHeading.compareDocumentPosition(whyLateHeading) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).not.toBe(0);
-    expect(
-      screen.getByText(
-        `현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel}입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다. 큰 그림이 필요할 때는 ${baselineGuide?.shortLabel}을 기준 프레임으로 함께 보면 좋습니다.`
-      )
-    ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "포트폴리오 우선 가이드 보기" })).toHaveAttribute(
-      "href",
-      "#portfolio-focus"
-    );
+    expect(guideEntry).not.toBeNull();
+    expectPrecedes(guideEntry as Element, whyLateHeading);
+
+    // 히어로 바로 다음이어야 한다 — 사이에 다른 섹션이 끼면 첫 화면에서 밀려난다.
+    const gatewayHero = screen.getByText("GloTm Gateway").closest("section");
+
+    expect((gatewayHero as HTMLElement).nextElementSibling).toBe(guideEntry);
   });
 
   it("does not render an empty Incubate roadmap card when no incubate-tier guides exist", () => {
@@ -740,14 +739,14 @@ describe("App portfolio shell", () => {
     expect(roadmapTitles.some((title) => /^·\s*Incubate$/.test(title))).toBe(false);
   });
 
-  it("surfaces the latest brief banner ahead of the reading flow with primary and archive CTAs", () => {
+  // 최신 브리프는 이제 이 배너 한 곳에서만 노출된다(별도 Latest Brief 섹션이 같은 내용을
+  // 반복했다). 그래서 배너가 아카이브 링크까지 함께 져야 한다.
+  it("surfaces the latest brief once, after the guide entry, with primary and archive CTAs", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
     const banner = screen.getByRole("region", { name: "최신 브리프 배너" });
-    const readingFlowHeading = screen.getByRole("heading", {
-      name: "ChaTm과 MexTm부터 보면 현재 우선 레인과 실행 질문이 함께 잡힙니다"
-    });
+    const guideEntry = document.querySelector('[data-gateway-section="guide-entry"]');
 
     expect(within(banner).getByRole("heading", { name: briefIssues[0]?.title ?? "" })).toBeInTheDocument();
     expect(within(banner).getByRole("link", { name: "최신 이슈 보기" })).toHaveAttribute(
@@ -758,9 +757,12 @@ describe("App portfolio shell", () => {
       "href",
       "/briefs"
     );
-    expect(
-      banner.compareDocumentPosition(readingFlowHeading) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).not.toBe(0);
+
+    // 이용자의 첫 업무(읽을 나라 고르기)가 브리프보다 앞이다.
+    expectPrecedes(guideEntry as Element, banner);
+
+    // 최신 이슈 제목이 게이트웨이에 두 번 이상 나오면 중복이 되살아난 것이다.
+    expect(screen.getAllByRole("heading", { name: briefIssues[0]?.title ?? "" })).toHaveLength(1);
   });
 
   it("leads the gateway with the latest brief banner above the latest reports trust layer", () => {
@@ -817,45 +819,21 @@ describe("App portfolio shell", () => {
     ).not.toBe(0);
   });
 
-  it("introduces report as a separate cross-jurisdiction lane between the brief section and portfolio focus", () => {
+  // 별도 Report 섹션은 최신 리포트를 세 번째로 반복했다(히어로 CTA · 트러스트 레이어 ·
+  // 이 섹션). 고유했던 focus point 핸드오프와 아카이브 링크만 트러스트 레이어로 접어 넣고
+  // 중복 섹션은 없앴다. 지켜야 할 계약(핸드오프 목적지)은 그대로 유지한다.
+  it("folds the report handoffs into the single latest-reports section", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    const briefSection = screen
-      .getByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다" })
-      .closest("section");
     const reportSection = screen
-      .getByRole("heading", { name: "여러 나라 공통 판단은 Report에서 따로 다룹니다" })
-      .closest("section");
-    const portfolioSection = screen
-      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .getByRole("heading", { name: "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다" })
       .closest("section");
 
     expect(reportSection).not.toBeNull();
     expect(
-      within(reportSection as HTMLElement).queryByText(
-        /guide가 국가별 실행 맥락을 정리하고 brief가 주간 이슈를 빠르게 해설한다면, report는 여러 시장에 공통으로 반복되는 운영 질문을 한 문서로 묶어 보는 영역입니다\./
-      )
-    ).toBeNull();
-    expect(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" })).toHaveAttribute(
-      "href",
-      "/reports"
-    );
-    expect(within(reportSection as HTMLElement).getAllByRole("link", { name: "리포트 보기" }).at(0)).toHaveAttribute(
-      "href",
-      `/reports/${latestReport?.slug}`
-    );
-    expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: latestReport?.title ?? "" })
-    ).toBeInTheDocument();
-    expect(
-      within(reportSection as HTMLElement).queryByText(
-        /ChaTm에서 이미 다룬 출원 우선순위와 표장 우선순위 질문을 이 리포트에서 한 번에 다시 정리했습니다\. LatTm은 전체 기준을 잡을 때 참고하면 좋습니다\. JapTm · UsaTm은 필요할 때 이어서 보면 됩니다\./
-      )
-    ).toBeNull();
-    expect(
-      within(reportSection as HTMLElement).queryByRole("heading", { name: "ChaTm: 중국어 표기 포트폴리오부터 잠근다" })
-    ).toBeNull();
+      within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" })
+    ).toHaveAttribute("href", "/reports");
     expect(
       within(reportSection as HTMLElement).getByRole("heading", { name: "ChaTm: 대리인 handoff 메모부터 표준화한다" })
     ).toBeInTheDocument();
@@ -866,54 +844,27 @@ describe("App portfolio shell", () => {
       "/china/chapter/제5장-출원서-작성-실무와-지정상품-설계#대리인-handoff-메모"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "MexTm: 위임장과 서명 권한부터 정리한다" })
-    ).toBeInTheDocument();
-    expect(
       within(reportSection as HTMLElement).getByRole("link", { name: "MexTm 권한·대리 실무 보기" })
     ).toHaveAttribute(
       "href",
       "/mexico/chapter/제5장-출원서-작성-실무-제출서류권한전자출원pase#4-권한-및-대리-실무"
     );
     expect(
-      within(reportSection as HTMLElement).getByRole("heading", { name: "EuTm: 대표자/대리인 handoff 규칙을 먼저 본다" })
-    ).toBeInTheDocument();
-    expect(
       within(reportSection as HTMLElement).getByRole("link", { name: "EuTm handoff 규칙 보기" })
     ).toHaveAttribute(
       "href",
       "/europe/chapter/제5장-출원-경로와-서류-설계#대표자대리인-handoff-규칙"
     );
-    expect(
-      within(reportSection as HTMLElement).queryByText(latestReport?.whyNow ?? "")
-    ).toBeNull();
-    expect(
-      within(reportSection as HTMLElement).queryByText(
-        /출원 경로, 권리자 구분, 혼합 경로 같은 질문처럼 한 국가만 봐서는 답이 약해지는 주제는 report에서 먼저 큰 구조를 잡고, 필요할 때 각 guide의 실행 맥락으로 이어서 보는 편이 가장 자연스럽습니다\./
-      )
-    ).toBeNull();
-    expect(
-      within(reportSection as HTMLElement).queryByText(
-        /그래서 여기서 나온 실행 질문을 Gateway와 Report에서 같은 기준으로 읽히게 하는 것이 지금의 다음 단계입니다\./
-      )
-    ).toBeNull();
-    expect(
-      within(reportSection as HTMLElement).getAllByText(
-        /현재 우선 레인 상태: ChaTm Mature · QA Full · gap 0 \/ MexTm Mature · QA Full · gap 0 \/ EuTm Mature · QA Full · gap 0/
-      ).length
-    ).toBeGreaterThan(0);
-    expect(
-      within(reportSection as HTMLElement).getByText(
-        `현재 공통 정렬 순서는 ${priorityLaneLabelSequence} -> ${latestReport?.gatewayBridgeLabel}입니다. guide 3개를 잠근 뒤, 최신 리포트와 Gateway handoff를 같은 순서로 이어 보는 단계입니다.`
-      )
-    ).toBeInTheDocument();
-    expect(
-      (briefSection as HTMLElement).compareDocumentPosition(reportSection as HTMLElement)
-      & Node.DOCUMENT_POSITION_FOLLOWING
-    ).not.toBe(0);
-    expect(
-      (reportSection as HTMLElement).compareDocumentPosition(portfolioSection as HTMLElement)
-      & Node.DOCUMENT_POSITION_FOLLOWING
-    ).not.toBe(0);
+
+    // 최신 리포트 제목이 게이트웨이에 두 번 이상 나오면 중복이 되살아난 것이다.
+    expect(screen.getAllByRole("heading", { name: latestReport?.title ?? "" })).toHaveLength(1);
+
+    // 운영 상태(우선 레인 요약)는 독자용 정보가 아니라 운영 정보라 접힌 운영 영역으로 내렸다.
+    const operationsPanel = document.querySelector('[data-gateway-section="operations"]');
+
+    expect(operationsPanel).not.toBeNull();
+    expect(operationsPanel?.textContent).toContain("현재 우선 레인 상태:");
+    expect(reportSection?.textContent).not.toContain("현재 우선 레인 상태:");
   });
 
   it("applies the centered header modifier only to the why-late section", () => {
@@ -1053,12 +1004,18 @@ describe("App portfolio shell", () => {
     const trackEventSpy = vi.spyOn(ga, "trackGaEvent").mockReturnValue(true);
 
     renderAppRouteTree("/");
+
+    // 아카이브 CTA와 리포트 카드가 이제 같은 트러스트 레이어 섹션에 있다.
     const reportSection = screen
-      .getByRole("heading", { name: "여러 나라 공통 판단은 Report에서 따로 다룹니다" })
+      .getByRole("heading", { name: "최신 리포트 2개에서 세 가이드의 공통 질문을 함께 살펴봅니다" })
       .closest("section");
 
     clickTrackedLink(within(reportSection as HTMLElement).getByRole("link", { name: "리포트 전체 보기" }));
-    const reportPrimaryLink = within(reportSection as HTMLElement).getAllByRole("link", { name: "리포트 보기" }).at(0);
+
+    const reportPrimaryLink = within(reportSection as HTMLElement)
+      .getAllByRole("link", { name: "리포트 보기" })
+      .at(0);
+
     expect(reportPrimaryLink).toBeDefined();
     clickTrackedLink(reportPrimaryLink as HTMLElement);
 
@@ -1073,8 +1030,8 @@ describe("App portfolio shell", () => {
       "G-TEST123",
       "report_open",
       expect.objectContaining({
-        report_slug: latestReport?.slug,
-        surface: "gateway_section"
+        report_slug: latestGatewayReports[0]?.slug,
+        surface: "gateway_latest_reports"
       })
     );
 
@@ -1082,43 +1039,30 @@ describe("App portfolio shell", () => {
     trackEventSpy.mockRestore();
   });
 
-  it("surfaces the brief archive on the gateway with links to the archive and latest issue", () => {
+  // 별도 Latest Brief 섹션은 히어로 아래 배너와 같은 이슈를 다시 보여줬다. 배너 하나로
+  // 통합하고, 그 배너가 아카이브 진입까지 함께 진다.
+  it("surfaces the brief exactly once on the gateway, with archive and latest-issue links", () => {
     installFetchMock();
     renderAppRouteTree("/");
 
-    const briefSection = screen
-      .getByRole("heading", { name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다" })
-      .closest("section");
+    const banner = screen.getByRole("region", { name: "최신 브리프 배너" });
 
-    expect(briefSection).not.toBeNull();
-    expect(
-      within(briefSection as HTMLElement).getByRole("link", { name: "브리프 전체 보기" })
-    ).toHaveAttribute("href", "/briefs");
-    expect(
-      within(briefSection as HTMLElement).getByRole("link", { name: "이번 주 브리프 보기" })
-    ).toHaveAttribute("href", `/briefs/${briefIssues[0]?.slug}`);
-    expect(within(briefSection as HTMLElement).getByText(briefIssues[0]?.title ?? "")).toBeInTheDocument();
-    const latestBriefCard = within(briefSection as HTMLElement)
-      .getByRole("heading", { name: briefIssues[0]?.title ?? "" })
-      .closest("article");
-    const previousBriefCard = within(briefSection as HTMLElement)
-      .getByRole("heading", { name: briefIssues[1]?.title ?? "" })
-      .closest("article");
+    expect(within(banner).getByRole("link", { name: "브리프 전체 보기" })).toHaveAttribute(
+      "href",
+      "/briefs"
+    );
+    expect(within(banner).getByRole("link", { name: "최신 이슈 보기" })).toHaveAttribute(
+      "href",
+      `/briefs/${briefIssues[0]?.slug}`
+    );
+    expect(within(banner).getByRole("heading", { name: briefIssues[0]?.title ?? "" })).toBeInTheDocument();
 
-    expect(latestBriefCard).not.toBeNull();
-    expect(previousBriefCard).not.toBeNull();
-    expect(within(latestBriefCard as HTMLElement).getByText("Latest Brief")).toBeInTheDocument();
-    expect(within(previousBriefCard as HTMLElement).queryByText("Latest Brief")).toBeNull();
-    expect(within(previousBriefCard as HTMLElement).getByText("Brief")).toBeInTheDocument();
+    // 중복 섹션이 되살아나면 아카이브 링크가 둘이 된다.
+    expect(screen.getAllByRole("link", { name: "브리프 전체 보기" })).toHaveLength(1);
     expect(
-      within(briefSection as HTMLElement).getByText(
-        "Hot Global TM Brief는 해외 상표 뉴스를 길게 모아두는 피드가 아니라, 한국 기업이 이번 주 먼저 확인해야 할 브랜드 이슈 하나를 골라 짧고 밀도 있게 해설하는 운영 브리프입니다."
-      )
-    ).toBeInTheDocument();
-    expect(
-      within(briefSection as HTMLElement).queryByText(
-        /이메일 게이트 없이 먼저 on-site archive로 축적하고/
-      )
+      screen.queryByRole("heading", {
+        name: "지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다"
+      })
     ).toBeNull();
   });
 
@@ -1482,6 +1426,52 @@ describe("App portfolio shell", () => {
     expect(document.querySelector('a[href="/glotm/japan"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/europe"]')).not.toBeNull();
     expect(document.querySelector('a[href="/glotm/uk"]')).not.toBeNull();
+  });
+
+  // 브라우저 자동 스크롤 복원은 새로고침 직후 문서가 아직 짧은 시점의 오프셋을 잡아 뒀다가,
+  // 앱이 앵커로 이동한 **뒤에** 지연 적용되며 되돌린다(`/glotm/` 실측 12/30 실패).
+  // 해시가 있는 동안에는 위치 소유권을 앱이 가진다.
+  it("hands scroll restoration to the app only while a hash route is active", async () => {
+    installFetchMock();
+
+    const originalDescriptor = Object.getOwnPropertyDescriptor(
+      window.history,
+      "scrollRestoration"
+    );
+
+    // jsdom에는 history.scrollRestoration이 없다. 앱은 미지원 환경에서 조용히 넘어가야 하므로
+    // (그 자체는 scrollRestoration.test.ts가 검증한다) 여기서는 지원 환경을 만들어 배선을 본다.
+    let scrollRestorationValue: ScrollRestoration = "auto";
+
+    Object.defineProperty(window.history, "scrollRestoration", {
+      configurable: true,
+      get: () => scrollRestorationValue,
+      set: (next: ScrollRestoration) => {
+        scrollRestorationValue = next;
+      }
+    });
+
+    try {
+      renderAppRouteTree("/china/chapter/china-overview#overview");
+
+      await waitFor(() => {
+        expect(window.history.scrollRestoration).toBe("manual");
+      });
+
+      const hashlessRender = renderAppRouteTree("/");
+
+      await waitFor(() => {
+        expect(window.history.scrollRestoration).toBe("auto");
+      });
+
+      hashlessRender.unmount();
+    } finally {
+      if (originalDescriptor) {
+        Object.defineProperty(window.history, "scrollRestoration", originalDescriptor);
+      } else {
+        delete (window.history as Partial<History>).scrollRestoration;
+      }
+    }
   });
 
   it("puts the guide entry section ahead of the report section on the gateway", async () => {

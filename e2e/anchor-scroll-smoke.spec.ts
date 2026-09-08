@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import {
   expectAnchorArrival,
+  expectAnchorArrivalEventually,
   installReaderSmokeState,
   measureAnchorArrival,
   mobileReaderViewport,
@@ -30,9 +31,7 @@ test.describe("anchor arrival", () => {
     test(`lands a direct deep link on the target section for ${guide.name}`, async ({ page }) => {
       await page.goto(buildSectionUrl(guide));
       await page.locator(`[id="${guide.bookmarkSectionId}"]`).waitFor({ state: "attached" });
-      await waitForScrollToSettle(page);
-
-      expectAnchorArrival(await measureAnchorArrival(page, guide.bookmarkSectionId));
+      await expectAnchorArrivalEventually(page, guide.bookmarkSectionId);
     });
   }
 
@@ -41,9 +40,7 @@ test.describe("anchor arrival", () => {
       await page.setViewportSize(mobileReaderViewport);
       await page.goto(buildSectionUrl(guide));
       await page.locator(`[id="${guide.bookmarkSectionId}"]`).waitFor({ state: "attached" });
-      await waitForScrollToSettle(page);
-
-      expectAnchorArrival(await measureAnchorArrival(page, guide.bookmarkSectionId));
+      await expectAnchorArrivalEventually(page, guide.bookmarkSectionId);
     });
 
     // 다른 장으로 가는 검색 결과 클릭. pathname이 함께 바뀌는 유일한 이동 경로라,
@@ -73,9 +70,7 @@ test.describe("anchor arrival", () => {
       expect(sectionId.length).toBeGreaterThan(0);
 
       await page.locator(`[id="${sectionId}"]`).waitFor({ state: "attached" });
-      await waitForScrollToSettle(page);
-
-      expectAnchorArrival(await measureAnchorArrival(page, sectionId));
+      await expectAnchorArrivalEventually(page, sectionId);
     });
 
     test(`lands an outline click inside the current chapter for ${guide.name}`, async ({ page }) => {
@@ -94,9 +89,7 @@ test.describe("anchor arrival", () => {
       expect(sectionId.length).toBeGreaterThan(0);
 
       await targetLink.click();
-      await waitForScrollToSettle(page);
-
-      expectAnchorArrival(await measureAnchorArrival(page, sectionId));
+      await expectAnchorArrivalEventually(page, sectionId);
     });
 
     // 문서 마지막 절. 모든 제목을 clearance 선까지 올릴 수는 없으므로(더 스크롤할 여지가 없다)

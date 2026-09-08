@@ -192,19 +192,27 @@ export async function expectGuideSmoke(page: Page, guide: ReaderSmokeCase) {
 // 스크롤이 멎을 때까지 기다린다. `toBeVisible()`은 스크롤이 전혀 없어도 통과하고,
 // 고정 헤더에 가려진 제목도 "보인다"고 판정하므로 앵커 도착의 증명이 되지 못한다.
 // 실제 좌표를 재려면 먼저 이동이 끝나야 한다.
+//
+// 문서 높이도 함께 본다. 새로고침 직후에는 SPA가 부팅하는 동안 scrollY가 0에 머무르고
+// 문서 높이만 373 -> 533 -> 15126px로 자라는 구간이 있는데, 스크롤만 보면 이 정적 구간을
+// "멎었다"로 오판해 이동 전 좌표를 재게 된다. 높이가 함께 안정돼야 실제로 멎은 것이다.
 export async function waitForScrollToSettle(page: Page) {
   await page.waitForFunction(
     () =>
       new Promise<boolean>((resolve) => {
         let lastScrollY = window.scrollY;
+        let lastScrollHeight = document.documentElement.scrollHeight;
         let stableFrames = 0;
 
         const tick = () => {
-          if (window.scrollY === lastScrollY) {
+          const scrollHeight = document.documentElement.scrollHeight;
+
+          if (window.scrollY === lastScrollY && scrollHeight === lastScrollHeight) {
             stableFrames += 1;
           } else {
             stableFrames = 0;
             lastScrollY = window.scrollY;
+            lastScrollHeight = scrollHeight;
           }
 
           if (stableFrames >= 12) {
@@ -267,7 +275,24 @@ export async function measureAnchorArrival(page: Page, sectionId: string): Promi
   }, sectionId);
 }
 
-// 도착 판정 정본. 세 가지를 한 번에 본다:
+// 앵커 도착 검사 정본.
+//
+// 두 단계로 본다. (1) 도착할 때까지 재시도하고 — 새로고침 직후처럼 SPA 부팅·데이터 fetch가
+// 끼는 경로에서는 이동이 수백 ms 뒤에 일어나며, 그 사이 scrollY와 문서 높이가 모두 정지한
+// 구간이 있어 "멎었다"만으로는 이동 전 좌표를 재게 된다. (2) 그 뒤 실제로 멎을 때까지 기다려
+// 한 번 더 단정한다 — 잠깐 맞았다가 밀리는 경우를 걸러낸다.
+//
+// 앱이 아예 이동하지 않으면 (1)에서 타임아웃으로 실패하므로 진짜 결함은 그대로 잡힌다.
+export async function expectAnchorArrivalEventually(page: Page, sectionId: string) {
+  await expect(async () => {
+    expectAnchorArrival(await measureAnchorArrival(page, sectionId));
+  }).toPass({ timeout: 10_000 });
+
+  await waitForScrollToSettle(page);
+  expectAnchorArrival(await measureAnchorArrival(page, sectionId));
+}
+
+// 좌표 단정 정본. 세 가지를 한 번에 본다:
 //   1) 아예 이동하지 않음   2) 고정 크롬에 가림   3) 과도한 오버슈트
 export function expectAnchorArrival(arrival: AnchorArrival) {
   expect(arrival.headingTop).not.toBeNull();

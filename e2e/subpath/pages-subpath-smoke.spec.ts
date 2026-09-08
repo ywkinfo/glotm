@@ -1,11 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import {
-  expectAnchorArrival,
-  measureAnchorArrival,
-  readerSmokeCases,
-  waitForScrollToSettle
-} from "../readerSmoke";
+import { expectAnchorArrivalEventually, readerSmokeCases } from "../readerSmoke";
 
 // 배포 경로 검증.
 //
@@ -43,10 +38,9 @@ for (const guide of subpathGuides) {
   test(`lands a /glotm/ deep link on the target section for ${guide.name}`, async ({ page }) => {
     await page.goto(`.${sectionPath}`);
     await page.locator(`[id="${guide.bookmarkSectionId}"]`).waitFor({ state: "attached" });
-    await waitForScrollToSettle(page);
 
     expect(decodeURIComponent(new URL(page.url()).pathname)).toBe(`/glotm${chapterPath}`);
-    expectAnchorArrival(await measureAnchorArrival(page, guide.bookmarkSectionId));
+    await expectAnchorArrivalEventually(page, guide.bookmarkSectionId);
   });
 
   test(`survives a reload on a /glotm/ hash route for ${guide.name}`, async ({ page }) => {
@@ -56,13 +50,13 @@ for (const guide of subpathGuides) {
     // GitHub Pages는 알 수 없는 경로를 404.html로 넘기고, 그 문서가 SPA를 다시 부팅한다.
     // 새로고침 후에도 같은 장·같은 섹션에 도착해야 한다.
     await page.reload();
-    await page.locator(`[id="${guide.bookmarkSectionId}"]`).waitFor({ state: "attached" });
-    await waitForScrollToSettle(page);
 
-    expect(decodeURIComponent(new URL(page.url()).pathname)).toBe(`/glotm${chapterPath}`);
+    // SPA가 본문을 렌더한 뒤에 재야 한다. 새로고침 직후에는 정적 셸만 있어 좌표가 의미 없다.
     await expect(
       page.getByRole("heading", { level: 1, name: guide.bookmarkChapterTitle })
     ).toBeVisible();
-    expectAnchorArrival(await measureAnchorArrival(page, guide.bookmarkSectionId));
+
+    expect(decodeURIComponent(new URL(page.url()).pathname)).toBe(`/glotm${chapterPath}`);
+    await expectAnchorArrivalEventually(page, guide.bookmarkSectionId);
   });
 }

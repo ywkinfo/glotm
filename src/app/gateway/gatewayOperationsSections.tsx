@@ -1,18 +1,8 @@
+import { buildReportArchivePath, reportExperienceMeta } from "../../reports/registry";
 import {
-  buildBriefArchivePath,
-  buildBriefIssuePath
-} from "../../briefs/archive";
-import {
-  buildReportArchivePath,
-  buildReportOpenLabel,
-  buildReportPath,
-  reportExperienceMeta
-} from "../../reports/registry";
-import {
-  BriefIssueCard,
   FullDocumentLink,
   ProductGroup,
-  ReportCard,
+  getTierComposition,
   joinProductLabels,
   operatorProfileUrl,
   trackEngagement
@@ -23,148 +13,11 @@ type SectionProps = {
   view: GatewayViewModel;
 };
 
-export function BriefSection({ view }: SectionProps) {
-  const { latestBrief, featuredBriefs } = view;
-
-  return (
-    <section className="gateway-section">
-      <div className="gateway-section-header">
-        <div>
-          <p className="gateway-kicker">Latest Brief</p>
-          <h2 className="gateway-section-title">지난 1주일간 가장 중요한 한국 기업 브랜드 이슈를 빠르게 정리합니다</h2>
-        </div>
-        <p className="gateway-section-copy">
-          Hot Global TM Brief는 해외 상표 뉴스를 길게 모아두는 피드가 아니라, 한국 기업이 이번 주 먼저 확인해야 할 브랜드 이슈 하나를 골라 짧고 밀도 있게 해설하는 운영 브리프입니다.
-        </p>
-      </div>
-      <p className="gateway-section-copy">
-        배경 뉴스 요약에 그치지 않고, 왜 중요한지와 기업이 지금 바로 점검할 방어 포인트까지 함께 보여드립니다.
-      </p>
-      <p className="gateway-section-copy gateway-section-copy--spaced">
-        위조, 모방, 상표 선점, 플랫폼 대응처럼 한국 브랜드의 신뢰와 매출에 직접 영향을 주는 주제를 중심으로 다룹니다.
-      </p>
-      <div className="gateway-cta-actions">
-        <FullDocumentLink
-          className="gateway-cta-link"
-          to={buildBriefArchivePath()}
-          onClick={() => {
-            trackEngagement("brief_archive_open", {
-              surface: "gateway_section"
-            });
-          }}
-        >
-          브리프 전체 보기
-        </FullDocumentLink>
-        {latestBrief ? (
-          <FullDocumentLink
-            className="gateway-cta-link gateway-cta-link--secondary"
-            to={buildBriefIssuePath(latestBrief.slug)}
-            onClick={() => {
-              trackEngagement("brief_issue_open", {
-                issue_slug: latestBrief.slug,
-                surface: "gateway_section"
-              });
-            }}
-          >
-            이번 주 브리프 보기
-          </FullDocumentLink>
-        ) : null}
-      </div>
-      <div className="brief-card-grid">
-        {featuredBriefs.map((issue) => (
-          <BriefIssueCard
-            key={issue.slug}
-            issue={issue}
-            isLatest={issue.slug === latestBrief?.slug}
-            surface="gateway"
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-export function ReportSection({ view }: SectionProps) {
-  const { leadReport, leadReportFocusPoints } = view;
-
-  return (
-    <section className="gateway-section">
-      <div className="gateway-section-header">
-        <div>
-          <p className="gateway-kicker">Report</p>
-          <h2 className="gateway-section-title">여러 나라 공통 판단은 Report에서 따로 다룹니다</h2>
-        </div>
-      </div>
-      {leadReport && leadReportFocusPoints.length > 0 ? (
-        <div className="gateway-card-grid">
-          {leadReportFocusPoints.map((focusPoint) => (
-            <article key={focusPoint.id} className="gateway-card">
-              <p className="gateway-kicker">이어 볼 가이드</p>
-              <h3 className="gateway-card-title">{focusPoint.title}</h3>
-              <p className="gateway-card-copy">{focusPoint.summary}</p>
-              <FullDocumentLink
-                className="gateway-cta-link"
-                to={focusPoint.href}
-                onClick={() => {
-                  trackEngagement("report_handoff_click", {
-                    report_slug: leadReport.slug,
-                    target_path: focusPoint.href,
-                    guide_slug: focusPoint.guideSlug ?? "none",
-                    surface: "gateway_section"
-                  });
-                }}
-              >
-                {focusPoint.ctaLabel}
-              </FullDocumentLink>
-            </article>
-          ))}
-        </div>
-      ) : null}
-      <ul className="gateway-bullet-list">
-        <li>{view.priorityLaneProgressNote}</li>
-        <li>현재 우선 레인 상태: {view.priorityLaneStatusSummary}</li>
-      </ul>
-      <div className="gateway-cta-actions">
-        <FullDocumentLink
-          className="gateway-cta-link"
-          to={buildReportArchivePath()}
-          onClick={() => {
-            trackEngagement("report_archive_open", {
-              surface: "gateway_section"
-            });
-          }}
-        >
-          {reportExperienceMeta.archiveCtaLabel}
-        </FullDocumentLink>
-        {leadReport ? (
-          <FullDocumentLink
-            className="gateway-cta-link gateway-cta-link--secondary"
-            to={buildReportPath(leadReport.slug)}
-            onClick={() => {
-              trackEngagement("report_open", {
-                report_slug: leadReport.slug,
-                surface: "gateway_section"
-              });
-            }}
-          >
-            {buildReportOpenLabel(leadReport)}
-          </FullDocumentLink>
-        ) : null}
-      </div>
-      {leadReport ? (
-        <div className="brief-card-grid">
-          <ReportCard report={leadReport} surface="gateway_section" />
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-export function PortfolioFocus({ view }: SectionProps) {
+function PortfolioFocus({ view }: SectionProps) {
   const { flagshipProducts, growthProducts, validateProducts, incubateProducts } = view;
 
   return (
-    <section id="portfolio-focus" className="gateway-section" data-gateway-section="operations">
+    <section id="portfolio-focus" className="gateway-section">
       <div className="gateway-section-header">
         <div>
           <p className="gateway-kicker">Portfolio Focus</p>
@@ -212,7 +65,7 @@ export function PortfolioFocus({ view }: SectionProps) {
   );
 }
 
-export function CurrentBuildOrder({ view }: SectionProps) {
+function CurrentBuildOrder({ view }: SectionProps) {
   return (
     <section className="gateway-section">
       <div className="gateway-section-header">
@@ -283,5 +136,59 @@ export function OperatorSection({ view }: SectionProps) {
         에서 확인하실 수 있습니다.
       </p>
     </section>
+  );
+}
+
+// 운영 영역 — 삭제가 아니라 강등이다.
+//
+// Portfolio Snapshot · tier 구성 · Current Build Order는 게이트웨이의 문서화된
+// "portfolio tier + trust formation" 역할을 지탱하는 정보라 남긴다. 다만 이용자의 첫 업무
+// (읽을 나라 고르기)보다 앞에 서면 안 되므로 기본 접힘 상태로 내린다.
+export function GatewayOperationsPanel({ view }: SectionProps) {
+  return (
+    <details className="gateway-ops" data-gateway-section="operations">
+      <summary className="gateway-ops-summary">
+        포트폴리오 운영 현황 (tier · 빌드 순서 · 스냅샷)
+      </summary>
+
+      <aside className="gateway-panel-card gateway-panel-card--supporting">
+        <p className="gateway-kicker">Portfolio Snapshot</p>
+        <div className="gateway-hero-metrics">
+          <div className="gateway-metric">
+            <span className="gateway-metric-label">Positioning</span>
+            <strong className="gateway-metric-value">
+              Cross-border operating guides for in-house teams
+            </strong>
+            <p className="gateway-metric-note">
+              GloTm은 일반 법률 정보 사이트가 아니라, 시장 우선순위와 출원·유지·집행 판단을 돕는 운영형 포트폴리오입니다.
+            </p>
+          </div>
+          <div className="gateway-metric">
+            <span className="gateway-metric-label">Portfolio</span>
+            <strong className="gateway-metric-value">{getTierComposition(view.orderedProducts)}</strong>
+            <p className="gateway-metric-note">
+              {view.liveProductCount}개 가이드를 하나의 체계로 운영해 안내하되, 각 가이드의 단계별 안내 수준과 확대 기준은 다르게 운영합니다.
+            </p>
+          </div>
+          <div className="gateway-metric">
+            <span className="gateway-metric-label">Proof</span>
+            <strong className="gateway-metric-value">
+              {view.liveChapterCount} Chapters · {view.liveSearchEntryCount} Search Entries
+            </strong>
+            <p className="gateway-metric-note">
+              권역형 {view.regionProductCount}개와 국가형 {view.countryProductCount}개를 운영하며, monthly health review와 scorecard로 search density, verification freshness, QA를 함께 관리합니다.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <ul className="gateway-bullet-list">
+        <li>{view.priorityLaneProgressNote}</li>
+        <li>현재 우선 레인 상태: {view.priorityLaneStatusSummary}</li>
+      </ul>
+
+      <PortfolioFocus view={view} />
+      <CurrentBuildOrder view={view} />
+    </details>
   );
 }

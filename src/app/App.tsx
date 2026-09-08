@@ -30,6 +30,7 @@ import {
   getRouterBasename
 } from "../products/shared";
 import { legalNavLinks, legalPages } from "../trustLegal";
+import { syncScrollRestorationForLocation } from "./scrollRestoration";
 import { BriefArchivePage, BriefIssuePage } from "./BriefPages";
 import { GatewayLandingPage } from "./gateway/GatewayLandingPage";
 import { LegalPage } from "./LegalPages";
@@ -60,6 +61,11 @@ function AppLayout() {
   const isGatewayActive = location.pathname === buildProductPath("/");
   const getGlobalNavClassName = (isActive: boolean) =>
     isActive ? "global-nav-link active" : "global-nav-link";
+
+  // SPA 안에서 해시 유무가 바뀔 때도 소유권을 맞춘다(최초 로드는 main.tsx가 먼저 정한다).
+  useEffect(() => {
+    syncScrollRestorationForLocation(location.hash);
+  }, [location.hash]);
 
   // 활성 칩을 `.global-nav` 안에서만 가운데로 옮긴다.
   //

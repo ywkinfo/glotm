@@ -10,7 +10,7 @@ import {
   buildReportPath,
   reportExperienceMeta
 } from "../../reports/registry";
-import { buildProductPath } from "../../products/shared";
+import { buildProductPath, getJurisdictionLabel } from "../../products/shared";
 import {
   BriefIssueCard,
   FullDocumentLink,
@@ -28,105 +28,56 @@ type SectionProps = {
   view: GatewayViewModel;
 };
 
-export function GatewayHero({ view }: SectionProps) {
-  const { leadGuide, secondGuide, leadReport } = view;
-
+export function GatewayHero() {
   return (
-    <section className="gateway-hero">
+    <section className="gateway-hero gateway-hero--compact">
       <div className="gateway-hero-card">
         <p className="gateway-kicker">GloTm Gateway</p>
         <div className="gateway-copy-stack">
           <h1 className="gateway-title">{gatewayHeroTitle}</h1>
           <p className="gateway-lead">{gatewayHeroLead}</p>
-          {gatewayHeroSupportingParagraphs.map((paragraph, index) => (
-            <p
-              key={paragraph}
-              className={
-                index === 0 ? "gateway-summary" : "gateway-summary gateway-summary--supporting"
-              }
-            >
+          {gatewayHeroSupportingParagraphs.map((paragraph) => (
+            <p key={paragraph} className="gateway-summary">
               {paragraph}
             </p>
           ))}
         </div>
-        {leadGuide ? (
-          <div className="gateway-actions">
-            <FullDocumentLink
-              className="gateway-button gateway-button--primary"
-              to={buildProductPath(leadGuide)}
-              onClick={() => {
-                trackEngagement(
-                  "guide_cta_click",
-                  buildGuideTrackingParams(leadGuide, "gateway_hero")
-                );
-              }}
-            >
-              {leadGuide.primaryCtaLabel}
-            </FullDocumentLink>
-            {secondGuide ? (
-              <FullDocumentLink
-                className="gateway-button gateway-button--secondary"
-                to={buildProductPath(secondGuide)}
-                onClick={() => {
-                  trackEngagement(
-                    "guide_cta_click",
-                    buildGuideTrackingParams(secondGuide, "gateway_hero")
-                  );
-                }}
-              >
-                {secondGuide.primaryCtaLabel}
-              </FullDocumentLink>
-            ) : null}
-            {leadReport ? (
-              <FullDocumentLink
-                className="gateway-button gateway-button--secondary"
-                to={buildReportPath(leadReport.slug)}
-                onClick={() => {
-                  trackEngagement("report_open", {
-                    report_slug: leadReport.slug,
-                    surface: "gateway_hero"
-                  });
-                }}
-              >
-                {buildReportOpenLabel(leadReport)}
-              </FullDocumentLink>
-            ) : null}
-          </div>
-        ) : null}
       </div>
+    </section>
+  );
+}
 
-      <aside className="gateway-panel-card gateway-panel-card--supporting">
-        <p className="gateway-kicker">Portfolio Snapshot</p>
-        <div className="gateway-hero-metrics">
-          <div className="gateway-metric">
-            <span className="gateway-metric-label">Positioning</span>
-            <strong className="gateway-metric-value">
-              Cross-border operating guides for in-house teams
-            </strong>
-            <p className="gateway-metric-note">
-              GloTm은 일반 법률 정보 사이트가 아니라, 시장 우선순위와 출원·유지·집행 판단을 돕는 운영형 포트폴리오입니다.
-            </p>
-          </div>
-          <div className="gateway-metric">
-            <span className="gateway-metric-label">Portfolio</span>
-            <strong className="gateway-metric-value">
-              {getTierComposition(view.orderedProducts)}
-            </strong>
-            <p className="gateway-metric-note">
-              {view.liveProductCount}개 가이드를 하나의 체계로 운영해 안내하되, 각 가이드의 단계별 안내 수준과 확대 기준은 다르게 운영합니다.
-            </p>
-          </div>
-          <div className="gateway-metric">
-            <span className="gateway-metric-label">Proof</span>
-            <strong className="gateway-metric-value">
-              {view.liveChapterCount} Chapters · {view.liveSearchEntryCount} Search Entries
-            </strong>
-            <p className="gateway-metric-note">
-              권역형 {view.regionProductCount}개와 국가형 {view.countryProductCount}개를 운영하며, monthly health review와 scorecard로 search density, verification freshness, QA를 함께 관리합니다.
-            </p>
-          </div>
-        </div>
-      </aside>
+// 국가 진입. 큰 소개 카드가 아니라 간결한 링크 그리드다 — 첫 화면에서 해야 할 일은
+// "읽을 나라를 고르는 것" 하나뿐이다.
+//
+// 순서는 `orderGatewayProducts(liveShellProducts)`를 그대로 소비해 registry의 gatewayOrder에서
+// 구조적으로 나온다(드리프트 불가). 이 계약은 App.test.tsx가 DOM 관계로 지킨다.
+export function GuideEntryGrid({ view }: SectionProps) {
+  return (
+    <section className="gateway-guide-entry" data-gateway-section="guide-entry">
+      <h2 className="gateway-section-title gateway-guide-entry-title">
+        어느 나라부터 보시겠습니까?
+      </h2>
+      <div className="gateway-guide-entry-grid">
+        {view.orderedProducts.map((product) => (
+          <FullDocumentLink
+            key={product.id}
+            className="gateway-guide-entry-link"
+            data-guide-entry-slug={product.slug}
+            to={buildProductPath(product)}
+            onClick={() => {
+              trackEngagement(
+                "guide_cta_click",
+                buildGuideTrackingParams(product, "gateway_guide_entry")
+              );
+            }}
+          >
+            <span className="gateway-guide-entry-name">{getJurisdictionLabel(product)}</span>
+            <span className="gateway-guide-entry-code">{product.shortLabel}</span>
+            <span className="gateway-guide-entry-meta">{product.chapterCount}개 챕터</span>
+          </FullDocumentLink>
+        ))}
+      </div>
     </section>
   );
 }
@@ -206,20 +157,45 @@ export function TrustLayerReports({ view }: SectionProps) {
           ))}
         </div>
       ) : null}
-    </section>
-  );
-}
-
-export function RecommendedStart({ view }: SectionProps) {
-  return (
-    <section className="gateway-cta-card">
-      <p className="gateway-kicker">Recommended Start</p>
-      <h2 className="gateway-cta-title">{view.recommendedStartTitle}</h2>
-      <p className="gateway-cta-copy">{view.recommendedStartCopy}</p>
+      {/* 별도 Report 섹션이 최신 리포트를 한 번 더 반복하고 있었다. 그 섹션에서 유일하게
+          고유했던 focus point 핸드오프와 아카이브 링크만 여기로 접어 넣고 중복은 없앤다. */}
+      {view.leadReport && view.leadReportFocusPoints.length > 0 ? (
+        <div className="gateway-card-grid">
+          {view.leadReportFocusPoints.map((focusPoint) => (
+            <article key={focusPoint.id} className="gateway-card">
+              <p className="gateway-kicker">이어 볼 가이드</p>
+              <h3 className="gateway-card-title">{focusPoint.title}</h3>
+              <p className="gateway-card-copy">{focusPoint.summary}</p>
+              <FullDocumentLink
+                className="gateway-cta-link"
+                to={focusPoint.href}
+                onClick={() => {
+                  trackEngagement("report_handoff_click", {
+                    report_slug: view.leadReport?.slug ?? "none",
+                    target_path: focusPoint.href,
+                    guide_slug: focusPoint.guideSlug ?? "none",
+                    surface: "gateway_section"
+                  });
+                }}
+              >
+                {focusPoint.ctaLabel}
+              </FullDocumentLink>
+            </article>
+          ))}
+        </div>
+      ) : null}
       <div className="gateway-cta-actions">
-        <a className="gateway-cta-link" href="#portfolio-focus">
-          포트폴리오 우선 가이드 보기
-        </a>
+        <FullDocumentLink
+          className="gateway-cta-link"
+          to={buildReportArchivePath()}
+          onClick={() => {
+            trackEngagement("report_archive_open", {
+              surface: "gateway_section"
+            });
+          }}
+        >
+          {reportExperienceMeta.archiveCtaLabel}
+        </FullDocumentLink>
       </div>
     </section>
   );

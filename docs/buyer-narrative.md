@@ -52,18 +52,21 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `MexTm`: canonical CTA는 `MexTm 먼저 보기`. filing packet, maintenance triage, border-control handoff를 buyer-entry 기준으로 잇는 두 번째 가이드다.
 - `EuTm`: canonical CTA는 `EuTm 보기`. growth lane에서 EU+UK scope와 evidence triage 기준을 정리하는 세 번째 가이드다.
 - `UsaTm`: canonical CTA는 `UsaTm 보기`. Gateway first CTA가 아니라, 미국 단일 시장의 full-QA supporting growth lane으로 이어 읽는다.
-- Gateway hero CTA row는 `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`로 고정한다.
+- Gateway 히어로에는 CTA row를 두지 않는다. 히어로 바로 아래 국가 진입 그리드가 같은 목적지를
+  전부 담당하며, 순서는 registry `gatewayOrder`에서 파생한다(`중국 · 멕시코 · 유럽 · 중남미 ·
+  일본 · 영국 · 미국`). 각 guide의 canonical CTA 문구는 guide 홈과 Portfolio Focus 카드에서 유지한다.
 
 ## Current gateway promise
 
-- Supporting copy 1: `중국 가이드(ChaTm)에서는 중국어 브랜드명, 시장별 출시 순서, 상표 출원 방식을 먼저 정리합니다. 이어 멕시코 가이드(MexTm)에서는 출원 준비와 등록 후 관리, 세관에서 위조품을 막기 위한 준비를 살펴봅니다. 유럽 가이드(EuTm)에서는 EU와 영국에서 상표를 어디까지 보호할지, 권리를 지키기 위해 어떤 증거가 필요한지 살펴봅니다.`
-- Supporting copy 2: `최신 리포트 2개는 세 가이드에서 반복해서 나오는 질문을 한곳에 모아 정리한 자료입니다.`
+- Supporting copy: `어느 나라부터 출원할지, 어떤 경로로 낼지, 등록한 뒤 무엇을 관리할지를 국가별 가이드에서 순서대로 정리합니다.`
+- 정본은 `src/content/gateway.ts`이고 SPA와 prerender(`scripts/seo.ts`)가 같은 배열을 import한다.
+  히어로가 길어지면 국가 진입이 첫 화면 밖으로 밀리고, 늘어난 분량이 크롤 표면에도 그대로 간다.
 
 ## Current report handoff
 
 - 현재 primary report 1순위는 `글로벌 지정상품·지정서비스 설계 프레임워크`(`global-goods-services-class-framework`)다.
 - 현재 primary report 2순위는 `한글 표장 글로벌 보호 운영 프레임워크`(`hangul-mark-global-protection-framework`)다.
-- Gateway 첫 화면의 최신 report 2개는 별도 주연 카드가 아니라, priority guides 아래에서 launch sequencing, filing packet, evidence triage 같은 공통 질문을 다시 묶는 first trust layer로 유지한다.
+- Gateway의 최신 report 2개는 별도 주연 카드가 아니라, 국가 진입 아래에서 launch sequencing, filing packet, evidence triage 같은 공통 질문을 다시 묶는 first trust layer로 유지한다. 게이트웨이에서 최신 report는 이 한 곳에만 노출한다(별도 Report 섹션의 중복은 제거했고, report focus point 핸드오프와 아카이브 링크를 이 섹션이 함께 진다).
 
 ## 지금 보면 좋은 가이드
 
@@ -78,7 +81,7 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 - `ChaTm -> MexTm -> EuTm -> Report / Gateway trust layer -> UsaTm -> JapTm -> UKTm`
 - `LatTm`은 대형 신규 확장보다 기준선 보호와 reader 품질 유지에 집중한다
 - 최신 Report / Gateway trust layer는 `ChaTm`, `MexTm`, `EuTm`에서 먼저 잠근 공통 질문을 다시 묶고, `LatTm` 기준 프레임과 `UsaTm` supporting growth lane으로 이어 읽게 설계한다
-- Gateway 첫 화면은 최신 report 2개를 먼저 보여 주고, report detail에서는 source guide context와 deep-link return CTA를 유지한다
+- Gateway 첫 화면은 국가 진입을 먼저 보여 주고, 그 아래에서 최신 report 2개를 한 번만 노출한다. report detail에서는 source guide context와 deep-link return CTA를 유지한다
 
 ## Three practical outcomes
 
