@@ -14,7 +14,10 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-09-mexico-lfppi-regulations-in-force");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-09-uspto-madrid-efiling-cutover");
+    expect(getBriefIssueBySlug("2026-09-uspto-madrid-efiling-cutover")?.title).toBe(
+      "2026년 9월 Hot Global TM Brief | 미국을 본국관청으로 하는 국제출원 창구가 10월 1일 Madrid e-Filing으로 일원화됩니다 — 9월 30일 전에 계정과 수수료 경로를 정리할 때입니다"
+    );
     expect(getBriefIssueBySlug("2026-09-mexico-lfppi-regulations-in-force")?.title).toBe(
       "2026년 9월 Hot Global TM Brief | 멕시코 시행규칙이 32년 만에 교체돼 7월 22일 발효됐습니다 — 진행 중인 건의 기한부터 다시 확인할 때입니다"
     );

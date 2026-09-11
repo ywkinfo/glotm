@@ -396,9 +396,10 @@ export const briefCandidates: BriefCandidate[] = [
     sourceIds: ["wipo-madrid", "uspto"],
     jurisdictions: ["United States", "Global", "Madrid System"],
     relatedProductSlugs: ["usa"],
-    status: "ready",
+    status: "published",
+    publishedAs: "2026-09-uspto-madrid-efiling-cutover",
     notes:
-      "2026-08-30 sweep에서 WIPO Madrid System 뉴스 목록을 열어 확인했다(https://www.wipo.int/en/web/madrid-system/w/news/2026/transition-to-madrid-efiling-at-the-uspto). 날짜가 박힌 마감이 있어 바로 쓸 수 있다: 2026-07-31~09-30 병행, 10-01 단일 창구. UsaTm은 마지막 브리프 등장 2026-08-08 이후 열린 후보가 0건이었고 claim-map에 uspto-madrid-outbound 소스를 이미 들고 있어 연결이 자연스럽다. 발행 시 확인할 것: 이 전환은 '미국을 본국관청으로 하는 outbound 국제출원' 창구 변경이며, 한국 기업이 KIPO를 본국관청으로 쓰는 경로에는 영향이 없다는 점을 본문에서 분명히 구분한다."
+      "2026-08-30 sweep에서 WIPO Madrid System 뉴스 목록을 열어 확인했다(https://www.wipo.int/en/web/madrid-system/w/news/2026/transition-to-madrid-efiling-at-the-uspto). 날짜가 박힌 마감이 있어 바로 쓸 수 있다: 2026-07-31~09-30 병행, 10-01 단일 창구. UsaTm은 마지막 브리프 등장 2026-08-08 이후 열린 후보가 0건이었고 claim-map에 uspto-madrid-outbound 소스를 이미 들고 있어 연결이 자연스럽다. 발행 시 확인할 것: 이 전환은 '미국을 본국관청으로 하는 outbound 국제출원' 창구 변경이며, 한국 기업이 KIPO를 본국관청으로 쓰는 경로에는 영향이 없다는 점을 본문에서 분명히 구분한다. 2026-09-11 발행 — 후보 등록 시 기록한 위 사실(공지일·병행 기간·단일 창구 전환일·WIPO Account 요건·CHF 직납)을 본문의 기준으로 삼았고, 마감이 걸린 소재라 발행 라운드에서 공식 도메인(uspto.gov·wipo.int) 제한 검색으로 날짜가 밀리지 않았음을 재확인했다. 그 과정에서 본문에 반영한 사실 두 가지가 더 나왔다: ⓐ 이미 TEASi에 접수한 건은 10-01 이후에도 TEASi에서 마무리한다, ⓑ 증명수수료는 USD로 USPTO에 출원 시 즉시 납부하고 류 수·기초 출원등록 건수로 계산되며 WIPO 수수료만 CHF 직납으로 갈린다. 다만 이 세션에서도 uspto.gov·wipo.int는 CONNECT 403이라 원문 페이지를 연 것은 아니므로(primary-page-read 0건) briefSweepLog 회차를 추가하지 않는다 — 등록 소스의 freshness는 그대로다."
   },
   {
     id: "2027-china-implementing-rules",
