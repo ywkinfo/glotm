@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-08-25 (2회차)
+- Last updated: 2026-09-11 (정합성 라운드 · 직전 기록 2026-09-07 9라운드)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -152,6 +152,23 @@
   - **sweep 회차는 추가하지 않았다.** 이 세션에서 `moip.go.kr`·`kipo.go.kr`·`koipa.re.kr`·`wipo.int` **네 호스트 전부 CONNECT 403**이라 소스를 새로 열지 못했다. 발행 라운드가 곧 실사 회차는 아니라는 점은 2026-08-24 라운드와 같은 처리다 — `lastVerified`는 하나도 움직이지 않았고 radar의 실사 이력도 그대로다. 앞 라운드가 같은 소스를 열 수 있었다는 사실과 합쳐 보면 **채널 가용성은 세션마다 갈린다**는 기록이 하나 더 쌓인 셈이다.
   - **남은 것**: `ready` 1건(`2026-10-uspto-madrid-efiling-cutover`, 2026-09-30 전 발행이 실효 조건). 커버리지 공백은 여전히 `JapTm`(마지막 등장 2026-06-09)과 `LatTm`(2026-07-11)이고 둘 다 열린 후보 0건이다. 2026-08-24 라운드가 남긴 **시한 있는 소재의 만료 표시 장치**(`timeSensitive.closesOn` 등) 부재는 그대로다 — 이번 호도 9월 11일이 지나면 같은 상태가 되며, lane 계약 변경이라 owner 판단으로 남긴다.
   - 게이트: `npm test` **372/372**, `typecheck` pass, `health:release` **148 routes** + `check:dist-boundary` 0 hits(25 tokens) + `test:seo` 23 pass, `briefs:radar` 19호 · 최신 2026-08-31 · 0d · `ready` 1 · `watching` 2. 문서 정합: sitemap 인벤토리 `147`→**148**, brief 행 `index 1 + issue 18 = 19`→`index 1 + issue 19 = 20`.
+
+- 2026-09-08 UX 라운드(#159·#160) — **2026-09-11에 소급 기록했다.** 이 라운드만 보드에 기록이 없었다(커밋 10개·PR 2건). 아래 수치는 라운드가 자기 커밋 메시지에 남긴 실측이고, 재현 확인분은 마지막 줄에 따로 적는다.
+  - **이동 안정화.** 앵커가 sticky 크롬 **뒤에** 착지하던 문제를 고쳤다. ResizeObserver가 실측한 크롬 높이를 `--reader-anchor-clearance` 하나로 모으고, `scrollToSection`의 도착 판정을 그 정본으로 통일했다.
+  - **진입 구조.** Gateway 히어로를 제목+문단 하나로 줄이고 CTA 버튼 3개를 뺐다(바로 아래 국가 진입이 같은 목적지를 전부 담당한다). 국가 진입을 링크 그리드로 올리고, Portfolio Snapshot·tier 그룹·Current Build Order는 **삭제가 아니라** 기본 접힘 운영 영역으로 내렸다. 첫 화면 실측은 390x844 / 1280x720 / 1440x900 모두 **7개 국가 전부 노출**. 최신 브리프는 배너 한 곳, 최신 리포트는 트러스트 레이어 한 곳으로 중복을 합쳤다. 상단 내비 라벨은 제품 코드에서 **관할**로 바꿨다.
+  - **실무 활용.** 읽고 있던 **섹션**을 가리키는 링크 복사와 인쇄 도달성을 넣었다. 초안은 클릭 시점에 위치를 쟀는데, 도구가 장 헤더에 있어 사용자가 위로 올라온 **뒤에** 재면 장 첫 섹션이 잡혔다(e2e가 잡았다). 최종안은 진행률과 도구를 하나의 sticky 바로 옮겨 추적 로직 자체를 없앴다.
+  - **부수적으로 잡은 실제 배포 결함.** `/glotm/` 앵커 딥링크를 **새로고침**하면 브라우저의 지연된 스크롤 복원이 앱의 앵커 이동 **뒤에** 낡은 오프셋으로 되돌렸다(부하 A/B: 자동 복원 12/30 실패, 수동 전환 0/30). 해시가 있는 동안 `history.scrollRestoration`을 manual로 넘겨 위치 소유권을 앱이 갖게 했다.
+  - **같은 종류의 드리프트 하나 더.** 내비를 한 줄로 고정해 topbar가 136 → 79px가 되자, 자기 상수(데스크톱 168)를 쓰던 `getTrackedSectionId`가 실제 clearance(145)와 어긋나 "지금 읽는 섹션"이 옆 섹션으로 잡혔다. 대상 제목의 `scroll-margin-top`을 직접 읽어 두 정의를 하나로 묶고 회귀 테스트를 붙였다.
+  - **문서 동기화 범위**: `PROJECT-OVERVIEW.md`·`docs/buyer-narrative.md`·`docs/portfolio-scorecard.md`. 이 보드와 `docs/phase2.5-organic-indexing-ops.md`는 빠졌고, 그 잔여가 아래 2026-09-11 라운드다.
+  - 라운드 기록 게이트: `npm test` **413**, `typecheck` pass, `e2e:smoke` **50**(3회 연속), `health:release`(subpath 7), `check:consistency` 0 hard / 0 advisory, prerender **150**.
+
+- 2026-09-11 정합성 라운드: **9/8 UX 라운드가 남긴 문서 드리프트를 닫았다.** 코드·콘텐츠 변경 없음(문서만).
+  - **없는 파일을 정본으로 가리키던 포인터 1건**: `monthly-review-template.md`의 Gateway hero 정본이 `src/app/GatewayPage.tsx`였는데, 그 파일은 9/7 모듈 분리(`refactor(gateway): split GatewayPage into gateway/ modules`)로 사라졌다. 제목·리드 상수 정본 `src/app/gateway/gatewayData.ts` + 렌더 `src/app/gateway/gatewaySections.tsx`로 교체했다. **월간 리뷰가 따라가는 포인터**라 다음 리뷰 전에 닫아야 하는 항목이었다.
+  - **확장자 드리프트 1건**: `ARCHITECTURE.md`의 `src/app/appShared.ts` → 실제 `src/app/appShared.tsx`.
+  - **stale 수치 1건**: `phase2.5-organic-indexing-ops.md` §3의 `e2e:smoke(28 pass)` → **50**. 같은 절의 라이브 QA 확인 흐름에 9/8 신설 surface(리더 sticky 바의 섹션 링크 복사·인쇄)를 추가했다 — 라이브 전용 회귀를 owner 육안 확인이 겨냥하지 못하고 있었다.
+  - **고치지 않은 것 — 드리프트가 아니다.** `PROJECT-OVERVIEW.md`의 `Last updated`/`Verified on` 2026-08-25 쌍은 문서 편집 스탬프가 아니라 **월간 lane 재검증 스탬프**다(이력상 2026-07-04·2026-08-25 리뷰에서만 함께 움직였다). 문서를 고쳤다는 이유로 올리면 하지 않은 재검증을 주장하게 된다. 이 보드 헤더의 `Last updated`는 라운드마다 움직이는 값이라 함께 갱신했다.
+  - 게이트(오늘 재현): `health:runtime` pass(unit **345** + e2e:smoke **50**), `health:content` pass(content **45**, 7개 워크스페이스 QA 0 error / 0 warning), `health:release` pass(**150 routes** + sitemap 150 `<loc>` + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` 23 + subpath e2e 7), `check:consistency` **0 hard / 0 advisory**, `health:report` 7개 가이드 전부 `hold`.
+  - **환경 제약 기록**: 이 세션의 egress 정책이 `ywkinfo.github.io`를 막아(**CONNECT 403**) 라이브 확인은 하지 못했다. 로컬 Playwright는 샌드박스 브라우저(1194)와 `@playwright/test` 1.59가 찾는 빌드(1217)가 어긋나 처음엔 e2e 50건 전부 실패했고, 스크래치패드 심볼릭 링크로 우회한 뒤 50/50 통과했다 — **저장소 결함이 아니다**.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
