@@ -4,7 +4,7 @@
 값을 바꿀 때는 먼저 source of truth를 업데이트한다.
 
 - positioning: `../PROJECT-OVERVIEW.md`, `buyer-narrative.md`
-- Gateway hero: `../src/content/gateway.ts` (supporting 문단 정본), `../src/app/GatewayPage.tsx` (제목·리드)
+- Gateway hero: `../src/content/gateway.ts` (supporting 문단 정본), `../src/app/gateway/gatewayData.ts` (제목·리드 상수), 렌더는 `../src/app/gateway/gatewaySections.tsx`
 - funnel CTA: `../src/products/registry.ts`
 - report ordering: `../src/reports/registry.ts`
 - KPI sheet: `portfolio-scorecard.md`

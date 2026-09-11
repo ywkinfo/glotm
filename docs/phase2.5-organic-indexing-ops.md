@@ -101,11 +101,11 @@ property id **`G-0XF5JG96CC`** 기준. **라이브 배포본**에서만 검증�
 
 ## §3. Live interactive QA (owner 육안 + agent 사전 스모크)
 
-로컬 `e2e:smoke`(28 pass)가 같은 흐름을 보호하므로, owner는 **라이브 배포본 육안 최종 확인**만 한다.
+로컬 `e2e:smoke`(50 pass)가 같은 흐름을 보호하므로, owner는 **라이브 배포본 육안 최종 확인**만 한다.
 Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(콘솔 에러·broken nav diff).
 
-확인 흐름: Gateway 로드 → guide 진입 → 챕터 → 검색 → continue reading 복귀 → report·`/legal`·`/privacy`
-네비게이션 → mobile drawer close/Escape.
+확인 흐름: Gateway 로드 → 첫 화면 국가 진입 → 챕터 → 검색 → continue reading 복귀 → report·`/legal`·`/privacy`
+네비게이션 → mobile drawer close/Escape → 리더 sticky 바의 섹션 링크 복사·인쇄(2026-09-08 라운드 신설 surface).
 
 ## §4. Organic measurement cadence — 월 100 유기방문 트리거 (owner)
 

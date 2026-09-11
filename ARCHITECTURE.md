@@ -36,7 +36,7 @@ Gateway / Brief / Report / guide readers
 - 루트 앱 진입과 route wiring: `src/app/App.tsx`
 - live guide portfolio metadata: `src/products/registry.ts`
 - report metadata와 archive ordering: `src/reports/registry.ts`
-- 공통 path / title / shared runtime helpers: `src/products/shared.ts`, `src/app/appShared.ts`, `src/reports/registry.ts`
+- 공통 path / title / shared runtime helpers: `src/products/shared.ts`, `src/app/appShared.tsx`, `src/reports/registry.ts`
 
 현재 루트 셸은 다음 surface를 함께 제공한다.
 
