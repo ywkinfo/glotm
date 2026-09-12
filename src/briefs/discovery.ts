@@ -493,6 +493,21 @@ export const briefCandidates: BriefCandidate[] = [
     publishedAs: "2026-09-mexico-lfppi-transitional-scope-correction",
     notes:
       "발굴 경로가 외부 소스가 아니라 **이미 발행한 이슈의 내부 모순**이다. 저장소 안에서 전부 확인되므로 소스 접근 없이 판정할 수 있었다. sourceIds는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다 — DOF 관보 원문의 부칙과 IMPI 공식 안내다. **1차 출처 미대조**: 이 세션에서도 DOF·IMPI는 열리지 않아(프록시 CONNECT 403) sweep 회차를 추가하지 않았고, 그래서 정정호는 20호의 단정을 철회하기만 하고 반대 방향을 새로 단정하지 않는다. **2026-09-12 2차 출처 triage(같은 날 후속)**: 컨테이너 egress를 다시 재 봤으나 `dof.gob.mx`·`www.dof.gob.mx`·`sidof.segob.gob.mx`·`www.diputados.gob.mx`·`impi.gob.mx` 전부 CONNECT 403이고 WebFetch도 `EGRESS_BLOCKED`라 관보 원문 대조는 여전히 불가하다. 다만 WebSearch는 이 채널에서 열려, 2차 출처 다수(Mijares·Pérez-Llorca·FisherBroyles·Panamericana de Patentes y Marcas·Coel·TaxToday)가 **조문을 특정해** 일치하는 것을 확인했다 — **TERCERO 전환규정**: 시행 전 접수된 사건은 접수 당시(presentación) 시행 중이던 규정에 따라 계속 처리하되, MASC(대체적 분쟁해결 메커니즘) 이용은 예외. 사실이라면 20호의 단정은 방향이 반대다. **그래도 등급은 2차다.** 20호의 오류는 '2차 출처를 썼다'가 아니라 '2차 출처가 다루지 않은 명제를 단정했다'였고, 여기서는 2차 출처가 그 명제를 직접·일관되게 다룬다는 점이 다르지만, `briefs-lane.md`가 잠근 '정정호는 1차 출처 대조 없이 반대 방향을 단정하지 않는다'는 그대로 적용된다. 그래서 **22호를 고치지도, 후속호를 발행하지도 않았다.** sweep 회차도 추가하지 않는다(WebSearch triage는 소스를 연 것이 아니다 — 20호 후보와 같은 처리). 미결은 `MexTm` claim-map의 **MX-OQ-004**로 옮겨 `MX-DL-001`·`MX-ENF-001`에 걸었고, 거기에 확인 대상 둘과 확인 경로를 적었다."
+  },
+  {
+    id: "2026-09-mexico-lfppi-gazette-primary-check",
+    headline:
+      "2026-04-28 DOF 게재분 부칙을 직접 대조하면 20호의 방향이 확정되고, 같은 부칙의 PRIMERO가 22호의 '네 축 유효' 재확인 중 하나를 무너뜨린다",
+    trigger:
+      "2026-09-12 데스크톱 세션에서 `dof.gob.mx` apex가 열려 nota 5786237(면머리 `DOF: 28/04/2026`)의 TRANSITORIOS를 직접 읽었다. 22호가 확인 대상으로 남긴 TERCERO 문언과 기준선이 둘 다 확정됐고(MX-OQ-004 종결), 그 과정에서 PRIMERO 둘째 문단이 제7장 온라인 침해 행정선언 절차를 본체 시행일에서 떼어 별도 Acuerdo 게재 다음 날로 미루고 그 고시에 18개월 기한을 붙인 것이 나왔다. 20호가 그 절차를 네 축 중 하나로 들었고 22호가 그 축을 유효로 재확인했으므로, 발행된 정정호 안에 남은 오류다.",
+    discoveredOn: "2026-09-12",
+    sourceIds: ["dof-mexico", "impi"],
+    jurisdictions: ["Mexico", "Industrial Property Reform", "Transitional Provisions", "Enforcement"],
+    relatedProductSlugs: ["mexico"],
+    status: "published",
+    publishedAs: "2026-09-mexico-lfppi-gazette-transitional-confirmation",
+    notes:
+      "앞 후보(`2026-09-mexico-lfppi-transitional-provisions`)와 같은 질문을 1차 출처로 닫은 회차다. 그 후보는 저장소 내부 모순에서 나왔고 2차 출처까지만 닿았지만, 이 후보는 관보 게재분 본문에서 나왔다. **sweep 회차는 추가하지 않았다** — `dof-mexico`의 `sweepTarget`은 기간 대상 검색이고 '일자별 edición 전문을 읽는 것은 완료 조건이 아니다'라고 명시돼 있는데, 이번에 한 것은 특정 nota 직접 열람이라 그 조건을 채우지 못한다. 그래서 `dof-mexico`는 radar에서 계속 `실사 이력 없음`이다. **대조 범위**: DOF 게재분 한 곳이며 diputados 상시본(`LeyesBiblio/regley/Reg_LFPPI.pdf`)은 이 세션에서 열리지 않았다(curl 443 연결 실패, 브라우저 내비게이션 거부). 관보 게재분이 정본이므로 결론은 서지만 두 곳 대조는 아니다. 남은 미결은 시행규칙 **본문 조문**이다 — `MX-OQ-002`(답변기한·연장 기산)는 부칙이 아니라 본문에 있고 이 회차가 열지 않았다."
   }
 ];
 
