@@ -15,7 +15,12 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-09-uspto-madrid-efiling-cutover");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-09-mexico-lfppi-transitional-scope-correction");
+    expect(
+      getBriefIssueBySlug("2026-09-mexico-lfppi-transitional-scope-correction")?.title
+    ).toBe(
+      "2026년 9월 Hot Global TM Brief | 정정 — 멕시코 새 시행규칙이 진행 중인 건에 이미 적용된다고 단정한 것은 근거가 없었습니다"
+    );
     expect(getBriefIssueBySlug("2026-09-uspto-madrid-efiling-cutover")?.title).toBe(
       "2026년 9월 Hot Global TM Brief | 미국을 본국관청으로 하는 국제출원 창구가 10월 1일 Madrid e-Filing으로 일원화됩니다 — 9월 30일 전에 계정과 수수료 경로를 정리할 때입니다"
     );
@@ -207,6 +212,21 @@ describe("brief lane contract", () => {
     // 예고 단계였던 일정·대상국이 확정값으로 바뀐 사실이 정정 문구에 남아 있어야 한다.
     expect(supersededIssue?.supersededBy?.note).toContain("9월 11일");
     expect(supersededIssue?.supersededBy?.note).toContain("73개국");
+  });
+
+  // 20호는 "관보를 대조하지 않았다"는 유보를 본문에 적어 두고도 요약·헤드라인에서는 그 명제를
+  // 단정했다. 정정호가 철회한 것이 **그 단정**이라는 사실이 문구에서 사라지면 정정이 무의미해지므로,
+  // 무엇을 철회했는지(진행 중인 건)와 무엇이 적용범위를 정하는지(부칙)를 여기서 잠근다.
+  it("keeps the 2026-09 Mexico regulations issue pointing at its transitional-scope correction", () => {
+    const supersededIssue = getBriefIssueBySlug("2026-09-mexico-lfppi-regulations-in-force");
+
+    expect(supersededIssue?.supersededBy?.slug).toBe(
+      "2026-09-mexico-lfppi-transitional-scope-correction"
+    );
+    expect(supersededIssue?.supersededBy?.note).toContain("진행 중인");
+    expect(supersededIssue?.supersededBy?.note).toContain("TRANSITORIOS");
+    // 철회 범위가 번져 나가지 않도록, 그대로 남는 사실도 정정 문구가 붙들고 있어야 한다.
+    expect(supersededIssue?.supersededBy?.note).toContain("발효일 7월 22일");
   });
 
   it("shapes every time-sensitive marker so the date arithmetic cannot drift", () => {

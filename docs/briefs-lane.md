@@ -31,6 +31,10 @@ lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/arc
 - `jurisdictions` 태그를 최소 1개 이상 단다(시장·주제 분류).
 - 각 item의 `relatedGuideLinks`는 live guide 경로로만 연결한다(`getProductPathBySlug`).
 - 출처를 구조화 메타데이터로 재가공하지 않는다. 사실 재가공은 오기 위험이 있으므로, 출처는 저자가 쓴 본문 인용을 정본으로 본다(정확성 우선).
+- **본문이 유보한 명제를 `summary`·`headline`에서 단정하지 않는다.** 요약과 헤드라인은 아카이브·Gateway 카드와 검색 결과에 본문 없이 단독으로 노출되므로 본문보다 넓게 읽힌다. 본문에 "확인이 필요하다"를 적어 두는 것만으로는 독자를 보호하지 못하고, 요약만 읽은 독자와 본문까지 읽은 독자가 서로 다른 결론을 갖게 된다. 유보가 붙은 사실은 요약·헤드라인에서도 유보를 달거나 아예 쓰지 않는다.
+  - 이 규칙은 2026-09-12 `2026-09-mexico-lfppi-transitional-scope-correction` 라운드에서 나왔다. 20호는 본문 두 곳에서 "발효 전 접수된 사건에 어떤 규칙이 적용되는지는 확인이 필요하다"고 적고도 요약·헤드라인에서는 "이미 새 규칙 아래 있습니다"라고 단정했다.
+- **법령 개정 소재는 공포일·발효일·적용범위를 분리해 쓴다.** 앞의 둘은 관보 첫 줄과 보도자료에 있지만, 이미 진행 중인 절차에 미치는 범위는 부칙(transitional provisions)에 있고 해설 기사에서는 자주 빠진다. 부칙을 확인하지 않았다면 "발효했으니 적용된다"로 메우지 않고 확인 대상으로 남긴다.
+- **정정호는 반대 방향을 새로 단정하지 않는다.** 확인 없이 단정한 것을 확인 없이 뒤집으면 같은 잘못을 부호만 바꿔 반복하는 것이다. 1차 출처를 대조하지 못한 상태의 정정은 앞 호의 단정을 **철회**하고, 무엇을 확인해야 답이 나오는지까지만 적는다.
 
 ## 정정 규칙 (supersession)
 
@@ -85,6 +89,7 @@ lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/arc
 - [ ] `jurisdictions` ≥ 1, 각 item core copy(`headline` / `whatChanged` / `whoShouldCare` / `whyItMatters` / `nextAction`) 채움
 - [ ] `relatedGuideLinks`가 live guide로 연결 (registry 경로 대조까지 테스트가 강제)
 - [ ] 이번 이슈가 앞 이슈의 사실을 정정한다면 앞 이슈에 `supersededBy` 추가 (위 `정정 규칙`)
+- [ ] `summary`와 각 item `headline`에 적은 단정이 `bodyParagraphs`의 유보와 어긋나지 않는지 대조 (위 `Provenance 규칙`) — 구조 테스트가 잡지 못하는 항목이므로 발행자가 직접 읽는다
 - [ ] 이번 이슈가 **날짜가 박힌 시한**(모집 마감, 병행 기간 종료 등)을 다룬다면 `timeSensitive` 선언 — `closesOn`·`label`과 함께 **지난 뒤에 남는 것**을 `note`에 지금 적는다 (위 `시한 규칙`)
 - [ ] 이 이슈의 후보를 `../src/briefs/discovery.ts`에서 `published` + `publishedAs`로 전이 ([`briefs-discovery.md`](briefs-discovery.md))
 

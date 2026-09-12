@@ -477,7 +477,22 @@ export const briefCandidates: BriefCandidate[] = [
     status: "published",
     publishedAs: "2026-09-mexico-lfppi-regulations-in-force",
     notes:
-      "2026-09-07 WebSearch triage로 발굴했다. 저장소는 이 시행규칙을 전혀 들고 있지 않았다 — `reglamento`·`시행규칙`·`2026-07-22`를 MexTm·docs·src/briefs 전체에서 검색해 0건을 확인했다. 2026-08-30 claim-refresh 라운드는 법률 개정(2026-04-03)까지만 봤고 MX-ENF-001에 '집행 조항에 개정이 닿았는지는 별도 확인 대상'을 미결로 남겨 뒀는데, 이 시행규칙이 그 답을 들고 있을 가능성이 크다. MexTm 제6장이 '보류'로 남긴 office action 답변기한·연장 규칙도 같은 자리다. **1차 출처 미대조**: DOF·IMPI는 이 세션에서 열리지 않아(등록 소스 전부 연결 실패) sweep 회차를 추가하지 않는다. 사실은 Pérez-Llorca, AIPPI, Mijares, CCN, FisherBroyles, Chevez, BDO México, EY México, Panamericana de Patentes y Marcas가 일치하는 범위에서만 가져왔고, 조문 번호는 본문에 쓰지 않았다. owner 1차 대조와 MexTm 본문·claim-map 정합은 별도 라운드로 넘긴다."
+      "2026-09-07 WebSearch triage로 발굴했다. 저장소는 이 시행규칙을 전혀 들고 있지 않았다 — `reglamento`·`시행규칙`·`2026-07-22`를 MexTm·docs·src/briefs 전체에서 검색해 0건을 확인했다. 2026-08-30 claim-refresh 라운드는 법률 개정(2026-04-03)까지만 봤고 MX-ENF-001에 '집행 조항에 개정이 닿았는지는 별도 확인 대상'을 미결로 남겨 뒀는데, 이 시행규칙이 그 답을 들고 있을 가능성이 크다. MexTm 제6장이 '보류'로 남긴 office action 답변기한·연장 규칙도 같은 자리다. **1차 출처 미대조**: DOF·IMPI는 이 세션에서 열리지 않아(등록 소스 전부 연결 실패) sweep 회차를 추가하지 않는다. 사실은 Pérez-Llorca, AIPPI, Mijares, CCN, FisherBroyles, Chevez, BDO México, EY México, Panamericana de Patentes y Marcas가 일치하는 범위에서만 가져왔고, 조문 번호는 본문에 쓰지 않았다. owner 1차 대조와 MexTm 본문·claim-map 정합은 별도 라운드로 넘긴다. **2026-09-12 후속**: 이 후보의 headline에 적은 '진행 중인 출원과 침해 대응이 이미 새 규칙 아래 있다'는 명제가 확인되지 않은 추론이었다. 발행된 20호가 같은 명제를 요약·헤드라인에서 단정해 `2026-09-mexico-lfppi-transitional-scope` 후보로 정정했다(발행 결과: `2026-09-mexico-lfppi-transitional-scope-correction`). 이 후보 기록 자체는 2026-09-07 시점의 판단이므로 고치지 않고 포인터만 남긴다."
+  },
+  {
+    id: "2026-09-mexico-lfppi-transitional-scope",
+    headline:
+      "멕시코 신 시행규칙이 이미 진행 중인 절차에 미치는지는 발효일이 아니라 관보 부칙(TRANSITORIOS)이 정한다 — 20호가 그 확인 없이 '이미 적용된다'고 단정했으므로 철회해야 한다",
+    trigger:
+      "2026-09-12 자체 점검. 2026-09-07 발행한 `2026-09-mexico-lfppi-regulations-in-force`의 요약과 항목 헤드라인이 '발효가 지났으므로 지금 심사 중인 출원과 진행 중인 침해 사건은 이미 새 규칙 아래 있습니다'라고 단정한 반면, 같은 호 본문 3문단과 7문단은 '발효 전 접수된 사건에 어떤 규칙이 적용되는지는 확인이 필요하다'고 유보했다. 같은 호 안의 모순이며, 단정한 쪽이 확인되지 않은 명제다. 2026년 4월 28일자 DOF 시행규칙의 부칙이 접수 당시 시행 중이던 규칙을 계속 적용하도록 정하고 있다면 방향까지 반대가 된다.",
+    discoveredOn: "2026-09-12",
+    sourceIds: ["dof-mexico", "impi"],
+    jurisdictions: ["Mexico", "Industrial Property Reform", "Transitional Provisions"],
+    relatedProductSlugs: ["mexico"],
+    status: "published",
+    publishedAs: "2026-09-mexico-lfppi-transitional-scope-correction",
+    notes:
+      "발굴 경로가 외부 소스가 아니라 **이미 발행한 이슈의 내부 모순**이다. 저장소 안에서 전부 확인되므로 소스 접근 없이 판정할 수 있었다. sourceIds는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다 — DOF 관보 원문의 부칙과 IMPI 공식 안내다. **1차 출처 미대조**: 이 세션에서도 DOF·IMPI는 열리지 않아(프록시 CONNECT 403) sweep 회차를 추가하지 않았고, 그래서 정정호는 20호의 단정을 철회하기만 하고 반대 방향을 새로 단정하지 않는다. 부칙 원문 대조는 미결로 남는다."
   }
 ];
 
