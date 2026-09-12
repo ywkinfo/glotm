@@ -17,6 +17,7 @@ import { runStalenessAudit } from "./research-audit/audit-staleness";
 import {
   buildResearchSummary,
   claimMapExists,
+  discoverClaimMapWorkspaces,
   getClaimMapPath,
   getCriticalClaimStalenessDays,
   readClaimMap,
@@ -27,17 +28,33 @@ export type CliFormat = "markdown" | "json";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
-const advisoryClaimMapWorkspaceBySlug: Partial<Record<string, string>> = {
-  china: "ChaTm",
-  mexico: "MexTm",
-  europe: "EuTm",
-  usa: "UsaTm",
-  japan: "JapTm",
-  uk: "UKTm"
-};
+// 워크스페이스 목록을 손으로 들지 않는다. 종전에는 slug→워크스페이스 맵을 여기 하드코딩했는데,
+// 2026-09-12 `LatTm`이 claim-map을 채택했을 때 감사(`audit:facts`)와 register 가드는 자동으로
+// 따라왔지만 이 리포트만 조용히 빠졌다 — 새 워크스페이스가 운영 표면에서만 안 보이는 상태다.
+// `claim-source-register.test.ts`가 같은 사고를 겪고 discovery로 바꾼 것과 같은 이유로 여기도
+// 파생시킨다. 매핑은 claim-map 자신이 들고 있다(`productSlug`).
+function loadClaimMapWorkspaceBySlug() {
+  const bySlug: Partial<Record<string, string>> = {};
+
+  for (const workspaceName of discoverClaimMapWorkspaces(rootDir)) {
+    try {
+      const claimMap = readClaimMap(getClaimMapPath(rootDir, workspaceName));
+
+      if (claimMap.productSlug?.trim()) {
+        bySlug[claimMap.productSlug] = workspaceName;
+      }
+    } catch {
+      // 읽을 수 없는 claim-map은 아래 로더가 스키마 오류로 다시 걸러낸다.
+      continue;
+    }
+  }
+
+  return bySlug;
+}
 
 function loadResearchBySlug() {
   const researchBySlug: Partial<Record<string, ProductResearchRecord>> = {};
+  const advisoryClaimMapWorkspaceBySlug = loadClaimMapWorkspaceBySlug();
 
   for (const product of products) {
     const workspaceName = advisoryClaimMapWorkspaceBySlug[product.slug];

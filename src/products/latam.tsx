@@ -5,6 +5,7 @@ import {
   createReaderRuntime,
   type ReaderHomePageProps
 } from "./configuredReader";
+import { ReaderProvenanceNote } from "./configuredReaderHomeSections";
 import {
   buildGeneratedContentUrl,
   buildChapterPath,
@@ -61,6 +62,10 @@ function LatamHomeContent({
           <span>총 {documentData.meta.chapterCount}개 챕터</span>
           <span>전략부터 집행까지 한 흐름으로 구성</span>
         </div>
+        {/* LatTm은 홈을 자체 컴포넌트로 그려서 공용 홈(configuredReader)이 히어로에 두는 이 줄이
+            빠져 있었다. factsReviewedOn이 미기록이던 동안에는 렌더할 것이 없어 표가 나지 않았고,
+            2026-09-12 claim-map 도입으로 날짜가 등록되자 readerContract 계약이 그 공백을 잡았다. */}
+        <ReaderProvenanceNote factsReviewedOn={productMeta.factsReviewedOn} />
       </section>
 
       {continueChapter && readingBookmark ? (

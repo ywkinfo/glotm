@@ -367,7 +367,7 @@ Why fourth:
 
 This phase should focus on schema adoption and advisory reporting, not aggressive gate tightening.
 
-### 5. `LatTm`
+### 5. `LatTm` — 완료 (2026-09-12)
 
 Why last:
 
@@ -555,9 +555,11 @@ Goal: validate the model for a region guide and optional source-registry support
 
 Goal: add advisory claim maps to `UKTm`, `UsaTm`, and `JapTm` without tightening lifecycle coupling.
 
-### PR 6, `LatTm` stabilization pass
+### PR 6, `LatTm` stabilization pass — 완료 (2026-09-12)
 
 Goal: extend the same boring pattern to the flagship after the model is proven.
+
+반영 결과: `LatTm/content/research/claim-map.json`(HIGH 5건)과 `lat_tm_source_register.md`(출처 6건)를 추가하고 `audit:facts`에 `LatTm`을 편입했다. claim 본문과 출처는 전부 2026-03-27 `fact-verification-log.md`가 이미 검증해 둔 것에서 구조화했고, 이 회차에서 출처를 다시 열지는 못했다(egress 차단) — 그래서 `lastVerified`는 2026-03-27에 머물고 staleness 경고가 그대로 뜬다.
 
 ## Acceptance criteria
 
@@ -567,7 +569,7 @@ The rollout is working as intended when all of the following are true:
 2. Factual QA runs only as helper audits under `health:content`.
 3. `src/products/registry.ts` and `src/products/scorecard.ts` remain the lifecycle source of truth in v1.
 4. `src/products/health.ts` and `scripts/health-report.ts` remain the report-shape source of truth, with only additive advisory research exposure.
-5. `claim-map.json` is the first required structured factual QA artifact for adopted workspaces, and `ChaTm`, `MexTm`, `EuTm`, `UsaTm`, `JapTm`, `UKTm` have all crossed that line (`LatTm` has not — it still has no claim-map).
+5. `claim-map.json` is the first required structured factual QA artifact for adopted workspaces, and all seven workspaces (`ChaTm`, `MexTm`, `EuTm`, `UsaTm`, `JapTm`, `UKTm`, `LatTm`) have crossed that line — `LatTm` adopted it on 2026-09-12, which completed the rollout order below. `LatTm`'s claims carry `lastVerified: 2026-03-27` (the date its existing `fact-verification-log.md` actually opened those sources), so `audit:facts` reports it as `gate=warn` with `staleHighRisk=5`. That warning is the point: the gap was previously unmeasured, not absent.
 6. `source-registry.json` remains optional and phased.
 7. Migrated products can show advisory `research` data in the health report before any scorecard coupling.
 8. `audit:facts`, `audit:staleness`, and `audit:consistency` all live under `health:content`.

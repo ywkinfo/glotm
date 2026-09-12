@@ -4,6 +4,11 @@ import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { buildCliOutput, parseArgs } from "./health-report";
+import {
+  discoverClaimMapWorkspaces,
+  getClaimMapPath,
+  readClaimMap
+} from "./research-audit/shared";
 
 describe("health report CLI", () => {
   beforeEach(() => {
@@ -38,7 +43,13 @@ describe("health report CLI", () => {
       id: "runtime",
       status: "pass"
     });
-    expect(researchProducts).toEqual(["china", "mexico", "europe", "usa", "japan", "uk"]);
+    // 기대 목록도 discovery에서 파생시킨다. 손으로 들면 claim-map을 새로 채택한 워크스페이스가
+    // 리포트에서 빠져도 이 단정이 함께 옛 목록에 머물러 아무도 붉어지지 않는다(2026-09-12 LatTm).
+    expect([...researchProducts].sort()).toEqual(
+      discoverClaimMapWorkspaces(process.cwd())
+        .map((workspace) => readClaimMap(getClaimMapPath(process.cwd(), workspace)).productSlug)
+        .sort()
+    );
     // 워크스페이스별로 손으로 블록을 쓰면 새로 승격된 가이드가 조용히 빠진다.
     // 실제로 japan·uk는 존재 목록에만 있고 research gate가 한 번도 단정된 적이 없었다.
     for (const slug of researchProducts) {
@@ -56,11 +67,20 @@ describe("health report CLI", () => {
         research: {
           auditMode: "advisory",
           factIntegrityScore: 100,
-          consistencyScore: 100,
-          staleHighRiskClaimCount: 0,
-          gate: "pass"
+          consistencyScore: 100
         }
       });
+
+      // staleness는 gate가 아니라 advisory다. 모든 워크스페이스에 gate=pass를 요구하면
+      // "오래된 claim을 정직하게 warn으로 드러내는 것"이 테스트 위반이 된다 — 2026-09-12 LatTm이
+      // 2026-03-27 검증분을 그대로 들고 들어오면서 실제로 그 상태가 됐다.
+      // 여기서 지킬 계약은 둘이다: 스키마 무결성(fail 금지)과 미해결 고위험 갭 0.
+      const research = report.products.find(
+        (product: { slug: string }) => product.slug === slug
+      ).research;
+
+      expect(["pass", "warn"], `${slug} gate`).toContain(research.gate);
+      expect(research.effectiveHighRiskGapCount, `${slug} unresolved high-risk gap`).toBe(0);
     }
     expect(report.root.find((lane: { id: string }) => lane.id === "content")).toMatchObject({
       verification: {
@@ -120,15 +140,17 @@ describe("health report CLI", () => {
 // 어느 테스트도 확인하지 않았다. 이 블록은 실시계로 돌려 그 계산 경로를 살려 둔다.
 // 게이팅은 하지 않는다 — fact-review는 monthly-review-template.md에서 advisory·non-gating으로 잠긴 트랙이다.
 describe("health report against the real clock", () => {
-  const claimMapSlugs = ["china", "mexico", "europe", "usa", "japan", "uk"];
-  const workspaceBySlug: Record<string, string> = {
-    china: "ChaTm",
-    mexico: "MexTm",
-    europe: "EuTm",
-    usa: "UsaTm",
-    japan: "JapTm",
-    uk: "UKTm"
-  };
+  // 이 목록도, 리포트가 소비하던 slug→워크스페이스 맵도 종전에는 둘 다 손으로 들고 있었다.
+  // 그래서 서로를 검증하지 못했다 — 2026-09-12 `LatTm`이 claim-map을 채택했을 때 양쪽이 같은
+  // 6개에 머물러 아무도 붉어지지 않았고, 새 워크스페이스는 운영 리포트에서만 조용히 빠졌다.
+  // 양쪽을 discovery에서 파생시켜 "claim-map을 채택하면 리포트에 반드시 나온다"를 실제 계약으로 만든다.
+  const workspaceBySlug: Record<string, string> = Object.fromEntries(
+    discoverClaimMapWorkspaces(process.cwd()).map((workspace) => [
+      readClaimMap(getClaimMapPath(process.cwd(), workspace)).productSlug,
+      workspace
+    ])
+  );
+  const claimMapSlugs = Object.keys(workspaceBySlug);
 
   it("computes claim freshness from the real date, not a frozen one", () => {
     const report = JSON.parse(buildCliOutput(["--format", "json"], {}));
@@ -178,6 +200,6 @@ describe("health report against the real clock", () => {
       .filter((entry: { research?: unknown }) => entry.research)
       .map((entry: { slug: string }) => entry.slug);
 
-    expect(reported).toEqual(claimMapSlugs);
+    expect([...reported].sort()).toEqual([...claimMapSlugs].sort());
   });
 });

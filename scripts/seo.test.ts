@@ -31,6 +31,7 @@ import {
   reports
 } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
+import { formatFactsReviewedNote } from "../src/trustLegal";
 import {
   CHAPTER_TITLE_QUALIFIER_BY_SLUG,
   getPortfolioTierLabel,
@@ -637,9 +638,22 @@ describe("SEO build helpers", () => {
     const usaHome = pages.find((page) => page.routePath === "/usa")!;
     expect(renderStaticHtml(shell, usaHome)).toContain('data-provenance="facts-reviewed"');
 
-    // LatTm은 factsReviewedOn 미기록 → 아무 provenance 라인도 렌더하지 않는다.
-    const latamHome = pages.find((page) => page.routePath === "/latam")!;
-    expect(renderStaticHtml(shell, latamHome)).not.toContain('data-provenance="facts-reviewed"');
+    // 음성 사례는 픽스처로 잡는다. 종전에는 LatTm을 "미기록 가이드"로 썼는데, 2026-09-12
+    // LatTm이 claim-map과 함께 factsReviewedOn을 등록하면서 살아 있는 미기록 가이드가 0이 됐다.
+    // 어느 가이드가 날짜를 갖고 있느냐에 이 분기 테스트가 매달리면 안 된다 — 순수 함수로 직접 본다.
+    expect(formatFactsReviewedNote(undefined)).toBeNull();
+    expect(formatFactsReviewedNote("2026-03-27T00:00:00.000Z")).toContain("2026");
+
+    // 그리고 지금은 모든 live guide가 기록을 갖고 있으므로 전부 라인을 노출해야 한다.
+    for (const product of liveShellProducts) {
+      const home = pages.find((page) => page.routePath === product.path)!;
+      const expectsNote = Boolean(formatFactsReviewedNote(product.factsReviewedOn));
+
+      expect(
+        renderStaticHtml(shell, home).includes('data-provenance="facts-reviewed"'),
+        `${product.slug} provenance line`
+      ).toBe(expectsNote);
+    }
   });
 
   it("adds priority and changefreq signals to the sitemap", () => {
