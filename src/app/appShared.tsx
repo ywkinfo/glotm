@@ -5,6 +5,7 @@ import {
   getGaMeasurementId,
   trackGaEvent
 } from "../analytics/ga";
+import { getOccupiedTierLabels } from "../content/gateway";
 import {
   formatBriefDate,
   buildBriefIssuePath,
@@ -222,21 +223,21 @@ export function buildGuideTrackingParams(
   };
 }
 
+// 비어 있는 tier는 세지 않는다. `0 Validate · 0 Incubate`는 사실이지만, buyer-facing 스냅샷에서
+// 없는 레인을 이름으로 광고하게 되고 바로 위 제목이 부르는 레인 목록과도 어긋난다.
+// 레인 순서·표기는 `content/gateway.ts`의 정본을 그대로 쓴다.
 export function getTierComposition(products: ProductMeta[]) {
   const tierCounts = products.reduce(
     (counts, product) => {
       counts[product.portfolioTier] = (counts[product.portfolioTier] ?? 0) + 1;
       return counts;
     },
-    {
-      flagship: 0,
-      growth: 0,
-      validate: 0,
-      incubate: 0
-    } as Record<PortfolioTier, number>
+    {} as Partial<Record<PortfolioTier, number>>
   );
 
-  return `${tierCounts.flagship} Flagship · ${tierCounts.growth} Growth · ${tierCounts.validate} Validate · ${tierCounts.incubate} Incubate`;
+  return getOccupiedTierLabels(products)
+    .map((label) => `${tierCounts[label.toLowerCase() as PortfolioTier] ?? 0} ${label}`)
+    .join(" · ");
 }
 
 type FullDocumentLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {

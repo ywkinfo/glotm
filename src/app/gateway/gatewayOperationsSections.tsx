@@ -1,3 +1,7 @@
+import {
+  buildBuildOrderCopy,
+  buildPortfolioFocusTitle
+} from "../../content/gateway";
 import { buildReportArchivePath, reportExperienceMeta } from "../../reports/registry";
 import {
   FullDocumentLink,
@@ -21,7 +25,7 @@ function PortfolioFocus({ view }: SectionProps) {
       <div className="gateway-section-header">
         <div>
           <p className="gateway-kicker">Portfolio Focus</p>
-          <h2 className="gateway-section-title">포트폴리오를 flagship, growth, validate, incubate로 운영합니다</h2>
+          <h2 className="gateway-section-title">{buildPortfolioFocusTitle(view.orderedProducts)}</h2>
         </div>
         <p className="gateway-section-copy">
           모든 가이드는 하나의 체계로 운영해 안내하되, 각 가이드의 단계별 안내 수준과 확대 기준은 다르게 운영합니다. 신규 시장 추가보다 기존 포트폴리오의 freshness, density, QA 정렬을 먼저 끌어올립니다.
@@ -73,9 +77,7 @@ function CurrentBuildOrder({ view }: SectionProps) {
           <p className="gateway-kicker">Current Build Order</p>
           <h2 className="gateway-section-title">지금은 가장 얇은 가이드보다, 이용자가 더 빨리 도움을 느낄 수 있는 레인부터 보강합니다</h2>
         </div>
-        <p className="gateway-section-copy">
-          현재 우선순위는 이용자가 바로 체감하는 가치, 전체 구성의 균형, 아직 내용이 덜 채워진 정도를 함께 보고 정합니다. 그래서 growth와 validate 레인을 먼저 더 보기 좋게 다듬고, incubate 레인은 가볍게 유지합니다.
-        </p>
+        <p className="gateway-section-copy">{buildBuildOrderCopy(view.orderedProducts)}</p>
       </div>
       <div className="gateway-card-grid">
         {view.priorityRoadmap.map((lane, index) => (

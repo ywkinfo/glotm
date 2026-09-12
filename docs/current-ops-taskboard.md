@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-12 (브리프 시한 장치 · 직전 기록 2026-09-11 2라운드)
+- Last updated: 2026-09-12 2라운드 (게이트웨이 tier 문구 파생)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -83,7 +83,7 @@
   - **`/reports/` 7면이 링크 고립섬이었다.** prerender된 147면 중 `/glotm/reports/`로 들어가는 링크를 가진 파일이 **리포트 클러스터 내부 7개뿐**이었다. 그런데 같은 Gateway 본문(`src/content/gateway.ts`)은 "최신 리포트 2개는 …"이라고 문장으로 약속한다 — 약속은 있고 링크가 없는 상태였다. `scripts/seo.ts`의 `renderGatewayBody`가 productLinks와 브리프 아카이브만 내보내고 report 섹션을 만들지 않았기 때문이다(SPA `GatewayPage.tsx`는 report 카드를 렌더하므로 **SPA/prerender divergence**다). SPA와 같은 기준(`getLatestReports(2)`)으로 아카이브 링크 + 최신 2건을 추가했고, 재빌드 후 `dist/index.html`이 클러스터로 들어가는 것을 실측 확인했다(인바운드 보유 파일 7 → 8, 클러스터 밖 1건). `seo.test.ts`에 회귀 케이스를 추가했다.
   - **데스크톱에서 보이는 챕터 사이드바에 `aria-hidden="true"`가 걸려 있었다.** `configuredReaderChrome.tsx`가 `aria-hidden={isNavOpen ? undefined : true}`를 쓰는데, `isNavOpen`은 **모바일 드로어 상태라 데스크톱에서는 항상 false**다. 라이브 1440px 실측: `display:block` · `visibility:visible` · 280×788px · **링크 26개**가 aria-hidden 상태. 스크린리더 사용자는 7개 가이드 전 챕터에서 목차를 못 쓰고, 포커스 가능한 링크가 aria-hidden 컨테이너 안에 들어가 WAI-ARIA 위반이다. **속성을 없애는 것이 맞다** — 모바일 닫힘은 CSS(`LatTm/src/styles.css` `@media (max-width: 920px)`의 `display:none; visibility:hidden`)가 이미 접근성 트리와 포커스 순서에서 제거한다.
   - **수정이 기존 테스트 3건을 깨뜨렸는데, 그게 이 결함의 크기를 보여준다.** 사이드바 링크가 접근성 트리로 돌아오자 `getByRole("link", …)`가 본문과 사이드바 양쪽을 잡았다 — 그 테스트들은 **사이드바가 보조기술에 안 보이는 데 기대고 있었다.** 의도대로 `.content-pane` 안으로 쿼리를 좁혔고, `readerContract.test.tsx`에 사이드바가 노출 상태를 유지하는지 검사하는 회귀 케이스를 추가했다(69/69).
-  - **고치지 않고 남긴 것 — owner 판단이 필요하다.** Gateway가 SPA(`GatewayPage.tsx:471`)와 prerender(`seo.ts:380`) 양쪽에서 "포트폴리오를 **flagship, growth, validate, incubate**로 운영합니다"라고 말하는데, registry 실측 tier 분포는 `flagship 1 / growth 6`이고 **validate·incubate는 비어 있다**. 4단 모델을 운영 프레임으로 설명하는 것인지, 현재 점유를 말하는 것인지에 따라 답이 갈리므로 문구를 임의로 바꾸지 않았다. `App.test.tsx`가 이 문장을 6곳에서 락하고 있어 바꾸려면 함께 고쳐야 한다.
+  - **고치지 않고 남긴 것 — owner 판단이 필요하다.** Gateway가 SPA(`GatewayPage.tsx:471`)와 prerender(`seo.ts:380`) 양쪽에서 "포트폴리오를 **flagship, growth, validate, incubate**로 운영합니다"라고 말하는데, registry 실측 tier 분포는 `flagship 1 / growth 6`이고 **validate·incubate는 비어 있다**. 4단 모델을 운영 프레임으로 설명하는 것인지, 현재 점유를 말하는 것인지에 따라 답이 갈리므로 문구를 임의로 바꾸지 않았다. `App.test.tsx`가 이 문장을 6곳에서 락하고 있어 바꾸려면 함께 고쳐야 한다. **→ 2026-09-12 2라운드에서 owner 지시로 해소했다**(문구를 tier 점유에서 파생, 아래 참조). 판단이 갈린다던 지점은 저장소가 이미 답해 두고 있었다 — 렌더는 빈 tier를 내보내지 않고 있었고 문구만 그 규칙 밖에 있었다.
   - 게이트: `health:all` green(295 unit + e2e 28, content 44, seo 23), `check:consistency` 0/0, `audit:facts` 6/6.
 
 - 2026-08-31 3라운드: **배포를 CI 성공 뒤로 게이팅.** 그전에는 `CI`·`Verify Release`·`Deploy GitHub Pages` 셋이 같은 push 에서 서로 독립적으로 떠서 **테스트가 붉어도 배포는 라이브까지 나갔다.** `deploy-pages.yml` 을 `push: main` 에서 `workflow_run`(CI 완료) 으로 바꿨고, `workflow_dispatch` 는 owner 수동 override 로 남겼다.
@@ -194,6 +194,17 @@
   - **위반 주입 5건 확인**: KST 판정을 UTC 비교로 되돌림 · `closesOn`을 발행일 이전으로 · `closesOn`을 UTC 자정 아닌 값으로 · 이슈 페이지 고지 제거 · prerender 고지 제거 — **5/5 모두 붉어졌다.**
   - **실제 산출물로 확인했다.** `health:release` 빌드의 `dist/briefs/*/index.html`에서 만료된 2건(`…licensing-control` 마감 08-21, `…certification-first-round…` 마감 09-11)에는 고지가 실렸고, 아직 열려 있는 1건(`…madrid-efiling-cutover` 병행 ~09-30)에는 실리지 않았다. 테스트가 고정 시계로 잠근 동작이 빌드 시각 기준으로도 그대로 나온다.
   - 게이트: `npm test` **420/420**(기존 413 + 신규 7), `typecheck` pass, `health:runtime` pass(unit **351** + e2e:smoke **50**), `health:release` pass(**151 routes** + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` **24** + subpath e2e 7), `check:consistency` 0 hard / 0 advisory. 라우트 수는 그대로다 — 새 면을 만든 것이 아니라 기존 이슈에 고지를 얹었다.
+
+- 2026-09-12 2라운드: **게이트웨이가 없는 레인을 약속하던 문구를 데이터에서 파생시켰다(owner 지시).** 2026-08-31 후속 라운드가 "고치지 않고 남긴 것 — owner 판단이 필요하다"로 넘긴 항목이다.
+  - **판단이 갈린다던 지점은 저장소가 이미 답해 두고 있었다.** 8/31 기록은 "4단 모델을 운영 프레임으로 설명하는 것인지, 현재 점유를 말하는 것인지에 따라 답이 갈린다"고 적었는데, **렌더는 이미 후자를 택하고 있었다** — `ProductGroup`과 roadmap 카드가 빈 tier를 렌더하지 않고 `App.test.tsx`가 그것을 단정한다(`does not render an empty Incubate roadmap card`, Validate·Incubate 그룹 제목 부재). 문구만 그 규칙 밖에 있어 제목이 네 레인을 약속하고 그 아래에 둘만 보여줬다. 그래서 이번 라운드가 한 것은 새 판단이 아니라 **문구를 기존 규칙 안으로 들인 것**이다.
+  - **드리프트는 8/31이 지목한 1곳이 아니라 4곳이었다**: ⓐ Portfolio Focus 제목, ⓑ Current Build Order 본문(`growth와 validate 레인을 먼저 … incubate 레인은 가볍게` — 언급한 셋 중 둘이 빈 레인), ⓒ prerender 본문(`scripts/seo.ts`), ⓓ Portfolio Snapshot 지표(`0 Validate · 0 Incubate` — 사실이지만 없는 레인을 이름으로 광고한다).
+  - **정본은 `src/content/gateway.ts` 한 곳이다.** 2026-09-07 히어로 문구가 쓴 방식과 같다 — SPA와 prerender가 같은 함수를 import하므로 둘이 서로 다른 레인 목록을 말할 수 없다. 조사 문제를 피하려고 목록 뒤에 고정어(`레인`)를 뒀다: 점유가 바뀔 때마다 로/으로·와/과가 어긋나지 않는다.
+  - **모델은 건드리지 않았다.** `PortfolioTier` 4단과 `portfolio-scorecard.md`의 tier 정의는 그대로다. 그 문서에 남은 `growth와 validate 레인`·`incubate 레인` 언급도 남겼다 — 거기는 모델을 정의하고 레인이 생겼을 때 적용될 규칙을 적는 자리이지, 지금 무엇을 운영 중인지 말하는 buyer-facing 면이 아니다. 이 구분이 이번 라운드의 판단 기준 전부다.
+  - **테스트는 문구를 다시 적지 않는다.** 제목을 락하던 5곳을 `buildPortfolioFocusTitle(liveShellProducts)` 파생으로 바꿨고 계약 둘을 신설했다: ⓐ 게이트웨이 렌더 어디에도 빈 tier 이름이 나오지 않는다, ⓑ 합성 입력에 validate 제품을 넣으면 문구가 스스로 그 레인을 부른다 — ⓑ가 없으면 `Flagship · Growth`를 하드코딩해도 ⓐ를 통과한다.
+  - **위반 주입 4건 확인**: 제목을 4-tier 하드코딩으로 복원 · 빈 tier 필터 해제 · prerender 문장만 따로 하드코딩(SPA와 분기) · 스냅샷에 0 tier 복원 — **4/4 모두 붉어졌다.**
+  - **중복 정본 하나를 만들었다가 되돌렸다.** 첫 구현이 `content/gateway.ts`에 tier→라벨 맵을 새로 뒀는데 같은 매핑이 이미 `products/shared.ts`의 `getPortfolioTierLabel`에 있었다 — 이름이 두 곳에 살면 라벨을 고칠 때 한쪽만 움직인다. 이번 라운드가 고친 드리프트와 같은 종류라 바로 통합했고, 테스트의 전체 레인 목록도 `portfolioTierOrder`에서 파생시켰다(목록을 테스트에 다시 적으면 tier가 늘 때 테스트만 옛 목록에 남는다).
+  - **실제 산출물 확인**: `dist/index.html`이 `현재 7개의 권역형·국가형 guide를 Flagship · Growth 레인으로 운영하고 있습니다.`를 싣고, 빈 레인 이름(`Validate`·`Incubate`)은 **0건**이다.
+  - 게이트: `npm test` **422/422**(기존 420 + 신규 2), `typecheck` pass, `health:runtime` pass(unit **353** + e2e:smoke 50), `health:release` pass(**151 routes** + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` 24 + subpath e2e 7), `check:consistency` 0 hard / 0 advisory.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
