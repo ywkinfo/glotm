@@ -200,7 +200,7 @@ export const briefSources: BriefSource[] = [
   {
     id: "kipo",
     label: "지식재산처(KIPO)",
-    url: "https://www.kipo.go.kr/",
+    url: "https://www.moip.go.kr/",
     sweepTarget:
       "보도자료·공지 목록 상단에서 마지막 verified sweep 이후 게시물. 해외 출원 지원·집행 프로그램·제도 시행 고지를 본다.",
     tier: "primary",
@@ -208,7 +208,7 @@ export const briefSources: BriefSource[] = [
     relatedProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
     sweepCadence: "weekly",
     notes:
-      "발신국 축. K-브랜드 지원·해외 집행 프로그램은 특정 가이드가 아니라 포트폴리오 전반에 소재를 댄다."
+      "발신국 축. K-브랜드 지원·해외 집행 프로그램은 특정 가이드가 아니라 포트폴리오 전반에 소재를 댄다. **2026-09-12 URL 교체**: 등록돼 있던 `www.kipo.go.kr`는 이제 기관 안내 페이지로 가면서 「지식재산처의 올바른 접속 URL은 https://www.moip.go.kr 입니다」만 띄운다 — 즉 등록 URL로는 sweepTarget(보도자료 목록)에 닿을 수 없었다. 2026-08-08·08-30 회차가 실제로 연 것도 `moip.go.kr`의 보도자료였으므로(각 회차 note의 게시물 20996·21009 URL), 이 교체는 실무를 등록부에 맞춘 것이다. 보도자료 목록은 `/ko/kpoBultnMgmt.do?menuCd=SCD0200618&parntMenuCd2=SCD0200052`."
   },
   {
     id: "euipo",
@@ -460,6 +460,48 @@ export const briefCandidates: BriefCandidate[] = [
       "1차 출처를 2026-08-08에 직접 대조했다: https://www.moip.go.kr/ko/kpoBultnDetail.do?aprchId=BUT0000029&menuCd=SCD0200618&ntatcSeq=20996&sysCd=SCD02. 기존 정부인증 후보는 정부 소유 인증표장의 보호 레이어이고, 이 후보는 기업 소유 상표의 사용허락·가맹·사용료·종료 통제를 다루는 수익화 레이어라 별개다."
   },
   {
+    id: "2026-09-kbrand-online-infringement-hotline",
+    headline:
+      "온라인 IP침해 대응 핫라인이 열렸다 — 플랫폼에 개별 신고하던 경로 옆에 기관 경유 창구가 생겼고, 쓰려면 자사 상표가 어느 나라에 어떤 상태로 있는지부터 정리돼 있어야 한다",
+    trigger:
+      "지식재산처 2026-09-09 보도자료(게시물 21038, 상표분쟁대응과) — 「K-브랜드 보호 컨퍼런스」에서 「온라인 IP침해 대응 핫라인」 개통. 지식재산처·한국지식재산보호원·한국소비자원을 주축으로 30여 개 상표권자와 국내·외 주요 플랫폼사가 침해 의심 정보를 공유하고 후속조치를 협의하는 창구다. 같은 발표에 해외 온라인 위조상품 차단, 해외 상표 무단선점 심층조사, 해외 유사상표 출원을 조기에 알리는 「K-브랜드 지킴이」가 함께 소개됐다.",
+    discoveredOn: "2026-09-12",
+    sourceIds: ["kipo"],
+    jurisdictions: ["Korea", "Online Enforcement", "Trademark Squatting"],
+    relatedProductSlugs: ["china", "usa", "europe", "japan"],
+    status: "watching",
+    notes:
+      "2026-09-12 sweep에서 보도자료 목록과 본문을 직접 열어 확인했다. 참여 상표권자로 구다이글로벌·더파운더즈·LG생활건강·이엘씨에이한국·코스알엑스·해브앤비(화장품), 유한양행(건강기능식품), 로이비쥬얼·산리오코리아(유·아동 완구)가 적시돼 있고, 한국스포츠산업협회·한국애니메이션산업협회와 신규 MOU가 체결됐다. **발행 전에 확인할 것**: 보도자료는 핫라인의 *개통*과 참여 구성만 말하고 비참여 기업이 어떻게 접근하는지를 말하지 않는다 — 신청 경로·자격이 공개되지 않으면 본문이 '창구가 생겼다'에서 멈춘다. 한국지식재산보호원 채널에서 접수 경로가 공개되는 시점이 발행 트리거다. 브리프 각도는 창구 자체가 아니라 그 앞단이다: 무단선점 신고든 플랫폼 차단 요청이든 '대상국에 내 권리가 어떤 상태인가'가 먼저라 8월 정부인증 1차 모집호(참여요건 (1))와 같은 축을 공유한다. 같은 발표에 ’27년 시행 중국 개정 상표법 소개가 포함돼 있으나 이는 행사 프로그램이고 시행규정 공개 신호가 아니다 — `2027-china-implementing-rules`는 watching 유지."
+  },
+  {
+    id: "2026-09-jpo-disaster-deadline-relief",
+    headline:
+      "일본 상표 기한을 놓쳤을 때 쓸 수 있는 재해 구제 경로가 熊本지진으로 다시 열렸다 — 재외자에게는 14일이 아니라 2개월이 적용되고, 갱신은 별도 2개월 트랙이다",
+    trigger:
+      "특허청(JPO) 「令和8年熊本地震により影響を受けた手続の取扱いについて」(2026-07-29 게시, 2026-08-07 갱신). 지정기간은 상표심사에서 기간 도과 후 제출을 인정하고, 법정기간은 ⓐ 원칙 14일(在外者는 2개월) 구제군과 ⓑ 「故意によるものでないこと」 기준 2개월 구제군으로 갈린다. ⓑ에 상표권 존속기간 갱신등록 신청(商21조1항)이 들어 있고 소정기간 경과 후 1년 이내라는 바깥 경계가 붙는다.",
+    discoveredOn: "2026-09-12",
+    sourceIds: ["jpo"],
+    jurisdictions: ["Japan", "Deadline Relief"],
+    relatedProductSlugs: ["japan"],
+    status: "watching",
+    notes:
+      "2026-09-12 sweep에서 JPO 災害関連情報 면과 본문을 직접 열어 확인했다. **이 소재는 직전 회차가 놓친 자리에서 나왔다** — 2026-08-30 sweep은 jpo의 sweepTarget을 報道発表 2026年度 목록으로만 잡아 「상표 실무 트리거 없음」으로 닫았는데, 이 고지는 報道発表가 아니라 広報／災害関連情報에 실린다. sweepTarget이 목록 하나를 가리키면 그 목록 밖은 정의상 안 보인다. JapTm은 커버리지 공백이 95일로 포트폴리오 최장이고 열린 후보가 0건이었다. **발행 전에 확인할 것**: ⓐ 이 구제가 熊本지진 피해자에 한정되는지 아니면 조문상 일반 재해 구제 틀(災害等における手続救済の基本的考え)의 발동 사례인지 — 후자라면 본문 가치가 이번 지진을 넘어선다, ⓑ 한국 출원인이 실제로 '影響を受けた'에 해당하는 범위(일본 대리인 업무 중단 등 간접 영향 포함 여부), ⓒ 特定非常災害特別措置法 제3조3항 기간연장은 별도 고지이므로 두 경로를 섞지 않는다. 법률 사실 판단과 발행 여부는 owner 몫이다."
+  },
+  {
+    id: "2026-09-euipo-time-limit-practice-alignment",
+    headline:
+      "EUIPO가 1심과 심판부의 기간연장·중지 취급을 맞췄다 — 이의·항소 일정 관리를 같은 전제로 돌릴 수 있는지 다시 봐야 한다",
+    trigger:
+      "EUIPO 뉴스 2026-07-17 「Improvements to the handling of extensions, suspensions and time limits in EUIPO's first and second instances」 — 1심(first instance)과 심판부(Boards of Appeal) 사이에서 자주 쓰이는 절차 관행을 정렬해 기간연장·중지·기간 산정을 더 단순하고 예측 가능하게 했다는 고지.",
+    discoveredOn: "2026-09-12",
+    sourceIds: ["euipo"],
+    jurisdictions: ["Europe", "Opposition"],
+    relatedProductSlugs: ["europe"],
+    status: "watching",
+    notes:
+      "2026-09-12 sweep에서 EUIPO 뉴스 목록을 열어 확인했다(등록 이후 첫 실사). 목록 수준에서 제목·날짜·요약만 대조했고 **상세 고지 본문은 아직 열지 않았다** — 무엇이 어떻게 바뀌었는지(연장 횟수·중지 요건·기산 규칙)를 본문으로 확인하기 전에는 EuTm 제8장 일정 서술에 닿는지 판단할 수 없다. 그게 발행 전 첫 작업이다. 같은 목록에서 2026-09-09 「Security alert: Beware of fraudulent websites impersonating the EUIPO」도 관측됐다 — 사칭 사이트 경고는 UKTm·EuTm이 이미 다루는 미청구 납부요구(unsolicited payment request) 축과 같은 계열이라 단독 브리프보다 기존 본문 보강 쪽이 맞다고 보고 후보로 올리지 않는다."
+  },
+  {
     id: "2026-09-mexico-lfppi-implementing-rules",
     headline:
       "멕시코 LFPPI 신 시행규칙이 1994년 규칙을 대체하며 2026년 7월 22일 발효됐다 — 진행 중인 출원과 침해 대응이 이미 새 규칙 아래 있으므로 기한·증거 구조를 다시 확인해야 한다",
@@ -493,6 +535,21 @@ export const briefCandidates: BriefCandidate[] = [
     publishedAs: "2026-09-mexico-lfppi-transitional-scope-correction",
     notes:
       "발굴 경로가 외부 소스가 아니라 **이미 발행한 이슈의 내부 모순**이다. 저장소 안에서 전부 확인되므로 소스 접근 없이 판정할 수 있었다. sourceIds는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다 — DOF 관보 원문의 부칙과 IMPI 공식 안내다. **1차 출처 미대조**: 이 세션에서도 DOF·IMPI는 열리지 않아(프록시 CONNECT 403) sweep 회차를 추가하지 않았고, 그래서 정정호는 20호의 단정을 철회하기만 하고 반대 방향을 새로 단정하지 않는다. **2026-09-12 2차 출처 triage(같은 날 후속)**: 컨테이너 egress를 다시 재 봤으나 `dof.gob.mx`·`www.dof.gob.mx`·`sidof.segob.gob.mx`·`www.diputados.gob.mx`·`impi.gob.mx` 전부 CONNECT 403이고 WebFetch도 `EGRESS_BLOCKED`라 관보 원문 대조는 여전히 불가하다. 다만 WebSearch는 이 채널에서 열려, 2차 출처 다수(Mijares·Pérez-Llorca·FisherBroyles·Panamericana de Patentes y Marcas·Coel·TaxToday)가 **조문을 특정해** 일치하는 것을 확인했다 — **TERCERO 전환규정**: 시행 전 접수된 사건은 접수 당시(presentación) 시행 중이던 규정에 따라 계속 처리하되, MASC(대체적 분쟁해결 메커니즘) 이용은 예외. 사실이라면 20호의 단정은 방향이 반대다. **그래도 등급은 2차다.** 20호의 오류는 '2차 출처를 썼다'가 아니라 '2차 출처가 다루지 않은 명제를 단정했다'였고, 여기서는 2차 출처가 그 명제를 직접·일관되게 다룬다는 점이 다르지만, `briefs-lane.md`가 잠근 '정정호는 1차 출처 대조 없이 반대 방향을 단정하지 않는다'는 그대로 적용된다. 그래서 **22호를 고치지도, 후속호를 발행하지도 않았다.** sweep 회차도 추가하지 않는다(WebSearch triage는 소스를 연 것이 아니다 — 20호 후보와 같은 처리). 미결은 `MexTm` claim-map의 **MX-OQ-004**로 옮겨 `MX-DL-001`·`MX-ENF-001`에 걸었고, 거기에 확인 대상 둘과 확인 경로를 적었다."
+  },
+  {
+    id: "2026-09-mexico-lfppi-gazette-primary-check",
+    headline:
+      "2026-04-28 DOF 게재분 부칙을 직접 대조하면 20호의 방향이 확정되고, 같은 부칙의 PRIMERO가 22호의 '네 축 유효' 재확인 중 하나를 무너뜨린다",
+    trigger:
+      "2026-09-12 데스크톱 세션에서 `dof.gob.mx` apex가 열려 nota 5786237(면머리 `DOF: 28/04/2026`)의 TRANSITORIOS를 직접 읽었다. 22호가 확인 대상으로 남긴 TERCERO 문언과 기준선이 둘 다 확정됐고(MX-OQ-004 종결), 그 과정에서 PRIMERO 둘째 문단이 제7장 온라인 침해 행정선언 절차를 본체 시행일에서 떼어 별도 Acuerdo 게재 다음 날로 미루고 그 고시에 18개월 기한을 붙인 것이 나왔다. 20호가 그 절차를 네 축 중 하나로 들었고 22호가 그 축을 유효로 재확인했으므로, 발행된 정정호 안에 남은 오류다.",
+    discoveredOn: "2026-09-12",
+    sourceIds: ["dof-mexico", "impi"],
+    jurisdictions: ["Mexico", "Industrial Property Reform", "Transitional Provisions", "Enforcement"],
+    relatedProductSlugs: ["mexico"],
+    status: "published",
+    publishedAs: "2026-09-mexico-lfppi-gazette-transitional-confirmation",
+    notes:
+      "앞 후보(`2026-09-mexico-lfppi-transitional-provisions`)와 같은 질문을 1차 출처로 닫은 회차다. 그 후보는 저장소 내부 모순에서 나왔고 2차 출처까지만 닿았지만, 이 후보는 관보 게재분 본문에서 나왔다. **sweep 회차는 추가하지 않았다** — `dof-mexico`의 `sweepTarget`은 기간 대상 검색이고 '일자별 edición 전문을 읽는 것은 완료 조건이 아니다'라고 명시돼 있는데, 이번에 한 것은 특정 nota 직접 열람이라 그 조건을 채우지 못한다. 그래서 `dof-mexico`는 radar에서 계속 `실사 이력 없음`이다. **대조 범위**: DOF 게재분 한 곳이며 diputados 상시본(`LeyesBiblio/regley/Reg_LFPPI.pdf`)은 이 세션에서 열리지 않았다(curl 443 연결 실패, 브라우저 내비게이션 거부). 관보 게재분이 정본이므로 결론은 서지만 두 곳 대조는 아니다. 남은 미결은 시행규칙 **본문 조문**이다 — `MX-OQ-002`(답변기한·연장 기산)는 부칙이 아니라 본문에 있고 이 회차가 열지 않았다."
   }
 ];
 
@@ -501,6 +558,44 @@ export const briefCandidates: BriefCandidate[] = [
 // 최신순으로 유지한다(archive 정렬 계약과 동일). 산출이 없어도 기록한다.
 
 export const briefSweepLog: BriefSweep[] = [
+  {
+    sweptOn: "2026-09-12",
+    kind: "verified",
+    sourceIds: [
+      "kipo",
+      "jpo",
+      "cnipa-official",
+      "euipo",
+      "govuk-ipo",
+      "uspto",
+      "eu-customs-reform",
+      "impi",
+      "inapi-chile",
+      "dof-mexico",
+      "wipo-madrid",
+      "inpi-argentina"
+    ],
+    foundCandidateIds: [
+      "2026-09-kbrand-online-infringement-hotline",
+      "2026-09-jpo-disaster-deadline-relief",
+      "2026-09-euipo-time-limit-practice-alignment"
+    ],
+    note:
+      "월간 리뷰 §5 훅으로 돈 회차다. **이 회차의 전제가 직전 기록과 다르다** — 8/31·9/7 라운드는 등록 소스 도메인이 전부 CONNECT 403이라 sweep 자체를 못 돌렸다고 적었는데, 2026-09-12 재측정에서 17개 중 10개가 컨테이너에서 다시 열렸고(wipo.int·moip.go.kr·gov.uk·uspto.gov·impi.gob.mx·inapi.cl·dof.gob.mx·cnipa.gov.cn·taxation-customs.ec.europa.eu·portaltramites.inpi.gob.ar) owner 데스크톱 내장 브라우저 경로도 17개 도메인 전부 승인됐다. 두 경로를 함께 써서 12개 소스를 열었다. " +
+      "ⓐ kipo(moip.go.kr 보도자료 목록 + 2026-09-09 게시물 21038 본문): 「온라인 IP침해 대응 핫라인」 개통 확인 → 신규 후보. 등록 URL이 `www.kipo.go.kr`로 남아 있어 sweepTarget에 닿지 못하는 상태였고 이 회차에서 `moip.go.kr`로 교체했다. " +
+      "ⓑ jpo(報道発表 2026年度 + 広報／災害関連情報 + 熊本지진 手続 본문): 報道発表는 7-27·7-22 이후 신규 없음으로 직전 회차와 동일하나, 災害関連情報에 실린 2026-07-29(8-07 갱신) 기한 구제 고지를 확인 → 신규 후보. 직전 회차의 sweepTarget이 報道発表 목록만 가리켜 이 면이 시야 밖이었다. " +
+      "ⓒ cnipa-official(공고 col74·통지 col75·정책해설 col66 목록 + 商标法 2026年修订 专题 col3684): 2026-08-30 이후 게시물은 09-01 지리적표시 보호시범구 공시 1건뿐이고, 专题 최신 항목은 2026-07 해설 기사에서 멈춰 있다. **商标法实施条例 개정안·의견수렴 신호 없음** — `2027-china-implementing-rules` watching 유지. 같은 기간 集成电路布图设计保护条例는 조례 공포(8-03 해설)와 配套规章 의견수렴(7-31)까지 진행돼, CNIPA가 따르는 순서 자체는 관측된다. " +
+      "ⓓ euipo(뉴스 목록, 등록 이후 첫 실사): 2026-07-17 기간연장·중지·기간 산정 정렬 고지 확인 → 신규 후보(상세 본문 미열람). " +
+      "ⓔ govuk-ipo(IPO news & communications 목록 + 우선 페이지 4건 last-updated): 2026-08-03 이후 신규는 09-08 위조완구 단속 보고서·08-21 신임 장관 두 건으로 권리·기한 트리거 아님. 우선 대상인 comparable UK mark 안내는 2020-01-30에서 변동 없고, 수수료·서식면은 2026-07-23 갱신인데 UK-FEE-001(08-30)·EU-FEE-001(08-02) 재검증이 그보다 뒤라 드리프트 없음 — 산출 없음. " +
+      "ⓕ uspto(News and updates 목록): 2026-07~09 항목이 PTAB·심사 실무 등 특허 축이고 상표 항목이 없다. 21호(마드리드 e-Filing 전환)가 이 피드에 없다는 점이 sweepTarget의 결함을 보여준다 — USPTO의 상표 고지는 이 일반 피드가 아니라 상표 전용 알림·공보 면에 실린다. 다음 회차 전에 sweepTarget을 그쪽으로 좁혀야 한다. 산출 없음. " +
+      "ⓖ eu-customs-reform: 페이지 상태가 여전히 2026-03-26 정치적 합의이고 Data Hub 일정(2028 전자상거래 → 2031 자율 → 2034 의무)도 그대로다 — `2026-08-eu-customs-reform-watch`의 발행 트리거(법령으로 일정 확정)는 미발화, watching 유지. 다만 같은 면의 Latest developments가 별개 조치를 싣고 있다: de minimis 면제 폐지와 품목당 EUR 3 임시관세(2026-07-01~2028-07-01), 근거 Regulation (EU) 2026/382·Delegated Regulation (EU) 2026/1022. 관세 조치라 상표 권리에 직접 닿지 않아 후보로 올리지 않지만, EuTm 세관 장이 소액 특송 흐름을 다룬다면 전제가 바뀐 자리다. " +
+      "ⓗ impi(prensa 목록 + 사용선언 공지 본문): 목록 상단 5건이 전부 압수·단속 집행 건이고 제도 변경 고지 없음 — 산출 없음. 본문은 LA-MX-USE-001 재대조에 썼다. " +
+      "ⓘ inapi-chile(sala-de-prensa 전체 뉴스 목록): 특허 포럼·출원통계·프로그램 공지로 상표 제도 트리거 없음 — 산출 없음. 등록 URL 체계가 개편돼 `/noticias/...`가 `/sala-de-prensa/...`로 옮겨간 것을 여기서 확인했다(LatTm 출처 등록부에 반영). " +
+      "ⓙ dof-mexico(2026-04-28 판 색인 + nota 5786237 본문, 등록 이후 첫 실사): **20호가 남긴 owner 1차 대조 항목이 닫혔다.** DOF 2026-04-28 PODER EJECUTIVO/PRESIDENCIA에 「Decreto por el que se expide el Reglamento de la Ley Federal de Protección a la Propiedad Industrial」이 실려 있고, TRANSITORIO PRIMERO가 공포 후 60 영업일 시행, SEGUNDO가 1994-11-23 구 RLPI 폐지를 명시한다(20호 기재와 일치). **그러나 TERCERO는 20호 본문과 어긋난다** — 「Los asuntos que estuvieren en trámite al entrar en vigor este Reglamento, se regirán y substanciarán hasta su conclusión conforme a las disposiciones vigentes al momento de su presentación」으로 계속 중인 사건은 접수 당시 규정으로 종결되며, 신 규정 접근은 대체적 분쟁해결 조항에 한해 열린다. 또 PRIMERO 둘째 문장은 제7장 온라인 침해 행정선언 절차의 시행을 별도 Acuerdo 공표 다음날로 미루고 그 Acuerdo에 시행 후 18개월 기한을 준다. CUARTO는 제131조 목록 공표를 시행 후 3개월 내로 정한다. 이 세 가지는 20호 정정 판단 대상이라 `docs/current-ops-taskboard.md`에 owner 결정 항목으로 올렸다 — 이 sweep 회차에서 본문을 고치지 않는다. " +
+      "ⓚ wipo-madrid(회원국 면): LA-OQ-001 재대조로 열었다(117 members / 133 countries, 최신 가입국 사우디아라비아). 뉴스 목록은 이 회차에서 열지 못했고 cadence(monthly, 직전 08-30) 안이라 별도 대상이 아니었다. " +
+      "ⓛ inpi-argentina: 등록 URL(portaltramites.inpi.gob.ar/Marcas/Renovaciones)이 로그인 벽이라 sweepTarget을 볼 수 없었고, 같은 기관의 공개 절차 안내면(argentina.gob.ar)으로 대체해 중간 사용선언·갱신 절차를 확인했다 — 절차·요율 변경 신호 없음. 등록부 교체는 LatTm 출처 등록부에 반영했고 이 소스의 sweepTarget도 다음 회차 전에 공개 안내면으로 옮겨야 한다. " +
+      "**이번 회차에서 열지 못한 소스 5개**: sbj.cnipa(CNIPA 상표국 통지공고)·samr·cbp-ipr·diario-oficial-chile는 컨테이너에서 403이고 이 회차 안에 브라우저 경로로 돌리지 못했다. sic-colombia는 두 경로 모두 연결 실패다. 이 다섯은 freshness를 갱신하지 않는다."
+  },
   {
     sweptOn: "2026-08-30",
     kind: "verified",

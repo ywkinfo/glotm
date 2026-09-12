@@ -598,22 +598,54 @@ describe("brief discovery report", () => {
     expect(byId["backfill-only"]?.status).toBe("never-verified");
   });
 
-  // 2026-08-30 회차가 다섯 소스를 직접 열었고, 나머지 열 개는 여전히 backfill뿐이다.
-  // 실사한 소스의 freshness가 열지 않은 소스까지 갱신한 것처럼 보이면 안 된다 — 이 테스트가 그 경계를 지킨다.
+  // 2026-09-12 회차가 열두 소스를 직접 열었다. 실사한 소스의 freshness가 열지 않은 소스까지
+  // 갱신한 것처럼 보이면 안 된다 — 이 테스트가 그 경계를 지킨다.
+  //
+  // 경계가 두 겹이라 둘 다 고정한다. ⓐ 한 번도 실사되지 않은 소스는 계속 never-verified여야 하고,
+  // ⓑ **예전 회차에 실사됐지만 이번 회차에는 열지 않은 소스**는 그 예전 날짜에 머물러야 한다.
+  // ⓑ가 더 미끄러지기 쉬운 쪽이다 — 최신 회차가 등록부 전체의 freshness를 끌어올리는 버그는
+  // never-verified만 보는 테스트로는 잡히지 않는다. cnipa-trademark-office가 그 pin이다.
   it("reports verified sweeps only for the sources that were actually opened", () => {
-    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-08-30T00:00:00.000Z"));
-    const swept = ["kipo", "wipo-madrid", "jpo", "cnipa-official", "cnipa-trademark-office"];
-    const untouched = rows.filter((row) => !swept.includes(row.source.id));
+    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-09-12T00:00:00.000Z"));
+    const sweptNow = [
+      "kipo",
+      "jpo",
+      "cnipa-official",
+      "euipo",
+      "govuk-ipo",
+      "uspto",
+      "eu-customs-reform",
+      "impi",
+      "inapi-chile",
+      "dof-mexico",
+      "wipo-madrid",
+      "inpi-argentina"
+    ];
 
-    for (const id of swept) {
+    for (const id of sweptNow) {
       const row = rows.find((entry) => entry.source.id === id);
-      expect(row?.lastVerifiedOn).toBe("2026-08-30");
+      expect(row?.lastVerifiedOn).toBe("2026-09-12");
       expect(row?.status).toBe("ok");
     }
 
-    // 등록부 크기에 묶인 pin이다(= briefSources.length - swept.length). 소스를 추가하면 여기서
-    // 한 번 걸리고, 그때 "새 소스는 실사 이력 없음으로 시작한다"를 의식적으로 확인하게 된다.
-    expect(untouched).toHaveLength(12);
-    expect(untouched.every((row) => row.status === "never-verified")).toBe(true);
+    // ⓑ 직전 회차(2026-08-30)에만 열린 소스. 이번 회차가 건드리지 않았으므로 날짜가 그대로여야 하고,
+    // weekly cadence라 13일이 지나 overdue로 떠야 한다.
+    const staleFromLastRound = rows.find((entry) => entry.source.id === "cnipa-trademark-office");
+    expect(staleFromLastRound?.lastVerifiedOn).toBe("2026-08-30");
+    expect(staleFromLastRound?.status).toBe("overdue");
+
+    // ⓐ 등록부 크기에 묶인 pin이다(= briefSources.length - sweptNow.length - 1). 소스를 추가하면
+    // 여기서 한 번 걸리고, 그때 "새 소스는 실사 이력 없음으로 시작한다"를 의식적으로 확인하게 된다.
+    const neverOpened = rows.filter(
+      (row) => ![...sweptNow, "cnipa-trademark-office"].includes(row.source.id)
+    );
+    expect(neverOpened).toHaveLength(4);
+    expect(neverOpened.map((row) => row.source.id).sort()).toEqual([
+      "cbp-ipr",
+      "diario-oficial-chile",
+      "samr",
+      "sic-colombia"
+    ]);
+    expect(neverOpened.every((row) => row.status === "never-verified")).toBe(true);
   });
 });
