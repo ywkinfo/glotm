@@ -44,6 +44,36 @@ lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/arc
 
 정정본이 **없는** 상태로 옛 이슈 본문만 고치는 것은 이 lane의 방식이 아니다. 사실이 바뀌었으면 새 이슈를 쓰고 포인터를 단다.
 
+## 시한 규칙 (time-sensitive)
+
+브리프는 시한 있는 소재를 자주 다룬다(모집 마감, 창구 전환 병행 기간). 그 시한이 지나면 본문의
+현재형 서술은 과거가 되는데, **본문은 소급 수정하지 않는다**(위 정정 규칙과 같은 이유). 그래서
+만료는 본문이 아니라 메타데이터로 선언하고 **렌더 시점에 판정**한다.
+
+- `supersededBy`와 혼동하지 않는다. 정정은 "이 이슈가 틀렸다"이고, 시한은 **"틀린 적이 없고 시효가
+  지났다"**이다. 둘은 직교하며 한 이슈가 동시에 가질 수 있다(이슈 페이지에서는 정정 고지가 먼저 온다).
+- 형태: `timeSensitive: { closesOn, label, note }` (`../src/briefs/archiveLegacy.ts`).
+  - `closesOn` — 시한의 **마지막 날**(= 그날까지 유효). `publishedAt`과 같은 UTC 자정 ISO 문자열로 적는다.
+  - `label` — 무엇이 닫히는가. 고지에 그대로 노출되므로 한 줄.
+  - `note` — **시한이 지난 뒤에도 남는 것**. 만료 고지 본문이 된다.
+- **`note`는 발행 회차에서 쓴다.** 만료된 다음에 채우는 구조라면 그때 누군가 이 이슈를 기억해야 하고,
+  기억하지 못하면 장치가 없는 것과 같다. 시한 있는 소재를 발행하면서 "지난 뒤에 무엇이 남는가"를
+  적을 수 없다면, 그 소재는 애초에 브리프 한 호를 쓸 만한 소재가 아니다.
+- **만료 판정 시간대는 KST다.** `closesOn`이 끝나는 순간, 즉 그 다음 날 0시 KST부터 만료로 본다.
+  이 lane의 독자도 소재(한국 기관 공고·국내 마감)도 한국 시간을 쓰므로, UTC 자정으로 판정하면
+  마감 당일 오전 9시부터 "지났다"고 말하게 된다. 판정 정본은 `../src/briefs/archive.ts`의
+  `resolveBriefExpiry(issue, now)`이며 UI·prerender·테스트가 같은 함수를 쓴다.
+- 표시 면: 이슈 페이지 상단 고지 + 아카이브·게이트웨이 카드 배지 + 게이트웨이 최신 브리프 배너 배지
+  + prerender HTML(본문 앞).
+- **prerender는 빌드 시각으로 판정한다.** 정적 HTML은 배포 사이에 스스로 만료로 넘어가지 못하므로,
+  크롤러가 보는 표면은 `closesOn` 이후 **첫 배포**에서 따라온다. JS를 실행하는 독자는 셸이 마운트하며
+  로드 시각으로 다시 판정하므로 항상 정확하다. 이 지연은 설계상 알려진 것이고 숨기지 않는다.
+- **`lastModified`는 움직이지 않는다.** 시한이 지나도 문서가 수정된 것은 아니고 달라지는 것은 읽는
+  시점의 렌더다. `closesOn`을 수정일로 올리면 하지 않은 수정을 크롤러에 주장하게 된다
+  (`getBriefLastModified`는 계속 `supersededBy.updatedAt ?? publishedAt`이다).
+- 구조 강제는 `../src/briefs/archive.test.ts`의 `brief lane contract`가 한다 — UTC 자정 형식,
+  발행일 이전 마감 금지, `label`·`note` 필수, KST 경계 판정.
+
 ## Publish QA 게이트
 
 브리프를 추가·수정한 뒤 아래를 확인한다.
@@ -55,6 +85,7 @@ lane의 정본 콘텐츠와 이슈 인벤토리는 런타임 [`../src/briefs/arc
 - [ ] `jurisdictions` ≥ 1, 각 item core copy(`headline` / `whatChanged` / `whoShouldCare` / `whyItMatters` / `nextAction`) 채움
 - [ ] `relatedGuideLinks`가 live guide로 연결 (registry 경로 대조까지 테스트가 강제)
 - [ ] 이번 이슈가 앞 이슈의 사실을 정정한다면 앞 이슈에 `supersededBy` 추가 (위 `정정 규칙`)
+- [ ] 이번 이슈가 **날짜가 박힌 시한**(모집 마감, 병행 기간 종료 등)을 다룬다면 `timeSensitive` 선언 — `closesOn`·`label`과 함께 **지난 뒤에 남는 것**을 `note`에 지금 적는다 (위 `시한 규칙`)
 - [ ] 이 이슈의 후보를 `../src/briefs/discovery.ts`에서 `published` + `publishedAs`로 전이 ([`briefs-discovery.md`](briefs-discovery.md))
 
 위 구조 규칙은 [`../src/briefs/archive.test.ts`](../src/briefs/archive.test.ts)의 `brief lane contract`에서 자동 강제된다. **문서는 설명, 테스트는 게이트다.**

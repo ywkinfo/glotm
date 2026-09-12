@@ -1512,3 +1512,57 @@ describe("App portfolio shell", () => {
     expect(entryHrefs).toHaveLength(7);
   });
 });
+
+describe("brief time-sensitive notice", () => {
+  // 시계를 고정하지 않으면 이 단정들은 달력이 지나가면서 조용히 뒤집힌다 —
+  // "만료 전"을 확인하는 테스트는 closesOn이 지나는 순간 의미를 잃는다.
+  // Date만 가짜로 쓴다(setTimeout까지 바꾸면 Testing Library의 대기가 멎는다).
+  const openWindowAt = new Date("2026-09-20T00:00:00.000Z");
+  const closedWindowAt = new Date("2026-10-01T00:00:00.000Z");
+  const issueSlug = "2026-09-uspto-madrid-efiling-cutover";
+
+  afterEach(() => {
+    vi.useRealTimers();
+    window.history.replaceState({}, "", "/");
+  });
+
+  function freezeAt(instant: Date) {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(instant);
+  }
+
+  it("says nothing while the window is still open", () => {
+    freezeAt(openWindowAt);
+
+    renderAppRouteTree(`/briefs/${issueSlug}`);
+
+    expect(screen.queryByLabelText("시한이 지난 소재 고지")).not.toBeInTheDocument();
+    expect(screen.queryByText("마감 지남")).not.toBeInTheDocument();
+  });
+
+  it("leads the issue with an expiry notice once the window has closed", () => {
+    freezeAt(closedWindowAt);
+
+    renderAppRouteTree(`/briefs/${issueSlug}`);
+
+    const notice = screen.getByLabelText("시한이 지난 소재 고지");
+
+    expect(within(notice).getByText(/TEASi와 Madrid e-Filing 병행 기간/)).toBeInTheDocument();
+    expect(within(notice).getByText(/Madrid e-Filing으로만 접수됩니다/)).toBeInTheDocument();
+
+    // 고지는 본문보다 먼저 나와야 한다 — 검색으로 도착한 독자가 지난 시한을 본문보다 늦게 알면
+    // 장치가 있으나 마나다.
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(
+      notice.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it("badges the expired issue in the archive listing", () => {
+    freezeAt(closedWindowAt);
+
+    renderAppRouteTree("/briefs");
+
+    expect(screen.getAllByText("마감 지남").length).toBeGreaterThan(0);
+  });
+});

@@ -16,7 +16,7 @@ import documentDataRouteReport from "../public/generated/reports/global-filing-r
 import documentDataReport from "../public/generated/reports/global-use-evidence-system/document-data.json";
 import documentDataUk from "../public/generated/uk/document-data.json";
 import documentDataUsa from "../public/generated/usa/document-data.json";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
 import { gatewayHeroSupportingParagraphs } from "../src/content/gateway";
 import {
@@ -321,6 +321,61 @@ describe("SEO build helpers", () => {
         );
       }
     }
+  });
+
+  // 2026-08-24 실측의 본질은 "만료된 마감이 JS 독자에게만 보였다"가 아니라 그 반대편이었다 —
+  // 게이트웨이 배너는 JS에만 있었고 prerender 표면에는 아예 없었다. 만료 고지는 그 반대가 되면
+  // 안 된다: 검색으로 옛 이슈에 도착한 독자가 보는 것은 바로 이 정적 HTML이다.
+  // 시계를 고정하지 않으면 "아직 열려 있다" 쪽 단정이 달력만으로 뒤집힌다.
+  it("leads an expired brief's static HTML with the expiry notice and leaves an open one alone", () => {
+    const expiredSlug = "2026-09-uspto-madrid-efiling-cutover";
+    const shell = [
+      "<!doctype html>",
+      "<html>",
+      "  <head>",
+      "    <title>Placeholder</title>",
+      "  </head>",
+      '  <body><div id="root"></div></body>',
+      "</html>"
+    ].join("\n");
+
+    const renderIssueAt = (instant: string) => {
+      vi.useFakeTimers({ toFake: ["Date"] });
+      vi.setSystemTime(new Date(instant));
+
+      try {
+        const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+          basePath: "/glotm/",
+          distDir: "/tmp/glotm-dist",
+          siteOrigin: "https://ywkinfo.github.io"
+        });
+        const page = pages.find((entry) => entry.routePath === `/briefs/${expiredSlug}`);
+
+        expect(page, `missing static page for ${expiredSlug}`).toBeDefined();
+
+        return renderStaticHtml(shell, page!);
+      } finally {
+        vi.useRealTimers();
+      }
+    };
+
+    // 병행 기간 안에서는 본문이 정확하므로 아무것도 덧붙이지 않는다.
+    expect(renderIssueAt("2026-09-20T00:00:00.000Z")).not.toContain("마감 지남");
+
+    const closedHtml = renderIssueAt("2026-10-01T00:00:00.000Z");
+
+    expect(closedHtml).toContain("마감 지남");
+    expect(closedHtml).toContain("TEASi와 Madrid e-Filing 병행 기간");
+    // 고지가 본문보다 앞에 있어야 한다. 뒤에 붙으면 크롤러와 첫 페인트 독자가 지난 시한을
+    // 본문을 다 읽은 뒤에 만난다.
+    // 기준 문구는 bodyParagraphs에만 있는 문장으로 잡는다 — summary는 <head> description과
+    // <header>에도 실려 본문 시작점을 가리키지 못한다.
+    const firstBodyOnlySentence = "이 소식에서 가장 먼저 가릴 것은 해당 여부입니다.";
+
+    expect(closedHtml).toContain(firstBodyOnlySentence);
+    expect(closedHtml.indexOf("마감 지남")).toBeLessThan(
+      closedHtml.indexOf(firstBodyOnlySentence)
+    );
   });
 
   // 게이트웨이 본문은 최신 리포트를 문장으로 약속하는데, prerender된 크롤 표면에는 오래도록

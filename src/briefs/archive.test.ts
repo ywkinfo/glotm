@@ -7,7 +7,8 @@ import {
   getBriefIssueBySlug,
   getBriefLastModified,
   getLatestBriefIssue,
-  resolveBriefCorrection
+  resolveBriefCorrection,
+  resolveBriefExpiry
 } from "./archive";
 import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 
@@ -206,6 +207,59 @@ describe("brief lane contract", () => {
     // 예고 단계였던 일정·대상국이 확정값으로 바뀐 사실이 정정 문구에 남아 있어야 한다.
     expect(supersededIssue?.supersededBy?.note).toContain("9월 11일");
     expect(supersededIssue?.supersededBy?.note).toContain("73개국");
+  });
+
+  it("shapes every time-sensitive marker so the date arithmetic cannot drift", () => {
+    for (const issue of briefIssues) {
+      if (!issue.timeSensitive) {
+        continue;
+      }
+
+      const { closesOn, label, note } = issue.timeSensitive;
+
+      expect(label.trim().length, `${issue.slug} needs a label`).toBeGreaterThan(0);
+      expect(note.trim().length, `${issue.slug} needs an after-note`).toBeGreaterThan(0);
+
+      // publishedAt과 같은 UTC 자정 ISO 문자열이어야 만료 시각 계산(+24h -9h)이 성립한다.
+      expect(closesOn, `${issue.slug} closesOn must be a UTC midnight instant`).toMatch(
+        /^\d{4}-\d{2}-\d{2}T00:00:00\.000Z$/
+      );
+      expect(Number.isNaN(new Date(closesOn).getTime())).toBe(false);
+
+      // 발행 시점에 이미 닫힌 시한을 선언하는 것은 저자 오류다 — 그런 소재는 애초에 쓰지 않는다.
+      expect(
+        new Date(closesOn).getTime(),
+        `${issue.slug} closes before it was published`
+      ).toBeGreaterThanOrEqual(new Date(issue.publishedAt).getTime());
+    }
+  });
+
+  it("keeps the closing day open and flips at midnight KST, not midnight UTC", () => {
+    const issue = getBriefIssueBySlug("2026-08-kbrand-certification-first-round-rights-gap");
+
+    expect(issue?.timeSensitive?.closesOn).toBe("2026-09-11T00:00:00.000Z");
+
+    // 마감 당일은 끝까지 열려 있다. 18:00 KST(= 09:00 UTC)는 `now > closesOn` 식의 UTC 비교로
+    // 바꾸면 곧바로 "지났다"가 되는 지점이라, 이 단정이 그 회귀를 직접 막는다.
+    expect(resolveBriefExpiry(issue!, new Date("2026-09-11T09:00:00.000Z"))).toBeUndefined();
+    expect(resolveBriefExpiry(issue!, new Date("2026-09-11T14:59:59.999Z"))).toBeUndefined();
+
+    // 다음 날 0시 KST(= 전날 15:00 UTC)부터 만료다.
+    expect(resolveBriefExpiry(issue!, new Date("2026-09-11T15:00:00.000Z"))?.label).toBe(
+      "K-브랜드 정부인증제도 1차 참여기업 모집"
+    );
+  });
+
+  it("leaves issues without a window untouched and never moves last-modified", () => {
+    for (const issue of briefIssues) {
+      if (!issue.timeSensitive) {
+        expect(resolveBriefExpiry(issue, new Date("2099-01-01T00:00:00.000Z"))).toBeUndefined();
+        continue;
+      }
+
+      // 시한이 지나도 문서가 수정된 것은 아니다. lastModified는 발행일 또는 정정 기록일에 머문다.
+      expect(getBriefLastModified(issue)).toBe(issue.supersededBy?.updatedAt ?? issue.publishedAt);
+    }
   });
 
   it("keeps the archive sorted newest-first with unique publish dates", () => {

@@ -32,6 +32,22 @@ export type BriefCorrection = {
   note: string;
 };
 
+// 시한이 있는 소재(모집 마감, 전환 창구 병행 기간)를 다룬 이슈는 그 시한이 지나는 순간
+// 본문의 현재형 서술이 과거가 된다. 본문은 발행일 시점의 사실이라 소급 수정하지 않으므로
+// (supersededBy와 같은 이유), 만료는 본문을 건드리지 않고 메타데이터로 선언해 두고 렌더 시점에
+// 판정한다. supersededBy와 다른 점이 핵심이다: 이 이슈는 **틀린 적이 없고 시효가 지났을 뿐**이라
+// 정정 포인터로는 표현되지 않는다. 둘은 직교하며 한 이슈가 동시에 가질 수 있다.
+export type BriefTimeSensitive = {
+  // 시한의 마지막 날(= 그날까지 유효). publishedAt과 같은 UTC 자정 ISO 문자열로 적고,
+  // 만료 판정은 그 날이 끝나는 순간(KST 기준 다음 날 0시)부터다 — archive.ts의 resolveBriefExpiry.
+  closesOn: string;
+  // 무엇이 닫히는가. 고지에 그대로 노출되므로 한 줄로 적는다
+  label: string;
+  // 시한이 지난 뒤에도 남는 것. **발행 시점에 저자가 적는다** — 만료된 뒤에 채우는 구조면
+  // 그때 누군가 기억해야 하고, 기억하지 못하면 장치가 없는 것과 같다
+  note: string;
+};
+
 export type BriefIssue = {
   slug: string;
   title: string;
@@ -42,6 +58,7 @@ export type BriefIssue = {
   bodyParagraphs?: string[];
   items: BriefItem[];
   supersededBy?: BriefCorrection;
+  timeSensitive?: BriefTimeSensitive;
 };
 
 function buildGuideSectionPath(

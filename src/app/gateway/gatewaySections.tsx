@@ -1,7 +1,8 @@
 import {
   buildBriefArchivePath,
   buildBriefIssuePath,
-  formatBriefDate
+  formatBriefDate,
+  resolveBriefExpiry
 } from "../../briefs/archive";
 import { gatewayHeroSupportingParagraphs } from "../../content/gateway";
 import {
@@ -100,6 +101,9 @@ export function LatestBriefBanner({ view }: SectionProps) {
       </div>
       <div className="latest-brief-banner-meta">
         <p className="brief-card-date">{formatBriefDate(latestBrief.publishedAt)}</p>
+        {resolveBriefExpiry(latestBrief) ? (
+          <span className="status-pill status-pill--expired">마감 지남</span>
+        ) : null}
         <div className="brief-chip-row" aria-label="최신 브리프 관할 목록">
           {latestBriefJurisdictions.map((jurisdiction) => (
             <span key={jurisdiction} className="brief-chip">
