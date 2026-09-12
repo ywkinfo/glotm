@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-12 4라운드 (2026-09 월간 리뷰 · verifiedOn re-stamp 2026-09-12)
+- Last updated: 2026-09-12 5라운드 (20호 사실 정정 · 22호 발행 · 후보 id 충돌 가드 신설)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -228,6 +228,21 @@
   - **이번 라운드가 하지 못한 것(범위 밖이 아니라 이 환경에서 불가)**: 런북 §1 Search Console 색인, §2 GA4 DebugView, §4 organic sessions 집계는 콘솔 계정이 필요한 owner 전용 절차다. §5 소스 sweep은 checkout agent도 계약상 가능하지만 등록 소스 도메인이 이 컨테이너에서 전부 CONNECT 403이라 실행하지 못했고, 라이브 `ywkinfo.github.io`도 같은 이유로 §3 라이브 QA를 로컬 `e2e:smoke`로 대체했다. **`briefSweepLog` 회차를 추가하지 않았고 어떤 `lastVerified`도 옮기지 않았다.**
   - **관찰 하나 — 고치지 않고 남긴다.** `docs/workspaces/`에 다른 6개 워크스페이스는 미러 문서가 있는데 `LatTm`만 없다. 이번 세션에 LatTm이 fact-QA 레인에 들어왔으므로 미러를 둘지 판단할 시점이지만, 새 운영 문서를 만드는 것은 owner 판단이라 만들지 않았다.
   - **다음 리뷰로 넘기는 것**: ⓐ `ready` 0을 푸는 소스 sweep(owner 브라우저 경로 필요), ⓑ `LA-OQ-001` — LatTm HIGH claim 5건의 1차 출처 재대조(같은 병목), ⓒ 정체 후보 2건 살릴지 버릴지 판단.
+
+- 2026-09-12 5라운드: **20호 사실 정정** — 별도 데스크톱 세션의 작업 기록을 받아, 이 컨테이너에서 **실제로 확인되는 부분만** 처리했다.
+  - **먼저 ground truth를 확인했다.** 데스크톱 세션이 만들었다는 브랜치 `claude/source-sweep-la-oq-001`과 패치 `glotm-2026-09-12-sweep-and-correction.patch`는 **이 컨테이너에 없고**(파일시스템 전수 검색 0건) `origin`에도 없다(원격 브랜치는 `main`·`claude/brave-turing-xtm836`·`claude/glotm-ux-improvements-pe1chp` 뿐). 소스 도메인 접근도 이 컨테이너에서는 **여전히 전부 CONNECT 403**이다 — WIPO·SIC·gob.mx·INPI·INAPI·USPTO·EUIPO를 다시 재 보고 프록시 `recentRelayFailures`에 7건이 그대로 기록됐다. 데스크톱 세션이 보고한 "17개 중 10개 200"은 그 환경(임베디드 브라우저)의 측정이지 이 컨테이너에 이전되지 않는다.
+  - **그래서 그쪽의 1차 출처 결과는 가져오지도, 재현하지도 않았다.** `LA-OQ-001` 종결, source-register 정정(INAPI 404·INPI 로그인월·SIC 접속불가), §5 sweep 회차, 그리고 그쪽이 발행했다는 22호는 **이 저장소에 반영되지 않았다.** 열지 않은 출처를 열었다고 기록하지 않는다는 규칙이 그대로 적용된다.
+  - **반면 20호의 결함은 저장소 안에서 전부 확인된다.** `2026-09-mexico-lfppi-regulations-in-force`는 요약과 항목 헤드라인에서 "발효가 지났으므로 지금 심사 중인 출원과 진행 중인 침해 사건은 이미 새 규칙 아래 있습니다"라고 단정했는데, **같은 호 본문 3문단과 7문단이 정확히 그 명제를 유보했다**("경과 규정은 IMPI 최신 안내와 현지 대리인 확인이 필요합니다", "발효 전 접수된 사건에 어떤 규칙이 적용되는지는 이 문서로 판단하지 않는 편이 좋습니다"). 확인하지 않았다고 스스로 밝힌 명제를 가장 눈에 띄는 자리에서 사실로 적은 것이고, 이 판정에는 외부 접근이 필요 없다.
+  - **정정호 `2026-09-mexico-lfppi-transitional-scope-correction`(22호, 2026-09-12)을 발행하고 20호에 `supersededBy`를 달았다.** 적용범위를 정하는 것은 발효일이 아니라 관보 부칙(TRANSITORIOS)이고, 부칙이 "접수 당시 시행 중이던 규칙을 계속 적용한다"고 정하고 있다면 20호의 단정은 방향이 반대가 된다.
+  - **정정호는 반대 방향을 새로 단정하지 않는다.** DOF 관보 부칙을 이 컨테이너에서 열지 못했으므로, 확인 없이 한 단정을 확인 없이 뒤집으면 같은 잘못을 부호만 바꿔 반복하는 것이다. 확정한 것은 하나다 — 20호의 그 문장을 근거로 진행 중인 건의 기한을 판단하지 말 것. 공포일·발효일·조문 수 확대 등 나머지 사실관계는 철회하지 않았고, 정정 문구가 그 경계를 문자열로 들고 있다.
+  - **`check:dist-boundary`가 실제로 하나 잡았다 — 그런데 누출이 아니라 이름 충돌이었다.** 후보 id를 처음에 `2026-09-mexico-lfppi-transitional-scope`로 지었는데 이것이 발행 slug `…-transitional-scope-correction`의 **부분문자열**이라, slug가 정상적으로 dist에 실린 것만으로 "발굴 데이터가 릴리스 산출물에 실렸다"가 5건 떴다. 후보 id는 소스 id와 달리 따옴표 없는 raw 부분문자열로 스캔하기 때문이다(그 설계 자체는 맞다). 후보 id를 `-transitional-provisions`로 바꿔 해소했다.
+  - **그 제약이 암묵이었다는 것이 진짜 결함이라 가드를 신설했다.** 지금까지 "후보 id는 발행 slug의 부분문자열이면 안 된다"는 규칙은 어디에도 쓰여 있지 않았고, 어기면 `npm test`가 아니라 **릴리스 레인에서야** 붉어졌다. `discovery.test.ts`에 후보 id × 발행 slug 전수 대조를 넣어 후보 id를 짓는 순간 잡히게 했다.
+  - **위반 주입 7건 확인**: ① 20호에서 `supersededBy` 제거 ② 정정 문구에서 `TRANSITORIOS` 삭제 ③ 그대로 남는 사실(공포일·발효일·조문 수) 문구 삭제 ④ 존재하지 않는 slug를 가리키게 ⑤ 후보를 `watching`으로 되돌려 발행 이슈의 계보 끊기 ⑥ 정정호를 20호보다 앞 날짜로 back-date ⑦ 후보 id를 충돌하던 값으로 되돌리기 — **7/7 모두 붉어졌다.** ⑦은 신설 가드가 릴리스 레인 대신 `npm test`에서, 그것도 무엇이 왜 걸리는지 적힌 메시지로 잡는지 확인한 것이다.
+  - **lane 규칙 3개를 `briefs-lane.md`에 명문화했다.** ⓐ 본문이 유보한 명제를 `summary`·`headline`에서 단정하지 않는다(카드·검색 결과에 본문 없이 단독 노출되므로 본문보다 넓게 읽힌다) ⓑ 법령 개정 소재는 공포일·발효일·적용범위를 분리해 쓴다 ⓒ 정정호는 1차 출처 대조 없이 반대 방향을 단정하지 않는다. Publish QA 게이트에 요약·헤드라인 대조 항목을 추가했다 — **구조 테스트가 잡지 못하는 항목이므로 문서 규칙 + 발행자 확인으로 둔다고 명시했다.**
+  - **발굴 기록은 고치지 않고 포인터만 남겼다.** 2026-09-07 후보의 headline에도 같은 단정이 들어 있지만 그것은 그 시점의 판단 기록이므로, 전방 포인터(`**2026-09-12 후속**`)만 붙이고 본문은 그대로 뒀다. 새 후보의 발굴 경로는 외부 소스가 아니라 **이미 발행한 이슈의 내부 모순**이고, `sourceIds`는 이 질문을 실제로 닫을 수 있는 소스(`dof-mexico`·`impi`)를 가리킨다.
+  - **런북 미러 갱신**: `phase2.5-organic-indexing-ops.md` sitemap 인벤토리 `151`→**152**, brief 행 `index 1 + issue 21 = 22`→`index 1 + issue 22 = 23`, 기준일 2026-09-11→2026-09-12.
+  - 게이트: `npm test` **426/426**(기존 424 + 신규 2), `typecheck` pass, `health:runtime` pass(unit **357** + e2e:smoke 50), `health:content` pass(content 45 · 7개 워크스페이스 QA 0 error / 0 warning), `health:release` pass(**152 routes** + sitemap 152 + `check:dist-boundary` 0 hits(**29 tokens**) + `test:seo` 24 + subpath e2e 7), `check:consistency` 0 hard / 0 advisory, `audit:facts` 7개(6 pass + `LatTm` warn — 4라운드와 동일, 이번 라운드가 건드리지 않았다), `briefs:radar` **22호** · 최신 2026-09-12 · 0d · `ready` 0 · `watching` 2.
+  - **남는 것**: ⓐ DOF 관보 부칙 원문 대조 — 정정호가 미결로 명시했고, 열리면 20호의 방향까지 확정된다. ⓑ 데스크톱 세션의 작업물(LA-OQ-001 종결·source-register 정정·§5 sweep)은 **여전히 미수령**이다. 그 세션이 브랜치를 푸시하거나 패치 파일이 전달되면 이 컨테이너에서 게이트를 돌려 올릴 수 있다. ⓒ 그 세션도 22호를 발행했다면 **같은 회차 번호의 정정호가 둘**이 되므로, 도착 시 둘 중 하나를 접어야 한다 — 1차 출처를 실제로 대조한 쪽이 우선이다.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 

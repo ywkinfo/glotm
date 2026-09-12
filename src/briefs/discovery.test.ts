@@ -223,6 +223,22 @@ describe("brief discovery contract", () => {
     }
   });
 
+  // `check:dist-boundary`는 후보 id를 **따옴표 없는 raw 부분문자열**로 dist 전체에서 찾는다(소스 id와
+  // 달리 후보 id는 본문 어휘와 충돌하지 않기 때문이다). 그래서 후보 id가 발행 slug의 부분문자열이면
+  // slug가 정상적으로 실린 것만으로 boundary 체크가 붉어진다 — 실제 누출이 아닌데 누출로 보고된다.
+  // 이 제약은 지금까지 암묵적이었고, 어기면 `npm test`가 아니라 릴리스 레인에서야 드러났다.
+  // 여기서 잠가 두면 후보 id를 짓는 순간 잡힌다.
+  it("keeps candidate ids from colliding with published slugs so the dist boundary stays readable", () => {
+    for (const candidate of briefCandidates) {
+      for (const issue of briefIssues) {
+        expect(
+          issue.slug.includes(candidate.id),
+          `candidate ${candidate.id} is a substring of published slug ${issue.slug} — check:dist-boundary would report the slug as a discovery leak`
+        ).toBe(false);
+      }
+    }
+  });
+
   it("keeps the sweep log newest-first with resolvable ids", () => {
     const timestamps = briefSweepLog.map((sweep) => Date.parse(sweep.sweptOn));
 
