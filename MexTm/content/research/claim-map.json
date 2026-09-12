@@ -69,6 +69,13 @@
       "question": "gob.mx ficha ID(IMPI88·IMPI3170) 존속 여부와, claim에서 ficha 축을 유지할지 서식(formato) 축만 남길지. 후속 등록부인 CONAMER 카탈로그는 Buscador가 결과를 JS로 채워 이 채널에서 확인되지 않는다.",
       "raisedOn": "2026-08-30",
       "claimIds": ["MX-FEE-001"]
+    },
+    {
+      "id": "MX-OQ-004",
+      "question": "2026-04-28 DOF 게재 LFPPI 신 시행규칙의 TERCERO 전환규정 원문. 2차 출처 다수(Mijares·Pérez-Llorca·FisherBroyles·Panamericana de Patentes y Marcas·Coel·TaxToday)가 '시행 전 접수된 사건은 접수 당시(presentación) 시행 중이던 규정에 따라 계속 처리하되 MASC(대체적 분쟁해결 메커니즘) 이용은 예외'로 일치하지만 관보 원문은 대조되지 않았다. 확인 대상 둘: (1) TRANSITORIOS TERCERO 조문 문언, (2) 기준선이 접수일인지 특정 절차단계인지. 확인 경로는 dof.gob.mx 게재분 또는 diputados.gob.mx/LeyesBiblio/regley/Reg_LFPPI.pdf의 TRANSITORIOS다. 닫히면 MX-DL-001의 기한 서술과 MX-ENF-001의 행정집행 절차가 어느 사건에 적용되는지가 함께 정해진다.",
+      "raisedOn": "2026-09-12",
+      "claimIds": ["MX-DL-001", "MX-ENF-001"],
+      "candidateId": "2026-09-mexico-lfppi-transitional-provisions"
     }
   ]
 }
