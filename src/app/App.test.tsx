@@ -18,12 +18,14 @@ import { liveShellProducts, products } from "../products/registry";
 import {
   buildPortfolioFocusTitle,
   gatewayHeroSupportingParagraphs,
-  getOccupiedTierLabels
+  getOccupiedTierLabels,
+  portfolioTierOrder
 } from "../content/gateway";
 import {
   isBaselineLaneProduct,
   isPriorityLaneProduct,
-  type DocumentData
+  type DocumentData,
+  getPortfolioTierLabel
 } from "../products/shared";
 
 const operatorProfileUrl = "https://ywkinfo.github.io";
@@ -1577,9 +1579,9 @@ describe("brief time-sensitive notice", () => {
 
 describe("gateway tier copy", () => {
   const occupiedLabels = getOccupiedTierLabels(liveShellProducts);
-  const emptyLabels = ["Flagship", "Growth", "Validate", "Incubate"].filter(
-    (label) => !occupiedLabels.includes(label)
-  );
+  const emptyLabels = portfolioTierOrder
+    .map((tier) => getPortfolioTierLabel(tier))
+    .filter((label) => !occupiedLabels.includes(label));
 
   beforeEach(() => {
     window.history.replaceState({}, "", "/");

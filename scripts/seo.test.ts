@@ -21,7 +21,8 @@ import { briefIssues } from "../src/briefs/archive";
 import {
   buildPortfolioTierSummary,
   gatewayHeroSupportingParagraphs,
-  getOccupiedTierLabels
+  getOccupiedTierLabels,
+  portfolioTierOrder
 } from "../src/content/gateway";
 import {
   buildReportArchivePath,
@@ -32,6 +33,7 @@ import {
 import { liveShellProducts } from "../src/products/registry";
 import {
   CHAPTER_TITLE_QUALIFIER_BY_SLUG,
+  getPortfolioTierLabel,
   type Chapter,
   type DocumentData
 } from "../src/products/shared";
@@ -468,7 +470,7 @@ describe("SEO build helpers", () => {
     expect(html).toContain(`<p>${buildPortfolioTierSummary(liveShellProducts)}</p>`);
     // 비어 있는 tier는 정적 HTML에서도 이름이 불리지 않아야 한다.
     const occupiedTierLabels = getOccupiedTierLabels(liveShellProducts);
-    for (const label of ["Flagship", "Growth", "Validate", "Incubate"]) {
+    for (const label of portfolioTierOrder.map((tier) => getPortfolioTierLabel(tier))) {
       if (occupiedTierLabels.includes(label)) {
         continue;
       }
