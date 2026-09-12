@@ -11,6 +11,7 @@ import {
   formatBriefDate,
   getBriefLastModified,
   resolveBriefCorrection,
+  resolveBriefExpiry,
   type BriefIssue
 } from "../src/briefs/archive";
 import {
@@ -493,6 +494,19 @@ function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
         </section>
       `
     : "";
+  // 만료 고지도 본문보다 먼저 나와야 한다 — 정정 고지와 같은 이유다.
+  // 다만 여기서의 판정 기준은 **빌드 시각**이다. prerender HTML은 정적이라 배포 사이에 스스로
+  // 만료로 넘어가지 못한다. JS를 실행하는 독자는 셸이 마운트하면서 로드 시각으로 다시 판정하므로
+  // 항상 정확하고, 크롤러가 보는 HTML은 closesOn 이후 첫 배포에서 따라온다.
+  const expiry = resolveBriefExpiry(issue);
+  const expiryNotice = expiry
+    ? `
+        <section>
+          <p><strong>마감 지남:</strong> ${escapeHtml(expiry.label)} · ${escapeHtml(formatBriefDate(expiry.closesOn))} 종료</p>
+          <p>${escapeHtml(expiry.note)}</p>
+        </section>
+      `
+    : "";
   const bodyParagraphs = issue.bodyParagraphs?.length
     ? `
         <section>
@@ -538,6 +552,7 @@ function renderBriefIssueBody(issue: BriefIssue, basePath: string) {
           <p>관할: ${escapeHtml(issue.jurisdictions.join(" · "))}</p>
         </header>
         ${correctionNotice}
+        ${expiryNotice}
         ${bodyParagraphs}
         ${issueSections}
       </article>

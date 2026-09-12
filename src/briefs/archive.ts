@@ -3,7 +3,13 @@ import { buildRuntimeDocumentTitle } from "../products/shared";
 import { briefIssues as legacyBriefIssues } from "./archiveLegacy";
 import type { BriefIssue } from "./archiveLegacy";
 
-export type { BriefCorrection, BriefGuideLink, BriefIssue, BriefItem } from "./archiveLegacy";
+export type {
+  BriefCorrection,
+  BriefGuideLink,
+  BriefIssue,
+  BriefItem,
+  BriefTimeSensitive
+} from "./archiveLegacy";
 
 const mexicoLfppiRegulationsIssue: BriefIssue = {
   slug: "2026-09-mexico-lfppi-regulations-in-force",
@@ -68,6 +74,11 @@ const kbrandOverseasLicensingIssue: BriefIssue = {
     "지식재산처는 2026년 8월 3일 해외 권리 사용 허가 또는 가맹점 계약을 추진 중이거나 추진 예정인 중소·중견기업을 대상으로 「2026년 K-브랜드 해외 상표권 보호·라이선싱 전략 지원 시범사업」을 공고했습니다. 신청은 8월 21일까지이며, 사용권 계약 구조와 법률적 위험 분석, 주요 계약조항 검토 등 계약 전반의 전문 자문을 지원합니다. 이번 브리프는 지원사업 안내에 그치지 않고, 상담 전에 기업이 표장·상품·지역·채널·승인·정산·종료 구조를 한 장의 라이선싱 통제표로 정리하는 방법을 제안합니다.",
   cadenceLabel: "주간 브리프",
   publishedAt: "2026-08-08T00:00:00.000Z",
+  timeSensitive: {
+    closesOn: "2026-08-21T00:00:00.000Z",
+    label: "K-브랜드 해외 라이선싱 지원 신청",
+    note: "지원 신청 기간은 끝났습니다. 다만 이 브리프의 요점은 지원사업 자체가 아니라 순서였습니다 — 계약서를 먼저 쓰는 대신 표장·권한·승인·정산·종료를 한 장의 통제표로 정리하는 것입니다. 그 표는 다음 회차 신청에서도, 지원사업과 무관한 개별 라이선싱 협상에서도 첫 입력값으로 그대로 쓰입니다."
+  },
   jurisdictions: [
     "Korea",
     "Trademark Licensing",
@@ -219,6 +230,11 @@ const kbrandCertificationFirstRoundIssue: BriefIssue = {
     "지식재산처가 2026년 8월 24일 「2026년 K-브랜드 정부인증제도」 1차 참여기업 모집을 공고했습니다. 모집기간은 2026년 8월 24일부터 9월 11일까지 3주이며, 정부가 권리자인 국가인증상표를 해외 73개국에 출원·등록해 선정 기업이 사용하는 구조입니다. 선정 기업에는 정품인증기술 도입비가 최대 2억원까지 지원되고, 대기업은 비용 지원 없이 상표 사용 신청만 할 수 있습니다. 이번 브리프가 주목하는 것은 지원 규모가 아니라 참여요건입니다. 국가인증상표를 사용하려는 해외 국가에 기업 자신의 상표가 이미 출원 또는 등록돼 있어야 하기 때문입니다. 7월 4일 이슈에서 정부 인증 레이어가 기업 자신의 권리 체계를 대체하지 않는다고 정리했던 내용이 이번 공고에서 신청 자격 자체로 못박힌 셈입니다. 9월 11일 마감 전에 확인할 것은 지원 조건이 아니라 대상국별 자사 상표의 출원·등록 상태입니다.",
   cadenceLabel: "주간 브리프",
   publishedAt: "2026-08-31T00:00:00.000Z",
+  timeSensitive: {
+    closesOn: "2026-09-11T00:00:00.000Z",
+    label: "K-브랜드 정부인증제도 1차 참여기업 모집",
+    note: "1차 모집은 마감됐습니다. 다만 이 브리프가 주목한 것은 지원 조건이 아니라 참여요건이 드러낸 구조였습니다 — 국가인증상표를 쓰려는 나라에 기업 자신의 상표가 먼저 출원 또는 등록돼 있어야 한다는 것입니다. 대상국별 자사 권리 상태를 정리한 표는 다음 회차 신청, 세관 등록, 위조 대응 어디에서나 그대로 첫 입력값이 됩니다."
+  },
   jurisdictions: [
     "Korea",
     "Certification Mark",
@@ -274,6 +290,11 @@ const usptoMadridEfilingCutoverIssue: BriefIssue = {
     "WIPO Madrid System은 2026년 7월 31일 「Transition to Madrid e-Filing at the USPTO」 공지로 USPTO의 Madrid e-Filing 합류를 알렸습니다. USPTO 안내 기준으로 9월 30일까지는 TEASi와 Madrid e-Filing을 모두 쓸 수 있고, 10월 1일부터는 신규 outbound 국제출원을 Madrid e-Filing으로만 냅니다. 이번 브리프에서 가장 먼저 가릴 것은 대응 방법이 아니라 해당 여부입니다. 이 변경은 미국 출원·등록을 기초로 미국을 본국관청으로 삼아 국제출원을 내는 경로의 창구 변경이고, KIPO를 본국관청으로 쓰는 한국 기업의 국제출원에는 해당하지 않습니다. 해당되는 쪽은 미국 법인·자회사 명의의 미국 권리를 기초로 국제출원을 운영해 온 포트폴리오입니다. 그렇다면 9월 30일 전에 확인할 것은 세 가지입니다. Madrid e-Filing 사용에 필요한 WIPO Account를 누구 명의로 만들고 누가 접근권을 갖는지, 미국 달러로 USPTO에 즉시 내는 증명수수료와 스위스프랑으로 WIPO에 직접 내는 수수료로 갈라지는 지급 경로를 사내 절차가 감당하는지, 그리고 이미 TEASi에 접수한 건은 10월 1일 이후에도 TEASi에서 마무리해야 하므로 한동안 두 시스템을 함께 봐야 한다는 점입니다.",
   cadenceLabel: "주간 브리프",
   publishedAt: "2026-09-11T00:00:00.000Z",
+  timeSensitive: {
+    closesOn: "2026-09-30T00:00:00.000Z",
+    label: "TEASi와 Madrid e-Filing 병행 기간",
+    note: "병행 기간이 끝나 미국을 본국관청으로 하는 신규 outbound 국제출원은 Madrid e-Filing으로만 접수됩니다. 본문의 세 축은 전환이 끝난 뒤에도 그대로 쓰입니다 — WIPO Account를 누가 소유하고 누가 접근하는지, USPTO 증명수수료(USD)와 WIPO 수수료(CHF)로 갈리는 지급 경로를 사내 절차가 어떻게 받는지, 그리고 TEASi에서 마무리해야 하는 진행 중 건이 무엇인지입니다."
+  },
   jurisdictions: [
     "United States",
     "Global",
@@ -367,7 +388,45 @@ export function resolveBriefCorrection(issue: BriefIssue) {
   return { ...issue.supersededBy, replacement };
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
+
+// `closesOn`은 "그날까지 유효"한 마지막 날이므로, 만료되는 순간은 그 날이 끝나는 때다.
+// 기준 시간대는 KST다 — 이 lane의 독자도 소재(한국 기관 공고·국내 마감)도 한국 시간을 쓴다.
+// UTC 자정으로 판정하면 마감 당일 오전 9시(KST)부터 "지났다"고 말하게 되고, 하루를 통째로
+// 틀린다. closesOn(UTC 자정) + 24h - 9h = 마감일 다음 날 0시 KST.
+export function getBriefExpiryInstant(closesOn: string) {
+  const closes = new Date(closesOn).getTime();
+
+  if (Number.isNaN(closes)) {
+    return Number.NaN;
+  }
+
+  return closes + DAY_MS - KST_OFFSET_MS;
+}
+
+// 시한이 실제로 지났을 때만 고지 데이터를 돌려준다. 아직 남았으면 undefined다 —
+// 마감 전에는 본문이 정확하므로 아무것도 덧붙이지 않는다.
+// `now`를 받는 이유: SPA는 로드 시각으로, prerender는 빌드 시각으로 같은 판정을 돌리고,
+// 테스트는 경계 시각을 직접 넣어 잠근다(resolveBriefCorrection을 UI·prerender·테스트가
+// 함께 쓰는 방식과 같다).
+export function resolveBriefExpiry(issue: BriefIssue, now: Date = new Date()) {
+  if (!issue.timeSensitive) {
+    return undefined;
+  }
+
+  const expiresAt = getBriefExpiryInstant(issue.timeSensitive.closesOn);
+
+  if (Number.isNaN(expiresAt) || now.getTime() < expiresAt) {
+    return undefined;
+  }
+
+  return issue.timeSensitive;
+}
+
 // 브리프의 마지막 갱신 시점. 정정 포인터가 붙은 이슈는 그 기록일이 곧 마지막 갱신일이다.
+// timeSensitive는 여기 들어오지 않는다: 시한이 지나도 **문서가 수정된 것은 아니고**, 달라지는
+// 것은 읽는 시점의 렌더다. closesOn을 수정일로 올리면 하지 않은 수정을 크롤러에 주장하게 된다.
 export function getBriefLastModified(issue: BriefIssue) {
   return issue.supersededBy?.updatedAt ?? issue.publishedAt;
 }

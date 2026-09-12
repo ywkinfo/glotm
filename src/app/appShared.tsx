@@ -8,6 +8,7 @@ import {
 import {
   formatBriefDate,
   buildBriefIssuePath,
+  resolveBriefExpiry,
   type BriefIssue
 } from "../briefs/archive";
 import {
@@ -332,6 +333,9 @@ export function BriefIssueCard({ issue, isLatest, surface }: BriefIssueCardProps
         <span className="status-pill status-pill--neutral">{issue.cadenceLabel}</span>
         {issue.supersededBy ? (
           <span className="status-pill status-pill--beta">이후 이슈에서 정정됨</span>
+        ) : null}
+        {resolveBriefExpiry(issue) ? (
+          <span className="status-pill status-pill--expired">마감 지남</span>
         ) : null}
       </div>
       <p className="brief-card-date">{formatBriefDate(issue.publishedAt)}</p>

@@ -8,7 +8,8 @@ import {
   formatBriefDate,
   getBriefIssueBySlug,
   getLatestBriefIssue,
-  resolveBriefCorrection
+  resolveBriefCorrection,
+  resolveBriefExpiry
 } from "../briefs/archive";
 import { buildProductPath, setRuntimeDocumentTitle } from "../products/shared";
 import {
@@ -88,6 +89,9 @@ export function BriefIssuePage() {
   const params = useParams<{ issueSlug: string }>();
   const issue = params.issueSlug ? getBriefIssueBySlug(params.issueSlug) : undefined;
   const correction = issue ? resolveBriefCorrection(issue) : undefined;
+  // 시한은 로드 시각으로 판정한다. 이 셸은 prerender HTML을 교체하며 마운트하므로
+  // (createRoot), JS가 도는 독자에게는 빌드 시점이 아니라 지금 기준이 보인다.
+  const expiry = issue ? resolveBriefExpiry(issue) : undefined;
 
   useEffect(() => {
     if (!issue) {
@@ -125,6 +129,15 @@ export function BriefIssuePage() {
             >
               {formatBriefDate(correction.replacement.publishedAt)} 이슈에서 확인하기
             </FullDocumentLink>
+          </aside>
+        ) : null}
+        {expiry ? (
+          <aside className="brief-expiry" aria-label="시한이 지난 소재 고지">
+            <p className="brief-expiry-label">마감 지남</p>
+            <p className="brief-expiry-window">
+              {expiry.label} · {formatBriefDate(expiry.closesOn)} 종료
+            </p>
+            <p className="brief-expiry-copy">{expiry.note}</p>
           </aside>
         ) : null}
         <div className="brief-issue-header">
