@@ -1,0 +1,77 @@
+{
+  "workspace": "LatTm",
+  "productSlug": "latam",
+  "version": 1,
+  "auditMode": "advisory",
+  "claims": [
+    {
+      "id": "LA-MADRID-001",
+      "jurisdiction": "LATAM",
+      "claim": "이 가이드의 대상 8개국 중 마드리드 시스템을 쓸 수 있는 나라는 브라질, 멕시코, 콜롬비아, 칠레 넷뿐이고 나머지는 직접출원으로만 간다.",
+      "chapterRefs": ["Ch1", "Ch2", "Ch4", "Ch5"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["wipo-madrid-members"],
+      "lastVerified": "2026-03-27",
+      "status": "BODY_READY",
+      "notes": "2026-03-27 검증에서 WIPO 공식 회원국 목록과 대조해 제4장 경로 선택과 관련 체크리스트의 직접출원/마드리드 범위를 교정했다. 회원국 구성은 가입국이 늘면 바뀌는 값이라 재대조 우선순위가 높다."
+    },
+    {
+      "id": "LA-ANDEAN-001",
+      "jurisdiction": "LATAM",
+      "claim": "콜롬비아·페루·에콰도르는 Decision 486이라는 공통 규범을 공유하지만 상표권은 국가별로 개별 확보하며, 출원 1건으로 3국에 동시에 효력이 생기는 공동체 상표는 없다.",
+      "chapterRefs": ["Ch1", "Ch4", "Ch7"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["sic-colombia-scope"],
+      "lastVerified": "2026-03-27",
+      "status": "BODY_READY",
+      "notes": "2026-03-27 검증에서 `CAN 공동체 상표`·`CAN 출원 1건으로 3국 동시 효과`·`3국 동시 갱신` 같은 표현을 전부 걷어내고 `공통 규범 + 국가별 직접출원`으로 통일했다. 잘못 쓰면 출원 예산과 기한 관리가 통째로 어긋나는 축이다."
+    },
+    {
+      "id": "LA-MX-USE-001",
+      "jurisdiction": "MX",
+      "claim": "멕시코는 등록일 3주년이 지난 뒤 3개월 안에 실제·효과적 사용선언을 제출해야 한다.",
+      "chapterRefs": ["Ch1", "Ch7", "Ch8"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["impi-use-declaration-notice", "impi-maintenance-seminar"],
+      "lastVerified": "2026-03-27",
+      "status": "BODY_READY",
+      "notes": "2026-03-27 검증에서 `등록 후 3년 내`로 적혀 있던 표현을 전부 `등록일 3주년 후 3개월`로 교정했다. 기산점이 아니라 창(window)이라는 점이 핵심이고, 본문·표·실패 사례가 같은 문구를 쓴다. 멕시코 축은 MexTm이 별도 claim-map으로 더 깊이 추적한다."
+    },
+    {
+      "id": "LA-AR-USE-001",
+      "jurisdiction": "AR",
+      "claim": "아르헨티나는 등록 후 5~6년차 사이에 중간 사용선언이 필요하고, 갱신 단계에서도 사용 관련 진술이 연동된다.",
+      "chapterRefs": ["Ch1", "Ch7", "Ch8", "Ch16"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["inpi-argentina-renewals"],
+      "lastVerified": "2026-03-27",
+      "status": "BODY_READY",
+      "notes": "2026-03-27 검증에서 `갱신 시 사용 진술만 확인` 수준의 약한 서술을 `5~6년차 중간 사용선언 + 갱신 연동`으로 올렸다. 중간 선언을 별도 기한으로 잡지 않는 것이 실패 사례로 본문에 남아 있다(제18장)."
+    },
+    {
+      "id": "LA-CL-NONUSE-001",
+      "jurisdiction": "CL",
+      "claim": "칠레는 2022년 시행된 법률 제21.355호 개정 이후 불사용 취소 제도를 운영한다.",
+      "chapterRefs": ["Ch1", "Ch7", "Ch8", "Ch16"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["inapi-chile-ley-21355"],
+      "lastVerified": "2026-03-27",
+      "status": "BODY_READY",
+      "notes": "2026-03-27 검증에서 `기준 기간 확인 필요`·`정기적으로 다시 확인` 같은 보류 표현을 걷어내고 실제 운영 리스크 수준으로 단정했다. 취소 청구 요건의 세부(기산·증거 기준)는 본문이 단정하지 않고 현지 확인을 전제로 둔다."
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "LA-OQ-001",
+      "question": "이 claim-map의 HIGH claim 5건은 전부 2026-03-27에 마지막으로 대조됐다. 여섯 출처(WIPO 회원국 목록, SIC, IMPI 공지·세미나 자료, INPI Argentina 포털, INAPI)를 다시 열어 값이 그대로인지 확인해야 닫힌다 — 특히 마드리드 회원국 구성과 멕시코·아르헨티나 사용선언 기한.",
+      "raisedOn": "2026-09-12",
+      "claimIds": [
+        "LA-MADRID-001",
+        "LA-ANDEAN-001",
+        "LA-MX-USE-001",
+        "LA-AR-USE-001",
+        "LA-CL-NONUSE-001"
+      ]
+    }
+  ]
+}

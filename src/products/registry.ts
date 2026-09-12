@@ -28,6 +28,7 @@ export const products: ProductMeta[] = [
     lifecycleStatus: "mature",
     lifecycleTone: "mature",
     verifiedOn: "2026-08-25T00:00:00.000Z",
+    factsReviewedOn: "2026-03-27T00:00:00.000Z",
     qaLevel: "full",
     highRiskVerificationGapCount: 0,
     audience: "중남미 진출 우선순위를 정해야 하는 브랜드 관리자, 인하우스 IP 담당자",

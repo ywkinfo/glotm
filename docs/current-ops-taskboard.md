@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-12 2라운드 (게이트웨이 tier 문구 파생)
+- Last updated: 2026-09-12 3라운드 (LatTm claim-map 도입 — fact-QA 레인 7/7)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -205,6 +205,19 @@
   - **중복 정본 하나를 만들었다가 되돌렸다.** 첫 구현이 `content/gateway.ts`에 tier→라벨 맵을 새로 뒀는데 같은 매핑이 이미 `products/shared.ts`의 `getPortfolioTierLabel`에 있었다 — 이름이 두 곳에 살면 라벨을 고칠 때 한쪽만 움직인다. 이번 라운드가 고친 드리프트와 같은 종류라 바로 통합했고, 테스트의 전체 레인 목록도 `portfolioTierOrder`에서 파생시켰다(목록을 테스트에 다시 적으면 tier가 늘 때 테스트만 옛 목록에 남는다).
   - **실제 산출물 확인**: `dist/index.html`이 `현재 7개의 권역형·국가형 guide를 Flagship · Growth 레인으로 운영하고 있습니다.`를 싣고, 빈 레인 이름(`Validate`·`Incubate`)은 **0건**이다.
   - 게이트: `npm test` **422/422**(기존 420 + 신규 2), `typecheck` pass, `health:runtime` pass(unit **353** + e2e:smoke 50), `health:release` pass(**151 routes** + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` 24 + subpath e2e 7), `check:consistency` 0 hard / 0 advisory.
+
+- 2026-09-12 3라운드: **flagship을 fact-QA 레인 안으로 들였다(owner 지시).** `factual-qa-rollout.md`가 rollout 마지막(PR 6)으로 계획해 두고, 수용 기준 5번이 "`LatTm`은 아직 claim-map이 없다"로 들고 있던 자리다. 이로써 7개 워크스페이스 전부가 그 선을 넘었다.
+  - **새로 조사하지 않았다.** LatTm은 이미 `fact-verification-log.md`(검증 기준일 **2026-03-27**)에 고위험 사실 5건과 1차 출처 6건을 기록해 두고 있었다. 이번 라운드는 그 기록을 `claim-map.json`(HIGH 5건) + `lat_tm_source_register.md`(sourceId 6건)로 구조화했고, claim 문장과 chapterRefs는 본문 실제 문구와 대조해 확인했다(`등록일 3주년 후 3개월`, `5~6년차 중간 사용선언`, 마드리드 4개국, Decision 486 국가별 등록).
+  - **`lastVerified`는 2026-03-27에 머문다.** 이 세션에서 `wipo.int`·`sic.gov.co`·`gob.mx`·`impi.gob.mx`·`inpi.gob.ar`·`inapi.cl`가 전부 CONNECT 403이라 출처를 다시 열지 못했다. 구조화는 재검증이 아니므로 날짜를 옮기지 않았다(4·7·8라운드와 같은 처리).
+  - **그래서 결과가 `gate=warn`이고, 그게 이번 라운드의 산출이다.** `LatTm factual QA: gate=warn, factIntegrity=100, consistency=100, staleHighRisk=5, effectiveGap=0`. 169일 stale이라는 사실이 **처음으로 측정된다** — 종전에는 LatTm이 감사 밖에 있어 같은 상태가 0으로도 경고로도 나타나지 않았다. 운영 표면 두 곳에 뜬다: `health:report` Research Coverage(`latam · 169d · 109d over · warn`)와 `briefs:radar` Workspace Open Questions(`LA-OQ-001`, 후보 `—`).
+  - **`factsReviewedOn`을 등록했다.** registry의 latam이 `unrecorded`였는데 저장소는 2026-03-27 기록을 이미 갖고 있었다. 없는 검증을 주장하는 것이 아니라 있는 기록을 등록하는 것이라 넣었고, fact-review 표에 `169d`로 뜬다.
+  - **같은 종류의 하드코딩 목록 세 개가 드러났다.** `LatTm`을 넣자 `audit:facts`와 register 가드는 discovery 덕에 자동으로 따라왔는데 **`health:report`만 조용히 빠졌다** — slug→워크스페이스 맵을 손으로 들고 있었고, 그것을 검증하는 테스트도 같은 6개를 손으로 들고 있어 서로를 잡지 못했다(세 번째는 JSON 출력 단정). 셋 다 claim-map 자신의 `productSlug`에서 파생시켰다. `claim-source-register.test.ts`가 같은 사고를 겪고 discovery로 바꾼 그 패턴이다.
+  - **테스트가 잡은 실제 공백 하나.** `factsReviewedOn`이 생기자 `readerContract` 계약이 `LatTm` 홈에서 1차 출처 대조 기준일 줄을 찾지 못해 붉어졌다 — LatTm은 홈을 자체 컴포넌트로 그려서 공용 홈(`configuredReader`)이 히어로에 두는 `ReaderProvenanceNote`가 빠져 있었다. 미기록이던 동안에는 렌더할 것이 없어 표가 나지 않던 공백이다. 공용 홈과 같은 자리에 넣었다.
+  - **`gate: "pass"` 단정을 계약에 맞게 고쳤다.** 리포트 테스트가 모든 워크스페이스에 pass를 요구해서, 오래된 claim을 정직하게 warn으로 드러내는 것이 테스트 위반이 되는 구조였다. 지킬 계약 둘(스키마 무결성 = fail 금지, 미해결 고위험 갭 0)로 바꿨다. seo 테스트의 "미기록 가이드" 음성 사례도 LatTm에 매달려 있어 픽스처로 옮겼다 — 이제 살아 있는 미기록 가이드는 0이다.
+  - **위반 주입 3건 확인**: `health:report` 매핑을 6개 하드코딩으로 되돌림 · claim sourceId를 register에 없는 값으로 · source register 파일 제거 — **3/3 모두 붉어졌다.**
+  - **남은 것은 재대조 자체다.** `LA-OQ-001`이 그 큐이고 여섯 출처를 열 수 있는 경로(owner 브라우저)가 필요하다. 열리면 `lastVerified`와 `factsReviewedOn`이 함께 움직이고 warn이 닫힌다.
+  - **실제 산출물 확인**: `dist/latam/index.html`에 `data-provenance="facts-reviewed"` 줄이 실렸다(종전 0건). prerender 표면에서도 flagship이 대조 기준일을 갖는다.
+  - 게이트: `npm test` **424/424**, `typecheck` pass, `audit:facts` **7개 워크스페이스**(6 pass + `LatTm` warn, exit 0), `health:runtime` pass(unit **355** + e2e:smoke 50), `health:release` pass(**151 routes** + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` 24 + subpath e2e 7), `health:content` pass(7개 워크스페이스 QA 0 error / 0 warning), `check:consistency` 0 hard / 0 advisory.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
