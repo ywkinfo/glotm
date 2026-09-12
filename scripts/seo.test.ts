@@ -18,7 +18,11 @@ import documentDataUk from "../public/generated/uk/document-data.json";
 import documentDataUsa from "../public/generated/usa/document-data.json";
 import { describe, expect, it, vi } from "vitest";
 import { briefIssues } from "../src/briefs/archive";
-import { gatewayHeroSupportingParagraphs } from "../src/content/gateway";
+import {
+  buildPortfolioTierSummary,
+  gatewayHeroSupportingParagraphs,
+  getOccupiedTierLabels
+} from "../src/content/gateway";
 import {
   buildReportArchivePath,
   buildReportPath,
@@ -458,6 +462,18 @@ describe("SEO build helpers", () => {
     // 같은 배열을 소비한다는 것이 지켜야 할 계약이고, 문구 자체는 언제든 바뀔 수 있다.
     for (const paragraph of gatewayHeroSupportingParagraphs) {
       expect(html).toContain(`<p>${paragraph}</p>`);
+    }
+    // tier 문장도 같은 정본에서 파생한다. SPA 제목과 이 문장이 서로 다른 레인 목록을 말하면
+    // 크롤 표면과 화면이 갈라진다.
+    expect(html).toContain(`<p>${buildPortfolioTierSummary(liveShellProducts)}</p>`);
+    // 비어 있는 tier는 정적 HTML에서도 이름이 불리지 않아야 한다.
+    const occupiedTierLabels = getOccupiedTierLabels(liveShellProducts);
+    for (const label of ["Flagship", "Growth", "Validate", "Incubate"]) {
+      if (occupiedTierLabels.includes(label)) {
+        continue;
+      }
+
+      expect(html, `${label} 레인은 비어 있는데 prerender 본문이 부른다`).not.toContain(label);
     }
     expect(html).toContain(
       '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'

@@ -15,7 +15,11 @@ import {
   reports
 } from "../reports/registry";
 import { liveShellProducts, products } from "../products/registry";
-import { gatewayHeroSupportingParagraphs } from "../content/gateway";
+import {
+  buildPortfolioFocusTitle,
+  gatewayHeroSupportingParagraphs,
+  getOccupiedTierLabels
+} from "../content/gateway";
 import {
   isBaselineLaneProduct,
   isPriorityLaneProduct,
@@ -36,6 +40,10 @@ const priorityLaneLabelSequence = orderedProducts
   .map((product) => product.shortLabel)
   .join(" -> ");
 const baselineGuide = orderedProducts.find(isBaselineLaneProduct);
+// 제목을 테스트에 다시 적지 않는다 — 정본에서 파생시켜야 tier 점유가 바뀔 때 문구와 테스트가
+// 함께 움직인다(2026-09-07 히어로 문구에서 쓴 방식과 같다).
+const portfolioFocusTitle = buildPortfolioFocusTitle(liveShellProducts);
+
 const orderedLiveGuidePaths = [...liveShellProducts]
   .sort(
     (left, right) =>
@@ -878,7 +886,7 @@ describe("App portfolio shell", () => {
       .getByRole("heading", { name: "시장 우선순위, 출원 경로, 유지·집행 판단을 한 번에 묶습니다" })
       .closest("section");
     const currentPilotScopeSection = screen
-      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .getByRole("heading", { name: portfolioFocusTitle })
       .closest("section");
 
     expect(
@@ -897,7 +905,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .getByRole("heading", { name: portfolioFocusTitle })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
@@ -925,7 +933,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .getByRole("heading", { name: portfolioFocusTitle })
       .closest("section");
     const operatorSection = screen
       .getByRole("heading", { name: "20년+ 상표 실무 경험을 바탕으로 먼저 봐야 할 판단을 정리합니다" })
@@ -970,7 +978,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const portfolioSection = screen
-      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .getByRole("heading", { name: portfolioFocusTitle })
       .closest("section");
 
     clickTrackedLink(within(portfolioSection as HTMLElement).getByRole("link", { name: "ChaTm 보기" }));
@@ -1071,7 +1079,7 @@ describe("App portfolio shell", () => {
     renderAppRouteTree("/");
 
     const currentPilotScope = screen
-      .getByRole("heading", { name: "포트폴리오를 flagship, growth, validate, incubate로 운영합니다" })
+      .getByRole("heading", { name: portfolioFocusTitle })
       .closest("section");
 
     expect(currentPilotScope).not.toBeNull();
@@ -1564,5 +1572,63 @@ describe("brief time-sensitive notice", () => {
     renderAppRouteTree("/briefs");
 
     expect(screen.getAllByText("마감 지남").length).toBeGreaterThan(0);
+  });
+});
+
+describe("gateway tier copy", () => {
+  const occupiedLabels = getOccupiedTierLabels(liveShellProducts);
+  const emptyLabels = ["Flagship", "Growth", "Validate", "Incubate"].filter(
+    (label) => !occupiedLabels.includes(label)
+  );
+
+  beforeEach(() => {
+    window.history.replaceState({}, "", "/");
+  });
+
+  afterEach(() => {
+    window.history.replaceState({}, "", "/");
+    vi.restoreAllMocks();
+  });
+
+  // 이 저장소는 빈 tier를 렌더하지 않는 규칙을 이미 지키는데(ProductGroup·roadmap 카드 조건부 렌더),
+  // 문구만 그 규칙 밖에 있어 제목이 네 레인을 약속하고 둘만 보여줬다. 문구도 같은 규칙 안으로 들인다.
+  it("never names a tier lane that has no guides in it", () => {
+    installFetchMock();
+    renderAppRouteTree("/");
+
+    expect(emptyLabels.length, "빈 tier가 없으면 이 테스트가 지키는 것이 없다").toBeGreaterThan(0);
+
+    const gatewayText = document.body.textContent ?? "";
+
+    for (const label of occupiedLabels) {
+      expect(gatewayText, `${label} 레인은 이름이 불려야 한다`).toContain(label);
+    }
+
+    for (const label of emptyLabels) {
+      expect(gatewayText, `${label} 레인은 비어 있는데 문구가 부른다`).not.toContain(label);
+    }
+  });
+
+  // 위 단정만 있으면 "Flagship · Growth"를 하드코딩해도 통과한다. 파생이 실제로 데이터를 따라가는지
+  // 합성 입력으로 확인한다 — validate 제품이 생기면 문구가 스스로 그 레인을 부른다.
+  it("follows the data when a tier becomes occupied", () => {
+    const withValidate = [
+      { portfolioTier: "flagship" as const },
+      { portfolioTier: "growth" as const },
+      { portfolioTier: "validate" as const }
+    ];
+
+    expect(buildPortfolioFocusTitle(withValidate)).toBe(
+      "포트폴리오를 Flagship · Growth · Validate 레인으로 운영합니다"
+    );
+    expect(getOccupiedTierLabels(withValidate)).toEqual(["Flagship", "Growth", "Validate"]);
+
+    // 모델 순서(flagship → growth → validate → incubate)는 입력 순서와 무관하게 유지된다.
+    expect(
+      getOccupiedTierLabels([
+        { portfolioTier: "incubate" as const },
+        { portfolioTier: "flagship" as const }
+      ])
+    ).toEqual(["Flagship", "Incubate"]);
   });
 });

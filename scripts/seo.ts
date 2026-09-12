@@ -25,7 +25,10 @@ import {
   type ReportMeta
 } from "../src/reports/registry";
 import { liveShellProducts } from "../src/products/registry";
-import { gatewayHeroSupportingParagraphs } from "../src/content/gateway";
+import {
+  buildPortfolioTierSummary,
+  gatewayHeroSupportingParagraphs
+} from "../src/content/gateway";
 import {
   buildChapterPageTitle,
   buildChapterPath,
@@ -378,7 +381,7 @@ function renderGatewayBody(basePath: string) {
         : ""}
       <section>
         <h2>운영 가이드 포트폴리오</h2>
-        <p>현재 ${liveShellProducts.length}개의 권역형·국가형 guide를 flagship, growth, validate, incubate 구조로 운영하고 있습니다.</p>
+        <p>${escapeHtml(buildPortfolioTierSummary(liveShellProducts))}</p>
       </section>
       ${renderLinkList("가이드 목록", productLinks)}
       ${renderTrustLegalNotice(basePath)}
