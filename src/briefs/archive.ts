@@ -266,7 +266,63 @@ const kbrandCertificationFirstRoundIssue: BriefIssue = {
   ]
 };
 
+const usptoMadridEfilingCutoverIssue: BriefIssue = {
+  slug: "2026-09-uspto-madrid-efiling-cutover",
+  title:
+    "2026년 9월 Hot Global TM Brief | 미국을 본국관청으로 하는 국제출원 창구가 10월 1일 Madrid e-Filing으로 일원화됩니다 — 9월 30일 전에 계정과 수수료 경로를 정리할 때입니다",
+  summary:
+    "WIPO Madrid System은 2026년 7월 31일 「Transition to Madrid e-Filing at the USPTO」 공지로 USPTO의 Madrid e-Filing 합류를 알렸습니다. USPTO 안내 기준으로 9월 30일까지는 TEASi와 Madrid e-Filing을 모두 쓸 수 있고, 10월 1일부터는 신규 outbound 국제출원을 Madrid e-Filing으로만 냅니다. 이번 브리프에서 가장 먼저 가릴 것은 대응 방법이 아니라 해당 여부입니다. 이 변경은 미국 출원·등록을 기초로 미국을 본국관청으로 삼아 국제출원을 내는 경로의 창구 변경이고, KIPO를 본국관청으로 쓰는 한국 기업의 국제출원에는 해당하지 않습니다. 해당되는 쪽은 미국 법인·자회사 명의의 미국 권리를 기초로 국제출원을 운영해 온 포트폴리오입니다. 그렇다면 9월 30일 전에 확인할 것은 세 가지입니다. Madrid e-Filing 사용에 필요한 WIPO Account를 누구 명의로 만들고 누가 접근권을 갖는지, 미국 달러로 USPTO에 즉시 내는 증명수수료와 스위스프랑으로 WIPO에 직접 내는 수수료로 갈라지는 지급 경로를 사내 절차가 감당하는지, 그리고 이미 TEASi에 접수한 건은 10월 1일 이후에도 TEASi에서 마무리해야 하므로 한동안 두 시스템을 함께 봐야 한다는 점입니다.",
+  cadenceLabel: "주간 브리프",
+  publishedAt: "2026-09-11T00:00:00.000Z",
+  jurisdictions: [
+    "United States",
+    "Global",
+    "Madrid System",
+    "Filing Channel",
+    "Portfolio Operations"
+  ],
+  bodyParagraphs: [
+    "WIPO Madrid System은 2026년 7월 31일 「Transition to Madrid e-Filing at the USPTO」 공지로 USPTO가 Madrid e-Filing에 합류했다고 알렸습니다. USPTO의 전환 안내 기준으로 미국발 outbound 국제출원은 TEASi(Trademark Electronic Application System International)에서 Madrid e-Filing으로 옮겨 가며, 9월 30일까지는 두 창구를 모두 쓸 수 있고 10월 1일부터는 신규 출원을 전부 Madrid e-Filing에서 냅니다. Madrid e-Filing은 WIPO가 운영하는 출원 시스템이고, 미국 출원 또는 등록을 기초로 한 국제출원을 이 시스템으로 접수하면 USPTO와 WIPO가 이어받아 처리합니다. 사용에는 WIPO Account가 필요하며, 시스템 안에서 USPTO가 지적한 국제출원의 흠결과 WIPO 국제사무국이 보내는 irregularity notice에 직접 대응할 수 있다고 안내됩니다.",
+    "이 소식에서 가장 먼저 가릴 것은 해당 여부입니다. 이번 변경은 미국을 본국관청(office of origin)으로 하는 국제출원의 창구가 바뀌는 것이지, 마드리드 제도 자체나 한국에서 나가는 국제출원이 바뀌는 것이 아닙니다. 한국 법인이 한국 출원·등록을 기초로 KIPO를 통해 국제출원을 내 왔다면 이번 전환은 해당하지 않습니다. 해당되는 쪽은 미국 법인이나 미국 자회사 명의의 미국 출원·등록을 기초로 국제출원을 내 온 포트폴리오입니다. 한국 본사와 미국 판매법인을 함께 두고 권리 명의가 갈려 있는 구조에서 흔히 나오는 경로입니다. 해당하지 않는다는 결론도 한 번 확인해 두면, 10월 이후 대리인에게서 오는 안내를 매번 다시 읽고 판단하지 않아도 됩니다.",
+    "해당된다면 첫 번째 확인 대상은 계정입니다. Madrid e-Filing은 WIPO Account가 있어야 씁니다. 실무 질문은 계정을 만들 수 있는지가 아니라 누구 명의로 만들고 누가 접근권을 갖는가입니다. 대리인만 계정을 들고 있으면 본사는 진행 상황을 직접 확인할 수 없고, 담당자가 바뀌거나 대리인을 교체할 때 접근이 끊깁니다. 반대로 사내에서만 들고 있으면 마감이 임박한 대응을 대리인이 즉시 처리하지 못합니다. 계정 소유자, 상시 접근자, 백업 접근자를 내부 통제표에 적어 두는 편이 안전하고, 이것은 창구가 하나로 좁혀지기 전에 정해 두어야 의미가 있습니다.",
+    "두 번째는 수수료 경로입니다. USPTO 안내 기준으로 국제출원의 증명수수료(certification fee)는 미국 달러로 계산되어 출원 시 USPTO에 즉시 납부하며, 국제출원에 담은 상품·서비스 류의 수와 기초로 삼은 출원·등록의 건수에 따라 계산됩니다. 반면 WIPO 수수료는 Madrid e-Filing으로 낼 때 USPTO를 거쳐 달러로 내는 대신 WIPO에 스위스프랑으로 직접 납부하고, WIPO 직납 쪽은 WIPO 당좌계정, 직불카드, 간편결제, PayPal 등 결제 선택지가 더 넓다고 안내됩니다. 사내에서 볼 것은 결제 수단이 아니라 절차입니다. 외화 지급 승인 라인, 환전과 환차 처리, 영수 증빙의 보관 형식이 창구 변경과 함께 움직이며, 이 절차가 정비되지 않은 채 10월을 맞으면 출원 자체가 아니라 결제 승인에서 막힙니다.",
+    "세 번째는 진행 중인 건입니다. USPTO 안내 기준으로 이미 TEASi에 접수한 국제출원은 10월 1일 이후에도 TEASi에서 마무리해야 합니다. 즉 이 전환은 하루에 끝나는 이사가 아니라 두 창구가 한동안 공존하는 구간을 만듭니다. 이때 끊기기 쉬운 것은 데이터가 아니라 사람입니다. 9월에 낸 건을 맡은 담당자와 10월 이후 신규 건을 맡는 담당자가 다르면, 어느 창구에서 무엇이 진행 중인지 아는 사람이 조직 안에서 사라집니다. 9월 안에 진행 중인 국제출원 목록과 각 건의 다음 기한, 그 건이 어느 창구에 있는지를 한 장으로 만들어 두면 10월 이후의 혼선을 대부분 줄일 수 있습니다.",
+    "창구가 바뀌어도 그대로 남는 축이 있습니다. 마드리드는 여러 나라를 한 장의 체계로 관리하는 방식이지 각국 실무를 없애는 장치가 아닙니다. 미국 지정(Section 66(a))은 미국 심사를 그대로 받고 Office Action 대응도 그대로 필요하며, 등록 후에는 Section 71 유지 요건을 따로 관리해야 합니다. 이 구조는 UsaTm 제5장이 정리해 둔 축이고 이번 전환과 무관하게 유지됩니다. 따라서 창구가 하나로 좁혀진다는 이유만으로 출원 경로 자체를 다시 고를 필요는 없습니다. 이번에 바뀌는 것은 어디로 내는가와 어떻게 결제하는가이지, 무엇을 내야 하는가가 아닙니다.",
+    "범위는 넘겨 읽지 않는 편이 안전합니다. 이 정리는 WIPO의 2026년 7월 31일 공지와 USPTO의 전환 안내가 공표한 내용을 운영 관점으로 옮긴 것이고, 수수료 금액, 계정 개설 절차의 세부, 경과 건 처리의 예외는 USPTO와 WIPO의 공식 안내 및 현지 대리인 확인을 기준으로 판단해야 합니다. 9월 30일이 지나면 이 브리프의 병행 기간 서술은 과거 사실이 되고, 그 뒤 남는 것은 계정, 수수료 경로, 진행 중 건 세 축이 정리되어 있는지입니다. 세 축은 이번 전환이 끝난 뒤에도 미국 기초 국제출원을 운영하는 동안 계속 쓰이는 입력값입니다."
+  ],
+  items: [
+    {
+      id: "us-origin-madrid-outbound-account-and-fee-route",
+      headline:
+        "10월 1일부터 미국 기초 국제출원은 Madrid e-Filing 한 곳에서만 냅니다 — 9월 30일 전에 WIPO Account 소유자와 이원화된 수수료 경로부터 정해야 합니다",
+      whatChanged:
+        "WIPO Madrid System의 2026년 7월 31일 「Transition to Madrid e-Filing at the USPTO」 공지로 USPTO가 Madrid e-Filing에 합류했습니다. USPTO 전환 안내 기준으로 미국발 outbound 국제출원은 9월 30일까지 TEASi와 Madrid e-Filing을 병행하고, 10월 1일부터는 신규 출원을 전부 Madrid e-Filing에서 냅니다. 사용에는 WIPO Account가 필요하고, 시스템 안에서 USPTO의 흠결 지적과 WIPO 국제사무국의 irregularity notice에 직접 대응할 수 있습니다. 수수료는 두 갈래로 갈립니다. 증명수수료는 미국 달러로 계산되어 출원 시 USPTO에 즉시 납부하며 류 수와 기초 출원·등록 건수에 따라 계산되고, WIPO 수수료는 Madrid e-Filing에서 스위스프랑으로 WIPO에 직접 납부합니다. 이미 TEASi에 접수한 건은 10월 1일 이후에도 TEASi에서 마무리합니다.",
+      whoShouldCare:
+        "미국 법인·자회사 명의의 미국 출원·등록을 기초로 국제출원을 운영해 온 한국 기업의 IP·법무팀, 미국 권리를 기초로 다국가 확장을 준비 중인 브랜드의 포트폴리오 담당, 대리인 커뮤니케이션과 해외 수수료 지급을 관리하는 운영 담당, 외부 시스템 계정의 명의와 접근권을 관리하는 내부 통제 담당. KIPO를 본국관청으로 쓰는 국제출원만 운영한다면 이번 전환은 해당하지 않습니다.",
+      whyItMatters:
+        "창구가 하나로 좁혀지면 계정이 없다는 사실이 곧 출원을 낼 수 없다는 뜻이 됩니다. 수수료도 USPTO에 달러로 내는 몫과 WIPO에 스위스프랑으로 내는 몫으로 갈리므로, 사내 외화 지급 절차가 종전 그대로면 마감 직전 결제 승인에서 막힙니다. 게다가 이미 TEASi에 낸 건은 그쪽에서 끝내야 해서 10월 이후 두 창구를 함께 봐야 하는 구간이 생기고, 그 구간에서 담당자가 바뀌면 어느 건이 어디에 있는지 아는 사람이 사라집니다.",
+      nextAction:
+        "① 우리 국제출원이 미국을 본국관청으로 하는지부터 확인합니다 — KIPO 기초 출원만 있으면 여기서 끝납니다. ② 해당된다면 WIPO Account를 누구 명의로 만들고 상시 접근자와 백업 접근자를 누구로 둘지 정해 내부 통제표에 적습니다. ③ USPTO 증명수수료(달러·출원 시 즉시)와 WIPO 수수료(스위스프랑·직접 납부)를 사내 외화 지급 승인 라인, 환전 처리, 증빙 보관 형식에 각각 매핑합니다. ④ 진행 중인 국제출원 목록을 뽑아 각 건의 다음 기한과 현재 창구(TEASi인지 Madrid e-Filing인지)를 한 표로 정리합니다. ⑤ 10월 이후 신규 건 처리 순서를 대리인과 한 번에 맞추고, 수수료 금액과 경과 건 처리의 세부는 USPTO·WIPO 공식 안내로 확인합니다.",
+      relatedGuideLinks: [
+        {
+          label: "UsaTm 제5장 · 출원 경로 선택: use-based / intent-to-use / Madrid",
+          href: `${getProductPathBySlug("usa")}/chapter/출원-경로-선택-use-based--intent-to-use--madrid`
+        },
+        {
+          label: "UsaTm 제10장 · 등록 후 유지관리와 갱신 체계",
+          href: `${getProductPathBySlug("usa")}/chapter/등록-후-유지관리와-갱신-체계`
+        },
+        {
+          label: "UsaTm 제15장 · 포트폴리오 관리 및 내부 통제(RACI)",
+          href: `${getProductPathBySlug("usa")}/chapter/포트폴리오-관리-및-내부-통제raci--부록`
+        }
+      ]
+    }
+  ]
+};
+
 const briefIssueSource: BriefIssue[] = [
+  usptoMadridEfilingCutoverIssue,
   mexicoLfppiRegulationsIssue,
   kbrandCertificationFirstRoundIssue,
   comparableUkMarkEuUseCutoffIssue,
