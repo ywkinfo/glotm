@@ -477,10 +477,10 @@ export const briefCandidates: BriefCandidate[] = [
     status: "published",
     publishedAs: "2026-09-mexico-lfppi-regulations-in-force",
     notes:
-      "2026-09-07 WebSearch triage로 발굴했다. 저장소는 이 시행규칙을 전혀 들고 있지 않았다 — `reglamento`·`시행규칙`·`2026-07-22`를 MexTm·docs·src/briefs 전체에서 검색해 0건을 확인했다. 2026-08-30 claim-refresh 라운드는 법률 개정(2026-04-03)까지만 봤고 MX-ENF-001에 '집행 조항에 개정이 닿았는지는 별도 확인 대상'을 미결로 남겨 뒀는데, 이 시행규칙이 그 답을 들고 있을 가능성이 크다. MexTm 제6장이 '보류'로 남긴 office action 답변기한·연장 규칙도 같은 자리다. **1차 출처 미대조**: DOF·IMPI는 이 세션에서 열리지 않아(등록 소스 전부 연결 실패) sweep 회차를 추가하지 않는다. 사실은 Pérez-Llorca, AIPPI, Mijares, CCN, FisherBroyles, Chevez, BDO México, EY México, Panamericana de Patentes y Marcas가 일치하는 범위에서만 가져왔고, 조문 번호는 본문에 쓰지 않았다. owner 1차 대조와 MexTm 본문·claim-map 정합은 별도 라운드로 넘긴다. **2026-09-12 후속**: 이 후보의 headline에 적은 '진행 중인 출원과 침해 대응이 이미 새 규칙 아래 있다'는 명제가 확인되지 않은 추론이었다. 발행된 20호가 같은 명제를 요약·헤드라인에서 단정해 `2026-09-mexico-lfppi-transitional-scope` 후보로 정정했다(발행 결과: `2026-09-mexico-lfppi-transitional-scope-correction`). 이 후보 기록 자체는 2026-09-07 시점의 판단이므로 고치지 않고 포인터만 남긴다."
+      "2026-09-07 WebSearch triage로 발굴했다. 저장소는 이 시행규칙을 전혀 들고 있지 않았다 — `reglamento`·`시행규칙`·`2026-07-22`를 MexTm·docs·src/briefs 전체에서 검색해 0건을 확인했다. 2026-08-30 claim-refresh 라운드는 법률 개정(2026-04-03)까지만 봤고 MX-ENF-001에 '집행 조항에 개정이 닿았는지는 별도 확인 대상'을 미결로 남겨 뒀는데, 이 시행규칙이 그 답을 들고 있을 가능성이 크다. MexTm 제6장이 '보류'로 남긴 office action 답변기한·연장 규칙도 같은 자리다. **1차 출처 미대조**: DOF·IMPI는 이 세션에서 열리지 않아(등록 소스 전부 연결 실패) sweep 회차를 추가하지 않는다. 사실은 Pérez-Llorca, AIPPI, Mijares, CCN, FisherBroyles, Chevez, BDO México, EY México, Panamericana de Patentes y Marcas가 일치하는 범위에서만 가져왔고, 조문 번호는 본문에 쓰지 않았다. owner 1차 대조와 MexTm 본문·claim-map 정합은 별도 라운드로 넘긴다. **2026-09-12 후속**: 이 후보의 headline에 적은 '진행 중인 출원과 침해 대응이 이미 새 규칙 아래 있다'는 명제가 확인되지 않은 추론이었다. 발행된 20호가 같은 명제를 요약·헤드라인에서 단정해 `2026-09-mexico-lfppi-transitional-provisions` 후보로 정정했다(발행 결과: `2026-09-mexico-lfppi-transitional-scope-correction`). 이 후보 기록 자체는 2026-09-07 시점의 판단이므로 고치지 않고 포인터만 남긴다."
   },
   {
-    id: "2026-09-mexico-lfppi-transitional-scope",
+    id: "2026-09-mexico-lfppi-transitional-provisions",
     headline:
       "멕시코 신 시행규칙이 이미 진행 중인 절차에 미치는지는 발효일이 아니라 관보 부칙(TRANSITORIOS)이 정한다 — 20호가 그 확인 없이 '이미 적용된다'고 단정했으므로 철회해야 한다",
     trigger:
