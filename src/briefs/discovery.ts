@@ -492,7 +492,7 @@ export const briefCandidates: BriefCandidate[] = [
     status: "published",
     publishedAs: "2026-09-mexico-lfppi-transitional-scope-correction",
     notes:
-      "발굴 경로가 외부 소스가 아니라 **이미 발행한 이슈의 내부 모순**이다. 저장소 안에서 전부 확인되므로 소스 접근 없이 판정할 수 있었다. sourceIds는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다 — DOF 관보 원문의 부칙과 IMPI 공식 안내다. **1차 출처 미대조**: 이 세션에서도 DOF·IMPI는 열리지 않아(프록시 CONNECT 403) sweep 회차를 추가하지 않았고, 그래서 정정호는 20호의 단정을 철회하기만 하고 반대 방향을 새로 단정하지 않는다. 부칙 원문 대조는 미결로 남는다."
+      "발굴 경로가 외부 소스가 아니라 **이미 발행한 이슈의 내부 모순**이다. 저장소 안에서 전부 확인되므로 소스 접근 없이 판정할 수 있었다. sourceIds는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다 — DOF 관보 원문의 부칙과 IMPI 공식 안내다. **1차 출처 미대조**: 이 세션에서도 DOF·IMPI는 열리지 않아(프록시 CONNECT 403) sweep 회차를 추가하지 않았고, 그래서 정정호는 20호의 단정을 철회하기만 하고 반대 방향을 새로 단정하지 않는다. **2026-09-12 2차 출처 triage(같은 날 후속)**: 컨테이너 egress를 다시 재 봤으나 `dof.gob.mx`·`www.dof.gob.mx`·`sidof.segob.gob.mx`·`www.diputados.gob.mx`·`impi.gob.mx` 전부 CONNECT 403이고 WebFetch도 `EGRESS_BLOCKED`라 관보 원문 대조는 여전히 불가하다. 다만 WebSearch는 이 채널에서 열려, 2차 출처 다수(Mijares·Pérez-Llorca·FisherBroyles·Panamericana de Patentes y Marcas·Coel·TaxToday)가 **조문을 특정해** 일치하는 것을 확인했다 — **TERCERO 전환규정**: 시행 전 접수된 사건은 접수 당시(presentación) 시행 중이던 규정에 따라 계속 처리하되, MASC(대체적 분쟁해결 메커니즘) 이용은 예외. 사실이라면 20호의 단정은 방향이 반대다. **그래도 등급은 2차다.** 20호의 오류는 '2차 출처를 썼다'가 아니라 '2차 출처가 다루지 않은 명제를 단정했다'였고, 여기서는 2차 출처가 그 명제를 직접·일관되게 다룬다는 점이 다르지만, `briefs-lane.md`가 잠근 '정정호는 1차 출처 대조 없이 반대 방향을 단정하지 않는다'는 그대로 적용된다. 그래서 **22호를 고치지도, 후속호를 발행하지도 않았다.** sweep 회차도 추가하지 않는다(WebSearch triage는 소스를 연 것이 아니다 — 20호 후보와 같은 처리). 미결은 `MexTm` claim-map의 **MX-OQ-004**로 옮겨 `MX-DL-001`·`MX-ENF-001`에 걸었고, 거기에 확인 대상 둘과 확인 경로를 적었다."
   }
 ];
 

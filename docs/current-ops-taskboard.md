@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-12 5라운드 (20호 사실 정정 · 22호 발행 · 후보 id 충돌 가드 신설)
+- Last updated: 2026-09-12 6라운드 (DOF 부칙 대조 시도 · 2차 출처 일치 확인 · MX-OQ-004 신설)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -243,6 +243,17 @@
   - **런북 미러 갱신**: `phase2.5-organic-indexing-ops.md` sitemap 인벤토리 `151`→**152**, brief 행 `index 1 + issue 21 = 22`→`index 1 + issue 22 = 23`, 기준일 2026-09-11→2026-09-12.
   - 게이트: `npm test` **426/426**(기존 424 + 신규 2), `typecheck` pass, `health:runtime` pass(unit **357** + e2e:smoke 50), `health:content` pass(content 45 · 7개 워크스페이스 QA 0 error / 0 warning), `health:release` pass(**152 routes** + sitemap 152 + `check:dist-boundary` 0 hits(**29 tokens**) + `test:seo` 24 + subpath e2e 7), `check:consistency` 0 hard / 0 advisory, `audit:facts` 7개(6 pass + `LatTm` warn — 4라운드와 동일, 이번 라운드가 건드리지 않았다), `briefs:radar` **22호** · 최신 2026-09-12 · 0d · `ready` 0 · `watching` 2.
   - **남는 것**: ⓐ DOF 관보 부칙 원문 대조 — 정정호가 미결로 명시했고, 열리면 20호의 방향까지 확정된다. ⓑ 데스크톱 세션의 작업물(LA-OQ-001 종결·source-register 정정·§5 sweep)은 **여전히 미수령**이다. 그 세션이 브랜치를 푸시하거나 패치 파일이 전달되면 이 컨테이너에서 게이트를 돌려 올릴 수 있다. ⓒ 그 세션도 22호를 발행했다면 **같은 회차 번호의 정정호가 둘**이 되므로, 도착 시 둘 중 하나를 접어야 한다 — 1차 출처를 실제로 대조한 쪽이 우선이다.
+
+- 2026-09-12 6라운드: **DOF 부칙 대조 시도** — 5라운드가 미결로 남긴 `TRANSITORIOS` 확인을 owner 지시로 진행했다. **1차 대조는 못 했고, 2차 출처가 조문을 특정해 일치하는 것까지 확인했다.**
+  - **egress 재측정: 여전히 막혀 있다.** `dof.gob.mx` · `www.dof.gob.mx` · `sidof.segob.gob.mx` · `www.diputados.gob.mx` · `impi.gob.mx` 전부 CONNECT 403이고, `WebFetch`도 `EGRESS_BLOCKED`를 돌려준다(관보 게재분과 diputados `LeyesBiblio/regley/Reg_LFPPI.pdf` 둘 다). **관보 원문 대조 경로는 이 컨테이너에 없다.**
+  - **다만 `WebSearch`는 이 채널에서 열린다** — 프록시와 다른 경로다. 이것으로 2차 출처를 훑었고, **다수가 조문을 특정해 일치한다**: **TERCERO 전환규정** — 시행 전 접수된 사건은 **접수 당시(presentación) 시행 중이던 규정에 따라 계속 처리**하되, **MASC**(대체적 분쟁해결 메커니즘) 이용은 예외. 일치한 출처는 Mijares · Pérez-Llorca · FisherBroyles · Panamericana de Patentes y Marcas · Coel Abogados · TaxToday México다.
+  - **사실이라면 20호의 단정은 방향이 반대다.** 5라운드 정정호가 "부칙이 접수 당시 규칙을 계속 적용하도록 정하고 있다면 방향까지 반대가 된다"고 적어 둔 그 경우다. 별도 데스크톱 세션이 보고한 내용과도 일치하는데, 이번에는 **이 세션이 직접 뽑은 출처로 독립 확인**된 것이라 단순 relay가 아니다.
+  - **그래도 등급은 2차이고, 그래서 아무것도 발행하지 않았다.** 20호의 오류는 "2차 출처를 썼다"가 아니라 "2차 출처가 다루지 않은 명제를 단정했다"였다. 여기서는 2차 출처가 그 명제를 직접·일관되게 다룬다는 점이 다르지만, 5라운드에 `briefs-lane.md`로 잠근 **"정정호는 1차 출처 대조 없이 반대 방향을 단정하지 않는다"**가 그대로 적용된다. 규칙을 만든 다음 라운드에 그 규칙을 예외 처리하면 규칙이 아니다. **22호를 고치지 않았고(본문 소급 수정 금지이기도 하다), 후속호도 발행하지 않았다.**
+  - **sweep 회차도 추가하지 않았다.** WebSearch triage는 등록 소스를 연 것이 아니다 — 20호 후보가 같은 이유로 sweep을 남기지 않은 것과 같은 처리다. `dof-mexico`는 radar에 `실사 이력 없음`으로 남는다.
+  - **미결을 워크스페이스로 옮겼다: `MX-OQ-004` 신설.** 종전에는 이 질문이 발굴 후보 notes 안에만 있었는데, 이것은 브리프 lane이 아니라 **MexTm 본문이 걸린 질문**이다 — 닫히면 `MX-DL-001`(기한 서술)과 `MX-ENF-001`(행정집행 절차)이 **어느 사건에 적용되는지**가 함께 정해진다. 그래서 두 claim에 걸었고, 확인 대상 둘(① TERCERO 조문 문언 ② 기준선이 접수일인지 절차단계인지)과 확인 경로(dof.gob.mx 게재분 또는 diputados `Reg_LFPPI.pdf`)를 질문에 적었다. radar Workspace Open Questions에 후보가 연결된 상태로 뜬다(열림 6→**7**, 후보 없음 4 유지).
+  - **MexTm 본문은 이 오류에 닿지 않았다.** `MexTm/content/source/`·`content/research/` 전체에서 `시행규칙`·`reglamento`·`2026-07-22`를 검색해 **0건**이다. 신 시행규칙은 가이드 본문에 아직 들어가 있지 않아, 잘못된 단정은 브리프 lane 한 곳에 갇혀 있었다. 22호로 이미 닫혔다.
+  - 게이트: `npm test` **426/426**(변동 없음 — 이번 라운드는 데이터만 움직였다), `audit:facts` MexTm `gate=pass`(openQuestions는 `validateClaimMap` 계약 밖이라 감사 수치에 영향이 없다 — 설계대로다), `briefs:radar` 미결 7 · `MX-OQ-004` 0d.
+  - **남는 것은 하나로 좁혀졌다**: owner 브라우저로 `TRANSITORIOS TERCERO` 원문 두 줄을 확인하는 것. 그것이 `MX-OQ-004`를 닫고, 닫히는 순간 20호의 방향까지 확정되므로 그때 후속호를 쓸지 판단한다.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
