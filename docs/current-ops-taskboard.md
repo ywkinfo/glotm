@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-12 3라운드 (LatTm claim-map 도입 — fact-QA 레인 7/7)
+- Last updated: 2026-09-12 4라운드 (2026-09 월간 리뷰 · verifiedOn re-stamp 2026-09-12)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -218,6 +218,16 @@
   - **남은 것은 재대조 자체다.** `LA-OQ-001`이 그 큐이고 여섯 출처를 열 수 있는 경로(owner 브라우저)가 필요하다. 열리면 `lastVerified`와 `factsReviewedOn`이 함께 움직이고 warn이 닫힌다.
   - **실제 산출물 확인**: `dist/latam/index.html`에 `data-provenance="facts-reviewed"` 줄이 실렸다(종전 0건). prerender 표면에서도 flagship이 대조 기준일을 갖는다.
   - 게이트: `npm test` **424/424**, `typecheck` pass, `audit:facts` **7개 워크스페이스**(6 pass + `LatTm` warn, exit 0), `health:runtime` pass(unit **355** + e2e:smoke 50), `health:release` pass(**151 routes** + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` 24 + subpath e2e 7), `health:content` pass(7개 워크스페이스 QA 0 error / 0 warning), `check:consistency` 0 hard / 0 advisory.
+
+- 2026-09-12 4라운드: **2026-09 월간 리뷰** — lane 재검증 + `verifiedOn` re-stamp + scorecard 리뷰 + 미러 드리프트 스윕. 직전 re-stamp가 2026-08-25였으니 **18일 만**이다(8/25 회차가 52일 만이었던 것에 비하면 cadence가 당겨졌다 — owner 지시로 이번 세션에서 함께 돌렸다).
+  - **shared root gate 전 lane 재현 통과.** `content:prepare` 생성 수치가 registry 정본과 전부 일치한다(`781 / 385 / 206 / 185 / 358 / 261 / 183` + 리포트 `7개 / 109 엔트리`). `health:runtime` pass(unit **355** + e2e:smoke 50), `health:content` pass(content 45 · 7개 워크스페이스 QA **0 error / 0 warning**), `health:release` pass(**151 routes** + `check:dist-boundary` 0 hits(28 tokens) + `test:seo` 24 + subpath e2e 7), `check:consistency` **0 hard / 0 advisory**, `audit:facts` 7개 워크스페이스(6 pass + `LatTm` warn).
+  - **`verifiedOn`을 7개 가이드 전부 2026-09-12로 re-stamp했다.** 이것은 lane 재통과이지 1차 출처 재대조가 아니다 — `factsReviewedOn`은 **하나도 건드리지 않았다**. 문서 미러도 함께 옮겼다: `PROJECT-OVERVIEW.md` 5곳(`Last updated`·`Verified on`·운영 스냅샷·LatTm·ChaTm 서술), `README.md` 1곳, registry `maturityNote` 2곳(`flagship 보호 · … full-lane 재검증`, `… shared root gate 재검증`). registry에 남은 옛 재검증 날짜는 0건이다.
+  - **scorecard 리뷰 결과: 이번 달 lifecycle 변경 없음.** `health:report`가 7개 전부 `hold`를 내고 `upgrade-ready` 0건 · `verification-refresh-needed` 0건 · 고위험 갭 0이다. owner override log에 추가할 건이 없다.
+  - **미러 드리프트 스윕 결과 0건.** `check:consistency`는 registry↔`PROJECT-OVERVIEW`/`README`만 보고 `docs/workspaces/**`는 보지 않으므로 이번에도 사람이 훑었다. 휴리스틱이 집은 후보는 전부 오탐이었다 — `UKTm`·`JapTm` root-sync의 `incubate/beta/standard` 서술은 상단 `SUPERSEDED (2026-07-07)`·`[!NOTE] 2026-06-29` 배너가 아래를 승급 이전 dated 기록으로 이미 표시하고 있고(8/25 판단과 동일), `EuTm`(258·260)·`JapTm`(145)·`UsaTm`의 옛 수치는 명시적 historical 문맥이다. **8/25(4건)·8/31(24건) 정합분이 그대로 유지되고 있다.**
+  - **브리프 발굴 체크**: 발행 **21호** · 최신 2026-09-11 · 마지막 발행 후 1d(목표선 이내) · 이번 달 published **2건**(20호 멕시코 LFPPI, 21호 USPTO Madrid) · dropped 0 · sweep 회차 **0건**. **`ready` 잔량 0** — 다음 발행은 sweep부터 시작해야 한다. 정체(30일+) 2건(`2027-china-implementing-rules`·`2026-08-eu-customs-reform-watch`, 각 40d). 커버리지 공백은 `JapTm`(95d)·`LatTm`(63d)이고 둘 다 열린 후보 0. 워크스페이스 미결 6건 중 **후보 없음 4건**(신규 `LA-OQ-001` 포함). 소스 17개 중 `실사 이력 없음` 12 · `주기 초과` 4.
+  - **이번 라운드가 하지 못한 것(범위 밖이 아니라 이 환경에서 불가)**: 런북 §1 Search Console 색인, §2 GA4 DebugView, §4 organic sessions 집계는 콘솔 계정이 필요한 owner 전용 절차다. §5 소스 sweep은 checkout agent도 계약상 가능하지만 등록 소스 도메인이 이 컨테이너에서 전부 CONNECT 403이라 실행하지 못했고, 라이브 `ywkinfo.github.io`도 같은 이유로 §3 라이브 QA를 로컬 `e2e:smoke`로 대체했다. **`briefSweepLog` 회차를 추가하지 않았고 어떤 `lastVerified`도 옮기지 않았다.**
+  - **관찰 하나 — 고치지 않고 남긴다.** `docs/workspaces/`에 다른 6개 워크스페이스는 미러 문서가 있는데 `LatTm`만 없다. 이번 세션에 LatTm이 fact-QA 레인에 들어왔으므로 미러를 둘지 판단할 시점이지만, 새 운영 문서를 만드는 것은 owner 판단이라 만들지 않았다.
+  - **다음 리뷰로 넘기는 것**: ⓐ `ready` 0을 푸는 소스 sweep(owner 브라우저 경로 필요), ⓑ `LA-OQ-001` — LatTm HIGH claim 5건의 1차 출처 재대조(같은 병목), ⓒ 정체 후보 2건 살릴지 버릴지 판단.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
