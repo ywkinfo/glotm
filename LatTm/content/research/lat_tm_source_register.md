@@ -23,6 +23,15 @@
 > | `sic-colombia-scope` | **연결 실패**(두 경로 모두) | 등록은 유지하되 대체 1차 출처로 안데스공동체 `can-decision-486`을 추가해 claim을 검증 |
 >
 > 등록은 실사가 아니고, 구조화도 재검증이 아니다 — 그리고 **살아 있는지조차 실사 전에는 모른다**.
+>
+> **2026-09-12 데스크톱 세션 독립 재측정.** 위 세 건을 다른 세션·다른 채널에서 다시 재 봤고 진단이 그대로
+> 확인됐다: 구 INAPI URL(`/noticias/ley-21355-...`)은 **404**(1,251바이트 오류면), 교체한 INAPI 기사면과
+> INPI 아르헨티나 공개 안내면은 **둘 다 200**(각 46KB·48KB). `sic.gov.co`는 이 세션에서도 node URL과
+> 루트 모두 연결 실패라 **채널 세 개가 전부 실패**했다 — 페이지가 죽은 것인지 망 차단인지는 여전히
+> 구분되지 않으므로 등록을 유지한 판단이 맞다. `can-decision-486` 편찬본(1.6MB)은 열렸고 **제154조를
+> 축자 대조**했다(편찬본 55면): 「El derecho al uso exclusivo de una marca se adquirirá por el registro de
+> la misma ante la respectiva oficina nacional competente」 — `LA-ANDEAN-001`의 핵심(공동체 단일 등록
+> 부재, 국가별 관청 등록으로 권리 취득)이 규범 원문과 일치한다.
 
 > **왜 이 파일이 필요한가.** `npm run audit:facts`는 HIGH risk claim에 sourceId가 **몇 개 있는지**만 센다
 > ([`scripts/research-audit/audit-facts.ts`](../../../scripts/research-audit/audit-facts.ts)). 실재하지 않는
