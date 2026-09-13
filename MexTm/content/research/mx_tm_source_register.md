@@ -26,6 +26,7 @@
 | impi-transparencia-focalizada | IMPI — Transparencia Focalizada (MARCANET·Gaceta 정보시스템) | https://transparencia.impi.gob.mx/Paginas/Transparencia-Focalizada.aspx |
 | anam-pedimento-copies | ANAM — Copias certificadas de pedimento | https://anam.gob.mx/copias-certificadas-de-pedimento/ |
 | anam-dpa-fees | ANAM — Derechos, productos y aprovechamientos | https://anam.gob.mx/derechos-productos-y-aprovechamientos/ |
+| dof-reglamento-lfppi-2026 | DOF 2026-04-28 게재 — Reglamento de la LFPPI (DECRETO, nota 5786237) — 제8조·제116조·제119조 및 TRANSITORIOS | https://dof.gob.mx/nota_detalle.php?codigo=5786237&fecha=28/04/2026 |
 
 ## 매핑 주의사항
 
@@ -33,6 +34,8 @@
 - **`impi-opposition-triptico` URL 인코딩.** `Oposicio%CC%81n`(결합 악센트) 형태를 그대로 써야 열린다. 정규화하면 404다.
 - **`impi-opposition-triptico`의 근거법 표기 주의.** 이 리플릿 본문은 근거법을 `Ley de la Propiedad Industrial`(2020 LFPPI 이전 법)로 부른다. 도해의 1개월 구조 자체는 현행 LFPPI 제221조와 일치하므로 값의 근거로는 쓰되, **법령명은 이 리플릿을 따르지 않는다.**
 - **`impi-transparencia-focalizada`는 오래된 안내면이다.** 페이지 표기가 `Última actualización: 31 enero 2022`다. 시스템 명칭(MARCANET·Gaceta) 확인용으로만 쓰고 절차·수수료 근거로 쓰지 않는다.
+- **`dof-reglamento-lfppi-2026`은 관보 게재분이고 시행일이 따로 있다.** 공포 2026-04-28, 시행 2026-07-22(부칙 PRIMERO, 공포 후 60 영업일). 그리고 **전 조문이 같은 날 시행된 것이 아니다** — 부칙 PRIMERO 둘째 문단이 제7장 온라인 침해 행정선언 절차를 별도 이행 Acuerdo 게재 다음 날로 미루고 그 고시에 18개월 기한을 준다. 부칙 TERCERO에 따라 **시행 시점에 계속 중이던 사건은 접수 당시 규정으로 종결**되므로, 이 시행규칙을 근거로 적는 값은 2026-07-22 이후 접수분에 적용된다고 범위를 함께 적는다. 근거·경위는 `claim-map.json`의 `MX-OQ-004` resolution.
+- **`wipolex-lfppi-2020`은 2020년 원문이다.** 게재 표기가 `Nueva Ley DOF 01-07-2020`이라 2026-04-03 개정 반영본이 아니다(`MX-OQ-001`과 같은 사유). 이 소스에서 뽑은 조문을 쓸 때는 **개정이 그 조문에 닿았는지 확인되지 않았다**는 것을 함께 적는다. 다만 2026-04-28 시행규칙이 `제117조·제226조·제279조`를 조문 번호로 참조하고 `plazo inicial de dos meses`를 전제하므로, **제226조의 존재와 초기 2개월 구조는 개정 이후 문서로 교차 확인된다**.
 - **`impi-pase-faq-2026` PDF는 텍스트 레이어가 부분적이다.** 67쪽 15MB이고 추출 시 질의응답 줄이 잘린다. 인용할 때 원문 페이지를 함께 확인한다.
 
 ## 채널 메모 (2026-08-30 실측)
