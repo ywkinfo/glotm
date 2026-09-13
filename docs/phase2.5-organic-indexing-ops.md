@@ -119,6 +119,9 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 브리프 lane은 이 phase의 신선도 surface다. 그 lane에 소재를 대는 발굴 절차는
 [`briefs-discovery.md`](briefs-discovery.md)가 계약이고, 여기서는 월 1회 실행 훅만 건다.
 
+0. **채널을 먼저 잰다** — [`briefs-discovery.md`](briefs-discovery.md) `sweep 절차` 0번의 명령을 그대로 돌린다.
+   이 훅이 실행 가능한지는 회차마다 다르고, 재지 않으면 지난 회차의 채널 상태를 사실로 물려받는다. 결과(날짜·채널·
+   열린 소스 수)를 그 회차 기록에 남긴다.
 1. `npm run briefs:radar` 실행. `Source Sweep`의 `실사 이력 없음`·`주기 초과` 소스가 이번 회차 대상이다.
    (`briefs-discovery.md` sweep 절차와 같은 집합이다. `실사 이력 없음`은 `주기 초과`로 표시되지 않으므로
    여기서 빼면 한 번도 열지 않은 소스가 이 훅의 대상에서 영구히 제외된다 — [`briefs-discovery-latency-review.md`](briefs-discovery-latency-review.md) D6.)
@@ -127,7 +130,11 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 4. 결과를 [`monthly-review-template.md`](monthly-review-template.md)의 `Brief discovery check`에 기록한다.
 
 > 이 절은 §1~§4와 달리 콘솔 계정 접근이 필요 없어 checkout agent도 수행할 수 있다.
-> 다만 발행 여부와 법률 사실 판단은 계속 owner 몫이다.
+> **다만 "할 수 있다"는 조건부다** — 0번 실측에서 소스가 열리는 회차에만 해당한다. 열리지 않는 회차의 agent가
+> 할 수 있는 것은 변경 신호 triage까지이고, `verified` sweep과 `lastVerified` 갱신은 소스를 실제로 연 채널의
+> 몫이다(owner 채널이 열려 있는데 agent 컨테이너가 막혀 있는 경우가 실제로 있었다 —
+> [`briefs-discovery.md`](briefs-discovery.md) `채널은 상수가 아니다`).
+> 발행 여부와 법률 사실 판단은 어느 경우에도 계속 owner 몫이다.
 
 ## Monthly quick checklist
 
@@ -136,4 +143,4 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 - [ ] §2 GA4 DebugView: debugger extension ON 상태에서 page_view + 6 KPI 이벤트 도착, 또는 Realtime 대체 확인
 - [ ] §3 라이브 QA(agent 스모크 → owner 육안)
 - [ ] §4 organic sessions 집계 → 월 100 트리거 대비 기록
-- [ ] §5 `npm run briefs:radar` → 실사 이력 없음·주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록
+- [ ] §5 채널 실측(0번) → `npm run briefs:radar` → 실사 이력 없음·주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록

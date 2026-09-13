@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-13 12라운드 (EuTm fact-review — 1차 출처 전건 차단으로 재대조 불가 · 변경신호 triage + EU-OQ-001 신설)
+- Last updated: 2026-09-13 13라운드 (채널은 상수가 아니다 — 라운드 시작 실측을 계약·훅에 넣음 · owner 채널 대조 보고는 랜딩 대기)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -310,6 +310,15 @@
   - **저장소 안에서 이미 확인된 것 하나.** `EU-FEE-001`의 UK 축(£205/£245)은 `UKTm` `UK-FEE-001`이 **2026-08-30**에 더 최근 값으로 들고 있고, UKTm fact log는 그 값을 **2026-07-22 GOV.UK 공식 안내로 재확인**했다고 적는다(값 일치, 2026-07-07 owner 단일 정본). 이걸로 claim을 닫지는 않지만 — claim-map은 워크스페이스별이고 남의 회차가 `lastVerified`를 옮기지 않는다 — **재대조 순서에서는 이 claim을 뒤로 미룰 근거**가 된다.
   - **owner가 열면 닫히는 순서**(fact log에 같은 순서로 적었다): ① `taxation-customs` + 관보(`EU-OQ-001`, 시한 최단) → ② CELEX 통합본 1회로 `EU-SEL/DL/EVD/RNW/PRIO/AG` **6건 동시**(각 claim notes에 조문 번호와 축자 인용이 이미 박혀 있어 문언 일치만 보면 된다) → ③ GOV.UK comparable 안내로 3건 → ④ `EU-FEE-001` 잔여(EUTM Annex I, ②에서 함께 처리 가능).
   - 게이트: `npm test` **429/429**, `audit:facts` 7/7 pass(EuTm `staleHighRisk=0` 유지 — 아직 창 안), `check:consistency` 0 hard / 0 advisory.
+
+- 2026-09-13 13라운드: **owner가 같은 날 같은 URL을 11/11 200으로 열었다고 보고했고, 같은 시각 에이전트 컨테이너는 여전히 전건 403이었다.** 두 관측은 모순이 아니라 **다른 채널의 사실**이며, 이 라운드는 그 사실을 계약에 넣었다.
+  - **재실측(08:44Z)**: `publications.europa.eu`·`eur-lex.europa.eu`·`www.gov.uk`(2건)·`taxation-customs.ec.europa.eu`·`www.jpo.go.jp` 전건 `connect_rejected`(게이트웨이 403). WebFetch도 `EGRESS_BLOCKED`. 프록시 `recentRelayFailures`에 그 6건이 그대로 남았다. owner가 보고한 "원문 7개 로컬 보관"도 이 파일시스템에는 없다(작업 트리 clean, 08:31 이후 생성 파일 0건). **에이전트 채널에서는 아무것도 바뀌지 않았다.**
+  - **그런데 owner 보고가 새 사실도 아니다.** 9/12 sweep note가 이미 "컨테이너 10/17 · owner 데스크톱 17/17"을 같은 회차에 적어 뒀다. 두 채널이 동시에 다른 것이 이 저장소에서 관측된 것은 이번이 두 번째다.
+  - **진짜 결함은 egress 정책이 아니라 기록 방식이다**(owner 진단과 같다). 8/15 "JPO 403" → 8/25 "15건 전건 403" → 8/30 "97개 중 85개 200" → 9/13 오전 "0/17" → 9/13 owner "11/11". **매 회차가 세션 한정 채널 상태를 저장소에 상수처럼 적고, 다음 회차가 그 전제를 물려받았다.** 그래서 이번 라운드의 결과물은 값이 아니라 절차다.
+  - **반영 셋.** ⓐ `briefs-discovery.md` `sweep 절차`에 **0번 "채널부터 잰다"** 신설 — URL을 정본에서 뽑아 전건 실측하는 명령과, 정책 거부(`connect_rejected`)와 전송 실패를 가르는 `__agentproxy/status` 확인을 함께 적었다. ⓑ 같은 문서에 **`채널은 상수가 아니다`** 절 신설 — 관측 6건을 시점·채널과 함께 표로 남기고, "`gov.uk`는 차단됐다"가 아니라 "2026-09-13 에이전트 컨테이너에서 403"으로 적는 규범을 `경계`에 걸었다. ⓒ 런북 §5에 0번을 걸고, "checkout agent도 수행할 수 있다"를 **조건부**로 고쳤다(0번 실측에서 열리는 회차에만 해당).
+  - **랜딩하지 않은 것 셋과 그 이유.** owner 보고는 EuTm claim 11건 `lastVerified` 갱신, `EU-ENF-001` 재확인 시점 2028→2026-12 정정(근거 COM(2026) 436 · 절차 2023/0156(COD) EP 2독), `EU-OQ-001` 종결을 함께 요청했다. **에이전트가 1차 출처를 열지 못한 채 찍을 수 없다** — `lastVerified`는 "믿는다"가 아니라 "열었다"는 주장이고, source register가 직접 금지선을 적어 뒀다("열어본 적 없는 URL을 붙이면 추적 가능성의 외형만 만들어진다"). 특히 재확인 시점 정정은 12라운드가 WebSearch로 얻은 "목표 9월 말"을 **뒤집는** 내용이라 근거를 열고 해야 한다. 랜딩 경로는 둘 — ⓐ 원문 파일을 이 파일시스템에 놓으면 에이전트가 축자 대조 후 그 파일 근거로 스탬프, ⓑ owner가 명시하면 **owner attestation 회차**로 기록(에이전트 재대조가 아님을 문면에 남긴다).
+  - **12라운드 서술 하나를 좁힌다.** 그 라운드는 "egress 허용목록을 열지, owner 전용으로 못 박을지"를 owner 결정으로 남겼는데, owner 채널이 열려 있다면 그 이지선다가 아니다. 실제로 닫힌 것은 owner 보고 기준 `kipo.go.kr`·`cnipa.gov.cn` 둘이고, 나머지는 **어느 채널에서 도느냐**의 문제다. 결정 항목을 "허용목록"에서 **"어느 채널이 이 lane의 기본 실행 채널인가"**로 바꿔 적는다.
+  - 게이트: `npm test` **429/429**, `check:consistency` 0 hard / 0 advisory. 데이터 변경 없음 — 계약·런북 문서 셋뿐이다.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
