@@ -9,6 +9,73 @@
 현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
+## 2026-09-13 재검증 라운드 (claim 11건 · 캡처 근거)
+
+**11건 전부 변경 없음.** 본문 정정은 없고, 바꾼 것은 `EU-ENF-001`의 재확인 시점 하나와 `EU-FEE-001`의
+sourceId 하나다. `lastVerified`는 전 항목 **2026-09-13**으로 갱신했고 `factsReviewedOn`도 같은 날로 옮겼다.
+
+### 이 회차가 무엇을 근거로 삼았는가
+
+같은 날 아래 triage 절이 기록한 대로 이 세션의 채널은 전건 차단이었다. 대조는 **다른 채널이 받아 온 응답
+바이트 캡처**로 했다. 캡처 provenance는 다음과 같고, 회차 시작에 전건 재계산해 일치를 확인했다.
+
+| 항목 | 값 |
+|---|---|
+| 아카이브 | `glotm-sources-20260913.tar.gz` · 1,726,391바이트 · sha256 `a2d564d52b7648b6…b0cd367f` |
+| 캡처 시각 | 2026-09-13 08:54:28Z ~ 08:55:49Z (UTC) |
+| 캡처 채널 | 별도 세션의 클라우드 컨테이너 `curl` (이 세션과 다른 egress 경로) |
+| 검증 | 25건 전건 sha256·바이트 수 MANIFEST 대조 **일치**, HTTP 전건 200 |
+| CELEX 요청 헤더 | `Accept: application/xhtml+xml` + `Accept-Language: eng` (register 접근 메모와 동일) |
+
+**이 회차를 `verified`로 적는 이유.** 계약이 `verified`에 요구하는 실질은 claim을 그 출처의 실제 바이트와
+대조했다는 것이고, register의 금지선이 겨눈 것은 그 반대편 — 아무도 열지 않은 URL을 근거처럼 붙이는 일이다.
+해시·바이트 수·시각·요청 헤더가 붙은 캡처는 그 실질을 만족하며, 사후 재현이 불가능한 일반 `verified` 회차보다
+오히려 감사 가능성이 높다. 다만 **`lastVerified`가 뜻하는 것은 "살아 있는 출처가 그날 그렇게 말했다"**이므로
+날짜는 스탬프한 날이 아니라 **캡처한 날**로 적는다(이번에는 둘 다 2026-09-13이다). 규칙은
+[`docs/briefs-discovery.md`](../../../docs/briefs-discovery.md) `캡처 근거 대조`에 잠갔다.
+
+### claim별 결과
+
+| claim | 결과 | 대조한 문언 |
+|---|---|---|
+| EU-SEL-001 | 유지 | 제1조 제2항 unitary character 축자 일치 · GOV.UK `no longer protected trade marks in the UK` |
+| EU-DL-001 | 유지 | 제46조 제1항 3개월 · Annex I item 10 EUR 320 |
+| EU-EVD-001 | 유지 | 제58조 제1항(a) 5년 · 제2항 부분취소 |
+| EU-RNW-001 | 유지 | 제52조 10년 · 제53조 제3항 6+6개월 · Annex I item 19 `25 % … maximum of EUR 1 500` |
+| EU-UK-001 | 유지 | `fully independent` · 수수료 `paid separately` |
+| EU-ENF-001 | 유지(재확인 시점만 정정) | `Defend your rights`의 national/Union AFA·IPEP·COPIS, COPIS는 608/2013 근거 |
+| EU-FEE-001 | 유지(sourceId 정리) | Annex I item 2·3·4·12·13·14 · GOV.UK TM3 £205 / TM11 £245 / 추가류 £60, 전부 `April 2026` |
+| EU-PRIO-001 | 유지 | 제34조 제1항 6개월·동일표장·`successors in title` |
+| EU-UKCOMP-001 | 유지 | `created a comparable UK trademark for every registered EUTM` · `only … registered before 1 January 2021` · 재출원 창 `up to and including 30 September 2021` |
+| EU-AG-001 | 유지 | 제7조 제1항 (b)(c)(d)·제2항·제3항 |
+| EU-UKUSE-001 | 유지 | `counts as use of the comparable UK right` · `will not be taken into account` |
+
+통합본 판본은 `32017R1001 — EN — 01.12.2025`(001.001)이고 개정법은 **Reg (EU) 2023/2411 하나**뿐이다 —
+2026-08-02 라운드가 대조한 판본과 같다.
+
+### 바꾼 것 둘
+
+**① `EU-ENF-001` 재확인 시점: 2028년경 → 2026년 12월.** 이 claim의 notes는 EU Customs Reform이 미발효라는
+전제로 재확인을 2028년경으로 잡았는데, 근거를 잘못 봤다. 절차 2023/0156(COD)의 최신 단계는 2026-09-04
+**COM(2026) 436 final**(TFEU 제294조 제6항 이사회 입장 통지)이고 지금은 **유럽의회 2독**이다. 제294조 제7항의
+3개월(1개월 연장 가능)이 그 통지일부터 도므로 관보 게재는 빨라야 2026-12-04 이후다.
+
+**본문은 건드리지 않았다.** 그 문서가 폐지 대상으로 드는 것은 `Regulation (EU) No 952/2013`이고 전문에
+`608/2013`은 **0회**다 — AFA 근거 규정은 폐지 대상이 아니며, Data Hub 승계도 2028 → 2031 → 2034 그대로다.
+어긋난 것은 claim의 사실이 아니라 claim이 스스로 정한 일정이었다. `EU-OQ-001`을 이 근거로 종결했다.
+
+> **직전 triage가 틀렸다는 것도 함께 기록한다.** 아래 절이 WebSearch로 얻은 `신 UCC 발효 목표 2026년 9월 말`
+> 신호는 2독 절차를 보지 못한 것이었다. 검색 수준 신호를 1차 출처로 승격하지 않은 판단이 옳았던 사례다.
+
+**② `EU-FEE-001`의 `euipo-fees` 폐기.** 등록 URL이 HTTP 200으로 404 페이지를 돌려준다. 근거를 실제 대조
+대상인 `eutmr-consolidated`(Annex I)로 옮겼다 — 상세는 source register `죽은 URL` 절.
+
+### 쓰지 않은 캡처 둘
+
+`euipo-priority-guidelines`·`euipo-absolute-grounds-guidelines`는 각각 2,268바이트 JS 셸(본문 16자)이라
+인용 근거가 아니다. register의 2026-08-30 접근 메모가 적어 둔 그대로이며, 두 claim 모두 EUTMR 조문이 상위
+근거라 결론에 영향이 없다.
+
 ## 2026-09-13 변경신호 triage (재대조 아님)
 
 `lastVerified`도 `factsReviewedOn`도 움직이지 않았다. **이 회차는 1차 출처를 하나도 열지 못했다** — 재대조가

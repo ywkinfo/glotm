@@ -30,7 +30,7 @@
 | ukipo-fees-2026 | GOV.UK Trade mark forms and fees (2026-04-01 개정) | https://www.gov.uk/government/publications/trade-mark-forms-and-fees/trade-mark-forms-and-fees |
 | govuk-comparable-uk-marks | GOV.UK EU trade mark protection and comparable UK trade marks | https://www.gov.uk/guidance/eu-trade-mark-protection-and-comparable-uk-trade-marks |
 | euipo-priority-guidelines | EUIPO Guidelines 11.2 — Substantive requirements for priority claims | https://guidelines.euipo.europa.eu/2214311/2046727/trade-mark-guidelines/11-2-substantive-requirements-for-priority-claims |
-| euipo-fees | EUIPO — Fees and payments | https://www.euipo.europa.eu/en/trade-marks/apply-now/fees |
+| ~~euipo-fees~~ | ~~EUIPO — Fees and payments~~ | **2026-09-13 폐기 — 아래 `죽은 URL` 참조** |
 | euipo-absolute-grounds-guidelines | EUIPO Guidelines — Examination, Absolute Grounds | https://guidelines.euipo.europa.eu/ |
 
 > 위 URL은 claim-map 신규 claim(EU-FEE-001·EU-PRIO-001·EU-UKCOMP-001·EU-AG-001)의 sourceId가 가리키는 1차 출처다. 기존 EUIPO/GOV.UK/WIPO source family는 위 Core Source Groups를 따른다.
@@ -49,7 +49,11 @@
 | govuk-ip-in-eu-and-eea | GOV.UK — IP in the EU and EEA | https://www.gov.uk/guidance/ip-in-the-eu-and-eea |
 | govuk-retaining-protection | GOV.UK — Retaining protection in the UK for EU Intellectual Property rights | https://www.gov.uk/government/publications/retaining-protection-in-the-uk-for-eu-intellectual-property-rights/retaining-protection-in-the-uk-for-eu-intellectual-property-rights |
 
-> **접근 메모 (2026-08-30 실측 갱신)**: `eur-lex.europa.eu`와 `www.euipo.europa.eu`는 일반 fetch에 빈 본문/403을 반환하고,
+> **접근 메모 (2026-08-30 실측 · 2026-09-13 재확인)** — 채널 상태는 회차마다 다르다. 2026-09-13 오전 에이전트
+> 컨테이너에서는 아래 URL 전건이 `connect_rejected`였고, 같은 날 다른 채널에서는 전건 200이었다
+> (`docs/briefs-discovery.md` `채널은 상수가 아니다`).
+>
+> **원 메모 (2026-08-30 실측 갱신)**: `eur-lex.europa.eu`와 `www.euipo.europa.eu`는 일반 fetch에 빈 본문/403을 반환하고,
 > `guidelines.euipo.europa.eu`는 JS 앱이라 텍스트가 나오지 않는다. `www.euipo.europa.eu`는 인앱 브라우저에서도
 > 본문이 하이드레이트되지 않아(내비게이션 6.9KB만 렌더) 인용 근거로 쓸 수 없었다.
 > 규정 본문 경로는 `https://publications.europa.eu/resource/celex/<CELEX>`이며,
@@ -61,6 +65,26 @@
 > curl -sSL -H "Accept: application/xhtml+xml" -H "Accept-Language: eng" \
 >   https://publications.europa.eu/resource/celex/02017R1001-20251201
 > ```
+
+## 죽은 URL (2026-09-13 폐기 — `euipo-fees`)
+
+`https://www.euipo.europa.eu/en/trade-marks/apply-now/fees`는 **HTTP 200으로 404 페이지를 돌려준다**
+(2026-09-13 08:54:38Z 캡처, 237,218바이트, 렌더 텍스트 첫 줄이 `404 - EUIPO`). 등록 당시에는 살아 있었을
+수 있으나 현재는 아니다.
+
+**교체하지 않고 폐기한다.** 이 register가 2026-08-30에 8개를 폐기하며 세운 규칙과 같다 — 열어서 인용을
+확보하지 않은 EUIPO 안내면 URL을 추측으로 붙이면 추적 가능성의 외형만 생긴다. `EU-FEE-001`의 EUTM 축은
+어차피 **EUTMR Annex I**(item 2·3·4·12·13·14)가 상위 근거이고 2026-09-13 재대조도 그 조문으로 결론냈으므로,
+claim은 근거를 잃지 않는다.
+
+| 폐기된 sourceId | 쓰이던 claim | 대체 |
+|---|---|---|
+| euipo-fees | EU-FEE-001 | eutmr-consolidated (Annex I item 2·3·4·12·13·14) |
+
+**이 결함은 어떤 게이트에도 걸리지 않았다.** `claim-source-register.test.ts`는 sourceId가 register 행에
+있는지와 그 행에 https URL이 있는지만 보고 fetch하지 않으며, `audit:facts`도 URL 생존을 보지 않는다.
+CI에서 fetch로 막는 것은 발굴 계약의 `자동 크롤링·fetch 금지` 경계에 걸리므로, 대신 라운드 시작 채널
+실측이 `200`을 살아 있음으로 읽지 않도록 절차를 고쳤다(`docs/briefs-discovery.md` `sweep 절차` 0번).
 
 ## 폐기된 sourceId (2026-08-30)
 
