@@ -26,6 +26,16 @@ describe("briefs radar cli", () => {
     expect(output).toContain("## Workspace Open Questions");
   });
 
+  // 두 축이 한 열로 접히면 "가이드는 최근에 다뤄졌는데 관할은 굶었다"가 다시 안 보이게 된다.
+  // 수치가 아니라 축의 분리 자체를 잠근다.
+  it("keeps the guide-link axis and the jurisdiction axis in separate columns", () => {
+    const output = formatMarkdown(now);
+
+    expect(output).toContain("| 링크 이슈 | 링크 마지막 | 링크 경과 | 관할 | 관할 이슈 |");
+    expect(output).toContain("**두 축은 다른 것을 센다.**");
+    expect(output).toContain("| Jurisdiction | 이슈 | 마지막 등장 | 경과 |");
+  });
+
   // 이 리포트가 게이트로 오해되면 cadence가 사실상 SLA가 된다. 면책 문구를 계약으로 잠근다.
   it("says out loud that it does not gate", () => {
     const output = formatMarkdown(now);

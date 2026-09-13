@@ -42,6 +42,22 @@ npm run health:report
 - `npm run health:report`: 최근 실행한 루트 lane 상태와 product scorecard 메타데이터를 같은 리포트 포맷으로 출력한다. 이것은 end-to-end verification proof가 아니라 recent lane-state provenance summary다. 기본적으로 저장된 lane 결과를 읽고, 필요하면 `--format json`, `--runtime=pass` 같은 플래그로 덮어쓸 수 있다.
 - `npm run content:prepare`: 7개 가이드의 generated content와 Reports generated content를 재생성한 뒤 `scripts/sync-generated-content.mjs`로 루트 셸 소비 경로를 동기화한다. 현재 루트 기준으로 `LatTm`·`MexTm`·`UsaTm`·`JapTm`·`ChaTm`·`EuTm`·`UKTm` 전부 `build-master -> qa-content -> build-content` 전체 흐름을 타고, Reports는 `Reports/scripts/build-content.ts`를 실행한다.
 
+### e2e 브라우저 (환경별 예외)
+
+`health:runtime`과 `health:release`는 실제 브라우저 스모크를 포함하므로 chromium이 있어야 합니다. 표준
+경로는 `npx playwright install --with-deps chromium`이고 CI(`ci.yml`)가 그렇게 합니다.
+
+이미지가 굽어 나온 뒤 playwright 버전이 올라간 환경(원격 에이전트 컨테이너 등)에서는 설치된 리비전과
+이 저장소가 고정한 버전이 어긋나 e2e가 **코드와 무관한 이유로** 붉어질 수 있습니다. 브라우저를 새로
+내려받을 수 없는 환경이면 이미 있는 실행 파일을 가리킵니다.
+
+```bash
+PLAYWRIGHT_CHROMIUM_EXECUTABLE=/path/to/chrome npm run health:runtime
+```
+
+변수를 두지 않으면 동작은 그대로입니다(playwright 기본 경로). 이건 실패한 검증을 통과시키는 우회로가
+아니라 **브라우저를 어디서 찾을지만** 바꾸는 값이며, 테스트 자체는 동일하게 실행됩니다.
+
 릴리즈 직전 한 번에 돌릴 때는 아래 묶음 명령을 사용합니다.
 
 ```bash

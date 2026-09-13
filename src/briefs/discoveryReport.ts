@@ -15,7 +15,8 @@ import {
   briefCandidates,
   briefSources,
   briefSweepLog,
-  getCanonicalJurisdictions
+  getCanonicalJurisdictions,
+  jurisdictionByProductSlug
 } from "./discovery";
 import type {
   BriefCandidate,
@@ -152,6 +153,15 @@ export type GuideCoverageRow = {
   lastIssueSlug: string | null;
   lastPublishedAt: string | null;
   daysSinceLastIssue: number | null;
+  // 관할 축. 위쪽 값들이 "이 가이드를 **링크한** 이슈"라면, 아래쪽은 "이 가이드의 정규 관할을
+  // **태그한** 이슈"다. 두 축을 한 행에서 갈라 두는 것이 요점이다 — 관할만 다루고 가이드로 링크하지
+  // 않은 이슈는 링크 축에 잡히지 않으므로, 링크 축이 신선해 보여도 관할이 굶어 있을 수 있다
+  // (`docs/briefs-discovery-latency-review.md` D5·P0-2).
+  jurisdiction: string | null;
+  jurisdictionIssueCount: number;
+  lastJurisdictionIssueSlug: string | null;
+  lastJurisdictionPublishedAt: string | null;
+  daysSinceLastJurisdictionIssue: number | null;
   // watching + ready 후보 수. 0이면 이 가이드에 댈 소재가 백로그에 없다는 뜻이다.
   openCandidateCount: number;
 };
@@ -159,6 +169,9 @@ export type GuideCoverageRow = {
 export type JurisdictionCoverageRow = {
   jurisdiction: string;
   issueCount: number;
+  lastIssueSlug: string | null;
+  lastPublishedAt: string | null;
+  daysSinceLastIssue: number | null;
 };
 
 export type CoverageSummary = {
@@ -175,10 +188,29 @@ export function summarizeCoverage(
     (candidate) => candidate.status === "watching" || candidate.status === "ready"
   );
 
+  // issues는 최신순 정렬 계약을 갖는다(archive.test.ts). 그래서 각 버킷의 첫 항목이 가장 최근 등장이고,
+  // guide 축과 jurisdiction 축이 같은 정렬 전제를 공유한다.
+  const issuesByJurisdiction = new Map<string, BriefIssue[]>();
+
+  for (const issue of issues) {
+    for (const jurisdiction of getCanonicalJurisdictions(issue.jurisdictions)) {
+      const bucket = issuesByJurisdiction.get(jurisdiction);
+
+      if (bucket) {
+        bucket.push(issue);
+      } else {
+        issuesByJurisdiction.set(jurisdiction, [issue]);
+      }
+    }
+  }
+
   const guides = liveShellProducts.map((product) => {
     const matched = issues.filter((issue) => getIssueProductSlugs(issue).includes(product.slug));
-    // issues는 최신순 정렬 계약을 갖는다(archive.test.ts). 첫 항목이 가장 최근 등장이다.
     const last = matched[0];
+
+    const jurisdiction = jurisdictionByProductSlug[product.slug] ?? null;
+    const jurisdictionMatched = jurisdiction ? (issuesByJurisdiction.get(jurisdiction) ?? []) : [];
+    const lastJurisdictionIssue = jurisdictionMatched[0];
 
     return {
       slug: product.slug,
@@ -187,22 +219,31 @@ export function summarizeCoverage(
       lastIssueSlug: last?.slug ?? null,
       lastPublishedAt: last?.publishedAt ?? null,
       daysSinceLastIssue: last ? elapsedUtcDays(last.publishedAt, now) : null,
+      jurisdiction,
+      jurisdictionIssueCount: jurisdictionMatched.length,
+      lastJurisdictionIssueSlug: lastJurisdictionIssue?.slug ?? null,
+      lastJurisdictionPublishedAt: lastJurisdictionIssue?.publishedAt ?? null,
+      daysSinceLastJurisdictionIssue: lastJurisdictionIssue
+        ? elapsedUtcDays(lastJurisdictionIssue.publishedAt, now)
+        : null,
       openCandidateCount: openCandidates.filter((candidate) =>
         candidate.relatedProductSlugs.includes(product.slug)
       ).length
     };
   });
 
-  const jurisdictionCounts = new Map<string, number>();
+  const jurisdictions = [...issuesByJurisdiction.entries()]
+    .map(([jurisdiction, matched]) => {
+      const last = matched[0];
 
-  for (const issue of issues) {
-    for (const jurisdiction of getCanonicalJurisdictions(issue.jurisdictions)) {
-      jurisdictionCounts.set(jurisdiction, (jurisdictionCounts.get(jurisdiction) ?? 0) + 1);
-    }
-  }
-
-  const jurisdictions = [...jurisdictionCounts.entries()]
-    .map(([jurisdiction, issueCount]) => ({ jurisdiction, issueCount }))
+      return {
+        jurisdiction,
+        issueCount: matched.length,
+        lastIssueSlug: last?.slug ?? null,
+        lastPublishedAt: last?.publishedAt ?? null,
+        daysSinceLastIssue: last ? elapsedUtcDays(last.publishedAt, now) : null
+      };
+    })
     .sort(
       (left, right) =>
         right.issueCount - left.issueCount || left.jurisdiction.localeCompare(right.jurisdiction)

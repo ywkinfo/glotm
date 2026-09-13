@@ -162,24 +162,36 @@ export function formatMarkdown(now = new Date()) {
   lines.push("");
   lines.push("## Guide Coverage");
   lines.push("");
-  lines.push("| Guide | 브리프 링크 이슈 | 마지막 등장 | 경과 | 열린 후보 |");
-  lines.push("| --- | --- | --- | --- | --- |");
+  lines.push(
+    "| Guide | 링크 이슈 | 링크 마지막 | 링크 경과 | 관할 | 관할 이슈 | 관할 마지막 | 관할 경과 | 열린 후보 |"
+  );
+  lines.push("| --- | --- | --- | --- | --- | --- | --- | --- | --- |");
 
   for (const guide of radar.coverage.guides) {
     lines.push(
-      `| ${guide.shortLabel} (${guide.slug}) | ${guide.issueCount} | ${toDay(guide.lastPublishedAt)} | ${toDays(guide.daysSinceLastIssue)} | ${guide.openCandidateCount} |`
+      `| ${guide.shortLabel} (${guide.slug}) | ${guide.issueCount} | ${toDay(guide.lastPublishedAt)} | ${toDays(guide.daysSinceLastIssue)} | ${guide.jurisdiction ?? "—"} | ${guide.jurisdictionIssueCount} | ${toDay(guide.lastJurisdictionPublishedAt)} | ${toDays(guide.daysSinceLastJurisdictionIssue)} | ${guide.openCandidateCount} |`
     );
   }
 
   lines.push("");
+  lines.push("> **두 축은 다른 것을 센다.** `링크`는 이 가이드로 deep link한 이슈이고, `관할`은 이 가이드의 정규 관할을 태그한 이슈다.");
+  lines.push("> 관할만 다루고 가이드를 링크하지 않은 이슈는 링크 축에 잡히지 않는다 — 그래서 링크 축이 신선해 보여도 관할 축은 굶어 있을 수 있다.");
+  lines.push("> 우선순위는 둘 중 더 오래된 쪽으로 본다.");
+
+  lines.push("");
   lines.push("### Jurisdiction tags (정규화 기준)");
   lines.push("");
-  lines.push("| Jurisdiction | 이슈 |");
-  lines.push("| --- | --- |");
+  lines.push("| Jurisdiction | 이슈 | 마지막 등장 | 경과 |");
+  lines.push("| --- | --- | --- | --- |");
 
   for (const row of radar.coverage.jurisdictions) {
-    lines.push(`| ${row.jurisdiction} | ${row.issueCount} |`);
+    lines.push(
+      `| ${row.jurisdiction} | ${row.issueCount} | ${toDay(row.lastPublishedAt)} | ${toDays(row.daysSinceLastIssue)} |`
+    );
   }
+
+  lines.push("");
+  lines.push("> guide에 매핑되지 않는 축(`Korea`·`Global`)도 여기서만 경과일을 갖는다. 이슈 수가 많다고 최근에 다룬 것은 아니다.");
 
   lines.push("");
   lines.push("## Source Sweep");

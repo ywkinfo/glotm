@@ -527,11 +527,94 @@ describe("brief discovery report", () => {
 
     // `UK`와 `Europe`이 각각 정규 관할로 접힌다.
     expect(summary.jurisdictions).toEqual([
-      { jurisdiction: "Europe", issueCount: 1 },
-      { jurisdiction: "United Kingdom", issueCount: 1 }
+      {
+        jurisdiction: "Europe",
+        issueCount: 1,
+        lastIssueSlug: "recent-europe",
+        lastPublishedAt: "2026-07-20T00:00:00.000Z",
+        daysSinceLastIssue: 14
+      },
+      {
+        jurisdiction: "United Kingdom",
+        issueCount: 1,
+        lastIssueSlug: "recent-europe",
+        lastPublishedAt: "2026-07-20T00:00:00.000Z",
+        daysSinceLastIssue: 14
+      }
     ]);
 
     expect(getIssueProductSlugs(issues[0]!)).toEqual(["europe"]);
+  });
+
+  // 링크 축만 보면 "이 가이드는 최근에 다뤄졌다"가 참인데 관할 축은 굶어 있을 수 있다. 그 갈라짐이
+  // 2026-08-30 회차에서 멕시코를 신선하게 보이게 만든 지점이라 축을 분리해 잠근다
+  // (`docs/briefs-discovery-latency-review.md` D5·P0-2).
+  it("separates the jurisdiction axis from the guide-link axis", () => {
+    const europePath = buildProductPath(
+      liveShellProducts.find((product) => product.slug === "europe")!
+    );
+
+    const issues = [
+      // 최신 이슈는 EuTm을 링크하지만 관할 태그는 `Global`이다 — europe 관할 축을 갱신하지 않는다.
+      buildIssue({
+        slug: "recent-global",
+        publishedAt: "2026-08-01T00:00:00.000Z",
+        jurisdictions: ["Global"],
+        items: [
+          {
+            id: "item",
+            headline: "h",
+            whatChanged: "w",
+            whoShouldCare: "w",
+            whyItMatters: "w",
+            nextAction: "n",
+            relatedGuideLinks: [{ label: "EuTm", href: europePath }]
+          }
+        ]
+      }),
+      // 오래된 이슈만 유럽 관할을 태그했고, 가이드로 링크하지는 않았다.
+      buildIssue({
+        slug: "older-europe-tagged",
+        publishedAt: "2026-06-20T00:00:00.000Z",
+        jurisdictions: ["EU"],
+        items: [
+          {
+            id: "item",
+            headline: "h",
+            whatChanged: "w",
+            whoShouldCare: "w",
+            whyItMatters: "w",
+            nextAction: "n",
+            relatedGuideLinks: []
+          }
+        ]
+      })
+    ];
+
+    const summary = summarizeCoverage(issues, [], now);
+    const europe = summary.guides.find((guide) => guide.slug === "europe");
+
+    // 링크 축: 최신 이슈가 잡혀 2일 전으로 보인다.
+    expect(europe?.issueCount).toBe(1);
+    expect(europe?.lastIssueSlug).toBe("recent-global");
+    expect(europe?.daysSinceLastIssue).toBe(2);
+
+    // 관할 축: 실제로 유럽을 다룬 것은 44일 전이다. 이 갈라짐이 이 행의 존재 이유다.
+    expect(europe?.jurisdiction).toBe("Europe");
+    expect(europe?.jurisdictionIssueCount).toBe(1);
+    expect(europe?.lastJurisdictionIssueSlug).toBe("older-europe-tagged");
+    expect(europe?.daysSinceLastJurisdictionIssue).toBe(44);
+
+    // 관할 태그가 하나도 없는 가이드는 두 축 모두 비어 있다.
+    const japan = summary.guides.find((guide) => guide.slug === "japan");
+    expect(japan?.jurisdiction).toBe("Japan");
+    expect(japan?.jurisdictionIssueCount).toBe(0);
+    expect(japan?.lastJurisdictionPublishedAt).toBeNull();
+    expect(japan?.daysSinceLastJurisdictionIssue).toBeNull();
+
+    // guide에 매핑되지 않는 축도 같은 계산을 갖는다.
+    const global = summary.jurisdictions.find((row) => row.jurisdiction === "Global");
+    expect(global?.daysSinceLastIssue).toBe(2);
   });
 
   it("flags overdue sources and keeps never-verified ones visible at any cadence", () => {
