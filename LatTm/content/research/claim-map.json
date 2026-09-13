@@ -8,56 +8,91 @@
       "id": "LA-MADRID-001",
       "jurisdiction": "LATAM",
       "claim": "이 가이드의 대상 8개국 중 마드리드 시스템을 쓸 수 있는 나라는 브라질, 멕시코, 콜롬비아, 칠레 넷뿐이고 나머지는 직접출원으로만 간다.",
-      "chapterRefs": ["Ch1", "Ch2", "Ch4", "Ch5"],
+      "chapterRefs": [
+        "Ch1",
+        "Ch2",
+        "Ch4",
+        "Ch5"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["wipo-madrid-members"],
-      "lastVerified": "2026-03-27",
+      "sourceIds": [
+        "wipo-madrid-members"
+      ],
+      "lastVerified": "2026-09-12",
       "status": "BODY_READY",
-      "notes": "2026-03-27 검증에서 WIPO 공식 회원국 목록과 대조해 제4장 경로 선택과 관련 체크리스트의 직접출원/마드리드 범위를 교정했다. 회원국 구성은 가입국이 늘면 바뀌는 값이라 재대조 우선순위가 높다."
+      "notes": "2026-03-27 검증에서 WIPO 공식 회원국 목록과 대조해 제4장 경로 선택과 관련 체크리스트의 직접출원/마드리드 범위를 교정했다. 회원국 구성은 가입국이 늘면 바뀌는 값이라 재대조 우선순위가 높다. 2026-09-12 재대조: WIPO Madrid System 회원국 면(117 members / 133 countries, 최신 가입국 사우디아라비아)과 그 면이 쓰는 회원국 데이터를 열어 이 가이드 대상 8개국을 대조했다 — 브라질·멕시코·콜롬비아·칠레만 회원이고 아르헨티나·페루·에콰도르·파나마는 회원이 아니다. 값 변동 없음."
     },
     {
       "id": "LA-ANDEAN-001",
       "jurisdiction": "LATAM",
       "claim": "콜롬비아·페루·에콰도르는 Decision 486이라는 공통 규범을 공유하지만 상표권은 국가별로 개별 확보하며, 출원 1건으로 3국에 동시에 효력이 생기는 공동체 상표는 없다.",
-      "chapterRefs": ["Ch1", "Ch4", "Ch7"],
+      "chapterRefs": [
+        "Ch1",
+        "Ch4",
+        "Ch7"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["sic-colombia-scope"],
-      "lastVerified": "2026-03-27",
+      "sourceIds": [
+        "sic-colombia-scope",
+        "can-decision-486"
+      ],
+      "lastVerified": "2026-09-12",
       "status": "BODY_READY",
-      "notes": "2026-03-27 검증에서 `CAN 공동체 상표`·`CAN 출원 1건으로 3국 동시 효과`·`3국 동시 갱신` 같은 표현을 전부 걷어내고 `공통 규범 + 국가별 직접출원`으로 통일했다. 잘못 쓰면 출원 예산과 기한 관리가 통째로 어긋나는 축이다."
+      "notes": "2026-03-27 검증에서 `CAN 공동체 상표`·`CAN 출원 1건으로 3국 동시 효과`·`3국 동시 갱신` 같은 표현을 전부 걷어내고 `공통 규범 + 국가별 직접출원`으로 통일했다. 잘못 쓰면 출원 예산과 기한 관리가 통째로 어긋나는 축이다. 2026-09-12 재대조: 등록 출처 sic-colombia-scope(https://www.sic.gov.co/node/79)는 이 회차에서 컨테이너·owner 브라우저 양쪽 모두 연결 실패라 열지 못했다. 대신 안데스공동체 사무국의 공식 편찬본(Decisión 486 제154조)을 열어 대조했다: 「El derecho al uso exclusivo de una marca se adquirirá por el registro de la misma ante la respectiva oficina nacional competente」 — 상표 전용권은 '각 국가별 관할 관청'의 등록으로 취득된다. 공동체 단위 단일 등록이 없다는 claim의 핵심이 규범 원문으로 확인된다."
     },
     {
       "id": "LA-MX-USE-001",
       "jurisdiction": "MX",
       "claim": "멕시코는 등록일 3주년이 지난 뒤 3개월 안에 실제·효과적 사용선언을 제출해야 한다.",
-      "chapterRefs": ["Ch1", "Ch7", "Ch8"],
+      "chapterRefs": [
+        "Ch1",
+        "Ch7",
+        "Ch8"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["impi-use-declaration-notice", "impi-maintenance-seminar"],
-      "lastVerified": "2026-03-27",
+      "sourceIds": [
+        "impi-use-declaration-notice",
+        "impi-maintenance-seminar"
+      ],
+      "lastVerified": "2026-09-12",
       "status": "BODY_READY",
-      "notes": "2026-03-27 검증에서 `등록 후 3년 내`로 적혀 있던 표현을 전부 `등록일 3주년 후 3개월`로 교정했다. 기산점이 아니라 창(window)이라는 점이 핵심이고, 본문·표·실패 사례가 같은 문구를 쓴다. 멕시코 축은 MexTm이 별도 claim-map으로 더 깊이 추적한다."
+      "notes": "2026-03-27 검증에서 `등록 후 3년 내`로 적혀 있던 표현을 전부 `등록일 3주년 후 3개월`로 교정했다. 기산점이 아니라 창(window)이라는 점이 핵심이고, 본문·표·실패 사례가 같은 문구를 쓴다. 멕시코 축은 MexTm이 별도 claim-map으로 더 깊이 추적한다. 2026-09-12 재대조: IMPI 공지(gob.mx, 등록 URL 그대로)를 열어 대조했다 — 2018-08-10 이후 부여된 등록은 「a los tres años de su expedición」 시점에 선언 의무가 생기고 「cuentan con tres meses para hacerlo」, 근거는 LFPPI 제233조와 제11 경과규정이다. '3주년 후 3개월 창'이라는 현행 표현이 그대로 유지된다."
     },
     {
       "id": "LA-AR-USE-001",
       "jurisdiction": "AR",
       "claim": "아르헨티나는 등록 후 5~6년차 사이에 중간 사용선언이 필요하고, 갱신 단계에서도 사용 관련 진술이 연동된다.",
-      "chapterRefs": ["Ch1", "Ch7", "Ch8", "Ch16"],
+      "chapterRefs": [
+        "Ch1",
+        "Ch7",
+        "Ch8",
+        "Ch16"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["inpi-argentina-renewals"],
-      "lastVerified": "2026-03-27",
+      "sourceIds": [
+        "inpi-argentina-ddjj-medio-termino"
+      ],
+      "lastVerified": "2026-09-12",
       "status": "BODY_READY",
-      "notes": "2026-03-27 검증에서 `갱신 시 사용 진술만 확인` 수준의 약한 서술을 `5~6년차 중간 사용선언 + 갱신 연동`으로 올렸다. 중간 선언을 별도 기한으로 잡지 않는 것이 실패 사례로 본문에 남아 있다(제18장)."
+      "notes": "2026-03-27 검증에서 `갱신 시 사용 진술만 확인` 수준의 약한 서술을 `5~6년차 중간 사용선언 + 갱신 연동`으로 올렸다. 중간 선언을 별도 기한으로 잡지 않는 것이 실패 사례로 본문에 남아 있다(제18장). 2026-09-12 재대조: 등록 출처 inpi-argentina-renewals(portaltramites.inpi.gob.ar/Marcas/Renovaciones)는 로그인 벽 뒤(「Debe iniciar sesion」)라 claim을 검증할 수 없는 면이었다. INPI의 공개 안내면(argentina.gob.ar)으로 바꿔 대조했다: 중간 사용선언(DJUM)은 「sobre los primeros 5 años de tu registro」이고 「se debe realizar a los primeros cinco (5) años desde la fecha en que la marca fue concedida」, 기한 경과 시 연차별 가산요율이 붙고 그 제출이 갱신 처리의 요건이다. 갱신 쪽은 10년 존속·만료 6개월 전부터 신청·만료 후 6개월 유예이며 갱신신청서 안에서 직전 5년 사용 진술을 함께 한다. claim의 두 축(중간 선언 존재·갱신 연동)은 확인됐고, '6년차'라는 바깥 경계만 이 면이 말하지 않는다 — LA-OQ-002로 남긴다."
     },
     {
       "id": "LA-CL-NONUSE-001",
       "jurisdiction": "CL",
       "claim": "칠레는 2022년 시행된 법률 제21.355호 개정 이후 불사용 취소 제도를 운영한다.",
-      "chapterRefs": ["Ch1", "Ch7", "Ch8", "Ch16"],
+      "chapterRefs": [
+        "Ch1",
+        "Ch7",
+        "Ch8",
+        "Ch16"
+      ],
       "riskLevel": "HIGH",
-      "sourceIds": ["inapi-chile-ley-21355"],
-      "lastVerified": "2026-03-27",
+      "sourceIds": [
+        "inapi-chile-ley-21355"
+      ],
+      "lastVerified": "2026-09-12",
       "status": "BODY_READY",
-      "notes": "2026-03-27 검증에서 `기준 기간 확인 필요`·`정기적으로 다시 확인` 같은 보류 표현을 걷어내고 실제 운영 리스크 수준으로 단정했다. 취소 청구 요건의 세부(기산·증거 기준)는 본문이 단정하지 않고 현지 확인을 전제로 둔다."
+      "notes": "2026-03-27 검증에서 `기준 기간 확인 필요`·`정기적으로 다시 확인` 같은 보류 표현을 걷어내고 실제 운영 리스크 수준으로 단정했다. 취소 청구 요건의 세부(기산·증거 기준)는 본문이 단정하지 않고 현지 확인을 전제로 둔다. 2026-09-12 재대조: 등록 URL(inapi.cl/noticias/ley-21355-...)은 사이트 개편으로 404였다. 살아 있는 같은 기사(sala-de-prensa/detalle-noticia/entra-en-vigor-ley-que-moderniza-...)를 열어 대조했다 — 법률 제21.355호는 2022년 5월 9일 시행됐고 「la reforma contempla el concepto de caducidad por falta de uso」로 불사용 취소 개념이 도입됐다고 INAPI가 직접 적고 있다. 시행일(2022-05-09)이 이번에 원문으로 확정됐다."
     }
   ],
   "openQuestions": [
@@ -71,6 +106,16 @@
         "LA-MX-USE-001",
         "LA-AR-USE-001",
         "LA-CL-NONUSE-001"
+      ],
+      "resolvedOn": "2026-09-12",
+      "resolution": "2026-09-12 재대조 회차로 닫는다. HIGH claim 5건을 전부 1차 출처로 대조했다 — WIPO 회원국 면(마드리드 4개국 구성 변동 없음), 안데스공동체 Decisión 486 제154조(국가별 등록으로 취득), IMPI 공지(3주년 후 3개월 창), INPI 아르헨티나 공개 안내면(중간 선언 5년차·갱신 연동), INAPI 기사(법 제21.355호 2022-05-09 시행·불사용취소 도입). 다만 세 출처는 등록된 URL로 열리지 않아 출처 등록부를 함께 고쳤다: INAPI는 404(사이트 개편), INPI 아르헨티나는 로그인 벽, SIC 콜롬비아는 연결 실패로 대체 1차 출처를 썼다. 남은 정밀도 항목은 LA-OQ-002로 분리했다."
+    },
+    {
+      "id": "LA-OQ-002",
+      "question": "아르헨티나 중간 사용선언의 바깥 경계를 확인해야 한다. 본문은 '5~6년차 사이'로 쓰는데 INPI 공개 안내면은 '등록(허여) 후 5년차에 한다'와 '늦으면 연차별 가산요율 + 갱신 처리 요건'까지만 말하고 6년차 마감을 명시하지 않는다. INPI 결의(P-183/2018 계열) 또는 법 제22.362호 개정 조문으로 마감 구조가 '창'인지 '기산점 + 지연 가산'인지 확정해야 닫힌다.",
+      "raisedOn": "2026-09-12",
+      "claimIds": [
+        "LA-AR-USE-001"
       ]
     }
   ]

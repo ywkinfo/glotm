@@ -15,7 +15,14 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-09-mexico-lfppi-transitional-scope-correction");
+    expect(getLatestBriefIssue()?.slug).toBe(
+      "2026-09-mexico-lfppi-gazette-transitional-confirmation"
+    );
+    expect(
+      getBriefIssueBySlug("2026-09-mexico-lfppi-gazette-transitional-confirmation")?.title
+    ).toBe(
+      "2026년 9월 Hot Global TM Brief | 관보 부칙을 확인했습니다 — 멕시코에서 진행 중인 건은 접수 당시 규칙으로 끝나고, 온라인 침해 절차는 아직 시작되지 않았습니다"
+    );
     expect(
       getBriefIssueBySlug("2026-09-mexico-lfppi-transitional-scope-correction")?.title
     ).toBe(
@@ -217,6 +224,20 @@ describe("brief lane contract", () => {
   // 20호는 "관보를 대조하지 않았다"는 유보를 본문에 적어 두고도 요약·헤드라인에서는 그 명제를
   // 단정했다. 정정호가 철회한 것이 **그 단정**이라는 사실이 문구에서 사라지면 정정이 무의미해지므로,
   // 무엇을 철회했는지(진행 중인 건)와 무엇이 적용범위를 정하는지(부칙)를 여기서 잠근다.
+  // 정정의 정정이다. 22호는 1차 출처를 열지 못해 20호의 단정을 철회하기만 했고, 그러면서 20호의
+  // 나머지 네 축을 "유효"로 재확인했다. 그 축 하나(제7장 온라인 침해 절차)가 관보 부칙 PRIMERO에서
+  // 무너졌으므로 22호도 앞을 가리켜야 한다. 체인(20호 → 22호 → 23호)이 끊기면 검색으로 22호에
+  // 도착한 독자가 그 재확인을 그대로 읽는다.
+  it("keeps the transitional-scope correction pointing at the gazette-confirmed follow-up", () => {
+    const correction = getBriefIssueBySlug("2026-09-mexico-lfppi-transitional-scope-correction");
+
+    expect(correction?.supersededBy?.slug).toBe(
+      "2026-09-mexico-lfppi-gazette-transitional-confirmation"
+    );
+    expect(correction?.supersededBy?.note).toContain("TERCERO");
+    expect(correction?.supersededBy?.note).toContain("18개월");
+  });
+
   it("keeps the 2026-09 Mexico regulations issue pointing at its transitional-scope correction", () => {
     const supersededIssue = getBriefIssueBySlug("2026-09-mexico-lfppi-regulations-in-force");
 
