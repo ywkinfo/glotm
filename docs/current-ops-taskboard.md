@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-13 10라운드 (서비스 검토 + 관할 축 freshness 반영 · e2e 브라우저 경로 탈출구)
+- Last updated: 2026-09-13 11라운드 (브리프 24호 후보 triage — JPO 후보 권고 · sweep 전 소스 egress 차단으로 ready 승격 불가)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -291,6 +291,16 @@
   - **환경 제약 재확인**: `jpo.go.jp`·`euipo.europa.eu`·`gov.uk`·`impi.gob.mx`·`uspto.gov`가 curl과 WebFetch 양쪽 다 egress 차단이다(WebSearch 제목·요약만 통과). 8/31 라운드가 기록한 `primary-page-read 0건` 제약이 그대로다 — **현재 phase의 실질 작업 대부분이 1차 출처 열람이라 이게 병목**이고, 허용목록을 열지 아니면 "1차 대조는 owner 전용"을 런북 경계로 못 박을지가 owner 결정으로 남는다.
   - **성능 실측(참고, 조치 없음)**: 로컬 Pages 빌드 기준 Gateway 623 KB · LatTm 홈 1,401 KB · LatTm 한 장 1,422 KB(비압축). JS 단일 청크 583 KB(gz 175 KB)이고 `document-data.json`(LatTm 797 KB)을 한 장 읽는 데 전량 받는다. FCP는 prerender 덕에 96~160 ms로 문제없고 search-index는 검색 포커스 시 지연 로드다. 장 단위 분할은 생성 산출물 형태를 바꾸는 일이라 `새 파이프라인 도입` 가드레일에 붙어 **Phase 3 판단 때 올릴 카드로만 기록**한다.
   - **남는 것**: 브리프 24호 후보 확정(`ready` **0** · watching 5 중 9/12 발굴 3건이 "발행 전에 확인할 것"을 달고 대기), EuTm fact-review(2026-08-02 · 42d · 60일 창에서 **18일 남음**, 7개 중 유일하게 여유 30일 미만), 미실사 소스 4건(`samr`·`cbp-ipr`·`sic-colombia`·`diario-oficial-chile`)과 `cnipa-trademark-office` 주기 초과(14d), 정체 후보 2건(41d) 살릴지 버릴지, staleness 하드 게이트 결정, `P1-1`·`P1-3`·`P1-4` 채택 범위.
+
+- 2026-09-13 11라운드: **브리프 24호 후보 triage — 권고는 `2026-09-jpo-disaster-deadline-relief`, 다만 `ready` 승격은 이 세션에서 불가능하다.**
+  - **먼저 막힌 것부터.** 등록 소스 **17개 전부** 이 세션에서 열리지 않는다(`curl` 전건 `connect_rejected` — 게이트웨이가 CONNECT에 403, `selective: false`). WebFetch도 같은 정책에 걸린다. **이것이 9/12 회차 기록과 어긋난다** — 그 회차는 "17개 중 10개가 컨테이너에서 다시 열렸다"고 적었다. 즉 sweep 가능 여부가 세션마다 다르고, 런북 §5의 "checkout agent도 수행할 수 있다"는 전제는 환경 의존이다. 발굴 계약이 `watching → ready`에 요구하는 것이 **`1차 출처 확인 가능`**이므로, 1차 출처를 하나도 못 여는 세션은 정의상 승격 주체가 될 수 없다. 그래서 이번 라운드는 승격이 아니라 **판단 재료를 좁히는 데까지**만 갔다.
+  - **WebSearch triage는 계약상 sweep이 아니다.** 소스를 연 적이 없으므로 `briefSweepLog`에 회차를 append하지 않았고 `lastVerified`도 건드리지 않았다. 기록할 자리가 없다는 것 자체가 `briefs-discovery-latency-review.md` **P1-1**(`mediated` kind)이 겨눈 구멍이고, 이번이 그 구멍에 연속으로 걸린 두 번째 라운드다. 관측은 각 후보 `notes`에 `2026-09-13 WebSearch triage(1차 출처 미열람)`으로 라벨해 남겼다.
+  - **① `2026-09-jpo-disaster-deadline-relief` — 24호 권고.** ⓐ("이번 지진 한정인가, 상설 틀의 발동인가")에 대해 「正当な理由」·「故意によるものでないこと」 두 트랙과 四法共通 가이드라인이 **상설로 존재**하고 `責めに帰することができない理由`의 14일(在外者 2개월)도 그 안에 있다는 검색 결과가 나왔다 — 상설 틀 쪽을 지지하며, 그 읽기라면 본문 가치가 이번 지진을 넘어선다. 커버리지로도 가장 급하다(`JapTm` 링크 96d · **관할 0건**, 10라운드가 새로 드러낸 최악 지점). 확인할 것이 둘 늘었다: ⓓ 검색이 돌려준 `kumamotojishin2026_sochi`는 제목상 **각국·지역 지재청의** 구제조치(일본 출원인의 해외 방향)라 이 후보가 근거로 삼는 국내 고지와 **다른 문서**다 — 최소 세 건이 병존하니 본문에서 섞지 않는다, ⓔ `saigai-encho-20260807.html`이 ⓒ의 特措法 고지 자체라 trigger의 `2026-08-07 갱신`이 국내 고지의 갱신일이 아니라 이 별도 고지의 게시일일 수 있다.
+  - **② `2026-09-euipo-time-limit-practice-alignment` — 2순위.** 심판부 쪽은 Rules of Procedure 개정으로 기간 산정·연장(제3조)과 중지(제44조)가 **2024-03-01 시행**됐고 이후 연 1회 개정 사이클이 도는 것으로 검색됐다. 2026-07-17 고지의 `1심과 2심 정렬`은 그 기준선에 1심을 맞춘 것이라는 읽기와 정합한다 — 다만 무엇이 어떻게 바뀌었는지는 여전히 고지 본문에서만 확인된다. 세 후보 중 trigger가 가장 오래됐고(2026-07-17), `EuTm` 관할은 20d로 셋 중 가장 신선하다.
+  - **③ `2026-09-kbrand-online-infringement-hotline` — 트리거 미도달, watching 유지.** 2026-09-09 개통은 복수 매체가 함께 보도해 확인되나, 이 후보가 발행 트리거로 잡아 둔 **신청 경로·자격은 어느 보도에도 없다.** 후보 판단이 옳았다는 확인이지 진전이 아니다.
+  - **`LatTm` 리드 하나(후보 아님).** 관할 177d에 열린 후보 0건인데, 검색 수준에서 아르헨티나 INPI **Resolución 75/2026**(2026-04-01 시행 · 전 산업재산 수수료를 CPI 연동 단위 `UMAPI`로 전환 → 인용한 수수료가 설계상 매달 낡는다)과 **297/2026**(이의절차 현대화), 칠레 INAPI 니스 13판 의무화(2026-01-01) 신호가 잡혔다. 그런데 `inpi-argentina`의 `sweepTarget`은 portaltramites의 **절차·수수료 안내 페이지 변경 감지**라 resolución 고지면은 그 밖일 수 있다 — JPO 후보 notes가 짚은 *"sweepTarget이 목록 하나를 가리키면 그 목록 밖은 정의상 안 보인다"*와 같은 형태다. 다음 sweep에서 sweepTarget 범위부터 확인한다.
+  - **owner가 열면 닫히는 것**: JPO 국내 고지 본문(ⓐ·ⓑ), 特措法 3조3항 고지(ⓒ·ⓔ), `kumamotojishin2026_sochi`(ⓓ), EUIPO 2026-07-17 고지 본문. 넷 다 이 세션에서는 403이다.
+  - 게이트: `npm test` **429/429**, `check:consistency` 0 hard / 0 advisory. 데이터 변경은 후보 `notes` 3건뿐이고 상태 전이·sweep 기록·`lastVerified` 변경은 없다.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
