@@ -9,6 +9,82 @@
 현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
+## 2026-09-13 변경신호 triage (재대조 아님)
+
+`lastVerified`도 `factsReviewedOn`도 움직이지 않았다. **이 회차는 1차 출처를 하나도 열지 못했다** — 재대조가
+아니라, 60일 창이 닫히기 전에 "무엇부터 열어야 하는가"를 좁힌 회차다.
+
+### 왜 재대조를 못 했는가
+
+이 세션에서 register의 `Primary Source Index`와 `2026-08-02 대조 출처` URL을 전부 실측했고 **7개 전건이
+차단**이다(게이트웨이가 CONNECT에 403 응답 — `connect_rejected`, `selective: false`). WebFetch도 같은 정책에
+걸린다. 위 `2026-08-30` 절이 "이 경로만으로 수수료·기한 claim이 모두 결론난다"고 적어 둔
+`publications.europa.eu` CELEX 경로도 포함이다.
+
+| URL | 결과 |
+|---|---|
+| `publications.europa.eu/resource/celex/02017R1001-20251201` | 차단 |
+| `publications.europa.eu/resource/celex/32017R1001` | 차단 |
+| `eur-lex.europa.eu` | 차단 |
+| `www.gov.uk/guidance/eu-trade-mark-protection-and-comparable-uk-trade-marks` | 차단 |
+| `taxation-customs.ec.europa.eu/.../defend-your-rights_en` | 차단 |
+| `guidelines.euipo.europa.eu` | 차단 |
+| `www.euipo.europa.eu/en/trade-marks/apply-now/fees` | 차단 |
+
+**이 차단은 2026-08-30 메모가 기록한 실패와 종류가 다르다.** 그때는 페이지가 열리되 본문이 비었거나(EUIPO
+하이드레이트 실패) 헤더가 모자라 400이 났고, 헤더를 고치자 731KB가 나왔다. 이번에는 연결 자체가 서지 않는다.
+
+### 창이 닫히는 시점
+
+`mature` lifecycle의 claim staleness 임계는 **60일**이다(`scripts/research-audit/shared.ts`
+`claimStalenessDaysByLifecycle`). claim 11건 전부 `lastVerified: 2026-08-02`이므로 **2026-10-01이 마지막
+날**이고, **2026-10-02부터** HIGH claim 9건에 staleness warning이 붙어 `audit:facts`의 EuTm 행이
+`gate=pass → warn`으로 바뀐다. warning 레벨이라 종료 코드는 계속 0이다(advisory·non-gating 계약).
+
+### triage 결과 — 11건 중 10건 무신호, 1건 살아 있는 신호
+
+**아래는 전부 WebSearch 수준이다.** 1차 출처 축자 대조가 아니므로 어떤 claim도 이 표로 닫히지 않는다.
+
+| 대상 | 신호 | 판단 |
+|---|---|---|
+| EUTMR 통합본 버전 | 현행 통합본이 여전히 **2025-12-01**자이고 개정법은 Reg (EU) 2023/2411 하나로 검색된다 | 2026-08-02 라운드가 대조한 판본과 같다 — `EU-SEL/DL/EVD/RNW/PRIO/AG` 6건에 새 신호 없음 |
+| EUTM 수수료 | 전자출원·갱신 각 EUR 850, 2류 EUR 50, 3류 이상 각 EUR 150 | Annex I item 2·12 기준값과 일치, 2026 개정 신호 없음 |
+| comparable UK mark 사용 산입 | GOV.UK 안내 문언이 `EU-UKUSE-001`·`EU-UKCOMP-001`이 인용한 것과 실질 동일 | 새 신호 없음 |
+| **EU Customs Reform** | **신품 Union Customs Code가 관보 게재 20일 후 발효 예정이고 목표가 "2026년 9월 말"이라는 신호.** EU Customs Authority는 2026년 중 릴 설치·2028-01 본격 가동, Data Hub는 2028년 단계 개시(전자상거래 2028-07)·2034-03 전면 | **`EU-ENF-001`의 계획과 어긋난다** — 그 notes는 "미발효"를 전제로 재확인을 **2028년경**으로 미뤄 뒀다. 아래 `EU-OQ-001` |
+
+### 살아 있는 신호 하나 — `EU-ENF-001`
+
+`EU-ENF-001` notes는 2026-08-02 기준으로 "EU Customs Reform이 2026-03-26 정치적 합의 단계이며(미발효) …
+COPIS 계층의 장기 승계 리스크로 **2028년경 재확인**"이라고 적어 뒀다. 이번 triage 신호가 맞다면 발효는
+2028년이 아니라 **몇 주 안**이고, 그 경우 재확인 시점 설정이 두 해 어긋난다.
+
+본문 정정 대상이 아니라는 점은 분명히 해 둔다 — Regulation (EU) No 608/2013 기반 AFA/IPEP/COPIS 서술 자체는
+신호와 충돌하지 않는다(운영 대체는 여전히 2028~2034 구간이다). 어긋난 것은 **claim의 사실이 아니라 그 claim이
+스스로 정한 재확인 일정**이다. 그래서 본문도 `lastVerified`도 건드리지 않고 `openQuestions`에
+**`EU-OQ-001`**로 올렸다. 이 워크스페이스의 첫 `openQuestions` 항목이며, 발굴 백로그의
+`2026-08-eu-customs-reform-watch`(41일째 `watching`)를 `candidateId`로 연결해 두 표면이 같은 것을 가리키게 했다.
+
+### 저장소 안에서 이미 확인된 것 하나 — `EU-FEE-001`의 UK 절반
+
+`EU-FEE-001`은 UK(£205/£245)와 EUTM(EUR 850) 두 축을 함께 담는다. 그중 **UK 축은 `UKTm`이 더 최근에 열었다** —
+`UK-FEE-001`의 `lastVerified`가 **2026-08-30**이고, `uk_tm_fact_verification_log.md`는 출원 £205·갱신 £245·
+추가 클래스 £60을 **2026-07-22 GOV.UK 공식 안내로 재확인**했다고 적는다. 값은 두 워크스페이스가 일치한다
+(2026-07-07 owner 결정으로 단일 정본).
+
+이것으로 `EU-FEE-001`을 닫지는 않는다 — claim-map은 워크스페이스별이고, 다른 워크스페이스의 회차가
+이 claim의 `lastVerified`를 옮기지 않는다. 다만 **재대조 순서를 정할 때 UK 축의 실효 staleness는 42일이 아니라
+14일**이라는 뜻이므로, 남은 시간이 짧으면 이 claim은 뒤로 미룬다.
+
+### owner가 열면 닫히는 순서
+
+1. **`taxation-customs.ec.europa.eu` + 관보** — `EU-ENF-001` / `EU-OQ-001`. 유일하게 신호가 살아 있고 시한이 가장 짧다.
+2. **`publications.europa.eu/resource/celex/02017R1001-20251201`** — 한 번 열면 `EU-SEL/DL/EVD/RNW/PRIO/AG` 6건이
+   같이 닫힌다(각 claim notes에 조문 번호와 축자 인용이 이미 박혀 있어 문언 일치만 보면 된다). 위 `2026-08-30`
+   절의 헤더 두 개(`Accept: application/xhtml+xml`, `Accept-Language: eng`)를 함께 보낸다.
+3. **`gov.uk/guidance/eu-trade-mark-protection-and-comparable-uk-trade-marks`** — `EU-UK-001`·`EU-UKCOMP-001`·
+   `EU-UKUSE-001` 3건.
+4. **`EU-FEE-001`** — UK 축은 위 UKTm 회차로 보강돼 있으므로 EUTM Annex I 쪽만 남는다(2번에서 함께 처리 가능).
+
 ## 2026-08-30 sourceId 정합 (재대조 아님)
 
 `lastVerified`는 움직이지 않았다 — 사실 재대조 회차가 아니라 **출처 추적 체인을 고친 회차**다.

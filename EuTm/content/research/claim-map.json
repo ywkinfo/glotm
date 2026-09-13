@@ -215,5 +215,16 @@
       },
       "notes": "GOV.UK EU trade mark protection and comparable UK trade marks: \"any use of the mark in the EU made before 1 January 2021, whether inside or outside the UK, counts as use of the comparable UK right. Where the 5-year period includes time before 1 January 2021, use in the EU will be considered. Where the period includes any time after 1 January 2021, use of the comparable trade mark in the EU (and outside of the UK) within that period will not be taken into account.\" 5년 구간이 2026-01-01부터 전부 2021-01-01 이후가 되므로 경과 규정의 보호가 소멸한다. UKTm 제8장이 2026-07-21 라운드에서 같은 사실을 이미 반영했으나 EU+UK scope를 운영하는 EuTm에는 누락돼 있어 2026-08-02 재검증 라운드에서 보강했다(교차 가이드 정합)."
     }
+  ],
+  "openQuestions": [
+    {
+      "id": "EU-OQ-001",
+      "question": "EU Customs Reform(신 Union Customs Code)의 발효일과, 그것이 Regulation (EU) No 608/2013 기반 AFA·IPEP·COPIS 계층을 언제부터 대체하는가. EU-ENF-001 notes는 2026-08-02 기준 '미발효'를 전제로 재확인을 2028년경으로 미뤄 뒀는데, 2026-09-13 변경신호 triage에서 '관보 게재 20일 후 발효, 목표 2026년 9월 말'이라는 WebSearch 수준 신호가 잡혔다. 확인 대상은 셋이다 — ⓐ 관보 게재 여부와 발효일, ⓑ 그 규정이 608/2013의 AFA 조항을 개정·대체하는지 아니면 병존하는지, ⓒ IPEP·COPIS의 승계 시점(현재 본문은 Data Hub 단계 개시를 2028년으로 적는다).",
+      "raisedOn": "2026-09-13",
+      "claimIds": [
+        "EU-ENF-001"
+      ],
+      "candidateId": "2026-08-eu-customs-reform-watch"
+    }
   ]
 }
