@@ -12,6 +12,12 @@ const rootPreviewCommand =
 const pagesSubpathPreviewCommand =
   "env -u NO_COLOR PAGES_BASE_PATH=/glotm/ npm run preview -- --host 127.0.0.1 --port 4274 --strictPort";
 
+// 실행 환경에 이미 있는 chromium을 가리키기 위한 opt-in 탈출구다. 원격 에이전트 컨테이너처럼 이미지가
+// 굽어 나온 뒤 playwright 버전이 올라간 환경에서는 설치된 리비전과 이 저장소가 고정한 버전이 어긋나
+// e2e 스텝이 **코드와 무관한 이유로** 붉어진다(브라우저를 새로 내려받을 수 없는 환경이 많다).
+// 변수를 두지 않으면 아무것도 바뀌지 않는다 — CI는 `playwright install`이 놓은 기본 경로를 그대로 쓴다.
+const chromiumExecutablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
+
 export default defineConfig({
   testDir: "./e2e",
   testIgnore: isPagesSubpathRun ? undefined : "subpath/**",
@@ -30,7 +36,10 @@ export default defineConfig({
     },
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
-    video: "retain-on-failure"
+    video: "retain-on-failure",
+    ...(chromiumExecutablePath
+      ? { launchOptions: { executablePath: chromiumExecutablePath } }
+      : {})
   },
   webServer: {
     command: isPagesSubpathRun ? pagesSubpathPreviewCommand : rootPreviewCommand,
