@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-13 8라운드 (23호 발행·머지·배포 완료 · 라이브 실측 sitemap 153 · LatTm gate warn→pass)
+- Last updated: 2026-09-13 9라운드 (MX-OQ-002 종결 — 165일 최장 미결 · 제6장 유보 해제 · MX-DL-002 신설)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -273,6 +273,16 @@
   - **머지된 main에서 게이트 재현**: `audit:facts` **7/7 pass**(`LatTm` warn→pass — 병합한 LA-OQ-001 재대조 반영), `check:consistency` 0 hard / 0 advisory, `briefs:radar` 발행 **23호** · 최신 2026-09-13 · 0d · 미결 열림 6 · 닫힘 2.
   - **드리프트 점검에서 고치지 않기로 한 것 셋**(스냅샷·기록이지 드리프트가 아니다): `content-gap-review.md`의 LatTm `미기록 / 2026-03-27` 행(문서 머리글이 `As of 2026-06-08 · dated snapshot`이고 정본을 `registry.ts`로 명시한다), `factual-qa-rollout.md` PR 6 완료 기록의 `출처 6건`(7번째 `can-decision-486`은 그 뒤 라운드 추가분이라 모순이 아니다), 9/12 3라운드의 `LatTm gate=warn` 기록(그 라운드가 만든 측정이 이번에 해소된 것이므로 기록은 남긴다).
   - **남는 것**: 시행규칙 **본문 조문** 대조(`MX-OQ-002` 답변기한·연장 기산 — 부칙이 아니라 본문에 있고 7라운드가 열지 않았다), 이행 Acuerdo와 10월 하순 제131조 목록 관보 감시.
+
+- 2026-09-13 9라운드: **`MX-OQ-002` 종결 — 저장소 최장 미결(165일)을 닫았다.** 8라운드가 남긴 "시행규칙 본문 조문 대조"를 실행했다. 이 미결은 2026-04-01에 제기돼 `MX-DL-001` notes에 "별도 보류"로만 있었고, 제6장은 그 때문에 숫자를 적지 않고 "공식 통지서에 적힌 답변기한"으로 유보해 왔다.
+  - **조문 넷이 맞물려 답이 된다.** ⓐ **법 제225조** — 제221조 1개월 공고가 끝나면 심사하고, 요건 미충족·등록 장애·이의가 있으면 서면 통지하며 `El Instituto otorgará un plazo de dos meses`, 무응답이면 `se considerará abandonada su solicitud`. ⓑ **법 제226조** — `plazo adicional de dos meses ... sin que medie solicitud y comprobando el pago de la tarifa que corresponda al mes en que se dé cumplimiento`, 기산은 초기 2개월 만료 다음 영업일, 그리고 초기·추가 어느 쪽도 이행하지 않거나 `no presenta el comprobante de pago` 면 포기 간주. ⓒ **시행규칙 제8조**(2026-04-28 게재·07-22 시행) — 그 추가기간의 기산을 다시 명시하고 `serán improrrogables`를 못 박는다. ⓓ **시행규칙 제116조** — 실체심사에서 등록 불가·장애·이의 시 서면 통지하는 근거면.
+  - **유보를 풀 수 있게 만든 것은 통념이 틀렸다는 발견이다.** 추가 2개월은 **신청해서 받는 연장이 아니다**(`sin que medie solicitud`). 대신 **이행하는 달의 수수료 납부 증빙**이 조건이고, 그 위에 다시 연장은 없다. 그래서 실무 위험은 "연장 신청을 놓친다"가 아니라 **"답변서는 제때 냈는데 납부 증빙이 빠져 포기 간주로 끝난다"**이고, 그 경로가 조문상 열려 있다. 제6장 6절을 그 구조로 다시 썼다 — 캘린더에 마감일 하나가 아니라 셋(초기 만료·추가 만료·수수료 납부와 증빙)을 잡으라고 적었다.
+  - **함께 잡은 함정 하나: 법 제227조.** 대응 과정에서 표장을 고치거나 지정상품을 늘리거나 다른 것으로 바꾸면 **새 출원으로 다시 시작하고 출원일도 그날로 새로 잡힌다.** 조문이 열거하는 셋에 **범위 축소는 없다**. 제6장 시나리오 1이 이미 "범위축소안"을 권하고 있었으므로 그 자리에 경계를 붙였다 — 살리려다 품목을 갈아 끼우면 선출원 지위를 잃는다.
+  - **claim은 나눠 담았다.** 신설 `MX-DL-002`(HIGH, `lastVerified` 2026-09-13, sourceIds `wipolex-lfppi-2020`·신규 `dof-reglamento-lfppi-2026`)에 답변기한 축을 담고, `MX-DL-001`은 공개본 핵심 기한 3개만 유지하며 `lastVerified`를 **움직이지 않았다** — 이번에 연 것은 제225·226조이지 제221·233·178조가 아니다(blind re-stamp 금지, 2026-08-15 JapTm 부분 라운드와 같은 처리).
+  - **이번에는 시행규칙을 source register에 등록했다.** 7라운드에서 등록하지 않은 이유가 "아직 이 문서를 sourceId로 인용하는 claim이 없다"였는데, `MX-DL-002`가 인용하면서 그 조건이 사라졌다. 등록부 주의사항도 둘 추가했다: 이 관보 게재분은 전 조문이 같은 날 시행된 것이 아니라는 것(제7장 별도 Acuerdo)과, `wipolex-lfppi-2020`이 2020년 원문이라 2026-04-03 개정 반영본이 아니라는 것.
+  - **남긴 범위 주의 둘.** 시행규칙 근거 부분은 부칙 TERCERO에 따라 2026-07-22 이후 접수분 적용이고(`MX-OQ-004`), 법 조문 출처가 2020년 원문이라 개정이 제225·226조 문언에 닿았는지는 `MX-OQ-001`에 남는다. 다만 2026-04-28 시행규칙이 제226조를 **조문 번호로 참조하며 초기 2개월을 전제**하므로 구조 자체는 개정 이후 문서로 교차 확인된다 — 본문에도 그 범위를 적었다.
+  - 게이트: `npm test` **427/427**, `audit:facts` **7/7 pass**(MexTm `gate=pass` 유지 — openQuestions는 `validateClaimMap` 계약 밖이라 수치에 영향이 없다), `check:consistency` 0 hard / 0 advisory, `content:mexico` QA 0 error / 0 warning · 15장 · 385 엔트리(registry 정본과 일치, 변동 없음), `briefs:radar` 미결 **열림 6→5 · 닫힘 2→3**.
+  - **남는 것**: `MX-OQ-001`(2026-04-03 개정이 집행 조항에 닿았는지 — diputados TEXTO VIGENTE가 이 환경에서 열리지 않는다), `MX-OQ-003`(gob.mx ficha), 그리고 이행 Acuerdo·10월 하순 제131조 목록 관보 감시.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 

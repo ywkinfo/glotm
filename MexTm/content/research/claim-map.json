@@ -24,7 +24,7 @@
       "sourceIds": ["wipolex-lfppi-2020", "impi-opposition-triptico", "impi-pase-faq-2026", "wipo-madrid-2024-32"],
       "lastVerified": "2026-08-30",
       "status": "BODY_READY",
-      "notes": "office action 답변기한·연장 규칙은 별도 보류, 공개본 핵심 기한만 잠금. 2026-07-21 재대조: 변경 없음(LFPPI 2020 제221조 공고 후 1개월 opposition, 제233조 grant 3주년 후 3개월 실사용 선언(2018-08-10 이후 등록), 제178조 존속 10년). 존속 10년은 부여(grant)일 기산(제178조)이며 2026-04-03 LFPPI 개정도 이 3개 기한은 미변경. 2026-08-30 재대조: 변경 없음. WIPO Lex LFPPI 원문에서 제221조('plazo improrrogable de un mes' — 공고 효력일부터 유예 불가 1개월 oposición), 제233조(허여 3주년 후 3개월 실사용 선언, 2018-08-10 이후 등록분), 제178조(허여일 기산 10년 존속)를 축자 확인했고, IMPI oposición 리플릿 도해(1 mes)와 WIPO Information Notice 32/2024도 일치한다. 다만 등록 소스 중 gob.mx IMPI3170 ficha는 링크가 소멸했다(MX-FEE-001과 동일 사유). 이번 회차에 sourceIds도 정리했다: 기한을 실제로 규율하는 `wipolex-lfppi-2020`(제221조·제233조·제178조)을 추가하고, 포털 개편으로 죽은 `gobmx-impi3170` ficha를 뺐다. 2026-09-12 적용범위 확정(MX-OQ-004 종결): 2026-04-28 DOF 게재 신 시행규칙의 TRANSITORIOS TERCERO를 관보 게재분에서 직접 대조했다 — 시행(2026-07-22) 시점에 계속 중이던 사건은 **접수 당시 시행 중이던 규정**으로 종결까지 처리되고, 예외는 MASC 접근 하나다. 이 claim이 잠근 세 기한은 LFPPI 조문(제221·233·178조) 근거라 시행규칙 교체로 값이 움직이지 않지만, **어느 사건에 신 규칙이 닿는지**는 이제 정해졌다. MX-OQ-002(office action 답변기한·연장)는 여전히 열려 있다 — TERCERO가 답하는 것은 적용범위이지 기한값이 아니고, 기한값은 시행규칙 본문 조문에 있는데 이 회차는 본문 조문을 대조하지 않았다(공개본도 아직 시행규칙을 인용하지 않는다). 함께 확인된 CUARTO: IMPI는 제131조 목록을 시행 후 3개월 내 공표해야 한다(≈2026-10 하순)."
+      "notes": "office action 답변기한·연장 규칙은 **2026-09-13에 신설 `MX-DL-002`로 분리해 잠갔다**(종전에는 여기 '별도 보류'로 남아 있던 축이다 — MX-OQ-002 종결). 이 claim은 계속 공개본 핵심 기한 3개만 담는다. 2026-07-21 재대조: 변경 없음(LFPPI 2020 제221조 공고 후 1개월 opposition, 제233조 grant 3주년 후 3개월 실사용 선언(2018-08-10 이후 등록), 제178조 존속 10년). 존속 10년은 부여(grant)일 기산(제178조)이며 2026-04-03 LFPPI 개정도 이 3개 기한은 미변경. 2026-08-30 재대조: 변경 없음. WIPO Lex LFPPI 원문에서 제221조('plazo improrrogable de un mes' — 공고 효력일부터 유예 불가 1개월 oposición), 제233조(허여 3주년 후 3개월 실사용 선언, 2018-08-10 이후 등록분), 제178조(허여일 기산 10년 존속)를 축자 확인했고, IMPI oposición 리플릿 도해(1 mes)와 WIPO Information Notice 32/2024도 일치한다. 다만 등록 소스 중 gob.mx IMPI3170 ficha는 링크가 소멸했다(MX-FEE-001과 동일 사유). 이번 회차에 sourceIds도 정리했다: 기한을 실제로 규율하는 `wipolex-lfppi-2020`(제221조·제233조·제178조)을 추가하고, 포털 개편으로 죽은 `gobmx-impi3170` ficha를 뺐다. 2026-09-12 적용범위 확정(MX-OQ-004 종결): 2026-04-28 DOF 게재 신 시행규칙의 TRANSITORIOS TERCERO를 관보 게재분에서 직접 대조했다 — 시행(2026-07-22) 시점에 계속 중이던 사건은 **접수 당시 시행 중이던 규정**으로 종결까지 처리되고, 예외는 MASC 접근 하나다. 이 claim이 잠근 세 기한은 LFPPI 조문(제221·233·178조) 근거라 시행규칙 교체로 값이 움직이지 않지만, **어느 사건에 신 규칙이 닿는지**는 이제 정해졌다. MX-OQ-002(office action 답변기한·연장)는 여전히 열려 있다 — TERCERO가 답하는 것은 적용범위이지 기한값이 아니고, 기한값은 시행규칙 본문 조문에 있는데 이 회차는 본문 조문을 대조하지 않았다(공개본도 아직 시행규칙을 인용하지 않는다). 함께 확인된 CUARTO: IMPI는 제131조 목록을 시행 후 3개월 내 공표해야 한다(≈2026-10 하순)."
     },
     {
       "id": "MX-NORM-001",
@@ -36,6 +36,17 @@
       "lastVerified": "2026-08-30",
       "status": "BODY_READY",
       "notes": "첫 등장 시 스페인어 병기 유지, buyer-entry control sheet와 용어 표준안에 반영 완료. 2026-07-21 재대조: 변경 없음(Tu cuenta PASE·Marca en Línea·MARCia·ClasNiza·MARCANET·SIGA/Gaceta 6개 시스템 모두 현행 명칭으로 라이브 확인). 2026-08-30 재대조: 변경 없음. gob.mx IMPI 「Tu cuenta PASE」 FAQ에서 Marca en línea·Oficialía/Ventanilla electrónica de marcas·MARCia·Clasniza·Tu Gaceta를, Transparencia Focalizada에서 MARCANET와 Gaceta 정보시스템을 확인했다. 공식 표기는 'Clasniza'·'Marca en línea'로 본문의 'ClasNiza'·'Marca en Línea'와 대소문자만 다르다(개칭이 아니라 표기 변형 — 본문 표기 통일 시 참고)."
+    },
+    {
+      "id": "MX-DL-002",
+      "jurisdiction": "MX",
+      "claim": "멕시코 상표 거절이유통지 대응기간은 초기 2개월이고, 이어서 추가 2개월이 신청 없이 자동으로 열리되 해당 월 수수료 납부 증빙이 조건이다. 두 기간 안에 대응하지 않거나 납부 증빙을 내지 않으면 출원은 포기 간주된다.",
+      "chapterRefs": ["Ch6", "Ch13", "Appendix"],
+      "riskLevel": "HIGH",
+      "sourceIds": ["wipolex-lfppi-2020", "dof-reglamento-lfppi-2026"],
+      "lastVerified": "2026-09-13",
+      "status": "BODY_READY",
+      "notes": "2026-04-01부터 제6장이 숫자를 적지 않고 '공식 통지서에 적힌 답변기한'으로 유보해 온 축이다(MX-OQ-002, 165일). 2026-09-13에 조문 네 개를 1차 출처로 대조해 유보를 풀었다. **법 제225조**: 제221조의 1개월 공고기간이 끝나면 심사하고, 요건 미충족·등록 장애(impedimento)·이의가 있으면 서면 통지하며 「El Instituto otorgará un plazo de dos meses」, 그리고 「Si el interesado no contesta dentro del plazo concedido, se considerará abandonada su solicitud」. **법 제226조**: 「El interesado tendrá un plazo adicional de dos meses para cumplir los requisitos a que se refiere el artículo anterior, **sin que medie solicitud** y comprobando el pago de la tarifa que corresponda al mes en que se dé cumplimiento」, 기산은 「a partir del día hábil siguiente al del vencimiento del plazo de dos meses previsto en el artículo 225」, 그리고 초기·추가 어느 기간에도 이행하지 않거나 「no presenta el comprobante de pago de las tarifas correspondientes」면 포기 간주. **시행규칙 제8조**(2026-04-28 게재, 2026-07-22 시행): 「El cómputo de los plazos adicionales a los que se refieren los artículos 117, 226 y 279 de la Ley, empezará a partir del día hábil siguiente al del vencimiento del plazo inicial de dos meses. Los plazos adicionales señalados en el párrafo que antecede serán **improrrogables**」. **시행규칙 제116조**: 방식심사 통과 후 실체심사(법 제224·225조)에서 등록 불가·법적 장애·이의가 있으면 서면 통지한다 — 통지의 근거면이다. **핵심은 '연장'이라는 말이 오해를 만든다는 점이다** — 추가 2개월은 신청해서 받는 연장이 아니라 신청 없이 열리는 기간이고, 대신 수수료 납부 증빙이 조건이며, 그 위에 다시 연장은 없다(improrrogable). 갱신 축은 다르다: 시행규칙 제119조는 갱신 requerimiento를 「dos meses improrrogables」로 두고 불이행 시 등록이 「caducará de pleno derecho」라고 정한다 — 추가기간이 없다. **범위 주의**: 시행규칙 근거 부분은 부칙 TERCERO에 따라 2026-07-22 이후 접수분에 적용된다(MX-OQ-004). 법 조문은 `wipolex-lfppi-2020`(2020년 원문)에서 뽑았고 2026-04-03 개정이 제225·226조 문언에 닿았는지는 확인되지 않았다(MX-OQ-001) — 다만 2026-04-28 시행규칙이 제226조를 조문 번호로 참조하며 초기 2개월을 전제하므로 구조 자체는 개정 이후 문서로 교차 확인된다."
     },
     {
       "id": "MX-ENF-001",
@@ -61,8 +72,10 @@
       "id": "MX-OQ-002",
       "question": "office action(거절이유통지) 답변기한과 연장 규칙을 공개본에 단정할지, 단정한다면 근거 조문이 무엇인지. 제6장에서 계속 보류 상태다.",
       "raisedOn": "2026-04-01",
-      "claimIds": ["MX-DL-001"],
-      "candidateId": "2026-09-mexico-lfppi-implementing-rules"
+      "claimIds": ["MX-DL-001", "MX-DL-002"],
+      "candidateId": "2026-09-mexico-lfppi-implementing-rules",
+      "resolvedOn": "2026-09-13",
+      "resolution": "2026-09-13 종결. 답은 '단정할 수 있다'이고 근거 조문은 넷이다 — **법 제225조**(초기 2개월, 무응답 시 포기 간주), **법 제226조**(추가 2개월, `sin que medie solicitud`로 신청 없이 열리되 해당 월 수수료 납부 증빙이 조건이며 초기기간 만료 다음 영업일부터 기산), **시행규칙 제8조**(그 추가기간은 `improrrogables`), **시행규칙 제116조**(실체심사에서 등록 불가·장애·이의 시 서면 통지 — 통지의 근거면). 법 조문은 WIPO Lex 게재 LFPPI 본문에서, 시행규칙 조문은 DOF 게재분(nota 5786237)에서 각각 축자 대조했다. **유보를 풀 수 있게 된 지점은 '연장'이라는 통념이 틀렸다는 것이다** — 추가 2개월은 신청해서 받는 연장이 아니라 자동으로 열리는 기간이고, 대신 수수료 납부 증빙이 조건이라 '연장을 신청하면 된다'고 알고 있던 팀은 증빙 요건을 놓친다. 제6장이 2026-04-01부터 숫자를 적지 않고 '통지서에 적힌 기한'으로 유보해 온 이유가 근거 부재였으므로, 근거가 서면서 유보를 풀었다. 값은 신설 `MX-DL-002`에 담고 `MX-DL-001`은 핵심 기한 3개만 유지한다 — 이번 회차가 연 것은 제225·226조이지 제221·233·178조가 아니므로 `MX-DL-001`의 `lastVerified`는 움직이지 않는다(blind re-stamp 금지). **남는 범위 주의 둘**: 시행규칙 근거 부분은 부칙 TERCERO에 따라 2026-07-22 이후 접수분 적용이고(`MX-OQ-004`), 법 조문 출처가 2020년 원문이라 2026-04-03 개정이 제225·226조 문언에 닿았는지는 `MX-OQ-001`에 남는다 — 다만 2026-04-28 시행규칙이 제226조를 번호로 참조하며 초기 2개월을 전제하므로 구조는 개정 이후 문서로 교차 확인된다."
     },
     {
       "id": "MX-OQ-003",
