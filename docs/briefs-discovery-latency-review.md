@@ -137,7 +137,7 @@ radar는 `impi`를 `실사 이력 없음`으로 찍는다. `주기 초과`가 �
 | 항목 | 내용 | 막았나 | 비용 | 가드레일 |
 |---|---|---|---|---|
 | **P0-1** `§5` 문면 정정 | `주기 초과` → `실사 이력 없음·주기 초과`. 계약 문면에 맞춘다 | 간접 — `impi`가 월간 대상 집합에 들어온다 | 2줄 | 해당 없음(문서 정합) |
-| **P0-2** 관할 축 freshness | `summarizeCoverage`의 jurisdiction 행에 `lastPublishedAt`·`daysSince` 추가, guide 행에 "관할 이슈 마지막 등장"을 링크 기준과 **분리해** 표시 | **예** — 8/30 화면에 "Mexico 177d"가 떴다 | 파생 함수 + 테스트 1건. 게이트 아님 | 안전 — 크롤러·의존성·스케줄 없음 |
+| **P0-2** 관할 축 freshness | `summarizeCoverage`의 jurisdiction 행에 `lastPublishedAt`·`daysSince` 추가, guide 행에 "관할 이슈 마지막 등장"을 링크 기준과 **분리해** 표시 | **예** — 8/30 화면에 "Mexico 177d"가 떴다 | 파생 함수 + 테스트 1건. 게이트 아님 | 안전 — 크롤러·의존성·스케줄 없음 **→ 2026-09-13 반영, 아래 §10** |
 
 ### P1 — 계약·타입 변경 (owner 판단)
 
@@ -167,7 +167,7 @@ radar는 `impi`를 `실사 이력 없음`으로 찍는다. `주기 초과`가 �
 
 ## 6. 이번 라운드에서 실제로 바꾼 것
 
-**P0-1만 반영했다.** `phase2.5-organic-indexing-ops.md` §5-1과 monthly quick checklist의 sweep 대상 문면을
+**(발행 시점) P0-1만 반영했다.** `phase2.5-organic-indexing-ops.md` §5-1과 monthly quick checklist의 sweep 대상 문면을
 계약(`briefs-discovery.md`)에 맞춰 `실사 이력 없음·주기 초과`로 정정했다.
 
 나머지는 전부 계약·타입·데이터 변경이라 이 문서에 제안으로만 남긴다. 발굴 계약을 바꾸는 것은
@@ -175,7 +175,7 @@ radar는 `impi`를 `실사 이력 없음`으로 찍는다. `주기 초과`가 �
 
 ## 7. Owner 액션 (이 문서가 넘기는 것)
 
-1. **P0-2 승인 여부** — 관할 축 freshness를 radar에 세울지. 결정만 나면 파생 계산이라 바로 구현 가능하다.
+1. ~~**P0-2 승인 여부** — 관할 축 freshness를 radar에 세울지. 결정만 나면 파생 계산이라 바로 구현 가능하다.~~ **2026-09-13 반영했다(§10).**
 2. **P1-1~P1-4 중 채택 범위** — 넷 다 하면 발굴 데이터 모델이 한 번에 커진다. 이 사건 기준 단독 효과가
    가장 큰 것은 **P1-2**(미결 다리)이고, 재발 방지 폭이 가장 넓은 것은 **P1-3**(규범 층 짝 규칙)이다.
 3. ~~**DOF URL 확정** — P2-1의 유일한 선행 조건.~~ **2026-09-07 owner 지시로 등록했다(§8).** 남은 것은 owner가 페이지를 한 번 열어 검색·게재 페이지 URL을 좁히고 2026-04-28 게재를 대조하는 일이다.
@@ -281,6 +281,42 @@ EuTm·UsaTm·JapTm·UKTm은 시드하지 않았다. **미결이 없다고 단정
 다만 이 다리는 **미결을 적는 행위 자체를 강제하지 않는다** — 재대조가 산문으로만 적고 `openQuestions`에
 넣지 않으면 여전히 보이지 않는다. 그 마지막 구멍을 막으려면 claim `notes`의 미결 표현을 검사하는
 휴리스틱 게이트가 필요한데, 산문 검사는 오탐이 많아 이번 범위에 넣지 않았다. **owner 판단으로 남긴다.**
+
+## 10. 후속 — P0-2 반영 (2026-09-13)
+
+`§5`가 "결정 불필요"로 분류한 두 항목 중 남아 있던 **관할 축 freshness**를 반영했다. P0-1(§5 문면 정정)은
+2026-09-07에 이미 들어갔고, 이 절은 그 짝을 채운다. 새 데이터도 새 스케줄도 만들지 않았다 — 이미 있는
+`briefIssues`의 정규 관할 태그에서 파생 계산 하나를 더 꺼냈을 뿐이다.
+
+| 층 | 무엇 |
+|---|---|
+| 파생 | `src/briefs/discoveryReport.ts`의 `summarizeCoverage` — jurisdiction 행에 `lastIssueSlug`·`lastPublishedAt`·`daysSinceLastIssue`, guide 행에 `jurisdiction`·`jurisdictionIssueCount`·`lastJurisdictionIssueSlug`·`lastJurisdictionPublishedAt`·`daysSinceLastJurisdictionIssue` |
+| 다리 | 기존 `jurisdictionByProductSlug`(guide slug → 정규 관할). 새 매핑을 만들지 않았다 |
+| 표면 | `npm run briefs:radar`의 `Guide Coverage`(링크 축 / 관할 축 분리 표시)와 `Jurisdiction tags`(경과일 추가) |
+| 게이트 | `src/briefs/discovery.test.ts`의 축 분리 테스트 1건 + `scripts/briefs-radar.test.ts`의 열 계약 1건. **둘 다 advisory 표시를 잠그는 것이지 pass/fail을 만들지 않는다** |
+
+### 첫 렌더에서 드러난 것
+
+축을 가르자마자 링크 축이 가리고 있던 것이 셋 나왔다. 이 수치들은 **이번 변경이 만든 것이 아니라
+이미 그 상태였는데 보이지 않던 것**이다.
+
+| Guide | 링크 축 | 관할 축 | 무엇이 가려져 있었나 |
+|---|---|---|---|
+| `LatTm` | 64d | **177d** (2026-03-20) | flagship의 자기 관할이 반년 가까이 브리프 주제가 된 적 없다. 링크 축은 다른 관할 이슈가 LatTm 챕터를 인용할 때마다 갱신된다 |
+| `JapTm` | 96d | **0건** | 링크는 5건 있는데 `Japan`을 관할로 태그한 이슈는 하네스 도입 이래 하나도 없다 |
+| `ChaTm` | 13d | **64d** | 최근 등장은 전부 다른 관할 이슈의 인용이었다 |
+
+3.4가 "멕시코가 184일 굶은 채 6d로 표시됐다"고 적은 것과 같은 형태다. 그때는 사후에 손으로 센 값이었고,
+이제 radar가 매번 같이 낸다.
+
+### 하지 않은 것
+
+- **정렬은 바꾸지 않았다.** `Jurisdiction tags`는 계속 이슈 수 내림차순이다. 경과일 내림차순으로 바꾸면
+  우선순위가 더 잘 보이지만, 그건 표시 규칙 변경이라 이 "결정 불필요" 범위 밖이다.
+- **게이트로 올리지 않았다.** 관할 축 경과일이 아무리 커도 exit 0이다. cadence를 하드 게이트로 올리는
+  것은 `briefs-lane.md`의 "hard SLA 없음" 계약을 먼저 바꿔야 하는 owner 결정이다.
+- **누락 관할을 강제하지 않았다.** `JapTm` 관할 0건을 위반으로 만들지 않았다. 커버리지 바닥 계약은
+  소스 축에만 있고, 이슈 태그 축에 같은 바닥을 두는 것은 별도 판단이다.
 
 ## Authority
 
