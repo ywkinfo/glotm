@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-13 11라운드 (브리프 24호 후보 triage — JPO 후보 권고 · sweep 전 소스 egress 차단으로 ready 승격 불가)
+- Last updated: 2026-09-13 12라운드 (EuTm fact-review — 1차 출처 전건 차단으로 재대조 불가 · 변경신호 triage + EU-OQ-001 신설)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -301,6 +301,15 @@
   - **`LatTm` 리드 하나(후보 아님).** 관할 177d에 열린 후보 0건인데, 검색 수준에서 아르헨티나 INPI **Resolución 75/2026**(2026-04-01 시행 · 전 산업재산 수수료를 CPI 연동 단위 `UMAPI`로 전환 → 인용한 수수료가 설계상 매달 낡는다)과 **297/2026**(이의절차 현대화), 칠레 INAPI 니스 13판 의무화(2026-01-01) 신호가 잡혔다. 그런데 `inpi-argentina`의 `sweepTarget`은 portaltramites의 **절차·수수료 안내 페이지 변경 감지**라 resolución 고지면은 그 밖일 수 있다 — JPO 후보 notes가 짚은 *"sweepTarget이 목록 하나를 가리키면 그 목록 밖은 정의상 안 보인다"*와 같은 형태다. 다음 sweep에서 sweepTarget 범위부터 확인한다.
   - **owner가 열면 닫히는 것**: JPO 국내 고지 본문(ⓐ·ⓑ), 特措法 3조3항 고지(ⓒ·ⓔ), `kumamotojishin2026_sochi`(ⓓ), EUIPO 2026-07-17 고지 본문. 넷 다 이 세션에서는 403이다.
   - 게이트: `npm test` **429/429**, `check:consistency` 0 hard / 0 advisory. 데이터 변경은 후보 `notes` 3건뿐이고 상태 전이·sweep 기록·`lastVerified` 변경은 없다.
+
+- 2026-09-13 12라운드: **`EuTm` fact-review — 재대조는 못 했고, 대신 창이 닫히기 전에 무엇부터 열어야 하는지를 좁혔다.**
+  - **못 한 이유부터.** register의 `Primary Source Index`와 2026-08-02 대조 출처 URL **7개 전건이 차단**이다(`connect_rejected`). 2026-08-30 메모가 "이 경로만으로 수수료·기한 claim이 모두 결론난다"고 적어 둔 `publications.europa.eu` CELEX 경로도 포함이다. **차단의 종류가 그때와 다르다** — 8/30에는 페이지가 열리되 헤더가 모자라 400이 났고 헤더를 고치자 731KB가 나왔는데, 지금은 연결 자체가 서지 않는다. `lastVerified`도 `factsReviewedOn`도 움직이지 않았다(blind re-stamp 금지).
+  - **창이 닫히는 시점을 정확히 박았다.** `mature`의 claim staleness 임계는 60일(`shared.ts` `claimStalenessDaysByLifecycle`)이고 claim 11건 전부 `2026-08-02`이므로 **2026-10-01이 마지막 날**, **10-02부터** HIGH 9건에 warning이 붙어 EuTm 행이 `gate=pass → warn`이 된다. warning 레벨이라 종료 코드는 계속 0이다.
+  - **triage 결과: 11건 중 10건 무신호, 1건 살아 있는 신호.** EUTMR 통합본은 여전히 **2025-12-01**자이고 개정법도 Reg (EU) 2023/2411 하나로 검색돼 2026-08-02 라운드가 대조한 판본과 같다(6건 무신호). EUTM 수수료 EUR 850/50/150도 Annex I 기준값과 일치. comparable UK mark 사용 산입 문언도 인용본과 실질 동일. **전부 WebSearch 수준이라 어떤 claim도 이걸로 닫히지 않는다.**
+  - **살아 있는 신호 — `EU-ENF-001`.** 그 notes는 "미발효"를 전제로 재확인을 **2028년경**으로 미뤄 뒀는데, 신 Union Customs Code가 **관보 게재 20일 후 발효, 목표 2026년 9월 말**이라는 신호가 잡혔다. 맞다면 재확인 시점이 두 해 어긋난다. **본문 정정 대상은 아니다** — 608/2013 기반 AFA·IPEP·COPIS 서술 자체는 신호와 충돌하지 않고(운영 대체는 여전히 2028~2034), 어긋난 것은 claim의 사실이 아니라 **claim이 스스로 정한 재확인 일정**이다. 그래서 본문·`lastVerified`를 건드리지 않고 **`EU-OQ-001`**로 올렸다 — 이 워크스페이스의 첫 `openQuestions`이고, 41일째 `watching`인 `2026-08-eu-customs-reform-watch`를 `candidateId`로 걸어 두 표면이 같은 것을 가리키게 했다. radar 미결 열림 5→6.
+  - **저장소 안에서 이미 확인된 것 하나.** `EU-FEE-001`의 UK 축(£205/£245)은 `UKTm` `UK-FEE-001`이 **2026-08-30**에 더 최근 값으로 들고 있고, UKTm fact log는 그 값을 **2026-07-22 GOV.UK 공식 안내로 재확인**했다고 적는다(값 일치, 2026-07-07 owner 단일 정본). 이걸로 claim을 닫지는 않지만 — claim-map은 워크스페이스별이고 남의 회차가 `lastVerified`를 옮기지 않는다 — **재대조 순서에서는 이 claim을 뒤로 미룰 근거**가 된다.
+  - **owner가 열면 닫히는 순서**(fact log에 같은 순서로 적었다): ① `taxation-customs` + 관보(`EU-OQ-001`, 시한 최단) → ② CELEX 통합본 1회로 `EU-SEL/DL/EVD/RNW/PRIO/AG` **6건 동시**(각 claim notes에 조문 번호와 축자 인용이 이미 박혀 있어 문언 일치만 보면 된다) → ③ GOV.UK comparable 안내로 3건 → ④ `EU-FEE-001` 잔여(EUTM Annex I, ②에서 함께 처리 가능).
+  - 게이트: `npm test` **429/429**, `audit:facts` 7/7 pass(EuTm `staleHighRisk=0` 유지 — 아직 창 안), `check:consistency` 0 hard / 0 advisory.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
