@@ -15,8 +15,9 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe(
-      "2026-09-mexico-lfppi-gazette-transitional-confirmation"
+    expect(getLatestBriefIssue()?.slug).toBe("2026-09-jpo-kumamoto-deadline-relief");
+    expect(getBriefIssueBySlug("2026-09-jpo-kumamoto-deadline-relief")?.title).toBe(
+      "2026년 9월 Hot Global TM Brief | 일본 기한을 놓쳤다면 경로가 셋입니다 — 신청이 필요 없는 일괄연장, 재외자 2개월, 그리고 갱신만 따로 걸리는 6개월"
     );
     expect(
       getBriefIssueBySlug("2026-09-mexico-lfppi-gazette-transitional-confirmation")?.title

@@ -21,7 +21,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 
 | 항목 | 상태 | 재확인 명령 (read-only) |
 |------|------|-------------------------|
-| sitemap | live, **153 URL** (2026-09-13 로컬 release 산출 기준) | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 153 |
+| sitemap | live, **154 URL** (2026-09-14 24호 발행 반영, 로컬 release 산출 기준) | `curl -s https://ywkinfo.github.io/glotm/sitemap.xml \| grep -c '<loc>'` → 154 |
 | robots | `/glotm/robots.txt`는 존재하지만 host-root `https://ywkinfo.github.io/robots.txt`는 404 | `curl -I https://ywkinfo.github.io/robots.txt`; `curl -s https://ywkinfo.github.io/glotm/robots.txt` |
 | GA4 배선 | 배포 번들에 `G-0XF5JG96CC` + gtag 인라인 | 홈 HTML의 `assets/index-*.js`를 받아 `G-0XF5JG96CC` grep |
 | 이벤트 코드 | manual page_view + 6 KPI 이벤트 emit·테스트 통과 | `npm run test`(unit), `e2e:smoke`(흐름) |
@@ -30,14 +30,14 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 > 배포본에서** 한다. GA id를 바꾸려면 owner가 GitHub repo variable `VITE_GA_MEASUREMENT_ID`를 갱신하고
 > 재배포해야 한다(코드 변경 아님).
 
-### sitemap URL 인벤토리 (153 = SC 색인 대상, 2026-09-13 기준)
+### sitemap URL 인벤토리 (154 = SC 색인 대상, 2026-09-14 기준)
 
 | 그룹 | 수 | 우선 색인 |
 |------|----|-----------|
 | Gateway 홈 `/` | 1 | ★ |
 | guide 홈 (`/china /mexico /europe /latam /japan /uk /usa`) | 7 | ★ china·mexico·europe |
 | 챕터 (latam 20 · china/europe/japan/mexico/usa/uk 15) | 110 | 대표 챕터 위주 |
-| briefs (index 1 + issue 23) | 24 | ★ 최신 3개호 위주 |
+| briefs (index 1 + issue 24) | 25 | ★ 최신 3개호 위주 |
 | reports (index 1 + detail 7) | 8 | ★ 대표 report 2건 |
 | trust/legal (`/legal /privacy /contact`) | 3 | — |
 
@@ -47,7 +47,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 ## §1. Search Console (owner)
 
 1. 속성 확인: `https://ywkinfo.github.io/glotm/` (GitHub Pages 도메인 prefix 속성).
-2. **Sitemaps**에서 `https://ywkinfo.github.io/glotm/sitemap.xml` 제출/갱신 → status `Success` 확인. discovered 수는 위 인벤토리 표(현재 153)와 대조한다.
+2. **Sitemaps**에서 `https://ywkinfo.github.io/glotm/sitemap.xml` 제출/갱신 → status `Success` 확인. discovered 수는 위 인벤토리 표(현재 154)와 대조한다.
 3. **Pages(Indexing)** 리포트에서 색인/미색인 분포 확인. 미색인 사유(crawled-not-indexed, discovered 등) 분류.
 4. 우선 URL을 **URL 검사 → 색인 요청**: Gateway 홈, `/china`·`/mexico`·`/europe` 홈, 각 대표 챕터,
    최신 brief 3건(`src/briefs/archive.ts`의 상위 3개 — 월을 고정하지 않는다), 대표 report 2건(monthly-review `Primary reports`).
@@ -56,7 +56,7 @@ agent가 도울 수 있는 범위는 §0의 read-only 라이브 검증과 라이
 ### Search Console troubleshooting
 
 - **Sitemap server health와 SC 처리 상태를 분리한다.** `https://ywkinfo.github.io/glotm/sitemap.xml`가
-  `HTTP 200`, `content-type: application/xml`, 인벤토리 표와 같은 수의 `<loc>`(현재 153)를 반환하면 배포 산출물은 정상이다. SC의
+  `HTTP 200`, `content-type: application/xml`, 인벤토리 표와 같은 수의 `<loc>`(현재 154)를 반환하면 배포 산출물은 정상이다. SC의
   `가져올 수 없음`·`discovered 0`는 수동 제출 직후 1~3일 지연될 수 있다.
 - **Googlebot은 robots.txt를 host root에서만 읽는다.** 현재 GitHub Pages path deploy에서는
   `https://ywkinfo.github.io/robots.txt`가 404이고, `https://ywkinfo.github.io/glotm/robots.txt`는
@@ -119,6 +119,9 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 브리프 lane은 이 phase의 신선도 surface다. 그 lane에 소재를 대는 발굴 절차는
 [`briefs-discovery.md`](briefs-discovery.md)가 계약이고, 여기서는 월 1회 실행 훅만 건다.
 
+0. **채널을 먼저 잰다** — [`briefs-discovery.md`](briefs-discovery.md) `sweep 절차` 0번의 명령을 그대로 돌린다.
+   이 훅이 실행 가능한지는 회차마다 다르고, 재지 않으면 지난 회차의 채널 상태를 사실로 물려받는다. 결과(날짜·채널·
+   열린 소스 수)를 그 회차 기록에 남긴다.
 1. `npm run briefs:radar` 실행. `Source Sweep`의 `실사 이력 없음`·`주기 초과` 소스가 이번 회차 대상이다.
    (`briefs-discovery.md` sweep 절차와 같은 집합이다. `실사 이력 없음`은 `주기 초과`로 표시되지 않으므로
    여기서 빼면 한 번도 열지 않은 소스가 이 훅의 대상에서 영구히 제외된다 — [`briefs-discovery-latency-review.md`](briefs-discovery-latency-review.md) D6.)
@@ -127,13 +130,17 @@ Checkout agent가 라이브 headless 스모크로 사전 점검할 수 있다(�
 4. 결과를 [`monthly-review-template.md`](monthly-review-template.md)의 `Brief discovery check`에 기록한다.
 
 > 이 절은 §1~§4와 달리 콘솔 계정 접근이 필요 없어 checkout agent도 수행할 수 있다.
-> 다만 발행 여부와 법률 사실 판단은 계속 owner 몫이다.
+> **다만 "할 수 있다"는 조건부다** — 0번 실측에서 소스가 열리는 회차에만 해당한다. 열리지 않는 회차의 agent가
+> 할 수 있는 것은 변경 신호 triage까지이고, `verified` sweep과 `lastVerified` 갱신은 소스를 실제로 연 채널의
+> 몫이다(owner 채널이 열려 있는데 agent 컨테이너가 막혀 있는 경우가 실제로 있었다 —
+> [`briefs-discovery.md`](briefs-discovery.md) `채널은 상수가 아니다`).
+> 발행 여부와 법률 사실 판단은 어느 경우에도 계속 owner 몫이다.
 
 ## Monthly quick checklist
 
-- [ ] §0 readiness 재확인(sitemap 153 / robots / GA id)
+- [ ] §0 readiness 재확인(sitemap 154 / robots / GA id)
 - [ ] §1 SC: sitemap status + 색인 분포 + 우선 URL 색인 요청(host-root robots 404는 block 아님)
 - [ ] §2 GA4 DebugView: debugger extension ON 상태에서 page_view + 6 KPI 이벤트 도착, 또는 Realtime 대체 확인
 - [ ] §3 라이브 QA(agent 스모크 → owner 육안)
 - [ ] §4 organic sessions 집계 → 월 100 트리거 대비 기록
-- [ ] §5 `npm run briefs:radar` → 실사 이력 없음·주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록
+- [ ] §5 채널 실측(0번) → `npm run briefs:radar` → 실사 이력 없음·주기 초과 소스 sweep → `briefSweepLog` append → 월간 리뷰 기록

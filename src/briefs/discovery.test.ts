@@ -689,10 +689,9 @@ describe("brief discovery report", () => {
   // ⓑ가 더 미끄러지기 쉬운 쪽이다 — 최신 회차가 등록부 전체의 freshness를 끌어올리는 버그는
   // never-verified만 보는 테스트로는 잡히지 않는다. cnipa-trademark-office가 그 pin이다.
   it("reports verified sweeps only for the sources that were actually opened", () => {
-    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-09-12T00:00:00.000Z"));
+    const rows = summarizeSourceSweep(undefined, undefined, new Date("2026-09-13T00:00:00.000Z"));
     const sweptNow = [
       "kipo",
-      "jpo",
       "cnipa-official",
       "euipo",
       "govuk-ipo",
@@ -711,16 +710,22 @@ describe("brief discovery report", () => {
       expect(row?.status).toBe("ok");
     }
 
+    // 2026-09-13 회차는 `jpo` 하나만 열었다(캡처 근거). 부분 sweep이 그 소스의 freshness만 옮기고
+    // 같은 회차의 다른 소스를 건드리지 않는다는 것이 이 행의 요점이다.
+    const jpo = rows.find((entry) => entry.source.id === "jpo");
+    expect(jpo?.lastVerifiedOn).toBe("2026-09-13");
+    expect(jpo?.status).toBe("ok");
+
     // ⓑ 직전 회차(2026-08-30)에만 열린 소스. 이번 회차가 건드리지 않았으므로 날짜가 그대로여야 하고,
     // weekly cadence라 13일이 지나 overdue로 떠야 한다.
     const staleFromLastRound = rows.find((entry) => entry.source.id === "cnipa-trademark-office");
     expect(staleFromLastRound?.lastVerifiedOn).toBe("2026-08-30");
     expect(staleFromLastRound?.status).toBe("overdue");
 
-    // ⓐ 등록부 크기에 묶인 pin이다(= briefSources.length - sweptNow.length - 1). 소스를 추가하면
+    // ⓐ 등록부 크기에 묶인 pin이다(= briefSources.length - sweptNow.length - 2 — jpo와 cnipa-trademark-office). 소스를 추가하면
     // 여기서 한 번 걸리고, 그때 "새 소스는 실사 이력 없음으로 시작한다"를 의식적으로 확인하게 된다.
     const neverOpened = rows.filter(
-      (row) => ![...sweptNow, "cnipa-trademark-office"].includes(row.source.id)
+      (row) => ![...sweptNow, "jpo", "cnipa-trademark-office"].includes(row.source.id)
     );
     expect(neverOpened).toHaveLength(4);
     expect(neverOpened.map((row) => row.source.id).sort()).toEqual([
