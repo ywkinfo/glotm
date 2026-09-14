@@ -91,7 +91,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 | `LatTm` | 권역형 | flagship | mature | 20 | 781 | 기준 프레임 보호 |
 | `MexTm` | 단일국가 | growth | mature | 15 | 385 | Sprint 2 운영 handoff 3장 보강 완료 · buyer entry 핵심 트랙 |
 | `ChaTm` | 단일국가 | growth | mature | 15 | 358 | Sprint 2 저밀도 9장 보강 완료 · monthly review 반영 · growth 대표 mature lane |
-| `EuTm` | 권역형 | growth | mature | 15 | 261 | growth expansion 반영 · mature 승급 완료(#69/#70) · claim-map 11건 · factsReviewedOn 2026-08-02 |
+| `EuTm` | 권역형 | growth | mature | 15 | 261 | growth expansion 반영 · mature 승급 완료(#69/#70) · claim-map 11건 · factsReviewedOn 2026-09-13 |
 | `UsaTm` | 단일국가 | growth | mature | 15 | 206 | 집행 포럼 플레이북 · 패러디·출처표지적 사용 이중 트랙 보강(Ch12–14) · claim-map 15건 · full QA |
 | `JapTm` | 단일국가 | growth | mature | 15 | 185 | 병존동의제도(2024-04-01) 집행 보강 · claim-map 12건 · full QA |
 | `UKTm` | 단일국가 | growth | mature | 15 | 183 | 다중 포럼 집행 오케스트레이션 15장 신설 + 저밀도 장 보강(density 12.2) · claim-map 11건 · full QA · 2026-07-07 growth/mature 승급(owner override) |
@@ -166,7 +166,7 @@ GloTm의 사업 범위는 특정 지역이 아니라 글로벌 시장 전체다.
 
 ### EuTm (유럽 상표 운영 가이드) — live shell에 연결된 권역형 가이드
 
-`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 11건 + 공식 URL 인덱스). mature 승급(#69/#70)이 `src/products/registry.ts` 정본에 반영돼 있고, `factsReviewedOn`은 2026-08-02 재대조 라운드 기준이다(verifiedOn은 월간 lane re-stamp로 관리). 현재는 growth lane baseline으로 운영한다.
+`EuTm`은 유럽 권역형 운영 가이드다. 현재 `document-data.json` 기준 생성 콘텐츠를 루트 `GloTm` 셸 `/europe` 경로에 연결한 상태다. 2026-06 growth expansion에서 Ch3·6·10·14 판단 매트릭스 보강과 EU/UK 부록 신설로 15장 체계로 전환했고, UK 수수료(£205/£245)·Brexit 분리 시점(2021-01-01)·comparable UK mark·우선권 6개월 같은 공개 법률 사실을 1차 출처 기준으로 정정했다(claim-map 11건 + 공식 URL 인덱스). mature 승급(#69/#70)이 `src/products/registry.ts` 정본에 반영돼 있고, `factsReviewedOn`은 2026-09-13 캡처 근거 재대조 라운드 기준이다(claim 11건 전부 EUTMR 통합본·GOV.UK 원문 바이트와 대조, 변경 없음)(verifiedOn은 월간 lane re-stamp로 관리). 현재는 growth lane baseline으로 운영한다.
 
 ### UKTm (영국 상표 실무 가이드) — live shell에 연결된 단일국가 growth mature lane
 
