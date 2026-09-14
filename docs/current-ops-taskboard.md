@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-13 15라운드 (브리프 24호 발행 — JapTm 두 축 공백 동시 해소 · 기준선까지 CI red는 설계대로)
+- Last updated: 2026-09-14 16라운드 (기준선 통과 후 CI green 확인 · Codex 리뷰 5건 전건 실물 확인 후 정정)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -337,6 +337,16 @@
   - **기준선까지 `npm test`가 red인 것은 설계대로다.** lane 계약이 발행일 유일성(하루 1이슈)과 미래일자 금지를 함께 강제하는데 2026-09-13은 23호가 점유했으므로 24호는 **2026-09-14가 최단**이다. `archive.test.ts`의 `publishedAt ≤ now` 하나만 붉고 나머지 **428/429는 통과**한다. 2026-09-14T00:00:00Z를 지나면 **코드 diff 0으로** green이 된다 — 8라운드가 23호에서 같은 경로를 지났고, 그때도 bypass를 쓰지 않았다.
   - 함께 맞춘 것: `archive.test.ts` latest-issue lock, 후보 `published` + `publishedAs` 전이, `phase2.5-organic-indexing-ops.md`의 sitemap 인벤토리 **153 → 154**(brief 행 24 → 25). 항목 간 `relatedGuideLinks` 라벨이 겹쳐 이슈 페이지에 같은 링크가 두 번 뜨던 것도 발행 전에 정리했다(App 렌더 테스트가 잡았다).
   - 게이트: `npm test` **428/429**(위 미래일자 1건만 대기), `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `build:pages:glotm` **154 routes** · sitemap 154 `<loc>`.
+
+- 2026-09-14 16라운드: **기준선을 지나 CI가 green이 됐고, 같은 시각 붙은 Codex 리뷰 5건을 전부 실물로 확인해 고쳤다.**
+  - **① 예측대로 코드 diff 0으로 green.** 같은 커밋 `89c9e3b`에서 재실행(attempt 2)만으로 `verify`·`verify-release` 둘 다 success. 15라운드가 red의 원인으로 지목한 `publishedAt ≤ now` 단 하나가 job 시계가 2026-09-14T00:00:00Z를 지나면서 풀렸다 — 테스트를 느슨하게 하거나 날짜를 앞당기지 않고 기다린 판단이 맞았다.
+  - **② `verified`가 아닌 것이 `verified`처럼 보이던 자리 — `EU-PRIO-001`.** 이 HIGH claim은 2026-08-02·2026-09-13 두 회차 모두 **EUTMR 제34조 제1항**으로 결론냈는데 `sourceIds`는 `euipo-priority-guidelines` 하나였고, 그 페이지는 같은 회차 fact log가 **2,268바이트 JS 셸이라 인용 근거로 쓰지 않았다**고 적어 둔 바로 그것이다. sourceIds를 따라간 감사가 실제 근거에 닿지 못한다. `eutmr-consolidated`를 앞에 붙여 `EU-AG-001`과 같은 모양으로 맞췄다. **`EU-FEE-001`과 같은 결함 유형이 하나 더 있었던 것이고, 14라운드는 죽은 URL 쪽만 보고 이쪽은 못 봤다.**
+  - **③ TFEU 제294조 제7항의 3개월을 모라토리엄으로 읽었다.** 14라운드가 `관보 게재는 빨라야 2026-12-04 이후`라고 적었는데, 3개월은 의회가 **늦어도 언제까지** 움직여야 하는가이지 관보가 **빨라야 언제** 나오는가가 아니다. 같은 항 (a)는 의회가 그 기간 **안에** 이사회 입장을 승인하면 그 시점에 채택된 것으로 본다. 그래서 `EU-ENF-001` 재확인을 **2026년 12월 → 2026년 10월**로 당기고(시한 직후 재확인은 유지), fact log·`EU-OQ-001` 두 곳에 상한/하한 구분을 정정으로 남겼다.
+  - **④ 회복 가능한 실기를 "되돌릴 수 없다"로 적었다(24호 본문).** 6개월 구제 경로를 설명하는 바로 그 항목이 `갱신은 놓치면 권리가 소멸하는 항목이라 되돌릴 수 없고`로 시작했다 — **아직 창 안에 있는 독자가 복구를 포기할 수 있는 문장**이라 P1이 맞다. 소멸 자체와 구제 창이 닫힌 뒤를 갈라 다시 썼고, "지금 지난 건이라도 6개월 안이면 계산할 값이 남아 있다"를 명시했다. 경고의 세기는 창 길이를 잘못 아는 쪽으로 옮겼다.
+  - **⑤ 같은 객체 안에서 법률 사실이 충돌했다.** 후보 `2026-09-jpo-disaster-deadline-relief`의 `notes`는 `1년`이 틀렸다고 적는데 `trigger`에는 그 `1년`이 무수식으로 남아 있었다. 아카이브가 아니라 후보 레코드를 읽는 소비자에게는 정정이 보이지 않는다. `trigger`에 `[2026-09-13 정정]`을 달아 6개월을 본문으로 올렸다.
+  - **⑥ registry 파생 스냅샷이 뒤처졌다.** `registry.ts`의 europe `factsReviewedOn`을 2026-09-13으로 옮기면서 `PROJECT-OVERVIEW.md` 94·169행의 `2026-08-02`를 같이 옮기지 않았다. `AGENTS.md`가 그 문서를 registry 파생 스냅샷으로 정의하므로, 정본을 읽지 않는 운영자는 EuTm이 42일 더 낡았다고 읽는다. 두 곳 다 정정.
+  - **이 다섯 중 셋(②③⑥)은 "값은 맞는데 값을 가리키는 것이 틀린" 유형이다.** 14~15라운드가 1차 출처 대조에 집중하는 동안 *그 대조를 가리키는 메타데이터*가 밀렸다. 캡처 대조 절차에 "claim을 닫은 근거가 그 claim의 `sourceIds`에 실제로 들어 있는가"를 회차 종료 점검으로 넣을지는 다음 라운드 판단 대상으로 남긴다.
+  - 게이트: `npm test` **429/429**, `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 pass(EuTm `staleHighRisk=0` 유지).
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
