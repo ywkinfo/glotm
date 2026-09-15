@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-14 16라운드 (기준선 통과 후 CI green 확인 · Codex 리뷰 5건 전건 실물 확인 후 정정)
+- Last updated: 2026-09-15 17라운드 (sourceId 종료 점검 도입 — register 대체 행을 계약으로 올렸다)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -345,8 +345,22 @@
   - **④ 회복 가능한 실기를 "되돌릴 수 없다"로 적었다(24호 본문).** 6개월 구제 경로를 설명하는 바로 그 항목이 `갱신은 놓치면 권리가 소멸하는 항목이라 되돌릴 수 없고`로 시작했다 — **아직 창 안에 있는 독자가 복구를 포기할 수 있는 문장**이라 P1이 맞다. 소멸 자체와 구제 창이 닫힌 뒤를 갈라 다시 썼고, "지금 지난 건이라도 6개월 안이면 계산할 값이 남아 있다"를 명시했다. 경고의 세기는 창 길이를 잘못 아는 쪽으로 옮겼다.
   - **⑤ 같은 객체 안에서 법률 사실이 충돌했다.** 후보 `2026-09-jpo-disaster-deadline-relief`의 `notes`는 `1년`이 틀렸다고 적는데 `trigger`에는 그 `1년`이 무수식으로 남아 있었다. 아카이브가 아니라 후보 레코드를 읽는 소비자에게는 정정이 보이지 않는다. `trigger`에 `[2026-09-13 정정]`을 달아 6개월을 본문으로 올렸다.
   - **⑥ registry 파생 스냅샷이 뒤처졌다.** `registry.ts`의 europe `factsReviewedOn`을 2026-09-13으로 옮기면서 `PROJECT-OVERVIEW.md` 94·169행의 `2026-08-02`를 같이 옮기지 않았다. `AGENTS.md`가 그 문서를 registry 파생 스냅샷으로 정의하므로, 정본을 읽지 않는 운영자는 EuTm이 42일 더 낡았다고 읽는다. 두 곳 다 정정.
-  - **이 다섯 중 셋(②③⑥)은 "값은 맞는데 값을 가리키는 것이 틀린" 유형이다.** 14~15라운드가 1차 출처 대조에 집중하는 동안 *그 대조를 가리키는 메타데이터*가 밀렸다. 캡처 대조 절차에 "claim을 닫은 근거가 그 claim의 `sourceIds`에 실제로 들어 있는가"를 회차 종료 점검으로 넣을지는 다음 라운드 판단 대상으로 남긴다.
+  - **이 다섯 중 셋(②③⑥)은 "값은 맞는데 값을 가리키는 것이 틀린" 유형이다.** 14~15라운드가 1차 출처 대조에 집중하는 동안 *그 대조를 가리키는 메타데이터*가 밀렸다. 캡처 대조 절차에 "claim을 닫은 근거가 그 claim의 `sourceIds`에 실제로 들어 있는가"를 회차 종료 점검으로 넣을지는 다음 라운드 판단 대상으로 남긴다. → **17라운드에서 도입(아래).**
   - 게이트: `npm test` **429/429**, `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 pass(EuTm `staleHighRisk=0` 유지).
+
+- 2026-09-15 17라운드: **sourceId 종료 점검 도입.** 16라운드가 판단 대상으로 남긴 항목을 닫았다 — 산문에만 있던 "이 sourceId 말고 저것이 실제 근거다"를 게이트가 읽는 자리로 옮겼다.
+  - **왜 두 번을 놓쳤는가.** `EU-FEE-001`(9/13)과 `EU-PRIO-001`(9/14)은 같은 결함이었다 — claim의 결론은 EUTMR 조문에서 났는데 `sourceIds`는 EUIPO 안내면을 가리켰다. 첫 번째는 URL이 죽어서 다른 가드에 걸렸고, 두 번째는 **URL이 살아 있어서**(200이 오고 본문만 2,268바이트 JS 셸) 아무 게이트도 울지 않았다. register 산문에는 2026-08-30부터 그 사실이 적혀 있었다. 기계가 못 읽었을 뿐이다.
+  - **모양으로 가른다.** register의 표 행을 **URL 유무**로 둘로 나눈다 — https가 있으면 index 행(claim이 가리킬 수 있는 출처), 없으면 **대체 행**("이 sourceId 말고 저것이 근거다"). 절 제목은 보지 않는다. 워크스페이스마다 제목이 다르고(`죽은 URL` · `폐기된 sourceId` · `제거된 출처` · `열리지만 근거가 아닌 소스`), 제목을 읽는 파서는 새 절이 생길 때마다 조용히 눈이 먼다.
+  - **가드 넷**(`scripts/research-audit/source-register.ts` 신설 + `claim-source-register.test.ts` 확장):
+    ① 모든 claim sourceId가 **index**에 있다 — 종전 파서는 표 행이기만 하면 등록으로 쳐서 폐기된 id가 "등록돼 있다"를 통과하고 엉뚱한 가드에서 터졌다. 이제 폐기 id는 제자리에서, 대체 근거를 함께 알려 주며 걸린다.
+    ② **대체 행이 지정한 claim은 그 대체 근거를 `sourceIds`에 갖는다** — 종료 점검의 본체. `A / B` 갈래 행이 있으므로 전부가 아니라 하나 이상을 요구한다.
+    ③ claim을 지정한 대체 행은 index에서 해석되는 대체 근거를 **최소 하나** 갖는다 — 오타 하나로 ②의 의무가 조용히 사라지는 것을 막는다.
+    ④ 대체 행이 가리키는 claim id가 claim-map에 실재한다 — 사라진 claim을 지키는 척하는 행을 막는다.
+  - **결함 재현으로 검증했다.** `EU-PRIO-001`·`EU-FEE-001`에서 `eutmr-consolidated`를 빼고, `MX-DL-001`에서 `wipolex-lfppi-2020`을 빼고, 대체 근거에 오타를 넣고, 없는 claim id를 가리키게 해 **다섯 경우 모두 red**를 확인한 뒤 되돌렸다. 실패 메시지는 `<register>:<행번호> <sourceId> → <claimId> (대체: …)` 형태다.
+  - **register 쪽 데이터**: EuTm에 `열리지만 근거가 아닌 소스` 절을 신설해 JS 셸 두 건(`euipo-priority-guidelines` → `EU-PRIO-001`, `euipo-absolute-grounds-guidelines` → `EU-AG-001`)을 대체 행으로 적었다 — **폐기하지 않는다.** URL이 살아 있고 채널이 열리면 다시 읽을 수 있다. MexTm의 `제거된 출처` 표는 2열 → 4열로 올려, 산문에만 있던 `wipolex-lfppi-2020` 대체를 계약으로 만들었다. 기존 EuTm 폐기 표 9행도 그대로 계약이 됐다(전건 통과).
+  - **하지 않은 것.** "claim의 notes가 말하는 근거"를 기계가 읽어 내는 일은 하지 않았다 — 산문에서 출처를 추론하면 오탐이 산문을 지배한다. 이 가드가 강제하는 것은 **회차가 적어 둔 대체가 실제로 반영됐는가**이지 "근거가 옳은가"가 아니다. 판단은 여전히 회차의 몫이고, 이 가드는 그 판단이 기록과 어긋나지 않게 잡아 준다.
+  - **남는 신호 하나(owner 판단).** HIGH risk claim 49건 중 **26건이 sourceId 1개**다(EuTm 9→6, JapTm 8→7, UKTm 7→5, UsaTm 10→4, LatTm 5→3, ChaTm 6→1, MexTm 4→0). 이 결함이 사는 자리가 정확히 여기인데, 절반을 실패로 올리는 것은 staleness 하드 게이트와 같은 정책 결정이라 게이트로 만들지 않았다.
+  - 게이트: `npm test` **448/448**(429 → +19: 파서 테스트 5 + 워크스페이스 7 × 신규 가드 2), `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 pass.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
