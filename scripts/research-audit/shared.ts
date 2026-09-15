@@ -67,7 +67,9 @@ export type ClaimMapDocument = {
 };
 
 export type AuditIssue = {
-  level: "error" | "warning";
+  // `info`는 게이트를 움직이지 않는다 — 출력에만 나온다. warning으로 올리면 `gate`가 warn으로 바뀌고,
+  // 그건 advisory 계약을 코드가 아니라 부작용으로 바꾸는 일이다(같은 이유로 staleness도 warning에 머문다).
+  level: "error" | "warning" | "info";
   audit: AuditName;
   message: string;
   claimId?: string;

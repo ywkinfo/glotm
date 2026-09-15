@@ -31,6 +31,7 @@
 - monthly review template: [`monthly-review-template.md`](monthly-review-template.md)
 - Phase 2.5 organic indexing & measurement ops (owner runbook): [`phase2.5-organic-indexing-ops.md`](phase2.5-organic-indexing-ops.md)
 - factual QA rollout: [`factual-qa-rollout.md`](factual-qa-rollout.md)
+- 단일 소스 HIGH claim 분류·조문 큐 (진단 + 실행 큐, 계약 아님): [`single-source-high-risk-claims.md`](single-source-high-risk-claims.md) (`audit:facts`의 `INFO [facts] 단일 소스 HIGH claim …` 출력이 가리키는 문서)
 - content gap review (콘텐츠 보충·추가 진단): [`content-gap-review.md`](content-gap-review.md)
 - Report / Gateway trust layer와 workflow path wording truth는 `../README.md`, `../PROJECT-OVERVIEW.md`, `phase1-runtime-qa.md`, `portfolio-scorecard.md`를 함께 본다.
 
