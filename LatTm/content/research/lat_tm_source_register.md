@@ -4,6 +4,8 @@
 `content/research/claim-map.json`의 `sourceIds`는 아래 표의 키로 공식 URL에 연결되고,
 회귀 가드 [`scripts/research-audit/claim-source-register.test.ts`](../../../scripts/research-audit/claim-source-register.test.ts)가
 "claim이 참조하는 sourceId가 이 표에 실재하고 URL까지 추적되는가"를 강제한다.
+**URL 칸이 없는 표 행은 "이 sourceId 말고 저것이 실제 근거다"라는 뜻이고**(폐기·제거·근거불가 모두 같은 모양),
+그 행이 claim을 지정하면 해당 claim이 대체 근거를 실제로 `sourceIds`에 들고 있는지까지 같은 가드가 본다.
 
 기준일: 2026-09-12 (아래 출처를 실제로 열어 대조한 날 — 직전 기준일은 2026-03-27)
 

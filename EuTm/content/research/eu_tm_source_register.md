@@ -66,6 +66,28 @@
 >   https://publications.europa.eu/resource/celex/02017R1001-20251201
 > ```
 
+## 열리지만 근거가 아닌 소스 (2026-09-14)
+
+`guidelines.euipo.europa.eu` 두 건은 **URL이 죽지 않았다.** 200이 오고 인앱 브라우저에서도 페이지가 뜬다.
+그런데 2026-09-13 캡처에서 본문이 2,268바이트 JS 셸(렌더 텍스트 16자)이라 어떤 문장도 인용할 수 없었고,
+두 claim의 결론은 실제로 EUTMR 조문에서 났다. 위 접근 메모가 2026-08-30부터 같은 사실을 적고 있었는데
+`sourceIds`는 그대로였다 — `EU-PRIO-001`은 그 페이지 **하나만** 들고 있었다.
+
+**폐기하지 않는다.** URL이 살아 있고 채널이 열리는 세션에서는 다시 읽을 수 있다. 대신 실제 근거를 같은
+행에 적어, claim이 그것을 들고 있는지를 게이트가 강제하게 한다.
+
+| 근거가 아닌 sourceId | 기대고 있던 claim | 실제 근거 |
+|---|---|---|
+| euipo-priority-guidelines | EU-PRIO-001 | eutmr-consolidated (제34조 제1항) |
+| euipo-absolute-grounds-guidelines | EU-AG-001 | eutmr-consolidated (제7조 제1항·제2항·제3항) |
+
+> **이 표와 아래 두 폐기 표는 같은 모양이고, 게이트도 같은 규칙으로 읽는다** —
+> [`claim-source-register.test.ts`](../../../scripts/research-audit/claim-source-register.test.ts)는
+> **URL 칸이 없는 행**을 "이 sourceId 말고 저것이 실제 근거다"로 해석하고, 그 행이 지정한 claim이
+> 대체 근거를 실제로 `sourceIds`에 들고 있는지를 강제한다. 절 제목은 보지 않으므로 새 절을 만들어도
+> 된다. 다만 claim을 적은 행은 **index에서 해석되는 대체 근거를 최소 하나** 가져야 한다 —
+> 오타 하나로 의무가 조용히 사라지지 않게 그것도 게이트가 본다.
+
 ## 죽은 URL (2026-09-13 폐기 — `euipo-fees`)
 
 `https://www.euipo.europa.eu/en/trade-marks/apply-now/fees`는 **HTTP 200으로 404 페이지를 돌려준다**
@@ -81,8 +103,10 @@ claim은 근거를 잃지 않는다.
 |---|---|---|
 | euipo-fees | EU-FEE-001 | eutmr-consolidated (Annex I item 2·3·4·12·13·14) |
 
-**이 결함은 어떤 게이트에도 걸리지 않았다.** `claim-source-register.test.ts`는 sourceId가 register 행에
+**이 결함은 당시 어떤 게이트에도 걸리지 않았다.** `claim-source-register.test.ts`는 sourceId가 register 행에
 있는지와 그 행에 https URL이 있는지만 보고 fetch하지 않으며, `audit:facts`도 URL 생존을 보지 않는다.
+**2026-09-15 보강**: 이제 이 표의 `대체` 칸이 계약이 된다 — `EU-FEE-001`이 `eutmr-consolidated`를
+`sourceIds`에서 잃으면 게이트가 운다. URL 생존을 보지 않는 것은 그대로다(fetch는 발굴 계약의 경계다).
 CI에서 fetch로 막는 것은 발굴 계약의 `자동 크롤링·fetch 금지` 경계에 걸리므로, 대신 라운드 시작 채널
 실측이 `200`을 살아 있음으로 읽지 않도록 절차를 고쳤다(`docs/briefs-discovery.md` `sweep 절차` 0번).
 

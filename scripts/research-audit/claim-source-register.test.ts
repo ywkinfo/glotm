@@ -9,6 +9,7 @@ import {
   readClaimMap,
   type ClaimMapEntry
 } from "./shared";
+import { parseSourceRegister } from "./source-register";
 
 const rootDir = process.cwd();
 
@@ -27,30 +28,6 @@ const workspaces = discoverClaimMapWorkspaces(rootDir).map((workspace) => ({
 
 function readRepoFile(relativePath: string) {
   return readFileSync(path.resolve(rootDir, relativePath), "utf8");
-}
-
-// source register의 매핑 표는 첫 열이 sourceId이고 같은 행에 URL이 온다.
-// `audit:facts`는 HIGH risk claim에 sourceId가 "몇 개 있는지"만 세므로, 실재하지 않는 sourceId를
-// 써도 factIntegrity=100이 나온다. 그 빈틈을 여기서 막는다.
-function collectRegisteredSources(markdown: string) {
-  const sources = new Map<string, string>();
-
-  for (const line of markdown.split("\n")) {
-    if (!line.trimStart().startsWith("|")) {
-      continue;
-    }
-
-    const cells = line.split("|").map((cell) => cell.trim());
-    const sourceId = cells[1] ?? "";
-
-    if (!/^[a-z0-9][a-z0-9-]*$/.test(sourceId)) {
-      continue;
-    }
-
-    sources.set(sourceId, cells.find((cell) => cell.includes("https://")) ?? "");
-  }
-
-  return sources;
 }
 
 function findClaim(claims: ClaimMapEntry[], claimId: string) {
@@ -75,26 +52,82 @@ const workspacesWithRegister = workspaces.filter((entry) => entry.registerPath !
 
 describe.each(workspacesWithRegister)("$workspace claim-map ↔ source register", ({ workspace, registerPath }) => {
   const claimMap = readClaimMap(getClaimMapPath(rootDir, workspace));
-  const registered = collectRegisteredSources(readRepoFile(registerPath as string));
+  const register = parseSourceRegister(readRepoFile(registerPath as string));
+  const claimById = new Map(claimMap.claims.map((claim) => [claim.id, claim]));
 
-  it("모든 claim sourceId가 source register에 등록돼 있다", () => {
+  // `audit:facts`는 HIGH risk claim에 sourceId가 "몇 개 있는지"만 세므로, 실재하지 않는 sourceId를
+  // 써도 factIntegrity=100이 나온다. 그 빈틈을 여기서 막는다.
+  //
+  // 폐기된 sourceId도 여기서 걸린다. 폐기 행은 URL이 없어 index에 들어가지 않기 때문이다 —
+  // 종전 파서는 표 행이기만 하면 등록으로 쳐서, 폐기된 id를 참조해도 "등록돼 있다"를 통과하고
+  // 다음 가드에서 URL이 비었다는 엉뚱한 이유로 터졌다.
+  it("모든 claim sourceId가 source register index에 등록돼 있다", () => {
     const missing = claimMap.claims.flatMap((claim) =>
       claim.sourceIds
-        .filter((sourceId) => !registered.has(sourceId))
-        .map((sourceId) => `${claim.id} → ${sourceId}`)
+        .filter((sourceId) => !register.index.has(sourceId))
+        .map((sourceId) => {
+          const substitution = register.substitutions.find((entry) => entry.sourceId === sourceId);
+
+          return substitution
+            ? `${claim.id} → ${sourceId} (폐기됨 · 대체: ${substitution.replacementIds.join(", ") || "미지정"})`
+            : `${claim.id} → ${sourceId}`;
+        })
     );
 
     expect(missing).toEqual([]);
   });
 
-  it("claim이 참조하는 sourceId는 URL까지 추적된다", () => {
-    const untraceable = claimMap.claims.flatMap((claim) =>
-      claim.sourceIds
-        .filter((sourceId) => !registered.get(sourceId))
-        .map((sourceId) => `${claim.id} → ${sourceId}`)
+  // 종료 점검의 본체. register가 "이 sourceId 말고 저것이 실제 근거였다"를 적어 두면, 그 claim이
+  // 실제로 저것을 들고 있는지를 여기서 강제한다.
+  //
+  // 2026-09-13이 `euipo-fees`를 폐기하며 `EU-FEE-001`의 근거를 `eutmr-consolidated`로 옮긴다고
+  // 적고 sourceIds 정리를 빠뜨린 것이 이 가드가 겨누는 실패다. 그때는 claim에 남은 죽은 id 덕분에
+  // 위 가드가 대신 잡았지만, 하루 뒤 `EU-PRIO-001`에서는 죽은 id가 없어(URL은 살아 있고 본문만
+  // JS 셸이었다) 아무 게이트도 울지 않았다.
+  //
+  // `A / B` 처럼 갈래로 적힌 행이 있으므로 **전부가 아니라 하나 이상**을 요구한다 — 어느 갈래로
+  // 옮겼는지는 claim마다 다르다.
+  it("대체 행이 지정한 claim은 그 대체 근거를 sourceIds에 갖는다", () => {
+    const unlinked = register.substitutions.flatMap((substitution) =>
+      substitution.claimIds
+        .map((claimId) => claimById.get(claimId))
+        .filter((claim): claim is ClaimMapEntry => claim !== undefined)
+        .filter(
+          (claim) =>
+            !substitution.replacementIds.some((sourceId) => claim.sourceIds.includes(sourceId))
+        )
+        .map(
+          (claim) =>
+            `${registerPath}:${substitution.line} ${substitution.sourceId} → ${claim.id} (대체: ${substitution.replacementIds.join(", ")})`
+        )
     );
 
-    expect(untraceable).toEqual([]);
+    expect(unlinked).toEqual([]);
+  });
+
+  // claim을 지정해 놓고 대체 근거가 하나도 해석되지 않으면 위 가드가 아무것도 강제하지 않는다.
+  // 오타 하나로 의무가 조용히 사라지는 것을 막는다.
+  it("claim을 지정한 대체 행은 index에서 해석되는 대체 근거를 갖는다", () => {
+    const vacuous = register.substitutions
+      .filter(
+        (substitution) =>
+          substitution.claimIds.length > 0 && substitution.replacementIds.length === 0
+      )
+      .map((substitution) => `${registerPath}:${substitution.line} ${substitution.sourceId}`);
+
+    expect(vacuous).toEqual([]);
+  });
+
+  // claim이 사라졌거나 id가 바뀌었는데 대체 행이 옛 id를 붙들고 있으면, 그 행은 아무 claim도
+  // 지키지 않으면서 지키는 것처럼 보인다.
+  it("대체 행이 가리키는 claim id가 claim-map에 실재한다", () => {
+    const dangling = register.substitutions.flatMap((substitution) =>
+      substitution.claimIds
+        .filter((claimId) => !claimById.has(claimId))
+        .map((claimId) => `${registerPath}:${substitution.line} ${substitution.sourceId} → ${claimId}`)
+    );
+
+    expect(dangling).toEqual([]);
   });
 });
 

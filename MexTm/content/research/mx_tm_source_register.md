@@ -4,6 +4,8 @@
 `content/research/claim-map.json`의 `sourceIds`는 아래 표의 키로 공식 URL에 연결되고,
 회귀 가드 [`scripts/research-audit/claim-source-register.test.ts`](../../../scripts/research-audit/claim-source-register.test.ts)가
 "claim이 참조하는 sourceId가 이 표에 실재하고 URL까지 추적되는가"를 강제한다.
+**URL 칸이 없는 표 행은 "이 sourceId 말고 저것이 실제 근거다"라는 뜻이고**(폐기·제거·근거불가 모두 같은 모양),
+그 행이 claim을 지정하면 해당 claim이 대체 근거를 실제로 `sourceIds`에 들고 있는지까지 같은 가드가 본다.
 
 기준일: 2026-08-30 (전건 본문 개방 확인)
 
@@ -48,12 +50,14 @@
 
 ## 제거된 출처 (2026-08-30)
 
-| 옛 sourceId | 사유 |
-|---|---|
-| gobmx-impi88 | gob.mx 포털 개편으로 `/tramites/ficha/*` 네임스페이스 소멸. 브라우저로 열면 포털 루트로 리다이렉트된다. |
-| gobmx-impi3170 | 동일 사유. |
+| 옛 sourceId | 기대고 있던 claim | 실제 근거 | 사유 |
+|---|---|---|---|
+| gobmx-impi88 | MX-FEE-001 | wipolex-lfppi-2020 (제233조·제237조) | gob.mx 포털 개편으로 `/tramites/ficha/*` 네임스페이스 소멸. 브라우저로 열면 포털 루트로 리다이렉트된다. |
+| gobmx-impi3170 | MX-FEE-001, MX-DL-001 | wipolex-lfppi-2020 (제178조·제233조·제237조) | 동일 사유. |
 
 두 sourceId는 `claim-map.json`의 `sourceIds`에서 제거했고, `MX-FEE-001`·`MX-DL-001`의 근거는 LFPPI 조문(`wipolex-lfppi-2020`)으로 옮겼다. 경위는 `mx_tm_fact_verification_log.md`의 `2026-08-30 재검증` 절에 있다.
+
+**2026-09-15**: 위 표에 `기대고 있던 claim`·`실제 근거` 두 열을 넣었다. 종전에는 이 대체가 이 문단의 산문에만 있어 게이트가 읽지 못했고, 두 claim이 `wipolex-lfppi-2020`을 잃어도 아무도 울지 않았다. 이제 표가 계약이다.
 
 ## 미해결 (owner 판단)
 
