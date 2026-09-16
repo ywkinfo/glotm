@@ -8,13 +8,13 @@
 ## 목적
 
 이 문서는 shipped `EuTm` baseline의 리서치 범위와 핵심 질문을 정리하는 working note다.
-이번 라운드의 목적은 새 범위를 넓히는 것이 아니라, `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope` 설명을 같은 기준선으로 유지하는 데 있다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
+이번 라운드의 목적은 새 범위를 넓히는 것이 아니라, `15개 챕터 / 검색 엔트리 261개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope` 설명을 같은 기준선으로 유지하는 데 있다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 
 ## 기준선 증빙
 
 - `content/source/manifest.json`은 현재 15개 챕터를 정의한다 (pre-expansion: 14개, historical).
-- `content/generated/search-index.json`의 현재 search entry 수는 260이다 (pre-expansion: 258, historical).
-- workspace 문서와 리서치 메모는 런타임 baseline 설명을 `growth tier · mature lifecycle, 15개 챕터 / 검색 엔트리 260개 / controlled EU+UK scope`로 정본(`src/products/registry.ts`)에 맞추고, root/shared truth 갱신은 리더 통합 단계에서 처리한다.
+- `content/generated/search-index.json`의 entry 수는 숫자를 여기 복제하지 않는다 — gitignore된 빌드 산출물이라 신규 클론에는 파일 자체가 없고, 복제한 숫자만 옛 값으로 남는다. 정본은 `src/products/registry.ts`의 `searchEntryCount`이고, 산출물 실측은 `npm run content:europe` 뒤 `node -e "console.log(JSON.parse(require('fs').readFileSync('EuTm/content/generated/search-index.json','utf8')).length)"`로 본다 (pre-expansion: 258, historical).
+- workspace 문서와 리서치 메모는 런타임 baseline 설명을 `growth tier · mature lifecycle, 15개 챕터 / 검색 엔트리 261개 / controlled EU+UK scope`로 정본(`src/products/registry.ts`)에 맞추고, root/shared truth 갱신은 리더 통합 단계에서 처리한다.
 
 ## 고정된 범위
 
@@ -58,5 +58,5 @@
 - 변동성이 큰 사실은 본문보다 `eu_tm_fact_verification_log.md`에 먼저 적는다.
 - 구체 수치나 기간은 공식 1차 출처를 확인하기 전에는 확정 문장으로 쓰지 않는다.
 - 회원국별 예외는 범용 본문을 흐릴 경우 메모 수준으로 제한하고, 필요하면 후속 국가 트랙으로 분리한다.
-- 문서 상태 문구는 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle / controlled EU+UK scope` 정본(`src/products/registry.ts`)과 어긋나지 않게 유지한다.
+- 문서 상태 문구는 `15개 챕터 / 검색 엔트리 261개 / growth tier · mature lifecycle / controlled EU+UK scope` 정본(`src/products/registry.ts`)과 어긋나지 않게 유지한다.
 - local lane 증빙은 `npm run content:prepare`를 우선 사용하고, 루트 동등 경로가 필요할 때만 `npm run content:europe`를 다시 재현한다. shared root gate는 리더 통합 단계에서 1회만 실행한다.

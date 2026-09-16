@@ -2,12 +2,12 @@
 
 > **CLOSED — EuTm growth/mature promotion shipped (#69/#70).** 이 handoff input은 2026-06 growth expansion
 > 통합으로 닫혔다. 현재 정본은 `src/products/registry.ts`(`15개 챕터 / 검색 엔트리 261개 / growth tier · mature
-> lifecycle · full QA`, verifiedOn re-stamp 2026-08-25 · factsReviewedOn 2026-08-02)이며, 아래 metadata는 정본을 반영하도록
+> lifecycle · full QA`, verifiedOn re-stamp 2026-09-12 · factsReviewedOn 2026-09-13)이며, 아래 metadata는 정본을 반영하도록
 > 갱신했다. 2026-04-21 기준 `14개 챕터 / 258개 / validate · beta` 수치는 pre-expansion baseline으로 historical 보존한다.
 
 ## Baseline One-Liner
 
-`EuTm`은 루트 `/europe`에 연결된 live growth regional guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 261개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(정본: `src/products/registry.ts`, verifiedOn re-stamp 2026-08-25 · factsReviewedOn 2026-08-02). pre-expansion baseline(`14개 챕터 / 258개 / validate · beta`, 2026-04-21)은 아래 historical 기록으로 보존한다.
+`EuTm`은 루트 `/europe`에 연결된 live growth regional guide이며, 현재 baseline은 `15개 챕터 / 검색 엔트리 261개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(정본: `src/products/registry.ts`, verifiedOn re-stamp 2026-09-12 · factsReviewedOn 2026-09-13). pre-expansion baseline(`14개 챕터 / 258개 / validate · beta`, 2026-04-21)은 아래 historical 기록으로 보존한다.
 
 ## Authority Order
 
@@ -34,9 +34,9 @@
 | Search entry count | `261` | `src/products/registry.ts`, `EuTm/content/generated/search-index.json` |
 | Tier / lifecycle / QA | `growth` / `mature` / `full` | `src/products/registry.ts` |
 | High-risk gap count | `0` | `src/products/registry.ts` |
-| Root metadata verifiedOn / factsReviewedOn | `2026-08-25` / `2026-08-02` | `src/products/registry.ts` |
+| Root metadata verifiedOn / factsReviewedOn | `2026-09-12` / `2026-09-13` | `src/products/registry.ts` |
 | Workspace gate rerun | `2026-04-21` `npm --prefix EuTm run content:prepare` pass (pre-expansion baseline, historical); growth expansion 통합·검증은 #69/#70에서 처리 | local rerun + shared root gate |
-| Research baseline | claim-map 11건(전 항목 BODY_READY · HIGH 9 / MEDIUM 2 · lastVerified 2026-08-02), source-register companion 유지 | `claim-map.json`, fact log, source register |
+| Research baseline | claim-map 11건(전 항목 BODY_READY · HIGH 9 / MEDIUM 2 · lastVerified 2026-09-13), source-register companion 유지 | `claim-map.json`, fact log, source register |
 
 ## Chapter Drift Map
 

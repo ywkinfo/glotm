@@ -6,7 +6,7 @@
 > beta`)과 stabilization 시절 framing은 historical 맥락으로 보존한다. 정본 수치는 `src/products/registry.ts`.
 
 이 fact log는 이미 검증된 사실이 어느 장에 어떻게 반영되었는지와 어떤 controlled gap이 남는지를 정리한다.
-현재 baseline은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
+현재 baseline은 `15개 챕터 / 검색 엔트리 261개 / growth tier · mature lifecycle · full QA / controlled EU+UK scope`다(pre-expansion: `14개 챕터 / 258개 / validate · beta`, historical).
 새 verified item을 무리하게 늘리기보다, 이 기준선이 `README`, harness 문서, 본문 설명과 같은 방향을 유지하는지를 먼저 본다.
 
 ## 2026-09-13 재검증 라운드 (claim 11건 · 캡처 근거)
@@ -219,7 +219,7 @@ claim-map 10건 전부가 mature 60일 창 만료(2026-08-08/09)를 앞두고 �
 ## Baseline evidence snapshot
 
 - 챕터 기준선: `content/source/manifest.json`에 15개 챕터가 정의돼 있다 (pre-expansion: 14개, historical).
-- search 기준선: `content/generated/search-index.json`의 현재 entry 수는 260이다 (pre-expansion: 258, historical).
+- search 기준선: 정본은 `src/products/registry.ts`의 `searchEntryCount`다. `content/generated/search-index.json`은 gitignore된 빌드 산출물이라 숫자를 여기 복제하지 않는다 (pre-expansion: 258, historical).
 - scope 기준선: 본문과 리서치 문서는 EU 공통 프레임 + UK 병행 판단까지만 유지하고, 회원국별 deep dive는 controlled gap으로 남긴다.
 
 | Item | Why it matters | Primary source target | Chapter ref | Status | Notes |

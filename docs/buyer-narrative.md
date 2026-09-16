@@ -64,8 +64,8 @@ GloTm은 이 사이의 빈칸을 메운다. 법률 자문을 대체하는 것이
 
 ## Current report handoff
 
-- 현재 primary report 1순위는 `글로벌 지정상품·지정서비스 설계 프레임워크`(`global-goods-services-class-framework`)다.
-- 현재 primary report 2순위는 `한글 표장 글로벌 보호 운영 프레임워크`(`hangul-mark-global-protection-framework`)다.
+- 현재 primary report 2건은 `src/reports/registry.ts`의 `getLatestReports(2)`가 정본이다(발행 최신순). 이 문서는 슬러그를 복제하지 않는다 — 새 리포트가 실리면 게이트웨이는 따라 움직이는데 여기 적어 둔 이름만 옛 쌍에 남기 때문이다(2026-08-31 `global-local-agent-selection-framework` 게재 때 실제로 그렇게 됐다).
+- 확인 명령: `node --import tsx -e "import {getLatestReports} from './src/reports/registry.ts'; for (const r of getLatestReports(2)) console.log(r.slug, r.publishedAt)"`
 - Gateway의 최신 report 2개는 별도 주연 카드가 아니라, 국가 진입 아래에서 launch sequencing, filing packet, evidence triage 같은 공통 질문을 다시 묶는 first trust layer로 유지한다. 게이트웨이에서 최신 report는 이 한 곳에만 노출한다(별도 Report 섹션의 중복은 제거했고, report focus point 핸드오프와 아카이브 링크를 이 섹션이 함께 진다).
 
 ## 지금 보면 좋은 가이드

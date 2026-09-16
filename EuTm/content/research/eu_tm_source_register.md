@@ -1,7 +1,7 @@
 # EuTm Source Register
 
 이 문서는 `EuTm` growth-tier baseline에서 우선 확인할 1차 출처군과 핵심 claim의 공식 URL을 정리한 source-register companion artifact다.
-현재 기준선은 `15개 챕터 / 검색 엔트리 260개 / growth tier · mature lifecycle / EU+UK scope`이며, 출처 범위를 이 기준선과 같은 방향으로 고정한다.
+현재 기준선은 `15개 챕터 / 검색 엔트리 261개 / growth tier · mature lifecycle / EU+UK scope`이며, 출처 범위를 이 기준선과 같은 방향으로 고정한다.
 
 ## Core Source Groups
 
