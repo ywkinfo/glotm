@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-15 18라운드 (단일 소스 HIGH claim 26건 분류 + 조문 큐 · 채널 닫혀 sourceIds는 늘리지 않았다)
+- Last updated: 2026-09-16 19라운드 (조문 큐는 미푸시 상태 확인 · LatTm 미결을 후보로 승계 · 미결 판정 기준 신설)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -374,6 +374,16 @@
   - **게이트로 만들지 않은 이유**를 문서 §4에 적었다. 단일 소스는 결함의 **징후**이지 결함이 아니다. 올릴 수 있는 형태는 "개수 ≥ 2"가 아니라 **"HIGH claim은 1차 법령·판결·공식 등록부를 최소 하나 참조한다"**이고, 그러려면 register가 어떤 소스가 1차인지를 선언해야 한다. 그 선언 도입은 staleness 하드 게이트와 같은 정책 결정이라 owner 몫이다.
   - 채널이 열리는 회차의 실행 순서: **B류 6건 → C류 중 앵커가 이미 등록된 JapTm 4건 → 나머지.**
   - 게이트: `npm test` **450/450**, `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 `gate=pass`.
+
+- 2026-09-16 19라운드: **조문 큐 결과가 저장소에 없다는 것을 확인하고, 이 채널에서 할 수 있는 자리를 대신 진행했다.**
+  - **① 조문 큐 10건은 아직 안 들어왔다.** 다른 채널에서 B류 6건 + JapTm 4건을 대조해 `claude/statute-anchors-b-queue`(5815263)에 커밋했다는 보고가 있었으나, **원격에 그 브랜치가 없다**(`git ls-remote --heads origin 'claude/statute-anchors*'` 0건). `origin/main`의 단일 소스 HIGH claim은 **여전히 26건**이고 조문 sourceId는 하나도 들어와 있지 않다. 그 세션의 git 프록시 인증 목록에 이 저장소가 없어 푸시가 막힌 것이고, 커밋은 그쪽 로컬에만 있다. 확인 방법을 `single-source-high-risk-claims.md` §5에 박아 뒀다 — **다음 회차는 큐를 다시 열기 전에 그 한 줄부터 본다.**
+  - **② 채널은 이틀 연속 닫혀 있다(이 컨테이너).** 09-15 조문 6/6, 09-16 조문 7/7 + 아르헨티나 3/3 전건 `CONNECT tunnel failed, 403`. 같은 09-16에 owner 브라우저 채널은 같은 호스트를 전부 열었다. 두 관측을 `채널은 상수가 아니다`에 함께 적고, **"닫혀 있다"는 결론에 유효기간이 없다**는 규범을 덧붙였다 — 18라운드가 물러선 기록은 그 채널의 그날에 대한 것이지 작업이 불가능하다는 뜻이 아니다.
+  - **③ radar가 지목한 자리를 진행했다.** `ready: 0`(다음 발행에 쓸 후보 없음)이고 후보 없는 미결이 4건이었다. 넷을 읽어 보니 **성격이 둘로 갈렸다.**
+    - `LA-OQ-002`만 소재다 — LatTm 본문과 `LA-AR-USE-001`은 중간 사용선언을 `5~6년차 창`으로 적는데, **claim의 유일한 근거로 등록된 INPI 면이 그 경계를 말하지 않는다**(`5년차 기산 + 지연 가산요율`까지만). 후보 `2026-09-argentina-midterm-use-declaration-boundary`로 올리고 `LA-OQ-002`에 `candidateId`를 연결했다. LatTm은 **관할 축 180일**로 포트폴리오 최악인데 열린 후보가 0건이었다 — 그 자리가 1건이 됐다.
+    - `CN-OQ-001`·`CN-OQ-002`는 register 장부 결정(sourceId 신설 vs 보조 출처), `MX-OQ-003`은 claim 범위 결정(owner)이라 **후보가 아니다.**
+  - **④ 그 판정 기준을 계약에 넣었다.** `briefs-discovery.md`에 `모든 미결이 후보가 되지는 않는다` 절 신설 — 가르는 기준은 **답이 바뀌면 독자가 다르게 행동하는가** 하나다. 장부·범위 결정을 후보로 올리면 백로그가 발행되지 않을 항목으로 차고 `ready: 0`인데 `watching`만 느는 모양이 된다. 그렇다고 미결을 닫아서도 안 된다 — 닫는 것은 확인됐을 때뿐이다. 판정 4건을 표로 남겨 **회차마다 같은 넷을 다시 들여다보지 않게** 했다.
+  - 후보의 `trigger`는 외부 소스가 아니라 **저장소 안의 불일치**이고, `sourceIds`는 이 질문을 닫을 수 있는 소스를 가리킨다 — `2026-09-mexico-lfppi-transitional-provisions`가 세운 규약 그대로다. 1차 출처를 열지 못했으므로 **sweep 회차는 추가하지 않았다.**
+  - 게이트: `npm test` **466/466**, `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 `gate=pass`.
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 
