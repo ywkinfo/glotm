@@ -551,6 +551,20 @@ export const briefCandidates: BriefCandidate[] = [
     publishedAs: "2026-09-mexico-lfppi-gazette-transitional-confirmation",
     notes:
       "앞 후보(`2026-09-mexico-lfppi-transitional-provisions`)와 같은 질문을 1차 출처로 닫은 회차다. 그 후보는 저장소 내부 모순에서 나왔고 2차 출처까지만 닿았지만, 이 후보는 관보 게재분 본문에서 나왔다. **sweep 회차는 추가하지 않았다** — `dof-mexico`의 `sweepTarget`은 기간 대상 검색이고 '일자별 edición 전문을 읽는 것은 완료 조건이 아니다'라고 명시돼 있는데, 이번에 한 것은 특정 nota 직접 열람이라 그 조건을 채우지 못한다. 그래서 `dof-mexico`는 radar에서 계속 `실사 이력 없음`이다. **대조 범위**: DOF 게재분 한 곳이며 diputados 상시본(`LeyesBiblio/regley/Reg_LFPPI.pdf`)은 이 세션에서 열리지 않았다(curl 443 연결 실패, 브라우저 내비게이션 거부). 관보 게재분이 정본이므로 결론은 서지만 두 곳 대조는 아니다. 남은 미결은 시행규칙 **본문 조문**이다 — `MX-OQ-002`(답변기한·연장 기산)는 부칙이 아니라 본문에 있고 이 회차가 열지 않았다."
+  },
+  {
+    id: "2026-09-argentina-midterm-use-declaration-boundary",
+    headline:
+      "아르헨티나 중간 사용선언을 '5~6년차 창'으로 관리하면 6년차 제출이 정상 처리라고 믿게 된다 — INPI 안내면은 5년차 기산과 지연 가산요율만 말하고 6년차 마감을 말하지 않는다",
+    trigger:
+      "2026-09-16 자체 점검(`LA-OQ-002` 승계). LatTm 본문과 `LA-AR-USE-001`은 중간 사용선언을 `등록 후 5~6년차 사이`라는 **창**으로 적는데, 2026-09-12 재대조가 실제로 열어 기록한 INPI 공개 안내면은 `sobre los primeros 5 años de tu registro` · `se debe realizar a los primeros cinco (5) años`와 지연 시 연차별 가산요율·갱신 처리 요건까지만 말하고 **6년차 마감을 명시하지 않는다**. 저장소 안에서 확인되는 불일치다 — claim의 유일한 근거로 등록된 바로 그 면이 claim이 적은 경계를 말하지 않는다.",
+    discoveredOn: "2026-09-16",
+    sourceIds: ["inpi-argentina"],
+    jurisdictions: ["Latin America", "Use Declaration"],
+    relatedProductSlugs: ["latam"],
+    status: "watching",
+    notes:
+      "**발굴 경로가 외부 소스가 아니라 저장소 안의 불일치다.** 2026-09-12 LatTm 재대조가 등록 URL(로그인 벽)에서 공개 안내면으로 근거를 옮기면서 인용한 문구가 본문의 경계와 맞지 않는다는 것을 `LA-OQ-002`로 올려 뒀는데, 나흘째 후보가 없어 발굴 백로그가 그것을 승계하지 못하고 있었다. `sourceIds`는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다(`2026-09-mexico-lfppi-transitional-provisions`와 같은 규약) — INPI 결의(P-183/2018 계열) 또는 법 제22.362호 개정 조문이 마감 구조를 '창'으로 정하는지 '기산점 + 지연 가산'으로 정하는지가 판정점이다. **1차 출처 미대조**: 2026-09-16 회차 시작 실측에서 `portaltramites.inpi.gob.ar`·`www.argentina.gob.ar`·`www.boletinoficial.gob.ar` 전건 `CONNECT tunnel failed, 403`(정책 거부)이라 sweep 회차를 추가하지 않는다. **두 읽기가 독자에게 다른 것을 말한다** — '창'이면 6년차 제출이 정상 처리이고, '기산점 + 지연 가산'이면 같은 제출이 가산 대상이다. 어느 쪽인지 모르는 채로는 본문을 고칠 수 없으므로 발행 전에 조문이 필요하다. `LA-AR-USE-001`은 단일 소스 HIGH claim이기도 해서 `docs/single-source-high-risk-claims.md` C류와 같은 자리를 가리킨다."
   }
 ];
 
