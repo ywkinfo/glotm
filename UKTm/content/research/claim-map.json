@@ -40,7 +40,7 @@
       "chapterRefs": ["Ch7"],
       "riskLevel": "HIGH",
       "sourceIds": ["ukipo-renew", "uk-tma-1994-section-40", "uk-tma-1994-section-42"],
-      "lastVerified": "2026-09-17",
+      "lastVerified": "2026-09-16",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -49,7 +49,7 @@
         "unit": "years",
         "expression": "renewal every 10 years from registration"
       },
-      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/renew-your-trade-mark. 갱신 수수료 금액은 UK-FEE-001에서 구조적 표기로 분리. 2026-07-21 재대조: 변경 없음. TMA 1994 §40(3)상 출원일이 등록일로 간주되어 갱신 10년 기산은 실제 등록완료일이 아니라 출원일 기준(본문 Ch07 명확화). 2026-08-30 재대조: 변경 없음('Trade marks must be renewed every 10 years' 축자 확인; 만료 전 6개월~만료 후 6개월 갱신 창도 유지). **2026-09-17 조문 대조(브라우저 채널 직접 열람)**: TMA 1994 제42조 제1항 「A trade mark shall be registered for a period of ten years from the date of registration」·제2항(제43조에 따라 10년 단위 갱신), 제40조 제3항 「A trade mark when registered shall be registered as of the date of filing of the application for registration; and that date shall be deemed for the purposes of this Act to be the date of registration」. claim의 '등록일 기준'은 제40조 제3항이 출원일을 이 법상 등록일로 간주한 결과로 성립하므로 normalized.trigger=registration 표기는 그대로 맞다 — 실제 갱신 달력이 출원일에 걸리는 이유가 이 간주 규정이다. 두 조문을 register에 신설해 연결했다."
+      "notes": "UKTm fact log(2026-05-12 확정) 파생. 출처: gov.uk/renew-your-trade-mark. 갱신 수수료 금액은 UK-FEE-001에서 구조적 표기로 분리. 2026-07-21 재대조: 변경 없음. TMA 1994 §40(3)상 출원일이 등록일로 간주되어 갱신 10년 기산은 실제 등록완료일이 아니라 출원일 기준(본문 Ch07 명확화). 2026-08-30 재대조: 변경 없음('Trade marks must be renewed every 10 years' 축자 확인; 만료 전 6개월~만료 후 6개월 갱신 창도 유지). **2026-09-16 조문 대조(브라우저 채널 직접 열람)**: TMA 1994 제42조 제1항 「A trade mark shall be registered for a period of ten years from the date of registration」·제2항(제43조에 따라 10년 단위 갱신), 제40조 제3항 「A trade mark when registered shall be registered as of the date of filing of the application for registration; and that date shall be deemed for the purposes of this Act to be the date of registration」. claim의 '등록일 기준'은 제40조 제3항이 출원일을 이 법상 등록일로 간주한 결과로 성립하므로 normalized.trigger=registration 표기는 그대로 맞다 — 실제 갱신 달력이 출원일에 걸리는 이유가 이 간주 규정이다. 두 조문을 register에 신설해 연결했다."
     },
     {
       "id": "UK-NONUSE-001",
