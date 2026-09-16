@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -45,6 +45,9 @@ import {
   legalPages
 } from "../src/trustLegal";
 import {
+  DEFAULT_SOCIAL_IMAGE_HEIGHT,
+  DEFAULT_SOCIAL_IMAGE_PATH,
+  DEFAULT_SOCIAL_IMAGE_WIDTH,
   LEGAL_SOURCE_PATH,
   buildPublicHref,
   buildRobotsTxt,
@@ -92,7 +95,7 @@ describe("SEO build helpers", () => {
     expect(pages[0]).toMatchObject({
       routePath: "/",
       canonicalUrl: "https://ywkinfo.github.io/glotm/",
-      ogImageUrl: "https://ywkinfo.github.io/glotm/og/glotm-share-card.svg",
+      ogImageUrl: "https://ywkinfo.github.io/glotm/og/glotm-share-card.png",
       title: "GloTm | Cross-border Trademark Operating Guide"
     });
     expect(pages[0]).toMatchObject({
@@ -181,6 +184,84 @@ describe("SEO build helpers", () => {
       );
       expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm${legalPage.path}/`);
     }
+  });
+
+  it("gives every list and legal route a publisher, not just a breadcrumb", () => {
+    // 챕터·리포트·브리프 상세는 Article + Organization + Person까지 내는데, 가이드 홈 7면과
+    // 두 아카이브, 법적 고지 3면은 BreadcrumbList 하나만 내고 있었다. 가이드 홈은 head 쿼리의
+    // 착지면이자 크롤러가 챕터보다 먼저 닿는 면이라, 발행 주체가 비어 있는 것이 가장 아프다.
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+
+    const typeOf = (node: unknown) => (node as { "@type"?: string })["@type"];
+
+    const listRoutes = [
+      ...liveShellProducts.map((product) => ({ path: product.path, expected: "CollectionPage" })),
+      { path: "/briefs", expected: "CollectionPage" },
+      { path: "/reports", expected: "CollectionPage" },
+      ...legalPages.map((legalPage) => ({ path: legalPage.path, expected: "WebPage" }))
+    ];
+
+    expect(listRoutes).toHaveLength(12);
+
+    for (const { path: routePath, expected } of listRoutes) {
+      const page = pages.find((candidate) => candidate.routePath === routePath);
+
+      expect(page, `${routePath} must be prerendered`).toBeDefined();
+
+      const node = page!.structuredData?.find((candidate) => typeOf(candidate) === expected) as
+        | Record<string, unknown>
+        | undefined;
+
+      expect(node, `${routePath} must emit a ${expected} node, not only a breadcrumb`).toBeDefined();
+      expect(node!.publisher, `${routePath} ${expected}.publisher`).toBeDefined();
+      expect(node!.inLanguage).toBe("ko");
+      expect(node!.isPartOf).toEqual({ "@id": "https://ywkinfo.github.io/glotm/#website" });
+
+      // 구조화 데이터가 그 면의 실제 lastmod와 다른 날짜를 주장하면 안 된다.
+      expect(node!.dateModified, `${routePath} ${expected}.dateModified`).toBe(page!.lastModified);
+
+      // breadcrumb은 없어지지 않는다 — 더한 것이지 바꾼 것이 아니다.
+      expect(
+        page!.structuredData?.some((candidate) => typeOf(candidate) === "BreadcrumbList"),
+        `${routePath} must keep its BreadcrumbList`
+      ).toBe(true);
+    }
+
+    // 목록면의 mainEntity는 그 면이 실제로 링크하는 항목 수와 같아야 한다(없는 것을 주장 금지).
+    for (const product of liveShellProducts) {
+      const page = pages.find((candidate) => candidate.routePath === product.path)!;
+      const node = page.structuredData!.find((candidate) => typeOf(candidate) === "CollectionPage") as
+        Record<string, unknown>;
+      const itemList = node.mainEntity as { numberOfItems?: number } | undefined;
+
+      expect(itemList?.numberOfItems, `${product.slug} chapter count in mainEntity`).toBe(
+        documentDataBySlug.get(product.slug)!.chapters.length
+      );
+    }
+  });
+
+  it("ships a social card in a format link previews actually render, at the declared size", () => {
+    // X(Twitter) Cards는 JPG·PNG·WEBP·GIF만 받고 Facebook·LinkedIn·Slack·카카오톡도 SVG
+    // og:image를 렌더하지 않는다. 전 면이 summary_large_image를 선언하므로, 여기가 SVG로
+    // 되돌아가면 링크를 붙여 넣은 자리에 카드가 통째로 사라진다(페이지는 멀쩡해서 게이트
+    // 어디도 붉어지지 않는다 — 그래서 이 단정이 필요하다).
+    expect(DEFAULT_SOCIAL_IMAGE_PATH).toMatch(/\.(png|jpe?g|webp|gif)$/);
+
+    const assetPath = path.resolve(__dirname, "..", "public", DEFAULT_SOCIAL_IMAGE_PATH.replace(/^\//, ""));
+
+    expect(existsSync(assetPath), `${DEFAULT_SOCIAL_IMAGE_PATH} must exist under public/`).toBe(true);
+
+    // 선언한 og:image:width/height와 실제 픽셀이 어긋나면 크롤러가 선언 쪽을 버린다.
+    // PNG IHDR은 파일 머리에 고정 오프셋으로 있어 의존성 없이 읽는다.
+    const header = readFileSync(assetPath);
+
+    expect(header.subarray(1, 4).toString("ascii"), "must be a real PNG").toBe("PNG");
+    expect(header.readUInt32BE(16)).toBe(DEFAULT_SOCIAL_IMAGE_WIDTH);
+    expect(header.readUInt32BE(20)).toBe(DEFAULT_SOCIAL_IMAGE_HEIGHT);
   });
 
   it("dates each guide chapter from its own source commit, not from the guide directory", () => {
@@ -569,12 +650,12 @@ describe("SEO build helpers", () => {
       expect(html, `${label} 레인은 비어 있는데 prerender 본문이 부른다`).not.toContain(label);
     }
     expect(html).toContain(
-      '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
+      '<meta property="og:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.png" />'
     );
     expect(html).toContain('<link rel="canonical" href="https://ywkinfo.github.io/glotm/" />');
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
     expect(html).toContain(
-      '<meta name="twitter:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.svg" />'
+      '<meta name="twitter:image" content="https://ywkinfo.github.io/glotm/og/glotm-share-card.png" />'
     );
   });
 
