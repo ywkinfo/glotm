@@ -922,8 +922,10 @@ describe("App portfolio shell", () => {
     for (const slug of ["mexico", "europe"]) {
       const product = products.find((candidate) => candidate.slug === slug);
       expect(product, `registry has no product for ${slug}`).toBeDefined();
+      // maturityNote는 선택 필드지만 priority lane 카드가 보여 주는 값이라, 이 둘에는 있어야 한다.
+      expect(product!.maturityNote, `${slug} has no maturityNote to render`).toBeDefined();
       expect(
-        within(currentPilotScope as HTMLElement).getByText(product!.maturityNote)
+        within(currentPilotScope as HTMLElement).getByText(product!.maturityNote!)
       ).toBeInTheDocument();
       expect(
         within(currentPilotScope as HTMLElement).getByText(product!.summary)

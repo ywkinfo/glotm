@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -243,7 +243,117 @@ export function scanLineForLifecycleDrift(
   return issues;
 }
 
+// ---- registry 날짜 미러 ----
+
+// registry의 날짜 필드를 복제하는 문서는 재검증 re-stamp 때마다 같이 움직여야 하는데,
+// 지금까지 그것을 사람의 기억에 맡겨 왔다. 2026-08-25 라운드가 손으로 고친 줄들이
+// 2026-09-12 re-stamp에서 그대로 다시 깨졌고, 같은 세션의 수동 스윕은 `drift 0`을 보고했다.
+//
+// 계약은 좁게 잡는다: **그 줄이 말하는 필드의 현재 값이 그 줄에 나타나야 한다.**
+// 같은 줄의 다른 날짜(직전 로컬 재현일 같은 historical 값)는 허용한다 — 미러가 stale해지는
+// 실패는 "현재 값이 사라지는" 모양이지 "옛 날짜가 남는" 모양이 아니기 때문이다.
+export type RegistryDateField = "verifiedOn" | "factsReviewedOn";
+
+export type DateMirrorRow = Pick<ProductMeta, "shortLabel" | "verifiedOn" | "factsReviewedOn">;
+
+// 문서마다 표기가 달라(표 라벨 / 산문) 필드명 자체와 이 저장소가 실제로 쓰는 라벨을 함께 본다.
+const DATE_FIELD_TOKENS: Record<RegistryDateField, string[]> = {
+  verifiedOn: ["verifiedOn", "root verified date"],
+  factsReviewedOn: ["factsReviewedOn", "claim verification date"]
+};
+
+// root truth를 미러하는 것이 임무인 문서만 본다. 같은 디렉터리의 checklist·expansion 보드는
+// 승급 시점 증거나 dated 라운드 기록이라 보드가 반복해서 not-drift로 판정해 왔다.
+const DATE_MIRROR_FILE_SUFFIXES = ["-root-sync-input.md", "-root-gate-input.md"];
+
+function toIsoDate(value: string | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const parsed = Date.parse(value);
+
+  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString().slice(0, 10);
+}
+
+export function scanLineForDateMirrorDrift(
+  source: string,
+  line: string,
+  product: DateMirrorRow
+): ConsistencyIssue[] {
+  const datesOnLine = line.match(/\d{4}-\d{2}-\d{2}/g);
+
+  // 날짜가 없는 줄은 필드를 **가리키기만** 하는 줄이다(예: `| verifiedOn source | registry.ts |`).
+  // 복제가 없으므로 drift도 없다.
+  if (!datesOnLine) {
+    return [];
+  }
+
+  const issues: ConsistencyIssue[] = [];
+
+  for (const field of Object.keys(DATE_FIELD_TOKENS) as RegistryDateField[]) {
+    const mentionsField = DATE_FIELD_TOKENS[field].some((token) => line.includes(token));
+
+    if (!mentionsField) {
+      continue;
+    }
+
+    const expected = toIsoDate(product[field]);
+
+    // factsReviewedOn은 미설정(unrecorded)이 정상 상태다. 정본에 값이 없으면 대조하지 않는다.
+    if (!expected) {
+      continue;
+    }
+
+    if (datesOnLine.includes(expected)) {
+      continue;
+    }
+
+    issues.push({
+      level: "hard",
+      source,
+      message: `${product.shortLabel} ${field} 미러가 정본과 어긋남: 줄의 날짜 ${datesOnLine.join(", ")} 중 정본 ${expected} 없음 (정본: src/products/registry.ts)`
+    });
+  }
+
+  return issues;
+}
+
+// ---- maturityNote가 품은 파생 수치 ----
+
+// maturityNote는 정본 파일 안의 자유 서술이라 어떤 검사도 받지 않으면서 게이트웨이 카드로
+// 렌더된다. 2026-09-16 실측에서 EuTm이 `claim-map 10건`을 적는 동안 claim-map은 11건이었고,
+// 파생본인 PROJECT-OVERVIEW는 11건으로 맞아 정본이 파생본보다 부정확한 역전이 나 있었다.
+export type MaturityNoteRow = Pick<ProductMeta, "shortLabel" | "maturityNote">;
+
+export function compareMaturityNoteClaimCount(
+  product: MaturityNoteRow,
+  actualClaimCount: number
+): ConsistencyIssue[] {
+  // maturityNote는 선택 필드다. 없으면 복제된 수치도 없다.
+  const match = product.maturityNote?.match(/claim-map\s+(\d+)건/);
+
+  if (!match) {
+    return [];
+  }
+
+  const stated = Number(match[1]);
+
+  if (stated === actualClaimCount) {
+    return [];
+  }
+
+  return [
+    {
+      level: "hard",
+      source: `registry:${product.shortLabel}:maturityNote`,
+      message: `claim-map 건수 불일치: maturityNote ${stated}건 vs claim-map.json ${actualClaimCount}건`
+    }
+  ];
+}
+
 // ---- 파일 I/O 래퍼 ----
+
 
 function checkGeneratedCounts(): ConsistencyIssue[] {
   const issues: ConsistencyIssue[] = [];
@@ -322,12 +432,71 @@ function checkLifecycleScan(): ConsistencyIssue[] {
   return issues;
 }
 
+function checkDateMirrors(): ConsistencyIssue[] {
+  const issues: ConsistencyIssue[] = [];
+
+  for (const product of products) {
+    const workspaceDir = path.resolve(rootDir, "docs/workspaces", product.shortLabel);
+
+    if (!existsSync(workspaceDir)) {
+      continue;
+    }
+
+    for (const fileName of readdirSync(workspaceDir)) {
+      if (!DATE_MIRROR_FILE_SUFFIXES.some((suffix) => fileName.endsWith(suffix))) {
+        continue;
+      }
+
+      const relativePath = path.join("docs/workspaces", product.shortLabel, fileName);
+      const lines = readFileSync(path.join(workspaceDir, fileName), "utf-8").split("\n");
+
+      // SUPERSEDED 배너가 붙은 문서는 그 아래 전체가 승급 이전 dated 기록이다
+      // (보드가 UKTm root-sync에 대해 두 번 not-drift로 판정한 자리다).
+      if (lines.slice(0, 6).some((line) => line.includes("SUPERSEDED"))) {
+        continue;
+      }
+
+      lines.forEach((line, lineIndex) => {
+        issues.push(
+          ...scanLineForDateMirrorDrift(`mirror:${relativePath}:${lineIndex + 1}`, line, product)
+        );
+      });
+    }
+  }
+
+  return issues;
+}
+
+function checkMaturityNoteClaimCounts(): ConsistencyIssue[] {
+  const issues: ConsistencyIssue[] = [];
+
+  for (const product of products) {
+    const claimMapPath = path.resolve(
+      rootDir,
+      product.shortLabel,
+      "content/research/claim-map.json"
+    );
+
+    if (!existsSync(claimMapPath)) {
+      continue;
+    }
+
+    const claimMap = JSON.parse(readFileSync(claimMapPath, "utf-8")) as { claims: unknown[] };
+
+    issues.push(...compareMaturityNoteClaimCount(product, claimMap.claims.length));
+  }
+
+  return issues;
+}
+
 export function runCheck(): ConsistencyResult {
   const allIssues = [
     ...checkGeneratedCounts(),
     ...checkOverviewTable(),
     ...checkScorecardTable(),
-    ...checkLifecycleScan()
+    ...checkLifecycleScan(),
+    ...checkDateMirrors(),
+    ...checkMaturityNoteClaimCounts()
   ];
 
   return {

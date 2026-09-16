@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 
 import {
   compareGeneratedCounts,
+  compareMaturityNoteClaimCount,
   compareOverviewRows,
   compareScorecardRows,
   parseMarkdownTable,
   runCheck,
+  scanLineForDateMirrorDrift,
   scanLineForLifecycleDrift,
   splitTableRow,
   type PortfolioRow,
@@ -119,6 +121,92 @@ describe("advisory lifecycle scan", () => {
 
   it("ignores lines that do not mention the guide", () => {
     expect(scanLineForLifecycleDrift("scan:test:3", "pilot 단계 일반 서술", [ukRow])).toHaveLength(0);
+  });
+});
+
+describe("registry date mirror scan", () => {
+  const euRow = {
+    shortLabel: "EuTm",
+    verifiedOn: "2026-09-12T00:00:00.000Z",
+    factsReviewedOn: "2026-09-13T00:00:00.000Z"
+  };
+
+  it("flags a table row whose verifiedOn mirror stayed on the previous re-stamp", () => {
+    const issues = scanLineForDateMirrorDrift(
+      "mirror:test:1",
+      "| Root metadata verifiedOn | `2026-08-25` | `src/products/registry.ts` |",
+      euRow
+    );
+
+    expect(issues).toHaveLength(1);
+    expect(issues[0]?.level).toBe("hard");
+    expect(issues[0]?.message).toContain("2026-09-12");
+  });
+
+  it("flags both fields independently when a paired row is half stale", () => {
+    const issues = scanLineForDateMirrorDrift(
+      "mirror:test:2",
+      "| verifiedOn / factsReviewedOn | `2026-09-12` / `2026-08-02` | `registry.ts` |",
+      euRow
+    );
+
+    expect(issues).toHaveLength(1);
+    expect(issues[0]?.message).toContain("factsReviewedOn");
+  });
+
+  it("accepts a line that also carries an unrelated historical date", () => {
+    const issues = scanLineForDateMirrorDrift(
+      "mirror:test:3",
+      "| Workspace gate rerun | `2026-04-21` pass (root verifiedOn은 이후 2026-09-12 re-stamp) |",
+      euRow
+    );
+
+    expect(issues).toHaveLength(0);
+  });
+
+  it("ignores a line that names the field but copies no date", () => {
+    expect(
+      scanLineForDateMirrorDrift(
+        "mirror:test:4",
+        "| verifiedOn source | `src/products/registry.ts`의 `verifiedOn` |",
+        euRow
+      )
+    ).toHaveLength(0);
+  });
+
+  it("does not compare factsReviewedOn when the registry leaves it unrecorded", () => {
+    const issues = scanLineForDateMirrorDrift(
+      "mirror:test:5",
+      "| factsReviewedOn | `2026-01-01` | `registry.ts` |",
+      { shortLabel: "EuTm", verifiedOn: "2026-09-12T00:00:00.000Z", factsReviewedOn: undefined }
+    );
+
+    expect(issues).toHaveLength(0);
+  });
+});
+
+describe("maturityNote derived counts", () => {
+  const euRow = {
+    shortLabel: "EuTm",
+    maturityNote: "mature 승급 · 부록 보강 및 claim-map 11건 반영"
+  };
+
+  it("passes when the stated claim count matches the claim map", () => {
+    expect(compareMaturityNoteClaimCount(euRow, 11)).toHaveLength(0);
+  });
+
+  it("flags the count the source of truth itself got wrong", () => {
+    const issues = compareMaturityNoteClaimCount(euRow, 12);
+
+    expect(issues).toHaveLength(1);
+    expect(issues[0]?.level).toBe("hard");
+    expect(issues[0]?.message).toContain("11건");
+  });
+
+  it("stays silent for a note that quotes no claim count", () => {
+    expect(
+      compareMaturityNoteClaimCount({ shortLabel: "LatTm", maturityNote: "flagship 기준 프레임" }, 5)
+    ).toHaveLength(0);
   });
 });
 

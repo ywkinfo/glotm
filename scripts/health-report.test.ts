@@ -112,9 +112,9 @@ describe("health report CLI", () => {
 
   it("merges stored lane statuses unless the CLI overrides them", () => {
     const output = buildCliOutput(["--content=fail"], {
-      runtime: "pass",
-      content: "pass",
-      release: "fail"
+      runtime: { status: "pass", recordedAt: "2026-09-12T00:00:00.000Z", commit: "a".repeat(40) },
+      content: { status: "pass", recordedAt: "2026-09-12T00:00:00.000Z", commit: "a".repeat(40) },
+      release: { status: "fail" }
     });
 
     expect(output).toContain("This report is a recent lane-state provenance summary");
@@ -122,9 +122,11 @@ describe("health report CLI", () => {
     expect(output).toContain("- Summary kind: `recent-lane-state-provenance-summary`");
     expect(output).toContain("- Interpretation: `operational-snapshot`");
     expect(output).toContain("- Provenance levels: `live`, `cached`, `partial`, `inferred`");
-    expect(output).toContain("| health:runtime | pass |");
-    expect(output).toContain("| health:content | fail |");
-    expect(output).toContain("| health:release | fail |");
+    // provenance 열이 붙어 상태 뒤에 기록일·커밋이 온다. CLI 오버라이드는 상태만 바꾸고
+    // provenance는 저장된 값을 그대로 둔다 — 덮어쓴 상태는 이 세션의 주장이지 저장된 실행이 아니다.
+    expect(output).toContain("| health:runtime | pass | 2026-09-12 |");
+    expect(output).toContain("| health:content | fail | 2026-09-12 |");
+    expect(output).toContain("| health:release | fail | unrecorded | unrecorded |");
     expect(output).toContain("verification scope: full pipeline: latam, mexico, usa, japan, china, europe, uk");
     expect(output).toContain("| usa | growth | mature | mature | hold | root content full pipeline |");
     expect(output).toContain("## Research Coverage");

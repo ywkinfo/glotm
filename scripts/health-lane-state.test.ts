@@ -4,7 +4,11 @@ import { tmpdir } from "node:os";
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { readStoredRootStatuses, writeStoredRootStatus } from "./health-lane-state";
+import {
+  readStoredRootLaneRecords,
+  readStoredRootStatuses,
+  writeStoredRootStatus
+} from "./health-lane-state";
 
 describe("health lane state helpers", () => {
   let tempDir: string;
@@ -36,6 +40,46 @@ describe("health lane state helpers", () => {
     expect(readStoredRootStatuses(stateFilePath)).toEqual({
       runtime: "pass",
       content: "fail"
+    });
+  });
+
+  it("records when and at which commit a lane result was produced", () => {
+    writeStoredRootStatus("runtime", "pass", stateFilePath, () => "b".repeat(40));
+
+    expect(readStoredRootLaneRecords(stateFilePath)).toEqual({
+      runtime: {
+        status: "pass",
+        recordedAt: "2026-04-04T12:00:00.000Z",
+        commit: "b".repeat(40)
+      }
+    });
+  });
+
+  it("leaves the commit empty rather than inventing one when git cannot answer", () => {
+    writeStoredRootStatus("release", "fail", stateFilePath, () => undefined);
+
+    expect(readStoredRootLaneRecords(stateFilePath).release).toEqual({
+      status: "fail",
+      recordedAt: "2026-04-04T12:00:00.000Z",
+      commit: undefined
+    });
+  });
+
+  it("keeps reading lane results written before provenance existed", () => {
+    // 옛 파일은 상태 문자열만 들고 있다. 거부하면 이 변경 직후 첫 리포트가 lane을 통째로 잃는다.
+    writeFileSync(
+      stateFilePath,
+      JSON.stringify({
+        updatedAt: "2026-04-04T12:00:00.000Z",
+        statuses: { runtime: "pass", content: "fail" }
+      }),
+      "utf8"
+    );
+
+    expect(readStoredRootStatuses(stateFilePath)).toEqual({ runtime: "pass", content: "fail" });
+    expect(readStoredRootLaneRecords(stateFilePath)).toEqual({
+      runtime: { status: "pass" },
+      content: { status: "fail" }
     });
   });
 
