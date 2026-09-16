@@ -27,7 +27,10 @@
 | jpo-accelerated-exam | JPO | Accelerated Examination for Trademarks | 가속심사 요건과 제외 대상 확인 | https://www.jpo.go.jp/e/system/trademark/shinsa/outline_accelerated_trademark.html |
 | jpn-trademark-act | e-Gov 법령검색 | 商標法(현행 일본어 정본) | 조문 대조 기준. 제4조 제4항(병존동의)·제8조 제1항 단서 확인 | https://laws.e-gov.go.jp/law/334AC0000000127 |
 | jpn-trademark-act-en | Japanese Law Translation | Trademark Act (English) | 현행 공식 영문 번역(Last Version: Act No. 51 of 2023). 영문 인용 표기용 보조 출처 | https://www.japaneselawtranslation.go.jp/en/laws/view/4764/en |
-| jpn-customs-act | Japanese Law Translation | Customs Act | 국경조치 관련 조문 구조 확인 | https://www.japaneselawtranslation.go.jp/en/laws/view/3703/en |
+| jpn-patent-act | e-Gov 법령검색 | 特許法(현행 일본어 정본) | 조문 대조 기준. 제8조(재외자의 특허관리인) — JPO 안내면이 비거주자 대리 구조의 근거로 직접 인용하는 조문 | https://laws.e-gov.go.jp/law/334AC0000000121 |
+| jpn-patent-act-en | Japanese Law Translation | Patent Act (English) | 「Patent Administrators for Overseas Residents」 Article 8 — JPO 영문 표기 대조용 보조 출처 | https://www.japaneselawtranslation.go.jp/en/laws/view/3118/en |
+| jpn-customs-act | e-Gov 법령검색 | 関税法(현행 일본어 정본) | 조문 대조 기준. 제69조의4(수출차단신청)·제69조의13(수입차단신청) 확인 | https://laws.e-gov.go.jp/law/329AC0000000061 |
+| jpn-customs-act-en | Japanese Law Translation | Customs Act (English) | 영문 인용 표기용 보조 출처(제69조의4·제69조의13 수록) | https://www.japaneselawtranslation.go.jp/en/laws/view/3703/en |
 | jpn-ucpa | e-Gov 법령검색 | 不正競争防止法(현행 일본어 정본) | 조문 대조 기준. 제2조 제1항 제1호(주지표시 혼동야기)·제2호(저명표시 모용)·제3호(형태모방) 확인 | https://laws.e-gov.go.jp/law/405AC0000000047 |
 | jpn-ucpa-en | Japanese Law Translation | Unfair Competition Prevention Act (English) | 현행 공식 영문 번역(Last Version: Act No. 51 of 2023). 영문 인용 표기용 보조 출처 | https://www.japaneselawtranslation.go.jp/en/laws/view/4709/en |
 | japan-customs-overview | Japan Customs | IPR Border Enforcement by Japan Customs | 일본 세관 집행 기본 구조와 제재 범위 확인 | https://www.customs.go.jp/mizugiwa/chiteki/pages/a_003_e.htm |

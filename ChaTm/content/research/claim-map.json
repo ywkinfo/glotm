@@ -50,8 +50,8 @@
       "claim": "불사용취소 절차에서 등록인은 통지 수령 후 2개월 내 사용 증거나 정당한 불사용 사유를 제출해야 한다.",
       "chapterRefs": ["Ch7", "Ch8", "Ch14"],
       "riskLevel": "HIGH",
-      "sourceIds": ["cnipa-nonuse-cancellation-guide-2023"],
-      "lastVerified": "2026-08-30",
+      "sourceIds": ["cnipa-nonuse-cancellation-guide-2023", "cn-trademark-law-implementing-regulations-article-66"],
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -60,7 +60,7 @@
         "unit": "months",
         "expression": "submit use evidence or excuse within 2 months from notice"
       },
-      "notes": "제7장 2개월 triage와 부분 유지 판단표에 반영 완료. 2026-07-21 재대조: 변경 없음. 2개월 사용증거 window는 商标法实施条例 제66조(법률 본문이 아닌 시행조례) 근거로, 2027-01-01 시행 개정 상표법이 이 window를 바꾸지 않음(amendment risk 없음). 다만 실시조례는 개정법 시행 전 개정 예상 → 개정본 공표 시 재확인. 근거 CNIPA 안내 페이지 실제 일자는 2022-12-07. 2026-08-30 재대조: 변경 없음(CNIPA 撤三 사용증거 안내 '应在2个月期限内' 원문 확인, 근거 商标法 제49조·实施条例 제66조). 페이지 발행일 표기는 2023-03-31이다."
+      "notes": "제7장 2개월 triage와 부분 유지 판단표에 반영 완료. 2026-07-21 재대조: 변경 없음. 2개월 사용증거 window는 商标法实施条例 제66조(법률 본문이 아닌 시행조례) 근거로, 2027-01-01 시행 개정 상표법이 이 window를 바꾸지 않음(amendment risk 없음). 다만 실시조례는 개정법 시행 전 개정 예상 → 개정본 공표 시 재확인. 근거 CNIPA 안내 페이지 실제 일자는 2022-12-07. 2026-08-30 재대조: 변경 없음(CNIPA 撤三 사용증거 안내 '应在2个月期限内' 원문 확인, 근거 商标法 제49조·实施条例 제66조). 페이지 발행일 표기는 2023-03-31이다. **2026-09-17 조문 대조(브라우저 채널 직접 열람)**: 商标法实施条例 제66조 제1항 축자 확인 — 「商标局受理后应当通知商标注册人，限其自收到通知之日起2个月内提交该商标在撤销申请提出前使用的证据材料或者说明不使用的正当理由」. 2개월 window의 근거가 법률 본문이 아니라 실시조례라는 기존 기록이 1차 출처로 고정됐고, 그 조례를 register에 신설해 sourceId로 연결했다. 현행본은 국무원령 제651호(2014-04-29 수정)이며, notes가 예고한 개정본은 같은 페이지의 历史沿革에 새 판으로 올라온다 — 재확인은 그 줄을 본다."
     },
     {
       "id": "CN-ENF-001",

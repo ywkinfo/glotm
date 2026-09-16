@@ -32,6 +32,7 @@
 | euipo-priority-guidelines | EUIPO Guidelines 11.2 — Substantive requirements for priority claims | https://guidelines.euipo.europa.eu/2214311/2046727/trade-mark-guidelines/11-2-substantive-requirements-for-priority-claims |
 | ~~euipo-fees~~ | ~~EUIPO — Fees and payments~~ | **2026-09-13 폐기 — 아래 `죽은 URL` 참조** |
 | euipo-absolute-grounds-guidelines | EUIPO Guidelines — Examination, Absolute Grounds | https://guidelines.euipo.europa.eu/ |
+| eu-reg-608-2013 | Regulation (EU) No 608/2013 — 지식재산권 세관집행 규정 (OJ L 181/15, 2013-06-29 · EUR-Lex 상태 `In force`) | https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32013R0608 |
 
 > 위 URL은 claim-map 신규 claim(EU-FEE-001·EU-PRIO-001·EU-UKCOMP-001·EU-AG-001)의 sourceId가 가리키는 1차 출처다. 기존 EUIPO/GOV.UK/WIPO source family는 위 Core Source Groups를 따른다.
 

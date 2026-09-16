@@ -49,6 +49,7 @@
 | impi-maintenance-seminar | IMPI 세미나 자료 「Vigencia y conservación de derechos — signos distintivos」 — 등록일 3주년 후 3개월 창 | https://www.impi.gob.mx/cloud/Seminario_en_linea_Ley_Federal_de_Proteccion_a_la_/D%C3%ADa%2002%20-%205%20de%20octubre/04%20Vigencia%20y%20conservaci%C3%B3n%20derechos%20signos%20distintivos.pdf |
 | inpi-argentina-ddjj-medio-termino | INPI Argentina 공개 안내 — 중간 사용선언(DJUM) 제출 절차·지연 효과·갱신 연동 | https://www.argentina.gob.ar/servicio/presentar-la-declaracion-jurada-de-uso-de-medio-termino-de-una-marca |
 | inapi-chile-ley-21355 | INAPI 기사 — 법률 제21.355호 2022-05-09 시행(불사용 취소 개념 도입) | https://www.inapi.cl/sala-de-prensa/detalle-noticia/entra-en-vigor-ley-que-moderniza-el-sistema-de-propiedad-industrial-en-chile |
+| cl-ley-21355 | 칠레 법률 제21.355호 — BCN Ley Chile 정본(공포 2021-06-22 · 공포게재 2021-07-05 · 버전 Única 2022-05-09). 제20호가 법률 제19.039호에 제27조의2 A를 신설해 불사용 취소(caducidad)를 도입 | https://www.bcn.cl/leychile/navegar?idLey=21355 |
 | can-decision-486 | 안데스공동체 사무국 — 「Decisiones Andinas en Propiedad Intelectual(텍스트 편찬본)」 Decisión 486 제154조 | https://www.comunidadandina.org/StaticFiles/201761102019%20en%20Propiedad%20Intelectual.pdf |
 
 ## 갱신 규칙

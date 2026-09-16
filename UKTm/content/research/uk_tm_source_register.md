@@ -53,6 +53,9 @@
 | ukipo-fast-track-opposition | Fast track opposition | https://www.gov.uk/government/publications/trade-marks-fast-track/fast-track-opposition |
 | ukipo-apply | Apply to register a trade mark | https://www.gov.uk/how-to-register-a-trade-mark/start-your-application |
 | ukipo-renew | Renew your trade mark | https://www.gov.uk/renew-your-trade-mark |
+| uk-tma-1994 | Trade Marks Act 1994 (c. 26) — legislation.gov.uk 원문 | https://www.legislation.gov.uk/ukpga/1994/26 |
+| uk-tma-1994-section-40 | 위 법 제40조 제3항 — 등록은 출원일자로 하고 그 날을 이 법상 등록일로 간주 | https://www.legislation.gov.uk/ukpga/1994/26/section/40 |
+| uk-tma-1994-section-42 | 위 법 제42조 — 존속기간 등록일부터 10년, 제43조에 따라 10년 단위 갱신 | https://www.legislation.gov.uk/ukpga/1994/26/section/42 |
 | ukipo-revocation-nonuse | Revocation (non-use) proceedings | https://www.gov.uk/government/publications/trade-marks-revocation/revocation-non-use-proceedings |
 | ukipo-ipec-small-claims | IPEC — guide to small claims | https://www.gov.uk/government/publications/intellectual-property-enterprise-court-a-guide-to-small-claims |
 | gov-ip-crime-enforcement | IP crime and enforcement for businesses | https://www.gov.uk/government/publications/ip-crime-and-enforcement-for-businesses/ip-crime-and-enforcement-for-businesses |

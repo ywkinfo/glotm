@@ -88,11 +88,12 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "inapi-chile-ley-21355"
+        "inapi-chile-ley-21355",
+        "cl-ley-21355"
       ],
-      "lastVerified": "2026-09-12",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
-      "notes": "2026-03-27 검증에서 `기준 기간 확인 필요`·`정기적으로 다시 확인` 같은 보류 표현을 걷어내고 실제 운영 리스크 수준으로 단정했다. 취소 청구 요건의 세부(기산·증거 기준)는 본문이 단정하지 않고 현지 확인을 전제로 둔다. 2026-09-12 재대조: 등록 URL(inapi.cl/noticias/ley-21355-...)은 사이트 개편으로 404였다. 살아 있는 같은 기사(sala-de-prensa/detalle-noticia/entra-en-vigor-ley-que-moderniza-...)를 열어 대조했다 — 법률 제21.355호는 2022년 5월 9일 시행됐고 「la reforma contempla el concepto de caducidad por falta de uso」로 불사용 취소 개념이 도입됐다고 INAPI가 직접 적고 있다. 시행일(2022-05-09)이 이번에 원문으로 확정됐다."
+      "notes": "2026-03-27 검증에서 `기준 기간 확인 필요`·`정기적으로 다시 확인` 같은 보류 표현을 걷어내고 실제 운영 리스크 수준으로 단정했다. 취소 청구 요건의 세부(기산·증거 기준)는 본문이 단정하지 않고 현지 확인을 전제로 둔다. 2026-09-12 재대조: 등록 URL(inapi.cl/noticias/ley-21355-...)은 사이트 개편으로 404였다. 살아 있는 같은 기사(sala-de-prensa/detalle-noticia/entra-en-vigor-ley-que-moderniza-...)를 열어 대조했다 — 법률 제21.355호는 2022년 5월 9일 시행됐고 「la reforma contempla el concepto de caducidad por falta de uso」로 불사용 취소 개념이 도입됐다고 INAPI가 직접 적고 있다. 시행일(2022-05-09)이 이번에 원문으로 확정됐다. **2026-09-17 조문 대조(BCN Ley Chile 정본 직접 열람)**: 법률 제21.355호 본문을 열어 근거를 뉴스 기사에서 법률 자체로 옮겼다. 제20호가 법률 제19.039호에 제27조의2 A를 신설하고 「Procederá la declaración de caducidad total o parcial de un registro de marca si concurre alguna de las siguientes circunstancias: a) Si transcurridos cinco años desde la fecha de concesión del registro, la marca no hubiese sido objeto de un uso real y efectivo dentro del territorio nacional…」로 규정한다. BCN 서지는 공포 2021-06-22·공포게재 2021-07-05·버전 Única 2022-05-09으로, 기존에 INAPI 기사로 잡아 둔 시행일 2022-05-09이 정본 서지와 일치한다. **5년·uso real y efectivo 기준은 이번에 원문으로 확인했을 뿐 본문에 반영하지 않았다** — 기산·증거 기준을 본문에 단정할지는 편집 판단이라 owner 몫으로 남긴다."
     }
   ],
   "openQuestions": [

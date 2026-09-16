@@ -14,11 +14,12 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "jpo-faq-trademark"
+        "jpo-faq-trademark",
+        "jpn-trademark-act"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
-      "notes": "JPO Trademarks FAQ: first-to-file 원칙. 사용주의가 아니라 출원일 기준으로 권리 선후가 갈린다는 구조만 본문에 반영."
+      "notes": "JPO Trademarks FAQ: first-to-file 원칙. 사용주의가 아니라 출원일 기준으로 권리 선후가 갈린다는 구조만 본문에 반영. **2026-09-17 조문 대조(e-Gov 정본 직접 열람)**: 商標法 제8조 제1항 축자 확인 — 「同一又は類似の商品又は役務について使用をする同一又は類似の商標について異なつた日に二以上の商標登録出願があつたときは、最先の商標登録出願人のみがその商標について商標登録を受けることができる」. 선출원주의 서술의 앵커를 JPO FAQ에서 조문으로 넓혔다(단서의 승낙+비혼동 예외는 2023년 개정 병존동의 경로이며 본문 확산 대상이 아니다)."
     },
     {
       "id": "JP-TERM-001",
@@ -29,9 +30,10 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "jpo-outline"
+        "jpo-outline",
+        "jpn-trademark-act"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -40,7 +42,7 @@
         "unit": "years",
         "expression": "10 years from registration date, renewable"
       },
-      "notes": "JPO Outline of the Trademark System: 존속기간 10년·갱신 가능. 갱신 캘린더는 등록일 기준으로 설계."
+      "notes": "JPO Outline of the Trademark System: 존속기간 10년·갱신 가능. 갱신 캘린더는 등록일 기준으로 설계. **2026-09-17 조문 대조(e-Gov 정본 직접 열람)**: 商標法 제19조 제1항 「商標権の存続期間は、設定の登録の日から十年をもつて終了する」·제2항(갱신등록 신청으로 갱신) 축자 확인. '설정등록일 기준 10년'이 조문 그대로임을 고정했다. 제20조 제2항의 갱신 신청 창(만료 전 6개월~만료일)도 같은 열람에서 확인했으나 본문 수치는 늘리지 않는다."
     },
     {
       "id": "JP-OPP-001",
@@ -52,9 +54,10 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "jpo-faq-trademark"
+        "jpo-faq-trademark",
+        "jpn-trademark-act"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -63,7 +66,7 @@
         "unit": "months",
         "expression": "within 2 months from publication of registration"
       },
-      "notes": "JPO Trademarks FAQ: 일본의 이의신청은 등록 후 공보게재일부터 2개월. 미국식 공고-후-등록전 opposition과 시점 구조가 다르다는 점을 본문에서 구분."
+      "notes": "JPO Trademarks FAQ: 일본의 이의신청은 등록 후 공보게재일부터 2개월. 미국식 공고-후-등록전 opposition과 시점 구조가 다르다는 점을 본문에서 구분. **2026-09-17 조문 대조(e-Gov 정본 직접 열람)**: 商標法 제43조의2 축자 확인 — 「何人も、商標掲載公報の発行の日から二月以内に限り、特許庁長官に、商標登録が次の各号のいずれかに該当することを理由として登録異議の申立てをすることができる」. 기산점이 '공보 발행일'이라는 점까지 조문으로 확정됐다."
     },
     {
       "id": "JP-REP-001",
@@ -75,11 +78,12 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "jpo-step-by-step"
+        "jpo-step-by-step",
+        "jpn-patent-act"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
-      "notes": "JPO Step-by-step Guide: 비거주자 대표자/대리인 구조 + 직접 납부 제약. 세부 자격 범위는 확장 단정 금지. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 [Last updated 23 March 2021]): 'If you do not have a permanent address or residence ... in Japan, a legal representative (such as a patent attorney) ... must be appointed as a \"Patent Administrator\" (Article 8, Patent Act)' + 'Overseas residents cannot make a payment of any fees directly to our Office by any means ... The payment has to be made by your representative (e.g., patent attorney) in Japan.' 변경 없음. chapterRefs를 실제 인용처(Ch1 §1.39·Ch5 §5.21)에 맞춰 Ch1 추가."
+      "notes": "JPO Step-by-step Guide: 비거주자 대표자/대리인 구조 + 직접 납부 제약. 세부 자격 범위는 확장 단정 금지. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 [Last updated 23 March 2021]): 'If you do not have a permanent address or residence ... in Japan, a legal representative (such as a patent attorney) ... must be appointed as a \"Patent Administrator\" (Article 8, Patent Act)' + 'Overseas residents cannot make a payment of any fees directly to our Office by any means ... The payment has to be made by your representative (e.g., patent attorney) in Japan.' 변경 없음. chapterRefs를 실제 인용처(Ch1 §1.39·Ch5 §5.21)에 맞춰 Ch1 추가. **2026-09-17 조문 대조(e-Gov 정본 직접 열람)**: 特許法 제8조 제1항 축자 확인 — 「日本国内に住所又は居所（法人にあつては、営業所）を有しない者（以下「在外者」という。）は、政令で定める場合を除き、その者の特許に関する代理人であつて日本国内に住所又は居所を有するもの（以下「特許管理人」という。）によらなければ、手続をし…ることができない」. JPO 안내면이 인용하던 Article 8이 register에 없던 상태를 닫았다(영문 표기 「Patent Administrators for Overseas Residents」는 Japanese Law Translation 보조 출처로 함께 등록). 현행 시행본은 令和8년 6월 24일 시행(RevisionID 334AC0000000121_20260624_508AC0000000046)이고 e-Gov에 未施行 개정이 함께 표시된다."
     },
     {
       "id": "JP-MADRID-REFUSAL-001",
@@ -90,11 +94,12 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "jpo-madrid-faq"
+        "jpo-madrid-faq",
+        "jpn-patent-act"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
-      "notes": "JPO Madrid FAQ: 일본 지정 국제출원의 provisional refusal 대응 구조. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 [Last updated 13 March 2023], FAQ 11-2·11-3): 'Under Article 8 of the Patent Act of Japan, applicants who do not reside or who are not domiciled in Japan cannot directly conduct any procedures with the JPO' + 대응 경로는 ⅰ) 일본 내 대표자를 통한 amendment 제출 — 'within three months from the \"date of pronouncement\"(i.e., the mailing date of the notification)' 또는 ⅱ) WIPO에 MM6 limitation. 변경 없음. 3개월은 Ch4 본문 서술과 일치하나 통지별 기재가 우선이므로 다른 장으로 확산하지 않는다."
+      "notes": "JPO Madrid FAQ: 일본 지정 국제출원의 provisional refusal 대응 구조. 2026-08-15 원문 재대조(브라우저 직접 열람, 페이지 [Last updated 13 March 2023], FAQ 11-2·11-3): 'Under Article 8 of the Patent Act of Japan, applicants who do not reside or who are not domiciled in Japan cannot directly conduct any procedures with the JPO' + 대응 경로는 ⅰ) 일본 내 대표자를 통한 amendment 제출 — 'within three months from the \"date of pronouncement\"(i.e., the mailing date of the notification)' 또는 ⅱ) WIPO에 MM6 limitation. 변경 없음. 3개월은 Ch4 본문 서술과 일치하나 통지별 기재가 우선이므로 다른 장으로 확산하지 않는다. **2026-09-17 조문 대조(e-Gov 정본 직접 열람)**: JPO FAQ가 인용한 特許法 제8조를 정본으로 확인하고 register에 연결했다(조문 축자는 JP-REP-001 notes 참조). 3개월 응답기간은 조문이 아니라 통지별 기재이므로 이 대조로 확정하지 않으며, 기존 서술 범위를 넓히지 않는다."
     },
     {
       "id": "JP-CONSENT-001",
@@ -123,11 +128,12 @@
       ],
       "riskLevel": "HIGH",
       "sourceIds": [
-        "japan-customs-rightholders"
+        "japan-customs-rightholders",
+        "jpn-customs-act"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-09-17",
       "status": "BODY_READY",
-      "notes": "Japan Customs For Right Holders: Application for Suspension + verification procedure. 금액·세부 절차 기한은 본문 하드코딩 금지."
+      "notes": "Japan Customs For Right Holders: Application for Suspension + verification procedure. 금액·세부 절차 기한은 본문 하드코딩 금지. **2026-09-17 조문 대조(e-Gov 정본 직접 열람)**: 関税法 제69조의13 제1항(수입차단신청)·제69조의4 제1항(수출차단신청) 축자 확인 — 상표권자를 포함한 권리자가 「その侵害の事実を疎明するために必要な証拠を提出し」 세관장에게 認定手続을 신청할 수 있다. claim이 말하는 '등록 상표권 + 제품 식별 자료 전제'가 조문의 疎明 요건에 대응한다. register의 jpn-customs-act를 영문 번역본에서 e-Gov 일본어 정본으로 옮기고 번역본은 -en 보조 행으로 분리했다(2026-08-15 라운드가 商標法·不競法에 적용한 기준과 같은 처리)."
     },
     {
       "id": "JP-IPHC-001",
