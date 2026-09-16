@@ -980,6 +980,11 @@ export function buildStaticPageDefinitions(
     for (let index = 0; index < documentData.chapters.length; index += 1) {
       const chapter = documentData.chapters[index]!;
       const chapterDescription = buildChapterDescription(product, chapter, repeatedSummaries);
+      // 장 단위 커밋일이 있으면 그것이 이 면의 lastmod다. 없으면(git이 답하지 못한 빌드)
+      // 가이드 단위 값으로 내려간다 — 근거가 굵어질 뿐 틀린 날짜를 만들지는 않는다.
+      const chapterModifiedIso = chapter.lastModifiedAt
+        ? ensureIsoDate(chapter.lastModifiedAt)
+        : productBuiltIso;
       const chapterRoutePath = buildChapterPath(product.path, chapter.slug);
       const chapterUrl = buildCanonicalUrl(chapterRoutePath, siteOrigin, basePath);
       const chapterSocialImage = buildDefaultSocialImage(siteOrigin, basePath);
@@ -995,7 +1000,7 @@ export function buildStaticPageDefinitions(
         canonicalUrl: chapterUrl,
         ...chapterSocialImage,
         ogType: "article",
-        lastModified: productBuiltIso,
+        lastModified: chapterModifiedIso,
         // 가이드 챕터는 안정적 최초 게시일 필드가 없으므로 publishedTime을 두지 않는다(dateModified만).
         bodyHtml: renderChapterBody(product, documentData, chapter, basePath),
         prevUrl: previousChapter
@@ -1010,7 +1015,7 @@ export function buildStaticPageDefinitions(
             description: chapterDescription,
             url: chapterUrl,
             imageUrl: chapterSocialImage.ogImageUrl,
-            dateModified: productBuiltIso,
+            dateModified: chapterModifiedIso,
             siteUrl,
             logoUrl
           }),

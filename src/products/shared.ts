@@ -14,6 +14,11 @@ export type Chapter = {
   summary?: string;
   html: string;
   headings: HeadingNode[];
+  // 이 장의 소스 파일이 마지막으로 커밋된 시각. sitemap lastmod와 Article dateModified의 근거다.
+  // `meta.builtAt`은 `content/source` **디렉터리** 단위라, 한 장을 고치면 같은 가이드의 홈과
+  // 나머지 전 장이 함께 수정됐다고 신고된다. 장 단위 값이 있으면 그것을 쓰고, git이 답하지
+  // 못했으면(비-git·shallow·dirty) 비워 두어 호출자가 `meta.builtAt`으로 내려가게 한다.
+  lastModifiedAt?: string;
 };
 
 export type DocumentMeta = {

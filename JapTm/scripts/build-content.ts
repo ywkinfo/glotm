@@ -158,6 +158,93 @@ async function withStableBuiltAt(next: DocumentData): Promise<DocumentData> {
     : next;
 }
 
+// ---- 장 단위 lastmod ----
+
+// `meta.builtAt`은 `content/source` **디렉터리**의 커밋일이라, 한 장을 고치면 그 가이드의 홈과
+// 나머지 전 장이 함께 수정됐다고 sitemap에 신고된다(실측 2026-09-16: 154개 URL 중 117개가 6개
+// 값만 공유). lastmod는 이 phase가 통제하는 거의 유일한 재크롤 신호이고, 정확하지 않으면
+// 크롤러가 신호 자체를 버린다. 그래서 장마다 그 장 소스 파일의 커밋일을 따로 구한다.
+//
+// 매핑은 build-master.ts와 같은 규칙이다 — manifest 항목의 `path`가 있으면 그것, 없으면
+// 소스 파일 H1 제목으로 찾는다. master.md의 `## ` 제목이 manifest 제목이므로 장 제목으로 이어진다.
+type ChapterManifestEntry = { title: string; path?: string };
+
+async function buildChapterSourcePathByTitle(): Promise<Map<string, string>> {
+  const sourceRoot = path.join(rootDir, "content", "source");
+
+  let manifest: { chapters: ChapterManifestEntry[] };
+
+  try {
+    manifest = JSON.parse(
+      await fs.readFile(path.join(sourceRoot, "manifest.json"), "utf-8")
+    ) as { chapters: ChapterManifestEntry[] };
+  } catch {
+    return new Map();
+  }
+
+  const titleToPath = new Map<string, string>();
+
+  for (const directory of ["chapters", "appendix"]) {
+    const directoryPath = path.join(sourceRoot, directory);
+
+    let filenames: string[];
+
+    try {
+      filenames = await fs.readdir(directoryPath);
+    } catch {
+      continue;
+    }
+
+    for (const filename of filenames) {
+      if (!filename.endsWith(".md")) {
+        continue;
+      }
+
+      const filePath = path.join(directoryPath, filename);
+      const heading = (await fs.readFile(filePath, "utf-8"))
+        .split(/\r?\n/)
+        .find((line) => /^#\s+/.test(line));
+
+      if (heading) {
+        titleToPath.set(heading.replace(/^#\s+/, "").trim(), filePath);
+      }
+    }
+  }
+
+  const byChapterTitle = new Map<string, string>();
+
+  for (const entry of manifest.chapters) {
+    const resolved = entry.path ? path.join(rootDir, entry.path) : titleToPath.get(entry.title);
+
+    if (resolved) {
+      byChapterTitle.set(entry.title, resolved);
+    }
+  }
+
+  return byChapterTitle;
+}
+
+// 장 소스를 찾지 못하거나 git이 답하지 못하면 필드를 **비워 둔다**. 가이드 단위 값으로
+// 메우면 이 장이 그날 바뀌었다고 주장하게 되고, 그건 고치려는 결함과 같은 것이다.
+// 비어 있으면 scripts/seo.ts가 meta.builtAt으로 내려간다.
+async function stampChapterLastModified(next: DocumentData): Promise<DocumentData> {
+  const sourcePathByTitle = await buildChapterSourcePathByTitle();
+
+  if (sourcePathByTitle.size === 0) {
+    return next;
+  }
+
+  return {
+    ...next,
+    chapters: next.chapters.map((chapter) => {
+      const sourcePath = sourcePathByTitle.get(chapter.title);
+      const committedAt = sourcePath ? gitLastModifiedIso(sourcePath) : undefined;
+
+      return committedAt ? { ...chapter, lastModifiedAt: committedAt } : chapter;
+    })
+  };
+}
+
 async function resolveBuiltAt(next: DocumentData): Promise<DocumentData> {
   const committedAt = gitLastModifiedIso(contentSourceDir);
 
@@ -189,7 +276,7 @@ async function main() {
   await fs.mkdir(generatedDir, { recursive: true });
   await fs.writeFile(
     documentDataPath,
-    JSON.stringify(await resolveBuiltAt(documentData), null, 2) + "\n",
+    JSON.stringify(await stampChapterLastModified(await resolveBuiltAt(documentData)), null, 2) + "\n",
     "utf-8"
   );
   await fs.writeFile(searchIndexPath, JSON.stringify(searchEntries, null, 2) + "\n", "utf-8");

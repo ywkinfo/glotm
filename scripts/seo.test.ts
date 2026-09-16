@@ -30,7 +30,7 @@ import {
   getLatestReports,
   reports
 } from "../src/reports/registry";
-import { liveShellProducts } from "../src/products/registry";
+import { liveShellProducts, products } from "../src/products/registry";
 import { formatFactsReviewedNote } from "../src/trustLegal";
 import {
   CHAPTER_TITLE_QUALIFIER_BY_SLUG,
@@ -180,6 +180,96 @@ describe("SEO build helpers", () => {
         ])
       );
       expect(sitemapXml).toContain(`https://ywkinfo.github.io/glotm${legalPage.path}/`);
+    }
+  });
+
+  it("dates each guide chapter from its own source commit, not from the guide directory", () => {
+    // `meta.builtAt`은 content/source **디렉터리** 단위라, 한 장을 고치면 홈과 전 장이 함께
+    // 수정됐다고 신고된다(2026-09-16 실측: 가이드 URL 117개가 lastmod 6개 값만 공유).
+    // lastmod는 이 phase가 통제하는 거의 유일한 재크롤 신호라, 부정확하면 신호째로 버려진다.
+    const pages = buildStaticPageDefinitions(documentDataBySlug, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+
+    const chapterPages = pages.filter((page) => page.routePath.includes("/chapter/"));
+
+    expect(chapterPages.length).toBeGreaterThan(0);
+
+    // 장 단위 값이 실제로 흐르는지 — 한 가이드 안에서 lastmod가 하나로 뭉치면 회귀다.
+    //
+    // git이 답할 수 있는 환경에서만 단정한다. 비-git 아카이브나 shallow 체크아웃에서는
+    // 빌더가 스탬프를 비우는 것이 **정상 동작**이라, 무조건 단정하면 코드와 무관한 이유로
+    // 붉어진다(legal lastmod 테스트가 같은 패턴을 쓴다). 반대로 git이 답하는 환경에서는
+    // 7개 가이드 **전부**가 스탬프를 가져야 한다 — 한 워크스페이스 빌더만 되돌아가도 잡힌다.
+    const gitAnswers = resolveGitLastModified(LEGAL_SOURCE_PATH).reason === "committed";
+
+    if (gitAnswers) {
+      for (const product of liveShellProducts) {
+        const documentData = documentDataBySlug.get(product.slug);
+
+        expect(documentData, `${product.slug} generated document data`).toBeDefined();
+
+        const stamped = documentData!.chapters.filter((chapter) => chapter.lastModifiedAt);
+
+        expect(
+          stamped.length,
+          `${product.slug} has no per-chapter lastModifiedAt — its build-content.ts stopped stamping`
+        ).toBe(documentData!.chapters.length);
+
+        const ownDates = new Set(
+          pages
+            .filter((page) => page.routePath.startsWith(`${product.path}/chapter/`))
+            .map((page) => page.lastModified)
+        );
+
+        expect(
+          ownDates.size,
+          `${product.slug} chapters collapsed to a single lastmod — per-chapter dates are not reaching the sitemap`
+        ).toBeGreaterThan(1);
+      }
+    }
+
+    // Article dateModified는 그 면의 lastModified에서만 파생한다(두 값이 갈라지면 안 된다).
+    for (const page of chapterPages) {
+      const article = page.structuredData?.find(
+        (node) => (node as { "@type"?: string })["@type"] === "Article"
+      ) as { dateModified?: string } | undefined;
+
+      expect(article?.dateModified, `${page.routePath} Article dateModified`).toBe(page.lastModified);
+    }
+  });
+
+  it("falls back to the guide date when git could not answer for a chapter", () => {
+    // 장 소스를 찾지 못했거나 git이 답하지 못하면 빌더가 필드를 비워 둔다. 그때 가이드 단위
+    // 값으로 내려가야지, 빈 lastmod를 내보내면 안 된다.
+    const [slug, documentData] = [...documentDataBySlug][0]!;
+    const product = products.find((candidate) => candidate.slug === slug)!;
+    const stripped = new Map(documentDataBySlug);
+
+    stripped.set(slug, {
+      ...documentData,
+      chapters: documentData.chapters.map((chapter) => ({
+        ...chapter,
+        lastModifiedAt: undefined
+      }))
+    });
+
+    const pages = buildStaticPageDefinitions(stripped, reportDocumentDataBySlug, {
+      basePath: "/glotm/",
+      distDir: "/tmp/glotm-dist",
+      siteOrigin: "https://ywkinfo.github.io"
+    });
+
+    const guideDate = pages.find((page) => page.routePath === product.path)?.lastModified;
+
+    expect(guideDate).toBeTruthy();
+
+    for (const page of pages.filter((candidate) =>
+      candidate.routePath.startsWith(`${product.path}/chapter/`)
+    )) {
+      expect(page.lastModified, `${page.routePath} must fall back to the guide date`).toBe(guideDate);
     }
   });
 
