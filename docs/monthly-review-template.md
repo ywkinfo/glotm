@@ -57,14 +57,8 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 
 - One-line wedge: `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕는다.`
 - Funnel CTA: `ChaTm 보기 -> MexTm 먼저 보기 -> EuTm 보기`
-- Primary reports:
-  `글로벌 지정상품·지정서비스 설계 프레임워크` (`global-goods-services-class-framework`, 2026-07-06)
-  `한글 표장 글로벌 보호 운영 프레임워크` (`hangul-mark-global-protection-framework`, 2026-04-15)
-- Gateway hero copy:
-  `중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.`
-  `중국 가이드(ChaTm)에서는 중국어 브랜드명, 시장별 출시 순서, 상표 출원 방식을 먼저 정리합니다. 이어 멕시코 가이드(MexTm)에서는 출원 준비와 등록 후 관리, 세관에서 위조품을 막기 위한 준비를 살펴봅니다. 유럽 가이드(EuTm)에서는 EU와 영국에서 상표를 어디까지 보호할지, 권리를 지키기 위해 어떤 증거가 필요한지 살펴봅니다.`
-  `최신 리포트 2개는 세 가이드에서 반복해서 나오는 질문을 한곳에 모아 정리한 자료입니다.`
-- Gateway hero CTA row: `ChaTm 보기 | MexTm 먼저 보기 | 리포트 보기`
+- Primary reports: `getLatestReports(2)` (`../src/reports/registry.ts`, 발행 최신순)가 정본이다. 슬러그를 여기 복제하지 않는다 — 2026-08-31 `global-local-agent-selection-framework` 게재 때 이 줄만 옛 쌍에 남았다.
+- Gateway hero copy: 제목·리드는 `../src/app/gateway/gatewayData.ts`, supporting 문단은 `../src/content/gateway.ts`의 `gatewayHeroSupportingParagraphs`가 정본이다. 문단은 현재 **1개**이며, 히어로에 **CTA row는 없다**(렌더는 `../src/app/gateway/gatewaySections.tsx`의 `GatewayHero` — 제목·리드·supporting 문단뿐). 국가 진입 CTA는 히어로가 아니라 그 아래 `GuideEntryGrid`가 registry `primaryCtaLabel`에서 파생한다.
 - KPI sheet 6 events:
   `guide_cta_click`
   `report_open`
@@ -112,10 +106,10 @@ fact-review는 tier를 올리거나 내리지 않는다. 다만 월간 review에
 
 ## Gateway hero check
 
-- Sentence 1:
-- Sentence 2:
-- Sentence 3:
-- CTA row:
+히어로 구조는 `../src/app/gateway/gatewaySections.tsx`의 `GatewayHero`가 정본이다 — 제목 1 · 리드 1 · supporting 문단 N(현재 1). 아래 칸은 구조를 고정하지 않고 **이번 달에 본 것**을 적는다.
+
+- supporting 문단 수 (정본 `gatewayHeroSupportingParagraphs`):
+- 첫 화면에서 국가 진입이 보이는가:
 - First viewport trust-layer read:
 - Notes:
 

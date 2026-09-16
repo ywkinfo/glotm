@@ -56,14 +56,25 @@ const DEFAULT_SITE_NAME = "GloTm";
 const DEFAULT_SITE_DESCRIPTION =
   "중국·멕시코·유럽 진출을 앞둔 팀이 로펌 상담 전에 무엇을 먼저 잠가야 하는지 판단하도록 돕습니다.";
 const DEFAULT_GATEWAY_HEADING = "인하우스 팀을 위한 cross-border trademark operating guide";
-const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.svg";
+// og:image / twitter:image는 **PNG**여야 한다. X(Twitter) Cards는 JPG·PNG·WEBP·GIF만 받고
+// Facebook/Open Graph·LinkedIn·Slack·카카오톡도 SVG og:image를 렌더하지 않는다. 전 면이
+// `twitter:card = summary_large_image`를 선언하는데 이미지가 SVG면, 링크를 붙여 넣은 자리에
+// 카드 대신 맨 텍스트만 뜬다 — 만들어 둔 공유 카드가 정작 그것을 볼 사람에게 안 보인다.
+//
+// PNG는 `public/og/glotm-share-card.svg`를 1200x630으로 한 번 구워 커밋한 정적 자산이다.
+// 빌드 타임 래스터라이저를 두지 않으므로 새 의존성이 없고, 카드를 고칠 때는 SVG를 고친 뒤
+// 다시 구워 두 파일을 함께 커밋한다.
+export const DEFAULT_SOCIAL_IMAGE_PATH = "/og/glotm-share-card.png";
+// schema.org Organization `logo`는 사정이 다르다 — Google Images가 SVG를 받으므로 벡터를
+// 그대로 쓴다(2.8KB vs 156KB).
+const DEFAULT_ORGANIZATION_LOGO_PATH = "/og/glotm-share-card.svg";
 // legalPages 정본. 이 경로가 옮겨가면 legal 3면의 lastmod는 조용히 fallback으로 내려가므로,
 // seo.test.ts가 실재를 단정할 수 있도록 내보낸다.
 export const LEGAL_SOURCE_PATH = "src/trustLegal.ts";
 const DEFAULT_SOCIAL_IMAGE_ALT =
   "GloTm Gateway와 인하우스 팀을 위한 cross-border trademark operating guide를 소개하는 대표 공유 이미지";
-const DEFAULT_SOCIAL_IMAGE_WIDTH = 1200;
-const DEFAULT_SOCIAL_IMAGE_HEIGHT = 630;
+export const DEFAULT_SOCIAL_IMAGE_WIDTH = 1200;
+export const DEFAULT_SOCIAL_IMAGE_HEIGHT = 630;
 
 export type StaticPageDefinition = {
   routePath: string;
@@ -142,6 +153,78 @@ function buildWebSiteGraph(siteUrl: string, logoUrl: string): JsonLdNode {
       }
     ]
   };
+}
+
+// 목록면(가이드 홈·브리프 아카이브·리포트 아카이브)과 정적 정보면(법적 고지 3면)의 노드.
+//
+// 이 12면은 지금까지 BreadcrumbList 하나만 냈다. 챕터·리포트·브리프 상세는 Article + Organization
+// + Person까지 내는데, **가이드 홈은 "중국 상표 출원 가이드" 같은 head 쿼리의 착지면이고 크롤러가
+// 챕터보다 먼저 닿는 면**이라 발행 주체가 비어 있는 것이 가장 아픈 자리다. 이 저장소가 JSON-LD와
+// reader provenance를 넣은 이유가 E-E-A-T인데, 정작 진입면이 그 주장을 하지 않고 있었다.
+//
+// 값은 전부 그 면이 실제로 렌더하는 것에서만 온다 — mainEntity 목록은 본문에 링크로 이미 있는
+// 항목이고, dateModified는 그 면의 lastModified다. 페이지에 없는 것을 구조화 데이터로 주장하지 않는다.
+function buildCollectionPageNode(input: {
+  name: string;
+  description: string;
+  url: string;
+  siteUrl: string;
+  logoUrl: string;
+  dateModified?: string;
+  itemUrls?: string[];
+}): JsonLdNode {
+  const node: JsonLdNode = {
+    "@type": "CollectionPage",
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inLanguage: "ko",
+    isPartOf: { "@id": `${input.siteUrl}#website` },
+    publisher: buildPublisherNode(input.siteUrl, input.logoUrl)
+  };
+
+  if (input.dateModified) {
+    node.dateModified = input.dateModified;
+  }
+
+  if (input.itemUrls && input.itemUrls.length > 0) {
+    node.mainEntity = {
+      "@type": "ItemList",
+      numberOfItems: input.itemUrls.length,
+      itemListElement: input.itemUrls.map((url, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url
+      }))
+    };
+  }
+
+  return node;
+}
+
+function buildWebPageNode(input: {
+  name: string;
+  description: string;
+  url: string;
+  siteUrl: string;
+  logoUrl: string;
+  dateModified?: string;
+}): JsonLdNode {
+  const node: JsonLdNode = {
+    "@type": "WebPage",
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inLanguage: "ko",
+    isPartOf: { "@id": `${input.siteUrl}#website` },
+    publisher: buildPublisherNode(input.siteUrl, input.logoUrl)
+  };
+
+  if (input.dateModified) {
+    node.dateModified = input.dateModified;
+  }
+
+  return node;
 }
 
 function buildBreadcrumbNode(items: BreadcrumbEntry[]): JsonLdNode {
@@ -627,7 +710,7 @@ function buildGatewayPage(
   lastModified: string
 ): StaticPageDefinition {
   const siteUrl = buildCanonicalUrl("/", siteOrigin, basePath);
-  const logoUrl = buildCanonicalUrl(DEFAULT_SOCIAL_IMAGE_PATH, siteOrigin, basePath);
+  const logoUrl = buildCanonicalUrl(DEFAULT_ORGANIZATION_LOGO_PATH, siteOrigin, basePath);
 
   return {
     routePath: "/",
@@ -776,7 +859,7 @@ export function buildStaticPageDefinitions(
     : reportDocumentDataBySlugOrOptions;
   const { basePath, siteOrigin, distDir } = getSeoRuntimeOptions(options);
   const siteUrl = buildCanonicalUrl("/", siteOrigin, basePath);
-  const logoUrl = buildCanonicalUrl(DEFAULT_SOCIAL_IMAGE_PATH, siteOrigin, basePath);
+  const logoUrl = buildCanonicalUrl(DEFAULT_ORGANIZATION_LOGO_PATH, siteOrigin, basePath);
   const gatewayCrumb: BreadcrumbEntry = { name: `${DEFAULT_SITE_NAME} Gateway`, url: siteUrl };
   const gatewayLastModified = [
     ...Array.from(documentDataBySlug.values()).map((documentData) => ensureIsoDate(documentData.meta.builtAt)),
@@ -810,6 +893,17 @@ export function buildStaticPageDefinitions(
     lastModified: ensureIsoDate(latestBriefPublishedAt),
     bodyHtml: renderBriefArchiveBody(basePath),
     structuredData: [
+      buildCollectionPageNode({
+        name: "Hot Global TM Brief",
+        description: buildBriefArchiveDescription(),
+        url: briefArchiveUrl,
+        siteUrl,
+        logoUrl,
+        dateModified: ensureIsoDate(latestBriefPublishedAt),
+        itemUrls: briefIssues.map((issue) =>
+          buildCanonicalUrl(buildBriefIssuePath(issue.slug), siteOrigin, basePath)
+        )
+      }),
       buildBreadcrumbNode([gatewayCrumb, { name: "Hot Global TM Brief", url: briefArchiveUrl }])
     ],
     sitemapPriority: 0.9,
@@ -828,6 +922,17 @@ export function buildStaticPageDefinitions(
     lastModified: ensureIsoDate(latestReportPublishedAt),
     bodyHtml: renderReportArchiveBody(basePath),
     structuredData: [
+      buildCollectionPageNode({
+        name: "Report",
+        description: buildReportArchiveDescription(),
+        url: reportArchiveUrl,
+        siteUrl,
+        logoUrl,
+        dateModified: ensureIsoDate(latestReportPublishedAt),
+        itemUrls: reports.map((report) =>
+          buildCanonicalUrl(buildReportPath(report.slug), siteOrigin, basePath)
+        )
+      }),
       buildBreadcrumbNode([gatewayCrumb, { name: "Report", url: reportArchiveUrl }])
     ],
     sitemapPriority: 0.9,
@@ -854,6 +959,14 @@ export function buildStaticPageDefinitions(
       lastModified: ensureIsoDate(legalLastModified),
       bodyHtml: renderLegalBody(legalPage, basePath),
       structuredData: [
+        buildWebPageNode({
+          name: legalPage.title,
+          description: buildLegalPageDescription(legalPage),
+          url: legalUrl,
+          siteUrl,
+          logoUrl,
+          dateModified: ensureIsoDate(legalLastModified)
+        }),
         buildBreadcrumbNode([gatewayCrumb, { name: legalPage.navLabel, url: legalUrl }])
       ],
       sitemapPriority: 0.3,
@@ -970,7 +1083,20 @@ export function buildStaticPageDefinitions(
       ogType: "website",
       lastModified: productBuiltIso,
       bodyHtml: renderProductBody(product, documentData, basePath),
-      structuredData: [buildBreadcrumbNode([gatewayCrumb, productCrumb])],
+      structuredData: [
+        buildCollectionPageNode({
+          name: product.title,
+          description: buildProductDescription(product, documentData),
+          url: productUrl,
+          siteUrl,
+          logoUrl,
+          dateModified: productBuiltIso,
+          itemUrls: documentData.chapters.map((chapter) =>
+            buildCanonicalUrl(buildChapterPath(product.path, chapter.slug), siteOrigin, basePath)
+          )
+        }),
+        buildBreadcrumbNode([gatewayCrumb, productCrumb])
+      ],
       sitemapPriority: 0.8,
       changeFrequency: "monthly"
     });
@@ -980,6 +1106,11 @@ export function buildStaticPageDefinitions(
     for (let index = 0; index < documentData.chapters.length; index += 1) {
       const chapter = documentData.chapters[index]!;
       const chapterDescription = buildChapterDescription(product, chapter, repeatedSummaries);
+      // 장 단위 커밋일이 있으면 그것이 이 면의 lastmod다. 없으면(git이 답하지 못한 빌드)
+      // 가이드 단위 값으로 내려간다 — 근거가 굵어질 뿐 틀린 날짜를 만들지는 않는다.
+      const chapterModifiedIso = chapter.lastModifiedAt
+        ? ensureIsoDate(chapter.lastModifiedAt)
+        : productBuiltIso;
       const chapterRoutePath = buildChapterPath(product.path, chapter.slug);
       const chapterUrl = buildCanonicalUrl(chapterRoutePath, siteOrigin, basePath);
       const chapterSocialImage = buildDefaultSocialImage(siteOrigin, basePath);
@@ -995,7 +1126,7 @@ export function buildStaticPageDefinitions(
         canonicalUrl: chapterUrl,
         ...chapterSocialImage,
         ogType: "article",
-        lastModified: productBuiltIso,
+        lastModified: chapterModifiedIso,
         // 가이드 챕터는 안정적 최초 게시일 필드가 없으므로 publishedTime을 두지 않는다(dateModified만).
         bodyHtml: renderChapterBody(product, documentData, chapter, basePath),
         prevUrl: previousChapter
@@ -1010,7 +1141,7 @@ export function buildStaticPageDefinitions(
             description: chapterDescription,
             url: chapterUrl,
             imageUrl: chapterSocialImage.ogImageUrl,
-            dateModified: productBuiltIso,
+            dateModified: chapterModifiedIso,
             siteUrl,
             logoUrl
           }),

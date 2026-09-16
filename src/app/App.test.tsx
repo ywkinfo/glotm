@@ -915,19 +915,22 @@ describe("App portfolio shell", () => {
     expect(within(currentPilotScope as HTMLElement).getByRole("heading", { name: "Growth" })).toBeInTheDocument();
     expect(within(currentPilotScope as HTMLElement).queryByRole("heading", { name: "Validate" })).toBeNull();
     expect(within(currentPilotScope as HTMLElement).queryByRole("heading", { name: "Incubate" })).toBeNull();
-    expect(
-      within(currentPilotScope as HTMLElement).getByText("mature 승격 반영 · Sprint 2 저밀도 9장 보강 · reader/search QA 정렬 완료")
-    ).toBeInTheDocument();
-    expect(
-      within(currentPilotScope as HTMLElement).getByText(
-        "EU-wide·core-state·UK split과 evidence triage를 EU+UK 범위에서 두껍게 다루는 growth regional guide입니다."
-      )
-    ).toBeInTheDocument();
-    expect(
-      within(currentPilotScope as HTMLElement).getByText(
-        "mature 승급 · Ch3/6/10/14·부록 보강 · 2026-06-10 법률 사실정정(UK fee·우선권·comparable·Brexit 날짜) 및 claim-map 10건 반영"
-      )
-    ).toBeInTheDocument();
+    // maturityNote·summary는 registry에서 파생시킨다. 문자열을 여기 복제하면 테스트가 registry의
+    // **현재 값**이 아니라 **작성 시점 값**을 정답으로 고정하고, 정본이 틀렸을 때 같이 틀린 채로
+    // green을 낸다(2026-08-02 라운드의 registry.test.ts 깨진 href 고정과 같은 형태). 여기서 지키려는
+    // 계약은 "게이트웨이 카드가 registry의 note를 그대로 보여 준다"이지 특정 문장이 아니다.
+    for (const slug of ["mexico", "europe"]) {
+      const product = products.find((candidate) => candidate.slug === slug);
+      expect(product, `registry has no product for ${slug}`).toBeDefined();
+      // maturityNote는 선택 필드지만 priority lane 카드가 보여 주는 값이라, 이 둘에는 있어야 한다.
+      expect(product!.maturityNote, `${slug} has no maturityNote to render`).toBeDefined();
+      expect(
+        within(currentPilotScope as HTMLElement).getByText(product!.maturityNote!)
+      ).toBeInTheDocument();
+      expect(
+        within(currentPilotScope as HTMLElement).getByText(product!.summary)
+      ).toBeInTheDocument();
+    }
   });
 
   it("renders the operator intro section after the pilot scope with an external profile link", () => {

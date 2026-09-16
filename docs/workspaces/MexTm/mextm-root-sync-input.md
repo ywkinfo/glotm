@@ -13,7 +13,7 @@
 | search entry count | `385` | `src/products/registry.ts` |
 | portfolio tier / lifecycle | `growth` / `mature` | `src/products/registry.ts` |
 | qa level / high-risk gap | `full` / `0` | `src/products/registry.ts` |
-| root verified date | `2026-08-25` | `src/products/registry.ts`, `PROJECT-OVERVIEW.md` |
+| root verified date | `2026-09-12` | `src/products/registry.ts`, `PROJECT-OVERVIEW.md` |
 | claim-map lock | `MX-FEE-001`, `MX-DL-001`, `MX-NORM-001`, `MX-ENF-001` 모두 `BODY_READY` | `MexTm/content/research/claim-map.json` |
 | claim verification date | `2026-08-30` | `MexTm/content/research/claim-map.json`, `src/products/registry.ts` `factsReviewedOn` |
 | lane-local gate | `npm --prefix MexTm run content:prepare` | `MexTm/README.md`, `mextm-content-expansion-taskboard.md` |

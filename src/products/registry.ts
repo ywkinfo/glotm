@@ -153,7 +153,7 @@ export const products: ProductMeta[] = [
     highRiskVerificationGapCount: 0,
     audience: "유럽 권역 진출과 운영을 준비하는 브랜드 관리자, 인하우스 IP 담당자",
     primaryCtaLabel: "EuTm 보기",
-    maturityNote: "mature 승급 · Ch3/6/10/14·부록 보강 · 2026-06-10 법률 사실정정(UK fee·우선권·comparable·Brexit 날짜) 및 claim-map 10건 반영",
+    maturityNote: "mature 승급 · Ch3/6/10/14·부록 보강 · 2026-06-10 법률 사실정정(UK fee·우선권·comparable·Brexit 날짜) 및 claim-map 11건 반영",
     coverageType: "region",
     availability: "live_shell"
   },

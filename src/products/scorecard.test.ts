@@ -132,4 +132,33 @@ describe("registry lifecycle claims against the real clock", () => {
       ).toBe(true);
     }
   });
+
+  // 미래 일자는 freshness를 **만료시키지 않고 침묵시킨다.** `getVerificationFreshnessDays`와
+  // `getFactReviewFreshnessDays`는 둘 다 `Math.max(0, …)`으로 clamp하므로(shared.ts), verifiedOn에
+  // 2099년이 들어가면 경과일이 영원히 0이 되고 위 lifecycle 가드도 `health:report`의 Freshness 열도
+  // 다시는 붉어지지 않는다. 오타 하나로 재검증 계약 전체가 조용히 꺼지는 모양이다.
+  //
+  // 브리프 lane은 같은 모양을 이미 막고 있다(`src/briefs/archive.test.ts`의 미래 발행일 금지).
+  // registry 쪽에는 그 짝이 없어서 여기에 둔다 — fake timer 밖이라야 "지금"이 진짜 지금이다.
+  it("refuses a future-dated verifiedOn or factsReviewedOn", () => {
+    const now = Date.now();
+
+    for (const product of products) {
+      expect(
+        Date.parse(product.verifiedOn),
+        `${product.shortLabel} verifiedOn=${product.verifiedOn.slice(0, 10)} is in the future; `
+          + "freshness clamps to 0 and the lane-freshness criterion stops gating"
+      ).toBeLessThanOrEqual(now);
+
+      if (!product.factsReviewedOn) {
+        continue;
+      }
+
+      expect(
+        Date.parse(product.factsReviewedOn),
+        `${product.shortLabel} factsReviewedOn=${product.factsReviewedOn.slice(0, 10)} is in the future; `
+          + "fact freshness clamps to 0 and health:report reports it as just-reviewed"
+      ).toBeLessThanOrEqual(now);
+    }
+  });
 });

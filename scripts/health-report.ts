@@ -10,7 +10,11 @@ import {
   type RootHealthLaneId,
   type RootHealthLaneStatus
 } from "../src/products/health";
-import { readStoredRootStatuses } from "./health-lane-state";
+import {
+  readStoredRootLaneRecords,
+  resolveCurrentCommit,
+  type StoredHealthLaneRecord
+} from "./health-lane-state";
 import { runConsistencyAudit } from "./research-audit/audit-consistency";
 import { runFactsAudit } from "./research-audit/audit-facts";
 import { runStalenessAudit } from "./research-audit/audit-staleness";
@@ -140,7 +144,41 @@ export function parseArgs(argv: string[]) {
   };
 }
 
-export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>) {
+// lane 행의 provenance. 저장된 결과가 **언제 · 어느 커밋에서** 나왔는지를 같이 보여 준다.
+// 이 리포트는 end-to-end proof가 아니라 recent lane-state summary이므로, 오래된 결과를 지우는
+// 대신 얼마나 오래됐는지를 적는다 — 판단은 읽는 사람이 한다.
+function formatLaneProvenance(
+  record: StoredHealthLaneRecord | undefined,
+  headCommit: string | undefined
+) {
+  if (!record?.recordedAt) {
+    return { recorded: "unrecorded", commit: "unrecorded" };
+  }
+
+  const recorded = record.recordedAt.slice(0, 10);
+
+  if (!record.commit) {
+    return { recorded, commit: "unrecorded" };
+  }
+
+  const shortCommit = record.commit.slice(0, 7);
+
+  if (!headCommit) {
+    return { recorded, commit: `\`${shortCommit}\`` };
+  }
+
+  // 커밋이 HEAD와 다르면 그 뒤로 트리가 움직였다는 뜻이다. 상태를 뒤집지는 않는다 —
+  // 그 변경이 이 lane에 닿았는지 이 파일은 알 수 없고, 모르는 것을 단정하지 않는다.
+  const drifted = record.commit !== headCommit;
+
+  return { recorded, commit: `\`${shortCommit}\`${drifted ? " (HEAD 이후 이동)" : ""}` };
+}
+
+export function formatMarkdown(
+  statuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>,
+  laneRecords: Partial<Record<RootHealthLaneId, StoredHealthLaneRecord>> = {},
+  headCommit = resolveCurrentCommit()
+) {
   const report = buildPortfolioHealthReport(products, statuses, loadResearchBySlug());
   const lines: string[] = [];
 
@@ -157,16 +195,21 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
   lines.push("");
   lines.push("## Root Lanes");
   lines.push("");
-  lines.push("| Lane | Status | Command | Notes |");
-  lines.push("| --- | --- | --- | --- |");
+  lines.push("| Lane | Status | Recorded | At commit | Command | Notes |");
+  lines.push("| --- | --- | --- | --- | --- | --- |");
 
   for (const lane of report.root) {
     const generatedLabel = lane.includesGeneratedContent ? "generated content 포함" : "pure runtime check";
     const verificationSummary = lane.verification
       ? `; verification scope: ${lane.verification.reportSummary}`
       : "";
-    lines.push(`| ${lane.label} | ${lane.status} | \`${lane.command}\` | ${lane.proves}; ${generatedLabel}${verificationSummary} |`);
+    const provenance = formatLaneProvenance(laneRecords[lane.id], headCommit);
+    lines.push(`| ${lane.label} | ${lane.status} | ${provenance.recorded} | ${provenance.commit} | \`${lane.command}\` | ${lane.proves}; ${generatedLabel}${verificationSummary} |`);
   }
+
+  lines.push("");
+  lines.push("> `Recorded` / `At commit`은 저장된 lane 결과가 언제 어느 트리에서 나왔는지다. `HEAD 이후 이동`은");
+  lines.push("> 그 뒤로 커밋이 있었다는 뜻이며, 그 커밋이 이 lane에 닿았는지까지는 말하지 않는다 — 다시 돌릴지는 읽는 사람이 정한다.");
 
   lines.push("");
   lines.push("## Product Health");
@@ -272,9 +315,12 @@ export function formatMarkdown(statuses: Partial<Record<RootHealthLaneId, RootHe
 
 export function buildCliOutput(
   argv: string[],
-  storedStatuses: Partial<Record<RootHealthLaneId, RootHealthLaneStatus>> = readStoredRootStatuses()
+  laneRecords: Partial<Record<RootHealthLaneId, StoredHealthLaneRecord>> = readStoredRootLaneRecords()
 ) {
   const { format, statuses } = parseArgs(argv);
+  const storedStatuses = Object.fromEntries(
+    Object.entries(laneRecords).map(([laneId, record]) => [laneId, record.status])
+  ) as Partial<Record<RootHealthLaneId, RootHealthLaneStatus>>;
   const resolvedStatuses = {
     ...storedStatuses,
     ...statuses
@@ -285,7 +331,7 @@ export function buildCliOutput(
     return JSON.stringify(buildPortfolioHealthReport(products, resolvedStatuses, researchBySlug), null, 2);
   }
 
-  return formatMarkdown(resolvedStatuses);
+  return formatMarkdown(resolvedStatuses, laneRecords);
 }
 
 function main() {
