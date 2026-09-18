@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-import { getCriticalClaimStalenessDays, readClaimMap, validateClaimMap, type ClaimMapDocument } from "./shared";
+import { getCriticalClaimStalenessDays, isFutureUtcDate, readClaimMap, validateClaimMap, type ClaimMapDocument } from "./shared";
 
 const tempDirs: string[] = [];
 
@@ -107,6 +107,18 @@ describe("research audit shared helpers", () => {
     expect(validateClaimMap(document)).toContainEqual(
       expect.objectContaining({ claimId: "CN-TEST-001", message: expect.stringContaining("status") })
     );
+  });
+
+  // `getClaimFreshnessDays`가 `Math.max(0, …)`으로 클램프하기 때문에 미래 일자는 freshness 0으로
+  // 읽히고 staleness 경고도 나지 않는다. 즉 하루 더 신선해 보이는 값이 조용히 통과한다.
+  // 저장소 데이터에 대한 계약은 `claim-verification-date.test.ts`가, 판정 자체는 여기가 잠근다.
+  it("reads a lastVerified as future only when it passes today's UTC day", () => {
+    // 2026-09-17 09:00 KST = 2026-09-17 00:00Z — KST 오전에 찍은 그날 날짜는 미래가 아니다.
+    expect(isFutureUtcDate("2026-09-17", new Date("2026-09-17T00:00:00.000Z"))).toBe(false);
+    // 같은 값을 KST 저녁(= UTC 전날)에 찍으면 미래다. 2026-09-17 회차 10건이 이 경로였다.
+    expect(isFutureUtcDate("2026-09-17", new Date("2026-09-16T22:00:00.000Z"))).toBe(true);
+    expect(isFutureUtcDate("2026-09-16", new Date("2026-09-16T22:00:00.000Z"))).toBe(false);
+    expect(isFutureUtcDate("not-a-date", new Date("2026-09-16T22:00:00.000Z"))).toBe(false);
   });
 
   it("keeps claim staleness thresholds decoupled from lane freshness", () => {

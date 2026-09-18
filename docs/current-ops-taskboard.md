@@ -5,7 +5,7 @@
 
 ## Snapshot
 
-- Last updated: 2026-09-16 19라운드 (조문 큐는 미푸시 상태 확인 · LatTm 미결을 후보로 승계 · 미결 판정 기준 신설)
+- Last updated: 2026-09-16 20라운드 (조문 큐 10건 닫음 — 단일 소스 HIGH 26 → 16 · lastVerified 미래일자 가드 신설)
 - Current phase: `Phase 2.5 — 프로모션 없는 유기 색인 운영 (배포·색인·계측 + 정합성 유지)`
 - Locked priority order: `ChaTm -> MexTm -> EuTm -> Report / Gateway -> UsaTm -> JapTm -> UKTm`
 - Current rule of thumb: 새 확장(신규 국가·pricing·새 파이프라인·의존성)은 멈추되, 정합성·verification provenance 유지에 더해 프로모션 없는 유기 색인·계측을 현재 운영 범위로 본다.
@@ -384,6 +384,17 @@
   - **④ 그 판정 기준을 계약에 넣었다.** `briefs-discovery.md`에 `모든 미결이 후보가 되지는 않는다` 절 신설 — 가르는 기준은 **답이 바뀌면 독자가 다르게 행동하는가** 하나다. 장부·범위 결정을 후보로 올리면 백로그가 발행되지 않을 항목으로 차고 `ready: 0`인데 `watching`만 느는 모양이 된다. 그렇다고 미결을 닫아서도 안 된다 — 닫는 것은 확인됐을 때뿐이다. 판정 4건을 표로 남겨 **회차마다 같은 넷을 다시 들여다보지 않게** 했다.
   - 후보의 `trigger`는 외부 소스가 아니라 **저장소 안의 불일치**이고, `sourceIds`는 이 질문을 닫을 수 있는 소스를 가리킨다 — `2026-09-mexico-lfppi-transitional-provisions`가 세운 규약 그대로다. 1차 출처를 열지 못했으므로 **sweep 회차는 추가하지 않았다.**
   - 게이트: `npm test` **466/466**, `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 `gate=pass`.
+
+- 2026-09-16 20라운드: **조문 큐 10건을 닫았다 — 단일 소스 HIGH claim 26 → 16.** 브라우저 채널이 열린 레인이 대조했고, 이 컨테이너 레인이 받아 검증·정정했다.
+  - **채널이 레인마다 달랐다.** 이 컨테이너는 09-15·09-16 이틀 연속 조문 호스트 전건 403인데, 같은 시각 브라우저 채널은 여섯 호스트를 다 열었다. 18라운드가 물러선 자리가 **작업 불가가 아니라 그 채널의 그날**이었다는 것이 실제로 확인됐다(19라운드가 `채널은 상수가 아니다`에 걸어 둔 규범 그대로다).
+  - **닫힌 10건**: B류 6건(`CN-EVD-001`→商标法实施条例 제66조 · `UK-RENEW-001`→TMA 1994 §40(3)·§42 · `JP-REP-001`·`JP-MADRID-REFUSAL-001`→特許法 제8조 · `EU-ENF-001`→Reg (EU) 608/2013 · `LA-CL-NONUSE-001`→Ley 21.355 경유 19.039 제27조의2 A) + C류 JapTm 4건(商標法 제8조①·제19조·제43조의2, 関税法 제69조의13·제69조의4).
+  - **18라운드 예측이 맞았다.** JapTm은 앵커 법령이 이미 register에 있어 "조문만 확인하면 닫힌다"고 적었고, 실제로 **7건 → 1건**이 됐다. `audit:facts`의 `INFO` 줄이 그 감소를 그대로 보여 준다.
+  - **`jpn-customs-act`가 영문 번역본을 가리키고 있었다.** 2026-08-15가 商標法·不競法에서 걷어낸 것과 같은 모양이라 e-Gov 정본으로 옮기고 번역본은 `-en`으로 분리했다. `实施条例`는 행정법규라 정본이 CNIPA가 아니라 국가행정법규고에 있고, 그 페이지 `历史沿革`이 예고된 개정본의 감시면이 된다 — `CN-EVD-001`의 2027-01-01 시한 항목이 이걸로 닫혔다.
+  - **받아서 고친 것 — `lastVerified` 10건이 UTC 기준 미래였다.** 그 레인은 KST 2026-09-17에 돌아 자기 지역 날짜를 찍었는데 그 시각 UTC는 2026-09-16이다. 저장소의 날짜 계산은 전부 UTC이므로(`startOfUtcDay`·`elapsedUtcDays`) 열 건이 하루 미래가 됐다.
+  - **그리고 그것을 아무 게이트도 보지 않았다.** `getClaimFreshnessDays`가 `Math.max(0, …)`으로 클램프해 미래 일자는 **freshness 0**으로 읽히고, staleness 경고도 나지 않으며, `validateClaimMap`은 비어 있는지만 본다 — **하루 더 신선해 보이는 값이 조용히 통과한다.** main 전체를 세어 보니 이 저장소 역사상 미래 일자는 0건이었고, 이 브랜치가 첫 10건이었다.
+  - 스탬프를 **2026-09-16(UTC)** 으로 맞추고 `claim-verification-date.test.ts`를 신설했다. 결함 재주입으로 red를 확인하고 되돌렸다.
+  - **가드를 처음엔 잘못된 자리에 뒀다.** `validateClaimMap`에 넣었더니 `health-report.test.ts` 2건이 깨졌다 — 그 리포트는 시계를 2026-06-10으로 고정한 채 같은 함수를 부르고, schema 에러가 나면 워크스페이스를 리포트에서 통째로 뺀다. 고정 시계 아래서는 모든 claim이 "미래"가 되어 리포트가 비어 버린다. **시간 의존 검사는 advisory 감사 파이프라인이 아니라 실시계 계약 테스트에 둔다**는 것을 헬퍼 주석과 새 테스트 머리에 적었다.
+  - 게이트: `npm test` **475/475**(466 → +9), `typecheck` pass, `check:consistency` 0 hard / 0 advisory, `audit:facts` 7/7 `gate=pass`, `health:release` exit 0(dist-boundary 0 hits · seo · subpath e2e 7/7).
 
 - 2026-08-02 미해결로 남긴 것(리뷰에서 실측 확인, 별도 라운드 필요): ① ~~sitemap `lastmod` 145건 중 **121건이 빌드 타임스탬프** — LatTm 콘텐츠 최종 변경 2026-06-23·JapTm 2026-07-01인데 둘 다 배포 시각을 신고해, 배포마다 전 코퍼스가 갱신됐다고 거짓 신호를 낸다.~~ → **2026-08-08 해소(위 라운드)**. ② ~~라이브 `<title>` 중복 4클러스터 10건(`서문 | GloTm` 4건은 관할 구분 없음), `description` 7건이 동일 placeholder `도입 MexTm 가이드 챕터.`~~ → **2026-08-15 해소(위 라운드)**. ③ **claim staleness 하드 게이트 전환**(부분 해소). 2026-08-02 3라운드에서 `audit:facts`·`check:consistency`를 `ci.yml`에 편입했고(더 이상 owner가 손으로 돌릴 때만 보이지 않는다), `health-report.test.ts`·`scorecard.test.ts`의 고정 시계 문제도 실시계 describe 분리로 해소했다. **남은 것은 정책 판단 하나다** — `audit-staleness.ts`는 여전히 `level: "warning"`이라 exit 0이고, staleness를 실패로 올릴지는 advisory·non-gating 계약을 바꾸는 결정이라 owner 몫으로 남긴다. ④ ~~`factual-qa-rollout.md` 18·57·365행이 "JapTm은 root shortcut-refresh 예외"라 단정하나 `content:japan`은 full pipeline이다.~~ → **2026-08-15 해소**: 세 곳 모두 정정했다(`content:japan`은 build-master + qa-content + build-content 3단계로 다른 가이드와 동일하고, `health:content`도 JapTm `content:prepare`를 함께 돈다).
 

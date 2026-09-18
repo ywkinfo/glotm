@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
+import { startOfUtcDay } from "../../src/products/shared";
 import type { LifecycleStatus, ProductMeta } from "../../src/products/shared";
 
 export type ClaimStatus =
@@ -189,6 +190,23 @@ export function validateClaimMap(document: ClaimMapDocument): AuditIssue[] {
   }
 
   return issues;
+}
+
+// **이 검사는 `validateClaimMap`에 넣지 않는다.** 그 함수는 `health-report`가 시계를 고정한 채로도
+// 부르고(테스트는 2026-06-10에 멈춘다), schema 에러가 나면 워크스페이스를 리포트에서 통째로 뺀다 —
+// 시간 의존 검사를 그 자리에 두면 고정 시계 아래서 모든 claim이 "미래"가 되어 리포트가 비어 버린다.
+// 실시계 계약은 `claim-verification-date.test.ts`가 잠근다.
+//
+// `lastVerified`는 날짜만 있는 문자열이라 `Date.parse`가 UTC 자정으로 읽는다. 그래서 "오늘"의
+// 기준도 UTC 자정이어야 KST 오전에 찍은 오늘 날짜가 오탐으로 걸리지 않는다.
+export function isFutureUtcDate(lastVerified: string, now = new Date()) {
+  const verifiedAt = Date.parse(lastVerified);
+
+  if (Number.isNaN(verifiedAt)) {
+    return false;
+  }
+
+  return startOfUtcDay(verifiedAt) > startOfUtcDay(now.getTime());
 }
 
 export function getClaimFreshnessDays(lastVerified: string, now = new Date()) {

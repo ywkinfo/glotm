@@ -23,6 +23,8 @@
 | cnipa-trademark-law-article-33 | 위 법령 제33조 — 이의신청 공고 후 3개월 | https://www.cnipa.gov.cn/art/2019/7/30/art_95_28179.html |
 | cnipa-trademark-law-article-34 | 위 법령 제34조 — 거절불복 복심 15일 | https://www.cnipa.gov.cn/art/2019/7/30/art_95_28179.html |
 | cnipa-trademark-law-2026 | 「中华人民共和国商标法（2026年修订）」 (2026-06-26 공포, 2027-01-01 시행) — CNIPA 專題 게재본 | https://www.cnipa.gov.cn/art/2026/6/26/art_3685_206939.html |
+| cn-trademark-law-implementing-regulations | 「中华人民共和国商标法实施条例」 전문 — 국무원령 제358호(2002-08-03 공포)·제651호(2014-04-29 수정), 국가행정법규고(司法部) 게재 정본 | https://xzfg.moj.gov.cn/front/law/detail?LawID=1441 |
+| cn-trademark-law-implementing-regulations-article-66 | 위 조례 제66조 — 撤三 통지 수령일부터 2개월 내 사용증거 제출 | https://xzfg.moj.gov.cn/front/law/detail?LawID=1441 |
 | cnipa-nonuse-cancellation-guide-2023 | CNIPA 商标局 「如何办理连续三年不使用撤销注册商标 提供商标使用证据」 | https://sbj.cnipa.gov.cn/sbj/sbsq/sqzn/202303/t20230330_26212.html |
 | cnipa-infringement-standard-2020 | CNIPA 국지발보자〔2020〕23호 「商标侵权判断标准」 | https://www.cnipa.gov.cn/art/2020/6/17/art_75_126939.html |
 | cnipa-accepted-naming-guide-2020 | CNIPA 商标局 「关于网申系统商标注册申请增加非标准项目申报功能的通知」 (2020-05-20) | https://sbj.cnipa.gov.cn/sbj/tzgg/202005/t20200520_5482.html |
@@ -36,6 +38,7 @@
 
 - **동일 URL 3중 포인터.** `cnipa-trademark-law`·`cnipa-trademark-law-article-33`·`cnipa-trademark-law-article-34`는 모두 2019년 수정 商标法의 CNIPA 게재본 한 페이지를 가리킨다. 오류가 아니라 조문별 포인터이며, 이 페이지에는 앵커(`#`)가 없어 조문 단위 딥링크가 불가능하다. 세 행을 유지하되 label로 구분한다.
 - **sourceId의 연도와 페이지 게재일이 다른 항목 2건.** `cnipa-fee-guide-2019`는 URL 경로만 2019(`201912/t20191227_611`)이고 페이지 상단 발행일은 **2025-11-03 재게시본**이다(수수료 값은 동일: 종이 300元/류·온라인 270元/류). `cnipa-nice-classification-2026`은 적용 문본이 2026(제13판 2026문본)이고 **통지 게재일은 2025-12-26**이다. 둘 다 "URL이 바뀌었다"는 오판을 부르기 쉬우니 재검증 시 이 줄을 먼저 본다.
+- **实施条例는 CNIPA가 아니라 국가행정법규고에 둔다.** 商标法(법률)은 CNIPA 게재본을 쓰지만 实施条例(행정법규)의 정본은 국무원 법규 데이터베이스다. 이 페이지는 `历史沿革`으로 2002-08-03본과 2014-04-29본을 함께 노출하므로, **개정본이 나오면 같은 URL의 연혁에 새 판이 추가된다** — `CN-EVD-001` notes가 적어 둔 "개정본 공표 시 재확인"의 감시면이 이 줄이다.
 - **2027-01-01 rule flip 예고.** `cnipa-trademark-law`(2019년본)의 `商标评审委员会` 지칭은 개정법 시행과 함께 폐지된다. 그 시점에 `cnipa-trademark-law-2026`이 현행 정본이 되고 이 표의 label을 함께 고친다.
 
 ## 채널 메모 (2026-08-30 실측)
