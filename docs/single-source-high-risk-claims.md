@@ -176,12 +176,36 @@ PR #180(다른 레인)이 같은 날 이 문서에 **"이 큐는 진행 중이�
 > [`claim-verification-date.test.ts`](../scripts/research-audit/claim-verification-date.test.ts)를 신설했다 —
 > `lastVerified`가 UTC 오늘을 넘으면 붉어진다. KST 오전(= 같은 날 UTC)에 찍은 날짜는 통과한다.
 
+### 21라운드 실측 — `ecfr.gov`가 첫 실측 대상이었고, 이 레인에서는 닫혀 있었다
+
+위가 "`ecfr.gov`는 C류 US 3건이 남아 있어 다음 회차의 첫 실측 대상"이라고 적었다. 21라운드가
+**에이전트 컨테이너 채널**에서 실측했고, 09-17 하루에 아홉 번·09-18에 한 번, 전건
+`CONNECT tunnel failed, 403`(정책 거부)이었다.
+
+| 호스트 | 무엇에 필요한가 | 09-17 | 09-18 |
+|---|---|---|---|
+| `ecfr.gov` | C류 US 3건 | 403 | 403 |
+| `legislation.gov.uk` | C류 UK 4건(TMA 1994 · Rules 2008) | 403 | 403 |
+| `sbj.cnipa.gov.cn` · `samr.gov.cn` | 미실사 소스 · 재확인 주기 초과 | 403 | — |
+| `cbp.gov` · `sic.gov.co` · `diariooficial.interior.gob.cl` | 미실사 소스 | 403 | — |
+
+두 가지를 덧붙인다.
+
+- **같은 컨테이너의 두 채널이 같이 막힌다.** `curl`은 `CONNECT tunnel failed, 403`으로, 브라우저를 쓰지 않는
+  fetch 도구는 `EGRESS_BLOCKED`로 같은 호스트에서 같이 거부됐다. 프록시 status의 `recentRelayFailures`도
+  같은 항목을 `connect_rejected / gateway answered 403 to CONNECT (policy denial)`로 적는다. 도구를 바꿔서
+  넘을 수 있는 벽이 아니라 **이 레인의 egress 정책**이라는 뜻이다.
+- **이것은 사이트가 닫혔다는 기록이 아니다.** 바로 위 규칙 2 그대로다 — 20라운드의 브라우저 채널은 같은 큐의
+  여섯 호스트를 다 열었다. C류 11건은 여전히 **채널이 열린 레인이 열면 닫히는** 상태이고, 이 표는 그 레인을
+  고르는 근거일 뿐이다.
+
 ## 6. 남은 것
 
 - **C류 11건.** 조문 후보는 §3 표에 있지만 **전부 미확인**이다. 그대로 붙이면 안 되고, 여는 회차가 조문을 읽어
   확인한 뒤에만 register와 `sourceIds`에 들어간다. 다음 구간은 앵커 법령이 register에 **없는** 쪽이라
   B류·JapTm보다 건당 비용이 크다 — UK 4건(TMA 1994 · Trade Marks Rules 2008)과 US 3건(`ecfr.gov`)이
-  각각 앵커 법령 하나를 신설하면 묶어서 닫히는 모양이다.
+  각각 앵커 법령 하나를 신설하면 묶어서 닫히는 모양이다. **여는 회차는 채널부터 실측한다** — §5의
+  21라운드 실측에서 `ecfr.gov`·`legislation.gov.uk`는 에이전트 컨테이너 채널에서 이틀 연속 403이었다.
 - **A류 5건은 그대로 둔다.** §1이 이유다. 이 목록에 계속 뜨더라도 조치 대상이 아니다.
 - **정책 판단 2건(owner 몫).** staleness 하드 게이트 전환, 그리고 §4가 적은 "HIGH claim은 1차 법령·판결·공식
   등록부를 최소 하나 참조한다"를 게이트로 올릴지. 20라운드가 단일 소스를 26건에서 16건으로 줄이면서 그 게이트의
