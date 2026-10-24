@@ -411,9 +411,10 @@ export const briefCandidates: BriefCandidate[] = [
     sourceIds: ["cnipa-official", "cnipa-trademark-office", "samr"],
     jurisdictions: ["China", "Trademark Law Reform"],
     relatedProductSlugs: ["china"],
-    status: "watching",
+    status: "published",
+    publishedAs: "2026-10-cnipa-implementing-rules-guidelines-draft",
     notes:
-      "시행 전까지 열려 있는 후보다. 시행규정이 실제로 공개되기 전에는 '아직 안 나왔다'가 본문의 대부분이 되므로 발행하지 않는다."
+      "시행 전까지 열려 있던 후보였다. 2026-10-24 국무원 상표법 실시조례 전면 개정 추진 및 CNIPA의 《상표 심사·심리 지침 개정 초안》, 경과규정 공표를 확인했다. 3년 불사용 직권 취소(Ex officio revocation) 절차와 통상적 생산·경영 필요를 초과하는 악의적 대량 출원에 최대 10만 위안 과태료를 부과하는 집행 기준이 확정되어, 2026-10-24호(2026-10-cnipa-implementing-rules-guidelines-draft)로 발행했다."
   },
   {
     id: "2026-08-eu-customs-reform-watch",

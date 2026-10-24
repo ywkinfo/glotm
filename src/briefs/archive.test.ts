@@ -15,8 +15,13 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-09-jpo-kumamoto-deadline-relief");
-    expect(getBriefIssueBySlug("2026-09-jpo-kumamoto-deadline-relief")?.title).toBe(
+    expect(getLatestBriefIssue()?.slug).toBe("2026-10-cnipa-implementing-rules-guidelines-draft");
+    expect(getBriefIssueBySlug("2026-10-cnipa-implementing-rules-guidelines-draft")?.title).toBe(
+      "2026년 10월 Hot Global TM Brief | 개정 중국 상표법 후속 지침이 나왔습니다 — 2027년 시행 전 3년 불사용 직권 취소와 10만 위안 과태료에 맞춰 상표 재고조사를 시작할 때입니다"
+    );
+    expect(
+      getBriefIssueBySlug("2026-09-jpo-kumamoto-deadline-relief")?.title
+    ).toBe(
       "2026년 9월 Hot Global TM Brief | 일본 기한을 놓쳤다면 경로가 셋입니다 — 신청이 필요 없는 일괄연장, 재외자 2개월, 그리고 갱신만 따로 걸리는 6개월"
     );
     expect(
