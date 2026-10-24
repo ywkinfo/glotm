@@ -18,7 +18,7 @@
         "cfr-37-2-101",
         "uspto-ttab-initiating"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
       "conceptKey": "opposition_period",
       "normalized": {
@@ -27,7 +27,7 @@
         "unit": "days",
         "expression": "within 30 days from Official Gazette publication, extendable"
       },
-      "notes": "2026-06-28 1차출처 확인(Cornell LII 15 U.S.C. §1063): 공고 후 30일, 요청 시 30일 연장 및 good cause 추가 연장."
+      "notes": "2026-06-28 1차출처 확인(Cornell LII 15 U.S.C. §1063): 공고 후 30일, 요청 시 30일 연장 및 good cause 추가 연장. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-CANC-001",
@@ -42,7 +42,7 @@
         "usc-15-1064",
         "usc-15-1065"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
       "conceptKey": "use_requirement",
       "normalized": {
@@ -51,7 +51,7 @@
         "unit": "years",
         "expression": "after 5 years, cancellation grounds limited to Section 14 enumerated grounds"
       },
-      "notes": "2026-06-28 1차출처 확인(Cornell LII 15 U.S.C. §1064): 5년 후 열거 사유 한정, 3년 후 never-used 사유 추가, 2(d)는 목록 외. 2026-08-15 재검증 정정: 종전 claim은 5년 후 사유를 '§1054/§1052 위반'으로 뭉뚱그려, 5년이 지나면 다툴 수 없는 §1052(d)(혼동)·§1052(e)(기술적 표장)까지 취소 사유인 것처럼 읽혔다. §1064(3) 원문은 'contrary to the provisions of section 1054 of this title or of subsection (a), (b), or (c) of section 1052'로 §1052를 (a)·(b)·(c)로 한정한다. 또한 notes에만 있던 §1064(6)('At any time after the 3-year period following the date of registration, if the registered mark has never been used in commerce')를 claim 본문으로 올렸다."
+      "notes": "2026-06-28 1차출처 확인(Cornell LII 15 U.S.C. §1064): 5년 후 열거 사유 한정, 3년 후 never-used 사유 추가, 2(d)는 목록 외. 2026-08-15 재검증 정정: 종전 claim은 5년 후 사유를 '§1054/§1052 위반'으로 뭉뚱그려, 5년이 지나면 다툴 수 없는 §1052(d)(혼동)·§1052(e)(기술적 표장)까지 취소 사유인 것처럼 읽혔다. §1064(3) 원문은 'contrary to the provisions of section 1054 of this title or of subsection (a), (b), or (c) of section 1052'로 §1052를 (a)·(b)·(c)로 한정한다. 또한 notes에만 있던 §1064(6)('At any time after the 3-year period following the date of registration, if the registered mark has never been used in commerce')를 claim 본문으로 올렸다. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-REM-001",
@@ -68,9 +68,9 @@
         "usc-15-1118",
         "uspto-about-ttab"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 1차출처 확인(15 U.S.C. §§1116–1118): 금지명령·손해배상·이익환수·압수·파기는 연방법원 구제. TTAB 권한 범위는 USPTO About TTAB 기준."
+      "notes": "2026-06-28 1차출처 확인(15 U.S.C. §§1116–1118): 금지명령·손해배상·이익환수·압수·파기는 연방법원 구제. TTAB 권한 범위는 USPTO About TTAB 기준. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-TTAB-001",
@@ -85,9 +85,9 @@
       "sourceIds": [
         "uspto-about-ttab"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(USPTO About TTAB): TTAB는 federal registration 권리만 판단하고 사용권, injunction, infringement, damages, attorney fee는 다루지 않음."
+      "notes": "2026-06-28 재확인(USPTO About TTAB): TTAB는 federal registration 권리만 판단하고 사용권, injunction, infringement, damages, attorney fee는 다루지 않음. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-MAINT-001",
@@ -101,7 +101,7 @@
         "uspto-maintaining",
         "uspto-keeping-alive"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
       "conceptKey": "renewal_term",
       "normalized": {
@@ -110,7 +110,7 @@
         "unit": "years",
         "expression": "Section 8 at 5-6yr, Section 8+9 at 9-10yr and every 10yr"
       },
-      "notes": "2026-06-28 재확인(USPTO Maintaining / Keeping your registration alive): 5-6년 Section 8, 9-10년 및 이후 10년마다 Section 8+9, Section 15는 Principal Register·5년 연속 사용 등 요건 충족 시 선택."
+      "notes": "2026-06-28 재확인(USPTO Maintaining / Keeping your registration alive): 5-6년 Section 8, 9-10년 및 이후 10년마다 Section 8+9, Section 15는 Principal Register·5년 연속 사용 등 요건 충족 시 선택. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-CBP-001",
@@ -124,9 +124,9 @@
       "sourceIds": [
         "cbp-ipr-protection"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(CBP IPR protection): USPTO Principal Register 등록이 recordation 전제이고 e-Recordation fee는 International Class별 부과. 금액은 본문 하드코딩 금지."
+      "notes": "2026-06-28 재확인(CBP IPR protection): USPTO Principal Register 등록이 recordation 전제이고 e-Recordation fee는 International Class별 부과. 금액은 본문 하드코딩 금지. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-ATY-001",
@@ -140,9 +140,9 @@
       "sourceIds": [
         "uspto-need-attorney"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(USPTO Do I need an attorney): foreign-domiciled applicant/registrant는 U.S.-licensed attorney 필요. 예외 여부는 단정 확장 금지."
+      "notes": "2026-06-28 재확인(USPTO Do I need an attorney): foreign-domiciled applicant/registrant는 U.S.-licensed attorney 필요. 예외 여부는 단정 확장 금지. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-FEE-001",
@@ -156,9 +156,9 @@
       "sourceIds": [
         "uspto-fees"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(USPTO How much does it cost): filing/maintenance cost는 classes 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지."
+      "notes": "2026-06-28 재확인(USPTO How much does it cost): filing/maintenance cost는 classes 수에 따라 달라지는 구조. 금액 자체는 휘발성이라 본문 하드코딩 금지. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-ASSIGN-001",
@@ -172,9 +172,9 @@
         "uspto-assignment-center",
         "uspto-assignment-center-2026-pdf"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(assignmentcenter.uspto.gov + USPTO Feb 2026 overview material): Assignment Center 명칭 확인. 세부 화면/자료 요건은 제출 직전 재확인."
+      "notes": "2026-06-28 재확인(assignmentcenter.uspto.gov + USPTO Feb 2026 overview material): Assignment Center 명칭 확인. 세부 화면/자료 요건은 제출 직전 재확인. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-SOU-001",
@@ -188,9 +188,9 @@
       "sourceIds": [
         "uspto-itu-forms"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(USPTO ITU forms): NOA 이후 acceptable allegation of use와 commerce use evidence가 필요한 SOU 흐름. 세부 fee/extension 수치는 본문 하드코딩 금지."
+      "notes": "2026-06-28 재확인(USPTO ITU forms): NOA 이후 acceptable allegation of use와 commerce use evidence가 필요한 SOU 흐름. 세부 fee/extension 수치는 본문 하드코딩 금지. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-LOP-001",
@@ -204,9 +204,9 @@
         "uspto-lop-practice-tip",
         "tmep-1715-lop"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(USPTO LOP practice tip + TMEP 1715): relevant objective evidence 중심, letter/arguments가 아니라 관련 evidence와 ground가 심사관에게 전달되는 구조."
+      "notes": "2026-06-28 재확인(USPTO LOP practice tip + TMEP 1715): relevant objective evidence 중심, letter/arguments가 아니라 관련 evidence와 ground가 심사관에게 전달되는 구조. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-MADRID-001",
@@ -219,9 +219,9 @@
       "sourceIds": [
         "uspto-madrid-outbound"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
-      "notes": "2026-06-28 재확인(USPTO Madrid outbound applicants)."
+      "notes": "2026-06-28 재확인(USPTO Madrid outbound applicants). 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-PARODY-001",
@@ -235,10 +235,10 @@
       "sourceIds": [
         "scotus-jack-daniels-v-vip-2023"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
       "conceptKey": "source_designating_use",
-      "notes": "2026-06-29 1차출처 확인(SCOTUS Jack Daniel's Properties v. VIP Products, 599 U.S. 140 (2023)): 'When an alleged infringer uses a trademark as a designation of source for the infringer's own goods, the Rogers test does not apply.' 'We do not decide whether the Rogers test is ever appropriate.'"
+      "notes": "2026-06-29 1차출처 확인(SCOTUS Jack Daniel's Properties v. VIP Products, 599 U.S. 140 (2023)): 'When an alleged infringer uses a trademark as a designation of source for the infringer's own goods, the Rogers test does not apply.' 'We do not decide whether the Rogers test is ever appropriate.' 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-DILUTION-001",
@@ -253,10 +253,10 @@
         "scotus-jack-daniels-v-vip-2023",
         "azd-jack-daniels-v-vip-2025-remand"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
       "conceptKey": "dilution_exclusion",
-      "notes": "2026-06-29 1차출처 확인: 15 U.S.C. §1125(c)(1) blurring·tarnishment, §1125(c)(3)(A) fair use 예외는 'other than as a designation of source for the person's own goods or services'. SCOTUS: parody는 'exempt only if not used to designate source'. 환송심 결론 문구는 Arizona D.C. order 기준."
+      "notes": "2026-06-29 1차출처 확인: 15 U.S.C. §1125(c)(1) blurring·tarnishment, §1125(c)(3)(A) fair use 예외는 'other than as a designation of source for the person's own goods or services'. SCOTUS: parody는 'exempt only if not used to designate source'. 환송심 결론 문구는 Arizona D.C. order 기준. 2026-10-23 재대조: 변경 없음."
     },
     {
       "id": "USA-CBP-002",
@@ -271,10 +271,10 @@
         "cfr-19-133-22",
         "cfr-19-133-25"
       ],
-      "lastVerified": "2026-08-15",
+      "lastVerified": "2026-10-23",
       "status": "BODY_READY",
       "conceptKey": "cbp_mark_classification",
-      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지. 2026-08-15 재검증 정정: 종전 서술은 수출(반송)을 copying-or-simulating(133.22)의 구제 경로로, 표장 제거 불가를 counterfeit(133.21)의 절대 규칙으로 적었으나 두 축이 뒤바뀌어 있었다. 133.22(c)는 표장 제거·권리자 수입·서면 동의·개인면세 4가지만 열거하고 수출을 포함하지 않으며, 수출과 표장 말소 후 통관은 133.21의 권리자 서면 동의 경로에 있다. 2026-08-15 2차 정정(eCFR 원문 대조): 두 30일을 '같은 시계'로 묶은 것이 오류였다. §133.25(a)는 §§133.22·133.23에만 적용되고 'shall be detained for 30 days from the date on which the merchandise is presented for CBP examination' + 'Extensions of the 30-day time period may be freely granted for good cause shown'이라 상한이 고정돼 있지 않다. 반면 §133.21(g)의 30일은 'within thirty days from notification of seizure'로 기산점 자체가 다르다. §133.22(f)는 연장된 억류 기간까지 해제되지 않으면 seizure·forfeiture로 넘어간다고 규정한다. counterfeit 자체의 억류는 §133.21(b)(1)의 별개 30일(제시일 기산)이고, 미해제 시 19 U.S.C. 1499(c)에 따라 excluded로 처리된다."
+      "notes": "2026-06-29 1차출처 확인: 19 C.F.R. §133.21(counterfeit = identical with or substantially indistinguishable; 30일 억류·압수·몰수, 표장 제거 불가) / §133.22(copying or simulating = likely to cause public to associate; 통관 거절·30일 억류, 표장 제거·동의·반송 등). 금액·세부 절차는 본문 하드코딩 금지. 2026-08-15 재검증 정정: 종전 서술은 수출(반송)을 copying-or-simulating(133.22)의 구제 경로로, 표장 제거 불가를 counterfeit(133.21)의 절대 규칙으로 적었으나 두 축이 뒤바뀌어 있었다. 133.22(c)는 표장 제거·권리자 수입·서면 동의·개인면세 4가지만 열거하고 수출을 포함하지 않으며, 수출과 표장 말소 후 통관은 133.21의 권리자 서면 동의 경로에 있다. 2026-08-15 2차 정정(eCFR 원문 대조): 두 30일을 '같은 시계'로 묶은 것이 오류였다. §133.25(a)는 §§133.22·133.23에만 적용되고 'shall be detained for 30 days from the date on which the merchandise is presented for CBP examination' + 'Extensions of the 30-day time period may be freely granted for good cause shown'이라 상한이 고정돼 있지 않다. 반면 §133.21(g)의 30일은 'within thirty days from notification of seizure'로 기산점 자체가 다르다. §133.22(f)는 연장된 억류 기간까지 해제되지 않으면 seizure·forfeiture로 넘어간다고 규정한다. counterfeit 자체의 억류는 §133.21(b)(1)의 별개 30일(제시일 기산)이고, 미해제 시 19 U.S.C. 1499(c)에 따라 excluded로 처리된다. 2026-10-23 재대조: 변경 없음."
     }
   ]
 }

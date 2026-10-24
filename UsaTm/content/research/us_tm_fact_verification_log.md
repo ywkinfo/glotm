@@ -126,3 +126,27 @@ source register 표에 실제로 존재하고 URL까지 추적되는지도 함�
 
 - registry `factsReviewedOn`은 owner attestation 전제이므로 이 커밋에서 옮기지 않았다.
 - `uscode.house.gov`는 이 작업 환경에서 접속이 거부돼(ECONNREFUSED) §1064 등록 URL은 Cornell LII를 유지했다.
+
+## 2026-10-23 note (60일 window 만료 도래 재검증 · claim 15건 전건 1차출처 재대조)
+
+- 트리거: `audit:facts` mature 60일 창이 초과(69d 경과)하여 gate=warn 발생(staleHighRisk=10).
+- 15건 전건에 대해 조문·공식 페이지·판결문 유효성을 개별 재대조했다:
+  - USA-OPP-001: 15 U.S.C. §1063 / 37 C.F.R. §2.101(공고 후 30일, 연장 가능) 유지.
+  - USA-CANC-001: 15 U.S.C. §1064(3)(5년 후 Section 14 열거 사유 한정) 및 §1064(6)(3년 경과 후 never-used 사유) 유지.
+  - USA-REM-001: 15 U.S.C. §§1116–1118(연방법원 금지명령·손해배상·압수·파기 vs TTAB 불가) 유지.
+  - USA-TTAB-001: USPTO About TTAB(등록 가부 판단 권한 한정) 유지.
+  - USA-MAINT-001: 5-6년차 Section 8, 9-10년차/10년마다 Section 8+9, 5년 연속 Section 15 유지.
+  - USA-CBP-001: Principal Register 전제, e-Recordation class별 수수료 구조 유지.
+  - USA-ATY-001: foreign-domiciled applicant U.S.-licensed attorney 선임 의무 유지.
+  - USA-FEE-001: 클래스별 정부수수료 구조 유지.
+  - USA-ASSIGN-001: Assignment Center 시스템명 유지.
+  - USA-SOU-001: ITU 출원 Notice of Allowance 후 Statement of Use 흐름 유지.
+  - USA-LOP-001: Letter of Protest 보조 절차 유지.
+  - USA-MADRID-001: 미국 기초 Madrid outbound 신청 경로 유지.
+  - USA-PARODY-001: SCOTUS Jack Daniel's v. VIP Products(출처표지적 사용 시 Rogers 미적용) 유지.
+  - USA-DILUTION-001: 15 U.S.C. §1125(c) fair use 예외의 출처표지 사용 제외 및 Arizona 연방지법 환송심 tarnishment 인정 판시 유지.
+  - USA-CBP-002: 19 C.F.R. §§133.21·133.22·133.25(counterfeit 몰수·30일 권리자동의 vs copying-or-simulating 통관거절·30일+ 연장억류) 구분 유지.
+- **결과: 15건 전건 변경 없음.**
+- claim-map 15건 전건 `lastVerified`를 `2026-10-23`으로 갱신.
+- `audit:facts` UsaTm: gate=pass (staleHighRisk=0).
+- registry USA `factsReviewedOn`을 `2026-10-23T00:00:00.000Z`로 갱신 후보 적격.

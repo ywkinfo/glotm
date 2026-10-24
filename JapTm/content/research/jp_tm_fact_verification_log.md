@@ -118,3 +118,18 @@ JPO 병존동의제도 전용 페이지를 모두 직접 열어 대조했다. �
 - **12/12 재대조 완료.** 전건 `lastVerified` 2026-08-15.
 - registry Japan `factsReviewedOn`을 2026-08-15로 옮겼다(전건 대조 완료 요건 충족). 최종 attestation은 owner 몫이다.
 - `scripts/research-audit/claim-source-register.test.ts`가 구 번역본 URL 재유입과 sourceId 미등록을 테스트로 막는다.
+
+## 2026-10-23 note (60일 window 만료 도래 재검증 · claim 12건 전건 1차출처 재대조)
+
+- 트리거: `audit:facts` mature 60일 창이 초과(69d 경과)하여 gate=warn 발생.
+- 2026-09-16 라운드에서 조문 대조를 마쳤던 6건(JP-FIRST-001, JP-TERM-001, JP-OPP-001, JP-REP-001, JP-MADRID-REFUSAL-001, JP-CUSTOMS-001)과 2026-08-15에 머물러 있던 잔여 6건(JP-CONSENT-001, JP-IPHC-001, JP-DRP-001, JP-FEE-001, JP-ACCEL-001, JP-UCPA-001)의 1차 출처 및 법령·지침 유효성을 재대조했다.
+- **결과: 12건 전건 변경 없음.**
+  - JP-CONSENT-001: 商標法 제4조 제4항(2023 개정, 2024-04-01 시행 병존동의제도: 동의 + 비혼동 요건) 및 JPO 안내면 유지 확인.
+  - JP-IPHC-001: 지재고재(IP High Court) 심결취소소송 전속관할 유지 확인.
+  - JP-DRP-001: JPRS JP-DRP 3요소 구조 유지 확인.
+  - JP-FEE-001: 구분(class)별 정부수수료 구조 유지 확인.
+  - JP-ACCEL-001: 비전통상표 일부·병존동의 청구 상표·일본 지정 국제출원 가속심사 제외 지침 유지 확인.
+  - JP-UCPA-001: 부정경쟁방지법 제2조 제1항 1호/2호/3호 구별 보완축 유지 확인.
+- claim-map 12건 전건 `lastVerified`를 `2026-10-23`으로 갱신.
+- `audit:facts` JapTm: gate=pass (staleHighRisk=0).
+- registry Japan `factsReviewedOn`을 `2026-10-23T00:00:00.000Z`로 갱신 후보 적격.
