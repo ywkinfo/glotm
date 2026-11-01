@@ -56,6 +56,22 @@ mature 승격 중 워크스페이스 간 UK 수수료 값 상충을 발견했고
   - owner 액션: 다음 재검증에서 £60,000/£30,000을 설정한 규칙(CPR Practice Direction 45/46의 IPEC scale costs 절)을 직접 열어 source register에 등록하고 `UK-IPEC-001.sourceIds`에 추가한다. 이 세션은 해당 페이지를 열 수 없어 URL을 추정 등록하지 않았다.
   - **[해소 2026-08-30]** 채널이 열린 세션에서 규범을 직접 열어 등록했다. 다만 근거의 위치와 함정의 성격이 이 메모와 다르다 — 실제 근거는 PD가 아니라 **CPR 46.21(1)**(Part 46 Section VII)이고, 등록 소스에서 `£50,000`은 재현되지 않았다. 아래 `2026-08-30 재검증` 절을 정본으로 본다.
 
+## 2026-10-24 재검증 (claim-freshness)
+
+2026-10-24에 claim 11건을 등록 1차출처에 재대조했다. **전건 현행 유효(값 변경 없음)**, `audit:facts` gate=pass·staleHighRisk=0. `claim-map.json`의 `lastVerified`를 2026-10-24로 갱신했다.
+
+- **OPP(TM7 2개월+TM7A 1개월):** Trade Marks Journal 공고일 기준 2개월 이내 TM7 및 TM7A 1개월 연장 규정 현행 확인.
+- **COOL(9→18개월, TM9E 무수수료):** 초기 9개월 및 TM9E 최대 18개월 cooling-off 연장 규정 현행 확인.
+- **RENEW(10년):** TMA 1994 §40(3) 출원일 등록 간주 및 §42 10년 주기 갱신 현행 확인.
+- **NONUSE(등록 후 5년+연속 5년):** TMA §46 등록 후 5년 경과 및 연속 5년 불사용 취소 리스크 현행 확인.
+- **IPEC(costs cap £60k/£30k, damages £500k):** CPR Part 46 rule 46.21(1) 및 CPR 63.17A(1) 상한 규정 현행 확인.
+- **BREXIT(2021-01-01):** comparable UK mark 009 prefix 및 신규 EUTM의 UK 미적용 현행 확인.
+- **COMPARABLE(갱신일 승계):** 원 EUTM 갱신일 유지 및 2026-01-01 이후 UK 실사용 단독 요구 원칙 현행 확인.
+- **IR(Gibraltar 자동효력):** 마드리드 UK 지정 시 지브롤터 자동 효력 및 EU 지정의 UK 배제 현행 확인.
+- **AFA(무료+30 working days):** HMRC AFA 무료 신청 및 최소 30 working days 사전 제출 권장 현행 확인.
+- **DRS(Nominet DRS / WIPO 접수):** Nominet DRS 공식명 및 2026-07-07 이후 WIPO 접수·관리 체계 현행 확인.
+- **FEE(출원 £205/갱신 £245/추가 클래스 £60):** 2026-04-01 개정 금액 현행 유지 확인.
+
 ## 2026-08-30 재검증 (claim-freshness) — 그리고 08-25 triage 메모 정정
 
 2026-08-30에 claim 11건을 등록 1차출처에 재대조했다. **전건 현행 유효(변경 없음)**, `audit:facts` gate=pass·staleHighRisk=0. `claim-map.json`의 `lastVerified`를 2026-08-30으로 갱신했다(창 마감 2026-09-20 전 종결). 이번 회차는 소스를 직접 열었다 — `nominet.uk`는 curl 403이라 인앱 브라우저로 본문을 확인했고 나머지는 curl로 열렸다.
