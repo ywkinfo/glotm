@@ -34,7 +34,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # workflow_dispatch 는 owner 의 수동 override 경로다(게이트를 의도적으로 우회한다).
     #
     # workflow_run 경로는 세 조건을 **모두** 만족해야 한다. conclusion 하나로는 부족하다:
@@ -126,7 +126,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
     steps:
       - name: Deploy to GitHub Pages

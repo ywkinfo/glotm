@@ -11,7 +11,7 @@ env:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       # fetch-depth: 0 은 선택 사항이 아니다. 생성 콘텐츠의 meta.builtAt(= sitemap lastmod)은

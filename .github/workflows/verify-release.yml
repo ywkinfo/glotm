@@ -13,7 +13,7 @@ env:
 
 jobs:
   verify-release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       # fetch-depth: 0 은 선택 사항이 아니다 — 근거는 ci.yml 의 같은 스텝 주석을 본다.
