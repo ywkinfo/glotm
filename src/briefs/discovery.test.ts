@@ -700,7 +700,6 @@ describe("brief discovery report", () => {
       "impi",
       "inapi-chile",
       "dof-mexico",
-      "wipo-madrid",
       "inpi-argentina"
     ];
 
@@ -709,6 +708,12 @@ describe("brief discovery report", () => {
       expect(row?.lastVerifiedOn).toBe("2026-09-12");
       expect(row?.status).toBe("ok");
     }
+
+    // wipo-madrid는 2026-11-01 sweep으로 freshness가 옮겨갔다. 참조 시점(2026-09-13)보다
+    // 뒤지만 elapsedUtcDays가 Math.max(0, ...)이라 daysSinceVerified=0, status=ok이다.
+    const wipoMadrid = rows.find((entry) => entry.source.id === "wipo-madrid");
+    expect(wipoMadrid?.lastVerifiedOn).toBe("2026-11-01");
+    expect(wipoMadrid?.status).toBe("ok");
 
     // 2026-09-13 회차는 `jpo` 하나만 열었다(캡처 근거). 부분 sweep이 그 소스의 freshness만 옮기고
     // 같은 회차의 다른 소스를 건드리지 않는다는 것이 이 행의 요점이다.
@@ -722,10 +727,10 @@ describe("brief discovery report", () => {
     expect(staleFromLastRound?.lastVerifiedOn).toBe("2026-08-30");
     expect(staleFromLastRound?.status).toBe("overdue");
 
-    // ⓐ 등록부 크기에 묶인 pin이다(= briefSources.length - sweptNow.length - 2 — jpo와 cnipa-trademark-office). 소스를 추가하면
+    // ⓐ 등록부 크기에 묶인 pin이다(= briefSources.length - sweptNow.length - 3 — jpo, cnipa-trademark-office, wipo-madrid). 소스를 추가하면
     // 여기서 한 번 걸리고, 그때 "새 소스는 실사 이력 없음으로 시작한다"를 의식적으로 확인하게 된다.
     const neverOpened = rows.filter(
-      (row) => ![...sweptNow, "jpo", "cnipa-trademark-office"].includes(row.source.id)
+      (row) => ![...sweptNow, "jpo", "cnipa-trademark-office", "wipo-madrid"].includes(row.source.id)
     );
     expect(neverOpened).toHaveLength(4);
     expect(neverOpened.map((row) => row.source.id).sort()).toEqual([

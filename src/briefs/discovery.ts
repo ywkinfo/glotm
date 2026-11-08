@@ -566,6 +566,21 @@ export const briefCandidates: BriefCandidate[] = [
     status: "watching",
     notes:
       "**발굴 경로가 외부 소스가 아니라 저장소 안의 불일치다.** 2026-09-12 LatTm 재대조가 등록 URL(로그인 벽)에서 공개 안내면으로 근거를 옮기면서 인용한 문구가 본문의 경계와 맞지 않는다는 것을 `LA-OQ-002`로 올려 뒀는데, 나흘째 후보가 없어 발굴 백로그가 그것을 승계하지 못하고 있었다. `sourceIds`는 이 질문을 실제로 닫을 수 있는 소스를 가리킨다(`2026-09-mexico-lfppi-transitional-provisions`와 같은 규약) — INPI 결의(P-183/2018 계열) 또는 법 제22.362호 개정 조문이 마감 구조를 '창'으로 정하는지 '기산점 + 지연 가산'으로 정하는지가 판정점이다. **1차 출처 미대조**: 2026-09-16 회차 시작 실측에서 `portaltramites.inpi.gob.ar`·`www.argentina.gob.ar`·`www.boletinoficial.gob.ar` 전건 `CONNECT tunnel failed, 403`(정책 거부)이라 sweep 회차를 추가하지 않는다. **두 읽기가 독자에게 다른 것을 말한다** — '창'이면 6년차 제출이 정상 처리이고, '기산점 + 지연 가산'이면 같은 제출이 가산 대상이다. 어느 쪽인지 모르는 채로는 본문을 고칠 수 없으므로 발행 전에 조문이 필요하다. `LA-AR-USE-001`은 단일 소스 HIGH claim이기도 해서 `docs/single-source-high-risk-claims.md` C류와 같은 자리를 가리킨다."
+  },
+  {
+    id: "2026-11-wipo-madrid-representative-email-rules",
+    headline:
+      "WIPO 마드리드 시스템 규칙 개정으로 대리인 선임 취소 서식이 의무화되고 이메일 변경이 공식 등록 사항으로 명확해졌다 — 국제등록부의 대리인·연락처 정보를 점검해야 한다",
+    trigger:
+      "WIPO Information Notice No. 43/2026(2026-10-29 발표) — 개정 규칙 제3조·제18조·제25조·제27조가 2026년 11월 1일 시행. 대리인 선임 취소 시 eMadrid 또는 신규 서식 MM25 사용 의무화(Rule 3(6)(a)), 권리자·대리인 이메일 변경의 공식 등록 사항 편입(Rule 25(1)(a)(iv), (vi)).",
+    discoveredOn: "2026-11-01",
+    sourceIds: ["wipo-madrid"],
+    jurisdictions: ["Global", "Madrid System", "Procedure"],
+    relatedProductSlugs: ["latam", "mexico", "usa", "japan", "china", "europe", "uk"],
+    status: "published",
+    publishedAs: "2026-11-wipo-madrid-rules-representative-cancellation-email",
+    notes:
+      "2026-11-01 발효일에 맞춰 발굴·발행한 소재다. WIPO 공식 통지문 MADRID/2026/43(2026-10-29)을 근거로 한다. 개정 규칙 원문(WIPO Document 601194)과 WIPO 대리인 관리 실무 가이드를 함께 대조했다. USPTO Madrid e-Filing 전환(2026-10-01 시행)은 21호에서 이미 다룬 소재이며, 이번 브리프에서는 디지털 전환 가속의 맥락으로 언급한다. 이메일 주소 등록 요건 자체는 2025년 11월부터 시행된 것이며 2026년 개정은 변경 등록 절차의 명문화다. 주의: 이메일 변경 누락 시 '상표권 자동 소멸'로 서술하지 않고 '공식 통지 누락과 기한 관리 실패로 인한 권리 유지 중대 위험'으로 표현했다."
   }
 ];
 
@@ -574,6 +589,21 @@ export const briefCandidates: BriefCandidate[] = [
 // 최신순으로 유지한다(archive 정렬 계약과 동일). 산출이 없어도 기록한다.
 
 export const briefSweepLog: BriefSweep[] = [
+  {
+    sweptOn: "2026-11-01",
+    kind: "verified",
+    sourceIds: ["wipo-madrid"],
+    foundCandidateIds: [
+      "2026-11-wipo-madrid-representative-email-rules"
+    ],
+    note:
+      "WIPO Information Notice No. 43/2026(2026-10-29 발표)을 근거로 한 회차다. "
+      + "개정 규칙 제3조·제18조·제25조·제27조가 2026-11-01 시행임을 확인하고, "
+      + "대리인 선임 취소 서식 의무화(Rule 3(6)(a))와 이메일 변경 공식 등록 편입(Rule 25(1)(a)(iv), (vi))을 "
+      + "1차 출처(WIPO 공식 통지문·개정 규칙 원문·대리인 관리 실무 가이드)로 대조했다. "
+      + "USPTO Madrid e-Filing 전환(2026-10-01)은 21호에서 이미 다룬 소재이므로 맥락 언급만 한다. "
+      + "이메일 등록 의무 자체는 2025-11-01 기시행이고 이번 개정은 변경 등록 절차의 명문화다."
+  },
   {
     sweptOn: "2026-09-13",
     kind: "verified",

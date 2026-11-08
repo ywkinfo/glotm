@@ -15,7 +15,10 @@ import { briefDiscoveryStartOn, hasCanonicalJurisdiction } from "./discovery";
 describe("brief archive", () => {
   it("surfaces the newest brief as the latest visible issue", () => {
     expect(getLatestBriefIssue()?.slug).toBe(briefIssues[0]?.slug);
-    expect(getLatestBriefIssue()?.slug).toBe("2026-10-cnipa-implementing-rules-guidelines-draft");
+    expect(getLatestBriefIssue()?.slug).toBe("2026-11-wipo-madrid-rules-representative-cancellation-email");
+    expect(getBriefIssueBySlug("2026-11-wipo-madrid-rules-representative-cancellation-email")?.title).toBe(
+      "2026년 11월 Hot Global TM Brief | WIPO 마드리드 시스템 개정 규칙, 11월 1일 발효 — 국제상표 대리인 선임 취소 서식 의무화 및 이메일 변경 관리 강화"
+    );
     expect(getBriefIssueBySlug("2026-10-cnipa-implementing-rules-guidelines-draft")?.title).toBe(
       "2026년 10월 Hot Global TM Brief | 개정 중국 상표법 후속 지침이 나왔습니다 — 2027년 시행 전 3년 불사용 직권 취소와 10만 위안 과태료에 맞춰 상표 재고조사를 시작할 때입니다"
     );

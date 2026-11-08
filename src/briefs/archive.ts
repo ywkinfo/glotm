@@ -11,6 +11,69 @@ export type {
   BriefTimeSensitive
 } from "./archiveLegacy";
 
+const wipoMadridRulesRepresentativeCancellationEmailIssue: BriefIssue = {
+  slug: "2026-11-wipo-madrid-rules-representative-cancellation-email",
+  title:
+    "2026년 11월 Hot Global TM Brief | WIPO 마드리드 시스템 개정 규칙, 11월 1일 발효 — 국제상표 대리인 선임 취소 서식 의무화 및 이메일 변경 관리 강화",
+  summary:
+    "세계지식재산기구(WIPO)의 마드리드 국제상표등록 관련 개정 규칙이 2026년 11월 1일부터 시행됩니다. 이번 개정은 국제등록부에 등재된 대리인의 선임 취소 절차를 표준화하고, 권리자 및 대리인의 이메일 주소 변경을 공식 등록 대상으로 명확히 규정한 것이 핵심입니다. WIPO는 2026년 10월 29일 공식 통지문 MADRID/2026/43을 발표해 개정 규칙 제3조, 제18조, 제25조, 제27조의 시행을 확인했습니다. 한국 기업이 해외 상표를 관리하는 과정에서 대리인 교체나 담당자 변경이 발생하면 WIPO 국제등록부의 대리인 및 이메일 정보도 함께 확인해야 합니다. 특히 등록된 연락처가 유효하지 않으면 WIPO 통지를 놓치거나 변경 신청이 지연될 수 있으며, 지정국의 거절이유 통지에 대한 대응 기한을 놓칠 경우 해당 국가에서의 상표 보호에 불이익이 발생할 수 있습니다.",
+  cadenceLabel: "주간 브리프",
+  publishedAt: "2026-11-01T00:00:00.000Z",
+  jurisdictions: [
+    "Global",
+    "Madrid System",
+    "Procedure"
+  ],
+  bodyParagraphs: [
+    "세계지식재산기구(WIPO)의 마드리드 국제상표등록 관련 개정 규칙이 2026년 11월 1일부터 시행됩니다. 이번 개정은 국제등록부에 등재된 대리인의 선임 취소 절차를 표준화하고, 권리자 및 대리인의 이메일 주소 변경을 공식 등록 대상으로 명확히 규정한 것이 핵심입니다.",
+    "개정 규칙 제3조 제6항(a)에 따라 WIPO에 등록된 대리인의 선임을 취소하려면 eMadrid 온라인 서비스 또는 신규 공식 서식 MM25를 사용해야 합니다. 기존처럼 일반 서면이나 이메일만으로 취소를 요청할 경우 신청에 불비가 있는 것으로 처리되며, 정해진 형식으로 다시 제출해야 합니다. 다만 새로운 대리인이 적법하게 선임되면 기존 대리인의 등록은 자동으로 취소되므로, 모든 대리인 교체에 별도의 MM25 제출이 필요한 것은 아닙니다.",
+    "개정 규칙 제25조 제1항(a)(iv) 및 (vi)는 권리자와 대리인의 이메일 주소 변경을 공식 등록 대상으로 명시했습니다. WIPO의 이메일 주소 등록 요건은 이미 2025년 11월부터 강화됐으며, 이번 개정은 변경사항을 국제등록부에 반영하고 통지하는 절차를 더욱 명확히 한 것입니다. 특히 이메일 주소 변경 내역은 WIPO 국제상표공보에 공개되지 않으므로 권리자와 대리인은 등록정보를 직접 점검할 필요가 있습니다.",
+    "이와 별도로 미국 특허상표청(USPTO)은 2026년 10월 1일부터 미국의 기초출원 또는 등록에 근거한 최초 마드리드 국제출원에 WIPO의 Madrid e-Filing 사용을 의무화했습니다. 이는 국제상표 행정이 표준화된 전자신청, 온라인 신원 확인 및 전자통지 중심으로 전환되고 있음을 보여줍니다.",
+    "한국 기업이 해외 상표를 관리하는 과정에서 대리인 교체나 담당자 변경이 발생하면 WIPO 국제등록부의 대리인 및 이메일 정보도 함께 확인해야 합니다. 특히 등록된 연락처가 유효하지 않으면 WIPO 통지를 놓치거나 변경 신청이 지연될 수 있으며, 지정국의 거절이유 통지에 대한 대응 기한을 놓칠 경우 해당 국가에서의 상표 보호에 불이익이 발생할 수 있습니다."
+  ],
+  items: [
+    {
+      id: "wipo-madrid-representative-cancellation-email-management",
+      headline:
+        "WIPO 마드리드 시스템 개정 규칙이 오늘부터 시행됩니다 — 국제등록번호별 대리인 및 이메일 정보를 점검하고 변경 절차를 정비해야 합니다",
+      whatChanged:
+        "WIPO 공식 통지문 MADRID/2026/43(2026-10-29)에 따라 개정 규칙 제3조, 제18조, 제25조, 제27조가 2026년 11월 1일부터 시행됩니다. 주요 변경은 두 가지입니다. 첫째, WIPO에 등록된 대리인의 선임을 취소하려면 eMadrid 온라인 서비스 또는 신규 공식 서식 MM25를 사용해야 합니다(개정 규칙 제3조 제6항(a)). 일반 서면이나 이메일만으로 취소를 요청하면 불비 처리됩니다. 둘째, 권리자와 대리인의 이메일 주소 변경이 공식 등록 대상으로 명시됐습니다(개정 규칙 제25조 제1항(a)(iv), (vi)). 이메일 등록 요건 자체는 2025년 11월부터 시행됐으며, 이번 개정은 변경 등록 절차를 명문화한 것입니다.",
+      whoShouldCare:
+        "마드리드 시스템을 통해 국제상표를 보유하거나 관리하는 한국 기업의 IP팀, 해외 상표 포트폴리오의 대리인 교체와 담당자 인사이동을 관리하는 법무팀, 국제등록부의 연락처와 기한을 관리하는 포트폴리오 운영 담당.",
+      whyItMatters:
+        "국제등록부에 등재된 대리인과 이메일이 최신 상태가 아니면 WIPO와 지정국의 공식 통지를 놓칠 수 있습니다. 특히 거절이유 통지에 대한 대응 기한을 놓칠 경우 해당 국가에서의 상표 보호에 불이익이 발생할 수 있습니다. 이번 개정으로 대리인 취소에 정해진 서식이 의무화됐으므로, 기존처럼 비정형 서면으로 처리하던 내부 절차가 있다면 지금 정비해야 합니다.",
+      nextAction:
+        "① 보유 국제등록번호별 WIPO에 등재된 권리자 및 대리인의 이메일 주소가 현재 유효한지 확인합니다. ② 대리인 선임 취소 또는 교체 시 eMadrid 및 MM25 등 적정 절차를 사용하도록 내부 프로세스를 정비합니다. ③ 이메일 변경 후 국제등록부 반영 여부와 전자통지 수신 상태를 점검합니다. ④ WIPO 통지와 지정국 현지 대리인의 기한 관리 체계를 교차 확인합니다.",
+      relatedGuideLinks: [
+        {
+          label: "UsaTm 미국 상표 운영 가이드",
+          href: getProductPathBySlug("usa")
+        },
+        {
+          label: "LatTm 중남미 상표 운영 가이드",
+          href: getProductPathBySlug("latam")
+        },
+        {
+          label: "ChaTm 중국 상표 운영 가이드",
+          href: getProductPathBySlug("china")
+        },
+        {
+          label: "JapTm 일본 상표 운영 가이드",
+          href: getProductPathBySlug("japan")
+        },
+        {
+          label: "EuTm 유럽 상표 운영 가이드",
+          href: getProductPathBySlug("europe")
+        },
+        {
+          label: "UKTm 영국 상표 운영 가이드",
+          href: getProductPathBySlug("uk")
+        }
+      ]
+    }
+  ]
+};
+
 const mexicoLfppiRegulationsIssue: BriefIssue = {
   slug: "2026-09-mexico-lfppi-regulations-in-force",
   title:
@@ -638,6 +701,7 @@ const cnipaImplementingRulesDraftIssue: BriefIssue = {
 };
 
 const briefIssueSource: BriefIssue[] = [
+  wipoMadridRulesRepresentativeCancellationEmailIssue,
   cnipaImplementingRulesDraftIssue,
   jpoKumamotoDeadlineReliefIssue,
   mexicoLfppiTransitionalProvisionsConfirmedIssue,
